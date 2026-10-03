@@ -3,36 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#10151b">
   <title>원형 판 · 2D 물리 모델</title>
   <style>
-    :root { color-scheme: dark; font: 15px/1.5 system-ui, sans-serif; background: #10151b; color: #e6edf2; }
-    * { box-sizing: border-box; }
-    body { margin: 0; padding: 28px 16px; }
-    main { width: min(100%, 860px); margin: auto; }
-    h1 { margin: 0; font-size: clamp(1.5rem, 4vw, 2.2rem); }
-    header p, .note, footer { color: #9baab5; }
-    header p { margin: 5px 0 22px; }
-    .layout { display: grid; grid-template-columns: minmax(0, 1fr) 245px; align-items: start; gap: 22px; }
-    .surface { min-width: 0; }
-    canvas { display: block; width: 100%; height: auto; border-radius: 50%; touch-action: none; cursor: crosshair; }
-    canvas:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid #7de5d2; outline-offset: 3px; }
-    .status { min-height: 1.5em; margin: 10px 0 0; color: #b8c6cf; }
-    .controls { display: grid; gap: 15px; padding: 16px; border: 1px solid #303b44; border-radius: 10px; background: #171e25; }
-    label { display: block; margin-bottom: 5px; font-weight: 600; }
-    select, button, input { width: 100%; font: inherit; }
-    select, button { min-height: 40px; padding: 7px 10px; border: 1px solid #43515b; border-radius: 6px; color: inherit; background: #202a32; }
-    button { cursor: pointer; }
-    button:hover { background: #293740; }
-    input[type="range"] { accent-color: #71d9c7; }
-    output { display: block; color: #aab8c1; font-size: .9rem; }
-    .keys { margin: 0; color: #aab8c1; font-size: .88rem; }
-    .note { margin: 22px 0 0; font-size: .9rem; }
-    details { margin-top: 14px; color: #b8c6cf; }
-    summary { cursor: pointer; }
-    code { color: #9de7dc; }
-    footer { margin-top: 20px; font-size: .8rem; }
-    @media (max-width: 650px) { body { padding: 20px 14px; } .layout { grid-template-columns: 1fr; gap: 14px; } .controls { grid-template-columns: repeat(2, minmax(0, 1fr)); } .controls > div { min-width: 0; } .controls .keys, .controls #stop { grid-column: 1 / -1; } }
+    canvas { max-width: 100%; height: auto; }
   </style>
 </head>
 <body>
@@ -45,7 +18,7 @@
     <div class="layout">
       <section class="surface" aria-label="원형 판 연주 영역">
         <canvas id="plate" width="480" height="480" tabindex="0" role="button" aria-label="원형 판. 원 안을 클릭하거나 드래그해 연주하세요."></canvas>
-        <p id="status" class="status" aria-live="polite">오디오를 준비하고 있습니다. 판을 두드려 연주하세요.</p>
+        <p id="status" class="status" aria-live="polite">판을 눌러 연주하세요. 첫 터치에서 오디오를 시작합니다.</p>
       </section>
 
       <section class="controls" aria-label="판 설정">
@@ -101,6 +74,7 @@
       const gridInfo = document.getElementById("grid-info");
       const presets = { low: 13, normal: 17, high: 21 };
       const sensorPosition = { x: 0.28, y: -0.18 };
+      let pickupPosition = { x: sensorPosition.x, y: sensorPosition.y };
       let latestFrame = null;
       let lastHit = null;
       let audioContext = null;
@@ -110,263 +84,6 @@
       let lastDragStrike = 0;
       let hitClearTimer = 0;
 
-      const workletSource = `
-class CircularPlateProcessor extends AudioWorkletProcessor {
-  constructor(options) {
-    super();
-    this.sampleRate = sampleRate;
-    this.resolution = options.processorOptions.resolution || "normal";
-    this.stiffnessControl = Number(options.processorOptions.stiffness || 0.92);
-    this.dampingControl = Number(options.processorOptions.damping || 35);
-    this.active = false;
-    this.frameClock = 0;
-    this.checkClock = 0;
-    this.hitQueue = [];
-    this.buildGrid(false);
-    this.port.onmessage = (event) => {
-      const message = event.data;
-      if (message.type === "strike") {
-        if (this.hitQueue.length < 24) this.hitQueue.push(message);
-      } else if (message.type === "resolution") {
-        this.resolution = message.value;
-        this.buildGrid(true);
-      } else if (message.type === "settings") {
-        this.stiffnessControl = message.stiffness;
-        this.dampingControl = message.damping;
-        this.updateCoefficients();
-      } else if (message.type === "stop") {
-        this.clearModel();
-      }
-    };
-  }
-
-  buildGrid(preserve) {
-    const old = preserve && this.current ? {
-      size: this.size,
-      center: this.center,
-      radius: this.radius,
-      current: this.current,
-      previous: this.previous,
-      active: this.active
-    } : null;
-    const sizeByQuality = { low: 13, normal: 17, high: 21 };
-    this.size = sizeByQuality[this.resolution] || sizeByQuality.normal;
-    this.center = (this.size - 1) / 2;
-    this.radius = this.center - 0.7;
-    const length = this.size * this.size;
-    this.mask = new Uint8Array(length);
-    this.indices = [];
-    this.left = new Int32Array(length);
-    this.right = new Int32Array(length);
-    this.up = new Int32Array(length);
-    this.down = new Int32Array(length);
-    this.left.fill(-1);
-    this.right.fill(-1);
-    this.up.fill(-1);
-    this.down.fill(-1);
-
-    for (let y = 0; y < this.size; y++) {
-      for (let x = 0; x < this.size; x++) {
-        const dx = x - this.center;
-        const dy = y - this.center;
-        const index = y * this.size + x;
-        if (dx * dx + dy * dy <= this.radius * this.radius) {
-          this.mask[index] = 1;
-          this.indices.push(index);
-        }
-      }
-    }
-    for (let k = 0; k < this.indices.length; k++) {
-      const index = this.indices[k];
-      const x = index % this.size;
-      const y = (index / this.size) | 0;
-      if (x > 0 && this.mask[index - 1]) this.left[index] = index - 1;
-      if (x + 1 < this.size && this.mask[index + 1]) this.right[index] = index + 1;
-      if (y > 0 && this.mask[index - this.size]) this.up[index] = index - this.size;
-      if (y + 1 < this.size && this.mask[index + this.size]) this.down[index] = index + this.size;
-    }
-
-    this.current = new Float32Array(length);
-    this.previous = new Float32Array(length);
-    this.next = new Float32Array(length);
-    this.laplacian = new Float32Array(length);
-    if (old) {
-      for (let k = 0; k < this.indices.length; k++) {
-        const index = this.indices[k];
-        const x = index % this.size;
-        const y = (index / this.size) | 0;
-        const nx = (x - this.center) / this.radius;
-        const ny = (y - this.center) / this.radius;
-        if (nx * nx + ny * ny <= 0.96) {
-          this.current[index] = this.sampleOld(old.current, old, nx, ny);
-          this.previous[index] = this.sampleOld(old.previous, old, nx, ny);
-        }
-      }
-      this.active = old.active;
-    } else {
-      this.active = false;
-    }
-    this.pickup = this.findNearest(sensorPosition.x, sensorPosition.y);
-    this.updateCoefficients();
-    this.port.postMessage({ type: "grid", size: this.size, nodes: this.indices.length });
-    this.sendFrame();
-  }
-
-  sampleOld(field, old, nx, ny) {
-    const x = (nx * old.radius + old.center);
-    const y = (ny * old.radius + old.center);
-    const x0 = Math.floor(x);
-    const y0 = Math.floor(y);
-    const fx = x - x0;
-    const fy = y - y0;
-    const at = (ix, iy) => (ix < 0 || iy < 0 || ix >= old.size || iy >= old.size) ? 0 : field[iy * old.size + ix];
-    const a = at(x0, y0) * (1 - fx) + at(x0 + 1, y0) * fx;
-    const b = at(x0, y0 + 1) * (1 - fx) + at(x0 + 1, y0 + 1) * fx;
-    return a * (1 - fy) + b * fy;
-  }
-
-  findNearest(x, y) {
-    const px = this.center + x * this.radius;
-    const py = this.center + y * this.radius;
-    let nearest = this.indices[0];
-    let nearestDistance = Infinity;
-    for (let k = 0; k < this.indices.length; k++) {
-      const index = this.indices[k];
-      const dx = index % this.size - px;
-      const dy = ((index / this.size) | 0) - py;
-      const distance = dx * dx + dy * dy;
-      if (distance < nearestDistance) {
-        nearestDistance = distance;
-        nearest = index;
-      }
-    }
-    return nearest;
-  }
-
-  updateCoefficients() {
-    const maxRadius = 9.3;
-    const rateScale = 48000 / this.sampleRate;
-    const radiusRatio = this.radius / maxRadius;
-    const mu = 0.18 * radiusRatio * radiusRatio * this.stiffnessControl * rateScale;
-    const lambda = 0.045 * radiusRatio * rateScale;
-    this.stiffnessTerm = mu * mu;
-    this.tensionTerm = lambda * lambda;
-    this.loss = (0.000018 + 0.00016 * (this.dampingControl / 100)) * rateScale;
-  }
-
-  applyStrike(message) {
-    const x = Math.max(-0.92, Math.min(0.92, message.x));
-    const y = Math.max(-0.92, Math.min(0.92, message.y));
-    const px = this.center + x * this.radius;
-    const py = this.center + y * this.radius;
-    const centerX = Math.round(px);
-    const centerY = Math.round(py);
-    const width = 0.72;
-    const amplitude = Math.max(0.01, Math.min(0.25, message.strength || 0.09));
-    for (let oy = -3; oy <= 3; oy++) {
-      for (let ox = -3; ox <= 3; ox++) {
-        const gx = centerX + ox;
-        const gy = centerY + oy;
-        if (gx < 0 || gy < 0 || gx >= this.size || gy >= this.size) continue;
-        const index = gy * this.size + gx;
-        if (!this.mask[index]) continue;
-        const dx = gx - px;
-        const dy = gy - py;
-        const weight = Math.exp(-(dx * dx + dy * dy) / (2 * width * width));
-        this.previous[index] -= amplitude * weight * (0.92 + Math.random() * 0.16);
-      }
-    }
-    this.active = true;
-  }
-
-  clearModel() {
-    this.current.fill(0);
-    this.previous.fill(0);
-    this.next.fill(0);
-    this.laplacian.fill(0);
-    this.hitQueue.length = 0;
-    this.active = false;
-    this.sendFrame();
-  }
-
-  sendFrame() {
-    this.port.postMessage({
-      type: "frame",
-      size: this.size,
-      radius: this.radius,
-      values: this.current.slice()
-    });
-  }
-
-  process(inputs, outputs) {
-    const output = outputs[0][0];
-    if (!output) return true;
-    if (this.hitQueue.length) {
-      const hits = this.hitQueue.splice(0);
-      for (let i = 0; i < hits.length; i++) this.applyStrike(hits[i]);
-    }
-    if (!this.active) {
-      output.fill(0);
-      return true;
-    }
-
-    const indices = this.indices;
-    const left = this.left;
-    const right = this.right;
-    const up = this.up;
-    const down = this.down;
-    const current = this.current;
-    const previous = this.previous;
-    const next = this.next;
-    const lap = this.laplacian;
-    const wave = this.tensionTerm;
-    const bend = this.stiffnessTerm;
-    const loss = this.loss;
-
-    for (let frame = 0; frame < output.length; frame++) {
-      for (let k = 0; k < indices.length; k++) {
-        const i = indices[k];
-        const l = left[i], r = right[i], u = up[i], d = down[i];
-        lap[i] = (l >= 0 ? current[l] : 0) + (r >= 0 ? current[r] : 0)
-          + (u >= 0 ? current[u] : 0) + (d >= 0 ? current[d] : 0) - 4 * current[i];
-      }
-      for (let k = 0; k < indices.length; k++) {
-        const i = indices[k];
-        const l = left[i], r = right[i], u = up[i], d = down[i];
-        const lapCenter = lap[i];
-        const biharmonic = (l >= 0 ? lap[l] : 0) + (r >= 0 ? lap[r] : 0)
-          + (u >= 0 ? lap[u] : 0) + (d >= 0 ? lap[d] : 0) - 4 * lapCenter;
-        const velocity = current[i] - previous[i];
-        next[i] = 2 * current[i] - previous[i] + wave * lapCenter - bend * biharmonic - loss * velocity;
-      }
-      const oldPrevious = this.previous;
-      this.previous = this.current;
-      this.current = this.next;
-      this.next = oldPrevious;
-      const sample = this.current[this.pickup] * 8;
-      output[frame] = sample / (1 + Math.abs(sample));
-    }
-
-    this.frameClock += output.length;
-    this.checkClock += output.length;
-    if (this.frameClock >= this.sampleRate / 30) {
-      this.frameClock = 0;
-      this.sendFrame();
-    }
-    if (this.checkClock >= this.sampleRate / 8) {
-      this.checkClock = 0;
-      let peak = 0;
-      for (let k = 0; k < indices.length; k++) {
-        const magnitude = Math.abs(this.current[indices[k]]);
-        if (magnitude > peak) peak = magnitude;
-      }
-      if (peak < 0.000002) this.clearModel();
-    }
-    return true;
-  }
-}
-registerProcessor("circular-plate-processor", CircularPlateProcessor);
-`;
 
       function drawPlate() {
         if (!canvasContext) return;
@@ -425,8 +142,8 @@ registerProcessor("circular-plate-processor", CircularPlateProcessor);
         canvasContext.strokeStyle = "rgba(143, 202, 198, .65)";
         canvasContext.stroke();
 
-        const sensorX = centerX + sensorPosition.x * plateRadius;
-        const sensorY = centerY + sensorPosition.y * plateRadius;
+        const sensorX = centerX + pickupPosition.x * plateRadius;
+        const sensorY = centerY + pickupPosition.y * plateRadius;
         canvasContext.beginPath();
         canvasContext.arc(sensorX, sensorY, width * 0.012, 0, Math.PI * 2);
         canvasContext.fillStyle = "#f3d68a";
@@ -462,14 +179,19 @@ registerProcessor("circular-plate-processor", CircularPlateProcessor);
       async function buildAudioEngine() {
         const AudioContextClass = window.AudioContext || window.webkitAudioContext;
         if (!AudioContextClass) throw new Error("Web Audio API is unavailable");
+        if (!window.isSecureContext) throw new Error("AudioWorklet requires HTTPS or localhost");
         audioContext = new AudioContextClass({ latencyHint: "interactive" });
         if (!audioContext.audioWorklet) throw new Error("AudioWorklet is unavailable");
-        const moduleUrl = URL.createObjectURL(new Blob([workletSource], { type: "application/javascript" }));
-        try {
-          await audioContext.audioWorklet.addModule(moduleUrl);
-        } finally {
-          URL.revokeObjectURL(moduleUrl);
-        }
+        const resumePromise = audioContext.resume();
+        const moduleUrl = new URL("./circular-plate-processor.js", document.baseURI).href;
+        let timeoutId;
+        const moduleReady = Promise.race([
+          audioContext.audioWorklet.addModule(moduleUrl),
+          new Promise((resolve, reject) => {
+            timeoutId = window.setTimeout(() => reject(new Error("AudioWorklet module load timed out")), 6000);
+          })
+        ]).finally(() => window.clearTimeout(timeoutId));
+        await Promise.all([moduleReady, resumePromise]);
         processor = new AudioWorkletNode(audioContext, "circular-plate-processor", {
           numberOfInputs: 0,
           numberOfOutputs: 1,
@@ -477,7 +199,9 @@ registerProcessor("circular-plate-processor", CircularPlateProcessor);
           processorOptions: {
             resolution: resolutionInput.value,
             stiffness: Number(stiffnessInput.value),
-            damping: Number(dampingInput.value)
+            damping: Number(dampingInput.value),
+            sensorX: sensorPosition.x,
+            sensorY: sensorPosition.y
           }
         });
         masterGain = audioContext.createGain();
@@ -493,6 +217,9 @@ registerProcessor("circular-plate-processor", CircularPlateProcessor);
             drawPlate();
           }
         };
+        processor.addEventListener("processorerror", () => {
+          status.textContent = "오디오 처리 중 오류가 생겼습니다. 페이지를 새로고침한 뒤 다시 시도해주세요.";
+        });
         status.textContent = "오디오 준비 완료. 판 안을 두드려 연주하세요.";
       }
 
@@ -509,6 +236,7 @@ registerProcessor("circular-plate-processor", CircularPlateProcessor);
 
       async function strike(x, y, strength) {
         lastHit = { x, y, time: performance.now() };
+        pickupPosition = { x, y };
         window.clearTimeout(hitClearTimer);
         hitClearTimer = window.setTimeout(() => {
           lastHit = null;
@@ -560,6 +288,8 @@ registerProcessor("circular-plate-processor", CircularPlateProcessor);
       document.getElementById("hit-center").addEventListener("click", () => strike(0, 0, 0.09));
       document.getElementById("stop").addEventListener("click", () => {
         if (processor) processor.port.postMessage({ type: "stop" });
+        pickupPosition = { x: sensorPosition.x, y: sensorPosition.y };
+        drawPlate();
         if (masterGain && audioContext) {
           const now = audioContext.currentTime;
           masterGain.gain.cancelScheduledValues(now);
@@ -609,8 +339,7 @@ registerProcessor("circular-plate-processor", CircularPlateProcessor);
       setCanvasSize();
       sendSettings();
       const initialSize = presets[resolutionInput.value];
-      gridInfo.textContent = initialSize + " × " + initialSize + " · 오디오 준비 중";
-      ensureAudio().catch(() => {});
+      gridInfo.textContent = initialSize + " × " + initialSize + " · 첫 연주 때 시작";
     })();
   </script>
 </body>
