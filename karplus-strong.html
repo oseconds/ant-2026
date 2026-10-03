@@ -55,13 +55,13 @@
       </tbody>
     </table>
 
+    <h3>현재 위치 주변 샘플 확대</h3>
+    <p>한 샘플 진행 후 바뀐 칸은 초록색, 현재 칸은 빨간색, 다음 칸은 파란색입니다. 각 칸에 샘플 번호와 값이 표시됩니다.</p>
+    <p><canvas id="buffer-detail" width="720" height="230" role="img" aria-label="현재 지연 버퍼 위치 주변 샘플의 확대 보기">이 브라우저는 canvas를 지원하지 않습니다.</canvas></p>
+
     <h3>전체 버퍼</h3>
     <p>파형의 가로축은 버퍼 한 바퀴입니다. 빨간 선이 현재 읽고 쓰는 샘플입니다.</p>
     <p><canvas id="buffer-canvas" width="720" height="150" role="img" aria-label="지연 버퍼 전체 파형과 현재 위치">이 브라우저는 canvas를 지원하지 않습니다.</canvas></p>
-
-    <h3>현재 위치 주변 샘플 확대</h3>
-    <p>한 샘플 진행 후 바뀐 칸은 초록색, 현재 칸은 빨간색, 다음 칸은 파란색입니다. 회색 칸은 나머지 샘플입니다.</p>
-    <p><canvas id="buffer-detail" width="720" height="230" role="img" aria-label="현재 지연 버퍼 위치 주변 샘플의 확대 보기">이 브라우저는 canvas를 지원하지 않습니다.</canvas></p>
   </fieldset>
 
   <fieldset>
@@ -253,18 +253,16 @@
       const visibleCells = width < 500 ? 8 : 16;
       const count = Math.min(visibleCells, demoBuffer.length);
       const margin = 24;
-      const baseline = Math.floor(height / 2) + 15;
-      const plotHeight = Math.min(baseline - 38, height - baseline - 32);
+      const panelTop = 28;
+      const panelBottom = height - 38;
+      const baseline = Math.floor((panelTop + panelBottom) / 2);
+      const plotHeight = (panelBottom - panelTop) / 2 - 20;
       const gap = 7;
       const cellWidth = (width - margin * 2 - gap * (count - 1)) / count;
       const firstIndex = (demoPosition - Math.floor(count / 2) + demoBuffer.length) % demoBuffer.length;
 
       context.clearRect(0, 0, width, height);
-      context.font = "12px monospace";
-      context.fillStyle = "#333";
-      context.fillText("+1", 2, 18);
-      context.fillText("0", 12, baseline - 3);
-      context.fillText("−1", 2, height - 7);
+      context.font = "10px monospace";
       context.strokeStyle = "#999";
       context.beginPath();
       context.moveTo(margin, baseline);
@@ -278,19 +276,41 @@
         const y = baseline - value * plotHeight;
         const barTop = Math.min(baseline, y);
         const barHeight = Math.max(2, Math.abs(y - baseline));
+        let fillColor = "#555";
+        let backgroundColor = "#f2f2f2";
+        let tag = "";
 
-        if (index === demoPosition) context.fillStyle = "#c00";
-        else if (index === (demoPosition + 1) % demoBuffer.length) context.fillStyle = "#1676c5";
-        else if (index === demoLastChangedPosition) context.fillStyle = "#17823b";
-        else context.fillStyle = "#777";
+        if (index === demoPosition) {
+          fillColor = "#b00000";
+          backgroundColor = "#ffe5e5";
+          tag = "현재";
+        } else if (index === (demoPosition + 1) % demoBuffer.length) {
+          fillColor = "#1266a8";
+          backgroundColor = "#e5f1ff";
+          tag = "다음";
+        } else if (index === demoLastChangedPosition) {
+          fillColor = "#167532";
+          backgroundColor = "#e2f4e6";
+          tag = "변경";
+        }
+
+        context.fillStyle = backgroundColor;
+        context.fillRect(x, panelTop, cellWidth, panelBottom - panelTop);
+        context.strokeStyle = "#aaa";
+        context.strokeRect(x, panelTop, cellWidth, panelBottom - panelTop);
+        context.strokeStyle = "#999";
+        context.beginPath();
+        context.moveTo(x, baseline);
+        context.lineTo(x + cellWidth, baseline);
+        context.stroke();
+        context.fillStyle = fillColor;
         context.fillRect(x, barTop, cellWidth, barHeight);
 
         context.fillStyle = "#111";
         context.textAlign = "center";
-        context.fillText(String(index), x + cellWidth / 2, height - 8);
-        if (index === demoPosition) context.fillText("현재", x + cellWidth / 2, 18);
-        else if (index === (demoPosition + 1) % demoBuffer.length) context.fillText("다음", x + cellWidth / 2, 18);
-        else if (index === demoLastChangedPosition) context.fillText("변경", x + cellWidth / 2, 18);
+        if (tag) context.fillText(tag, x + cellWidth / 2, panelTop + 13);
+        context.fillText(String(index), x + cellWidth / 2, height - 25);
+        context.fillText(value.toFixed(count <= 8 ? 1 : 2), x + cellWidth / 2, height - 8);
       }
       context.textAlign = "start";
     }
