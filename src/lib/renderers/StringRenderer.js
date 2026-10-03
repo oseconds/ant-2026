@@ -18,8 +18,6 @@ export class StringRenderer {
     const cos = Math.cos(angle), sin = Math.sin(angle);
     ctx.lineWidth = 1.05 + pulse * .35;
     ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-    ctx.shadowBlur = 7 + pulse * 13;
-    ctx.shadowColor = pulse ? 'rgba(116,248,234,.72)' : 'rgba(95,149,255,.48)';
     ctx.beginPath();
     this.points.forEach((p, i) => {
       const px = (p[0] * cos - p[1] * sin) * scale;
@@ -27,11 +25,8 @@ export class StringRenderer {
       const x = width / 2 + px, y = height / 2 - py;
       if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
     });
-    const gradient = ctx.createLinearGradient(width * .15, height * .8, width * .85, height * .2);
-    gradient.addColorStop(0, `rgba(78,111,221,${.25 + pulse * .2})`);
-    gradient.addColorStop(.5, `rgba(118,205,222,${.58 + pulse * .32})`);
-    gradient.addColorStop(1, `rgba(122,137,255,${.42 + pulse * .28})`);
-    ctx.strokeStyle = gradient; ctx.stroke(); ctx.shadowBlur = 0;
+    ctx.strokeStyle = pulse ? '#a33b32' : '#34434d';
+    ctx.stroke();
   }
 
   destroy() { this.context = null; this.canvas = null; this.points = []; }

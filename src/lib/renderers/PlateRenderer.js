@@ -15,9 +15,7 @@ export class PlateRenderer {
     const centerX = width / 2, centerY = height / 2;
     const plateRadius = Math.min(width, height) * 0.435;
     ctx.clearRect(0, 0, width, height);
-    const face = ctx.createRadialGradient(centerX * 0.83, centerY * 0.72, 4, centerX, centerY, plateRadius);
-    face.addColorStop(0, '#25343c'); face.addColorStop(0.72, '#1a262e'); face.addColorStop(1, '#111920');
-    ctx.beginPath(); ctx.arc(centerX, centerY, plateRadius, 0, Math.PI * 2); ctx.fillStyle = face; ctx.fill();
+    ctx.beginPath(); ctx.arc(centerX, centerY, plateRadius, 0, Math.PI * 2); ctx.fillStyle = '#f4f4f4'; ctx.fill();
     ctx.save(); ctx.beginPath(); ctx.arc(centerX, centerY, plateRadius, 0, Math.PI * 2); ctx.clip();
     const frame = snapshot?.frame;
     if (frame?.values?.length && frame.size > 1) {
@@ -31,7 +29,7 @@ export class PlateRenderer {
         const value = values[y * size + x], amount = Math.min(1, Math.abs(value) / scale);
         if (amount < 0.025) continue;
         const alpha = 0.12 + amount * 0.8;
-        ctx.fillStyle = value >= 0 ? `rgba(106, 235, 211, ${alpha})` : `rgba(255, 174, 111, ${alpha})`;
+        ctx.fillStyle = value >= 0 ? `rgba(47, 111, 159, ${alpha})` : `rgba(182, 75, 67, ${alpha})`;
         const px = centerX + dx / radius * plateRadius - cellSize / 2;
         const py = centerY + dy / radius * plateRadius - cellSize / 2;
         ctx.fillRect(px, py, cellSize, cellSize);
@@ -39,17 +37,17 @@ export class PlateRenderer {
     }
     ctx.restore();
     ctx.beginPath(); ctx.arc(centerX, centerY, plateRadius, 0, Math.PI * 2);
-    ctx.lineWidth = Math.max(1, width / 360); ctx.strokeStyle = 'rgba(143, 202, 198, .65)'; ctx.stroke();
+    ctx.lineWidth = Math.max(1, width / 360); ctx.strokeStyle = '#555'; ctx.stroke();
     const pickup = snapshot?.state?.pickup?.position || { x: 0.28, y: -0.18 };
     const sensorX = centerX + pickup.x * plateRadius, sensorY = centerY + pickup.y * plateRadius;
-    ctx.beginPath(); ctx.arc(sensorX, sensorY, width * 0.012, 0, Math.PI * 2); ctx.fillStyle = '#f3d68a'; ctx.fill();
+    ctx.beginPath(); ctx.arc(sensorX, sensorY, width * 0.012, 0, Math.PI * 2); ctx.fillStyle = '#174f3b'; ctx.fill();
     ctx.beginPath(); ctx.arc(sensorX, sensorY, width * 0.023, 0, Math.PI * 2);
-    ctx.lineWidth = Math.max(1, width / 480); ctx.strokeStyle = 'rgba(243, 214, 138, .65)'; ctx.stroke();
+    ctx.lineWidth = Math.max(1, width / 480); ctx.strokeStyle = '#174f3b'; ctx.stroke();
     const hit = snapshot?.state?.excitation?.position;
     if (hit) {
       const fade = snapshot.status === 'active' ? 0.55 + 0.2 * Math.sin(Number(time) / 100) : 0.35;
       ctx.beginPath(); ctx.arc(centerX + hit.x * plateRadius, centerY + hit.y * plateRadius, width * 0.025, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(255,255,255,${fade})`; ctx.stroke();
+      ctx.strokeStyle = `rgba(163, 59, 50, ${fade})`; ctx.stroke();
     }
   }
 

@@ -171,10 +171,90 @@ async function waitForModel(page, name) {
   await page.locator(`[data-model="${name}"]`).click();
   await page.waitForFunction(model => document.querySelector('#state-json').textContent.includes(`"model": "${model}"`), name);
   await page.locator('#simulation-canvas').waitFor({ state: 'attached' });
+  await page.locator(`#experiment[data-model-view="${name}"]`).waitFor({ state: 'visible' });
+}
+
+async function verifyDocumentPresentation(page) {
+  const presentation = await page.evaluate(() => {
+    const rgb = value => value.match(/[\d.]+/g)?.slice(0, 3).map(Number) || [0, 0, 0];
+    const background = getComputedStyle(document.body).backgroundColor;
+    const [red, green, blue] = rgb(background);
+    const article = document.querySelector('#experiment');
+    const articleStyle = getComputedStyle(article);
+    const nav = document.querySelector('nav[aria-label]');
+    const buttons = [...nav.querySelectorAll('button[data-model]')];
+    return {
+      background,
+      lightBackground: red > 225 && green > 225 && blue > 225,
+      h1Count: document.querySelectorAll('h1').length,
+      navCount: Boolean(nav),
+      modelButtons: buttons.length,
+      currentButtonPressed: buttons.some(button => button.getAttribute('aria-pressed') === 'true'),
+      titleHeading: article?.querySelector('h2')?.textContent.trim(),
+      articleGradient: /gradient\(/i.test(articleStyle.backgroundImage),
+      articleShadow: articleStyle.boxShadow !== 'none',
+      articleRadius: articleStyle.borderRadius,
+      canvasCount: article?.querySelectorAll('canvas#simulation-canvas').length,
+      controls: [...article.querySelectorAll('[data-path]')].map(input => ({
+        tag: input.tagName.toLowerCase(),
+        type: input.type || '',
+        associatedLabel: Boolean(input.labels?.length)
+      }))
+    };
+  });
+  assert.ok(presentation.lightBackground, `body background is light: ${presentation.background}`);
+  assert.equal(presentation.h1Count, 1, 'document has one primary heading');
+  assert.ok(presentation.navCount, 'model selection uses a labeled nav');
+  assert.equal(presentation.modelButtons, 3, 'all model choices remain available');
+  assert.ok(presentation.currentButtonPressed, 'selected native model button exposes aria-pressed');
+  assert.ok(presentation.titleHeading, 'the active experiment has a semantic heading');
+  assert.equal(presentation.articleGradient, false, 'experiment has no gradient background');
+  assert.equal(presentation.articleShadow, false, 'experiment has no dashboard shadow');
+  assert.ok(presentation.articleRadius === '0px' || presentation.articleRadius === '0%',
+    `experiment wrapper has square document-like edges: ${presentation.articleRadius}`);
+  assert.equal(presentation.canvasCount, 1, 'the simulation remains the primary experiment canvas');
+  assert.ok(presentation.controls.length > 0, 'active experiment exposes its controls');
+  assert.ok(presentation.controls.every(control => control.associatedLabel), 'every parameter has a native label');
+  assert.ok(presentation.controls.every(control => control.tag === 'input' || control.tag === 'select'),
+    'parameters use native form controls');
+}
+
+async function verifyModelSemantics(page, name) {
+  const actual = await page.evaluate(() => ({
+    legends: [...document.querySelectorAll('#experiment fieldset')].map(fieldset => fieldset.querySelector('legend')?.textContent.trim()),
+    analysisHeaders: [...document.querySelectorAll('#analysis th')].map(cell => cell.textContent.trim()),
+    notes: [...document.querySelectorAll('#model-notes, #state-details')].map(element => element.tagName.toLowerCase()),
+    inspectorVisible: Boolean(document.querySelector('#string-inspector') && !document.querySelector('#string-inspector').hidden),
+    tableRows: document.querySelectorAll('#analysis tbody tr').length
+  }));
+  assert.ok(actual.legends.length > 0 && actual.legends.every(Boolean), 'control groups have descriptive native legends');
+  assert.ok(actual.analysisHeaders.length > 0 && actual.tableRows > 0, 'analysis uses a semantic table');
+  assert.deepEqual(actual.notes, ['details', 'details'], 'model notes and JSON state use native details');
+  assert.equal(actual.inspectorVisible, name === 'string', 'String inspector visibility follows the selected model');
+  if (name === 'string') {
+    assert.ok(await page.locator('#string-inspector h3').count(), 'String inspector has its own heading');
+    assert.ok(await page.locator('#buffer-metrics tbody tr').count() > 0, 'buffer metrics render in a table');
+    await page.locator('#string-pattern').waitFor({ state: 'attached' });
+  }
+  if (name === 'plate') await page.locator('#pickup-settings').waitFor({ state: 'attached' });
+  if (name === 'sphere') await page.locator('#sphere-excitation').waitFor({ state: 'attached' });
+}
+
+async function verifyMobileLayout(page, filename) {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.waitForTimeout(100);
+  const dimensions = await page.evaluate(() => ({ viewport: innerWidth, document: document.documentElement.scrollWidth }));
+  assert.ok(dimensions.document <= dimensions.viewport,
+    `mobile document has no horizontal overflow (${dimensions.document}px > ${dimensions.viewport}px)`);
+  await mkdir('test-results', { recursive: true });
+  await page.screenshot({ path: `test-results/${filename}-mobile.png`, fullPage: true });
+  await page.setViewportSize({ width: 1280, height: 900 });
 }
 
 async function clickCanvas(page, xRatio, yRatio) {
-  const bounds = await page.locator('#simulation-canvas').boundingBox();
+  const canvas = page.locator('#simulation-canvas');
+  await canvas.scrollIntoViewIfNeeded();
+  const bounds = await canvas.boundingBox();
   assert.ok(bounds, 'simulation canvas has layout bounds');
   await page.mouse.click(bounds.x + bounds.width * xRatio, bounds.y + bounds.height * yRatio);
 }
@@ -200,13 +280,17 @@ async function verifyBrowser(baseUrl) {
   await page.locator('#simulation-canvas').waitFor({ state: 'visible' });
 
   assert.equal((await readState(page)).model, 'string');
+  await verifyDocumentPresentation(page);
+  await verifyModelSemantics(page, 'string');
+  await verifyMobileLayout(page, 'string');
   await setControl(page, 'physical.frequency', 330);
   await setControl(page, 'duration', .5);
   await page.locator('[data-action="step"]').click();
   await page.locator('[data-action="cycle"]').click();
   await page.locator('[data-action="generate-pattern"]').click();
   const notes = await page.locator('#pattern-notes').textContent();
-  assert.match(notes, /1\./, 'String pattern generator renders eight steps');
+  assert.match(notes, /1\./, 'String pattern status remains available to screen readers and existing consumers');
+  assert.equal(await page.locator('#pattern-steps tr').count(), 8, 'String pattern generator renders eight table rows');
   await page.locator('[data-action="play-pattern"]').click();
   await page.waitForFunction(() => document.querySelector('#status').textContent.includes('재생'));
   await page.locator('[data-action="stop-pattern"]').click();
@@ -217,6 +301,9 @@ async function verifyBrowser(baseUrl) {
     && window.__physicalAudioProbe.audioContexts[0].state === 'running');
 
   await waitForModel(page, 'plate');
+  await verifyDocumentPresentation(page);
+  await verifyModelSemantics(page, 'plate');
+  await verifyMobileLayout(page, 'plate');
   await setControl(page, 'quality', 'high');
   await setControl(page, 'physical.stiffness', 1.05);
   const pickupButton = page.locator('[data-action="pickup"]');
@@ -233,6 +320,9 @@ async function verifyBrowser(baseUrl) {
   await page.screenshot({ path: 'test-results/plate.png', fullPage: true });
 
   await waitForModel(page, 'sphere');
+  await verifyDocumentPresentation(page);
+  await verifyModelSemantics(page, 'sphere');
+  await verifyMobileLayout(page, 'sphere');
   await setControl(page, 'physical.material', 'aluminum6061');
   await setControl(page, 'physical.diameter', 2.5);
   await setControl(page, 'quality', 'high');
@@ -247,7 +337,9 @@ async function verifyBrowser(baseUrl) {
   assert.equal(Math.round(Math.hypot(...Object.values(sphereState.pickup.position)) * 1e6), 1000000,
     'sphere pickup stays normalized to the surface');
   await page.locator('[data-action="pickup"]').click();
-  const sphereBounds = await page.locator('#simulation-canvas').boundingBox();
+  const sphereCanvas = page.locator('#simulation-canvas');
+  await sphereCanvas.scrollIntoViewIfNeeded();
+  const sphereBounds = await sphereCanvas.boundingBox();
   await page.mouse.move(sphereBounds.x + sphereBounds.width * .35, sphereBounds.y + sphereBounds.height * .5);
   await page.mouse.down();
   await page.mouse.move(sphereBounds.x + sphereBounds.width * .55, sphereBounds.y + sphereBounds.height * .45, { steps: 4 });

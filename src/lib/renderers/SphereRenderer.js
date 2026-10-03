@@ -188,7 +188,7 @@ export class SphereRenderer {
 
     gl.enable(gl.DEPTH_TEST);
     gl.depthFunc(gl.LEQUAL);
-    gl.clearColor(0.035, 0.055, 0.07, 1);
+    gl.clearColor(0.97, 0.97, 0.97, 1);
   }
 
   createSphereGeometry(latitudeCount, longitudeCount) {
@@ -312,7 +312,7 @@ export class SphereRenderer {
     gl.enableVertexAttribArray(this.lineLocations.position);
     gl.vertexAttribPointer(this.lineLocations.position, 3, gl.FLOAT, false, 12, 0);
     gl.uniformMatrix4fv(this.lineLocations.mvp, false, multiply4(projection, viewModel));
-    gl.uniform4f(this.lineLocations.color, 0.10, 0.78, 0.82, 0.36);
+    gl.uniform4f(this.lineLocations.color, 0.17, 0.20, 0.22, 0.54);
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     gl.depthMask(false);

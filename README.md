@@ -29,6 +29,7 @@ src/
     index.js                      # 공개 ESM 진입점
   demo/
     definitions.js                # 데모의 렌더러·컨트롤 metadata
+    documentViews.js              # 모델별 semantic HTML 문서 구성
     CanvasInteraction.js          # DOM 이벤트와 좌표 변환 adapter
   main.js                         # DOM, RAF, resize, inspector UI 수명
   style.css
@@ -43,6 +44,8 @@ vite.config.js                    # publicDir: 'static'
 ```
 
 기존 `html/` 실행 페이지는 통합 앱으로 대체했습니다. 재사용한 계산식은 새 모델·Worklet에 있고, 원본 두 processor만 회귀 테스트 fixture로 남깁니다.
+
+데모 UI는 원본 HTML 페이지의 문서 구조를 참고해 밝은 배경, 기본 브라우저 컨트롤, fieldset/legend, table, details/summary로 구성합니다. String은 현 연주·지연 버퍼 검사·패턴 생성기를 각각 배치하고, Plate는 판과 격자 설정, Sphere는 회전 가능한 구와 물성 설정을 보여 줍니다. 공통 파라미터 사이드바는 사용하지 않습니다. 색은 지연 버퍼의 샘플 역할과 변위·표면 마커를 구분할 때 사용합니다.
 
 ## 책임과 API
 
@@ -92,7 +95,7 @@ Lab 모델들은 하나의 지연 초기화 AudioEngine을 공유합니다. 전�
 
 canvas 교체, pointer listener, ResizeObserver, RAF, WebGL 자원은 UI adapter와 renderer가 정리합니다. main.js는 전환 때 이 자원들을 해제하고 새 canvas를 만듭니다. 2D/WebGL 전환 때 같은 canvas를 재사용하지 않습니다. HMR과 pagehide에서도 앱을 파괴합니다.
 
-새 모델은 공통 API를 구현하고 modelRegistry에 factory를 추가하면 됩니다. 커스텀 registry를 `new Lab({ registry })`로 전달할 수도 있습니다. 데모에서 보이려면 `demo/definitions.js`에 renderer와 컨트롤 metadata를 추가하세요. MIDI, automation, sequencer adapter는 DOM 없이 공통 모델 API를 호출할 수 있습니다.
+새 모델은 공통 API를 구현하고 modelRegistry에 factory를 추가하면 됩니다. 커스텀 registry를 `new Lab({ registry })`로 전달할 수도 있습니다. 데모에서 보이려면 `demo/definitions.js`에 renderer와 컨트롤 metadata를 추가하고 `demo/documentViews.js`에 실험에 맞는 문서 구조를 작성하세요. 컨트롤은 `data-control-slot`에 배치됩니다. MIDI, automation, sequencer adapter는 DOM 없이 공통 모델 API를 호출할 수 있습니다.
 
 ## 보존된 기능과 pickup 수정
 
@@ -162,7 +165,7 @@ CHECK_PRODUCTION=1 npm run test:browser
 
 Node native 테스트는 SSR import, JSON 복사·부분 병합, delay stepping, 공유 AudioEngine, 초기화/정지/전환 경합, Worklet protocol, sample rate/quality별 유한 출력, 독립 pickup, 원본 DSP 회귀를 확인합니다. fixture는 앱 bundle에 포함되지 않습니다.
 
-브라우저 스크립트는 Vite를 임시 포트로 띄우고 세 모델의 연주·컨트롤·전환·정리와 console/processor 오류를 확인합니다. macOS의 설치된 Google Chrome을 자동 사용하며 다른 환경은 `BROWSER_EXECUTABLE_PATH`로 실행 파일을 지정하거나 `npx playwright install chromium`으로 검증용 브라우저를 설치하세요. 스크린샷은 test-results/에 저장합니다. 자동 테스트는 출력 데이터와 lifecycle을 확인하며 청감 비교는 별도입니다.
+브라우저 스크립트는 Vite를 임시 포트로 띄우고 세 모델의 연주·컨트롤·전환·정리와 console/processor 오류를 확인합니다. 모델별 문서 구조, native control의 label 연결, 밝은 배경과 모바일 가로 넘침도 검사합니다. macOS의 설치된 Google Chrome을 자동 사용하며 다른 환경은 `BROWSER_EXECUTABLE_PATH`로 실행 파일을 지정하거나 `npx playwright install chromium`으로 검증용 브라우저를 설치하세요. 스크린샷은 test-results/에 저장합니다. 자동 테스트는 출력 데이터와 lifecycle을 확인하며 청감 비교는 별도입니다.
 
 ## 남은 기술 부채와 다음 작업
 

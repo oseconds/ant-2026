@@ -3,32 +3,35 @@ import { StringRenderer, PlateRenderer, SphereRenderer, SPHERE_MATERIALS } from 
 const percent = (value) => `${Math.round(value * 100)}%`;
 const strength = { path: 'excitation.strength', label: '타격 강도', min: 0, max: 1, step: .01, format: percent };
 const damping = { path: 'damping', label: '감쇠', min: 0, max: 1, step: .01, format: percent };
-const quality = { path: 'quality', label: '품질 / 해상도', options: [['low', 'LOW'], ['normal', 'NORMAL'], ['high', 'HIGH']] };
+const quality = { path: 'quality', label: '계산 해상도', options: [['low', 'Low'], ['normal', 'Normal'], ['high', 'High']] };
 
 /** UI metadata is independent of the simulation registry and can be replaced in Svelte. */
 export const demoDefinitions = {
   string: {
-    label: 'STRING', title: '노이즈에서 태어난 하나의 현', subtitle: 'KARPLUS–STRONG / DELAY FEEDBACK', Renderer: StringRenderer,
-    hint: '클릭 또는 Space로 현 튕기기 · 아래에서 샘플 단위로 내부 버퍼 탐색',
+    label: 'String', title: 'Karplus–Strong 현 시뮬레이션', Renderer: StringRenderer,
+    description: '짧은 잡음을 순환 지연선에 넣어 현의 울림을 만듭니다. 소리를 듣고, 지연 버퍼를 한 샘플씩 진행하며 되먹임을 살펴보세요.',
+    hint: '그림을 클릭해 현을 튕기세요. 그림에 포커스가 있을 때 Space 또는 Enter로도 연주할 수 있습니다.',
     controls: [
-      { path: 'physical.frequency', label: '주파수', min: 55, max: 880, step: 1, format: (v) => `${v.toFixed(0)} Hz` },
-      { path: 'feedback', label: '피드백', min: .9, max: .99996, step: .00001, format: (v) => v.toFixed(5) },
+      { path: 'physical.frequency', label: '주파수', type: 'number', min: 55, max: 880, step: 1, format: (v) => `${v.toFixed(0)} Hz`, help: '55–880 Hz. 버퍼 길이가 달라지므로 실제 음높이는 아래 예상 값과 조금 다를 수 있습니다.' },
+      { path: 'feedback', label: '피드백', min: .9, max: .99996, step: .00001, format: (v) => v.toFixed(5), help: '1에 가까울수록 울림이 오래 유지됩니다.' },
       strength,
       { path: 'duration', label: '재생 길이', min: .5, max: 8, step: .1, format: (v) => `${v.toFixed(1)} s` },
       { path: 'pattern.tempo', label: '패턴 템포', min: 60, max: 180, step: 1, format: (v) => `${v} BPM` }
     ]
   },
   plate: {
-    label: 'PLATE', title: '원형 판의 진동', subtitle: '2D FINITE DIFFERENCE / AUDIOWORKLET', Renderer: PlateRenderer,
-    hint: '클릭·드래그로 타격 · QWE / ASD / ZXC로 위치 선택 · Shift+드래그로 pickup 이동',
+    label: 'Plate', title: '원형 판 · 2D 물리 모델', Renderer: PlateRenderer,
+    description: '원형 격자의 진동을 AudioWorklet에서 계산합니다. 원하는 곳을 두드리면 위치에 따른 울림과 변위를 확인할 수 있습니다.',
+    hint: '원 안을 클릭하거나 드래그해 타격하세요. 그림에 포커스가 있을 때 Q W E / A S D / Z X C로 위치를 선택하고, Space 또는 Enter로 중앙을 두드릴 수 있습니다.',
     controls: [
       { path: 'physical.stiffness', label: '강성', min: .65, max: 1.15, step: .01, format: (v) => v.toFixed(2) },
       damping, strength, quality
     ]
   },
   sphere: {
-    label: 'SPHERE', title: '구의 표면에서 시작되는 공진', subtitle: 'SPHERICAL HARMONICS / MODAL SYNTHESIS', Renderer: SphereRenderer,
-    hint: '드래그로 회전 · 클릭·Space로 타격 · Shift+클릭·드래그로 pickup 이동',
+    label: 'Sphere', title: '3D 구체 물리 모델', Renderer: SphereRenderer,
+    description: '구를 드래그해 회전하고 표면을 눌러 타격하세요. 회전된 표면 좌표를 3D 타격 위치로 변환하여 모달 합성으로 소리를 만듭니다.',
+    hint: '드래그하면 회전하고, 클릭 또는 탭하면 타격합니다. 그림에 포커스가 있을 때 Space 또는 Enter로 중앙을 타격할 수 있습니다.',
     controls: [
       { path: 'physical.material', label: '재질', options: Object.entries(SPHERE_MATERIALS).map(([id, material]) => [id, material.name]) },
       { path: 'physical.diameter', label: '지름', min: .25, max: 5, step: .25, format: (v) => `${v.toFixed(2)} m` },
