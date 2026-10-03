@@ -1,3 +1,5 @@
+// Regression reference copied from the pre-refactor html/steel-sphere/steel-sphere-processor.js.
+// Keep this original DSP implementation for sample-equivalence tests.
 class SteelSphereProcessor extends AudioWorkletProcessor {
   constructor(options) {
     super();

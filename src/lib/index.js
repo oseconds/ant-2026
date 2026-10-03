@@ -1,0 +1,11 @@
+export { AudioEngine } from './audio/AudioEngine.js';
+export { StringModel } from './models/string/StringModel.js';
+export { PlateModel } from './models/plate/PlateModel.js';
+export { SphereModel, SPHERE_MATERIALS } from './models/sphere/SphereModel.js';
+export { StringRenderer } from './renderers/StringRenderer.js';
+export { StringInspectorRenderer } from './renderers/StringInspectorRenderer.js';
+export { PlateRenderer } from './renderers/PlateRenderer.js';
+export { SphereRenderer } from './renderers/SphereRenderer.js';
+export { spherePointFromNdc } from './renderers/sphereMath.js';
+export { Lab } from './lab/Lab.js';
+export { modelRegistry } from './lab/modelRegistry.js';

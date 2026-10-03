@@ -1,3 +1,5 @@
+// Regression reference copied from the pre-refactor html/circular-plate/circular-plate-processor.js.
+// Keep this original DSP implementation for sample-equivalence tests; intentional pickup behavior is excluded.
 class CircularPlateProcessor extends AudioWorkletProcessor {
   constructor(options) {
     super();
