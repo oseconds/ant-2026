@@ -1,6 +1,6 @@
 # Physical Audio Lab
 
-독립적인 물리 오디오 라이브러리와 vanilla Vite 데모입니다. 하나의 페이지에서 String, Circular Plate, Solid Sphere를 연주하고 내부 상태를 확인합니다. `src/lib`는 SvelteKit으로 옮겨 사용할 수 있습니다.
+독립적인 물리 오디오 라이브러리와 vanilla Vite 데모입니다. 하나의 페이지에서 String, Circular Plate, Solid Sphere를 연주하고 내부 상태를 확인합니다. ANT는 움직임을 시간 버퍼로 다루는 시각 실험입니다. `src/lib`는 SvelteKit으로 옮겨 사용할 수 있습니다.
 
 ```bash
 npm install
@@ -15,6 +15,7 @@ Node.js 20 이상이 필요합니다. 현재 저장소의 Node 20.9에서도 실
 src/
   lib/
     audio/AudioEngine.js          # 지연 초기화, 모듈 캐시, 연결 그래프와 정리
+    agents/ant/AntController.js   # 오디오·DOM·p5와 독립적인 이동/지연 재생
     models/
       BaseModel.js                # 설정, 구독, 공통 모델 계약
       WorkletModel.js             # Worklet 초기화·메시지·비동기 연주 취소
@@ -23,9 +24,11 @@ src/
       sphere/SphereModel.js       # 구 설정과 모달 오디오
       sphere/materials.js         # 밀도 / Young's modulus / Poisson ratio
     renderers/                    # canvas 수동 render; 자체 RAF 없음
+      AntRenderer.js             # p5 instance-mode 시각화와 키보드 adapter
     lab/Lab.js                    # 모델 전환, 공유 오디오, 구독 수명
     lab/modelRegistry.js          # 모델 생성 registry
     utils/state.js                # JSON 설정 병합·복사·좌표 검증
+    utils/TrajectoryBuffer.js     # 일반적인 timestamp/x/y 링 버퍼
     index.js                      # 공개 ESM 진입점
   demo/
     definitions.js                # 데모의 렌더러·컨트롤 metadata
@@ -107,6 +110,38 @@ Plate 원본의 applyStrike는 pickup을 strike 위치의 격자 index로 덮었
 
 Plate·Sphere에서는 **Pickup 이동** 버튼 또는 **Shift+클릭/드래그**로 위치를 바꿉니다. Sphere의 일반 드래그는 회전, 일반 클릭은 타격입니다. canvas에 focus가 있을 때 Space/Enter는 중앙 타격입니다. Plate의 QWE/ASD/ZXC는 위치별 타격입니다. 기존 오디오 gain과 DSP를 유지하며 별도의 필터나 compressor를 추가하지 않았습니다.
 
+## ANT: 움직임을 시간 버퍼로 다루기
+
+ANT 메뉴에서 리더 한 개와 지연된 복사본 일곱 개를 볼 수 있습니다. 리더는 방향을 조금씩 바꾸며 이동하고, 가장자리에 가까워지면 안쪽으로 조향합니다. 초당 60개, 최대 301개의 `{ timestamp, x, y }` 샘플을 기록하여 약 5초를 유지합니다. 좌표는 0–1로 정규화하고, 시각은 시뮬레이션의 밀리초입니다. 큰 프레임 간격은 100 ms까지만 반영하여 탭으로 돌아왔을 때 긴 시간을 한 번에 계산하지 않습니다.
+
+일곱 복사본은 120, 240, …, 840 ms 전의 위치를 시간 보간으로 읽고, 각 축에 최대 0.003의 부드러운 변화를 더합니다. 처음에는 부족한 지연 구간을 가장 오래된 위치로 채웁니다. **LOOP**는 현재 기록의 독립 읽기 전용 사본을 반복합니다. 끝과 시작을 연결하는 240 ms 구간은 재생에만 적용하며 원래 기억을 변경하지 않습니다. **RELEASE**는 현재 재생 위치와 진행 방향에서 새 live 기록을 시작합니다. 그림에 focus가 있을 때 L/R 키도 같은 조작을 수행합니다.
+
+책임은 세 부분으로 나눕니다.
+
+- `TrajectoryBuffer`: 고정 크기 기록, 시간/지연 보간, chronological 복사, 읽기 전용 snapshot. ANT나 p5를 알지 않습니다.
+- `AntController`: 이동과 지연된 재생, LIVE/LOOP 상태. `getState()`는 JSON 설정이고, 실제 버퍼·위치·재생 시계는 runtime/snapshot에 있습니다. 오디오를 만들지 않습니다.
+- `AntRenderer`: 전달받은 snapshot을 p5 instance mode로 그리는 adapter. p5는 `init()`에서만 동적으로 불러오고, sketch에는 이동·메모리·기록 로직이 없습니다. `noLoop()`와 `redraw()`를 사용하며 main.js의 RAF가 controller update와 render를 호출합니다. p5.sound는 포함하지 않습니다.
+
+```js
+import { AntController, AntRenderer } from './src/lib/index.js';
+
+const ants = new AntController();
+await ants.init(); // browser 자원 없이 상태를 준비
+const renderer = new AntRenderer(canvas); // browser mount 이후
+await renderer.init({ width: 480, height: 480, pixelRatio: 1 });
+
+// 호출자가 가진 animation callback에서:
+ants.update(frameTimestamp);
+renderer.render(ants.getSnapshot());
+
+ants.loop();
+ants.release();
+renderer.destroy(); // p5.remove()로 canvas와 입력 listener 정리
+await ants.destroy();
+```
+
+ANT도 Lab registry로 전환하지만 AudioEngine을 주입받지 않습니다. 전환하면 기존 RAF·ResizeObserver·p5 instance를 정리하고 controller를 파괴합니다. SvelteKit에서 `AntRenderer`를 사용할 때는 `p5` dependency를 설치하고 onMount 이후 `init()`하세요. 컨트롤러와 버퍼만 사용하는 환경에는 p5를 import하거나 실행할 필요가 없습니다. 현재 ANT는 시각 실험이며 물리 모델·소리·호르몬·페로몬·장애물을 구현하지 않습니다.
+
 ## AudioWorklet protocol
 
 모든 메시지는 `{ type, payload }` envelope를 사용합니다.
@@ -163,9 +198,9 @@ npm run test:browser
 CHECK_PRODUCTION=1 npm run test:browser
 ```
 
-Node native 테스트는 SSR import, JSON 복사·부분 병합, delay stepping, 공유 AudioEngine, 초기화/정지/전환 경합, Worklet protocol, sample rate/quality별 유한 출력, 독립 pickup, 원본 DSP 회귀를 확인합니다. fixture는 앱 bundle에 포함되지 않습니다.
+Node native 테스트는 SSR import, JSON 복사·부분 병합, delay stepping, 공유 AudioEngine, 초기화/정지/전환 경합, Worklet protocol, sample rate/quality별 유한 출력, 독립 pickup, 원본 DSP 회귀를 확인합니다. ANT는 링 버퍼 wrapping/지연 보간, 고정 timestep 이동, LOOP/RELEASE, p5 adapter 초기화·키보드·파괴를 검사합니다. fixture는 앱 bundle에 포함되지 않습니다.
 
-브라우저 스크립트는 Vite를 임시 포트로 띄우고 세 모델의 연주·컨트롤·전환·정리와 console/processor 오류를 확인합니다. 모델별 문서 구조, native control의 label 연결, 밝은 배경과 모바일 가로 넘침도 검사합니다. macOS의 설치된 Google Chrome을 자동 사용하며 다른 환경은 `BROWSER_EXECUTABLE_PATH`로 실행 파일을 지정하거나 `npx playwright install chromium`으로 검증용 브라우저를 설치하세요. 스크린샷은 test-results/에 저장합니다. 자동 테스트는 출력 데이터와 lifecycle을 확인하며 청감 비교는 별도입니다.
+브라우저 스크립트는 Vite를 임시 포트로 띄우고 세 모델의 연주·컨트롤·전환·정리와 console/processor 오류를 확인합니다. ANT의 움직임·LOOP/RELEASE·무음 실행과 전환 정리도 검사합니다. 모델별 문서 구조, native control의 label 연결, 밝은 배경과 모바일 가로 넘침도 검사합니다. macOS의 설치된 Google Chrome을 자동 사용하며 다른 환경은 `BROWSER_EXECUTABLE_PATH`로 실행 파일을 지정하거나 `npx playwright install chromium`으로 검증용 브라우저를 설치하세요. 스크린샷은 test-results/에 저장합니다. 자동 테스트는 출력 데이터와 lifecycle을 확인하며 청감 비교는 별도입니다.
 
 ## 남은 기술 부채와 다음 작업
 

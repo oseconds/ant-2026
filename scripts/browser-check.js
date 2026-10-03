@@ -189,6 +189,7 @@ async function verifyDocumentPresentation(page) {
       h1Count: document.querySelectorAll('h1').length,
       navCount: Boolean(nav),
       modelButtons: buttons.length,
+      modelName: article?.dataset.modelView,
       currentButtonPressed: buttons.some(button => button.getAttribute('aria-pressed') === 'true'),
       titleHeading: article?.querySelector('h2')?.textContent.trim(),
       articleGradient: /gradient\(/i.test(articleStyle.backgroundImage),
@@ -205,7 +206,7 @@ async function verifyDocumentPresentation(page) {
   assert.ok(presentation.lightBackground, `body background is light: ${presentation.background}`);
   assert.equal(presentation.h1Count, 1, 'document has one primary heading');
   assert.ok(presentation.navCount, 'model selection uses a labeled nav');
-  assert.equal(presentation.modelButtons, 3, 'all model choices remain available');
+  assert.equal(presentation.modelButtons, 4, 'all model choices remain available');
   assert.ok(presentation.currentButtonPressed, 'selected native model button exposes aria-pressed');
   assert.ok(presentation.titleHeading, 'the active experiment has a semantic heading');
   assert.equal(presentation.articleGradient, false, 'experiment has no gradient background');
@@ -213,7 +214,7 @@ async function verifyDocumentPresentation(page) {
   assert.ok(presentation.articleRadius === '0px' || presentation.articleRadius === '0%',
     `experiment wrapper has square document-like edges: ${presentation.articleRadius}`);
   assert.equal(presentation.canvasCount, 1, 'the simulation remains the primary experiment canvas');
-  assert.ok(presentation.controls.length > 0, 'active experiment exposes its controls');
+  if (presentation.modelName !== 'ant') assert.ok(presentation.controls.length > 0, 'active experiment exposes its controls');
   assert.ok(presentation.controls.every(control => control.associatedLabel), 'every parameter has a native label');
   assert.ok(presentation.controls.every(control => control.tag === 'input' || control.tag === 'select'),
     'parameters use native form controls');
@@ -238,6 +239,88 @@ async function verifyModelSemantics(page, name) {
   }
   if (name === 'plate') await page.locator('#pickup-settings').waitFor({ state: 'attached' });
   if (name === 'sphere') await page.locator('#sphere-excitation').waitFor({ state: 'attached' });
+  if (name === 'ant') await page.locator('#ant-playback').waitFor({ state: 'attached' });
+}
+
+async function readCanvasFrame(page) {
+  return page.locator('#simulation-canvas').evaluate(canvas => canvas.toDataURL());
+}
+
+async function readAntMemory(page) {
+  return page.locator('#ant-memory').evaluate(element => element.value || element.textContent.trim());
+}
+
+async function readAntMode(page) {
+  return page.locator('#ant-mode').evaluate(element => element.value || element.textContent.trim());
+}
+
+async function verifyAnt(page, requestedUrls) {
+  await waitForModel(page, 'ant');
+  await verifyDocumentPresentation(page);
+  await verifyModelSemantics(page, 'ant');
+  await verifyMobileLayout(page, 'ant');
+
+  assert.equal((await readState(page)).mode, 'live');
+  assert.match(await readAntMode(page), /live/i);
+  assert.equal(await page.locator('[data-action="ant-loop"]').count(), 1);
+  assert.equal(await page.locator('[data-action="ant-release"]').count(), 1);
+  assert.equal(await page.evaluate(() => typeof window.setup === 'undefined'
+    && typeof window.draw === 'undefined' && typeof window.circle === 'undefined'), true,
+  'p5 runs in instance mode without global sketch functions');
+  assert.equal(await page.evaluate(() => window.__physicalAudioProbe.audioContexts.length), 0,
+    'ANT does not initialize Web Audio');
+  assert.equal(requestedUrls.some(url => /p5[./-]sound/i.test(url)), false,
+    'ANT does not load p5.sound');
+
+  const initialMemory = await readAntMemory(page);
+  await page.waitForTimeout(900);
+  const liveMemory = await readAntMemory(page);
+  assert.notEqual(liveMemory, initialMemory, 'live mode records new trajectory samples');
+  assert.equal(await page.evaluate(() => window.__physicalAudioProbe.liveRaf.size), 1,
+    'ANT uses the single application animation frame');
+  assert.equal(await page.locator('#scene canvas').count(), 1, 'ANT mounts one canvas');
+  await page.screenshot({ path: 'test-results/ant.png', fullPage: true });
+
+  await page.locator('[data-action="ant-loop"]').click();
+  await page.waitForFunction(() => JSON.parse(document.querySelector('#state-json').textContent).mode === 'loop');
+  const frozenMemory = await readAntMemory(page);
+  const frameAtLoop = await readCanvasFrame(page);
+  await page.waitForTimeout(500);
+  assert.equal(await readAntMemory(page), frozenMemory, 'loop mode freezes the recorded trajectory');
+  assert.notEqual(await readCanvasFrame(page), frameAtLoop, 'leader/followers continue moving along the loop');
+  assert.equal(await page.evaluate(() => window.__physicalAudioProbe.audioContexts.length), 0,
+    'loop playback remains visual only');
+
+  await page.locator('[data-action="ant-release"]').click();
+  await page.waitForFunction(() => JSON.parse(document.querySelector('#state-json').textContent).mode === 'live');
+  const releasedMemory = await readAntMemory(page);
+  await page.waitForTimeout(500);
+  assert.notEqual(await readAntMemory(page), releasedMemory, 'release resumes live recording');
+  assert.equal(await page.evaluate(() => window.__physicalAudioProbe.liveRaf.size), 1,
+    'release keeps exactly one active application animation frame');
+
+  const antCanvas = page.locator('#simulation-canvas');
+  await antCanvas.evaluate(canvas => canvas.focus());
+  await page.keyboard.press('l');
+  await page.waitForFunction(() => JSON.parse(document.querySelector('#state-json').textContent).mode === 'loop');
+  await page.keyboard.press('r');
+  await page.waitForFunction(() => JSON.parse(document.querySelector('#state-json').textContent).mode === 'live');
+
+  if (!useProduction) {
+    await page.evaluate(async () => {
+      const { app } = await import('/src/main.js');
+      window.__oldAntController = app.lab.model;
+    });
+  }
+  await waitForModel(page, 'string');
+  assert.equal(await page.locator('#scene canvas').count(), 1, 'switching away leaves one current canvas');
+  assert.equal(await page.evaluate(() => window.__physicalAudioProbe.liveRaf.size), 1,
+    'switching away cancels the old render loop before starting the next one');
+  if (!useProduction) {
+    assert.equal(await page.evaluate(() => window.__oldAntController.destroyed), true,
+      'switching away destroys the ANT controller');
+    await page.evaluate(() => { delete window.__oldAntController; });
+  }
 }
 
 async function verifyMobileLayout(page, filename) {
@@ -266,10 +349,11 @@ async function verifyBrowser(baseUrl) {
   if (existsSync(chromePath)) launch.executablePath = chromePath;
   browser = await chromium.launch(launch);
   const page = await browser.newPage();
-  const consoleErrors = [], pageErrors = [], failedRequests = [];
+  const consoleErrors = [], pageErrors = [], failedRequests = [], requestedUrls = [];
   page.on('console', message => { if (message.type() === 'error') consoleErrors.push(message.text()); });
   page.on('pageerror', error => pageErrors.push(error.message));
   page.on('requestfailed', request => failedRequests.push(`${request.url()}: ${request.failure()?.errorText}`));
+  page.on('request', request => requestedUrls.push(request.url()));
   await page.addInitScript(probeSource);
   await page.goto(baseUrl, { waitUntil: 'networkidle' });
   if (useProduction) {
@@ -280,6 +364,10 @@ async function verifyBrowser(baseUrl) {
   await page.locator('#simulation-canvas').waitFor({ state: 'visible' });
 
   assert.equal((await readState(page)).model, 'string');
+  assert.equal(await page.evaluate(() => window.__physicalAudioProbe.audioContexts.length), 0,
+    'initial String selection does not initialize Web Audio before interaction');
+  await verifyAnt(page, requestedUrls);
+  assert.equal((await readState(page)).model, 'string', 'ANT verification returns to the String instrument');
   await verifyDocumentPresentation(page);
   await verifyModelSemantics(page, 'string');
   await verifyMobileLayout(page, 'string');
@@ -383,6 +471,13 @@ async function verifyBrowser(baseUrl) {
   await waitForModel(page, 'string');
   await mkdir('test-results', { recursive: true });
   await page.screenshot({ path: resolve('test-results/lab.png'), fullPage: true });
+  await waitForModel(page, 'ant');
+  if (!useProduction) {
+    await page.evaluate(async () => {
+      const { app } = await import('/src/main.js');
+      window.__finalAntController = app.lab.model;
+    });
+  }
   if (useProduction) {
     await page.evaluate(() => window.dispatchEvent(new Event('pagehide')));
     await page.waitForFunction(() => window.__physicalAudioProbe.contextCloseCalls === 1
@@ -393,6 +488,11 @@ async function verifyBrowser(baseUrl) {
       await app.destroy();
     });
   }
+  if (!useProduction) {
+    assert.equal(await page.evaluate(() => window.__finalAntController.destroyed), true,
+      'destroying the app while ANT is active destroys the controller');
+    await page.evaluate(() => { delete window.__finalAntController; });
+  }
   const modelAfterDestroy = useProduction ? undefined : await page.evaluate(async () => {
     const { app } = await import('/src/main.js');
     return app.lab.model;
@@ -400,6 +500,9 @@ async function verifyBrowser(baseUrl) {
   const appResult = await page.evaluate(model => ({
       model,
       sceneChildren: document.querySelector('#scene').children.length,
+      activeSceneCanvases: document.querySelectorAll('#scene canvas').length,
+      simulationCanvases: document.querySelectorAll('canvas#simulation-canvas').length,
+      p5Canvases: document.querySelectorAll('canvas.p5Canvas').length,
       contextStates: window.__physicalAudioProbe.audioContexts.map(context => context.state),
       closeCalls: window.__physicalAudioProbe.contextCloseCalls,
       unclosedPorts: window.__physicalAudioProbe.worklets.filter(item => item.portCloses === 0).length,
@@ -408,6 +511,9 @@ async function verifyBrowser(baseUrl) {
   }), modelAfterDestroy);
   if (!useProduction) assert.equal(appResult.model, null);
   assert.equal(appResult.sceneChildren, 0);
+  assert.equal(appResult.activeSceneCanvases, 0);
+  assert.equal(appResult.simulationCanvases, 0, 'ANT canvas is removed from the document');
+  assert.equal(appResult.p5Canvases, 0, 'p5 canvas is not left behind outside the scene');
   assert.ok(appResult.contextStates.every(state => state === 'closed'));
   assert.equal(appResult.closeCalls, 1);
   assert.equal(appResult.unclosedPorts, 0);

@@ -1,4 +1,4 @@
-import { StringRenderer, PlateRenderer, SphereRenderer, SPHERE_MATERIALS } from '../lib/index.js';
+import { StringRenderer, PlateRenderer, SphereRenderer, AntRenderer, SPHERE_MATERIALS } from '../lib/index.js';
 
 const percent = (value) => `${Math.round(value * 100)}%`;
 const strength = { path: 'excitation.strength', label: '타격 강도', min: 0, max: 1, step: .01, format: percent };
@@ -37,6 +37,16 @@ export const demoDefinitions = {
       { path: 'physical.diameter', label: '지름', min: .25, max: 5, step: .25, format: (v) => `${v.toFixed(2)} m` },
       damping, strength, quality
     ]
+  },
+  ant: {
+    label: 'ANT', title: 'ANT · 움직임을 기억하는 버퍼', Renderer: AntRenderer,
+    description: '한 리더의 최근 움직임을 기억하고, 일곱 개의 점이 같은 기억을 조금씩 늦게 따라갑니다. 미세한 차이를 더해 같은 경로의 불완전한 복사본을 만듭니다.',
+    hint: 'LOOP로 현재 기억을 고정해 반복하고, RELEASE로 새 움직임을 기록하세요. 그림에 포커스가 있을 때 L / R 키로도 조작할 수 있습니다.',
+    canvasDescription: '리더 한 개와 지연된 움직임을 따라가는 일곱 개의 점, 그리고 최근 이동 경로를 표시합니다.',
+    audio: false,
+    interaction: false, // The p5 instance forwards ANT's keyboard actions.
+    update: (controller, time) => controller.update(time),
+    controls: []
   }
 };
 

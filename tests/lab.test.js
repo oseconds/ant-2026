@@ -85,8 +85,26 @@ test('Lab latest request wins a pending init and destroys the stale candidate', 
   assert.equal(audioDestroyCount, 0, 'injected shared audio stays owned by its caller');
 });
 
-test('default registry covers each core physical model', () => {
-  assert.deepEqual(Object.keys(modelRegistry).sort(), ['plate', 'sphere', 'string']);
+test('default registry covers the physical models and visual ANT experiment', () => {
+  assert.deepEqual(Object.keys(modelRegistry).sort(), ['ant', 'plate', 'sphere', 'string']);
+});
+
+test('Lab can switch through ANT without giving it audio resources', async () => {
+  let contextCreations = 0;
+  const audio = new AudioEngine({ contextFactory: () => { contextCreations += 1; return {}; } });
+  const lab = new Lab({ audioEngine: audio });
+  const ant = await lab.setModel('ant');
+  ant.update(0);
+  ant.update(100);
+  assert.equal(lab.getState().model, 'ant');
+  assert.equal(lab.getSnapshot().followers.length, 7);
+  assert.equal(ant.audio, undefined);
+  assert.equal(contextCreations, 0);
+  await lab.setModel('string');
+  assert.equal(ant.destroyed, true);
+  assert.equal(contextCreations, 0);
+  await lab.destroy();
+  await audio.destroy();
 });
 
 test('destroying a Lab during model init disposes the late candidate', async () => {

@@ -118,5 +118,24 @@ export const documentViews = {
       <p>실체 구의 저차 탄성 공진을 방사 방향 모드와 구면 각도 모드로 근사합니다. 구면조화함수로 타격 위치와 pickup 위치에 따른 각 모드의 기여를 계산합니다.</p>
       <p>지름은 공진 주파수와 질량에 반영됩니다. 밀도·탄성계수·포아송비는 파동 속도와 질량을 바꿉니다. 선택 재질의 물성은 대표값이며 제품 형상과 열처리에 따라 달라질 수 있습니다.</p>
       <p>현재 그림은 표면 위치와 회전을 표시하며, 실제 모드의 변형을 그리지는 않습니다.</p>
+    </details>`,
+
+  ant: `
+    <h2 id="model-title"></h2>
+    <p id="model-description"></p>
+    ${scene('검은 점은 리더, 작은 회색 점은 지연된 복사본입니다. 옅은 선은 기억된 리더의 경로입니다.')}
+    <p id="interaction-hint"></p>
+    <fieldset id="ant-playback">
+      <legend>기억 재생</legend>
+      <p class="actions"><button type="button" data-action="ant-loop">LOOP</button><button type="button" data-action="ant-release" disabled>RELEASE</button></p>
+      <p>현재 모드: <output id="ant-mode">LIVE</output></p>
+      <p>기억: <output id="ant-memory"></output></p>
+    </fieldset>
+    ${analysis('지연된 움직임')}
+    <details id="model-notes">
+      <summary>기억과 재생 방식</summary>
+      <p>리더는 방향을 조금씩 바꾸며 움직이고, 위치와 시각을 초당 60개씩 기록합니다. 메모리가 가득 차면 가장 오래된 샘플부터 덮어씁니다.</p>
+      <p>각 복사본은 120–840 ms 전의 위치를 시간 보간으로 읽고, 매우 작은 부드러운 차이를 더합니다. LOOP에서는 원래 기억을 고정하고, 경로의 끝과 시작 사이에 짧은 재생 연결을 둡니다.</p>
+      <p>RELEASE는 현재 재생 위치에서 새 기록을 시작합니다. 처음에는 아직 쌓이지 않은 지연만큼 가장 오래된 위치를 읽습니다.</p>
     </details>`
 };

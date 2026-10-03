@@ -49,11 +49,14 @@ export function mountLab(root) {
     try { Promise.resolve(action()).catch((error) => { if (!disposed) reportError(error); }); }
     catch (error) { reportError(error); }
   }
+  function canvasSize(element, height = null) {
+    const width = Math.max(1, Math.round(element.getBoundingClientRect().width));
+    return { width, height: height || width, pixelRatio: Math.min(globalThis.devicePixelRatio || 1, 2) };
+  }
   function resizeCanvas(canvas, height = null) {
-    const width = Math.max(1, Math.round(canvas.getBoundingClientRect().width));
-    const ratio = Math.min(globalThis.devicePixelRatio || 1, 2);
-    canvas.width = Math.round(width * ratio);
-    canvas.height = Math.round((height || width) * ratio);
+    const size = canvasSize(canvas, height);
+    canvas.width = Math.round(size.width * size.pixelRatio);
+    canvas.height = Math.round(size.height * size.pixelRatio);
   }
   function unmountScene() {
     if (frameId !== null) cancelAnimationFrame(frameId);
@@ -64,22 +67,36 @@ export function mountLab(root) {
     inspectorRenderer?.destroy(); inspectorRenderer = null;
     query('#scene')?.replaceChildren();
   }
-  function mountScene(name) {
+  async function mountScene(name, version) {
+    const item = demoDefinitions[name];
     const canvas = document.createElement('canvas');
     canvas.id = 'simulation-canvas';
     canvas.tabIndex = 0;
-    canvas.setAttribute('aria-label', demoDefinitions[name].hint);
-    canvas.textContent = '그림을 누르거나 키보드로 물리 모델을 연주하세요.';
+    canvas.setAttribute('aria-label', item.hint);
+    canvas.textContent = item.canvasDescription || '그림을 누르거나 키보드로 물리 모델을 연주하세요.';
     query('#scene').append(canvas);
-    renderer = new demoDefinitions[name].Renderer(canvas);
-    interaction = new CanvasInteraction(canvas, {
-      modelName: name, getState: () => lab.getState(),
-      onStrike: (position) => run(() => lab.strike({ position })),
-      onPickup: (position) => run(() => lab.setPickup(position))
+    const mountedRenderer = renderer = new item.Renderer(canvas, {
+      onLoop: () => run(() => { if (!lab.switching && lab.modelName === 'ant') return lab.model.loop(); }),
+      onRelease: () => run(() => { if (!lab.switching && lab.modelName === 'ant') return lab.model.release(); })
     });
+    if (mountedRenderer.init) {
+      const ready = await mountedRenderer.init(canvasSize(query('#scene')));
+      if (ready === false || disposed || version !== selectionVersion || renderer !== mountedRenderer) return false;
+    }
+    if (item.interaction !== false) {
+      interaction = new CanvasInteraction(canvas, {
+        modelName: name, getState: () => lab.getState(),
+        onStrike: (position) => run(() => lab.strike({ position })),
+        onPickup: (position) => run(() => lab.setPickup(position))
+      });
+    }
     if (name === 'string') inspectorRenderer = new StringInspectorRenderer(query('#buffer-overview'), query('#buffer-detail'));
     const resize = () => {
-      resizeCanvas(canvas);
+      if (mountedRenderer.resize) {
+        // p5 owns the backing canvas; measure its host so it can grow after a resize.
+        const size = canvasSize(query('#scene'));
+        mountedRenderer.resize(size.width, size.height, size.pixelRatio);
+      } else resizeCanvas(canvas);
       if (name === 'string') {
         resizeCanvas(query('#buffer-overview'), 170);
         resizeCanvas(query('#buffer-detail'), 190);
@@ -92,12 +109,14 @@ export function mountLab(root) {
     if (name === 'string') resizeObserver.observe(query('#string-inspector'));
     resize();
     const draw = (time) => {
-      if (disposed || !renderer) return;
+      if (disposed || version !== selectionVersion || renderer !== mountedRenderer) return;
+      item.update?.(lab.model, time);
       const snapshot = lab.getSnapshot();
-      if (snapshot) renderer.render(snapshot, { time, view: interaction?.getView() });
+      if (snapshot) mountedRenderer.render(snapshot, { time, view: interaction?.getView() });
       frameId = requestAnimationFrame(draw);
     };
     frameId = requestAnimationFrame(draw);
+    return true;
   }
   function mountControls() {
     definition.controls.forEach((control, index) => {
@@ -149,9 +168,11 @@ export function mountLab(root) {
       if (input) input.value = value;
       if (output) output.value = control.format ? control.format(value) : String(value);
     });
-    const statusText = { idle: '연주 준비 완료', ready: '연주 준비 완료', loading: '오디오 준비 중…', playing: '현 재생 중', active: '공진 중', error: snapshot.error || '오디오 오류' };
+    const statusText = { idle: '연주 준비 완료', ready: '연주 준비 완료', loading: '오디오 준비 중…', playing: '현 재생 중', active: '공진 중', live: 'LIVE · 움직임 기록 중', loop: 'LOOP · 고정된 기억 재생 중', stopped: '정지', error: snapshot.error || '오디오 오류' };
     query('#status').textContent = errorMessage || statusText[status] || status;
-    query('#audio-info').textContent = lab.audio.context ? `${lab.audio.context.sampleRate.toLocaleString()} Hz / ${lab.audio.context.state}` : '첫 타격에서 오디오 시작';
+    query('#audio-info').hidden = definition.audio === false;
+    query('footer').hidden = definition.audio === false;
+    query('#audio-info').textContent = definition.audio === false ? '' : lab.audio.context ? `${lab.audio.context.sampleRate.toLocaleString()} Hz / ${lab.audio.context.state}` : '첫 타격에서 오디오 시작';
     query('#state-json').textContent = JSON.stringify(state, null, 2);
     if (query('#pickup-info')) query('#pickup-info').textContent = `Pickup 위치: (${positionText(state.pickup.position)})`;
     if (query('#exciter-info')) query('#exciter-info').textContent = `타격 위치: (${positionText(state.excitation.position)})`;
@@ -189,7 +210,7 @@ export function mountLab(root) {
       const size = { low: 13, normal: 17, high: 21 }[state.quality];
       items.push(metricRow('격자 해상도', `${analysis.size || size} × ${analysis.size || size}`), metricRow('활성 격자점', analysis.nodes ?? '오디오 시작 전'), metricRow('강성', state.physical.stiffness.toFixed(2)));
       query('#physical-info').textContent = 'Laplacian과 biharmonic stencil로 계산한 원형 판입니다. 변위의 표시 크기는 현재 진동의 최댓값에 맞추어 조절됩니다.';
-    } else {
+    } else if (state.model === 'sphere') {
       const material = SPHERE_MATERIALS[state.physical.material];
       const mass = material.density * 4 / 3 * Math.PI * (state.physical.diameter / 2) ** 3;
       items.push(
@@ -202,6 +223,16 @@ export function mountLab(root) {
         metricRow('P / S 파동 속도', analysis.longitudinalSpeed ? `${analysis.longitudinalSpeed} / ${analysis.shearSpeed} m/s` : '오디오 시작 전')
       );
       query('#physical-info').textContent = '크기와 재질을 바꾸면 공진 주파수와 질량이 달라집니다. 구 표면의 타격 위치와 pickup은 각각 독립적으로 저장됩니다.';
+    } else if (state.model === 'ant') {
+      query('#ant-mode').value = state.mode.toUpperCase();
+      query('#ant-memory').value = `${(analysis.historyMs / 1000).toFixed(2)} s · ${analysis.samples} / ${analysis.capacity} samples${analysis.frozen ? ' (고정됨)' : ''}`;
+      query('[data-action="ant-loop"]').disabled = state.mode === 'loop' || analysis.samples < 2;
+      query('[data-action="ant-release"]').disabled = state.mode !== 'loop';
+      items.push(
+        metricRow('리더 / 복사본', `1 / ${snapshot.followers.length}`),
+        metricRow('지연', snapshot.followers.map(follower => `${follower.delayMs} ms`).join(', ')),
+        metricRow('기록 주기', `${state.memory.sampleRate} samples/s`)
+      );
     }
     query('#analysis tbody').replaceChildren(...items);
   }
@@ -226,7 +257,8 @@ export function mountLab(root) {
       query('#model-description').textContent = definition.description;
       query('#interaction-hint').textContent = definition.hint;
       for (const tab of root.querySelectorAll('[data-model]')) tab.setAttribute('aria-pressed', String(tab.dataset.model === name));
-      mountControls(); mountScene(name); refresh();
+      mountControls();
+      if (await mountScene(name, version)) refresh();
     } catch (error) { if (version === selectionVersion && !disposed) reportError(error); }
   }
 
@@ -246,6 +278,8 @@ export function mountLab(root) {
     if (!lab.model || lab.switching) return;
     run(() => {
       switch (target.dataset.action) {
+        case 'ant-loop': return lab.model.loop();
+        case 'ant-release': return lab.model.release();
         case 'strike': return lab.strike({ position: interaction?.center() });
         case 'stop': return lab.stop();
         case 'pickup': {
