@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>구체 물리 모델</title>
+  <style>
+    canvas { display: block; width: 480px; max-width: 100%; height: auto; touch-action: none; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>3D 구체 물리 모델</h1>
+    <p>구를 드래그해 회전하고, 표면을 눌러 타격하세요. 회전된 표면 좌표가 구의 3D 타격 위치로 계산됩니다.</p>
+
+    <canvas id="sphere" width="480" height="480" tabindex="0" aria-label="드래그해 구를 회전하고 표면을 눌러 타격하세요."></canvas>
+    <p id="status" aria-live="polite">드래그: 회전 · 클릭/탭: 타격 · 첫 타격에서 오디오를 시작합니다.</p>
+    <p id="position">타격 위치: —</p>
+
+    <p>
+      <label for="diameter">지름</label>
+      <input id="diameter" type="range" min="0.25" max="5" step="0.25" value="2">
+      <output id="diameter-value">2.00m</output>
+    </p>
+    <p>
+      <label for="material">재질</label>
+      <select id="material">
+        <option value="stainless304" selected>스테인리스 304</option>
+        <option value="carbon1045">탄소강 1045</option>
+        <option value="aluminum6061">알루미늄 6061-T6</option>
+        <option value="brassC260">황동 C260</option>
+      </select>
+      <output id="material-info"></output>
+    </p>
+    <p id="physical-info"></p>
+    <p>
+      <label for="quality">계산 해상도</label>
+      <select id="quality">
+        <option value="low" selected>Low</option>
+        <option value="normal">Normal</option>
+        <option value="high">High</option>
+      </select>
+      <output id="mode-count">공진 모드: 오디오 시작 전</output>
+    </p>
+    <p>
+      <label for="strength">타격 세기</label>
+      <input id="strength" type="range" min="5" max="100" value="62">
+      <output id="strength-value">62%</output>
+    </p>
+    <p>
+      <label for="damping">감쇠</label>
+      <input id="damping" type="range" min="0" max="100" value="34">
+      <output id="damping-value">34%</output>
+    </p>
+    <p>
+      <button id="center-hit" type="button">중앙 타격</button>
+      <button id="stop" type="button">울림 멈추기</button>
+    </p>
+
+    <details>
+      <summary>모델 가정과 물성 자료</summary>
+      <p>실체 구의 저차 탄성 공진을 방사 방향 모드와 구면 각도 모드로 근사합니다. 지름은 반지름을 통해 공진 주파수와 질량에 반영되고, 재질은 밀도·탄성계수·포아송비를 통해 파동 속도와 질량을 바꿉니다. 속이 빈 구는 벽 두께가 필요합니다.</p>
+      <p>선택 재질의 밀도와 탄성계수는 대표값이며, 포아송비는 등방성 재료의 근사값입니다. 제품 형상과 열처리에 따라 실제 물성은 달라질 수 있습니다.</p>
+      <ul>
+        <li><a href="https://www.thyssenkrupp-materials.co.uk/stainless-steel-304-14301.html/index.html" target="_blank" rel="noreferrer">스테인리스 304</a></li>
+        <li><a href="https://www.thyssenkrupp-materials.co.uk/technical-knowledge-hub/density-of-metal" target="_blank" rel="noreferrer">탄소강 1045, 알루미늄 6061-T6</a></li>
+        <li><a href="https://www.matweb.com/search/DataSheet.aspx?MatGUID=37cf6059082f42c780ed6f798aa71029" target="_blank" rel="noreferrer">황동 C260</a></li>
+      </ul>
+    </details>
+
+    <script>
+      "use strict";
+
+      (() => {
+        const canvas = document.getElementById("sphere");
+        const gl = canvas.getContext("webgl", { antialias: true, alpha: false });
+        const status = document.getElementById("status");
+        const positionOutput = document.getElementById("position");
+        const diameterInput = document.getElementById("diameter");
+        const diameterValue = document.getElementById("diameter-value");
+        const materialInput = document.getElementById("material");
+        const materialInfo = document.getElementById("material-info");
+        const physicalInfo = document.getElementById("physical-info");
+        const qualityInput = document.getElementById("quality");
+        const modeCount = document.getElementById("mode-count");
+        const strengthInput = document.getElementById("strength");
+        const strengthValue = document.getElementById("strength-value");
+        const dampingInput = document.getElementById("damping");
+        const dampingValue = document.getElementById("damping-value");
+        const materials = {
+          stainless304: {
+            name: "스테인리스 304", density: 8000, youngModulus: 193e9, poisson: 0.29,
+            color: [0.63, 0.69, 0.73]
+          },
+          carbon1045: {
+            name: "탄소강 1045", density: 7850, youngModulus: 205e9, poisson: 0.29,
+            color: [0.43, 0.50, 0.57]
+          },
+          aluminum6061: {
+            name: "알루미늄 6061-T6", density: 2700, youngModulus: 69e9, poisson: 0.33,
+            color: [0.72, 0.75, 0.77]
+          },
+          brassC260: {
+            name: "황동 C260", density: 8530, youngModulus: 110e9, poisson: 0.375,
+            color: [0.73, 0.49, 0.19]
+          }
+        };
+        const pickup = normalize({ x: 0.72, y: 0.12, z: 0.684 });
+        let audioContext = null;
+        let processor = null;
+        let enginePromise = null;
+        let selectedHit = null;
+        let yaw = 0.38;
+        let pitch = -0.24;
+        let pointer = null;
+        let rendererReady = false;
+        let sphereVertexBuffer = null;
+        let sphereIndexBuffer = null;
+        let sphereIndexCount = 0;
+        let lineVertexBuffer = null;
+        let lineVertexCount = 0;
+        let sphereProgram = null;
+        let lineProgram = null;
+        let sphereLocations = null;
+        let lineLocations = null;
+
+        function normalize(point) {
+          const length = Math.hypot(point.x, point.y, point.z) || 1;
+          return { x: point.x / length, y: point.y / length, z: point.z / length };
+        }
+
+        function currentMaterial() {
+          return materials[materialInput.value] || materials.stainless304;
+        }
+
+        function currentDiameter() {
+          return Number(diameterInput.value);
+        }
+
+        function massForCurrentModel() {
+          const radius = currentDiameter() / 2;
+          return currentMaterial().density * (4 / 3) * Math.PI * radius * radius * radius;
+        }
+
+        function updatePhysicalInfo() {
+          const material = currentMaterial();
+          const diameter = currentDiameter();
+          const mass = massForCurrentModel();
+          diameterValue.textContent = diameter.toFixed(2) + "m";
+          materialInfo.textContent = " · " + material.density.toLocaleString("ko-KR") + "kg/m³ · E "
+            + (material.youngModulus / 1e9).toFixed(1) + "GPa";
+          physicalInfo.textContent = diameter.toFixed(2) + "m 실체 구 · 추정 질량 "
+            + (mass >= 1000 ? (mass / 1000).toFixed(2) + "t" : mass.toFixed(1) + "kg");
+          if (selectedHit) showPosition(selectedHit);
+          if (processor) {
+            processor.port.postMessage({
+              type: "configure",
+              diameter,
+              material: {
+                name: material.name,
+                density: material.density,
+                youngModulus: material.youngModulus,
+                poisson: material.poisson
+              }
+            });
+          }
+          drawSphere();
+        }
+
+        function compileShader(type, source) {
+          const shader = gl.createShader(type);
+          gl.shaderSource(shader, source);
+          gl.compileShader(shader);
+          if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+            const message = gl.getShaderInfoLog(shader);
+            gl.deleteShader(shader);
+            throw new Error(message || "WebGL 셰이더를 만들 수 없습니다.");
+          }
+          return shader;
+        }
+
+        function createProgram(vertexSource, fragmentSource) {
+          const program = gl.createProgram();
+          gl.attachShader(program, compileShader(gl.VERTEX_SHADER, vertexSource));
+          gl.attachShader(program, compileShader(gl.FRAGMENT_SHADER, fragmentSource));
+          gl.linkProgram(program);
+          if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+            throw new Error(gl.getProgramInfoLog(program) || "WebGL 프로그램을 연결할 수 없습니다.");
+          }
+          return program;
+        }
+
+        function initializeRenderer() {
+          if (!gl) throw new Error("이 브라우저에서 WebGL을 사용할 수 없습니다.");
+          const sphereVertex = [
+            "attribute vec3 aPosition;",
+            "attribute vec3 aNormal;",
+            "uniform mat4 uMvp;",
+            "uniform mat4 uViewModel;",
+            "varying vec3 vNormal;",
+            "varying vec3 vPosition;",
+            "void main() {",
+            "  vec4 eyePosition = uViewModel * vec4(aPosition, 1.0);",
+            "  vPosition = eyePosition.xyz;",
+            "  vNormal = (uViewModel * vec4(aNormal, 0.0)).xyz;",
+            "  gl_Position = uMvp * vec4(aPosition, 1.0);",
+            "}"
+          ].join("\n");
+          const sphereFragment = [
+            "precision mediump float;",
+            "uniform vec3 uBaseColor;",
+            "varying vec3 vNormal;",
+            "varying vec3 vPosition;",
+            "void main() {",
+            "  vec3 n = normalize(vNormal);",
+            "  vec3 viewDirection = normalize(-vPosition);",
+            "  vec3 lightA = normalize(vec3(-0.55, 0.75, 1.0));",
+            "  vec3 lightB = normalize(vec3(0.85, 0.10, 0.45));",
+            "  float diffuse = max(dot(n, lightA), 0.0);",
+            "  vec3 halfVector = normalize(lightA + viewDirection);",
+            "  float specular = pow(max(dot(n, halfVector), 0.0), 72.0);",
+            "  float strip = pow(max(dot(n, lightB), 0.0), 16.0);",
+            "  float edge = pow(1.0 - max(dot(n, viewDirection), 0.0), 3.0);",
+            "  vec3 color = uBaseColor * (0.19 + diffuse * 0.62 + strip * 0.18);",
+            "  color += mix(vec3(0.48), uBaseColor, 0.42) * (specular * 0.88 + strip * 0.20);",
+            "  color += uBaseColor * edge * 0.12;",
+            "  gl_FragColor = vec4(color, 1.0);",
+            "}"
+          ].join("\n");
+          const lineVertex = [
+            "attribute vec3 aPosition;",
+            "uniform mat4 uMvp;",
+            "void main() { gl_Position = uMvp * vec4(aPosition, 1.0); }"
+          ].join("\n");
+          const lineFragment = [
+            "precision mediump float;",
+            "uniform vec4 uColor;",
+            "void main() { gl_FragColor = uColor; }"
+          ].join("\n");
+          sphereProgram = createProgram(sphereVertex, sphereFragment);
+          lineProgram = createProgram(lineVertex, lineFragment);
+          sphereLocations = {
+            position: gl.getAttribLocation(sphereProgram, "aPosition"),
+            normal: gl.getAttribLocation(sphereProgram, "aNormal"),
+            mvp: gl.getUniformLocation(sphereProgram, "uMvp"),
+            viewModel: gl.getUniformLocation(sphereProgram, "uViewModel"),
+            color: gl.getUniformLocation(sphereProgram, "uBaseColor")
+          };
+          lineLocations = {
+            position: gl.getAttribLocation(lineProgram, "aPosition"),
+            mvp: gl.getUniformLocation(lineProgram, "uMvp"),
+            color: gl.getUniformLocation(lineProgram, "uColor")
+          };
+          createSphereBuffers();
+          createLineBuffer();
+          gl.enable(gl.DEPTH_TEST);
+          gl.depthFunc(gl.LEQUAL);
+          gl.clearColor(0.96, 0.96, 0.96, 1);
+          rendererReady = true;
+          resizeCanvas();
+        }
+
+        function createSphereBuffers() {
+          const latitudeCount = 32;
+          const longitudeCount = 48;
+          const vertices = [];
+          const indices = [];
+          for (let latitude = 0; latitude <= latitudeCount; latitude++) {
+            const theta = Math.PI * latitude / latitudeCount;
+            const sinTheta = Math.sin(theta);
+            const cosTheta = Math.cos(theta);
+            for (let longitude = 0; longitude <= longitudeCount; longitude++) {
+              const phi = 2 * Math.PI * longitude / longitudeCount;
+              const x = sinTheta * Math.cos(phi);
+              const y = cosTheta;
+              const z = sinTheta * Math.sin(phi);
+              vertices.push(x, y, z, x, y, z);
+            }
+          }
+          for (let latitude = 0; latitude < latitudeCount; latitude++) {
+            for (let longitude = 0; longitude < longitudeCount; longitude++) {
+              const a = latitude * (longitudeCount + 1) + longitude;
+              const b = a + longitudeCount + 1;
+              indices.push(a, a + 1, b, a + 1, b + 1, b);
+            }
+          }
+          sphereVertexBuffer = gl.createBuffer();
+          gl.bindBuffer(gl.ARRAY_BUFFER, sphereVertexBuffer);
+          gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+          sphereIndexBuffer = gl.createBuffer();
+          gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, sphereIndexBuffer);
+          gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
+          sphereIndexCount = indices.length;
+        }
+
+        function createLineBuffer() {
+          const points = [];
+          const segments = 80;
+          const lineRadius = 1.004;
+          const appendLine = (pointAt) => {
+            let previous = pointAt(0);
+            for (let i = 1; i <= segments; i++) {
+              const next = pointAt(i / segments * Math.PI * 2);
+              points.push(previous[0], previous[1], previous[2], next[0], next[1], next[2]);
+              previous = next;
+            }
+          };
+          for (const latitude of [-1.0472, -0.5236, 0, 0.5236, 1.0472]) {
+            appendLine((angle) => [
+              lineRadius * Math.cos(latitude) * Math.cos(angle),
+              lineRadius * Math.sin(latitude),
+              lineRadius * Math.cos(latitude) * Math.sin(angle)
+            ]);
+          }
+          for (let longitude = 0; longitude < 6; longitude++) {
+            const phi = longitude * Math.PI / 6;
+            let previous = null;
+            for (let i = 0; i <= segments; i++) {
+              const latitude = -Math.PI / 2 + Math.PI * i / segments;
+              const next = [
+                lineRadius * Math.cos(latitude) * Math.cos(phi),
+                lineRadius * Math.sin(latitude),
+                lineRadius * Math.cos(latitude) * Math.sin(phi)
+              ];
+              if (previous) points.push(previous[0], previous[1], previous[2], next[0], next[1], next[2]);
+              previous = next;
+            }
+          }
+          lineVertexBuffer = gl.createBuffer();
+          gl.bindBuffer(gl.ARRAY_BUFFER, lineVertexBuffer);
+          gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(points), gl.STATIC_DRAW);
+          lineVertexCount = points.length / 3;
+        }
+
+        function multiply4(a, b) {
+          const out = new Float32Array(16);
+          for (let column = 0; column < 4; column++) {
+            for (let row = 0; row < 4; row++) {
+              out[column * 4 + row] =
+                a[row] * b[column * 4] +
+                a[4 + row] * b[column * 4 + 1] +
+                a[8 + row] * b[column * 4 + 2] +
+                a[12 + row] * b[column * 4 + 3];
+            }
+          }
+          return out;
+        }
+
+        function rotationMatrix() {
+          const cy = Math.cos(yaw);
+          const sy = Math.sin(yaw);
+          const cp = Math.cos(pitch);
+          const sp = Math.sin(pitch);
+          const rotateY = new Float32Array([
+            cy, 0, -sy, 0,
+            0, 1, 0, 0,
+            sy, 0, cy, 0,
+            0, 0, 0, 1
+          ]);
+          const rotateX = new Float32Array([
+            1, 0, 0, 0,
+            0, cp, sp, 0,
+            0, -sp, cp, 0,
+            0, 0, 0, 1
+          ]);
+          return multiply4(rotateY, rotateX);
+        }
+
+        function translation(x, y, z) {
+          const matrix = new Float32Array([
+            1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x, y, z, 1
+          ]);
+          return matrix;
+        }
+
+        function scaling(value) {
+          return new Float32Array([
+            value, 0, 0, 0, 0, value, 0, 0, 0, 0, value, 0, 0, 0, 0, 1
+          ]);
+        }
+
+        function perspective(fieldOfView, aspect, near, far) {
+          const f = 1 / Math.tan(fieldOfView / 2);
+          const range = 1 / (near - far);
+          return new Float32Array([
+            f / aspect, 0, 0, 0,
+            0, f, 0, 0,
+            0, 0, (near + far) * range, -1,
+            0, 0, 2 * near * far * range, 0
+          ]);
+        }
+
+        function normalize3(vector) {
+          const length = Math.hypot(vector[0], vector[1], vector[2]) || 1;
+          return [vector[0] / length, vector[1] / length, vector[2] / length];
+        }
+
+        function viewMatrix() {
+          const eye = [0, 0, 3.8];
+          const right = [1, 0, 0];
+          const up = [0, 1, 0];
+          const back = [0, 0, 1];
+          return new Float32Array([
+            right[0], up[0], back[0], 0,
+            right[1], up[1], back[1], 0,
+            right[2], up[2], back[2], 0,
+            -eye[0], -eye[1], -eye[2], 1
+          ]);
+        }
+
+        function displayScale() {
+          return 0.55 + 0.45 * currentDiameter() / 5;
+        }
+
+        function bindSphereAttributes() {
+          gl.bindBuffer(gl.ARRAY_BUFFER, sphereVertexBuffer);
+          gl.enableVertexAttribArray(sphereLocations.position);
+          gl.vertexAttribPointer(sphereLocations.position, 3, gl.FLOAT, false, 24, 0);
+          gl.enableVertexAttribArray(sphereLocations.normal);
+          gl.vertexAttribPointer(sphereLocations.normal, 3, gl.FLOAT, false, 24, 12);
+          gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, sphereIndexBuffer);
+        }
+
+        function drawObject(model, color, projection, view) {
+          const viewModel = multiply4(view, model);
+          const mvp = multiply4(projection, viewModel);
+          gl.useProgram(sphereProgram);
+          bindSphereAttributes();
+          gl.uniformMatrix4fv(sphereLocations.mvp, false, mvp);
+          gl.uniformMatrix4fv(sphereLocations.viewModel, false, viewModel);
+          gl.uniform3fv(sphereLocations.color, color);
+          gl.drawElements(gl.TRIANGLES, sphereIndexCount, gl.UNSIGNED_SHORT, 0);
+        }
+
+        function markerModel(model, point, radius) {
+          const move = translation(point.x * 1.012, point.y * 1.012, point.z * 1.012);
+          const size = scaling(radius);
+          return multiply4(model, multiply4(move, size));
+        }
+
+        function drawSphere() {
+          if (!rendererReady) return;
+          gl.viewport(0, 0, canvas.width, canvas.height);
+          gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+          const aspect = canvas.width / canvas.height;
+          const projection = perspective(Math.PI / 4, aspect, 0.1, 30);
+          const view = viewMatrix();
+          const rotation = rotationMatrix();
+          const size = displayScale();
+          const model = multiply4(rotation, scaling(size));
+          drawObject(model, currentMaterial().color, projection, view);
+
+          const lineMvp = multiply4(projection, multiply4(view, model));
+          gl.useProgram(lineProgram);
+          gl.bindBuffer(gl.ARRAY_BUFFER, lineVertexBuffer);
+          gl.enableVertexAttribArray(lineLocations.position);
+          gl.vertexAttribPointer(lineLocations.position, 3, gl.FLOAT, false, 12, 0);
+          gl.uniformMatrix4fv(lineLocations.mvp, false, lineMvp);
+          gl.uniform4f(lineLocations.color, 0.10, 0.13, 0.15, 0.36);
+          gl.enable(gl.BLEND);
+          gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+          gl.depthMask(false);
+          gl.drawArrays(gl.LINES, 0, lineVertexCount);
+          gl.depthMask(true);
+          gl.disable(gl.BLEND);
+
+          const sensorModel = markerModel(model, pickup, 0.035);
+          drawObject(sensorModel, [0.98, 0.60, 0.10], projection, view);
+          if (selectedHit) {
+            const hitModel = markerModel(model, selectedHit, 0.032);
+            drawObject(hitModel, [0.86, 0.12, 0.12], projection, view);
+          }
+        }
+
+        function resizeCanvas() {
+          if (!gl) return;
+          const rect = canvas.getBoundingClientRect();
+          const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+          const size = Math.max(1, Math.round((rect.width || 480) * pixelRatio));
+          if (canvas.width !== size || canvas.height !== size) {
+            canvas.width = size;
+            canvas.height = size;
+          }
+          drawSphere();
+        }
+
+        function rotateWorldToLocal(point) {
+          const cy = Math.cos(yaw);
+          const sy = Math.sin(yaw);
+          const cp = Math.cos(pitch);
+          const sp = Math.sin(pitch);
+          const xAfterY = cy * point.x - sy * point.z;
+          const zAfterY = sy * point.x + cy * point.z;
+          return normalize({
+            x: xAfterY,
+            y: cp * point.y + sp * zAfterY,
+            z: -sp * point.y + cp * zAfterY
+          });
+        }
+
+        function pointOnSphere(event) {
+          const rect = canvas.getBoundingClientRect();
+          const ndcX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+          const ndcY = 1 - ((event.clientY - rect.top) / rect.height) * 2;
+          const aspect = rect.width / rect.height;
+          const halfFov = Math.tan(Math.PI / 8);
+          const ray = normalize3([ndcX * aspect * halfFov, ndcY * halfFov, -1]);
+          const scale = displayScale();
+          const origin = [0, 0, 3.8];
+          const dot = origin[0] * ray[0] + origin[1] * ray[1] + origin[2] * ray[2];
+          const c = origin[0] * origin[0] + origin[1] * origin[1] + origin[2] * origin[2] - scale * scale;
+          const discriminant = dot * dot - c;
+          if (discriminant < 0) return null;
+          const distance = -dot - Math.sqrt(discriminant);
+          if (distance < 0) return null;
+          const world = {
+            x: origin[0] + ray[0] * distance,
+            y: origin[1] + ray[1] * distance,
+            z: origin[2] + ray[2] * distance
+          };
+          const local = rotateWorldToLocal({
+            x: world.x / scale,
+            y: world.y / scale,
+            z: world.z / scale
+          });
+          return local;
+        }
+
+        function showPosition(point) {
+          const radius = currentDiameter() / 2;
+          const meters = (value) => (value >= 0 ? "+" : "") + value.toFixed(2) + "m";
+          positionOutput.textContent = "타격 좌표 (x, y, z): "
+            + meters(point.x * radius) + ", "
+            + meters(point.y * radius) + ", "
+            + meters(point.z * radius);
+        }
+
+        async function buildAudioEngine() {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (!AudioContextClass) throw new Error("Web Audio API를 사용할 수 없습니다.");
+          if (!window.isSecureContext) throw new Error("오디오는 HTTPS 또는 localhost에서 열어야 합니다.");
+          const nextContext = new AudioContextClass({ latencyHint: "interactive" });
+          audioContext = nextContext;
+          try {
+            if (!nextContext.audioWorklet) throw new Error("이 브라우저는 AudioWorklet을 지원하지 않습니다.");
+            const moduleUrl = new URL("./steel-sphere-processor.js", document.baseURI).href;
+            let timeoutId;
+            const moduleReady = Promise.race([
+              nextContext.audioWorklet.addModule(moduleUrl),
+              new Promise((resolve, reject) => {
+                timeoutId = window.setTimeout(() => reject(new Error("오디오 모듈 로드 시간 초과")), 6000);
+              })
+            ]).finally(() => window.clearTimeout(timeoutId));
+            const resumeReady = nextContext.resume();
+            await Promise.all([moduleReady, resumeReady]);
+            const material = currentMaterial();
+            processor = new AudioWorkletNode(nextContext, "steel-sphere-processor", {
+              numberOfInputs: 0,
+              numberOfOutputs: 1,
+              outputChannelCount: [1],
+              processorOptions: {
+                quality: qualityInput.value,
+                diameter: currentDiameter(),
+                material: {
+                  name: material.name,
+                  density: material.density,
+                  youngModulus: material.youngModulus,
+                  poisson: material.poisson
+                },
+                damping: Number(dampingInput.value),
+                strength: Number(strengthInput.value),
+                pickup
+              }
+            });
+            const gain = nextContext.createGain();
+            gain.gain.value = 0.85;
+            processor.connect(gain);
+            gain.connect(nextContext.destination);
+            processor.port.onmessage = (event) => {
+              if (event.data.type === "model") {
+                modeCount.textContent = "공진 모드: " + event.data.modes + "개 · P파 "
+                  + event.data.longitudinalSpeed + "m/s · S파 " + event.data.shearSpeed + "m/s";
+                const mass = event.data.mass;
+                physicalInfo.textContent = currentDiameter().toFixed(2) + "m 실체 구 · "
+                  + currentMaterial().name + " · 추정 질량 "
+                  + (mass >= 1000 ? (mass / 1000).toFixed(2) + "t" : mass.toFixed(1) + "kg");
+              }
+            };
+            processor.addEventListener("processorerror", () => {
+              status.textContent = "오디오 처리 오류가 발생했습니다. 페이지를 새로고침한 뒤 다시 시도해주세요.";
+            });
+            status.textContent = "오디오 준비 완료. 회전한 표면을 눌러 연주하세요.";
+          } catch (error) {
+            await nextContext.close().catch(() => {});
+            if (audioContext === nextContext) audioContext = null;
+            processor = null;
+            throw error;
+          }
+        }
+
+        function ensureAudio() {
+          if (!enginePromise) {
+            enginePromise = buildAudioEngine().catch((error) => {
+              console.error(error);
+              status.textContent = error.message;
+              enginePromise = null;
+              throw error;
+            });
+          }
+          return enginePromise;
+        }
+
+        async function strike(point) {
+          if (!point) return;
+          const local = normalize(point);
+          selectedHit = local;
+          showPosition(local);
+          drawSphere();
+          status.textContent = "3D 타격 좌표의 진동 모드를 계산하고 있습니다.";
+          try {
+            await ensureAudio();
+            if (audioContext.state === "suspended") await audioContext.resume();
+            processor.port.postMessage({
+              type: "strike",
+              x: local.x,
+              y: local.y,
+              z: local.z,
+              strength: Number(strengthInput.value)
+            });
+            status.textContent = "타격 위치에 따라 다른 구 공진 모드가 울리고 있습니다.";
+          } catch (_) {
+            // ensureAudio displays the browser or module error.
+          }
+        }
+
+        function startPointer(event) {
+          pointer = {
+            id: event.pointerId,
+            startX: event.clientX,
+            startY: event.clientY,
+            lastX: event.clientX,
+            lastY: event.clientY,
+            moved: false
+          };
+          canvas.setPointerCapture(event.pointerId);
+        }
+
+        canvas.addEventListener("pointerdown", startPointer);
+        canvas.addEventListener("pointermove", (event) => {
+          if (!pointer || pointer.id !== event.pointerId) return;
+          const dx = event.clientX - pointer.lastX;
+          const dy = event.clientY - pointer.lastY;
+          pointer.lastX = event.clientX;
+          pointer.lastY = event.clientY;
+          if (Math.hypot(event.clientX - pointer.startX, event.clientY - pointer.startY) > 4) {
+            pointer.moved = true;
+          }
+          if (pointer.moved) {
+            yaw += dx * 0.009;
+            pitch = Math.max(-1.48, Math.min(1.48, pitch + dy * 0.009));
+            drawSphere();
+          }
+        });
+        canvas.addEventListener("pointerup", (event) => {
+          if (!pointer || pointer.id !== event.pointerId) return;
+          const didMove = pointer.moved;
+          pointer = null;
+          if (!didMove) strike(pointOnSphere(event));
+        });
+        canvas.addEventListener("pointercancel", () => { pointer = null; });
+        canvas.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            strike(rotateWorldToLocal({ x: 0, y: 0, z: 1 }));
+          }
+        });
+
+        document.getElementById("center-hit").addEventListener("click", () => {
+          strike(rotateWorldToLocal({ x: 0, y: 0, z: 1 }));
+        });
+        document.getElementById("stop").addEventListener("click", () => {
+          if (processor) processor.port.postMessage({ type: "stop" });
+          status.textContent = "구의 울림을 멈췄습니다.";
+        });
+
+        qualityInput.addEventListener("change", () => {
+          if (processor) processor.port.postMessage({ type: "quality", value: qualityInput.value });
+        });
+        diameterInput.addEventListener("input", updatePhysicalInfo);
+        materialInput.addEventListener("change", updatePhysicalInfo);
+        function updateSettings() {
+          strengthValue.textContent = strengthInput.value + "%";
+          dampingValue.textContent = dampingInput.value + "%";
+          if (processor) processor.port.postMessage({
+            type: "settings",
+            strength: Number(strengthInput.value),
+            damping: Number(dampingInput.value)
+          });
+        }
+        strengthInput.addEventListener("input", updateSettings);
+        dampingInput.addEventListener("input", updateSettings);
+        window.addEventListener("resize", resizeCanvas);
+
+        try {
+          initializeRenderer();
+        } catch (error) {
+          console.error(error);
+          status.textContent = "3D 화면을 시작할 수 없습니다: " + error.message;
+        }
+        updatePhysicalInfo();
+        updateSettings();
+      })();
+    </script>
+  </main>
+</body>
+</html>
