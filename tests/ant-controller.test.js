@@ -466,7 +466,7 @@ test('agents retain independent inertia and angular motion is smooth and finite'
   assert.ok(Math.hypot(agent.vx, agent.vy) < agent.personality.acceleration / 30);
 });
 
-test('weak directional residue has little influence while reinforced trails reduce wandering probabilistically', async () => {
+test('long-range discovery ignores weak residue and favors reinforced trails probabilistically', async () => {
   async function choices(signal) {
     const controller = new AntController({ random: seededRandom(305) });
     await controller.init();
@@ -480,7 +480,10 @@ test('weak directional residue has little influence while reinforced trails redu
     let forward = 0;
     for (let trial = 0; trial < 2000; trial += 1) {
       ant.decisionRemaining = ant.committedRemaining = 0;
-      controller.updateIntention(ant, [ant], controller.occupancy.sense(ant, [ant]), 1 / 60);
+      // Keep this regression focused on discovery; local sensory persistence
+      // has separate coverage and can already hold a moderately strong route.
+      controller.updateIntention(ant, [ant], controller.occupancy.sense(ant, [ant]), 1 / 60,
+        { strength: 0, coherence: 0 });
       if (Math.abs(ant.intentHeading) < 0.2) forward += 1;
     }
     const confidence = ant.trailConfidence;

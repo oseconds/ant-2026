@@ -28,6 +28,7 @@ export class AntAgent {
     this.decisionRemaining = between(random, 0, 0.25);
     this.intentHeading = this.heading;
     this.trailConfidence = 0;
+    this.trailAdherence = 0;
     this.committedRemaining = 0;
   }
 
@@ -66,6 +67,7 @@ export class AntAgent {
     return {
       id: this.id, x: this.x, y: this.y, vx: this.vx, vy: this.vy,
       heading: this.heading, radius: this.radius,
+      trailAdherence: this.trailAdherence,
       personality: { ...this.personality }
     };
   }

@@ -12,6 +12,16 @@ const TRAIL_SCORE_GAIN = 2.8;
 const DECISION_TEMPERATURE = 0.85;
 const MIN_EXPLORATION_PROBABILITY = 0.04;
 const SENSOR_OFFSETS = [-1, -0.5, 0, 0.5, 1];
+const LOCAL_SENSOR_DISTANCES = [0.016, 0.028];
+const LOCAL_SENSOR_HALF_WIDTH = 0.009;
+const LOCAL_BAND_HALF_WIDTH = 0.003;
+const LOCAL_STEERING_LIMIT = 0.45;
+const LOCAL_TRAIL_HALF_SATURATION = 0.018;
+const LOCAL_TURN_DAMPING = 0.65;
+const ADHERENCE_RISE_SECONDS = 0.25;
+const ADHERENCE_FADE_SECONDS = 1.8;
+const ADHERENCE_HEADING_WEIGHT = 0.82;
+const ADHERENCE_DIRECTION_SCORE = 3;
 const SEPARATION_ACCELERATION = 0.003;
 const HESITATION_SPEED_RATIO = 0.05;
 const HESITATION_MIN_SECONDS = 0.7;
@@ -161,14 +171,22 @@ export class AntController {
     const current = this.agents;
     const sensed = current.map((agent) => this.occupancy.sense(agent, current));
     this.field.decay(dt);
+    const localTrails = current.map((agent) => this.senseLocalTrail(agent));
     for (let index = 0; index < current.length; index += 1) {
-      this.updateIntention(current[index], current, sensed[index], dt);
+      this.updateIntention(current[index], current, sensed[index], dt, localTrails[index]);
     }
 
     const displacements = current.map((agent, index) => {
       const info = sensed[index];
       const separationMagnitude = Math.hypot(info.separationX, info.separationY);
-      let targetHeading = agent.intentHeading;
+      // Keep the current forward motion while the three local bands make small
+      // corrections. Occupancy and boundary steering still have the final say.
+      const localTurn = clamp(localTrails[index].steering * (0.35 + 0.65 * agent.trailAdherence)
+        - agent.angularVelocity * LOCAL_TURN_DAMPING * agent.trailAdherence,
+        -LOCAL_STEERING_LIMIT, LOCAL_STEERING_LIMIT);
+      let targetHeading = blendAngle(agent.intentHeading, agent.heading,
+        agent.trailAdherence * ADHERENCE_HEADING_WEIGHT)
+        + localTurn;
       if (separationMagnitude > 0.03) {
         const awayHeading = Math.atan2(info.separationY, info.separationX);
         targetHeading = blendAngle(targetHeading, awayHeading, Math.min(0.66, separationMagnitude * 0.34));
@@ -262,7 +280,9 @@ export class AntController {
       + SPAWN_INTERVAL_MIN_MS + this.random() * SPAWN_INTERVAL_RANGE_MS;
   }
 
-  updateIntention(agent, agents, occupancy, dt) {
+  updateIntention(agent, agents, occupancy, dt, localTrail = this.senseLocalTrail(agent)) {
+    this.updateTrailAdherence(agent, localTrail, dt);
+    const persistence = Math.max(agent.trailConfidence, agent.trailAdherence);
     agent.decisionRemaining -= dt;
     agent.committedRemaining -= dt;
     agent.inspectionRemaining -= dt;
@@ -272,7 +292,7 @@ export class AntController {
       agent.inspectionRemaining = 1.2 + this.random() * 2.4;
       if (this.random() < 0.23) {
         agent.intentHeading = wrapAngle(agent.intentHeading + signed(this.random) * 0.24
-          * (1 - 0.8 * (agent.trailConfidence || 0)));
+          * (1 - 0.8 * persistence));
         // Leave enough time for inertial deceleration to produce a near-stop,
         // rather than a barely visible dip in an otherwise constant pace.
         agent.hesitationRemaining = Math.max(agent.hesitationRemaining,
@@ -286,7 +306,7 @@ export class AntController {
     if (agent.decisionRemaining > 0 && agent.committedRemaining > 0 && !newlyBlocked) return;
     const offsets = [-0.92, -0.47, 0, 0.47, 0.92];
     const options = offsets.map((offset) => {
-      const jitter = 0.12 * (1 - 0.8 * (agent.trailConfidence || 0));
+      const jitter = 0.12 * (1 - 0.8 * persistence);
       const heading = wrapAngle(agent.heading + offset + (this.random() - 0.5) * jitter);
       const distance = this.state.behavior.sensorDistance;
       const x = agent.x + Math.cos(heading) * distance;
@@ -300,7 +320,7 @@ export class AntController {
     // elevated. Trail confidence is a continuous sensor value, not a role.
     agent.trailConfidence = Math.max(...options.map(option => option.trail))
       - Math.min(...options.map(option => option.trail));
-    const confidence = agent.trailConfidence;
+    const confidence = Math.max(agent.trailConfidence, agent.trailAdherence);
     const exploration = Math.max(MIN_EXPLORATION_PROBABILITY,
       agent.personality.exploration * (1.2 - confidence));
     agent.decisionRemaining = (0.25 + this.random() * 0.42) * (1 + 0.35 * confidence);
@@ -309,6 +329,7 @@ export class AntController {
       option.score = option.trail * agent.personality.pheromoneSensitivity * TRAIL_SCORE_GAIN
         - option.crowding * 3.2 - option.wall * 2.4
         + (Math.cos(option.offset) - 1) * confidence * 0.55
+        + (Math.cos(option.offset) - 1) * agent.trailAdherence * ADHERENCE_DIRECTION_SCORE
         + (this.random() - 0.5) * 0.42 * (1 - 0.85 * confidence);
     }
     const chosen = this.random() < exploration
@@ -332,6 +353,49 @@ export class AntController {
         y + ny * sensorWidth * offset) * weight);
     }
     return signal;
+  }
+
+  /** A short cross-section follows a trail; the wider sensor discovers it. */
+  senseLocalTrail(agent) {
+    const dx = Math.cos(agent.heading), dy = Math.sin(agent.heading);
+    const nx = -dy, ny = dx;
+    const profiles = LOCAL_SENSOR_DISTANCES.map(distance => [-1, 0, 1].map(side => {
+      const x = agent.x + dx * distance + nx * LOCAL_SENSOR_HALF_WIDTH * side;
+      const y = agent.y + dy * distance + ny * LOCAL_SENSOR_HALF_WIDTH * side;
+      // A small symmetric footprint reduces sensitivity to the field's grid
+      // alignment. It samples the field without spreading deposited pheromone.
+      return [-1, 0, 1].reduce((signal, offset) => {
+        const sx = x + nx * LOCAL_BAND_HALF_WIDTH * offset;
+        const sy = y + ny * LOCAL_BAND_HALF_WIDTH * offset;
+        // Clamping an out-of-domain sample to an edge cell would invent a cue.
+        if (sx < 0 || sx > 1 || sy < 0 || sy > 1) return signal;
+        return signal + this.field.sample(sx, sy) * (offset === 0 ? 0.5 : 0.25);
+      }, 0);
+    }));
+    const [left, center, right] = profiles[0].map((value, index) => (value + profiles[1][index]) * 0.5);
+    const peaks = profiles.map(profile => Math.max(...profile));
+    // Precise local contrast can hold a recently discovered narrow route before
+    // it becomes a strongly reinforced long-range cue. Diffuse fields still
+    // have zero coherence, and weak residue has very little steering weight.
+    const strength = trailResponse(Math.sqrt(peaks[0] * peaks[1]), LOCAL_TRAIL_HALF_SATURATION);
+    // Contrast at both depths supports persistence even between two sample
+    // bands. A flat field or equally strong, separated side bands is ambiguous.
+    const coherence = Math.min(...profiles.map(profile => {
+      const peak = Math.max(...profile), floor = Math.min(...profile);
+      const split = Math.max(0, Math.min(profile[0], profile[2]) - profile[1]);
+      return (peak - floor) / (peak + 1e-9) * (1 - split / (peak + 1e-9));
+    }));
+    // Balance the whole cross-section instead of aiming at an argmax point.
+    const balance = (right - left) / (left + center + right + 1e-9);
+    return { left, center, right, strength, coherence,
+      steering: LOCAL_STEERING_LIMIT * balance * strength };
+  }
+
+  updateTrailAdherence(agent, localTrail, dt) {
+    const target = clamp(localTrail.strength * localTrail.coherence, 0, 1);
+    const previous = agent.trailAdherence;
+    const seconds = target > previous ? ADHERENCE_RISE_SECONDS : ADHERENCE_FADE_SECONDS;
+    agent.trailAdherence = clamp(previous + (target - previous) * -Math.expm1(-dt / seconds), 0, 1);
   }
 
   advanceBehaviorClocks(agent, dt) {
@@ -375,8 +439,8 @@ function clampFinite(value, min, max, fallback) {
 }
 function clamp(value, min, max) { return Math.min(max, Math.max(min, value)); }
 function signed(random) { return random() * 2 - 1; }
-function trailResponse(signal) {
-  const normalized = (signal / TRAIL_HALF_SATURATION) ** TRAIL_RESPONSE_EXPONENT;
+function trailResponse(signal, halfSaturation = TRAIL_HALF_SATURATION) {
+  const normalized = (signal / halfSaturation) ** TRAIL_RESPONSE_EXPONENT;
   return normalized / (1 + normalized);
 }
 function wrapAngle(value) { return ((value + Math.PI) % TAU + TAU) % TAU - Math.PI; }
