@@ -94,10 +94,13 @@ test('Lab can switch through ANT without giving it audio resources', async () =>
   const audio = new AudioEngine({ contextFactory: () => { contextCreations += 1; return {}; } });
   const lab = new Lab({ audioEngine: audio });
   const ant = await lab.setModel('ant');
-  ant.update(0);
-  ant.update(100);
   assert.equal(lab.getState().model, 'ant');
-  assert.equal(lab.getSnapshot().agents.length, 28);
+  assert.equal(lab.getSnapshot().agents.length, 1, 'ANT initializes with one ordinary agent');
+  ant.update(0);
+  for (let timestamp = 100; timestamp <= 2000; timestamp += 100) ant.update(timestamp);
+  const growingPopulation = lab.getSnapshot().agents.length;
+  assert.ok(growingPopulation > 1, 'simulation time gradually adds agents');
+  assert.ok(growingPopulation < lab.getState().population.count, 'the target population is not created all at once');
   assert.equal(ant.audio, undefined);
   assert.equal(contextCreations, 0);
   await lab.setModel('string');

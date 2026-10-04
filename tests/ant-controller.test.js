@@ -16,6 +16,17 @@ function runTicks(controller, count, dt = 1000 / 60) {
   for (let index = 0; index < count; index += 1) controller.tick(dt / 1000);
 }
 
+// Movement stress cases supply their own bodies so they test the unchanged
+// movement rules independently of the demonstration's gradual entry.
+function movementFixture(controller, count, random = seededRandom(17)) {
+  controller.agents = Array.from({ length: count }, (_, index) => new AntAgent({
+    id: 'fixture-' + index, x: 0.5, y: 0.5, random,
+    radius: controller.state.behavior.bodyRadius
+  }));
+  controller.nextSpawnTimeMs = null;
+  return controller.agents;
+}
+
 function spread(agents) {
   const meanX = agents.reduce((sum, agent) => sum + agent.x, 0) / agents.length;
   const meanY = agents.reduce((sum, agent) => sum + agent.y, 0) / agents.length;
@@ -37,7 +48,8 @@ test('population has equal agents with stable individual personalities and share
   const controller = new AntController({ random: seededRandom(10) });
   await controller.init();
   const initial = controller.getSnapshot();
-  assert.equal(initial.agents.length, 28);
+  assert.equal(initial.agents.length, 1);
+  assert.equal(initial.state.population.count, 28);
   assert.equal(initial.state.pheromone.halfLifeSeconds, 3);
   assert.equal(initial.state.pheromone.radius, 0.0045);
   assert.ok(initial.state.behavior.sensorWidth > initial.state.pheromone.radius);
@@ -46,18 +58,110 @@ test('population has equal agents with stable individual personalities and share
   assert.equal('leader' in initial, false);
   assert.equal('followers' in initial, false);
   assert.equal('mode' in initial, false);
-  assert.ok(initial.analysis.minSeparation > 0.02);
+  assert.equal(initial.analysis.minSeparation, null);
 
-  const personality = controller.agents.map((agent) => ({ ...agent.personality }));
-  runTicks(controller, 60 * 20);
+  const personality = new Map();
+  for (let tick = 0; tick < 60 * 60; tick += 1) {
+    for (const agent of controller.agents) {
+      if (!personality.has(agent.id)) personality.set(agent.id, { ...agent.personality });
+      assert.deepEqual(agent.personality, personality.get(agent.id));
+    }
+    controller.tick(1 / 60);
+  }
   const updated = controller.getSnapshot();
+  assert.equal(updated.agents.length, 28);
   assert.ok(updated.analysis.pheromoneMass > 0, 'walking deposits path memory');
-  assert.ok(updated.agents.some((agent, index) =>
-    Math.hypot(agent.x - initial.agents[index].x, agent.y - initial.agents[index].y) > 0.04));
-  assert.deepEqual(controller.agents.map((agent) => agent.personality), personality,
+  assert.ok(Math.hypot(updated.agents[0].x - initial.agents[0].x,
+    updated.agents[0].y - initial.agents[0].y) > 0.04);
+  assert.deepEqual(controller.agents.map((agent) => agent.personality), [...personality.values()],
     'individual differences persist rather than changing each frame');
-  assert.ok(new Set(personality.map((item) => item.preferredSpeed)).size > 1);
+  assert.ok(new Set([...personality.values()].map((item) => item.preferredSpeed)).size > 1);
   assert.ok(updated.analysis.meanSpeed > 0.005 && updated.analysis.meanSpeed < 0.16);
+  await controller.destroy();
+});
+
+test('ants enter one at a time from a common region with irregular delays and distinct headings', async () => {
+  const controller = new AntController({ random: seededRandom(61) });
+  await controller.init();
+  await controller.init();
+  assert.equal(controller.agents.length, 1, 'repeated init does not add an ant');
+  let previousBirth = 0;
+  const intervals = [];
+  const headings = [];
+  const recordBirth = () => {
+    const ant = controller.agents.at(-1);
+    assert.ok(Math.hypot(ant.x - 0.5, ant.y - 0.72) <= 0.018 + 1e-12);
+    assert.ok(Math.abs(ant.heading + Math.PI / 2) <= 0.3);
+    for (const other of controller.agents.slice(0, -1)) {
+      assert.ok(Math.hypot(ant.x - other.x, ant.y - other.y)
+        >= ant.radius + other.radius + 0.004 - 1e-12);
+    }
+    headings.push(ant.heading);
+    if (controller.nextSpawnTimeMs !== null) {
+      const scheduledDelay = controller.nextSpawnTimeMs - controller.simulationTimeMs;
+      assert.ok(scheduledDelay >= 400 && scheduledDelay <= 900);
+    }
+  };
+  recordBirth();
+  for (let tick = 0; tick < 60 * 60; tick += 1) {
+    const count = controller.agents.length;
+    controller.tick(1 / 60);
+    assert.ok(controller.agents.length - count <= 1, 'no batch release');
+    if (controller.agents.length === count) continue;
+    const interval = controller.simulationTimeMs - previousBirth;
+    assert.ok(interval >= 400 - 1e-9);
+    intervals.push(interval);
+    previousBirth = controller.simulationTimeMs;
+    recordBirth();
+  }
+  assert.equal(controller.agents.length, 28);
+  assert.equal(new Set(controller.agents.map(ant => ant.id)).size, 28);
+  assert.equal(new Set(headings).size, 28);
+  assert.ok(new Set(intervals.map(value => Math.round(value))).size > 5);
+  assert.equal(controller.nextSpawnTimeMs, null, 'entry ends at the target population');
+  await controller.destroy();
+});
+
+test('occupied spawn space delays entry without allocating an overlapping agent or skipping an ID', async () => {
+  const controller = new AntController({ random: seededRandom(71) });
+  await controller.init();
+  const blocker = controller.agents[0];
+  blocker.x = 0.5; blocker.y = 0.72;
+  blocker.radius = 0.03; // Covers the entire small entry disk.
+  blocker.inspectionRemaining = blocker.decisionRemaining = blocker.committedRemaining = 1000;
+  blocker.hesitationRemaining = 1000;
+  controller.nextSpawnTimeMs = 0;
+  controller.tick(1 / 60);
+  assert.equal(controller.agents.length, 1);
+  assert.equal(controller.nextAgentId, 2);
+  assert.ok(Math.abs(controller.nextSpawnTimeMs - controller.simulationTimeMs - 120) < 1e-9);
+  runTicks(controller, 7);
+  assert.equal(controller.agents.length, 1, 'retry waits for its short delay');
+  blocker.x = 0.8;
+  controller.tick(1 / 60);
+  assert.equal(controller.agents.length, 2);
+  assert.equal(controller.agents[1].id, 'ant-2');
+  await controller.destroy();
+});
+
+test('changing the target preserves shared history and introduces additional ants gradually', async () => {
+  const controller = new AntController({ random: seededRandom(11), state: { population: { count: 8 } } });
+  await controller.init();
+  runTicks(controller, 60 * 15);
+  assert.equal(controller.agents.length, 8);
+  const survivors = controller.agents.slice();
+  const before = controller.field.getSnapshot();
+  controller.configure({ population: { count: 12 } });
+  assert.deepEqual(controller.agents, survivors, 'configuration does not release a batch or replace agents');
+  assert.deepEqual(controller.field.getSnapshot().values, before.values, 'memory survives a changed target');
+  runTicks(controller, 60 * 10);
+  assert.equal(controller.agents.length, 12);
+  controller.configure({ population: { count: 8 } });
+  assert.deepEqual(controller.agents, survivors);
+  assert.equal(controller.nextSpawnTimeMs, null);
+  controller.configure({ population: { count: 12 } });
+  runTicks(controller, 60 * 10);
+  assert.equal(new Set(controller.agents.map(ant => ant.id)).size, 12);
   await controller.destroy();
 });
 
@@ -176,7 +280,7 @@ test('long runs across seeds remain finite, bounded, spread out, and collision s
     let nearest = Infinity;
     let minimumSpeed = Infinity;
     let maximumSpeed = 0;
-    for (let tick = 0; tick < 60 * 20; tick += 1) {
+    for (let tick = 0; tick < 60 * 60; tick += 1) {
       controller.tick(1 / 60);
       nearest = Math.min(nearest, minSeparation(controller.agents));
       for (const agent of controller.agents) {
@@ -186,6 +290,7 @@ test('long runs across seeds remain finite, bounded, spread out, and collision s
       }
     }
     const state = controller.getSnapshot();
+    assert.equal(state.agents.length, state.state.population.count);
     assert.ok(state.agents.every((agent) =>
       Number.isFinite(agent.x) && Number.isFinite(agent.y)
       && Number.isFinite(agent.vx) && Number.isFinite(agent.vy)));
@@ -206,6 +311,7 @@ test('a dense equal-agent cluster disperses without body overlap or unstable vel
   // Keep the larger stress case even though the demonstration defaults to 28.
   const controller = new AntController({ random: seededRandom(48), state: { population: { count: 64 } } });
   await controller.init();
+  movementFixture(controller, 64, seededRandom(48));
   for (let index = 0; index < controller.agents.length; index += 1) {
     const agent = controller.agents[index];
     agent.x = 0.44 + (index % 8) * 0.017;
@@ -232,7 +338,7 @@ test('a dense equal-agent cluster disperses without body overlap or unstable vel
 test('wall contact constrains movement before the pair collision guard', async () => {
   const controller = new AntController({ random: seededRandom(77) });
   await controller.init();
-  const [wallAnt, followingAnt] = controller.agents;
+  const [wallAnt, followingAnt] = movementFixture(controller, 2, seededRandom(77));
   wallAnt.x = wallAnt.radius + 0.0002;
   wallAnt.y = 0.5;
   wallAnt.heading = Math.PI;
@@ -279,8 +385,11 @@ test('stop and destroy halt simulation and detach listeners', async () => {
   controller.update(1000 / 60);
   const beforeStop = controller.getSnapshot().analysis.simulationTimeMs;
   assert.equal(controller.stop(), true);
+  assert.equal(controller.nextSpawnTimeMs, null);
   const afterStopNotifications = notifications;
   controller.update(5000);
+  controller.tick(5);
+  assert.equal(controller.agents.length, 1, 'stopped entry cannot release pending ants');
   assert.equal(controller.getSnapshot().analysis.simulationTimeMs, beforeStop);
   assert.equal(notifications, afterStopNotifications);
   unsubscribe();
@@ -289,6 +398,9 @@ test('stop and destroy halt simulation and detach listeners', async () => {
   assert.equal(notifications, afterStopNotifications);
   assert.equal(controller.agents.length, 0);
   assert.equal(controller.field, null);
+  controller.tick(5);
+  assert.equal(controller.nextSpawnTimeMs, null);
+  assert.equal(controller.agents.length, 0);
 });
 
 test('an isolated ant has repeated near-stops after warmup and resumes forward movement', async () => {
@@ -297,6 +409,7 @@ test('an isolated ant has repeated near-stops after warmup and resumes forward m
     await controller.init();
     const ant = controller.agents[0];
     controller.agents = [ant];
+    controller.nextSpawnTimeMs = null;
     ant.x = 0.5;
     ant.y = 0.5;
     let nearStops = 0;
@@ -321,8 +434,7 @@ test('approaching bodies brake smoothly before a head-on contact', async () => {
   for (const count of [28, 64]) {
     const controller = new AntController({ random: seededRandom(17), state: { population: { count } } });
     await controller.init();
-    const [a, b] = controller.agents;
-    controller.agents = [a, b];
+    const [a, b] = movementFixture(controller, 2, () => 0.5);
     a.x = 0.4; a.y = 0.5; a.heading = 0;
     b.x = 0.52; b.y = 0.5; b.heading = Math.PI;
     for (const ant of controller.agents) {

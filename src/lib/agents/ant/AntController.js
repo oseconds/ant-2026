@@ -17,6 +17,16 @@ const HESITATION_SPEED_RATIO = 0.05;
 const HESITATION_MIN_SECONDS = 0.7;
 const HESITATION_RANGE_SECONDS = 0.8;
 const TAU = Math.PI * 2;
+// This is only an entry region. Agents have no reason to return to it.
+const SPAWN_CENTER = { x: 0.5, y: 0.72 };
+const SPAWN_RADIUS = 0.018;
+const SPAWN_HEADING = -Math.PI / 2;
+const SPAWN_HEADING_SPREAD = 0.3;
+const SPAWN_INTERVAL_MIN_MS = 400;
+const SPAWN_INTERVAL_RANGE_MS = 500;
+const SPAWN_RETRY_MS = 120;
+const SPAWN_PLACEMENT_ATTEMPTS = 12;
+const SPAWN_CLEARANCE = 0.004;
 const DEFAULT_STATE = Object.freeze({
   model: 'ant',
   population: { count: 28 },
@@ -37,6 +47,8 @@ export class AntController {
     this.lastFrameTimestamp = null;
     this.accumulatorMs = 0;
     this.simulationTimeMs = 0;
+    this.nextSpawnTimeMs = null;
+    this.nextAgentId = 1;
     this.agents = [];
     this.field = null;
     this.occupancy = new LocalOccupancy();
@@ -46,9 +58,9 @@ export class AntController {
     this.assertAlive();
     if (this.initialized) return this;
     this.field = this.fieldFactory({ decayHalfLifeSeconds: this.state.pheromone.halfLifeSeconds });
-    this.agents = createPopulation(this.state.population.count, this.random, this.state.behavior.bodyRadius);
     this.initialized = true;
     this.running = true;
+    this.spawnNextAnt();
     this.emit('update');
     return this;
   }
@@ -103,14 +115,16 @@ export class AntController {
 
   configure(patch = {}) {
     this.assertAlive();
-    const previousCount = this.state.population.count;
     this.state = normalizeState(mergeState(this.state, patch));
     if (this.field) this.field.decayHalfLifeSeconds = this.state.pheromone.halfLifeSeconds;
-    if (this.initialized && this.state.population.count !== previousCount) {
-      this.agents = createPopulation(this.state.population.count, this.random, this.state.behavior.bodyRadius);
-      this.field.clear();
-    } else {
-      for (const agent of this.agents) agent.radius = this.state.behavior.bodyRadius;
+    // A changed population target must not bypass gradual entry or erase the
+    // shared history that already exists. Keep surviving agents and their traits.
+    this.agents.length = Math.min(this.agents.length, this.state.population.count);
+    for (const agent of this.agents) agent.radius = this.state.behavior.bodyRadius;
+    if (this.agents.length >= this.state.population.count) {
+      this.nextSpawnTimeMs = null;
+    } else if (this.initialized && this.running && this.nextSpawnTimeMs === null) {
+      this.scheduleNextSpawn();
     }
     this.emit('update');
     return this.getState();
@@ -119,6 +133,7 @@ export class AntController {
   stop() {
     if (this.destroyed || !this.initialized || !this.running) return false;
     this.running = false;
+    this.nextSpawnTimeMs = null;
     this.resetFrameClock();
     this.emit('update');
     return true;
@@ -132,6 +147,7 @@ export class AntController {
     this.running = false;
     this.destroyed = true;
     this.initialized = false;
+    this.nextSpawnTimeMs = null;
     this.listeners.clear();
     this.agents = [];
     this.field?.clear();
@@ -141,6 +157,7 @@ export class AntController {
   }
 
   tick(dt) {
+    if (this.destroyed || !this.initialized || !this.running || !Number.isFinite(dt) || dt <= 0) return;
     const current = this.agents;
     const sensed = current.map((agent) => this.occupancy.sense(agent, current));
     this.field.decay(dt);
@@ -210,6 +227,39 @@ export class AntController {
       this.advanceBehaviorClocks(agent, dt);
     }
     this.simulationTimeMs += dt * 1000;
+    // Use the simulation clock, not browser timers. A delayed frame or blocked
+    // entry never releases a batch of overdue agents.
+    if (this.nextSpawnTimeMs !== null && this.simulationTimeMs + 1e-9 >= this.nextSpawnTimeMs) {
+      this.spawnNextAnt();
+    }
+  }
+
+  spawnNextAnt() {
+    if (this.destroyed || !this.initialized || !this.running
+      || this.agents.length >= this.state.population.count) return false;
+    const radius = this.state.behavior.bodyRadius;
+    for (let attempt = 0; attempt < SPAWN_PLACEMENT_ATTEMPTS; attempt += 1) {
+      const angle = this.random() * TAU;
+      const distance = Math.sqrt(this.random()) * SPAWN_RADIUS;
+      const x = SPAWN_CENTER.x + Math.cos(angle) * distance;
+      const y = SPAWN_CENTER.y + Math.sin(angle) * distance;
+      if (this.agents.some(agent => Math.hypot(x - agent.x, y - agent.y)
+        < radius + agent.radius + SPAWN_CLEARANCE)) continue;
+      this.agents.push(new AntAgent({
+        id: 'ant-' + this.nextAgentId++, x, y, radius, random: this.random,
+        heading: SPAWN_HEADING + signed(this.random) * SPAWN_HEADING_SPREAD
+      }));
+      if (this.agents.length < this.state.population.count) this.scheduleNextSpawn();
+      else this.nextSpawnTimeMs = null;
+      return true;
+    }
+    this.nextSpawnTimeMs = this.simulationTimeMs + SPAWN_RETRY_MS;
+    return false;
+  }
+
+  scheduleNextSpawn() {
+    this.nextSpawnTimeMs = this.simulationTimeMs
+      + SPAWN_INTERVAL_MIN_MS + this.random() * SPAWN_INTERVAL_RANGE_MS;
   }
 
   updateIntention(agent, agents, occupancy, dt) {
@@ -295,26 +345,6 @@ export class AntController {
     const event = { type, payload: this.getSnapshot() };
     for (const listener of [...this.listeners]) listener(event);
   }
-}
-
-function createPopulation(count, random, radius) {
-  const columns = Math.ceil(Math.sqrt(count));
-  const rows = Math.ceil(count / columns);
-  const cells = Array.from({ length: columns * rows }, (_, index) => index);
-  for (let index = cells.length - 1; index > 0; index -= 1) {
-    const swap = Math.floor(random() * (index + 1));
-    [cells[index], cells[swap]] = [cells[swap], cells[index]];
-  }
-  return Array.from({ length: count }, (_, id) => {
-    const cell = cells[id];
-    const column = cell % columns;
-    const row = Math.floor(cell / columns);
-    const cellWidth = 0.84 / columns;
-    const cellHeight = 0.84 / rows;
-    const x = 0.08 + (column + 0.2 + random() * 0.6) * cellWidth;
-    const y = 0.08 + (row + 0.2 + random() * 0.6) * cellHeight;
-    return new AntAgent({ id: 'ant-' + (id + 1), x, y, random, radius });
-  });
 }
 
 function normalizeState(input) {
