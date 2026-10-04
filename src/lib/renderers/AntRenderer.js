@@ -2,11 +2,11 @@
  * p5 instance-mode view for the ANT experiment.
  *
  * The sketch only paints the most recent snapshot supplied by `render()`.
- * Trajectory recording, follower playback, timing, and loop state belong to
- * the model/controller. No p5 object is created until `init()` is called.
+ * Agent movement and pheromone state belong to the framework-independent
+ * model/controller. No p5 object is created until `init()` is called.
  */
 export class AntRenderer {
-  constructor(canvas, { loadP5 = () => import('p5'), onLoop, onRelease } = {}) {
+  constructor(canvas, { loadP5 = () => import('p5') } = {}) {
     if (!canvas) throw new TypeError('AntRenderer requires a canvas element');
     this.canvas = canvas;
     this.canvasParent = canvas.parentElement || null;
@@ -15,10 +15,10 @@ export class AntRenderer {
       .filter((attribute) => attribute.name?.startsWith('aria-'))
       .map((attribute) => [attribute.name, attribute.value]);
     this.loadP5 = loadP5;
-    this.onLoop = onLoop;
-    this.onRelease = onRelease;
     this.instance = null;
     this.snapshot = null;
+    this.fieldImage = null;
+    this.fieldSize = null;
     this.width = 1;
     this.height = 1;
     this.pixelRatio = 1;
@@ -94,6 +94,7 @@ export class AntRenderer {
     if (this.destroyed) return this.removalPromise || Promise.resolve();
     this.destroyed = true;
     this.snapshot = null;
+    this.fieldImage = null;
     this.resolveInitialization?.(false);
     this.rejectInitialization = null;
     const removal = this.#removeInstance();
@@ -134,8 +135,6 @@ export class AntRenderer {
         p.createCanvas(this.width, this.height, p.P2D, this.canvas);
         this.#restoreCanvasIdentity();
         p.noLoop();
-        // p5 dispatches keyboard events through window; handlers below require
-        // explicit canvas focus before forwarding an experiment shortcut.
         if (this.canvas && this.canvas.tabIndex < 0) this.canvas.tabIndex = 0;
         p.redraw();
         this.resolveInitialization?.(true);
@@ -147,17 +146,9 @@ export class AntRenderer {
 
     p.draw = () => {
       if (this.destroyed) return;
-      drawSnapshot(p, this.snapshot);
+      drawSnapshot(p, this.snapshot, this);
     };
 
-    p.keyPressed = () => {
-      // p5 dispatches keyboard events through the window. Restrict these
-      // shortcuts to an explicitly focused experiment canvas.
-      if (typeof document === 'undefined' || document.activeElement !== this.canvas) return;
-      const key = String(p.key || '').toLowerCase();
-      if (key === 'l') this.onLoop?.();
-      if (key === 'r') this.onRelease?.();
-    };
   }
 
   #failInitialization(error) {
@@ -182,32 +173,53 @@ export class AntRenderer {
   }
 }
 
-function drawSnapshot(p, snapshot) {
+const PHEROMONE_DISPLAY_HALF_SATURATION = 0.06;
+const PHEROMONE_DISPLAY_MAX_ALPHA = 48;
+
+function drawSnapshot(p, snapshot, renderer) {
   const width = p.width, height = p.height;
   p.background(255);
 
-  const trajectory = snapshot?.trajectory || [];
-  if (trajectory.length > 1) {
-    p.noFill();
-    p.stroke(155, 155, 155, 105);
-    p.strokeWeight(1);
-    p.beginShape();
-    for (const sample of trajectory) p.vertex(sample.x * width, sample.y * height);
-    p.endShape();
+  const field = snapshot?.pheromone;
+  if (field?.values?.length && field.width > 0 && field.height > 0) {
+    const image = updateFieldImage(p, renderer, field);
+    p.image(image, 0, 0, width, height);
   }
 
-  const leader = snapshot?.leader;
-  if (isPoint(leader)) drawAntMark(p, leader, width, height, 4, [55, 55, 55]);
-
-  for (const follower of snapshot?.followers || []) {
-    if (isPoint(follower)) drawAntMark(p, follower, width, height, 2.7, [130, 130, 130]);
+  const diameterScale = Math.min(width, height) * 2;
+  p.noStroke();
+  p.fill(48);
+  for (const agent of snapshot?.agents || []) {
+    if (!isPoint(agent)) continue;
+    const diameter = Math.max(1, (Number.isFinite(agent.radius) ? agent.radius : 0.006) * diameterScale);
+    p.circle(agent.x * width, agent.y * height, diameter);
   }
 }
 
-function drawAntMark(p, point, width, height, diameter, color) {
-  p.noStroke();
-  p.fill(...color);
-  p.circle(point.x * width, point.y * height, diameter);
+function updateFieldImage(p, renderer, field) {
+  const width = Math.floor(field.width), height = Math.floor(field.height);
+  if (!renderer.fieldImage || renderer.fieldSize?.width !== width || renderer.fieldSize?.height !== height) {
+    renderer.fieldImage = p.createImage(width, height);
+    renderer.fieldSize = { width, height };
+  }
+  const image = renderer.fieldImage;
+  image.loadPixels();
+  const pixels = image.pixels;
+  const values = field.values;
+  const limit = Math.min(values.length, width * height);
+  pixels.fill(0);
+  for (let index = 0; index < limit; index++) {
+    const value = Number.isFinite(values[index]) ? Math.max(0, values[index]) : 0;
+    const opacity = Math.round(PHEROMONE_DISPLAY_MAX_ALPHA
+      * value / (value + PHEROMONE_DISPLAY_HALF_SATURATION));
+    const offset = index * 4;
+    pixels[offset] = 0;
+    pixels[offset + 1] = 0;
+    pixels[offset + 2] = 0;
+    pixels[offset + 3] = opacity;
+  }
+  image.updatePixels();
+  return image;
 }
 
 function isPoint(value) {

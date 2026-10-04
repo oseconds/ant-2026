@@ -97,7 +97,7 @@ test('Lab can switch through ANT without giving it audio resources', async () =>
   ant.update(0);
   ant.update(100);
   assert.equal(lab.getState().model, 'ant');
-  assert.equal(lab.getSnapshot().followers.length, 7);
+  assert.equal(lab.getSnapshot().agents.length, 64);
   assert.equal(ant.audio, undefined);
   assert.equal(contextCreations, 0);
   await lab.setModel('string');

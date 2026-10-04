@@ -1,6 +1,6 @@
 # Physical Audio Lab
 
-독립적인 물리 오디오 라이브러리와 vanilla Vite 데모입니다. 하나의 페이지에서 String, Circular Plate, Solid Sphere를 연주하고 내부 상태를 확인합니다. ANT는 움직임을 시간 버퍼로 다루는 시각 실험입니다. `src/lib`는 SvelteKit으로 옮겨 사용할 수 있습니다.
+독립적인 물리 오디오 라이브러리와 vanilla Vite 데모입니다. 하나의 페이지에서 String, Circular Plate, Solid Sphere를 연주하고 내부 상태를 확인합니다. ANT는 동등한 개체들이 환경에 흔적을 남기며 움직이는 시각 실험입니다. `src/lib`는 SvelteKit으로 옮겨 사용할 수 있습니다.
 
 ```bash
 npm install
@@ -15,7 +15,11 @@ Node.js 20 이상이 필요합니다. 현재 저장소의 Node 20.9에서도 실
 src/
   lib/
     audio/AudioEngine.js          # 지연 초기화, 모듈 캐시, 연결 그래프와 정리
-    agents/ant/AntController.js   # 오디오·DOM·p5와 독립적인 이동/지연 재생
+    agents/ant/
+      AntController.js            # 개체군, 명시적인 시간 진행과 시스템 연결
+      AntAgent.js                 # 개체별 이동 상태, 관성, 지속적인 성향
+      PheromoneField.js           # 거리 기반 침적·감쇠·공간 샘플링
+      LocalOccupancy.js           # 몸체 점유 감지·회피·접촉 방지
     models/
       BaseModel.js                # 설정, 구독, 공통 모델 계약
       WorkletModel.js             # Worklet 초기화·메시지·비동기 연주 취소
@@ -24,7 +28,7 @@ src/
       sphere/SphereModel.js       # 구 설정과 모달 오디오
       sphere/materials.js         # 밀도 / Young's modulus / Poisson ratio
     renderers/                    # canvas 수동 render; 자체 RAF 없음
-      AntRenderer.js             # p5 instance-mode 시각화와 키보드 adapter
+      AntRenderer.js              # p5 instance-mode로 snapshot만 시각화
     lab/Lab.js                    # 모델 전환, 공유 오디오, 구독 수명
     lab/modelRegistry.js          # 모델 생성 registry
     utils/state.js                # JSON 설정 병합·복사·좌표 검증
@@ -110,17 +114,23 @@ Plate 원본의 applyStrike는 pickup을 strike 위치의 격자 index로 덮었
 
 Plate·Sphere에서는 **Pickup 이동** 버튼 또는 **Shift+클릭/드래그**로 위치를 바꿉니다. Sphere의 일반 드래그는 회전, 일반 클릭은 타격입니다. canvas에 focus가 있을 때 Space/Enter는 중앙 타격입니다. Plate의 QWE/ASD/ZXC는 위치별 타격입니다. 기존 오디오 gain과 DSP를 유지하며 별도의 필터나 compressor를 추가하지 않았습니다.
 
-## ANT: 움직임을 시간 버퍼로 다루기
+## ANT: 환경을 공유 기억으로 다루기
 
-ANT 메뉴에서 리더 한 개와 지연된 복사본 일곱 개를 볼 수 있습니다. 리더는 방향을 조금씩 바꾸며 이동하고, 가장자리에 가까워지면 안쪽으로 조향합니다. 초당 60개, 최대 301개의 `{ timestamp, x, y }` 샘플을 기록하여 약 5초를 유지합니다. 좌표는 0–1로 정규화하고, 시각은 시뮬레이션의 밀리초입니다. 큰 프레임 간격은 100 ms까지만 반영하여 탭으로 돌아왔을 때 긴 시간을 한 번에 계산하지 않습니다.
+ANT 메뉴는 같은 `AntAgent` 모델을 사용하는 64개 개체를 표시합니다. 지정된 리더, 지연된 복사본, 리더 선출은 없습니다. 개체마다 위치·속도·방향·관성과 지속적인 성향을 가지며, 선호 속도·흔적 감도·탐색 성향·회전 반응·가속·감쇠·개인 간격이 조금씩 다릅니다. 움직임은 가속과 감속, 짧은 머뭇거림, 방향 검사, 전진을 섞습니다. 좌표는 0–1이고 시간은 호출자가 전달합니다. 큰 프레임 간격은 100 ms까지만 반영합니다.
 
-일곱 복사본은 120, 240, …, 840 ms 전의 위치를 시간 보간으로 읽고, 각 축에 최대 0.003의 부드러운 변화를 더합니다. 처음에는 부족한 지연 구간을 가장 오래된 위치로 채웁니다. **LOOP**는 현재 기록의 독립 읽기 전용 사본을 반복합니다. 끝과 시작을 연결하는 240 ms 구간은 재생에만 적용하며 원래 기억을 변경하지 않습니다. **RELEASE**는 현재 재생 위치와 진행 방향에서 새 live 기록을 시작합니다. 그림에 focus가 있을 때 L/R 키도 같은 조작을 수행합니다.
+개체들은 실제로 이동한 선분에 거리 비례 페로몬을 남깁니다. 정지한 개체는 침적하지 않습니다. 공유장은 기본 96×96 격자이며 14초 반감기로 지수 감쇠합니다. 앞쪽 후보 방향의 흔적을 읽어 확률적으로 선택하고, 탐색 확률을 유지하여 강한 흔적도 반드시 따라가지는 않습니다. 흔적의 강화·이탈·분기·합류는 이름 붙인 집단 상태 없이 국소 선택에서 나타납니다.
 
-책임은 세 부분으로 나눕니다.
+페로몬은 가고 싶은 방향의 유인이고, 몸체 점유는 이동 가능한 공간의 제약입니다. 가까운 이웃은 강한 분리력을 주고, 앞쪽 혼잡은 감속과 여유 있는 쪽으로의 조향을 유도합니다. 상대 접근 속도로 접촉까지의 시간을 추정해 미리 제동하며, 뒤쪽 이웃의 영향은 약합니다. 작은 시간 간격과 이동 선분 검사로 몸체의 통과를 막으며 rigid-body impulse나 위치 순간 이동을 사용하지 않습니다. 이 규칙들은 특정 교통 상태를 지시하지 않습니다.
 
-- `TrajectoryBuffer`: 고정 크기 기록, 시간/지연 보간, chronological 복사, 읽기 전용 snapshot. ANT나 p5를 알지 않습니다.
-- `AntController`: 이동과 지연된 재생, LIVE/LOOP 상태. `getState()`는 JSON 설정이고, 실제 버퍼·위치·재생 시계는 runtime/snapshot에 있습니다. 오디오를 만들지 않습니다.
-- `AntRenderer`: 전달받은 snapshot을 p5 instance mode로 그리는 adapter. p5는 `init()`에서만 동적으로 불러오고, sketch에는 이동·메모리·기록 로직이 없습니다. `noLoop()`와 `redraw()`를 사용하며 main.js의 RAF가 controller update와 render를 호출합니다. p5.sound는 포함하지 않습니다.
+책임은 다음처럼 분리합니다.
+
+- `AntAgent`: 개체별 이동 상태, 관성, 지속적인 성향.
+- `PheromoneField`: 공유 외부 기억. `depositSegment()`, `sample()`, `decay(dtSeconds)`, `clear()`, `getSnapshot()`을 독립적으로 제공합니다.
+- `LocalOccupancy`: 주변 몸체 점유와 방향별 혼잡, 근거리 분리와 이동 선분의 접촉 제약. 페로몬을 알지 않습니다.
+- `AntController`: 위 시스템들을 연결하고 명시적인 시간에 따라 개체군을 진행합니다. `getState()`는 JSON 설정, `getSnapshot()`은 개체와 격자 복사본입니다. 오디오·DOM·p5를 알지 않습니다.
+- `AntRenderer`: 모든 개체를 같은 작은 점으로 그리고 공유장을 옅은 회색으로 표시합니다. p5는 `init()`에서만 동적으로 불러옵니다. sketch에는 이동·침적·감쇠·기억 로직이 없습니다. `noLoop()`와 `redraw()`를 사용하며 main.js의 RAF가 update와 render를 호출합니다. p5.sound는 포함하지 않습니다.
+
+이전 리더/복사본·지연 재생·LIVE/LOOP 상태와 LOOP/RELEASE 버튼·L/R 단축키는 제거했습니다. 일반적인 timestamp/x/y 링 버퍼인 `TrajectoryBuffer`와 그 테스트는 다른 실험에 재사용할 수 있도록 유지합니다.
 
 ```js
 import { AntController, AntRenderer } from './src/lib/index.js';
@@ -134,13 +144,12 @@ await renderer.init({ width: 480, height: 480, pixelRatio: 1 });
 ants.update(frameTimestamp);
 renderer.render(ants.getSnapshot());
 
-ants.loop();
-ants.release();
-renderer.destroy(); // p5.remove()로 canvas와 입력 listener 정리
+ants.stop();
+await renderer.destroy(); // p5.remove()로 canvas와 내부 listener 정리
 await ants.destroy();
 ```
 
-ANT도 Lab registry로 전환하지만 AudioEngine을 주입받지 않습니다. 전환하면 기존 RAF·ResizeObserver·p5 instance를 정리하고 controller를 파괴합니다. SvelteKit에서 `AntRenderer`를 사용할 때는 `p5` dependency를 설치하고 onMount 이후 `init()`하세요. 컨트롤러와 버퍼만 사용하는 환경에는 p5를 import하거나 실행할 필요가 없습니다. 현재 ANT는 시각 실험이며 물리 모델·소리·호르몬·페로몬·장애물을 구현하지 않습니다.
+ANT도 Lab registry로 전환하지만 AudioEngine을 주입받지 않습니다. 전환하면 기존 RAF·ResizeObserver·p5 instance를 정리하고 controller를 파괴합니다. SvelteKit에서 `AntRenderer`를 사용할 때는 `p5` dependency를 설치하고 onMount 이후 `init()`하세요. 개체와 공유장만 사용하는 환경에서는 p5를 import하거나 실행할 필요가 없습니다. 현재 ANT는 시각 실험이며 소리·호르몬·먹이·둥지·장애물은 구현하지 않습니다. 몸체 회피는 soft local interaction이며 개미의 생물학이나 rigid-body physics를 재현하지 않습니다.
 
 ## AudioWorklet protocol
 
@@ -198,9 +207,9 @@ npm run test:browser
 CHECK_PRODUCTION=1 npm run test:browser
 ```
 
-Node native 테스트는 SSR import, JSON 복사·부분 병합, delay stepping, 공유 AudioEngine, 초기화/정지/전환 경합, Worklet protocol, sample rate/quality별 유한 출력, 독립 pickup, 원본 DSP 회귀를 확인합니다. ANT는 링 버퍼 wrapping/지연 보간, 고정 timestep 이동, LOOP/RELEASE, p5 adapter 초기화·키보드·파괴를 검사합니다. fixture는 앱 bundle에 포함되지 않습니다.
+Node native 테스트는 SSR import, JSON 복사·부분 병합, delay stepping, 공유 AudioEngine, 초기화/정지/전환 경합, Worklet protocol, sample rate/quality별 유한 출력, 독립 pickup, 원본 DSP 회귀를 확인합니다. ANT는 거리 기반 침적·감쇠, 확률적인 흔적 선택, 지속적인 개체 성향, 몸체 회피·접촉 안정성·장시간 유한 상태와 분산, p5 adapter 초기화·파괴를 검사합니다. 일반 링 버퍼의 wrapping/지연 보간 테스트도 유지합니다. fixture는 앱 bundle에 포함되지 않습니다.
 
-브라우저 스크립트는 Vite를 임시 포트로 띄우고 세 모델의 연주·컨트롤·전환·정리와 console/processor 오류를 확인합니다. ANT의 움직임·LOOP/RELEASE·무음 실행과 전환 정리도 검사합니다. 모델별 문서 구조, native control의 label 연결, 밝은 배경과 모바일 가로 넘침도 검사합니다. macOS의 설치된 Google Chrome을 자동 사용하며 다른 환경은 `BROWSER_EXECUTABLE_PATH`로 실행 파일을 지정하거나 `npx playwright install chromium`으로 검증용 브라우저를 설치하세요. 스크린샷은 test-results/에 저장합니다. 자동 테스트는 출력 데이터와 lifecycle을 확인하며 청감 비교는 별도입니다.
+브라우저 스크립트는 Vite를 임시 포트로 띄우고 세 모델의 연주·컨트롤·전환·정리와 console/processor 오류를 확인합니다. ANT의 독립적인 움직임·공유 흔적·무음 실행과 전환 정리도 검사합니다. 모델별 문서 구조, native control의 label 연결, 밝은 배경과 모바일 가로 넘침도 검사합니다. macOS의 설치된 Google Chrome을 자동 사용하며 다른 환경은 `BROWSER_EXECUTABLE_PATH`로 실행 파일을 지정하거나 `npx playwright install chromium`으로 검증용 브라우저를 설치하세요. 스크린샷은 test-results/에 저장합니다. 자동 테스트는 출력 데이터와 lifecycle을 확인하며 청감 비교는 별도입니다.
 
 ## 남은 기술 부채와 다음 작업
 
@@ -208,4 +217,5 @@ Node native 테스트는 SSR import, JSON 복사·부분 병합, delay stepping,
 - Plate는 작은 정규 격자와 단순 고정 경계 모델입니다. resolution 변경은 음색도 바꿀 수 있고 고해상도 실시간 CPU 비용을 따로 측정해야 합니다.
 - Sphere의 주파수는 기존 alpha table과 P/S branch 근사식입니다. 정확한 elastic-sphere 경계조건 해법은 아니며 현재 WebGL 구는 실제 modal displacement를 그리지 않습니다.
 - 현재 output은 mono·pickup 하나입니다. preset persistence, MIDI, automation, recording, spectrum analyzer는 아직 구현하지 않았습니다. Inspector는 String에 먼저 마련했습니다.
+- ANT의 이웃 감지와 접촉 검사는 현재 O(N²)이며 기본 64개에 맞추었습니다. 더 큰 개체군에는 spatial index와 CPU profiling이 필요합니다. 페로몬 감도·감쇠·회피 거리의 조정은 여전히 실험 과제이며 특정 분기나 교통 패턴을 보장하지 않습니다.
 - 다음 작업은 장시간 CPU/audio dropout profiling, String의 Worklet 전환과 위치 반영, preset save/load, 공통 analyser·WAV recording, Sphere modal visualization 순으로 진행할 수 있습니다. 다중 pickup·stereo는 state schema와 Worklet channel protocol을 확장하고 UI adapter를 추가하세요.

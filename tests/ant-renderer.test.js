@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { AntRenderer } from '../src/lib/renderers/AntRenderer.js';
 
-test('AntRenderer paints supplied snapshots through an instance and removes it once', async () => {
+test('AntRenderer paints equal agent marks and a cached pheromone field without changing the snapshot', async () => {
   const calls = [];
   const parent = makeParent();
   const canvas = makeCanvas(parent, { id: 'simulation-canvas', 'aria-label': 'Ant trajectories', role: 'img' });
@@ -20,19 +20,33 @@ test('AntRenderer paints supplied snapshots through an instance and removes it o
   assert.equal(canvas.getAttribute('aria-label'), 'Ant trajectories');
   assert.equal(canvas.getAttribute('role'), 'img');
   assert.ok(calls.some(([name]) => name === 'noLoop'));
-  renderer.render({
-    trajectory: [{ x: 0.1, y: 0.2 }, { x: 0.8, y: 0.6 }],
-    leader: { x: 0.8, y: 0.6 },
-    followers: [{ x: 0.5, y: 0.4 }]
-  });
-  assert.ok(calls.some(([name]) => name === 'beginShape'));
-  assert.equal(calls.filter(([name]) => name === 'circle').length, 2);
+  const values = new Float32Array([0, 0.05, 0.25, 0]);
+  const snapshot = {
+    agents: [
+      { id: 'a', x: 0.1, y: 0.2, vx: 0, vy: 0, heading: 0, radius: 0.006, personality: 'curious' },
+      { id: 'b', x: 0.8, y: 0.6, vx: 0, vy: 0, heading: 1, radius: 0.006, personality: 'steady' },
+      { id: 'c', x: 0.5, y: 0.4, vx: 0, vy: 0, heading: 2, radius: 0.006, personality: 'bold' }
+    ],
+    pheromone: { width: 2, height: 2, values, maxValue: 8, totalMass: 12 }
+  };
+  const savedValues = [...values];
+  Object.freeze(snapshot.agents);
+  for (const agent of snapshot.agents) Object.freeze(agent);
+  renderer.render(snapshot);
+  const circles = calls.filter(([name]) => name === 'circle');
+  assert.equal(circles.length, 3);
+  assert.equal(new Set(circles.map(([, , , diameter]) => diameter)).size, 1);
+  assert.equal(calls.filter(([name]) => name === 'image').length, 1);
+  assert.deepEqual([...values], savedValues);
+  const fieldImage = calls.find(([name]) => name === 'createImage')[1];
+  assert.deepEqual([...fieldImage.pixels].filter((_, i) => i % 4 === 3), [0, 22, 39, 0]);
+  assert.ok(!calls.some(([name]) => name === 'beginShape'));
 
   renderer.resize(300, 200, 1.5);
   assert.ok(calls.some(([name, ...args]) => name === 'resizeCanvas' && args[0] === 300 && args[1] === 200));
   await renderer.destroy();
   await renderer.destroy();
-  renderer.render({ leader: { x: 0, y: 0 } });
+  renderer.render({ agents: [{ x: 0, y: 0, radius: 0.006 }] });
   assert.equal(calls.filter(([name]) => name === 'remove').length, 1);
 });
 
@@ -65,32 +79,6 @@ test('destroy racing p5 setup removes a canvas created immediately before setup'
   assert.equal(calls.filter(([name]) => name === 'remove').length, 2);
 });
 
-test('keyboard shortcuts run only while the canvas is focused', async () => {
-  const calls = [];
-  const canvas = { tabIndex: -1 };
-  let loops = 0, releases = 0;
-  const renderer = new AntRenderer(canvas, {
-    loadP5: async () => ({ default: makeP5(calls) }),
-    onLoop: () => loops++, onRelease: () => releases++
-  });
-  await renderer.init();
-  const previousDocument = globalThis.document;
-  globalThis.document = { activeElement: null };
-  try {
-    calls.find(([name]) => name === 'keyPressed')[1]('l');
-    assert.equal(loops, 0);
-    globalThis.document.activeElement = canvas;
-    calls.find(([name]) => name === 'keyPressed')[1]('L');
-    calls.find(([name]) => name === 'keyPressed')[1]('r');
-    assert.equal(loops, 1);
-    assert.equal(releases, 1);
-  } finally {
-    if (previousDocument === undefined) delete globalThis.document;
-    else globalThis.document = previousDocument;
-    renderer.destroy();
-  }
-});
-
 test('p5 setup failures reject init and remove the failed instance', async () => {
   const calls = [];
   const renderer = new AntRenderer({}, {
@@ -120,15 +108,16 @@ function makeP5(calls, { deferSetup = false, manualSetup = false, failSetup = fa
         redraw: () => { calls.push(['redraw']); p.draw(); },
         resizeCanvas: (...args) => calls.push(['resizeCanvas', ...args]),
         background: (...args) => calls.push(['background', ...args]),
-        noFill: () => calls.push(['noFill']), stroke: (...args) => calls.push(['stroke', ...args]),
-        strokeWeight: (...args) => calls.push(['strokeWeight', ...args]),
-        beginShape: () => calls.push(['beginShape']), vertex: (...args) => calls.push(['vertex', ...args]),
-        endShape: () => calls.push(['endShape']), noStroke: () => calls.push(['noStroke']),
-        fill: (...args) => calls.push(['fill', ...args]), circle: (...args) => calls.push(['circle', ...args]),
-        key: '', keyPressed: null
+        createImage: (width, height) => {
+          const image = { width, height, pixels: new Uint8ClampedArray(width * height * 4), loadPixels() {}, updatePixels() {} };
+          calls.push(['createImage', image]);
+          return image;
+        },
+        image: (...args) => calls.push(['image', ...args]),
+        noStroke: () => calls.push(['noStroke']),
+        fill: (...args) => calls.push(['fill', ...args]), circle: (...args) => calls.push(['circle', ...args])
       };
       sketch(p);
-      calls.push(['keyPressed', (key) => { p.key = key; p.keyPressed(); }]);
       const setup = () => {
         if (failSetup) p.createCanvas = () => { throw new Error('setup failed'); };
         p.setup();

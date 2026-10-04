@@ -39,12 +39,12 @@ export const demoDefinitions = {
     ]
   },
   ant: {
-    label: 'ANT', title: 'ANT · 움직임을 기억하는 버퍼', Renderer: AntRenderer,
-    description: '한 리더의 최근 움직임을 기억하고, 일곱 개의 점이 같은 기억을 조금씩 늦게 따라갑니다. 미세한 차이를 더해 같은 경로의 불완전한 복사본을 만듭니다.',
-    hint: 'LOOP로 현재 기억을 고정해 반복하고, RELEASE로 새 움직임을 기록하세요. 그림에 포커스가 있을 때 L / R 키로도 조작할 수 있습니다.',
-    canvasDescription: '리더 한 개와 지연된 움직임을 따라가는 일곱 개의 점, 그리고 최근 이동 경로를 표시합니다.',
+    label: 'ANT', title: 'ANT · 환경에 남기는 기억', Renderer: AntRenderer,
+    description: '각 개미는 독립적으로 탐색하며 이동 경로에 페로몬을 남깁니다. 공유 흔적과 가까운 개체를 감지하여 방향과 속도를 조금씩 바꿉니다.',
+    hint: '옅은 흔적은 시간이 지나면 사라집니다. 강한 흔적도 항상 따르지는 않으며, 혼잡하면 가까운 빈 방향으로 돌아갑니다.',
+    canvasDescription: '동등한 개미들을 작은 점으로, 공유 페로몬장을 옅은 회색으로 표시합니다.',
     audio: false,
-    interaction: false, // The p5 instance forwards ANT's keyboard actions.
+    interaction: false, // This visual experiment has no physical-model pointer adapter.
     update: (controller, time) => controller.update(time),
     controls: []
   }

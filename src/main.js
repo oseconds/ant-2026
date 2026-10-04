@@ -75,10 +75,7 @@ export function mountLab(root) {
     canvas.setAttribute('aria-label', item.hint);
     canvas.textContent = item.canvasDescription || '그림을 누르거나 키보드로 물리 모델을 연주하세요.';
     query('#scene').append(canvas);
-    const mountedRenderer = renderer = new item.Renderer(canvas, {
-      onLoop: () => run(() => { if (!lab.switching && lab.modelName === 'ant') return lab.model.loop(); }),
-      onRelease: () => run(() => { if (!lab.switching && lab.modelName === 'ant') return lab.model.release(); })
-    });
+    const mountedRenderer = renderer = new item.Renderer(canvas);
     if (mountedRenderer.init) {
       const ready = await mountedRenderer.init(canvasSize(query('#scene')));
       if (ready === false || disposed || version !== selectionVersion || renderer !== mountedRenderer) return false;
@@ -168,7 +165,7 @@ export function mountLab(root) {
       if (input) input.value = value;
       if (output) output.value = control.format ? control.format(value) : String(value);
     });
-    const statusText = { idle: '연주 준비 완료', ready: '연주 준비 완료', loading: '오디오 준비 중…', playing: '현 재생 중', active: '공진 중', live: 'LIVE · 움직임 기록 중', loop: 'LOOP · 고정된 기억 재생 중', stopped: '정지', error: snapshot.error || '오디오 오류' };
+    const statusText = { idle: '연주 준비 완료', ready: '연주 준비 완료', loading: '오디오 준비 중…', playing: '현 재생 중', active: state.model === 'ant' ? '개미와 공유 흔적 갱신 중' : '공진 중', stopped: '정지', error: snapshot.error || '오디오 오류' };
     query('#status').textContent = errorMessage || statusText[status] || status;
     query('#audio-info').hidden = definition.audio === false;
     query('footer').hidden = definition.audio === false;
@@ -224,14 +221,10 @@ export function mountLab(root) {
       );
       query('#physical-info').textContent = '크기와 재질을 바꾸면 공진 주파수와 질량이 달라집니다. 구 표면의 타격 위치와 pickup은 각각 독립적으로 저장됩니다.';
     } else if (state.model === 'ant') {
-      query('#ant-mode').value = state.mode.toUpperCase();
-      query('#ant-memory').value = `${(analysis.historyMs / 1000).toFixed(2)} s · ${analysis.samples} / ${analysis.capacity} samples${analysis.frozen ? ' (고정됨)' : ''}`;
-      query('[data-action="ant-loop"]').disabled = state.mode === 'loop' || analysis.samples < 2;
-      query('[data-action="ant-release"]').disabled = state.mode !== 'loop';
       items.push(
-        metricRow('리더 / 복사본', `1 / ${snapshot.followers.length}`),
-        metricRow('지연', snapshot.followers.map(follower => `${follower.delayMs} ms`).join(', ')),
-        metricRow('기록 주기', `${state.memory.sampleRate} samples/s`)
+        metricRow('개체 수', analysis.population),
+        metricRow('평균 속도', `${analysis.meanSpeed.toFixed(3)} / s`),
+        metricRow('페로몬 총량', analysis.pheromoneMass.toFixed(2))
       );
     }
     query('#analysis tbody').replaceChildren(...items);
@@ -278,8 +271,6 @@ export function mountLab(root) {
     if (!lab.model || lab.switching) return;
     run(() => {
       switch (target.dataset.action) {
-        case 'ant-loop': return lab.model.loop();
-        case 'ant-release': return lab.model.release();
         case 'strike': return lab.strike({ position: interaction?.center() });
         case 'stop': return lab.stop();
         case 'pickup': {

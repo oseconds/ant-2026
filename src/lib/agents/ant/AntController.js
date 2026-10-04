@@ -1,91 +1,72 @@
-import { TrajectoryBuffer } from '../../utils/TrajectoryBuffer.js';
+import { AntAgent } from './AntAgent.js';
+import { LocalOccupancy } from './LocalOccupancy.js';
+import { PheromoneField } from './PheromoneField.js';
 
 const STEP_MS = 1000 / 60;
 const MAX_FRAME_GAP_MS = 100;
+// Cell values from fresh distance-based trails are much smaller than the
+// storage cap. This response scale keeps sparse trails perceptible to agents.
+const TRAIL_HALF_SATURATION = 0.012;
+const DECISION_TEMPERATURE = 0.85;
+const SEPARATION_ACCELERATION = 0.003;
+const HESITATION_SPEED_RATIO = 0.05;
+const HESITATION_MIN_SECONDS = 0.7;
+const HESITATION_RANGE_SECONDS = 0.8;
+const TAU = Math.PI * 2;
 const DEFAULT_STATE = Object.freeze({
   model: 'ant',
-  mode: 'live',
-  memory: { historySeconds: 5, sampleRate: 60 },
-  colony: { followerCount: 7, firstDelayMs: 120, delayStepMs: 120 },
-  behavior: { speed: 0.18, steering: 0.14, variation: 0.003 }
+  population: { count: 64 },
+  pheromone: { halfLifeSeconds: 14, amountPerUnitDistance: 6, radius: 0.009 },
+  behavior: { sensorDistance: 0.042, bodyRadius: 0.006 }
 });
 
-/**
- * Framework-independent controller for a leader trajectory and delayed copies.
- * Time enters through update(timestampMs), so renderers can choose their own loop.
- */
+/** Framework independent population and shared-environment simulation. */
 export class AntController {
-  constructor({ state, random = Math.random } = {}) {
+  constructor({ state, random = Math.random, fieldFactory = (options) => new PheromoneField(options) } = {}) {
     this.state = normalizeState(state || {});
     this.random = random;
+    this.fieldFactory = fieldFactory;
     this.listeners = new Set();
     this.destroyed = false;
     this.initialized = false;
     this.running = false;
-    this.mode = 'live';
     this.lastFrameTimestamp = null;
     this.accumulatorMs = 0;
-    this.simulationTime = 0;
-    this.playbackTime = 0;
-    this.position = { x: 0.5, y: 0.5 };
-    this.heading = -Math.PI / 2;
-    this.seededHeading = false;
-    this.buffer = null;
-    this.loopBuffer = null;
+    this.simulationTimeMs = 0;
+    this.agents = [];
+    this.field = null;
+    this.occupancy = new LocalOccupancy();
   }
 
   async init() {
     this.assertAlive();
     if (this.initialized) return this;
-    const capacity = this.bufferCapacity();
-    this.buffer = new TrajectoryBuffer({ capacity });
-    this.buffer.push({ timestamp: 0, ...this.position });
+    this.field = this.fieldFactory({ decayHalfLifeSeconds: this.state.pheromone.halfLifeSeconds });
+    this.agents = createPopulation(this.state.population.count, this.random, this.state.behavior.bodyRadius);
     this.initialized = true;
     this.running = true;
     this.emit('update');
     return this;
   }
 
-  getState() {
-    return { ...clone(this.state), mode: this.mode };
-  }
+  getState() { return clone(this.state); }
 
   getSnapshot() {
-    if (!this.initialized) {
-      return {
-        state: this.getState(), mode: this.mode, status: this.mode,
-        leader: { ...this.position }, followers: [], trajectory: [],
-        analysis: { historyMs: 0, capacity: 0, samples: 0 }
-      };
-    }
-    const source = this.mode === 'loop' ? this.loopBuffer : this.buffer;
-    const trajectory = source.toArray();
-    const clock = this.mode === 'loop' ? this.playbackTime : this.simulationTime;
-    const followers = Array.from({ length: this.state.colony.followerCount }, (_, index) => {
-      const delayMs = this.state.colony.firstDelayMs + index * this.state.colony.delayStepMs;
-      const base = this.sampleAt(clock - delayMs, source, this.mode === 'loop');
-      return {
-        id: `follower-${index + 1}`,
-        delayMs,
-        x: clamp01(base.x + this.variation(index, clock, 'x')),
-        y: clamp01(base.y + this.variation(index, clock, 'y'))
-      };
-    });
+    const agents = this.agents.map((agent) => agent.getSnapshot());
+    const field = this.field?.getSnapshot() || { width: 0, height: 0, values: new Float32Array(), maxValue: 0, totalMass: 0 };
+    let speedTotal = 0;
+    for (const agent of agents) speedTotal += Math.hypot(agent.vx, agent.vy);
     return {
       state: this.getState(),
-      mode: this.mode,
-      status: this.running ? this.mode : 'stopped',
-      leader: { ...this.position },
-      followers,
-      trajectory,
+      status: this.running ? 'active' : 'stopped',
+      agents,
+      pheromone: field,
       analysis: {
-        historyMs: source.durationMs,
-        capacity: source.capacity,
-        samples: source.size,
-        loopPeriodMs: this.mode === 'loop' ? source.durationMs + 240 : null,
-        simulationTimeMs: this.simulationTime,
-        playbackTimeMs: this.mode === 'loop' ? this.playbackTime : null,
-        frozen: this.mode === 'loop'
+        population: agents.length,
+        meanSpeed: agents.length ? speedTotal / agents.length : 0,
+        pheromoneMass: field.totalMass,
+        simulationTimeMs: this.simulationTimeMs,
+        minSeparation: minimumSeparation(agents)
       }
     };
   }
@@ -97,7 +78,6 @@ export class AntController {
     return () => this.listeners.delete(listener);
   }
 
-  /** Advance from an external monotonic frame clock, using fixed 60 Hz steps. */
   update(timestampMs) {
     if (this.destroyed || !this.initialized || !this.running || !Number.isFinite(timestampMs)) return false;
     if (this.lastFrameTimestamp === null) {
@@ -110,7 +90,7 @@ export class AntController {
     let steps = 0;
     while (this.accumulatorMs + 1e-9 >= STEP_MS) {
       this.accumulatorMs -= STEP_MS;
-      this.tick();
+      this.tick(STEP_MS / 1000);
       steps += 1;
     }
     if (steps) this.emit('update');
@@ -119,46 +99,17 @@ export class AntController {
 
   configure(patch = {}) {
     this.assertAlive();
-    const next = normalizeState(mergeState(this.state, patch));
-    next.mode = this.mode;
-    const nextCapacity = Math.round(next.memory.historySeconds * next.memory.sampleRate) + 1;
-    if (this.initialized && nextCapacity !== this.buffer.capacity) this.resizeBuffer(nextCapacity);
-    this.state = next;
+    const previousCount = this.state.population.count;
+    this.state = normalizeState(mergeState(this.state, patch));
+    if (this.field) this.field.decayHalfLifeSeconds = this.state.pheromone.halfLifeSeconds;
+    if (this.initialized && this.state.population.count !== previousCount) {
+      this.agents = createPopulation(this.state.population.count, this.random, this.state.behavior.bodyRadius);
+      this.field.clear();
+    } else {
+      for (const agent of this.agents) agent.radius = this.state.behavior.bodyRadius;
+    }
     this.emit('update');
     return this.getState();
-  }
-
-  loop() {
-    this.assertReady();
-    if (this.mode === 'loop') return false;
-    this.loopBuffer = this.buffer.snapshot();
-    this.mode = 'loop';
-    this.state.mode = 'loop';
-    this.playbackTime = this.loopBuffer.latest.timestamp;
-    this.position = this.sampleAt(this.playbackTime, this.loopBuffer, true);
-    this.running = true;
-    this.resetFrameClock();
-    this.emit('update');
-    return true;
-  }
-
-  release() {
-    this.assertReady();
-    if (this.mode === 'live') return false;
-    // Start a fresh live record at the replayed point; old memory is retained by its own frozen snapshot.
-    const before = this.sampleAt(this.playbackTime - STEP_MS, this.loopBuffer, true);
-    const dx = this.position.x - before.x;
-    const dy = this.position.y - before.y;
-    if (Math.hypot(dx, dy) > 1e-6) this.heading = Math.atan2(dy, dx);
-    this.mode = 'live';
-    this.state.mode = 'live';
-    this.loopBuffer = null;
-    this.buffer = new TrajectoryBuffer({ capacity: this.bufferCapacity() });
-    this.buffer.push({ timestamp: this.simulationTime, ...this.position });
-    this.running = true;
-    this.resetFrameClock();
-    this.emit('update');
-    return true;
   }
 
   stop() {
@@ -169,7 +120,6 @@ export class AntController {
     return true;
   }
 
-  // The generic Lab interaction methods are intentionally silent for this visual experiment.
   strike() { return false; }
   setPickup() { return false; }
 
@@ -179,115 +129,226 @@ export class AntController {
     this.destroyed = true;
     this.initialized = false;
     this.listeners.clear();
-    this.buffer = null;
-    this.loopBuffer = null;
+    this.agents = [];
+    this.field?.clear();
+    this.field = null;
     this.lastFrameTimestamp = null;
+    this.accumulatorMs = 0;
   }
 
-  tick() {
-    this.simulationTime += STEP_MS;
-    if (this.mode === 'loop') {
-      this.playbackTime += STEP_MS;
-      this.position = this.sampleAt(this.playbackTime, this.loopBuffer, true);
-      return;
+  tick(dt) {
+    const current = this.agents;
+    const sensed = current.map((agent) => this.occupancy.sense(agent, current));
+    this.field.decay(dt);
+    for (let index = 0; index < current.length; index += 1) {
+      this.updateIntention(current[index], current, sensed[index], dt);
     }
-    this.walk(STEP_MS / 1000);
-    this.buffer.push({ timestamp: this.simulationTime, ...this.position });
-  }
 
-  walk(dt) {
-    // A correlated heading plus a mild inward bias gives smooth wandering and avoids sticking at the edge.
-    this.heading += (this.random() * 2 - 1) * this.state.behavior.steering;
-    const { x, y } = this.position;
-    const edgeX = x < 0.14 ? (0.14 - x) * 2 : x > 0.86 ? -(x - 0.86) * 2 : 0;
-    const edgeY = y < 0.14 ? (0.14 - y) * 2 : y > 0.86 ? -(y - 0.86) * 2 : 0;
-    if (edgeX || edgeY) this.heading = blendAngle(this.heading, Math.atan2(edgeY, edgeX), Math.min(.22, Math.hypot(edgeX, edgeY)));
-    if (!this.seededHeading) { this.heading = this.random() * Math.PI * 2; this.seededHeading = true; }
-    const speed = this.state.behavior.speed;
-    const nextX = x + Math.cos(this.heading) * speed * dt;
-    const nextY = y + Math.sin(this.heading) * speed * dt;
-    if (nextX < .02 || nextX > .98) this.heading = Math.PI - this.heading;
-    if (nextY < .02 || nextY > .98) this.heading = -this.heading;
-    this.position = { x: clampRange(nextX, .02, .98, .5), y: clampRange(nextY, .02, .98, .5) };
-  }
-
-  sampleAt(timestamp, buffer, loop) {
-    if (!buffer?.size) return { ...this.position };
-    if (loop && buffer.size > 1) {
-      const first = buffer.oldest;
-      const last = buffer.latest;
-      const bridgeDuration = 240;
-      const period = buffer.durationMs + bridgeDuration;
-      const phase = ((timestamp - first.timestamp) % period + period) % period;
-      if (phase <= buffer.durationMs) {
-        const sample = buffer.sample(first.timestamp + phase);
-        return { x: sample.x, y: sample.y };
+    const displacements = current.map((agent, index) => {
+      const info = sensed[index];
+      const separationMagnitude = Math.hypot(info.separationX, info.separationY);
+      let targetHeading = agent.intentHeading;
+      if (separationMagnitude > 0.03) {
+        const awayHeading = Math.atan2(info.separationY, info.separationX);
+        targetHeading = blendAngle(targetHeading, awayHeading, Math.min(0.66, separationMagnitude * 0.34));
       }
-      const amount = smoothstep((phase - buffer.durationMs) / bridgeDuration);
-      return {
-        x: last.x + (first.x - last.x) * amount,
-        y: last.y + (first.y - last.y) * amount
+      if (info.frontCrowding > 0.12 && Math.abs(info.leftCrowding - info.rightCrowding) > 0.02) {
+        const side = info.leftCrowding < info.rightCrowding ? -1 : 1;
+        targetHeading = blendAngle(targetHeading, agent.heading + side * 0.42,
+          Math.min(0.58, info.frontCrowding * 0.6));
+      }
+      const edge = boundarySteering(agent);
+      if (edge.strength > 0) targetHeading = blendAngle(targetHeading, edge.heading, Math.min(0.8, edge.strength * 0.7));
+
+      agent.turnToward(targetHeading, dt);
+      const cycle = Math.sin(agent.speedPhase);
+      let desiredSpeed = agent.personality.preferredSpeed * (0.58 + 0.34 * (cycle + 1) * 0.5);
+      // Inertia limits braking; the swept contact guard is a final safeguard.
+      desiredSpeed *= (1 - info.frontCrowding) ** 2;
+      desiredSpeed *= 1 - Math.min(0.45, separationMagnitude * 0.1);
+      if (agent.hesitationRemaining > 0) desiredSpeed *= HESITATION_SPEED_RATIO;
+      if (edge.strength > 0.65) desiredSpeed *= 0.78;
+      agent.targetSpeed = desiredSpeed;
+      agent.accelerateToward(desiredSpeed, dt);
+      agent.vx += info.separationX * SEPARATION_ACCELERATION * dt;
+      agent.vy += info.separationY * SEPARATION_ACCELERATION * dt;
+      const movement = {
+        x: clamp(agent.vx * dt, -0.008, 0.008),
+        y: clamp(agent.vy * dt, -0.008, 0.008)
       };
+      const edgeScale = boundaryScale(agent, movement);
+      movement.x *= edgeScale;
+      movement.y *= edgeScale;
+      return movement;
+    });
+
+    const collisionScales = this.occupancy.constrainDisplacements(current, displacements);
+    for (let index = 0; index < current.length; index += 1) {
+      const agent = current[index];
+      const displacement = displacements[index];
+      const scale = collisionScales[index];
+      const from = { x: agent.x, y: agent.y };
+      agent.x = clamp(agent.x + displacement.x * scale, agent.radius, 1 - agent.radius);
+      agent.y = clamp(agent.y + displacement.y * scale, agent.radius, 1 - agent.radius);
+      if (scale < 0.999) {
+        agent.vx *= scale;
+        agent.vy *= scale;
+      }
+      const travelled = Math.hypot(agent.x - from.x, agent.y - from.y);
+      if (travelled > 1e-8) this.field.depositSegment(from, { x: agent.x, y: agent.y }, {
+        amountPerUnitDistance: this.state.pheromone.amountPerUnitDistance,
+        radius: this.state.pheromone.radius
+      });
+      this.advanceBehaviorClocks(agent, dt);
     }
-    const sample = buffer.sample(timestamp, { loop });
-    return { x: sample.x, y: sample.y };
+    this.simulationTimeMs += dt * 1000;
   }
 
-  variation(index, time, axis) {
-    const phase = index * 1.71 + (axis === 'y' ? 1.3 : 0);
-    return Math.sin(time * .0011 + phase) * this.state.behavior.variation;
+  updateIntention(agent, agents, occupancy, dt) {
+    agent.decisionRemaining -= dt;
+    agent.committedRemaining -= dt;
+    agent.inspectionRemaining -= dt;
+    agent.hesitationRemaining -= dt;
+    if (agent.hesitationRemaining <= 0) agent.hesitationRemaining = 0;
+    if (agent.inspectionRemaining <= 0) {
+      agent.inspectionRemaining = 1.2 + this.random() * 2.4;
+      if (this.random() < 0.23) {
+        agent.intentHeading = wrapAngle(agent.intentHeading + signed(this.random) * 0.24);
+        // Leave enough time for inertial deceleration to produce a near-stop,
+        // rather than a barely visible dip in an otherwise constant pace.
+        agent.hesitationRemaining = Math.max(agent.hesitationRemaining,
+          HESITATION_MIN_SECONDS + this.random() * HESITATION_RANGE_SECONDS);
+      }
+    }
+
+    const blocked = occupancy.frontCrowding > 0.25;
+    const newlyBlocked = blocked && !agent.wasBlocked;
+    agent.wasBlocked = blocked;
+    if (agent.decisionRemaining > 0 && agent.committedRemaining > 0 && !newlyBlocked) return;
+    agent.decisionRemaining = 0.25 + this.random() * 0.42;
+    agent.committedRemaining = 0.3 + this.random() * 0.9;
+    const offsets = [-0.92, -0.47, 0, 0.47, 0.92];
+    const options = offsets.map((offset) => {
+      const heading = wrapAngle(agent.heading + offset + (this.random() - 0.5) * 0.12);
+      const distance = this.state.behavior.sensorDistance;
+      const x = agent.x + Math.cos(heading) * distance;
+      const y = agent.y + Math.sin(heading) * distance;
+      const trailAmount = this.field.sample(x, y);
+      // Realistic distance deposits remain far below maxValue=8. Compress
+      // that useful low range while keeping the pheromone influence bounded.
+      const trail = trailAmount / (trailAmount + TRAIL_HALF_SATURATION);
+      const crowding = this.occupancy.crowdingInDirection(agent, agents, heading, distance * 1.45);
+      const wall = boundaryPenalty(x, y);
+      const score = trail * agent.personality.pheromoneSensitivity * 1.8
+        - crowding * 3.2 - wall * 2.4 + (this.random() - 0.5) * 0.42;
+      return { heading, score };
+    });
+    const chosen = this.random() < agent.personality.exploration
+      ? options[Math.floor(this.random() * options.length)]
+      : weightedChoice(options, this.random, DECISION_TEMPERATURE);
+    agent.intentHeading = chosen.heading;
   }
 
-  bufferCapacity() { return Math.round(this.state.memory.historySeconds * this.state.memory.sampleRate) + 1; }
-  resizeBuffer(capacity) {
-    const replacement = new TrajectoryBuffer({ capacity });
-    for (const sample of this.buffer.toArray().slice(-capacity)) replacement.push(sample);
-    this.buffer = replacement;
+  advanceBehaviorClocks(agent, dt) {
+    agent.speedPhase = wrapAngle(agent.speedPhase + dt * TAU / agent.speedCycle);
   }
+
   resetFrameClock() { this.lastFrameTimestamp = null; this.accumulatorMs = 0; }
   assertAlive() { if (this.destroyed) throw new Error('AntController has been destroyed.'); }
-  assertReady() { this.assertAlive(); if (!this.initialized) throw new Error('AntController has not been initialized.'); }
   emit(type) {
-    if (this.destroyed) return;
+    if (this.destroyed || this.listeners.size === 0) return;
     const event = { type, payload: this.getSnapshot() };
     for (const listener of [...this.listeners]) listener(event);
   }
 }
 
-function mergeState(base, patch) {
-  return {
-    ...clone(base),
-    ...clone(patch),
-    memory: { ...clone(base.memory), ...clone(patch.memory || {}) },
-    colony: { ...clone(base.colony), ...clone(patch.colony || {}) },
-    behavior: { ...clone(base.behavior), ...clone(patch.behavior || {}) }
-  };
+function createPopulation(count, random, radius) {
+  const columns = Math.ceil(Math.sqrt(count));
+  const rows = Math.ceil(count / columns);
+  const cells = Array.from({ length: columns * rows }, (_, index) => index);
+  for (let index = cells.length - 1; index > 0; index -= 1) {
+    const swap = Math.floor(random() * (index + 1));
+    [cells[index], cells[swap]] = [cells[swap], cells[index]];
+  }
+  return Array.from({ length: count }, (_, id) => {
+    const cell = cells[id];
+    const column = cell % columns;
+    const row = Math.floor(cell / columns);
+    const cellWidth = 0.84 / columns;
+    const cellHeight = 0.84 / rows;
+    const x = 0.08 + (column + 0.2 + random() * 0.6) * cellWidth;
+    const y = 0.08 + (row + 0.2 + random() * 0.6) * cellHeight;
+    return new AntAgent({ id: 'ant-' + (id + 1), x, y, random, radius });
+  });
 }
+
 function normalizeState(input) {
   const state = mergeState(DEFAULT_STATE, input);
   state.model = 'ant';
-  state.mode = 'live';
-  state.memory.historySeconds = clampRange(state.memory.historySeconds, 1, 30, 5);
-  state.memory.sampleRate = 60;
-  state.colony.followerCount = 7;
-  state.colony.firstDelayMs = clampRange(state.colony.firstDelayMs, 20, 1000, 120);
-  state.colony.delayStepMs = clampRange(state.colony.delayStepMs, 20, 1000, 120);
-  state.behavior.speed = clampRange(state.behavior.speed, 0.02, 0.5, 0.18);
-  state.behavior.steering = clampRange(state.behavior.steering, 0.01, 1, 0.14);
-  state.behavior.variation = clampRange(state.behavior.variation, 0, 0.006, 0.003);
+  state.population.count = Math.round(clampFinite(state.population.count, 8, 100, 64));
+  state.pheromone.halfLifeSeconds = clampFinite(state.pheromone.halfLifeSeconds, 2, 120, 14);
+  state.pheromone.amountPerUnitDistance = clampFinite(state.pheromone.amountPerUnitDistance, 0.1, 30, 6);
+  state.pheromone.radius = clampFinite(state.pheromone.radius, 0.002, 0.04, 0.009);
+  state.behavior.sensorDistance = clampFinite(state.behavior.sensorDistance, 0.012, 0.1, 0.042);
+  state.behavior.bodyRadius = clampFinite(state.behavior.bodyRadius, 0.003, 0.015, 0.006);
   return state;
 }
+function mergeState(base, patch) {
+  return {
+    ...clone(base), ...clone(patch),
+    population: { ...clone(base.population), ...clone(patch.population || {}) },
+    pheromone: { ...clone(base.pheromone), ...clone(patch.pheromone || {}) },
+    behavior: { ...clone(base.behavior), ...clone(patch.behavior || {}) }
+  };
+}
 function clone(value) { return structuredClone(value); }
-function clamp01(value) { return Math.max(0, Math.min(1, value)); }
-function clampRange(value, min, max, fallback) {
-  const numeric = Number(value);
-  return Number.isFinite(numeric) ? Math.min(max, Math.max(min, numeric)) : fallback;
+function clampFinite(value, min, max, fallback) {
+  const number = Number(value);
+  return Number.isFinite(number) ? clamp(number, min, max) : fallback;
 }
-function blendAngle(from, to, amount) {
-  const difference = Math.atan2(Math.sin(to - from), Math.cos(to - from));
-  return from + difference * amount;
+function clamp(value, min, max) { return Math.min(max, Math.max(min, value)); }
+function signed(random) { return random() * 2 - 1; }
+function wrapAngle(value) { return ((value + Math.PI) % TAU + TAU) % TAU - Math.PI; }
+function blendAngle(from, to, amount) { return from + wrapAngle(to - from) * amount; }
+function boundaryPenalty(x, y) {
+  const edge = Math.min(x, y, 1 - x, 1 - y);
+  return edge >= 0.09 ? 0 : (0.09 - edge) / 0.09;
 }
-function smoothstep(value) {
-  const t = clamp01(value);
-  return t * t * (3 - 2 * t);
+function boundarySteering(agent) {
+  const margin = 0.09;
+  let x = 0, y = 0;
+  if (agent.x < margin) x += (margin - agent.x) / margin;
+  if (agent.x > 1 - margin) x -= (agent.x - (1 - margin)) / margin;
+  if (agent.y < margin) y += (margin - agent.y) / margin;
+  if (agent.y > 1 - margin) y -= (agent.y - (1 - margin)) / margin;
+  const strength = Math.hypot(x, y);
+  return { heading: Math.atan2(y, x), strength: Math.min(1, strength) };
+}
+function boundaryScale(agent, displacement) {
+  let scale = 1;
+  if (displacement.x < 0 && agent.x + displacement.x < agent.radius) scale = Math.min(scale, (agent.x - agent.radius) / -displacement.x);
+  else if (displacement.x > 0 && agent.x + displacement.x > 1 - agent.radius) scale = Math.min(scale, (1 - agent.radius - agent.x) / displacement.x);
+  if (displacement.y < 0 && agent.y + displacement.y < agent.radius) scale = Math.min(scale, (agent.y - agent.radius) / -displacement.y);
+  else if (displacement.y > 0 && agent.y + displacement.y > 1 - agent.radius) scale = Math.min(scale, (1 - agent.radius - agent.y) / displacement.y);
+  return clamp(scale, 0, 1);
+}
+function weightedChoice(options, random, temperature) {
+  const max = Math.max(...options.map((option) => option.score));
+  const weights = options.map((option) => Math.exp((option.score - max) / temperature));
+  const total = weights.reduce((sum, weight) => sum + weight, 0);
+  let choice = random() * total;
+  for (let index = 0; index < options.length; index += 1) {
+    choice -= weights[index];
+    if (choice <= 0) return options[index];
+  }
+  return options.at(-1);
+}
+function minimumSeparation(agents) {
+  let minimum = Infinity;
+  for (let i = 0; i < agents.length; i += 1) {
+    for (let j = i + 1; j < agents.length; j += 1) {
+      minimum = Math.min(minimum, Math.hypot(agents[i].x - agents[j].x, agents[i].y - agents[j].y));
+    }
+  }
+  return Number.isFinite(minimum) ? minimum : null;
 }

@@ -123,19 +123,13 @@ export const documentViews = {
   ant: `
     <h2 id="model-title"></h2>
     <p id="model-description"></p>
-    ${scene('검은 점은 리더, 작은 회색 점은 지연된 복사본입니다. 옅은 선은 기억된 리더의 경로입니다.')}
+    ${scene('작은 점은 동등한 개미, 옅은 회색은 모두가 남긴 페로몬 흔적입니다.')}
     <p id="interaction-hint"></p>
-    <fieldset id="ant-playback">
-      <legend>기억 재생</legend>
-      <p class="actions"><button type="button" data-action="ant-loop">LOOP</button><button type="button" data-action="ant-release" disabled>RELEASE</button></p>
-      <p>현재 모드: <output id="ant-mode">LIVE</output></p>
-      <p>기억: <output id="ant-memory"></output></p>
-    </fieldset>
-    ${analysis('지연된 움직임')}
+    ${analysis('개체와 공유 흔적')}
     <details id="model-notes">
-      <summary>기억과 재생 방식</summary>
-      <p>리더는 방향을 조금씩 바꾸며 움직이고, 위치와 시각을 초당 60개씩 기록합니다. 메모리가 가득 차면 가장 오래된 샘플부터 덮어씁니다.</p>
-      <p>각 복사본은 120–840 ms 전의 위치를 시간 보간으로 읽고, 매우 작은 부드러운 차이를 더합니다. LOOP에서는 원래 기억을 고정하고, 경로의 끝과 시작 사이에 짧은 재생 연결을 둡니다.</p>
-      <p>RELEASE는 현재 재생 위치에서 새 기록을 시작합니다. 처음에는 아직 쌓이지 않은 지연만큼 가장 오래된 위치를 읽습니다.</p>
+      <summary>공유 기억과 국소 상호작용</summary>
+      <p>페로몬은 이동한 거리에 비례해 쌓이고 시간에 따라 줄어듭니다. 각 개미의 탐색 성향과 흔적 감도는 유지되며, 강한 흔적은 선택 확률을 높입니다.</p>
+      <p>가까운 몸체는 서로 밀어내고, 앞이 붐비면 감속하거나 더 여유 있는 방향으로 부드럽게 돌아갑니다. 페로몬의 유인과 몸체의 점유는 별도로 계산합니다.</p>
+      <p>리더나 복사본 역할은 없습니다. 경로의 강화·이탈·분기·합류는 각 개체의 국소적인 선택에서 나타납니다.</p>
     </details>`
 };

@@ -228,7 +228,8 @@ async function verifyModelSemantics(page, name) {
     inspectorVisible: Boolean(document.querySelector('#string-inspector') && !document.querySelector('#string-inspector').hidden),
     tableRows: document.querySelectorAll('#analysis tbody tr').length
   }));
-  assert.ok(actual.legends.length > 0 && actual.legends.every(Boolean), 'control groups have descriptive native legends');
+  if (name === 'ant') assert.equal(actual.legends.length, 0, 'ANT has no retired playback control fieldset');
+  else assert.ok(actual.legends.length > 0 && actual.legends.every(Boolean), 'control groups have descriptive native legends');
   assert.ok(actual.analysisHeaders.length > 0 && actual.tableRows > 0, 'analysis uses a semantic table');
   assert.deepEqual(actual.notes, ['details', 'details'], 'model notes and JSON state use native details');
   assert.equal(actual.inspectorVisible, name === 'string', 'String inspector visibility follows the selected model');
@@ -239,19 +240,14 @@ async function verifyModelSemantics(page, name) {
   }
   if (name === 'plate') await page.locator('#pickup-settings').waitFor({ state: 'attached' });
   if (name === 'sphere') await page.locator('#sphere-excitation').waitFor({ state: 'attached' });
-  if (name === 'ant') await page.locator('#ant-playback').waitFor({ state: 'attached' });
 }
 
 async function readCanvasFrame(page) {
   return page.locator('#simulation-canvas').evaluate(canvas => canvas.toDataURL());
 }
 
-async function readAntMemory(page) {
-  return page.locator('#ant-memory').evaluate(element => element.value || element.textContent.trim());
-}
-
-async function readAntMode(page) {
-  return page.locator('#ant-mode').evaluate(element => element.value || element.textContent.trim());
+async function readAntAnalysis(page) {
+  return page.locator('#analysis tbody').evaluate(tbody => [...tbody.rows].map(row => row.textContent.trim()));
 }
 
 async function verifyAnt(page, requestedUrls) {
@@ -260,10 +256,12 @@ async function verifyAnt(page, requestedUrls) {
   await verifyModelSemantics(page, 'ant');
   await verifyMobileLayout(page, 'ant');
 
-  assert.equal((await readState(page)).mode, 'live');
-  assert.match(await readAntMode(page), /live/i);
-  assert.equal(await page.locator('[data-action="ant-loop"]').count(), 1);
-  assert.equal(await page.locator('[data-action="ant-release"]').count(), 1);
+  const state = await readState(page);
+  assert.equal(state.model, 'ant');
+  assert.equal(state.population.count, 64, 'ANT starts with the default population');
+  assert.equal(await page.locator('#ant-playback').count(), 0, 'ANT has no obsolete loop/release controls');
+  assert.equal(await page.locator('[data-action="ant-loop"], [data-action="ant-release"]').count(), 0,
+    'ANT has no obsolete playback actions');
   assert.equal(await page.evaluate(() => typeof window.setup === 'undefined'
     && typeof window.draw === 'undefined' && typeof window.circle === 'undefined'), true,
   'p5 runs in instance mode without global sketch functions');
@@ -272,39 +270,49 @@ async function verifyAnt(page, requestedUrls) {
   assert.equal(requestedUrls.some(url => /p5[./-]sound/i.test(url)), false,
     'ANT does not load p5.sound');
 
-  const initialMemory = await readAntMemory(page);
+  const initialFrame = await readCanvasFrame(page);
+  const initialAnalysis = await readAntAnalysis(page);
+  assert.ok(initialAnalysis.some(row => /population|agents|개체/i.test(row)), 'analysis reports population');
+  assert.ok(initialAnalysis.some(row => /mean speed|평균 속도/i.test(row)), 'analysis reports mean speed');
+  const initialMass = initialAnalysis.find(row => /pheromone|페로몬/i.test(row));
+  assert.ok(initialMass, 'analysis reports pheromone mass');
   await page.waitForTimeout(900);
-  const liveMemory = await readAntMemory(page);
-  assert.notEqual(liveMemory, initialMemory, 'live mode records new trajectory samples');
+  const activeFrame = await readCanvasFrame(page);
+  const activeAnalysis = await readAntAnalysis(page);
+  assert.notEqual(activeFrame, initialFrame, 'equal agents continue moving in the active simulation');
+  const activeMass = activeAnalysis.find(row => /pheromone|페로몬/i.test(row));
+  assert.notEqual(activeMass, initialMass, 'active simulation updates pheromone mass');
+  assert.match(activeAnalysis.find(row => /population|agents|개체/i.test(row)), /64/,
+    'analysis reports all 64 agents');
+  assert.ok(activeAnalysis.find(row => /mean speed|평균 속도/i.test(row)), 'mean speed remains visible');
+  if (!useProduction) {
+    const summary = await page.evaluate(async () => {
+      const { app } = await import('/src/main.js');
+      const snapshot = app.lab.model.getSnapshot();
+      return {
+        status: snapshot.status,
+        agents: snapshot.agents.length,
+        radii: [...new Set(snapshot.agents.map(agent => agent.radius))],
+        pheromoneIsFloat32: snapshot.pheromone.values instanceof Float32Array,
+        pheromoneSize: snapshot.pheromone.values.length,
+        pheromoneGridSize: snapshot.pheromone.width * snapshot.pheromone.height,
+        totalMass: snapshot.pheromone.totalMass,
+        meanSpeed: snapshot.analysis.meanSpeed
+      };
+    });
+    assert.equal(summary.status, 'active');
+    assert.equal(summary.agents, 64);
+    assert.equal(summary.radii.length, 1, 'agents share one body radius');
+    assert.equal(summary.pheromoneIsFloat32, true);
+    assert.ok(summary.pheromoneGridSize > 0 && summary.pheromoneSize === summary.pheromoneGridSize,
+      'pheromone field values match its configured grid');
+    assert.ok(Number.isFinite(summary.totalMass) && summary.totalMass > 0);
+    assert.ok(Number.isFinite(summary.meanSpeed));
+  }
   assert.equal(await page.evaluate(() => window.__physicalAudioProbe.liveRaf.size), 1,
     'ANT uses the single application animation frame');
   assert.equal(await page.locator('#scene canvas').count(), 1, 'ANT mounts one canvas');
   await page.screenshot({ path: 'test-results/ant.png', fullPage: true });
-
-  await page.locator('[data-action="ant-loop"]').click();
-  await page.waitForFunction(() => JSON.parse(document.querySelector('#state-json').textContent).mode === 'loop');
-  const frozenMemory = await readAntMemory(page);
-  const frameAtLoop = await readCanvasFrame(page);
-  await page.waitForTimeout(500);
-  assert.equal(await readAntMemory(page), frozenMemory, 'loop mode freezes the recorded trajectory');
-  assert.notEqual(await readCanvasFrame(page), frameAtLoop, 'leader/followers continue moving along the loop');
-  assert.equal(await page.evaluate(() => window.__physicalAudioProbe.audioContexts.length), 0,
-    'loop playback remains visual only');
-
-  await page.locator('[data-action="ant-release"]').click();
-  await page.waitForFunction(() => JSON.parse(document.querySelector('#state-json').textContent).mode === 'live');
-  const releasedMemory = await readAntMemory(page);
-  await page.waitForTimeout(500);
-  assert.notEqual(await readAntMemory(page), releasedMemory, 'release resumes live recording');
-  assert.equal(await page.evaluate(() => window.__physicalAudioProbe.liveRaf.size), 1,
-    'release keeps exactly one active application animation frame');
-
-  const antCanvas = page.locator('#simulation-canvas');
-  await antCanvas.evaluate(canvas => canvas.focus());
-  await page.keyboard.press('l');
-  await page.waitForFunction(() => JSON.parse(document.querySelector('#state-json').textContent).mode === 'loop');
-  await page.keyboard.press('r');
-  await page.waitForFunction(() => JSON.parse(document.querySelector('#state-json').textContent).mode === 'live');
 
   if (!useProduction) {
     await page.evaluate(async () => {
