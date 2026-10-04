@@ -4,10 +4,14 @@ import { PheromoneField } from './PheromoneField.js';
 
 const STEP_MS = 1000 / 60;
 const MAX_FRAME_GAP_MS = 100;
-// Cell values from fresh distance-based trails are much smaller than the
-// storage cap. This response scale keeps sparse trails perceptible to agents.
-const TRAIL_HALF_SATURATION = 0.012;
+// A steep Hill response suppresses diffuse residue while rewarding repeated
+// passes. Concentrations are cell values, not fractions of the storage cap.
+const TRAIL_HALF_SATURATION = 0.035;
+const TRAIL_RESPONSE_EXPONENT = 3;
+const TRAIL_SCORE_GAIN = 2.8;
 const DECISION_TEMPERATURE = 0.85;
+const MIN_EXPLORATION_PROBABILITY = 0.04;
+const SENSOR_OFFSETS = [-1, -0.5, 0, 0.5, 1];
 const SEPARATION_ACCELERATION = 0.003;
 const HESITATION_SPEED_RATIO = 0.05;
 const HESITATION_MIN_SECONDS = 0.7;
@@ -15,9 +19,9 @@ const HESITATION_RANGE_SECONDS = 0.8;
 const TAU = Math.PI * 2;
 const DEFAULT_STATE = Object.freeze({
   model: 'ant',
-  population: { count: 64 },
-  pheromone: { halfLifeSeconds: 14, amountPerUnitDistance: 6, radius: 0.009 },
-  behavior: { sensorDistance: 0.042, bodyRadius: 0.006 }
+  population: { count: 28 },
+  pheromone: { halfLifeSeconds: 3, amountPerUnitDistance: 4.5, radius: 0.0045, reinforcementGain: 0.45 },
+  behavior: { sensorDistance: 0.042, sensorWidth: 0.014, bodyRadius: 0.006 }
 });
 
 /** Framework independent population and shared-environment simulation. */
@@ -179,6 +183,10 @@ export class AntController {
       const edgeScale = boundaryScale(agent, movement);
       movement.x *= edgeScale;
       movement.y *= edgeScale;
+      // Read the field before any ant deposits this step. Reinforcement varies
+      // continuously with the trail ahead, rather than an explorer/follower role.
+      movement.depositionMultiplier = 1 + this.state.pheromone.reinforcementGain
+        * trailResponse(this.senseTrail(agent, agent.heading));
       return movement;
     });
 
@@ -196,7 +204,7 @@ export class AntController {
       }
       const travelled = Math.hypot(agent.x - from.x, agent.y - from.y);
       if (travelled > 1e-8) this.field.depositSegment(from, { x: agent.x, y: agent.y }, {
-        amountPerUnitDistance: this.state.pheromone.amountPerUnitDistance,
+        amountPerUnitDistance: this.state.pheromone.amountPerUnitDistance * displacement.depositionMultiplier,
         radius: this.state.pheromone.radius
       });
       this.advanceBehaviorClocks(agent, dt);
@@ -213,7 +221,8 @@ export class AntController {
     if (agent.inspectionRemaining <= 0) {
       agent.inspectionRemaining = 1.2 + this.random() * 2.4;
       if (this.random() < 0.23) {
-        agent.intentHeading = wrapAngle(agent.intentHeading + signed(this.random) * 0.24);
+        agent.intentHeading = wrapAngle(agent.intentHeading + signed(this.random) * 0.24
+          * (1 - 0.8 * (agent.trailConfidence || 0)));
         // Leave enough time for inertial deceleration to produce a near-stop,
         // rather than a barely visible dip in an otherwise constant pace.
         agent.hesitationRemaining = Math.max(agent.hesitationRemaining,
@@ -225,28 +234,54 @@ export class AntController {
     const newlyBlocked = blocked && !agent.wasBlocked;
     agent.wasBlocked = blocked;
     if (agent.decisionRemaining > 0 && agent.committedRemaining > 0 && !newlyBlocked) return;
-    agent.decisionRemaining = 0.25 + this.random() * 0.42;
-    agent.committedRemaining = 0.3 + this.random() * 0.9;
     const offsets = [-0.92, -0.47, 0, 0.47, 0.92];
     const options = offsets.map((offset) => {
-      const heading = wrapAngle(agent.heading + offset + (this.random() - 0.5) * 0.12);
+      const jitter = 0.12 * (1 - 0.8 * (agent.trailConfidence || 0));
+      const heading = wrapAngle(agent.heading + offset + (this.random() - 0.5) * jitter);
       const distance = this.state.behavior.sensorDistance;
       const x = agent.x + Math.cos(heading) * distance;
       const y = agent.y + Math.sin(heading) * distance;
-      const trailAmount = this.field.sample(x, y);
-      // Realistic distance deposits remain far below maxValue=8. Compress
-      // that useful low range while keeping the pheromone influence bounded.
-      const trail = trailAmount / (trailAmount + TRAIL_HALF_SATURATION);
+      const trail = trailResponse(this.senseTrail(agent, heading));
       const crowding = this.occupancy.crowdingInDirection(agent, agents, heading, distance * 1.45);
       const wall = boundaryPenalty(x, y);
-      const score = trail * agent.personality.pheromoneSensitivity * 1.8
-        - crowding * 3.2 - wall * 2.4 + (this.random() - 0.5) * 0.42;
-      return { heading, score };
+      return { heading, offset, trail, crowding, wall };
     });
-    const chosen = this.random() < agent.personality.exploration
+    // A flat field offers no clear directional cue, even if all sensors are
+    // elevated. Trail confidence is a continuous sensor value, not a role.
+    agent.trailConfidence = Math.max(...options.map(option => option.trail))
+      - Math.min(...options.map(option => option.trail));
+    const confidence = agent.trailConfidence;
+    const exploration = Math.max(MIN_EXPLORATION_PROBABILITY,
+      agent.personality.exploration * (1.2 - confidence));
+    agent.decisionRemaining = (0.25 + this.random() * 0.42) * (1 + 0.35 * confidence);
+    agent.committedRemaining = 0.3 + this.random() * 0.9;
+    for (const option of options) {
+      option.score = option.trail * agent.personality.pheromoneSensitivity * TRAIL_SCORE_GAIN
+        - option.crowding * 3.2 - option.wall * 2.4
+        + (Math.cos(option.offset) - 1) * confidence * 0.55
+        + (this.random() - 0.5) * 0.42 * (1 - 0.85 * confidence);
+    }
+    const chosen = this.random() < exploration
       ? options[Math.floor(this.random() * options.length)]
-      : weightedChoice(options, this.random, DECISION_TEMPERATURE);
+      : weightedChoice(options, this.random, DECISION_TEMPERATURE * (1 - 0.4 * confidence));
     agent.intentHeading = chosen.heading;
+  }
+
+  /** Sense across a wider footprint without widening the deposited field. */
+  senseTrail(agent, heading) {
+    const { sensorDistance, sensorWidth } = this.state.behavior;
+    const x = agent.x + Math.cos(heading) * sensorDistance;
+    const y = agent.y + Math.sin(heading) * sensorDistance;
+    const nx = -Math.sin(heading), ny = Math.cos(heading);
+    let signal = 0;
+    for (const offset of SENSOR_OFFSETS) {
+      // Favor a centered trail but retain distant narrow peaks; averaging
+      // empty cells here would dilute the very trail we want to discover.
+      const weight = 1 - Math.abs(offset) * 0.45;
+      signal = Math.max(signal, this.field.sample(x + nx * sensorWidth * offset,
+        y + ny * sensorWidth * offset) * weight);
+    }
+    return signal;
   }
 
   advanceBehaviorClocks(agent, dt) {
@@ -285,11 +320,13 @@ function createPopulation(count, random, radius) {
 function normalizeState(input) {
   const state = mergeState(DEFAULT_STATE, input);
   state.model = 'ant';
-  state.population.count = Math.round(clampFinite(state.population.count, 8, 100, 64));
-  state.pheromone.halfLifeSeconds = clampFinite(state.pheromone.halfLifeSeconds, 2, 120, 14);
-  state.pheromone.amountPerUnitDistance = clampFinite(state.pheromone.amountPerUnitDistance, 0.1, 30, 6);
-  state.pheromone.radius = clampFinite(state.pheromone.radius, 0.002, 0.04, 0.009);
+  state.population.count = Math.round(clampFinite(state.population.count, 8, 100, DEFAULT_STATE.population.count));
+  state.pheromone.halfLifeSeconds = clampFinite(state.pheromone.halfLifeSeconds, 0.5, 120, DEFAULT_STATE.pheromone.halfLifeSeconds);
+  state.pheromone.amountPerUnitDistance = clampFinite(state.pheromone.amountPerUnitDistance, 0.1, 30, DEFAULT_STATE.pheromone.amountPerUnitDistance);
+  state.pheromone.radius = clampFinite(state.pheromone.radius, 0.002, 0.04, DEFAULT_STATE.pheromone.radius);
+  state.pheromone.reinforcementGain = clampFinite(state.pheromone.reinforcementGain, 0, 1, DEFAULT_STATE.pheromone.reinforcementGain);
   state.behavior.sensorDistance = clampFinite(state.behavior.sensorDistance, 0.012, 0.1, 0.042);
+  state.behavior.sensorWidth = clampFinite(state.behavior.sensorWidth, 0.004, 0.04, DEFAULT_STATE.behavior.sensorWidth);
   state.behavior.bodyRadius = clampFinite(state.behavior.bodyRadius, 0.003, 0.015, 0.006);
   return state;
 }
@@ -308,6 +345,10 @@ function clampFinite(value, min, max, fallback) {
 }
 function clamp(value, min, max) { return Math.min(max, Math.max(min, value)); }
 function signed(random) { return random() * 2 - 1; }
+function trailResponse(signal) {
+  const normalized = (signal / TRAIL_HALF_SATURATION) ** TRAIL_RESPONSE_EXPONENT;
+  return normalized / (1 + normalized);
+}
 function wrapAngle(value) { return ((value + Math.PI) % TAU + TAU) % TAU - Math.PI; }
 function blendAngle(from, to, amount) { return from + wrapAngle(to - from) * amount; }
 function boundaryPenalty(x, y) {

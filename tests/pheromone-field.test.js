@@ -75,6 +75,20 @@ test('sampling clamps coordinates and invalid values fail clearly', () => {
   assert.throws(() => field.depositSegment(start, end, { radius: 0 }), /greater than zero/);
 });
 
+test('default thin traces lose most of their signal quickly without reinforcement', () => {
+  const narrow = new PheromoneField();
+  const wide = new PheromoneField();
+  narrow.depositSegment(start, end);
+  wide.depositSegment(start, end, { radius: 0.009 });
+  const initial = narrow.getSnapshot();
+  const occupied = values => values.filter(value => value > 1e-6).length;
+  assert.ok(occupied(initial.values) < occupied(wide.getSnapshot().values), 'deposition covers fewer cells');
+  narrow.decay(12);
+  const faded = narrow.getSnapshot();
+  assert.ok(Math.abs(faded.totalMass / initial.totalMass - 1 / 16) < 1e-6,
+    'an abandoned trace retains only 6.25% after twelve seconds');
+});
+
 function interpolate(a, b, t) {
   return { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t };
 }

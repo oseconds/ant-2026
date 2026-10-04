@@ -37,7 +37,10 @@ test('population has equal agents with stable individual personalities and share
   const controller = new AntController({ random: seededRandom(10) });
   await controller.init();
   const initial = controller.getSnapshot();
-  assert.equal(initial.agents.length, 64);
+  assert.equal(initial.agents.length, 28);
+  assert.equal(initial.state.pheromone.halfLifeSeconds, 3);
+  assert.equal(initial.state.pheromone.radius, 0.0045);
+  assert.ok(initial.state.behavior.sensorWidth > initial.state.pheromone.radius);
   assert.ok(initial.agents.every((agent) => agent.id.startsWith('ant-')));
   assert.ok(initial.agents.every((agent) => Number.isFinite(agent.personality.preferredSpeed)));
   assert.equal('leader' in initial, false);
@@ -200,7 +203,8 @@ test('long runs across seeds remain finite, bounded, spread out, and collision s
 });
 
 test('a dense equal-agent cluster disperses without body overlap or unstable velocity', async () => {
-  const controller = new AntController({ random: seededRandom(48) });
+  // Keep the larger stress case even though the demonstration defaults to 28.
+  const controller = new AntController({ random: seededRandom(48), state: { population: { count: 64 } } });
   await controller.init();
   for (let index = 0; index < controller.agents.length; index += 1) {
     const agent = controller.agents[index];
@@ -314,30 +318,32 @@ test('an isolated ant has repeated near-stops after warmup and resumes forward m
 });
 
 test('approaching bodies brake smoothly before a head-on contact', async () => {
-  const controller = new AntController({ random: seededRandom(17) });
-  await controller.init();
-  const [a, b] = controller.agents;
-  controller.agents = [a, b];
-  a.x = 0.4; a.y = 0.5; a.heading = 0;
-  b.x = 0.52; b.y = 0.5; b.heading = Math.PI;
-  for (const ant of controller.agents) {
-    ant.intentHeading = ant.heading;
-    ant.vx = Math.cos(ant.heading) * 0.06;
-    ant.vy = 0;
-    ant.inspectionRemaining = ant.decisionRemaining = ant.committedRemaining = 1000;
-    ant.hesitationRemaining = 0;
-  }
-  for (let tick = 0; tick < 300; tick += 1) {
-    const before = controller.agents.map(ant => ({ vx: ant.vx, vy: ant.vy }));
-    controller.tick(1 / 60);
-    for (const [index, ant] of controller.agents.entries()) {
-      assert.ok(Math.hypot(ant.vx - before[index].vx, ant.vy - before[index].vy)
-        <= (ant.personality.acceleration + 0.01) / 60,
-      'anticipatory braking avoids an abrupt stop at full speed');
+  for (const count of [28, 64]) {
+    const controller = new AntController({ random: seededRandom(17), state: { population: { count } } });
+    await controller.init();
+    const [a, b] = controller.agents;
+    controller.agents = [a, b];
+    a.x = 0.4; a.y = 0.5; a.heading = 0;
+    b.x = 0.52; b.y = 0.5; b.heading = Math.PI;
+    for (const ant of controller.agents) {
+      ant.intentHeading = ant.heading;
+      ant.vx = Math.cos(ant.heading) * 0.06;
+      ant.vy = 0;
+      ant.inspectionRemaining = ant.decisionRemaining = ant.committedRemaining = 1000;
+      ant.hesitationRemaining = 0;
     }
-    assert.ok(minSeparation(controller.agents) >= a.radius + b.radius - 1e-6);
+    for (let tick = 0; tick < 300; tick += 1) {
+      const before = controller.agents.map(ant => ({ vx: ant.vx, vy: ant.vy }));
+      controller.tick(1 / 60);
+      for (const [index, ant] of controller.agents.entries()) {
+        assert.ok(Math.hypot(ant.vx - before[index].vx, ant.vy - before[index].vy)
+          <= (ant.personality.acceleration + 0.01) / 60,
+        'anticipatory braking avoids an abrupt stop at full speed');
+      }
+      assert.ok(minSeparation(controller.agents) >= a.radius + b.radius - 1e-6);
+    }
+    await controller.destroy();
   }
-  await controller.destroy();
 });
 
 test('agents retain independent inertia and angular motion is smooth and finite', () => {
@@ -346,4 +352,73 @@ test('agents retain independent inertia and angular motion is smooth and finite'
   assert.ok(Math.abs(agent.heading) < 0.1, 'heading responds over time instead of snapping');
   agent.accelerateToward(agent.personality.preferredSpeed, 1 / 60);
   assert.ok(Math.hypot(agent.vx, agent.vy) < agent.personality.acceleration / 30);
+});
+
+test('weak directional residue has little influence while reinforced trails reduce wandering probabilistically', async () => {
+  async function choices(signal) {
+    const controller = new AntController({ random: seededRandom(305) });
+    await controller.init();
+    const ant = controller.agents[0];
+    controller.agents = [ant];
+    ant.x = 0.4; ant.y = 0.5; ant.heading = 0;
+    ant.inspectionRemaining = 1000;
+    ant.hesitationRemaining = 0;
+    // A thin local trail in front of the ant; the rest of the environment is empty.
+    controller.field.sample = (_x, y) => Math.abs(y - 0.5) < 0.004 ? signal : 0;
+    let forward = 0;
+    for (let trial = 0; trial < 2000; trial += 1) {
+      ant.decisionRemaining = ant.committedRemaining = 0;
+      controller.updateIntention(ant, [ant], controller.occupancy.sense(ant, [ant]), 1 / 60);
+      if (Math.abs(ant.intentHeading) < 0.2) forward += 1;
+    }
+    const confidence = ant.trailConfidence;
+    await controller.destroy();
+    return { forward: forward / 2000, confidence };
+  }
+  const empty = await choices(0);
+  const weak = await choices(0.005);
+  const middle = await choices(0.025);
+  const strong = await choices(0.14);
+  assert.ok(Math.abs(weak.forward - empty.forward) < 0.03, 'weak directional haze is almost ignored');
+  assert.ok(weak.confidence < 0.01);
+  assert.ok(middle.forward > weak.forward + 0.15);
+  assert.ok(strong.forward > middle.forward + 0.25, 'reinforcement produces a steep attraction response');
+  assert.ok(strong.forward > 0.85 && strong.forward < 0.99, 'clear trails reduce wandering without eliminating it');
+  assert.ok(strong.confidence > 0.9);
+});
+
+test('a wide sensor discovers a thin adjacent trail without broadening the pheromone field', async () => {
+  const controller = new AntController({ random: seededRandom(20) });
+  await controller.init();
+  const ant = controller.agents[0];
+  ant.x = 0.4; ant.y = 0.5; ant.heading = 0;
+  controller.field.depositSegment({ x: 0.43, y: 0.514 }, { x: 0.7, y: 0.514 });
+  const before = controller.field.getSnapshot();
+  const pointSignal = controller.field.sample(ant.x + controller.state.behavior.sensorDistance, ant.y);
+  assert.equal(pointSignal, 0, 'the ant is outside the narrow deposit');
+  assert.ok(controller.senseTrail(ant, 0) > 0.005, 'the nearby trail is still discoverable');
+  assert.deepEqual(controller.field.getSnapshot().values, before.values, 'sensing does not diffuse the field');
+  await controller.destroy();
+});
+
+test('distance deposition gains a small continuous reinforcement boost', async () => {
+  async function depositionRates(signal) {
+    const rates = [];
+    const controller = new AntController({ random: seededRandom(75) });
+    await controller.init();
+    controller.field.sample = () => signal;
+    controller.field.depositSegment = (_from, _to, options) => { rates.push(options.amountPerUnitDistance); };
+    controller.tick(1 / 60);
+    await controller.destroy();
+    assert.ok(rates.length > 0);
+    return rates;
+  }
+  const isolated = await depositionRates(0);
+  const weak = await depositionRates(0.005);
+  const middle = await depositionRates(0.035);
+  const reinforced = await depositionRates(0.14);
+  assert.ok(isolated.every(rate => rate === 4.5));
+  assert.ok(weak.every(rate => rate < 4.5 * 1.01));
+  assert.ok(middle.every(rate => rate > weak[0] && rate < reinforced[0]));
+  assert.ok(reinforced.every(rate => rate > 4.5 * 1.4 && rate <= 4.5 * 1.45));
 });

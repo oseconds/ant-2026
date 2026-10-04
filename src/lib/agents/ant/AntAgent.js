@@ -27,6 +27,7 @@ export class AntAgent {
     this.inspectionRemaining = between(random, 0, 1.4);
     this.decisionRemaining = between(random, 0, 0.25);
     this.intentHeading = this.heading;
+    this.trailConfidence = 0;
     this.committedRemaining = 0;
   }
 

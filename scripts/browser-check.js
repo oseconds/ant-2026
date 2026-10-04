@@ -258,7 +258,9 @@ async function verifyAnt(page, requestedUrls) {
 
   const state = await readState(page);
   assert.equal(state.model, 'ant');
-  assert.equal(state.population.count, 64, 'ANT starts with the default population');
+  assert.equal(state.population.count, 28, 'ANT starts with the default population');
+  assert.equal(state.pheromone.halfLifeSeconds, 3, 'ANT uses the tuned pheromone half-life');
+  assert.equal(state.pheromone.radius, .0045, 'ANT uses the tuned deposit radius');
   assert.equal(await page.locator('#ant-playback').count(), 0, 'ANT has no obsolete loop/release controls');
   assert.equal(await page.locator('[data-action="ant-loop"], [data-action="ant-release"]').count(), 0,
     'ANT has no obsolete playback actions');
@@ -282,8 +284,8 @@ async function verifyAnt(page, requestedUrls) {
   assert.notEqual(activeFrame, initialFrame, 'equal agents continue moving in the active simulation');
   const activeMass = activeAnalysis.find(row => /pheromone|페로몬/i.test(row));
   assert.notEqual(activeMass, initialMass, 'active simulation updates pheromone mass');
-  assert.match(activeAnalysis.find(row => /population|agents|개체/i.test(row)), /64/,
-    'analysis reports all 64 agents');
+  assert.match(activeAnalysis.find(row => /population|agents|개체/i.test(row)), /28/,
+    'analysis reports all 28 agents');
   assert.ok(activeAnalysis.find(row => /mean speed|평균 속도/i.test(row)), 'mean speed remains visible');
   if (!useProduction) {
     const summary = await page.evaluate(async () => {
@@ -301,7 +303,7 @@ async function verifyAnt(page, requestedUrls) {
       };
     });
     assert.equal(summary.status, 'active');
-    assert.equal(summary.agents, 64);
+    assert.equal(summary.agents, 28);
     assert.equal(summary.radii.length, 1, 'agents share one body radius');
     assert.equal(summary.pheromoneIsFloat32, true);
     assert.ok(summary.pheromoneGridSize > 0 && summary.pheromoneSize === summary.pheromoneGridSize,
@@ -312,7 +314,17 @@ async function verifyAnt(page, requestedUrls) {
   assert.equal(await page.evaluate(() => window.__physicalAudioProbe.liveRaf.size), 1,
     'ANT uses the single application animation frame');
   assert.equal(await page.locator('#scene canvas').count(), 1, 'ANT mounts one canvas');
-  await page.screenshot({ path: 'test-results/ant.png', fullPage: true });
+  if (!useProduction) {
+    await page.evaluate(async () => {
+      const { app } = await import('/src/main.js');
+      const model = app.lab.model;
+      for (let step = 0; step < 40 * 60; step += 1) model.tick(1 / 60);
+    });
+    await page.waitForTimeout(200);
+    await page.screenshot({ path: 'test-results/ant-matured.png', fullPage: true });
+  } else {
+    await page.screenshot({ path: 'test-results/ant-production.png', fullPage: true });
+  }
 
   if (!useProduction) {
     await page.evaluate(async () => {

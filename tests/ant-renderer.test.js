@@ -20,7 +20,7 @@ test('AntRenderer paints equal agent marks and a cached pheromone field without 
   assert.equal(canvas.getAttribute('aria-label'), 'Ant trajectories');
   assert.equal(canvas.getAttribute('role'), 'img');
   assert.ok(calls.some(([name]) => name === 'noLoop'));
-  const values = new Float32Array([0, 0.05, 0.25, 0]);
+  const values = new Float32Array([0, 0.005, 0.05, 0.25]);
   const snapshot = {
     agents: [
       { id: 'a', x: 0.1, y: 0.2, vx: 0, vy: 0, heading: 0, radius: 0.006, personality: 'curious' },
@@ -39,7 +39,7 @@ test('AntRenderer paints equal agent marks and a cached pheromone field without 
   assert.equal(calls.filter(([name]) => name === 'image').length, 1);
   assert.deepEqual([...values], savedValues);
   const fieldImage = calls.find(([name]) => name === 'createImage')[1];
-  assert.deepEqual([...fieldImage.pixels].filter((_, i) => i % 4 === 3), [0, 22, 39, 0]);
+  assert.deepEqual([...fieldImage.pixels].filter((_, i) => i % 4 === 3), [0, 1, 29, 47]);
   assert.ok(!calls.some(([name]) => name === 'beginShape'));
 
   renderer.resize(300, 200, 1.5);

@@ -1,7 +1,9 @@
 const CONTACT_TOLERANCE = 1e-10;
 const MAX_CONTACT_PASSES = 24;
 const CONTACT_SEARCH_ITERATIONS = 24;
-const BRAKING_HORIZON_SECONDS = 1.2;
+// Earlier braking keeps a strong trail from carrying approaching bodies all
+// the way into the emergency contact guard.
+const BRAKING_HORIZON_SECONDS = 2.1;
 
 /** Local body interaction, kept separate from the shared pheromone memory. */
 export class LocalOccupancy {

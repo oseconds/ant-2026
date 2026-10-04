@@ -173,7 +173,7 @@ export class AntRenderer {
   }
 }
 
-const PHEROMONE_DISPLAY_HALF_SATURATION = 0.06;
+const PHEROMONE_DISPLAY_HALF_SATURATION = 0.04;
 const PHEROMONE_DISPLAY_MAX_ALPHA = 48;
 
 function drawSnapshot(p, snapshot, renderer) {
@@ -210,8 +210,8 @@ function updateFieldImage(p, renderer, field) {
   pixels.fill(0);
   for (let index = 0; index < limit; index++) {
     const value = Number.isFinite(values[index]) ? Math.max(0, values[index]) : 0;
-    const opacity = Math.round(PHEROMONE_DISPLAY_MAX_ALPHA
-      * value / (value + PHEROMONE_DISPLAY_HALF_SATURATION));
+    const contrast = value * value / (value * value + PHEROMONE_DISPLAY_HALF_SATURATION ** 2);
+    const opacity = Math.round(PHEROMONE_DISPLAY_MAX_ALPHA * contrast);
     const offset = index * 4;
     pixels[offset] = 0;
     pixels[offset + 1] = 0;
