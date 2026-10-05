@@ -116,6 +116,36 @@ test('bridge lazily creates the existing Plate and sends restrained spatial stri
   assert.equal(audio.handles[0].disconnectCount, 1);
 });
 
+test('one valid tripod centroid excites the existing Plate once and malformed or outside contacts are dropped', async () => {
+  const audio = fakeEngine();
+  const bridge = new AntAudioBridge({ audioEngine: audio });
+  await bridge.setEnabled(true);
+  const contacts = [
+    { legId: 'FL', position: { x: 0.2, y: 0.3 } },
+    { legId: 'MR', position: { x: 0.4, y: 0.5 } },
+    { legId: 'RL', position: { x: 0.6, y: 0.7 } }
+  ];
+  const event = { type: 'FOOT_CONTACT', antId: 'ant-1', contactGroup: 'A', contacts,
+    position: { x: 0.4, y: 0.5 }, strength: 0.035, simulationTimeMs: 123 };
+  assert.equal(await bridge.handleFootContact(event), true);
+  assert.equal(audio.calls[0].messages.filter(message => message.type === 'strike').length, 1);
+  const strike = audio.calls[0].messages.find(message => message.type === 'strike');
+  assert.ok(Math.abs(strike.payload.position.x - (-0.2 * 0.92 / Math.sqrt(2))) < 1e-12);
+  assert.ok(Math.abs(strike.payload.position.y - (0.0 * 0.92 / Math.sqrt(2))) < 1e-12);
+  assert.equal(strike.payload.strength, 0.035);
+
+  const invalid = { ...event, contacts: [{ legId: 'FL', position: { x: -0.001, y: 0.5 } }],
+    position: { x: -0.001, y: 0.5 } };
+  assert.equal(await bridge.handleFootContact(invalid), false);
+  assert.equal(await bridge.handleFootContact({ ...event, position: { x: 0.5, y: 0.5 } }), false,
+    'event position must remain the actual contacts centroid');
+  assert.equal(await bridge.handleFootContact({ ...event, contacts: [
+    { legId: 'FR', position: { x: 0.4, y: 0.5 } }
+  ] }), false, 'the contact leg must belong to the named tripod');
+  assert.equal(audio.calls[0].messages.filter(message => message.type === 'strike').length, 1);
+  await bridge.destroy();
+});
+
 test('steps are dropped while loading, and Off cancels pending initialization and disconnects late worklets', async () => {
   const gate = deferred();
   const audio = fakeEngine(() => gate.promise);

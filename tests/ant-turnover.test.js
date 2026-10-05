@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { AntController } from '../src/lib/agents/ant/AntController.js';
+import { GaitController } from '../src/lib/agents/ant/GaitController.js';
 import { AntAgent } from '../src/lib/agents/ant/AntAgent.js';
 
 function seededRandom(seed) {
@@ -33,7 +34,7 @@ function nearBoundaryAgent(controller, start = { x: 0.9998, y: 0.5 }, velocity =
   return ant;
 }
 
-test('outward exits on every side and a corner deposit and emit STEP only to the first boundary hit', async () => {
+test('outward exits on every side and corner use only the first boundary hit for gait distance', async () => {
   const cases = [
     { name: 'right', start: { x: 0.9998, y: 0.5 }, velocity: { x: 0.018, y: 0 }, end: { x: 1, y: 0.5 } },
     { name: 'left', start: { x: 0.0002, y: 0.5 }, velocity: { x: -0.018, y: 0 }, end: { x: 0, y: 0.5 } },
@@ -43,20 +44,21 @@ test('outward exits on every side and a corner deposit and emit STEP only to the
   ];
 
   for (const [index, scenario] of cases.entries()) {
-    const events = [];
     const controller = new AntController({ random: seededRandom(101 + index), state: { population: { count: 1 } } });
     await controller.init();
     const ant = nearBoundaryAgent(controller, scenario.start, scenario.velocity);
-    const stepState = controller.stepEventGenerator.getOrCreate(ant.id);
-    stepState.stepLength = 0.00005;
-    stepState.distanceRemainder = 0;
-    let stepDistance;
-    const advanceStep = controller.stepEventGenerator.advance.bind(controller.stepEventGenerator);
-    controller.stepEventGenerator.advance = (agent, distance, time) => {
-      stepDistance = distance;
-      return advanceStep(agent, distance, time);
+    const expectedDistance = Math.hypot(scenario.end.x - scenario.start.x,
+      scenario.end.y - scenario.start.y);
+    const gaitState = controller.gaitController.getOrCreate(ant.id);
+    gaitState.phase = 1 - expectedDistance / gaitState.strideCycleLength * 0.5;
+    let gaitTravel;
+    const gaitEvents = [];
+    const advanceGait = controller.gaitController.advance.bind(controller.gaitController);
+    controller.gaitController.advance = (agent, distance, dt, time, segment) => {
+      gaitTravel = { distance, segment };
+      return advanceGait(agent, distance, dt, time, segment);
     };
-    controller.subscribe((event) => { if (event.type === 'step') events.push(event.payload); });
+    controller.subscribe((event) => { if (event.type === 'foot-contact') gaitEvents.push(event.payload); });
 
     const field = controller.field;
     field.depositSegment({ x: 0.35, y: 0.35 }, { x: 0.45, y: 0.35 });
@@ -78,18 +80,22 @@ test('outward exits on every side and a corner deposit and emit STEP only to the
     assert.deepEqual(depositedSegment.to, scenario.end, scenario.name + ': accounting stops at first boundary intersection');
     const observedDistance = Math.hypot(depositedSegment.to.x - depositedSegment.from.x,
       depositedSegment.to.y - depositedSegment.from.y);
-    const expectedDistance = Math.hypot(scenario.end.x - scenario.start.x,
-      scenario.end.y - scenario.start.y);
     assert.ok(Math.abs(observedDistance - expectedDistance) < 1e-12,
-      scenario.name + ': deposition and STEP accounting use only observed distance');
-    assert.ok(Math.abs(stepDistance - expectedDistance) < 1e-12,
-      scenario.name + ': STEP receives only the in-domain travel rather than the full outward displacement');
-    assert.ok(events.length > 0);
-    assert.ok(events.every(event => event.antId === ant.id
-      && event.position.x >= 0 && event.position.x <= 1 && event.position.y >= 0 && event.position.y <= 1));
-    assert.ok(events.every(event => event.position.x === scenario.end.x && event.position.y === scenario.end.y));
-    assert.equal(controller.stepEventGenerator.ants.has(ant.id), false,
-      'retirement clears the per-ant STEP remainder');
+      scenario.name + ': deposition and gait accounting use only observed distance');
+    assert.ok(Math.abs(gaitTravel.distance - expectedDistance) < 1e-12,
+      scenario.name + ': gait receives only the in-domain travel rather than the full outward displacement');
+    assert.deepEqual(gaitTravel.segment, { from: scenario.start, to: scenario.end });
+    for (const event of gaitEvents) {
+      assert.equal(event.type, 'FOOT_CONTACT');
+      assert.equal(event.antId, ant.id);
+      assert.ok(event.contacts.length > 0 && event.contacts.length <= 3);
+      assert.ok(event.contacts.every(contact => contact.position.x >= 0 && contact.position.x <= 1
+        && contact.position.y >= 0 && contact.position.y <= 1));
+      assert.ok(event.position.x >= 0 && event.position.x <= 1
+        && event.position.y >= 0 && event.position.y <= 1);
+    }
+    assert.equal(controller.gaitController.ants.has(ant.id), false,
+      'retirement clears the gait phase and contact traits');
     assert.equal(controller.field, field);
     assert.ok(controller.field.sample(0.4, 0.35) > 0 && controller.field.sample(0.4, 0.35) <= priorSignal,
       'previous environmental memory remains after its depositing ant is removed');
@@ -133,7 +139,7 @@ test('exits are replaced one at a time with fresh individuals while audio toggle
     enabled: false,
     setEnabled(enabled) { this.enabled = enabled; return Promise.resolve(true); },
     setVolume() { return true; },
-    handleStep() { return undefined; },
+    handleFootContact() { return undefined; },
     stop() {},
     destroy() {}
   });
@@ -147,10 +153,8 @@ test('exits are replaced one at a time with fresh individuals while audio toggle
   const oldQuiet = nearBoundaryAgent(quiet);
   const oldAudible = nearBoundaryAgent(audible);
   const sharedField = quiet.field;
-  const oldStepState = quiet.stepEventGenerator.getOrCreate(oldQuiet.id);
-  oldStepState.distanceRemainder = 0.009;
-  const retiredStepValues = { ...oldStepState };
-  audible.stepEventGenerator.getOrCreate(oldAudible.id).distanceRemainder = 0.009;
+  const oldGaitState = { ...quiet.gaitController.getOrCreate(oldQuiet.id) };
+  audible.gaitController.getOrCreate(oldAudible.id);
   await Promise.all([quiet.setAudioEnabled(false), audible.setAudioEnabled(true)]);
 
   for (let tick = 0; tick < 100; tick += 1) {
@@ -177,12 +181,12 @@ test('exits are replaced one at a time with fresh individuals while audio toggle
     && replacement.committedRemaining === 0,
   'behavior clocks start from a new agent constructor');
   assert.ok(replacement.hesitationRemaining >= 0 && replacement.hesitationRemaining <= 0.8);
-  assert.equal(quiet.stepEventGenerator.ants.has(oldQuiet.id), false);
-  const freshStep = quiet.stepEventGenerator.getOrCreate(replacement.id);
-  assert.equal(freshStep.distanceRemainder, 0, 'the replacement starts with a fresh distance remainder');
-  assert.notEqual(freshStep.stepLength, retiredStepValues.stepLength, 'step variation follows its new unique identity');
-  assert.notEqual(freshStep.strikeStrength, retiredStepValues.strikeStrength,
-    'strike variation follows its new unique identity');
+  assert.equal(quiet.gaitController.ants.has(oldQuiet.id), false);
+  const freshGait = quiet.gaitController.getOrCreate(replacement.id);
+  const expectedFreshGait = new GaitController().getOrCreate(replacement.id);
+  assert.deepEqual(freshGait, expectedFreshGait, 'the replacement receives fresh ID-derived phase and gait traits');
+  assert.notEqual(freshGait.strideCycleLength, oldGaitState.strideCycleLength);
+  assert.notEqual(freshGait.contactStrength, oldGaitState.contactStrength);
   assert.equal(quiet.field, sharedField, 'replacement does not replace the shared field');
   assert.equal(quiet.getSnapshot().analysis.totalSpawned,
     quiet.getSnapshot().analysis.totalRetired + quiet.agents.length);
@@ -209,6 +213,7 @@ test('several simultaneous exits preserve a pending timer and replacement remain
   controller.tick(1 / 60);
   assert.equal(controller.agents.length, 0, 'all three independently exiting bodies retire');
   assert.equal(controller.totalRetired, 3);
+  assert.equal(controller.gaitController.ants.size, 0, 'simultaneously retired ants leave no gait state');
   assert.equal(controller.nextSpawnTimeMs, 500, 'an already scheduled simulation-clock spawn is preserved');
   while (controller.simulationTimeMs < 500) {
     const before = controller.totalSpawned;

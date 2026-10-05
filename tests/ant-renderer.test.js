@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { AntRenderer } from '../src/lib/renderers/AntRenderer.js';
+import { AntRenderer, pheromoneValueToAlpha } from '../src/lib/renderers/AntRenderer.js';
+import { GaitController } from '../src/lib/agents/ant/GaitController.js';
 
 test('AntRenderer paints equal agent marks and a cached pheromone field without changing the snapshot', async () => {
   const calls = [];
@@ -39,7 +40,7 @@ test('AntRenderer paints equal agent marks and a cached pheromone field without 
   assert.equal(calls.filter(([name]) => name === 'image').length, 1);
   assert.deepEqual([...values], savedValues);
   const fieldImage = calls.find(([name]) => name === 'createImage')[1];
-  assert.deepEqual([...fieldImage.pixels].filter((_, i) => i % 4 === 3), [0, 1, 29, 47]);
+  assert.deepEqual([...fieldImage.pixels].filter((_, i) => i % 4 === 3), [0, 0, 23, 112]);
   assert.ok(!calls.some(([name]) => name === 'beginShape'));
 
   renderer.resize(300, 200, 1.5);
@@ -48,6 +49,41 @@ test('AntRenderer paints equal agent marks and a cached pheromone field without 
   await renderer.destroy();
   renderer.render({ agents: [{ x: 0, y: 0, radius: 0.006 }] });
   assert.equal(calls.filter(([name]) => name === 'remove').length, 1);
+});
+
+test('pheromone display uses two fixed scales with monotonic weak trace and strong route contrast', () => {
+  const values = [0, 0.004, 0.01, 0.02, 0.04, 0.05, 0.1, 0.18, 0.4];
+  const alpha = values.map(pheromoneValueToAlpha);
+  assert.equal(alpha[0], 0);
+  assert.equal(pheromoneValueToAlpha(Number.NaN), 0);
+  assert.equal(pheromoneValueToAlpha(-1), 0);
+  assert.ok(alpha.every((value, index) => index === 0 || value >= alpha[index - 1]));
+  assert.ok(alpha[2] < alpha[3] && alpha[3] < alpha[6], 'weak traces stay faint while medium paths show');
+  assert.ok(alpha[7] >= 110 && alpha[7] > alpha[6] + 40, 'strong routes become substantially darker');
+  assert.ok(alpha.every(value => value <= 112));
+});
+
+test('articulated ants draw six gait legs and an oriented three-part body from the snapshot geometry', async () => {
+  const calls = [];
+  const parent = makeParent();
+  const canvas = makeCanvas(parent);
+  canvas.getBoundingClientRect = () => ({ width: 240, height: 240 });
+  const renderer = new AntRenderer(canvas, {
+    loadP5: async () => ({ default: makeP5(calls) })
+  });
+  await renderer.init();
+  const ant = movingAnt('ant-7', 0.4, 0.6, Math.PI / 4);
+  const gait = new GaitController();
+  const snapshot = { agents: [{ ...ant, gait: gait.getSnapshot(ant) }],
+    pheromone: { width: 0, height: 0, values: new Float32Array() } };
+  const before = structuredClone(snapshot.agents[0]);
+  renderer.render(snapshot);
+  assert.deepEqual(snapshot.agents[0], before, 'the renderer does not write to its model snapshot');
+  assert.equal(calls.filter(([name]) => name === 'line').length, 12);
+  assert.equal(calls.filter(([name]) => name === 'ellipse').length, 3);
+  assert.equal(calls.filter(([name]) => name === 'circle').length, 0);
+  assert.ok(calls.some(([name, ...args]) => name === 'rotate' && args[0] === ant.heading));
+  await renderer.destroy();
 });
 
 test('destroy cancels initialization while the p5 module is still loading', async () => {
@@ -114,7 +150,13 @@ function makeP5(calls, { deferSetup = false, manualSetup = false, failSetup = fa
           return image;
         },
         image: (...args) => calls.push(['image', ...args]),
-        noStroke: () => calls.push(['noStroke']),
+        noStroke: () => calls.push(['noStroke']), stroke: (...args) => calls.push(['stroke', ...args]),
+        strokeWeight: (...args) => calls.push(['strokeWeight', ...args]),
+        line: (...args) => calls.push(['line', ...args]),
+        push: () => calls.push(['push']), pop: () => calls.push(['pop']),
+        translate: (...args) => calls.push(['translate', ...args]),
+        rotate: (...args) => calls.push(['rotate', ...args]),
+        ellipse: (...args) => calls.push(['ellipse', ...args]),
         fill: (...args) => calls.push(['fill', ...args]), circle: (...args) => calls.push(['circle', ...args])
       };
       sketch(p);
@@ -134,6 +176,8 @@ function makeP5(calls, { deferSetup = false, manualSetup = false, failSetup = fa
     remove() { calls.push(['remove']); }
   };
 }
+
+function movingAnt(id, x, y, heading) { return { id, x, y, heading, radius: 0.006 }; }
 
 function makeParent() {
   return {

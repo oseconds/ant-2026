@@ -34,9 +34,14 @@ function inspectPopulation(controller, target, seenIds, lastIdNumber) {
   assert.equal(ids.size, controller.agents.length, 'active ant IDs must be unique');
   assert.ok(ids.size <= target, `active population ${ids.size} exceeds target ${target}`);
   const newIds = [];
+  let maximumSpeed = 0;
   for (const agent of controller.agents) {
     assert.ok(Number.isFinite(agent.x) && Number.isFinite(agent.y), `${agent.id} position must be finite`);
     assert.ok(Number.isFinite(agent.vx) && Number.isFinite(agent.vy), `${agent.id} velocity must be finite`);
+    const speed = Math.hypot(agent.vx, agent.vy);
+    maximumSpeed = Math.max(maximumSpeed, speed);
+    assert.ok(speed <= agent.personality.preferredSpeed * 1.35 + 1e-12,
+      `${agent.id} speed ${speed} must stay within its existing acceleration cap`);
     assert.ok(agent.x >= 0 && agent.x <= 1 && agent.y >= 0 && agent.y <= 1,
       `${agent.id} must be inside the observed field while active`);
     if (!seenIds.has(agent.id)) newIds.push(agent.id);
@@ -63,11 +68,11 @@ function inspectPopulation(controller, target, seenIds, lastIdNumber) {
     }
   }
 
-  const stepStates = controller.stepEventGenerator?.ants;
-  if (stepStates instanceof Map) {
-    for (const id of stepStates.keys()) assert.ok(ids.has(id), `retired ant ${id} retained STEP state`);
+  const gaitStates = controller.gaitController?.ants;
+  if (gaitStates instanceof Map) {
+    for (const id of gaitStates.keys()) assert.ok(ids.has(id), `retired ant ${id} retained gait state`);
   }
-  return { ids, lastIdNumber, minimumSurfaceGap };
+  return { ids, lastIdNumber, minimumSurfaceGap, maximumSpeed };
 }
 
 function readDiagnostics(controller, target) {
@@ -126,6 +131,7 @@ async function run() {
   const postExitSamples = [];
   const maximumPopulation = { value: 0 };
   let minimumSurfaceGap = Infinity;
+  let maximumSpeed = 0;
   let checkpointIndex = 0;
   let nextExitSample = 0;
   const checkpointTimes = CHECKPOINT_SECONDS.filter((time) => time <= durationSeconds);
@@ -148,9 +154,10 @@ async function run() {
       lastIdNumber = population.lastIdNumber;
       maximumPopulation.value = Math.max(maximumPopulation.value, population.ids.size);
       minimumSurfaceGap = Math.min(minimumSurfaceGap, population.minimumSurfaceGap);
+      maximumSpeed = Math.max(maximumSpeed, population.maximumSpeed);
       assert.equal(controller.field, field, 'the shared pheromone field must not be replaced during turnover');
-      assert.ok(controller.stepEventGenerator?.ants instanceof Map,
-        'turnover evidence expects the active StepEventGenerator state map');
+      assert.ok(controller.gaitController?.ants instanceof Map,
+        'turnover evidence expects the active GaitController state map');
 
       const exitedIds = [...idsBefore].filter((id) => !population.ids.has(id));
       if (exitedIds.length) {
@@ -218,10 +225,12 @@ async function run() {
         fieldClearCallsDuringRun: fieldClearCount,
         uniqueMonotonicAntIds: true,
         activePopulationNeverExceededTarget: true,
-        stepEventStateContainsOnlyActiveAntIds: true,
+        gaitStateContainsOnlyActiveAntIds: true,
         finiteCoordinatesAndVelocitiesEveryStep: true,
         noBodyOverlapEveryStep: true,
-        minimumSurfaceGap: Number.isFinite(minimumSurfaceGap) ? minimumSurfaceGap : null
+        minimumSurfaceGap: Number.isFinite(minimumSurfaceGap) ? minimumSurfaceGap : null,
+        speedWithinExistingPerAntCapEveryStep: true,
+        maximumObservedSpeed: maximumSpeed
       },
       checkpoints,
       exitObservations: exits,
@@ -245,6 +254,7 @@ async function run() {
       exitedAntCount: exits.reduce((sum, event) => sum + event.retiredIds.length, 0),
       postExitFieldSamples: postExitSamples,
       checks: report.checks,
+      maximumObservedSpeed: report.checks.maximumObservedSpeed,
       final: finalDiagnostics,
       observedUniqueAntIds: seenIds.size
     }, null, 2)}\n`);

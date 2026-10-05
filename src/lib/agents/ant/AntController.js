@@ -1,7 +1,7 @@
 import { AntAgent } from './AntAgent.js';
 import { LocalOccupancy } from './LocalOccupancy.js';
 import { PheromoneField } from './PheromoneField.js';
-import { StepEventGenerator } from './StepEventGenerator.js';
+import { GaitController } from './GaitController.js';
 
 const STEP_MS = 1000 / 60;
 const MAX_FRAME_GAP_MS = 100;
@@ -50,7 +50,7 @@ const DEFAULT_STATE = Object.freeze({
 /** Framework independent population and shared-environment simulation. */
 export class AntController {
   constructor({ state, random = Math.random, fieldFactory = (options) => new PheromoneField(options),
-    stepEventGenerator = new StepEventGenerator(), audioBridge = null } = {}) {
+    gaitController = new GaitController(), audioBridge = null } = {}) {
     this.state = normalizeState(state || {});
     this.random = random;
     this.fieldFactory = fieldFactory;
@@ -68,7 +68,7 @@ export class AntController {
     this.agents = [];
     this.field = null;
     this.occupancy = new LocalOccupancy();
-    this.stepEventGenerator = stepEventGenerator;
+    this.gaitController = gaitController;
     this.audioBridge = audioBridge;
   }
 
@@ -86,7 +86,10 @@ export class AntController {
   getState() { return clone(this.state); }
 
   getSnapshot() {
-    const agents = this.agents.map((agent) => agent.getSnapshot());
+    const agents = this.agents.map((agent) => ({
+      ...agent.getSnapshot(),
+      gait: this.gaitController.getSnapshot(agent)
+    }));
     const field = this.field?.getSnapshot() || { width: 0, height: 0, values: new Float32Array(), maxValue: 0, totalMass: 0 };
     let speedTotal = 0;
     for (const agent of agents) speedTotal += Math.hypot(agent.vx, agent.vy);
@@ -148,7 +151,7 @@ export class AntController {
     const retainedCount = Math.min(this.agents.length, this.state.population.count);
     this.totalRetired += this.agents.length - retainedCount;
     this.agents.length = retainedCount;
-    this.stepEventGenerator.retain?.(this.agents.map(agent => agent.id));
+    this.gaitController.retain?.(this.agents.map(agent => agent.id));
     for (const agent of this.agents) agent.radius = this.state.behavior.bodyRadius;
     if (this.agents.length >= this.state.population.count) {
       this.nextSpawnTimeMs = null;
@@ -202,7 +205,7 @@ export class AntController {
     this.field = null;
     this.lastFrameTimestamp = null;
     this.accumulatorMs = 0;
-    this.stepEventGenerator.reset?.();
+    this.gaitController.reset?.();
     await this.audioBridge?.destroy();
   }
 
@@ -275,7 +278,7 @@ export class AntController {
       }
       const exiting = agent.x < 0 || agent.x > 1 || agent.y < 0 || agent.y > 1;
       // Contact is resolved on the outward motion. Only its observed portion
-      // contributes to environmental memory and distance-based STEP accounting.
+      // contributes to environmental memory and gait/contact accounting.
       const to = exiting ? observedSegmentEnd(from, agent) : { x: agent.x, y: agent.y };
       const travelled = Math.hypot(to.x - from.x, to.y - from.y);
       if (travelled > 1e-8) this.field.depositSegment(from, to, {
@@ -284,11 +287,13 @@ export class AntController {
       });
       // Observe final travel, including collision braking. No audio operation
       // contributes to movement, its random stream, or the shared trail field.
-      const observedAgent = exiting ? { ...agent, x: to.x, y: to.y } : agent;
-      for (const event of this.stepEventGenerator.advance(observedAgent, travelled, this.simulationTimeMs + dt * 1000)) {
-        this.emit('step', event);
+      const observedAgent = { ...agent, x: to.x, y: to.y };
+      const contacts = this.gaitController.advance(observedAgent, travelled, dt,
+        this.simulationTimeMs + dt * 1000, { from, to });
+      for (const event of contacts) {
+        this.emit('foot-contact', event);
         try {
-          const delivered = this.audioBridge?.handleStep(event);
+          const delivered = this.audioBridge?.handleFootContact(event);
           void Promise.resolve(delivered).catch(error => this.emit('error', { message: error.message }));
         } catch (error) { this.emit('error', { message: error.message }); }
       }
@@ -301,7 +306,7 @@ export class AntController {
     if (retiredCount) {
       this.agents = survivors;
       this.totalRetired += retiredCount;
-      this.stepEventGenerator.retain?.(survivors.map(agent => agent.id));
+      this.gaitController.retain?.(survivors.map(agent => agent.id));
     }
     this.simulationTimeMs += dt * 1000;
     if (retiredCount && this.agents.length < this.state.population.count && this.nextSpawnTimeMs === null) {

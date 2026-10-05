@@ -367,22 +367,28 @@ async function assertAntOutputGain(page, volume) {
 
 async function runDeterministicTurnoverEvidence(page) {
   return page.evaluate(async () => {
-    const { AntController, StepEventGenerator } = await import('/src/lib/index.js');
+    const { AntController, GaitController } = await import('/src/lib/index.js');
     const seed = 0x20261005;
     let randomState = seed >>> 0;
     const random = () => {
       randomState = (Math.imul(randomState, 1664525) + 1013904223) >>> 0;
       return randomState / 0x100000000;
     };
-    const stepEventGenerator = new StepEventGenerator();
-    const model = new AntController({ random, stepEventGenerator });
+    const gaitController = new GaitController();
+    const model = new AntController({ random, gaitController });
     await model.init();
-    let stepEventCount = 0, invalidStepEventCount = 0;
+    let footContactCount = 0, tripodAContactCount = 0, tripodBContactCount = 0;
+    let invalidContactCount = 0;
     model.subscribe(({ type, payload }) => {
-      if (type !== 'step') return;
-      stepEventCount += 1;
-      const { x, y } = payload.position || {};
-      if (!Number.isFinite(x) || !Number.isFinite(y) || x < 0 || x > 1 || y < 0 || y > 1) invalidStepEventCount += 1;
+      if (type !== 'foot-contact') return;
+      footContactCount += 1;
+      if (payload.contactGroup === 'A') tripodAContactCount += 1;
+      if (payload.contactGroup === 'B') tripodBContactCount += 1;
+      const inDomain = position => Number.isFinite(position?.x) && Number.isFinite(position?.y)
+        && position.x >= 0 && position.x <= 1 && position.y >= 0 && position.y <= 1;
+      if (payload.type !== 'FOOT_CONTACT' || !inDomain(payload.position)
+        || !Array.isArray(payload.contacts) || payload.contacts.length < 1 || payload.contacts.length > 3
+        || !payload.contacts.every(contact => inDomain(contact.position))) invalidContactCount += 1;
     });
     const samples = [];
     const spawnEvents = [{ second: 0, id: model.agents[0]?.id }];
@@ -430,7 +436,7 @@ async function runDeterministicTurnoverEvidence(page) {
         retirementEvents.push({
           second: model.simulationTimeMs / 1000,
           ids: departed,
-          stepStateRemoved: departed.every(id => !stepEventGenerator.ants.has(id))
+          gaitStateRemoved: departed.every(id => !gaitController.ants.has(id))
         });
         if (!firstRetirementField) {
           firstRetirementField = {
@@ -461,8 +467,11 @@ async function runDeterministicTurnoverEvidence(page) {
       firstRetirementField,
       finalActiveIds: [...activeIds],
       uniqueIdsSeen: seenIds.size,
-      stepEventCount,
-      invalidStepEventCount,
+      footContactCount,
+      tripodAContactCount,
+      tripodBContactCount,
+      invalidContactCount,
+      meanSpeed: final.analysis.meanSpeed,
       maxSpawnsInOneTick,
       spawnIntervalsSeconds: spawnIntervals,
       finalAnalysis: final.analysis,
@@ -472,9 +481,10 @@ async function runDeterministicTurnoverEvidence(page) {
         fieldPersistsAcrossRetirement: Boolean(firstRetirementField?.massBefore > 0 && firstRetirementField?.massAfter > 0
           && firstRetirementField?.nonzeroCellsAfter > 0),
         replacementIdsAreUnique: seenIds.size === model.totalSpawned,
-        stepStatesRemovedOnExit: retirementEvents.every(event => event.stepStateRemoved),
+        gaitStatesRemovedOnExit: retirementEvents.every(event => event.gaitStateRemoved),
+        bothTripodsTouchDown: tripodAContactCount > 0 && tripodBContactCount > 0,
         gradualOneAtATime: maxSpawnsInOneTick <= 1 && spawnIntervals.every(interval => interval >= .4 - 1e-9),
-        stepEventsRemainInDomain: invalidStepEventCount === 0,
+        contactsRemainInDomain: invalidContactCount === 0,
         activePopulationWithinTarget: final.analysis.population <= model.state.population.count
       }
     };
@@ -655,17 +665,80 @@ async function verifyAnt(page, requestedUrls) {
       const model = app.lab.model;
       await model.setAudioEnabled(false);
       for (let step = 0; step < 20 * 60; step += 1) model.tick(1 / 60);
+      await model.setAudioEnabled(true);
       model.emit('update');
     });
+    await page.waitForFunction(() => {
+      const probe = window.__physicalAudioProbe;
+      const plate = probe.worklets.filter(item => item.name === 'plate-processor').at(-1);
+      return plate && probe.workletMessages.some(item => item.index === plate.index && item.message?.type === 'strike')
+        && probe.workletRms.some(item => item.index === plate.index && item.rms > 1e-7);
+    }, null, { timeout: 12000 });
     await page.waitForTimeout(200);
     const turnoverCapture = await page.evaluate(async () => {
       const { app } = await import('/src/main.js');
       const snapshot = app.lab.model.getSnapshot();
-      return { scenario: 'default live ANT app after 20 additional simulated seconds; existing canvas renderer',
-        analysis: snapshot.analysis, activeAnts: snapshot.agents.length };
+      const probe = window.__physicalAudioProbe;
+      const plate = probe.worklets.filter(item => item.name === 'plate-processor').at(-1);
+      const contactEvents = window.__antFootContactEvents || [];
+      const contactGroups = contactEvents.reduce((groups, event) => {
+        groups[event.contactGroup] = (groups[event.contactGroup] || 0) + 1;
+        return groups;
+      }, {});
+      const contactCountByLeg = contactEvents.flatMap(event => event.contacts.map(contact => contact.legId))
+        .reduce((counts, legId) => ({ ...counts, [legId]: (counts[legId] || 0) + 1 }), {});
+      const invalidContactEvents = contactEvents.filter(event => !Array.isArray(event.contacts)
+        || event.contacts.length < 1 || event.contacts.length > 3
+        || event.contacts.some(contact => contact.position.x < 0 || contact.position.x > 1
+          || contact.position.y < 0 || contact.position.y > 1));
+      const strikes = probe.workletMessages.filter(item => item.index === plate?.index
+        && item.message?.type === 'strike');
+      const gaitPhases = snapshot.agents.map(agent => agent.gait?.phase);
+      return {
+        scenario: 'default live ANT app after 20 additional simulated seconds with audio active; existing canvas renderer',
+        observedAt: new Date().toISOString(),
+        analysis: snapshot.analysis,
+        activeAnts: snapshot.agents.length,
+        gait: {
+          antsWithSixLegs: snapshot.agents.filter(agent => agent.gait?.legs?.length === 6).length,
+          finitePhases: gaitPhases.every(Number.isFinite),
+          contactEvents: contactEvents.length,
+          contactGroups,
+          contactsByLeg: contactCountByLeg,
+          uniqueContactingAnts: new Set(contactEvents.map(event => event.antId)).size,
+          invalidContactEvents: invalidContactEvents.length
+        },
+        pheromone: {
+          halfLifeSeconds: snapshot.state.pheromone.halfLifeSeconds,
+          radius: snapshot.state.pheromone.radius,
+          amountPerUnitDistance: snapshot.state.pheromone.amountPerUnitDistance,
+          reinforcementGain: snapshot.state.pheromone.reinforcementGain,
+          grid: [snapshot.pheromone.width, snapshot.pheromone.height],
+          totalMass: snapshot.pheromone.totalMass,
+          maxValue: snapshot.pheromone.maxValue
+        },
+        audio: {
+          enabled: snapshot.audio.enabled,
+          volumePercent: Math.round(snapshot.audio.volume * 100),
+          outputChannels: plate?.outputChannelCount,
+          pickupPositions: plate?.processorOptions?.stereoPickups,
+          plateStrikes: strikes.length,
+          peakPcmRms: Math.max(0, ...probe.workletRms.filter(item => item.index === plate?.index).map(item => item.rms))
+        }
+      };
     });
+    assert.equal(turnoverCapture.gait.antsWithSixLegs, turnoverCapture.activeAnts,
+      'the live renderer snapshot contains articulated six-leg gaits');
+    assert.ok(turnoverCapture.gait.contactEvents > 0 && turnoverCapture.gait.uniqueContactingAnts > 0,
+      'natural movement generates tripod contact events');
+    assert.ok(turnoverCapture.gait.contactGroups.A > 0 && turnoverCapture.gait.contactGroups.B > 0,
+      'both tripod groups occur in the live simulation');
+    assert.equal(turnoverCapture.gait.invalidContactEvents, 0, 'all live foot contacts stay in the ANT domain');
+    assert.ok(turnoverCapture.audio.enabled && turnoverCapture.audio.plateStrikes > 0,
+      'live tripod contacts reach the shared Plate while the screenshot audio is on');
+    await writeFile('test-results/ant-gait-dev-metrics.json', `${JSON.stringify(turnoverCapture, null, 2)}\n`);
     await writeFile('test-results/ant-turnover-dev-capture.json', `${JSON.stringify(turnoverCapture, null, 2)}\n`);
-    await page.screenshot({ path: 'test-results/ant-turnover-dev.png', fullPage: true });
+    await page.screenshot({ path: 'test-results/ant-gait-dev.png', fullPage: true });
   } else {
     await page.waitForTimeout(30000);
     const turnoverCapture = await page.evaluate(() => ({
@@ -674,8 +747,9 @@ async function verifyAnt(page, requestedUrls) {
       diagnostics: document.querySelector('#ant-diagnostics')?.textContent.trim() || null,
       audioEnabled: document.querySelector('[data-action="ant-audio"]')?.getAttribute('aria-pressed') === 'true'
     }));
+    await writeFile('test-results/ant-gait-production-metrics.json', `${JSON.stringify(turnoverCapture, null, 2)}\n`);
     await writeFile('test-results/ant-turnover-production-metrics.json', `${JSON.stringify(turnoverCapture, null, 2)}\n`);
-    await page.screenshot({ path: 'test-results/ant-turnover-production.png', fullPage: true });
+    await page.screenshot({ path: 'test-results/ant-gait-production.png', fullPage: true });
   }
   progressedAudioMetrics = await page.evaluate(production => {
     const probe = window.__physicalAudioProbe;
@@ -801,13 +875,16 @@ async function verifyAntAudioToggle(page, audioButton) {
     const { app } = await import('/src/main.js');
     const controller = app.lab.model;
     const bridge = controller.audioBridge;
-    if (!bridge || typeof bridge.handleStep !== 'function') throw new Error('ANT audio bridge is not injected');
+    if (!bridge || typeof bridge.handleFootContact !== 'function') throw new Error('ANT audio bridge is not injected');
     window.__antAudioController = controller;
-    window.__antStepEvents = [];
-    const handleStep = bridge.handleStep.bind(bridge);
-    bridge.handleStep = event => {
-      window.__antStepEvents.push({ ...event, position: { ...event.position } });
-      return handleStep(event);
+    window.__antFootContactEvents = [];
+    const handleFootContact = bridge.handleFootContact.bind(bridge);
+    bridge.handleFootContact = event => {
+      window.__antFootContactEvents.push({ ...event,
+        position: { ...event.position },
+        contacts: event.contacts.map(contact => ({ ...contact, position: { ...contact.position } }))
+      });
+      return handleFootContact(event);
     };
   });
   assert.equal(await page.evaluate(() => window.__physicalAudioProbe.audioContexts.length), 0,
@@ -846,7 +923,7 @@ async function verifyAntAudioToggle(page, audioButton) {
         leftPeakRms: channelPeak('leftRms'), rightPeakRms: channelPeak('rightRms'),
         maxChannelDifference: channelDifference, outputGainNodeCount: plate?.outputGainNodes.length,
         stereoPanners: probe.stereoPanners },
-      strikes, events: window.__antStepEvents || [] };
+      strikes, events: window.__antFootContactEvents || [] };
   });
   assert.equal(firstOn.contextCount, 1, 'Audio On lazily creates exactly one shared AudioContext');
   assert.equal(firstOn.contextState, 'running');
@@ -866,8 +943,8 @@ async function verifyAntAudioToggle(page, audioButton) {
   assert.equal(firstOn.stereo.outputGainNodeCount, 1,
     'both channels use one shared output gain node for equal volume scaling');
   assert.equal(firstOn.stereo.stereoPanners, 0, 'stereo is not implemented with an x-position panner');
-  if (!useProduction) assert.ok(firstOn.events.length > 0, 'ANT generated real distance-based STEP events');
-  assert.ok(firstOn.strikes.length > 0, 'STEP events reach the Plate worklet');
+  if (!useProduction) assert.ok(firstOn.events.length > 0, 'ANT generated gait-derived FOOT_CONTACT events');
+  assert.ok(firstOn.strikes.length > 0, 'tripod contacts reach the Plate worklet');
   assert.ok(Math.abs(await readAntAudioVolume(page) - .65) < 1e-9,
     'Audio On preserves the volume selected while Audio Off');
   await assertAntOutputGain(page, .65);
@@ -885,14 +962,23 @@ async function verifyAntAudioToggle(page, audioButton) {
     assert.ok(position && Number.isFinite(position.x) && Number.isFinite(position.y), 'Plate strike has finite position coordinates');
     assert.ok(Math.hypot(position.x, position.y) <= .92 + 1e-7, 'normalized ANT positions map inside the Plate disk');
     assert.ok(Number.isFinite(payload.strength) && payload.strength > 0 && payload.strength <= .05 + 1e-9,
-      'STEP strike strength is positive and safely capped');
+      'foot-contact strike strength is positive and safely capped');
+    assert.ok(position.x >= -.92 / Math.SQRT2 - 1e-7 && position.x <= .92 / Math.SQRT2 + 1e-7
+      && position.y >= -.92 / Math.SQRT2 - 1e-7 && position.y <= .92 / Math.SQRT2 + 1e-7);
     const matched = firstOn.events.some(event => {
       const expected = { x: (2 * event.position.x - 1) * .92 / sqrtTwo,
         y: (2 * event.position.y - 1) * .92 / sqrtTwo };
       return Math.abs(position.x - expected.x) < 1e-7 && Math.abs(position.y - expected.y) < 1e-7
         && Math.abs(payload.strength - Math.min(.05, event.strength)) < 1e-7;
     });
-    if (!useProduction) assert.ok(matched, 'Plate strike preserves normalized ANT x/y mapping and STEP strength');
+    if (!useProduction) assert.ok(matched, 'Plate strike preserves normalized tripod-centroid mapping and contact strength');
+  }
+  if (!useProduction) {
+    assert.ok(firstOn.events.some(event => event.type === 'FOOT_CONTACT' && event.contactGroup === 'A'));
+    assert.ok(firstOn.events.some(event => event.type === 'FOOT_CONTACT' && event.contactGroup === 'B'));
+    assert.ok(firstOn.events.every(event => event.contacts.length >= 1 && event.contacts.length <= 3
+      && event.contacts.every(contact => contact.position.x >= 0 && contact.position.x <= 1
+        && contact.position.y >= 0 && contact.position.y <= 1)));
   }
 
   const firstRecordIndex = firstOn.worklets.find(item => item.name === 'plate-processor').index;
@@ -956,7 +1042,7 @@ async function verifyAntAudioToggle(page, audioButton) {
   assert.ok(reenabled.plateWorklets.every(item => item.contextMatches));
   assert.deepEqual(reenabled.plateWorklets[1].outputChannelCount, [2], 're-enabled ANT creates a stereo Plate worklet');
   assert.equal(reenabled.plateWorklets[1].outputGainNodeCount, 1);
-  assert.ok(reenabled.freshStrikes > 0, 're-enabled Plate worklet receives fresh STEP strikes');
+  assert.ok(reenabled.freshStrikes > 0, 're-enabled Plate worklet receives fresh tripod contacts');
   assert.ok(reenabled.plateWorklets[0].portCloses > 0, 'the prior Plate worklet was closed before re-enabling');
   assert.ok(reenabled.plateWorklets[1].portCloses === 0);
 }

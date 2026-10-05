@@ -1,6 +1,6 @@
 # Physical Audio Lab
 
-독립적인 물리 오디오 라이브러리와 vanilla Vite 데모입니다. 첫 화면은 ANT이며 String, Circular Plate, Solid Sphere는 같은 페이지의 보조 실험으로 열 수 있습니다. ANT는 동등한 개체들이 환경에 흔적을 남기며 움직이는 실험이며, 선택적으로 이동 거리 기반 STEP을 공유 Plate의 두 물리 픽업에서 스테레오로 들을 수 있습니다. `src/lib`는 SvelteKit으로 옮겨 사용할 수 있습니다.
+독립적인 물리 오디오 라이브러리와 vanilla Vite 데모입니다. 첫 화면은 ANT이며 String, Circular Plate, Solid Sphere는 같은 페이지의 보조 실험으로 열 수 있습니다. ANT는 동등한 개체들이 환경에 흔적을 남기며 움직이는 실험입니다. 이동 거리로 진행하는 여섯 다리 tripod gait가 시각 표현과 FOOT_CONTACT를 함께 만들며, 접촉 중심점을 하나의 공유 Plate와 두 물리 픽업에서 스테레오로 들을 수 있습니다. `src/lib`는 SvelteKit으로 옮겨 사용할 수 있습니다.
 
 ```bash
 npm install
@@ -15,13 +15,14 @@ Node.js 20 이상이 필요합니다. 현재 저장소의 Node 20.9에서도 실
 src/
   lib/
     audio/AudioEngine.js          # 지연 초기화, 모듈 캐시, 연결 그래프와 정리
-    audio/AntAudioBridge.js       # STEP을 기존 공유 engine의 Plate 타격으로 전달
+    audio/AntAudioBridge.js       # FOOT_CONTACT 중심점을 공유 Plate 타격으로 전달
     agents/ant/
       AntController.js            # 개체군, 명시적인 시간 진행과 시스템 연결
       AntAgent.js                 # 개체별 이동 상태, 관성, 지속적인 성향
       PheromoneField.js           # 거리 기반 침적·감쇠·공간 샘플링
       LocalOccupancy.js           # 몸체 점유 감지·회피·접촉 방지
-      StepEventGenerator.js       # 실제 이동 거리에서 독립적인 STEP 이벤트 생성
+      GaitController.js           # 실제 이동 거리, 여섯 다리 geometry, tripod 접촉
+      StepEventGenerator.js       # 이전 거리 기반 STEP 기준 구현
     models/
       BaseModel.js                # 설정, 구독, 공통 모델 계약
       WorkletModel.js             # Worklet 초기화·메시지·비동기 연주 취소
@@ -120,9 +121,9 @@ Plate·Sphere에서는 **Pickup 이동** 버튼 또는 **Shift+클릭/드래그*
 
 ANT 메뉴의 목표 개체 수는 28입니다. 시작할 때는 하단 중앙 부근의 작은 원 안에 일반 개체 하나만 놓입니다. 이후 시뮬레이션 시간이 400–900 ms씩 흐를 때마다 최대 한 개체를 추가하며, 생성 위치가 점유되어 있으면 약 120 ms 뒤 다시 시도합니다. 별도의 wall-clock timer는 사용하지 않으므로 시뮬레이션이 멈추면 생성도 멈춥니다. 모든 개체는 같은 `AntAgent` 모델을 사용하며, 지정된 리더·지연된 복사본·리더 선출은 없습니다. 개체마다 위치·속도·방향·관성과 지속적인 성향을 가지며, 선호 속도·흔적 감도·탐색 성향·회전 반응·가속·감쇠·개인 간격이 조금씩 다릅니다. 움직임은 가속과 감속, 짧은 머뭇거림, 방향 검사, 전진을 섞습니다. 좌표는 0–1이고 시간은 호출자가 전달합니다. 큰 프레임 간격은 100 ms까지만 반영합니다.
 
-0–1 정사각형은 관측 영역입니다. 경계가 가깝다는 이유만으로 안쪽 조향·감속·이동 제한을 적용하지 않습니다. 접촉 제약을 적용한 이동이 영역 밖으로 나가면 그 개체를 퇴장시키며, 반사·순환·순간 이동은 없습니다. 마지막 이동은 최초 경계 교차점까지의 실제 관측 선분만 페로몬 침적과 STEP 거리·좌표에 반영합니다. 개체의 STEP 잔여 거리와 편차 상태도 제거하지만 공유장은 유지합니다. 영역 밖 센서는 신호 0을 읽고, 침적 선분은 영역과 실제로 교차한 부분만 사용하므로 밖의 이동을 가장자리 흔적으로 바꾸지 않습니다.
+0–1 정사각형은 관측 영역입니다. 경계가 가깝다는 이유만으로 안쪽 조향·감속·이동 제한을 적용하지 않습니다. 접촉 제약을 적용한 이동이 영역 밖으로 나가면 그 개체를 퇴장시키며, 반사·순환·순간 이동은 없습니다. 마지막 이동은 최초 경계 교차점까지의 실제 관측 선분만 페로몬 침적과 locomotion/gait 접촉 계산에 반영합니다. 개체의 gait 위상·stride·접촉 편차 상태도 제거하지만 공유장은 유지합니다. 영역 밖 센서는 신호 0을 읽고, 침적 선분은 영역과 실제로 교차한 부분만 사용하므로 밖의 이동을 가장자리 흔적으로 바꾸지 않습니다.
 
-퇴장으로 목표보다 적어지면 같은 입구·시뮬레이션 시계·400–900 ms 생성 간격으로 보충합니다. 이미 예정된 생성 시각은 유지하고, 한 번의 due tick에는 최대 하나만 생성하므로 여러 개체가 떠나도 한꺼번에 보충하지 않습니다. 새 개체는 계속 증가하는 고유 ID와 새 성향·행동 시계·adherence·STEP 상태로 시작합니다. `getSnapshot().analysis`의 `population`, `totalSpawned`, `totalRetired`는 현재 수와 누적 생성·제거 수를 제공하며 화면에 새 지표를 추가하지 않습니다. `totalRetired`에는 설정으로 목표 수를 줄일 때 제거된 개체도 포함합니다.
+퇴장으로 목표보다 적어지면 같은 입구·시뮬레이션 시계·400–900 ms 생성 간격으로 보충합니다. 이미 예정된 생성 시각은 유지하고, 한 번의 due tick에는 최대 하나만 생성하므로 여러 개체가 떠나도 한꺼번에 보충하지 않습니다. 새 개체는 계속 증가하는 고유 ID와 새 성향·행동 시계·adherence·gait 상태로 시작합니다. `getSnapshot().analysis`의 `population`, `totalSpawned`, `totalRetired`는 현재 수와 누적 생성·제거 수를 제공하며 화면에 새 지표를 추가하지 않습니다. `totalRetired`에는 설정으로 목표 수를 줄일 때 제거된 개체도 포함합니다.
 
 개체들은 실제로 이동한 선분에 거리 비례 페로몬을 계속 조금씩 남깁니다. 정지한 개체는 침적하지 않습니다. 공유장은 기본 96×96 격자이며 15초 반감기로 지수 감쇠합니다. 재방문 없는 흔적은 60초 뒤 약 6.25%만 남습니다. 이번 연속성 실험에서 기본 반감기만 3초에서 15초로 변경했고, 침적량·반경·강화 계수·감각 및 조향 계수는 유지했습니다. 침적 반경은 0.0045 정규화 좌표이고, 센서는 0.042 앞쪽에서 좌우 ±0.014 범위의 다섯 지점을 읽습니다. 침적을 넓히지 않고 가까운 얇은 경로를 발견할 수 있습니다.
 
@@ -141,8 +142,17 @@ ANT 메뉴의 목표 개체 수는 28입니다. 시작할 때는 하단 중앙 �
 - `AntAgent`: 개체별 이동 상태, 관성, 지속적인 성향.
 - `PheromoneField`: 공유 외부 기억. `depositSegment()`, `sample()`, `decay(dtSeconds)`, `clear()`, `getSnapshot()`을 독립적으로 제공합니다.
 - `LocalOccupancy`: 주변 몸체 점유와 방향별 혼잡, 근거리 분리와 이동 선분의 접촉 제약. 페로몬을 알지 않습니다.
-- `AntController`: 위 시스템들을 연결하고 명시적인 시간에 따라 개체군을 진행합니다. `getState()`는 JSON 설정, `getSnapshot()`은 개체와 격자 복사본입니다. 접촉 제약 뒤의 실제 이동 거리를 이벤트 생성기에 전달하며, 선택적으로 주입된 오디오 브리지를 호출합니다. Web Audio·DOM·p5 코드는 포함하지 않습니다.
-- `AntRenderer`: 모든 개체를 같은 작은 점으로 그리고 공유장을 옅은 회색으로 표시합니다. p5는 `init()`에서만 동적으로 불러옵니다. sketch에는 이동·침적·감쇠·기억 로직이 없습니다. `noLoop()`와 `redraw()`를 사용하며 main.js의 RAF가 update와 render를 호출합니다. p5.sound는 포함하지 않습니다.
+- `GaitController`: 실제 이동 거리만으로 ID 기반 stride/phase를 진행합니다. 여섯 leg의 root/knee/foot geometry snapshot과 교대하는 tripod FOOT_CONTACT를 같은 phase에서 만듭니다. heading·속도·trail·collision을 바꾸지 않고 behavior random도 읽지 않습니다.
+- `AntController`: 위 시스템들을 연결하고 명시적인 시간에 따라 개체군을 진행합니다. `getState()`는 JSON 설정, `getSnapshot()`은 개체와 gait geometry, 격자 복사본입니다. 접촉 제약 뒤의 관측 가능한 실제 이동 구간을 `GaitController`에 전달하고, 이벤트를 선택적으로 주입된 오디오 브리지에 넘깁니다. Web Audio·DOM·p5 코드는 포함하지 않습니다.
+- `AntRenderer`: p5 instance-mode로 oriented head/thorax/abdomen과 6개의 2-segment leg를 snapshot에서 그립니다. 공유 pheromone field는 고정된 two-scale grayscale transfer로 표시합니다. p5는 `init()`에서만 동적으로 불러오고 `noLoop()`와 `redraw()`를 사용하며 main.js의 RAF가 update와 render를 호출합니다. sketch는 gait나 model을 갱신하지 않고 p5.sound도 포함하지 않습니다.
+
+현재 몸체는 collision radius를 유지하는 하나의 `AntAgent`입니다. snapshot의 visual body에는 heading 기준으로 head `+0.90r`, thorax `0`, abdomen `−1.05r` 중심을 사용하며 각각의 종·횡 크기는 `(1.05r, 0.85r)`, `(1.10r, 0.90r)`, `(1.55r, 1.05r)`입니다. 여섯 leg는 앞·중간·뒤 root 위치 `+0.45r / 0 / −0.45r`, lateral `±0.42r`에서 발 `+1.20r / 0 / −1.20r`, lateral `±1.70r`로 이어집니다. knee는 root와 발 중간에 바깥쪽 `0.12r` 편향을 줍니다.
+
+`GaitController`의 한 cycle은 ID 해시로 지속 편차 ±8%를 정한 `0.036` 이동 단위이고, touchdown은 약 `0.018`마다 생깁니다. phase 시작값과 접촉 세기 편차 ±4%도 ant ID에서 해시합니다. AntController의 random source는 호출하지 않습니다. Tripod A는 FL/MR/RL, B는 FR/ML/RR이고 half-cycle씩 교대합니다. 각 leg의 stance 비율은 0.62이며 stance에서 발을 몸체 기준 뒤로 옮기고 swing은 smoothstep으로 앞쪽에 돌려놓으며 약간 안쪽으로 접습니다. Renderer가 계산을 다시 만들지 않고 이 snapshot geometry를 그립니다.
+
+`FOOT_CONTACT`는 `{ type, antId, contactGroup: 'A' | 'B', contacts, position, strength, simulationTimeMs }`입니다. `contacts`에는 실제 tripod의 각 `{ legId, position: { x, y } }`가 있으며, 영역 밖 발은 clamp 없이 제외되어 1–3개가 남을 수 있습니다. `position`은 남은 발의 centroid이고, 0개면 이벤트를 내지 않습니다. 큰 advance에서도 phase/remainder를 모두 전진시키면서 최대 4개 tripod event만 냅니다. 각 group은 shared Plate에 centroid로 한 번만 타격됩니다.
+
+Renderer는 기존 field 값을 frame별 max에 맞춰 재정규화하지 않습니다. `base = smoothstep(0.004, 0.050, value)`, `route = smoothstep(0.040, 0.180, value)`, `alpha = min(112, round(base × 22 + route × 90))`을 사용합니다. 흰 배경·회색 field·짙은 ant 표현을 유지하며 field 크기와 농도, 감쇠·침적은 바꾸지 않습니다.
 
 이전 리더/복사본·지연 재생·LIVE/LOOP 상태와 LOOP/RELEASE 버튼·L/R 단축키는 제거했습니다. 일반적인 timestamp/x/y 링 버퍼인 `TrajectoryBuffer`와 그 테스트는 다른 실험에 재사용할 수 있도록 유지합니다.
 
@@ -169,23 +179,23 @@ ANT도 Lab registry로 전환하며, registry가 Lab의 기존 AudioEngine을 �
 
 첫 로드는 ANT이며 내비게이션 순서는 ANT, String, Plate, Sphere입니다. 상단 제목은 작은 `Lab` 한 단어입니다. ANT에는 제목·캔버스·Audio On/Off·Volume·기존 개체 수/평균 속도/페로몬 총량을 한 줄로 표시합니다. 설명문·캡션·상호작용 안내·공유 기억 설명 details와 정상 실행 상태 문구는 보이는 ANT 화면에서 제거하고 canvas의 접근 가능한 설명은 유지합니다. `Loading…`·`Loading audio…`와 오류는 접근 가능한 status 영역에서 알립니다. 페이지의 중복 소개·footer 안내를 제거하고 JSON은 하단의 접힌 `State (JSON)` details로 남깁니다. String·Plate·Sphere의 기능 컨트롤·inspector·개별 모델 설명은 유지합니다.
 
-## ANT AUDIO: 이동 거리 기반 STEP과 공유 Plate 스테레오
+## ANT AUDIO: tripod FOOT_CONTACT와 공유 Plate 스테레오
 
-연결은 `AntController → StepEventGenerator → AntAudioBridge → PlateModel → 기존 AudioEngine / plate.worklet.js`입니다. `AntAgent`와 p5 렌더러에는 오디오가 없으며, Plate 진동이나 오디오 상태를 ANT 행동에 되먹임하지 않습니다. 기존 Plate DSP를 재사용하고 별도 엔진·합성기·오디오 framework를 추가하지 않습니다.
+활성 연결은 `AntController → GaitController → AntAudioBridge.handleFootContact() → PlateModel → 기존 AudioEngine / plate.worklet.js`입니다. 동일한 gait phase가 renderer의 여섯 다리와 발 접촉 이벤트를 만듭니다. `AntAgent`와 p5 렌더러에는 오디오가 없고, Plate 진동이나 오디오 상태를 ANT 행동에 되먹임하지 않습니다. 기존 Plate DSP를 재사용하며 별도 엔진·합성기·오디오 framework를 추가하지 않습니다.
 
-ANT 브리지는 모든 STEP을 Plate 하나에 타격합니다. 이 Plate의 고정 관측 위치는 좌 `(-0.32, -0.18)`, 우 `(+0.32, -0.18)`이며 생성 시 `stereoPickups` 옵션으로 전달합니다. displacement/current/previous 상태·strike queue·공명 이력은 하나입니다. 각 오디오 sample에서 원래의 finite-difference 계산을 한 번 진행한 뒤 같은 current field의 두 픽업을 채널 0과 1로 읽고 각각 기존 `sample / (1 + abs(sample))` 제한을 적용합니다. 개미 x/y는 타격 위치만 결정하며 pan이나 출력 gain을 결정하지 않습니다. 픽업별 독립 Plate, stereo panner, per-ant voice를 만들지 않습니다.
+ANT 브리지는 각 tripod touchdown의 valid foot centroid를 Plate 하나에 한 번 타격합니다. 이 Plate의 고정 관측 위치는 좌 `(-0.32, -0.18)`, 우 `(+0.32, -0.18)`이며 생성 시 `stereoPickups` 옵션으로 전달합니다. displacement/current/previous 상태·strike queue·공명 이력은 하나입니다. 각 오디오 sample에서 원래의 finite-difference 계산을 한 번 진행한 뒤 같은 current field의 두 픽업을 채널 0과 1로 읽고 각각 기존 `sample / (1 + abs(sample))` 제한을 적용합니다. 접촉 centroid는 물리 타격점만 정하며 pan이나 출력 gain을 결정하지 않습니다. 픽업별 독립 Plate, stereo panner, per-ant voice를 만들지 않습니다.
 
 `AudioEngine.createWorklet()`의 선택적 `output.channels`만 1 또는 2를 허용하도록 일반화했습니다. 기본값은 1이고, `WorkletModel`은 기존대로 output 설정을 전달합니다. `PlateModel({ stereoPickups: [left, right] })`는 두 채널을 요청하며 기본 `PlateModel`과 Sphere Worklet은 한 채널을 유지합니다. String의 기존 오디오 경로도 그대로입니다. ANT 스테레오는 기존 GainNode 하나를 통과하므로 Volume이 좌우에 같은 비율로 적용됩니다. 일반 Plate 데모의 single pickup API·UI·DSP 경로는 유지합니다.
 
-`StepEventGenerator.advance(agent, travelledDistance, simulationTimeMs)`는 `{ type: 'STEP', antId, position: { x, y }, strength, simulationTimeMs }` 배열을 반환합니다. 좌표는 개미의 현재 0–1 위치입니다. 개체별 거리 누적치가 stepLength를 넘을 때마다 전체 임계 거리를 소비하고 나머지를 보존합니다. 기본 stepLength는 0.018, strikeStrength는 0.035이며 각각 개체 ID에서 결정한 ±4%의 작은 편차를 한 번 할당합니다. 이동·스폰 난수를 소비하지 않습니다. 가속·주저·혼잡·재개는 실제 이동 거리를 통해서만 이벤트 빈도에 영향을 줍니다.
+`StepEventGenerator.advance(agent, travelledDistance, simulationTimeMs)`와 실제 이동거리 `0.018`당 생성되는 중심 STEP은 비교 기준용으로 보존합니다. 기본 controller runtime에서는 더 이상 사용하지 않습니다. `GaitController`가 post-collision 실제 이동거리로 phase를 전진시키며, 각 touchdown 시각은 해당 substep 안의 phase 교차 비율을 사용합니다. 정지·주저·혼잡은 실제 이동량에 따라 phase와 접촉을 줄입니다.
 
-이벤트 생성은 Audio Off 동안에도 계속되지만 브리지는 Off 또는 초기화 중의 이벤트를 버립니다. 따라서 On에서 과거 걸음을 재생하지 않습니다. 시간은 기존 시뮬레이션 substep의 끝이며, 별도 tempo·음계·grid·quantization을 추가하지 않습니다. `stepEventGenerator`를 같은 이벤트 계약의 보행/접촉 생성기로 교체하면 브리지와 Plate를 그대로 사용할 수 있습니다. 생성기의 `retain(ids)`와 `reset()`은 개체 제거와 파괴 시 상태를 정리하는 선택적 lifecycle 메서드입니다.
+FOOT_CONTACT 생성은 Audio Off 동안에도 model에서 진행하지만 브리지는 Off 또는 초기화 중의 이벤트를 버립니다. 따라서 On에서 과거 발 접촉을 재생하지 않습니다. 별도 tempo·음계·grid·quantization은 없습니다. 브리지는 tripod contacts의 leg ID·영역 좌표와 centroid 일관성을 검증하고, centroid를 기존 plate disk mapping에 넣어 타격 세기만 기존 상한 0.05로 제한합니다. `GaitController.retain(ids)`와 `reset()`은 퇴장·파괴 시 개인 phase·traits를 정리합니다. `StepEventGenerator.retain(ids)`와 `reset()`은 기준 이벤트 생성기에 계속 남아 있습니다.
 
 브리지는 단위 정사각형을 Plate의 반지름 0.92 원 안에 넣습니다. `plateX = (2x - 1) × 0.92 / √2`, `plateY = (2y - 1) × 0.92 / √2`이며 두 화면의 y축 방향을 유지합니다. 이 좌표로 기존 `PlateModel.strike()`를 호출합니다. 위치는 타격 지점만 바꾸고 pitch·filter·pickup은 바꾸지 않습니다.
 
-데모에는 `Audio Off / Audio On` 버튼과 그 옆의 `Volume` 슬라이더가 있습니다. 볼륨은 0–100%이며 기본 100%는 기존 Plate 출력 gain 0.7입니다. `setAudioVolume(0–1)`은 ANT Plate의 기존 출력 GainNode만 조절하며 20 ms ramp로 급격한 음량 변화를 완화합니다. 타격 강도와 STEP 타이밍은 그대로 유지합니다. Off에서도 볼륨을 바꿀 수 있고 같은 ANT 안에서 Off/On을 전환하면 선택한 볼륨을 유지하지만, 슬라이더 자체는 오디오를 초기화하지 않습니다. On 클릭에서 기존 engine의 초기화·resume와 Plate Worklet 로드를 시작하므로 브라우저 autoplay 제한을 따릅니다. Off는 즉시 추가 타격을 차단하고 Plate를 정지·파괴합니다. 다시 On하면 같은 engine에서 Plate를 다시 준비합니다. ANT를 떠나거나 앱을 파괴할 때도 진행 중인 타격과 늦게 끝나는 초기화가 취소됩니다. 오디오 상태와 볼륨은 저장 가능한 ANT 행동 설정에 포함하지 않아 모델을 다시 선택해도 자동으로 소리를 시작하지 않습니다.
+데모에는 `Audio Off / Audio On` 버튼과 그 옆의 `Volume` 슬라이더가 있습니다. 볼륨은 0–100%이며 기본 100%는 기존 Plate 출력 gain 0.7입니다. `setAudioVolume(0–1)`은 ANT Plate의 기존 출력 GainNode만 조절하며 20 ms ramp로 급격한 음량 변화를 완화합니다. 타격 강도와 FOOT_CONTACT 타이밍은 그대로 유지합니다. Off에서도 볼륨을 바꿀 수 있고 같은 ANT 안에서 Off/On을 전환하면 선택한 볼륨을 유지하지만, 슬라이더 자체는 오디오를 초기화하지 않습니다. On 클릭에서 기존 engine의 초기화·resume와 Plate Worklet 로드를 시작하므로 브라우저 autoplay 제한을 따릅니다. Off는 즉시 추가 타격을 차단하고 Plate를 정지·파괴합니다. 다시 On하면 같은 engine에서 Plate를 다시 준비합니다. ANT를 떠나거나 앱을 파괴할 때도 진행 중인 타격과 늦게 끝나는 초기화가 취소됩니다. 오디오 상태와 볼륨은 저장 가능한 ANT 행동 설정에 포함하지 않아 모델을 다시 선택해도 자동으로 소리를 시작하지 않습니다.
 
-새 보호 한도는 비정상적인 긴 이동 입력에 대한 개체당 `advance()`당 최대 4 STEP과 브리지 타격 강도 상한 0.05입니다. 정상적인 작은 시간 간격의 이동에서는 거리 임계 이벤트를 모두 전달합니다. 한도를 넘는 전체 걸음은 버리고 분수 거리는 보존하므로 이후 프레임으로 폭주를 미루지 않습니다. 기존 Plate의 타격 큐 24개 제한과 `sample / (1 + abs(sample))` 출력 제한은 변경하지 않았고, ANT 볼륨의 최대 출력 gain은 기존 0.7입니다.
+새 보호 한도는 비정상적인 긴 이동 입력에 대한 개체당 `advance()`당 최대 4 tripod contact group과 브리지 타격 강도 상한 0.05입니다. 정상적인 작은 시간 간격의 이동에서는 phase 경계 이벤트를 모두 전달합니다. 한도를 넘는 전체 접촉 그룹은 버리고 최종 phase를 보존하므로 이후 프레임으로 폭주를 미루지 않습니다. 기존 Plate의 타격 큐 24개 제한과 `sample / (1 + abs(sample))` 출력 제한은 변경하지 않았고, ANT 볼륨의 최대 출력 gain은 기존 0.7입니다.
 
 [AUDIO v0의 선별 화면과 검증 기록](docs/ant/evidence/2026-10-05-audio-v0/README.md)에는 production 실행의 PCM·자원 수명 측정과 변경 전 controller에 대한 세 시드·120초 동작 일치 비교를 보존했습니다.
 
@@ -193,19 +203,21 @@ ANT 브리지는 모든 STEP을 Plate 하나에 타격합니다. 이 Plate의 �
 
 [최소 UI와 공유 Plate 스테레오 검증 기록](docs/ant/evidence/2026-10-05-shared-plate-stereo/README.md)에는 최신 진행 화면, 실제 두 채널·두 픽업·공통 gain·전환 정리 측정을 보존했습니다.
 
+[Tripod gait·FOOT_CONTACT 구현과 실제 화면](docs/ant/evidence/2026-10-05-gait/README.md)에는 테스트 이후 진행된 ANT 브라우저 화면 두 장, 실제 접촉 그룹/Plate 측정, 장시간 개체 교체·비중첩·속도 검사 기록을 보존했습니다.
+
 단독 사용에서는 브리지에 기존 engine을 명시적으로 주입합니다. 데모의 Lab registry는 이 연결을 준비합니다.
 
 ```js
-import { AntController, StepEventGenerator, AntAudioBridge } from './src/lib/index.js';
+import { AntController, GaitController, AntAudioBridge } from './src/lib/index.js';
 
 const ants = new AntController({
-  stepEventGenerator: new StepEventGenerator(),
+  gaitController: new GaitController(),
   audioBridge: new AntAudioBridge({ audioEngine: existingAudioEngine })
 });
 await ants.init();
 // 사용자 버튼 handler 안에서 호출:
 await ants.setAudioEnabled(true);
-ants.setAudioVolume(0.5); // 기존 출력 gain의 50%; STEP은 변경하지 않음.
+ants.setAudioVolume(0.5); // 기존 출력 gain의 50%; FOOT_CONTACT는 변경하지 않음.
 // 호출자의 animation callback에서 ants.update(timestamp)를 계속 호출.
 await ants.setAudioEnabled(false);
 await ants.destroy(); // 주입한 engine은 소유자가 별도로 정리.
@@ -225,7 +237,7 @@ await ants.destroy(); // 주입한 engine은 소유자가 별도로 정리.
 
 이 단계에서는 페로몬 반감기·침적량, 개체 수, 격자 해상도, `trailAdherence`, 생성, 오디오, encounter rate, quorum, raid, UI를 바꾸지 않습니다. 성공 기준은 여러 개미가 같은 경로 위에 간격을 두고 이어서 이동하는 장면이 실제 화면에서 보이고, 접촉/통과가 발생하지 않는 것입니다. 자동 검증 결과만으로 이 시각 기준이 충족됐다고 판단하지 않습니다.
 
-방향 인지형 교통과 adherence 기반 페로몬 강화를 각각 별도 단계로 진행했고, 거리 기반 AUDIO v0·볼륨 조절·같은 Plate의 두 물리 픽업을 관측하는 스테레오를 구현했습니다. 이번 단계는 더 긴 공유장 기억과 개체의 지속적인 교체를 함께 관측합니다. 이후 후보는 거리 기반 STEP과 실제 보행/발 접촉 기반 STEP을 같은 브리지·Plate에서 듣는 비교이며, 보행 구현은 아직 추가하지 않았습니다. 실제 결과에 따라 한 번에 한 실험씩 진행하며, pitch/filter 좌표 매핑이나 오디오·공명을 ANT 행동에 되먹임하지 않습니다. `TrajectoryBuffer`는 일반 유틸리티로 남기며 ANT의 행동/리듬 재생 장치로 다시 연결하지 않습니다. 장기적으로 다시 쓰더라도 집단의 과거를 담는 별도 기억층으로 취급합니다.
+방향 인지형 교통·adherence 기반 페로몬 강화·거리 기반 AUDIO v0·볼륨·공유 Plate 스테레오 이후, 이번 단계에서 여섯 다리 tripod gait와 같은 위상에서 생성되는 FOOT_CONTACT를 추가했습니다. 현재 보행 출력이 기본이며, `StepEventGenerator`는 비교 실험을 위한 거리 STEP 기준으로 남아 있습니다. 이번 변경은 ANT의 이동 결정과 공유 페로몬 동역학을 그대로 두고 gait 표시·접촉 사건·field의 시각 표현만 바꿉니다. `TrajectoryBuffer`는 일반 유틸리티로 남기며 ANT의 행동/리듬 재생 장치로 다시 연결하지 않습니다. 장기적으로 다시 쓰더라도 집단의 과거를 담는 별도 기억층으로 취급합니다.
 
 ## AudioWorklet protocol
 
@@ -285,7 +297,7 @@ npm run test:browser
 CHECK_PRODUCTION=1 npm run test:browser
 ```
 
-Node native 테스트는 SSR import, JSON 복사·부분 병합, delay stepping, 공유 AudioEngine, 초기화/정지/전환 경합, Worklet protocol, sample rate/quality별 유한 출력, 독립 pickup, 원본 DSP 회귀를 확인합니다. ANT는 거리 기반 침적·감쇠, 확률적인 흔적 선택, 지속적인 개체 성향, 몸체 회피·접촉 안정성·장시간 유한 상태와 분산, p5 adapter 초기화·파괴를 검사합니다. STEP의 거리 잔여분·고정 편차·정체/주저/재개, Audio On/Off의 이동·페로몬·난수 일치, Plate 전달 좌표·동시 타격·비동기 취소·공유 engine 수명도 확인합니다. 스테레오는 중앙 타격의 균형, 비대칭 타격의 좌우 신호 차이, 같은 field/history와 단일 타격 소비, 해상도 변경·stop, 44.1/48/96 kHz와 세 품질의 유한·제한 출력을 검사합니다. 일반 링 버퍼의 wrapping/지연 보간 테스트도 유지합니다. fixture는 앱 bundle에 포함되지 않습니다.
+Node native 테스트는 SSR import, JSON 복사·부분 병합, delay stepping, 공유 AudioEngine, 초기화/정지/전환 경합, Worklet protocol, sample rate/quality별 유한 출력, 독립 pickup, 원본 DSP 회귀를 확인합니다. ANT는 거리 기반 침적·감쇠, 확률적인 흔적 선택, 지속적인 개체 성향, 몸체 회피·접촉 안정성·장시간 유한 상태와 분산, p5 adapter 초기화·파괴를 검사합니다. Gait 검사는 고정 ID 기반 편차와 phase, 여섯 다리 geometry, A/B tripod 교대, 영역 밖 접촉 제외, 이벤트 상한, turnover 정리, 행동 난수·이동·페로몬과의 분리를 확인합니다. FOOT_CONTACT 브리지의 centroid·strike 좌표와 세기, Audio On/Off와 전환 정리를 검사합니다. 스테레오는 중앙 타격의 균형, 비대칭 타격의 좌우 신호 차이, 같은 field/history와 단일 타격 소비, 해상도 변경·stop, 44.1/48/96 kHz와 세 품질의 유한·제한 출력을 검사합니다. 일반 링 버퍼의 wrapping/지연 보간 테스트도 유지합니다. fixture는 앱 bundle에 포함되지 않습니다.
 
 브라우저 스크립트는 Vite를 임시 포트로 띄우고 세 모델의 연주·컨트롤·전환·정리와 console/processor 오류를 확인합니다. ANT의 독립적인 움직임·공유 흔적·기본 무음 실행, 사용자 Audio On 이후 기존 Plate의 실제 PCM 출력, Off/재활성화/전환 시 정리도 검사합니다. 모델별 문서 구조, native control의 label 연결, 밝은 배경과 모바일 가로 넘침도 검사합니다. macOS의 설치된 Google Chrome을 자동 사용하며 다른 환경은 `BROWSER_EXECUTABLE_PATH`로 실행 파일을 지정하거나 `npx playwright install chromium`으로 검증용 브라우저를 설치하세요. 스크린샷은 test-results/에 저장합니다. 자동 테스트는 출력 데이터와 lifecycle을 확인하며 청감 비교는 별도입니다.
 
@@ -294,6 +306,6 @@ Node native 테스트는 SSR import, JSON 복사·부분 병합, delay stepping,
 - String은 기존 방식대로 AudioBuffer를 main thread에서 미리 생성합니다. feedback 변경은 다음 voice에 적용됩니다. String의 strike/pickup 위치는 저장 가능한 API를 제공하지만 아직 음색에 영향을 주지 않습니다. 두 원본 String 페이지의 attack/tail envelope는 하나의 Karplus–Strong 출력 경로로 통합했습니다.
 - Plate는 작은 정규 격자와 단순 고정 경계 모델입니다. resolution 변경은 음색도 바꿀 수 있고 고해상도 실시간 CPU 비용을 따로 측정해야 합니다.
 - Sphere의 주파수는 기존 alpha table과 P/S branch 근사식입니다. 정확한 elastic-sphere 경계조건 해법은 아니며 현재 WebGL 구는 실제 modal displacement를 그리지 않습니다.
-- 현재 output은 mono·pickup 하나입니다. preset persistence, MIDI, automation, recording, spectrum analyzer는 아직 구현하지 않았습니다. Inspector는 String에 먼저 마련했습니다.
+- 기본 Plate와 Sphere output은 mono·pickup 하나입니다. ANT는 기존 Plate processor의 두 물리 pickup을 함께 사용합니다. preset persistence, MIDI, automation, recording, spectrum analyzer는 아직 구현하지 않았습니다. Inspector는 String에 먼저 마련했습니다.
 - ANT의 이웃 감지와 접촉 검사는 현재 O(N²)이며 기본 28개에 맞추었습니다. 더 큰 개체군에는 spatial index와 CPU profiling이 필요합니다. 페로몬 감도·감쇠·회피 거리의 조정은 여전히 실험 과제이며 특정 분기나 교통 패턴을 보장하지 않습니다.
-- 다음 작업은 장시간 CPU/audio dropout profiling, String의 Worklet 전환과 위치 반영, preset save/load, 공통 analyser·WAV recording, Sphere modal visualization 순으로 진행할 수 있습니다. 다중 pickup·stereo는 state schema와 Worklet channel protocol을 확장하고 UI adapter를 추가하세요.
+- 다음 실험 후보는 장시간 CPU/audio dropout profiling, String의 Worklet 전환과 위치 반영, preset save/load, 공통 analyser·WAV recording, Sphere modal visualization입니다. 다중 pickup·stereo는 ANT Plate에서 이미 검증한 별도 기능입니다.

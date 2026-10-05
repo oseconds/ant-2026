@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { AntController } from '../src/lib/agents/ant/AntController.js';
-import { StepEventGenerator } from '../src/lib/agents/ant/StepEventGenerator.js';
+import { GaitController } from '../src/lib/agents/ant/GaitController.js';
 import { Lab } from '../src/lib/lab/Lab.js';
 
 function countedRandom(seed) {
@@ -19,21 +19,20 @@ function recordingBridge() {
   return {
     enabled: false, loading: false, error: null, events: [], stopped: 0, destroyed: false,
     async setEnabled(value) { this.enabled = value; return value; },
-    handleStep(event) { if (this.enabled) this.events.push(event); return this.enabled; },
+    handleFootContact(event) { if (this.enabled) this.events.push(event); return this.enabled; },
     stop() { this.enabled = false; this.stopped += 1; },
     async destroy() { this.stop(); this.destroyed = true; }
   };
 }
 
-test('STEP observation and Audio On/Off preserve movement, field, spawning, and the simulation random stream', async () => {
+test('FOOT_CONTACT observation and Audio On/Off preserve movement, field, spawning, and the simulation random stream', async () => {
   for (const seed of [61, 193]) {
     const baselineRandom = countedRandom(seed), audioRandom = countedRandom(seed);
-    const baseline = new AntController({ random: baselineRandom,
-      stepEventGenerator: { advance: () => [] } });
+    const baseline = new AntController({ random: baselineRandom });
     const bridge = recordingBridge();
     const audible = new AntController({ random: audioRandom, audioBridge: bridge });
     const generated = [];
-    audible.subscribe(({ type, payload }) => { if (type === 'step') generated.push(payload); });
+    audible.subscribe(({ type, payload }) => { if (type === 'foot-contact') generated.push(payload); });
     await Promise.all([baseline.init(), audible.init()]);
     for (let tick = 0; tick < 1200; tick += 1) {
       if (tick === 240 || tick === 840) await audible.setAudioEnabled(true);
@@ -52,21 +51,42 @@ test('STEP observation and Audio On/Off preserve movement, field, spawning, and 
     assert.deepEqual(audible.getState(), baseline.getState());
     await Promise.all([baseline.destroy(), audible.destroy()]);
     assert.equal(bridge.destroyed, true);
-    assert.equal(audible.stepEventGenerator.ants.size, 0);
+    assert.equal(audible.gaitController.ants.size, 0);
   }
 });
 
-test('controller measures post-contact displacement rather than intended velocity for STEP generation', async () => {
-  const observations = [];
-  const generator = new StepEventGenerator({ variation: 0 });
-  let steps = 0;
-  const controller = new AntController({ random: countedRandom(7), stepEventGenerator: {
-    advance(agent, distance, time) {
-      observations.push({ x: agent.x, y: agent.y, distance, time });
-      return generator.advance(agent, distance, time);
-    }
+test('adding the deterministic gait leaves the behavior random stream and ant trajectories unchanged', async () => {
+  const gaitRandom = countedRandom(811), referenceRandom = countedRandom(811);
+  const withGait = new AntController({ random: gaitRandom });
+  const reference = new AntController({ random: referenceRandom, gaitController: {
+    advance() { return []; }, getSnapshot() { return null; }, retain() {}, reset() {}
   } });
-  controller.subscribe(({ type }) => { if (type === 'step') steps += 1; });
+  await Promise.all([withGait.init(), reference.init()]);
+  const behaviorAgents = controller => controller.getSnapshot().agents.map(({ gait, ...agent }) => agent);
+  for (let tick = 0; tick < 2400; tick += 1) {
+    withGait.tick(1 / 60);
+    reference.tick(1 / 60);
+    if (tick % 60 === 0) {
+      assert.deepEqual(behaviorAgents(withGait), behaviorAgents(reference));
+      assert.deepEqual(withGait.field.values, reference.field.values);
+      assert.equal(withGait.nextSpawnTimeMs, reference.nextSpawnTimeMs);
+      assert.equal(gaitRandom.calls, referenceRandom.calls);
+    }
+  }
+  await Promise.all([withGait.destroy(), reference.destroy()]);
+});
+
+test('controller measures final post-contact displacement rather than intended velocity for gait contacts', async () => {
+  const observations = [];
+  const gait = new GaitController({ strideVariation: 0 });
+  const advanceGait = gait.advance.bind(gait);
+  let steps = 0;
+  const controller = new AntController({ random: countedRandom(7), gaitController: gait });
+  gait.advance = (agent, distance, dt, time, segment) => {
+    observations.push({ x: agent.x, y: agent.y, distance, dt, time, segment });
+    return advanceGait(agent, distance, dt, time, segment);
+  };
+  controller.subscribe(({ type }) => { if (type === 'foot-contact') steps += 1; });
   await controller.init();
   controller.nextSpawnTimeMs = null;
   const agent = controller.agents[0];
@@ -76,24 +96,25 @@ test('controller measures post-contact displacement rather than intended velocit
   controller.occupancy.constrainDisplacements = () => [0.25];
   controller.tick(1 / 60);
   const first = observations[0];
-  assert.equal(first.distance, Math.hypot(first.x - 0.5, first.y - 0.5));
+  assert.equal(first.distance, Math.hypot(first.x - first.segment.from.x, first.y - first.segment.from.y));
   assert.ok(first.distance < 0.06 / 60, 'contact constraint reduces measured travel');
   assert.equal(first.time, controller.simulationTimeMs);
+  const contactsBeforeBlocking = steps;
   controller.occupancy.constrainDisplacements = () => [0];
   controller.tick(1 / 60);
   assert.equal(observations[1].distance, 0, 'fully blocked travel cannot create footsteps');
   for (let frame = 0; frame < 180; frame += 1) controller.tick(1 / 60);
-  assert.equal(steps, 0, 'blocked bodies emit no footsteps despite their intended motion');
+  assert.equal(steps, contactsBeforeBlocking, 'blocked bodies emit no foot contacts despite their intended motion');
   controller.occupancy.constrainDisplacements = () => [1];
   agent.vx = 0.06;
   for (let frame = 0; frame < 60; frame += 1) controller.tick(1 / 60);
-  assert.ok(steps >= 3, 'footstep activity returns when actual travel resumes');
+  assert.ok(steps >= contactsBeforeBlocking + 2, 'foot-contact activity returns when actual travel resumes');
   await controller.destroy();
 });
 
-async function isolatedSteps(hesitating) {
+async function isolatedContacts(hesitating) {
   const controller = new AntController({ random: countedRandom(4),
-    stepEventGenerator: new StepEventGenerator({ variation: 0 }) });
+    gaitController: new GaitController({ strideVariation: 0 }) });
   await controller.init();
   controller.nextSpawnTimeMs = null;
   const agent = controller.agents[0];
@@ -102,7 +123,7 @@ async function isolatedSteps(hesitating) {
   agent.inspectionRemaining = agent.decisionRemaining = agent.committedRemaining = 100;
   agent.hesitationRemaining = hesitating ? 100 : 0;
   let count = 0;
-  controller.subscribe(({ type }) => { if (type === 'step') count += 1; });
+  controller.subscribe(({ type }) => { if (type === 'foot-contact') count += 1; });
   for (let frame = 0; frame < 300; frame += 1) controller.tick(1 / 60);
   const duringMotion = count;
   if (hesitating) {
@@ -113,14 +134,14 @@ async function isolatedSteps(hesitating) {
   controller.stop();
   const atStop = count;
   for (let frame = 0; frame < 300; frame += 1) controller.tick(1 / 60);
-  assert.equal(count, atStop, 'stopped simulation emits no more steps');
+    assert.equal(count, atStop, 'stopped simulation emits no more foot contacts');
   await controller.destroy();
   return duringMotion;
 }
 
-test('actual hesitation produces fewer steps than the same freely moving ant', async () => {
-  const free = await isolatedSteps(false), hesitating = await isolatedSteps(true);
-  assert.ok(free > 5, 'free movement regularly crosses step distances');
+test('actual hesitation produces fewer gait contacts than the same freely moving ant', async () => {
+  const free = await isolatedContacts(false), hesitating = await isolatedContacts(true);
+  assert.ok(free > 5, 'free movement regularly crosses gait touchdowns');
   assert.ok(hesitating < free / 4, 'hesitation changes timing through its slower actual movement');
 });
 

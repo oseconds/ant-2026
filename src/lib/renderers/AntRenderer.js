@@ -173,8 +173,8 @@ export class AntRenderer {
   }
 }
 
-const PHEROMONE_DISPLAY_HALF_SATURATION = 0.04;
-const PHEROMONE_DISPLAY_MAX_ALPHA = 48;
+const BASE_TRACE_ALPHA = 22;
+const ESTABLISHED_ROUTE_ALPHA = 90;
 
 function drawSnapshot(p, snapshot, renderer) {
   const width = p.width, height = p.height;
@@ -187,13 +187,43 @@ function drawSnapshot(p, snapshot, renderer) {
   }
 
   const diameterScale = Math.min(width, height) * 2;
-  p.noStroke();
-  p.fill(48);
   for (const agent of snapshot?.agents || []) {
     if (!isPoint(agent)) continue;
-    const diameter = Math.max(1, (Number.isFinite(agent.radius) ? agent.radius : 0.006) * diameterScale);
-    p.circle(agent.x * width, agent.y * height, diameter);
+    drawAnt(p, agent, width, height, diameterScale);
   }
+}
+
+function drawAnt(p, agent, width, height, diameterScale) {
+  const radius = Number.isFinite(agent.radius) && agent.radius > 0 ? agent.radius : 0.006;
+  const centerX = agent.x * width, centerY = agent.y * height;
+  const legs = Array.isArray(agent.gait?.legs) ? agent.gait.legs : null;
+  if (!legs) {
+    p.noStroke();
+    p.fill(48);
+    p.circle(centerX, centerY, Math.max(1, radius * diameterScale));
+    return;
+  }
+
+  const minimumStroke = 0.65;
+  p.stroke(64);
+  p.strokeWeight(Math.max(minimumStroke, radius * diameterScale * 0.11));
+  for (const leg of legs) {
+    if (!isPoint(leg.root) || !isPoint(leg.knee) || !isPoint(leg.foot)) continue;
+    p.line(leg.root.x * width, leg.root.y * height, leg.knee.x * width, leg.knee.y * height);
+    p.line(leg.knee.x * width, leg.knee.y * height, leg.foot.x * width, leg.foot.y * height);
+  }
+
+  p.push();
+  p.translate(centerX, centerY);
+  p.rotate(Number.isFinite(agent.heading) ? agent.heading : 0);
+  p.noStroke();
+  p.fill(34);
+  p.ellipse(-1.05 * radius * diameterScale, 0,
+    1.55 * radius * diameterScale, 1.05 * radius * diameterScale);
+  p.ellipse(0, 0, 1.1 * radius * diameterScale, 0.9 * radius * diameterScale);
+  p.ellipse(0.9 * radius * diameterScale, 0,
+    1.05 * radius * diameterScale, 0.85 * radius * diameterScale);
+  p.pop();
 }
 
 function updateFieldImage(p, renderer, field) {
@@ -209,9 +239,7 @@ function updateFieldImage(p, renderer, field) {
   const limit = Math.min(values.length, width * height);
   pixels.fill(0);
   for (let index = 0; index < limit; index++) {
-    const value = Number.isFinite(values[index]) ? Math.max(0, values[index]) : 0;
-    const contrast = value * value / (value * value + PHEROMONE_DISPLAY_HALF_SATURATION ** 2);
-    const opacity = Math.round(PHEROMONE_DISPLAY_MAX_ALPHA * contrast);
+    const opacity = pheromoneValueToAlpha(values[index]);
     const offset = index * 4;
     pixels[offset] = 0;
     pixels[offset + 1] = 0;
@@ -220,6 +248,19 @@ function updateFieldImage(p, renderer, field) {
   }
   image.updatePixels();
   return image;
+}
+
+/** Two-scale fixed mapping; it never normalizes contrast to the current field maximum. */
+export function pheromoneValueToAlpha(value) {
+  if (!Number.isFinite(value) || value <= 0) return 0;
+  const base = smoothstep(0.004, 0.050, value);
+  const route = smoothstep(0.040, 0.180, value);
+  return Math.min(112, Math.round(base * BASE_TRACE_ALPHA + route * ESTABLISHED_ROUTE_ALPHA));
+}
+
+function smoothstep(min, max, value) {
+  const t = Math.min(1, Math.max(0, (value - min) / (max - min)));
+  return t * t * (3 - 2 * t);
 }
 
 function isPoint(value) {

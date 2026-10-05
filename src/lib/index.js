@@ -10,6 +10,7 @@ export { SphereRenderer } from './renderers/SphereRenderer.js';
 export { AntRenderer } from './renderers/AntRenderer.js';
 export { AntController } from './agents/ant/AntController.js';
 export { StepEventGenerator } from './agents/ant/StepEventGenerator.js';
+export { GaitController } from './agents/ant/GaitController.js';
 export { AntAgent } from './agents/ant/AntAgent.js';
 export { PheromoneField } from './agents/ant/PheromoneField.js';
 export { LocalOccupancy } from './agents/ant/LocalOccupancy.js';

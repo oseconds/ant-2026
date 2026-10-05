@@ -8,7 +8,7 @@ const ANT_STEREO_PICKUPS = Object.freeze([
 ]);
 const VOLUME_RAMP_SECONDS = 0.02;
 
-/** Routes distance-step events into the existing shared Plate worklet. */
+/** Routes ANT locomotion events into the existing shared Plate worklet. */
 export class AntAudioBridge {
   constructor({ audioEngine, workletBaseUrl, plateFactory = (options) => new PlateModel({
     ...options,
@@ -36,7 +36,7 @@ export class AntAudioBridge {
   get error() { return this._error; }
   get volume() { return this._volume; }
 
-  /** Adjust only the existing output gain; never initialize audio or alter STEP excitation. */
+  /** Adjust only the existing output gain; never initialize audio or alter locomotion excitation. */
   setVolume(value) {
     const volume = Number(value);
     if (this.destroyed || !Number.isFinite(volume)) return this._volume;
@@ -105,9 +105,41 @@ export class AntAudioBridge {
     return pending;
   }
 
-  /** STEP events are dropped until ready; no event queue or timing quantization. */
+  /** STEP remains available for the distance-based comparison baseline. */
   handleStep(event) {
-    if (!this._enabled || this._loading || this.destroyed || !this.plate || event?.type !== 'STEP') {
+    if (event?.type !== 'STEP') return Promise.resolve(false);
+    return this.handleExcitation(event);
+  }
+
+  /** One tripod touchdown excites the same shared Plate at its valid foot centroid. */
+  handleFootContact(event) {
+    if (event?.type !== 'FOOT_CONTACT' || !['A', 'B'].includes(event.contactGroup)
+      || !Array.isArray(event.contacts) || event.contacts.length < 1 || event.contacts.length > 3) {
+      return Promise.resolve(false);
+    }
+    const tripodLegs = event.contactGroup === 'A'
+      ? ['FL', 'MR', 'RL'] : ['FR', 'ML', 'RR'];
+    const uniqueLegIds = new Set();
+    let x = 0, y = 0;
+    for (const contact of event.contacts) {
+      if (!contact || !tripodLegs.includes(contact.legId)
+        || uniqueLegIds.has(contact.legId) || !validNormalizedPosition(contact.position)) {
+        return Promise.resolve(false);
+      }
+      uniqueLegIds.add(contact.legId);
+      x += contact.position.x / event.contacts.length;
+      y += contact.position.y / event.contacts.length;
+    }
+    const centroidX = Number(event.position?.x), centroidY = Number(event.position?.y);
+    if (!Number.isFinite(centroidX) || !Number.isFinite(centroidY)
+      || Math.abs(centroidX - x) > 1e-6 || Math.abs(centroidY - y) > 1e-6) {
+      return Promise.resolve(false);
+    }
+    return this.handleExcitation({ ...event, type: 'STEP', position: { x, y } });
+  }
+
+  handleExcitation(event) {
+    if (!this._enabled || this._loading || this.destroyed || !this.plate) {
       return Promise.resolve(false);
     }
     const x = Number(event.position?.x);
@@ -159,6 +191,11 @@ export class AntAudioBridge {
     this.stop();
     await this.cleanupPromise;
   }
+}
+
+function validNormalizedPosition(position) {
+  return Number.isFinite(position?.x) && Number.isFinite(position?.y)
+    && position.x >= 0 && position.x <= 1 && position.y >= 0 && position.y <= 1;
 }
 
 export default AntAudioBridge;
