@@ -1,4 +1,5 @@
 export { AudioEngine } from './audio/AudioEngine.js';
+export { AntAudioBridge } from './audio/AntAudioBridge.js';
 export { StringModel } from './models/string/StringModel.js';
 export { PlateModel } from './models/plate/PlateModel.js';
 export { SphereModel, SPHERE_MATERIALS } from './models/sphere/SphereModel.js';
@@ -8,6 +9,7 @@ export { PlateRenderer } from './renderers/PlateRenderer.js';
 export { SphereRenderer } from './renderers/SphereRenderer.js';
 export { AntRenderer } from './renderers/AntRenderer.js';
 export { AntController } from './agents/ant/AntController.js';
+export { StepEventGenerator } from './agents/ant/StepEventGenerator.js';
 export { AntAgent } from './agents/ant/AntAgent.js';
 export { PheromoneField } from './agents/ant/PheromoneField.js';
 export { LocalOccupancy } from './agents/ant/LocalOccupancy.js';

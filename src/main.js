@@ -166,7 +166,13 @@ export function mountLab(root) {
       if (output) output.value = control.format ? control.format(value) : String(value);
     });
     const statusText = { idle: '연주 준비 완료', ready: '연주 준비 완료', loading: '오디오 준비 중…', playing: '현 재생 중', active: state.model === 'ant' ? '개미와 공유 흔적 갱신 중' : '공진 중', stopped: '정지', error: snapshot.error || '오디오 오류' };
-    query('#status').textContent = errorMessage || statusText[status] || status;
+    query('#status').textContent = errorMessage || snapshot.audio?.error
+      || (snapshot.audio?.loading ? '오디오 준비 중…' : statusText[status] || status);
+    const antAudio = query('[data-action="ant-audio"]');
+    if (antAudio) {
+      antAudio.setAttribute('aria-pressed', String(snapshot.audio.enabled));
+      antAudio.textContent = snapshot.audio.enabled ? 'Audio On' : 'Audio Off';
+    }
     query('#audio-info').hidden = definition.audio === false;
     query('footer').hidden = definition.audio === false;
     query('#audio-info').textContent = definition.audio === false ? '' : lab.audio.context ? `${lab.audio.context.sampleRate.toLocaleString()} Hz / ${lab.audio.context.state}` : '첫 타격에서 오디오 시작';
@@ -271,6 +277,7 @@ export function mountLab(root) {
     if (!lab.model || lab.switching) return;
     run(() => {
       switch (target.dataset.action) {
+        case 'ant-audio': return lab.model.setAudioEnabled(!lab.getSnapshot().audio.enabled);
         case 'strike': return lab.strike({ position: interaction?.center() });
         case 'stop': return lab.stop();
         case 'pickup': {

@@ -1,6 +1,7 @@
 import { AntAgent } from './AntAgent.js';
 import { LocalOccupancy } from './LocalOccupancy.js';
 import { PheromoneField } from './PheromoneField.js';
+import { StepEventGenerator } from './StepEventGenerator.js';
 
 const STEP_MS = 1000 / 60;
 const MAX_FRAME_GAP_MS = 100;
@@ -48,7 +49,8 @@ const DEFAULT_STATE = Object.freeze({
 
 /** Framework independent population and shared-environment simulation. */
 export class AntController {
-  constructor({ state, random = Math.random, fieldFactory = (options) => new PheromoneField(options) } = {}) {
+  constructor({ state, random = Math.random, fieldFactory = (options) => new PheromoneField(options),
+    stepEventGenerator = new StepEventGenerator(), audioBridge = null } = {}) {
     this.state = normalizeState(state || {});
     this.random = random;
     this.fieldFactory = fieldFactory;
@@ -64,6 +66,8 @@ export class AntController {
     this.agents = [];
     this.field = null;
     this.occupancy = new LocalOccupancy();
+    this.stepEventGenerator = stepEventGenerator;
+    this.audioBridge = audioBridge;
   }
 
   async init() {
@@ -89,6 +93,11 @@ export class AntController {
       status: this.running ? 'active' : 'stopped',
       agents,
       pheromone: field,
+      audio: {
+        enabled: this.audioBridge?.enabled ?? false,
+        loading: this.audioBridge?.loading ?? false,
+        error: this.audioBridge?.error ?? null
+      },
       analysis: {
         population: agents.length,
         meanSpeed: agents.length ? speedTotal / agents.length : 0,
@@ -132,6 +141,7 @@ export class AntController {
     // A changed population target must not bypass gradual entry or erase the
     // shared history that already exists. Keep surviving agents and their traits.
     this.agents.length = Math.min(this.agents.length, this.state.population.count);
+    this.stepEventGenerator.retain?.(this.agents.map(agent => agent.id));
     for (const agent of this.agents) agent.radius = this.state.behavior.bodyRadius;
     if (this.agents.length >= this.state.population.count) {
       this.nextSpawnTimeMs = null;
@@ -143,6 +153,7 @@ export class AntController {
   }
 
   stop() {
+    this.audioBridge?.stop();
     if (this.destroyed || !this.initialized || !this.running) return false;
     this.running = false;
     this.nextSpawnTimeMs = null;
@@ -153,6 +164,16 @@ export class AntController {
 
   strike() { return false; }
   setPickup() { return false; }
+
+  // The injected transport owns audio; the simulation only requests its state.
+  async setAudioEnabled(enabled) {
+    this.assertAlive();
+    if (!this.audioBridge) return false;
+    const pending = this.audioBridge.setEnabled(Boolean(enabled));
+    this.emit('update');
+    try { return await pending; }
+    finally { this.emit('update'); }
+  }
 
   async destroy() {
     if (this.destroyed) return;
@@ -166,6 +187,8 @@ export class AntController {
     this.field = null;
     this.lastFrameTimestamp = null;
     this.accumulatorMs = 0;
+    this.stepEventGenerator.reset?.();
+    await this.audioBridge?.destroy();
   }
 
   tick(dt) {
@@ -246,6 +269,15 @@ export class AntController {
         amountPerUnitDistance: this.state.pheromone.amountPerUnitDistance * displacement.depositionMultiplier,
         radius: this.state.pheromone.radius
       });
+      // Observe final travel, including collision braking. No audio operation
+      // contributes to movement, its random stream, or the shared trail field.
+      for (const event of this.stepEventGenerator.advance(agent, travelled, this.simulationTimeMs + dt * 1000)) {
+        this.emit('step', event);
+        try {
+          const delivered = this.audioBridge?.handleStep(event);
+          void Promise.resolve(delivered).catch(error => this.emit('error', { message: error.message }));
+        } catch (error) { this.emit('error', { message: error.message }); }
+      }
       this.advanceBehaviorClocks(agent, dt);
     }
     this.simulationTimeMs += dt * 1000;
@@ -408,9 +440,9 @@ export class AntController {
 
   resetFrameClock() { this.lastFrameTimestamp = null; this.accumulatorMs = 0; }
   assertAlive() { if (this.destroyed) throw new Error('AntController has been destroyed.'); }
-  emit(type) {
+  emit(type, payload) {
     if (this.destroyed || this.listeners.size === 0) return;
-    const event = { type, payload: this.getSnapshot() };
+    const event = { type, payload: payload === undefined ? this.getSnapshot() : payload };
     for (const listener of [...this.listeners]) listener(event);
   }
 }

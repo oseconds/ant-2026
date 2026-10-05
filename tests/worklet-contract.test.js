@@ -57,6 +57,28 @@ test('plate worklet renders finite audio at common sample rates and honors zero 
   }
 });
 
+test('simultaneous restrained ANT strikes stay bounded by the existing Plate queue and output limiter', async () => {
+  const { processor } = await loadProcessor('static/worklets/plate.worklet.js', 'plate-processor', 48000,
+    { damping: 35 }, { stableRandom: true });
+  const samples = new Float32Array(128);
+  let peak = 0;
+  for (let block = 0; block < 375; block += 1) {
+    if (block % 20 === 0) {
+      for (let ant = 0; ant < 28; ant += 1) {
+        processor.handleMessage({ type: 'strike', payload: {
+          position: { x: Math.sin(ant) * 0.6, y: Math.cos(ant) * 0.6 }, strength: 0.05
+        } });
+      }
+      assert.equal(processor.hitQueue.length, 24, 'the existing processor queue bounds simultaneous bursts');
+    }
+    processor.process([], [[samples]]);
+    assert.ok(samples.every(Number.isFinite));
+    for (const value of samples) peak = Math.max(peak, Math.abs(value));
+  }
+  assert.ok(peak > 1e-7, 'the existing Plate produces a nonzero baseline');
+  assert.ok(peak <= 1, 'the existing soft limiter bounds output before unchanged output gain');
+});
+
 test('worklet protocol envelopes responses and destroyed processors stop rendering', async () => {
   for (const [file, name] of [
     ['static/worklets/plate.worklet.js', 'plate-processor'],

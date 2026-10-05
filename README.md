@@ -1,6 +1,6 @@
 # Physical Audio Lab
 
-독립적인 물리 오디오 라이브러리와 vanilla Vite 데모입니다. 하나의 페이지에서 String, Circular Plate, Solid Sphere를 연주하고 내부 상태를 확인합니다. ANT는 동등한 개체들이 환경에 흔적을 남기며 움직이는 시각 실험입니다. `src/lib`는 SvelteKit으로 옮겨 사용할 수 있습니다.
+독립적인 물리 오디오 라이브러리와 vanilla Vite 데모입니다. 하나의 페이지에서 String, Circular Plate, Solid Sphere를 연주하고 내부 상태를 확인합니다. ANT는 동등한 개체들이 환경에 흔적을 남기며 움직이는 실험이며, 선택적으로 이동 거리 기반 STEP을 기존 Plate로 들을 수 있습니다. `src/lib`는 SvelteKit으로 옮겨 사용할 수 있습니다.
 
 ```bash
 npm install
@@ -15,11 +15,13 @@ Node.js 20 이상이 필요합니다. 현재 저장소의 Node 20.9에서도 실
 src/
   lib/
     audio/AudioEngine.js          # 지연 초기화, 모듈 캐시, 연결 그래프와 정리
+    audio/AntAudioBridge.js       # STEP을 기존 공유 engine의 Plate 타격으로 전달
     agents/ant/
       AntController.js            # 개체군, 명시적인 시간 진행과 시스템 연결
       AntAgent.js                 # 개체별 이동 상태, 관성, 지속적인 성향
       PheromoneField.js           # 거리 기반 침적·감쇠·공간 샘플링
       LocalOccupancy.js           # 몸체 점유 감지·회피·접촉 방지
+      StepEventGenerator.js       # 실제 이동 거리에서 독립적인 STEP 이벤트 생성
     models/
       BaseModel.js                # 설정, 구독, 공통 모델 계약
       WorkletModel.js             # Worklet 초기화·메시지·비동기 연주 취소
@@ -133,7 +135,7 @@ ANT 메뉴의 목표 개체 수는 28입니다. 시작할 때는 하단 중앙 �
 - `AntAgent`: 개체별 이동 상태, 관성, 지속적인 성향.
 - `PheromoneField`: 공유 외부 기억. `depositSegment()`, `sample()`, `decay(dtSeconds)`, `clear()`, `getSnapshot()`을 독립적으로 제공합니다.
 - `LocalOccupancy`: 주변 몸체 점유와 방향별 혼잡, 근거리 분리와 이동 선분의 접촉 제약. 페로몬을 알지 않습니다.
-- `AntController`: 위 시스템들을 연결하고 명시적인 시간에 따라 개체군을 진행합니다. `getState()`는 JSON 설정, `getSnapshot()`은 개체와 격자 복사본입니다. 오디오·DOM·p5를 알지 않습니다.
+- `AntController`: 위 시스템들을 연결하고 명시적인 시간에 따라 개체군을 진행합니다. `getState()`는 JSON 설정, `getSnapshot()`은 개체와 격자 복사본입니다. 접촉 제약 뒤의 실제 이동 거리를 이벤트 생성기에 전달하며, 선택적으로 주입된 오디오 브리지를 호출합니다. Web Audio·DOM·p5 코드는 포함하지 않습니다.
 - `AntRenderer`: 모든 개체를 같은 작은 점으로 그리고 공유장을 옅은 회색으로 표시합니다. p5는 `init()`에서만 동적으로 불러옵니다. sketch에는 이동·침적·감쇠·기억 로직이 없습니다. `noLoop()`와 `redraw()`를 사용하며 main.js의 RAF가 update와 render를 호출합니다. p5.sound는 포함하지 않습니다.
 
 이전 리더/복사본·지연 재생·LIVE/LOOP 상태와 LOOP/RELEASE 버튼·L/R 단축키는 제거했습니다. 일반적인 timestamp/x/y 링 버퍼인 `TrajectoryBuffer`와 그 테스트는 다른 실험에 재사용할 수 있도록 유지합니다.
@@ -155,15 +157,48 @@ await renderer.destroy(); // p5.remove()로 canvas와 내부 listener 정리
 await ants.destroy();
 ```
 
-ANT도 Lab registry로 전환하지만 AudioEngine을 주입받지 않습니다. 전환하면 기존 RAF·ResizeObserver·p5 instance를 정리하고 controller를 파괴합니다. SvelteKit에서 `AntRenderer`를 사용할 때는 `p5` dependency를 설치하고 onMount 이후 `init()`하세요. 개체와 공유장만 사용하는 환경에서는 p5를 import하거나 실행할 필요가 없습니다. 현재 ANT는 시각 실험이며 소리·호르몬·먹이·둥지·장애물은 구현하지 않습니다. 몸체 회피는 soft local interaction이며 개미의 생물학이나 rigid-body physics를 재현하지 않습니다.
+ANT도 Lab registry로 전환하며, registry가 Lab의 기존 AudioEngine을 공유하는 `AntAudioBridge`를 controller에 주입합니다. 기본 Audio Off에서는 AudioContext나 Plate Worklet을 만들지 않습니다. 전환하면 기존 RAF·ResizeObserver·p5 instance와 ANT의 Plate 자원을 정리하고 controller를 파괴합니다. 공유 AudioEngine의 최종 파괴는 Lab이 담당합니다. SvelteKit에서 `AntRenderer`를 사용할 때는 `p5` dependency를 설치하고 onMount 이후 `init()`하세요. 개체와 공유장만 사용하는 환경에서는 p5를 import하거나 실행할 필요가 없습니다. 호르몬·먹이·둥지·장애물과 다리·보행 애니메이션은 구현하지 않습니다. 몸체 회피는 soft local interaction이며 개미의 생물학이나 rigid-body physics를 재현하지 않습니다.
 
-## ANT 다음 실험: 방향 인지형 교통
+## ANT AUDIO v0: 이동 거리 기반 STEP
+
+연결은 `AntController → StepEventGenerator → AntAudioBridge → PlateModel → 기존 AudioEngine / plate.worklet.js`입니다. `AntAgent`와 p5 렌더러에는 오디오가 없으며, Plate 진동이나 오디오 상태를 ANT 행동에 되먹임하지 않습니다. 기존 Plate 설정·DSP·gain·pickup을 그대로 사용하고 별도 엔진·합성기·오디오 framework를 추가하지 않습니다.
+
+`StepEventGenerator.advance(agent, travelledDistance, simulationTimeMs)`는 `{ type: 'STEP', antId, position: { x, y }, strength, simulationTimeMs }` 배열을 반환합니다. 좌표는 개미의 현재 0–1 위치입니다. 개체별 거리 누적치가 stepLength를 넘을 때마다 전체 임계 거리를 소비하고 나머지를 보존합니다. 기본 stepLength는 0.018, strikeStrength는 0.035이며 각각 개체 ID에서 결정한 ±4%의 작은 편차를 한 번 할당합니다. 이동·스폰 난수를 소비하지 않습니다. 가속·주저·혼잡·재개는 실제 이동 거리를 통해서만 이벤트 빈도에 영향을 줍니다.
+
+이벤트 생성은 Audio Off 동안에도 계속되지만 브리지는 Off 또는 초기화 중의 이벤트를 버립니다. 따라서 On에서 과거 걸음을 재생하지 않습니다. 시간은 기존 시뮬레이션 substep의 끝이며, 별도 tempo·음계·grid·quantization을 추가하지 않습니다. `stepEventGenerator`를 같은 이벤트 계약의 보행/접촉 생성기로 교체하면 브리지와 Plate를 그대로 사용할 수 있습니다. 생성기의 `retain(ids)`와 `reset()`은 개체 제거와 파괴 시 상태를 정리하는 선택적 lifecycle 메서드입니다.
+
+브리지는 단위 정사각형을 Plate의 반지름 0.92 원 안에 넣습니다. `plateX = (2x - 1) × 0.92 / √2`, `plateY = (2y - 1) × 0.92 / √2`이며 두 화면의 y축 방향을 유지합니다. 이 좌표로 기존 `PlateModel.strike()`를 호출합니다. 위치는 타격 지점만 바꾸고 pitch·filter·pickup은 바꾸지 않습니다.
+
+데모에는 `Audio Off / Audio On` 버튼 하나만 추가했습니다. On 클릭에서 기존 engine의 초기화·resume와 Plate Worklet 로드를 시작하므로 브라우저 autoplay 제한을 따릅니다. Off는 즉시 추가 타격을 차단하고 Plate를 정지·파괴합니다. 다시 On하면 같은 engine에서 Plate를 다시 준비합니다. ANT를 떠나거나 앱을 파괴할 때도 진행 중인 타격과 늦게 끝나는 초기화가 취소됩니다. On 상태는 저장 가능한 ANT 행동 설정에 포함하지 않아 모델을 다시 선택해도 자동으로 소리를 시작하지 않습니다.
+
+새 보호 한도는 비정상적인 긴 이동 입력에 대한 개체당 `advance()`당 최대 4 STEP과 브리지 타격 강도 상한 0.05입니다. 정상적인 작은 시간 간격의 이동에서는 거리 임계 이벤트를 모두 전달합니다. 한도를 넘는 전체 걸음은 버리고 분수 거리는 보존하므로 이후 프레임으로 폭주를 미루지 않습니다. 기존 Plate의 타격 큐 24개 제한, `sample / (1 + abs(sample))` 출력 제한과 gain 0.7은 변경하지 않았습니다.
+
+[AUDIO v0의 선별 화면과 검증 기록](docs/ant/evidence/2026-10-05-audio-v0/README.md)에는 production 실행의 PCM·자원 수명 측정과 변경 전 controller에 대한 세 시드·120초 동작 일치 비교를 보존했습니다.
+
+단독 사용에서는 브리지에 기존 engine을 명시적으로 주입합니다. 데모의 Lab registry는 이 연결을 준비합니다.
+
+```js
+import { AntController, StepEventGenerator, AntAudioBridge } from './src/lib/index.js';
+
+const ants = new AntController({
+  stepEventGenerator: new StepEventGenerator(),
+  audioBridge: new AntAudioBridge({ audioEngine: existingAudioEngine })
+});
+await ants.init();
+// 사용자 버튼 handler 안에서 호출:
+await ants.setAudioEnabled(true);
+// 호출자의 animation callback에서 ants.update(timestamp)를 계속 호출.
+await ants.setAudioEnabled(false);
+await ants.destroy(); // 주입한 engine은 소유자가 별도로 정리.
+```
+
+## ANT 실험 기록: 방향 인지형 교통
 
 기준 상태는 2026-10-05의 `a023984cf8234b77307aa350444a18c02d75a6cd`입니다. 사용자는 페로몬 경로는 보이지만 개미들이 흩어져 행렬/행진이 아직 포착되지 않는다고 보고했습니다. 이는 사용자 관찰 기록이며, 아래 원인 설명은 코드에서 확인한 다음 검토 가설입니다.
 
-현재 `AntController`는 이동 방향 후보마다 점유 혼잡에 `3.2` 가중치의 페널티를 주고, 앞 혼잡이 `0.12`를 넘으며 좌우 혼잡 차이가 있으면 빈 쪽으로 조향합니다. 속도도 앞 혼잡도에 따라 줄입니다. 같은 경로에서 같은 방향으로 걷는 개미까지 장애물처럼 처리할 수 있는지 검토하는 것이 다음 한 단계입니다.
+해당 기준 상태의 `AntController`는 이동 방향 후보마다 점유 혼잡에 `3.2` 가중치의 페널티를 주고, 앞 혼잡이 `0.12`를 넘으며 좌우 혼잡 차이가 있으면 빈 쪽으로 조향했습니다. 속도도 앞 혼잡도에 따라 줄였습니다. 같은 경로에서 같은 방향으로 걷는 개미까지 장애물처럼 처리할 수 있는지 검토하는 것이 당시 다음 한 단계였습니다.
 
-다음 ANT 동작 변경은 근거리 교통 규칙만 다룹니다.
+당시 방향 인지형 교통 변경은 근거리 교통 규칙만 다뤘습니다.
 
 - 앞의 이웃이 나와 비슷한 방향으로 움직이면 같은 흐름의 참여자로 보고, 즉시 옆으로 빠지기보다 편안한 간격을 유지하도록 속도를 조절합니다.
 - 마주 오거나 횡단하거나 경로 안에서 거의 정지한 이웃, 또는 위험할 만큼 가까운 이웃에는 기존 제동·회피·분리 동작을 유지합니다. 접촉 선분 검사는 개체가 겹치거나 서로 통과하지 못하도록 계속 작동해야 합니다.
@@ -171,7 +206,7 @@ ANT도 Lab registry로 전환하지만 AudioEngine을 주입받지 않습니다.
 
 이 단계에서는 페로몬 반감기·침적량, 개체 수, 격자 해상도, `trailAdherence`, 생성, 오디오, encounter rate, quorum, raid, UI를 바꾸지 않습니다. 성공 기준은 여러 개미가 같은 경로 위에 간격을 두고 이어서 이동하는 장면이 실제 화면에서 보이고, 접촉/통과가 발생하지 않는 것입니다. 자동 검증 결과만으로 이 시각 기준이 충족됐다고 판단하지 않습니다.
 
-이후에는 실제 결과에 따라 한 번에 한 실험씩 진행합니다. 행진이 계속 끊기면 페로몬장의 공간·시간 스케일을 별도 단계로 살펴보고, 이동 흐름의 변화를 들을 수 있게 할 때는 기존 Plate를 이용한 최소 AUDIO v0를 추가합니다. AUDIO v0는 개미가 이동 거리 기준으로 STEP 이벤트를 내고 현재 위치에서 Plate를 타격하는 단방향 연결입니다. pitch/filter에 좌표를 매핑하거나 오디오·공명을 개미 행동에 되먹임하지 않습니다. `TrajectoryBuffer`는 일반 유틸리티로 남기며 ANT의 행동/리듬 재생 장치로 다시 연결하지 않습니다. 장기적으로 다시 쓰더라도 집단의 과거를 담는 별도 기억층으로 취급합니다.
+방향 인지형 교통과 adherence 기반 페로몬 강화를 각각 별도 단계로 진행했고, 현재는 위의 최소 AUDIO v0를 구현했습니다. 다음 비교는 거리 기반 STEP과 실제 보행/발 접촉 기반 STEP을 같은 브리지·Plate에서 듣는 것입니다. 보행 구현은 아직 추가하지 않았습니다. 실제 결과에 따라 한 번에 한 실험씩 진행하며, pitch/filter 좌표 매핑이나 오디오·공명을 ANT 행동에 되먹임하지 않습니다. `TrajectoryBuffer`는 일반 유틸리티로 남기며 ANT의 행동/리듬 재생 장치로 다시 연결하지 않습니다. 장기적으로 다시 쓰더라도 집단의 과거를 담는 별도 기억층으로 취급합니다.
 
 ## AudioWorklet protocol
 
@@ -229,9 +264,9 @@ npm run test:browser
 CHECK_PRODUCTION=1 npm run test:browser
 ```
 
-Node native 테스트는 SSR import, JSON 복사·부분 병합, delay stepping, 공유 AudioEngine, 초기화/정지/전환 경합, Worklet protocol, sample rate/quality별 유한 출력, 독립 pickup, 원본 DSP 회귀를 확인합니다. ANT는 거리 기반 침적·감쇠, 확률적인 흔적 선택, 지속적인 개체 성향, 몸체 회피·접촉 안정성·장시간 유한 상태와 분산, p5 adapter 초기화·파괴를 검사합니다. 일반 링 버퍼의 wrapping/지연 보간 테스트도 유지합니다. fixture는 앱 bundle에 포함되지 않습니다.
+Node native 테스트는 SSR import, JSON 복사·부분 병합, delay stepping, 공유 AudioEngine, 초기화/정지/전환 경합, Worklet protocol, sample rate/quality별 유한 출력, 독립 pickup, 원본 DSP 회귀를 확인합니다. ANT는 거리 기반 침적·감쇠, 확률적인 흔적 선택, 지속적인 개체 성향, 몸체 회피·접촉 안정성·장시간 유한 상태와 분산, p5 adapter 초기화·파괴를 검사합니다. STEP의 거리 잔여분·고정 편차·정체/주저/재개, Audio On/Off의 이동·페로몬·난수 일치, Plate 전달 좌표·동시 타격·비동기 취소·공유 engine 수명도 확인합니다. 일반 링 버퍼의 wrapping/지연 보간 테스트도 유지합니다. fixture는 앱 bundle에 포함되지 않습니다.
 
-브라우저 스크립트는 Vite를 임시 포트로 띄우고 세 모델의 연주·컨트롤·전환·정리와 console/processor 오류를 확인합니다. ANT의 독립적인 움직임·공유 흔적·무음 실행과 전환 정리도 검사합니다. 모델별 문서 구조, native control의 label 연결, 밝은 배경과 모바일 가로 넘침도 검사합니다. macOS의 설치된 Google Chrome을 자동 사용하며 다른 환경은 `BROWSER_EXECUTABLE_PATH`로 실행 파일을 지정하거나 `npx playwright install chromium`으로 검증용 브라우저를 설치하세요. 스크린샷은 test-results/에 저장합니다. 자동 테스트는 출력 데이터와 lifecycle을 확인하며 청감 비교는 별도입니다.
+브라우저 스크립트는 Vite를 임시 포트로 띄우고 세 모델의 연주·컨트롤·전환·정리와 console/processor 오류를 확인합니다. ANT의 독립적인 움직임·공유 흔적·기본 무음 실행, 사용자 Audio On 이후 기존 Plate의 실제 PCM 출력, Off/재활성화/전환 시 정리도 검사합니다. 모델별 문서 구조, native control의 label 연결, 밝은 배경과 모바일 가로 넘침도 검사합니다. macOS의 설치된 Google Chrome을 자동 사용하며 다른 환경은 `BROWSER_EXECUTABLE_PATH`로 실행 파일을 지정하거나 `npx playwright install chromium`으로 검증용 브라우저를 설치하세요. 스크린샷은 test-results/에 저장합니다. 자동 테스트는 출력 데이터와 lifecycle을 확인하며 청감 비교는 별도입니다.
 
 ## 남은 기술 부채와 다음 작업
 
