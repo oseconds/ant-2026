@@ -69,6 +69,40 @@ test('AudioEngine creates browser resources lazily and shares module loading', a
   assert.ok(nodes.every(node => node.port.closeCount === 1 && node.messages.some(m => m.type === 'destroy')));
 });
 
+test('AudioEngine keeps mono as the default and allows a stereo worklet output', async () => {
+  const { context } = makeContext();
+  const workletOptions = [];
+  const engine = new AudioEngine({
+    contextFactory: () => context,
+    workletNodeFactory: (_context, _name, options) => {
+      workletOptions.push(options);
+      return makeWorkletNode();
+    }
+  });
+  const mono = await engine.createWorklet('string-processor', '/worklets/string.worklet.js', {}, () => {}, () => {});
+  const stereo = await engine.createWorklet('plate-processor', '/worklets/plate.worklet.js', {}, () => {}, () => {}, {
+    gain: 0.7, channels: 2
+  });
+  assert.deepEqual(workletOptions.map(({ numberOfOutputs, outputChannelCount }) => ({ numberOfOutputs, outputChannelCount })), [
+    { numberOfOutputs: 1, outputChannelCount: [1] },
+    { numberOfOutputs: 1, outputChannelCount: [2] }
+  ]);
+  mono.disconnect();
+  stereo.disconnect();
+  await engine.destroy();
+});
+
+test('AudioEngine rejects unsupported channel counts before loading a worklet', async () => {
+  let moduleLoads = 0;
+  const { context } = makeContext(async () => { moduleLoads++; });
+  const engine = new AudioEngine({ contextFactory: () => context, workletNodeFactory: makeWorkletNode });
+  await assert.rejects(engine.createWorklet('plate-processor', '/worklets/plate.worklet.js', {}, () => {}, () => {}, {
+    channels: 3
+  }), /channels must be 1 or 2/);
+  assert.equal(moduleLoads, 0);
+  await engine.destroy();
+});
+
 test('AudioEngine rejects a pending module after destroy and closes the context', async () => {
   const gate = deferred();
   const { context } = makeContext(() => gate.promise);

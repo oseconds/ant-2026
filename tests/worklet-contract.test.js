@@ -79,6 +79,127 @@ test('simultaneous restrained ANT strikes stay bounded by the existing Plate que
   assert.ok(peak <= 1, 'the existing soft limiter bounds output before unchanged output gain');
 });
 
+test('stereo Plate pickups observe one shared field and keep centered excitation balanced', async () => {
+  const stereoPickups = [{ x: -0.32, y: -0.18 }, { x: 0.32, y: -0.18 }];
+  const { processor } = await loadProcessor('static/worklets/plate.worklet.js', 'plate-processor', 48000,
+    { damping: 35, stereoPickups }, { stableRandom: true });
+  assert.deepEqual(processor.stereoPickupPositions.map(point => ({ ...point })), stereoPickups);
+  assert.notEqual(processor.stereoPickupIndices[0], processor.stereoPickupIndices[1]);
+
+  processor.handleMessage({ type: 'strike', payload: { position: { x: 0, y: 0 }, strength: 0.05 } });
+  const left = new Float32Array(4096), right = new Float32Array(4096);
+  assert.equal(processor.process([], [[left, right]]), true);
+  assert.equal(processor.hitQueue.length, 0, 'the queued strike is consumed once');
+  assert.ok(left.every(Number.isFinite) && right.every(Number.isFinite));
+  assert.ok(left.every(value => Math.abs(value) <= 1) && right.every(value => Math.abs(value) <= 1));
+
+  const rms = channel => Math.sqrt(channel.reduce((sum, sample) => sum + sample * sample, 0) / channel.length);
+  const leftRms = rms(left), rightRms = rms(right);
+  const balanceRatio = Math.abs(leftRms - rightRms) / Math.max(leftRms, rightRms);
+  assert.ok(leftRms > 1e-8 && rightRms > 1e-8);
+  assert.ok(balanceRatio < 0.03, `centered symmetric strike should balance: ${leftRms} vs ${rightRms}`);
+});
+
+test('asymmetric strike yields pickup-dependent stereo from the same Plate resonance history', async () => {
+  const stereoPickups = [{ x: -0.32, y: -0.18 }, { x: 0.32, y: -0.18 }];
+  const stereo = await loadProcessor('static/worklets/plate.worklet.js', 'plate-processor', 48000,
+    { damping: 35, stereoPickups }, { stableRandom: true });
+  const leftMono = await loadProcessor('static/worklets/plate.worklet.js', 'plate-processor', 48000,
+    { damping: 35, pickup: stereoPickups[0] }, { stableRandom: true });
+  const rightMono = await loadProcessor('static/worklets/plate.worklet.js', 'plate-processor', 48000,
+    { damping: 35, pickup: stereoPickups[1] }, { stableRandom: true });
+  const strike = { position: { x: -0.48, y: -0.1 }, strength: 0.08 };
+  for (const instance of [stereo, leftMono, rightMono]) {
+    instance.processor.handleMessage({ type: 'strike', payload: strike });
+  }
+
+  const left = new Float32Array(4096), right = new Float32Array(4096);
+  const leftReference = new Float32Array(4096), rightReference = new Float32Array(4096);
+  stereo.processor.process([], [[left, right]]);
+  leftMono.processor.process([], [[leftReference]]);
+  rightMono.processor.process([], [[rightReference]]);
+
+  assert.equal(stereo.processor.hitQueue.length, 0);
+  assert.deepEqual([...stereo.processor.current], [...leftMono.processor.current]);
+  assert.deepEqual([...stereo.processor.current], [...rightMono.processor.current]);
+  assert.deepEqual([...stereo.processor.previous], [...leftMono.processor.previous]);
+  assert.deepEqual([...stereo.processor.previous], [...rightMono.processor.previous]);
+  assert.deepEqual([...left], [...leftReference]);
+  assert.deepEqual([...right], [...rightReference]);
+  assert.ok(left.some(value => Math.abs(value) > 1e-8));
+  assert.ok(right.some(value => Math.abs(value) > 1e-8));
+  const rms = channel => Math.sqrt(channel.reduce((sum, sample) => sum + sample * sample, 0) / channel.length);
+  const leftRms = rms(left), rightRms = rms(right);
+  const differenceRatio = Math.sqrt(left.reduce((sum, sample, index) => sum + (sample - right[index]) ** 2, 0) / left.length)
+    / Math.max(leftRms, rightRms);
+  assert.ok(differenceRatio > 0.05, `asymmetric excitation should distinguish physical pickups: ${differenceRatio}`);
+});
+
+test('stereo pickup points and resonance history survive Plate grid changes, and stop silences both channels', async () => {
+  const stereoPickups = [{ x: -0.32, y: -0.18 }, { x: 0.32, y: -0.18 }];
+  const { processor } = await loadProcessor('static/worklets/plate.worklet.js', 'plate-processor', 48000,
+    { resolution: 'normal', stereoPickups }, { stableRandom: true });
+  const left = new Float32Array(256), right = new Float32Array(256);
+  processor.handleMessage({ type: 'strike', payload: { position: { x: -0.3, y: 0.1 }, strength: 0.08 } });
+  processor.process([], [[left, right]]);
+  assert.ok(left.some(value => Math.abs(value) > 1e-8));
+  assert.ok(right.some(value => Math.abs(value) > 1e-8));
+  assert.equal(processor.active, true);
+
+  const priorCurrent = processor.current;
+  const priorPrevious = processor.previous;
+  const priorIndices = [...processor.stereoPickupIndices];
+  processor.handleMessage({ type: 'configure', payload: { resolution: 'high' } });
+  assert.deepEqual(processor.stereoPickupPositions.map(point => ({ ...point })), stereoPickups);
+  assert.deepEqual(processor.stereoPickupIndices,
+    stereoPickups.map(({ x, y }) => processor.findNearest(x, y)));
+  assert.notDeepEqual(processor.stereoPickupIndices, priorIndices, 'pickup sample indices are rebuilt for the new grid');
+  assert.notStrictEqual(processor.current, priorCurrent);
+  assert.notStrictEqual(processor.previous, priorPrevious);
+  assert.ok(processor.current.some(value => Math.abs(value) > 1e-9), 'current displacement history is resampled');
+  assert.ok(processor.previous.some(value => Math.abs(value) > 1e-9), 'previous displacement history is resampled');
+  assert.equal(processor.active, true, 'grid rebuild preserves active resonance');
+
+  processor.handleMessage({ type: 'stop' });
+  left.fill(0.5); right.fill(-0.5);
+  processor.process([], [[left, right]]);
+  assert.ok(left.every(value => value === 0), 'stop clears left output');
+  assert.ok(right.every(value => value === 0), 'stop clears right output');
+  assert.equal(processor.active, false);
+});
+
+test('stereo Plate output stays finite and limited at supported sample rates and grid qualities', async () => {
+  const stereoPickups = [{ x: -0.32, y: -0.18 }, { x: 0.32, y: -0.18 }];
+  for (const rate of [44100, 48000, 96000]) {
+    for (const resolution of ['low', 'normal', 'high']) {
+      const { processor } = await loadProcessor('static/worklets/plate.worklet.js', 'plate-processor', rate,
+        { resolution, stereoPickups }, { stableRandom: true });
+      for (let strike = 0; strike < 4; strike += 1) {
+        processor.handleMessage({ type: 'strike', payload: {
+          position: { x: -0.45 + strike * 0.3, y: -0.12 + strike * 0.08 }, strength: 0.05
+        } });
+      }
+      const left = new Float32Array(256), right = new Float32Array(256);
+      processor.process([], [[left, right]]);
+      assert.ok(left.every(Number.isFinite) && right.every(Number.isFinite), `${resolution} at ${rate} Hz is finite`);
+      assert.ok(left.every(value => Math.abs(value) <= 1) && right.every(value => Math.abs(value) <= 1),
+        `${resolution} at ${rate} Hz stays within the shared soft limiter`);
+      assert.ok(left.some(value => Math.abs(value) > 1e-8) && right.some(value => Math.abs(value) > 1e-8),
+        `${resolution} at ${rate} Hz produces both pickup signals`);
+      assert.equal(processor.hitQueue.length, 0, `${resolution} at ${rate} Hz consumes each queued strike once`);
+    }
+  }
+});
+
+test('Plate remains mono when no valid pair of stereo pickups is configured', async () => {
+  for (const stereoPickups of [undefined, [{ x: 0, y: 0 }], [{ x: 0, y: 0 }, { x: Number.NaN, y: 0 }]]) {
+    const { processor } = await loadProcessor('static/worklets/plate.worklet.js', 'plate-processor', 48000,
+      { stereoPickups });
+    assert.equal(processor.stereoPickupPositions, null);
+    assert.equal(processor.stereoPickupIndices, null);
+  }
+});
+
 test('worklet protocol envelopes responses and destroyed processors stop rendering', async () => {
   for (const [file, name] of [
     ['static/worklets/plate.worklet.js', 'plate-processor'],

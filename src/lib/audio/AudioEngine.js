@@ -96,8 +96,10 @@ export class AudioEngine {
   }
 
   async createWorklet(name, url, processorOptions, onMessage, onError, output = {}) {
+    const channels = output.channels ?? 1;
+    if (channels !== 1 && channels !== 2) throw new RangeError('AudioWorklet output channels must be 1 or 2.');
     const context = await this.loadModule(url);
-    const options = { numberOfInputs: 0, numberOfOutputs: 1, outputChannelCount: [1], processorOptions };
+    const options = { numberOfInputs: 0, numberOfOutputs: 1, outputChannelCount: [channels], processorOptions };
     const Constructor = globalThis.AudioWorkletNode;
     if (!this.workletNodeFactory && !Constructor) throw new Error('AudioWorkletNode is unavailable.');
     const node = this.workletNodeFactory ? this.workletNodeFactory(context, name, options) : new Constructor(context, name, options);

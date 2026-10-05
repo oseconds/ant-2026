@@ -8,6 +8,8 @@ class CircularPlateProcessor extends AudioWorkletProcessor {
     this.dampingControl = Number(config.damping ?? 35);
     const pickup = config.pickup ?? { x: 0.28, y: -0.18 };
     this.pickupPosition = { x: Number(pickup.x ?? 0.28), y: Number(pickup.y ?? -0.18) };
+    this.stereoPickupPositions = normalizeStereoPickups(config.stereoPickups);
+    this.stereoPickupIndices = null;
     this.active = false;
     this.destroyed = false;
     this.frameClock = 0;
@@ -100,6 +102,8 @@ class CircularPlateProcessor extends AudioWorkletProcessor {
       this.active = old.active;
     } else this.active = false;
     this.pickup = this.findNearest(this.pickupPosition.x, this.pickupPosition.y);
+    this.stereoPickupIndices = this.stereoPickupPositions
+      ? this.stereoPickupPositions.map(({ x, y }) => this.findNearest(x, y)) : null;
     this.recomputePreviousLaplacian();
     this.updateCoefficients();
     this.post('grid', { size: this.size, nodes: this.indices.length });
@@ -177,10 +181,16 @@ class CircularPlateProcessor extends AudioWorkletProcessor {
 
   process(inputs, outputs) {
     if (this.destroyed) return false;
-    const output = outputs[0]?.[0];
+    const channels = outputs[0];
+    const output = channels?.[0];
     if (!output) return true;
     if (this.hitQueue.length) for (const hit of this.hitQueue.splice(0)) this.applyStrike(hit);
-    if (!this.active) { output.fill(0); return true; }
+    if (!this.active) {
+      for (const channel of channels) channel.fill(0);
+      return true;
+    }
+    const stereo = this.stereoPickupIndices && channels.length >= 2;
+    const rightOutput = stereo ? channels[1] : null;
     const { indices, left, right, up, down } = this;
     for (let frame = 0; frame < output.length; frame++) {
       const current = this.current, previous = this.previous, next = this.next;
@@ -199,8 +209,15 @@ class CircularPlateProcessor extends AudioWorkletProcessor {
       const oldPrevious = this.previous;
       this.previous = this.current; this.current = this.next; this.next = oldPrevious;
       this.laplacian = previousLaplacian; this.previousLaplacian = lap;
-      const sample = this.current[this.pickup] * 8;
-      output[frame] = sample / (1 + Math.abs(sample));
+      if (stereo) {
+        const leftSample = this.current[this.stereoPickupIndices[0]] * 8;
+        const rightSample = this.current[this.stereoPickupIndices[1]] * 8;
+        output[frame] = leftSample / (1 + Math.abs(leftSample));
+        rightOutput[frame] = rightSample / (1 + Math.abs(rightSample));
+      } else {
+        const sample = this.current[this.pickup] * 8;
+        output[frame] = sample / (1 + Math.abs(sample));
+      }
     }
     this.frameClock += output.length; this.checkClock += output.length;
     if (this.frameClock >= this.sampleRate / 30) { this.frameClock = 0; this.sendFrame(); }
@@ -212,6 +229,18 @@ class CircularPlateProcessor extends AudioWorkletProcessor {
     }
     return true;
   }
+}
+
+function normalizeStereoPickups(positions) {
+  if (!Array.isArray(positions) || positions.length !== 2
+    || positions.some(position => !position || !Number.isFinite(position.x) || !Number.isFinite(position.y))) return null;
+  return positions.map(position => {
+    let x = Math.max(-0.92, Math.min(0.92, position.x));
+    let y = Math.max(-0.92, Math.min(0.92, position.y));
+    const length = Math.hypot(x, y);
+    if (length > 0.92) { x *= 0.92 / length; y *= 0.92 / length; }
+    return { x, y };
+  });
 }
 
 registerProcessor('plate-processor', CircularPlateProcessor);

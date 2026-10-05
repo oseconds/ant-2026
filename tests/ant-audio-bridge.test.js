@@ -95,6 +95,12 @@ test('bridge lazily creates the existing Plate and sends restrained spatial stri
   assert.equal(audio.createCount, 1);
   assert.equal(audio.calls[0].args[0], 'plate-processor');
   assert.equal(audio.calls[0].args[1], '/audio/worklets/plate.worklet.js');
+  assert.equal(audio.calls[0].args[5].channels, 2);
+  assert.equal(audio.calls[0].args[5].gain, 0.7);
+  assert.deepEqual(audio.calls[0].args[2].stereoPickups, [
+    { x: -0.32, y: -0.18 }, { x: 0.32, y: -0.18 }
+  ]);
+  assert.equal(Object.hasOwn(bridge.plate.getState(), 'stereoPickups'), false, 'pickup experiment stays out of saved mono state');
 
   assert.equal(await bridge.handleStep(step(0, 0, 0.035)), true);
   assert.equal(await bridge.handleStep(step(1, 1, 0.9)), true);

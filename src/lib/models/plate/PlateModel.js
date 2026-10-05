@@ -3,8 +3,22 @@ import { boundedNumber, normalizePoint2 } from '../../utils/state.js';
 
 const QUALITY = new Set(['low', 'normal', 'high']);
 
+function normalizeStereoPickups(value) {
+  if (value === undefined) return null;
+  if (!Array.isArray(value) || value.length !== 2) {
+    throw new TypeError('stereoPickups must contain exactly two positions.');
+  }
+  return value.map((position) => {
+    if (!Number.isFinite(position?.x) || !Number.isFinite(position?.y)) {
+      throw new TypeError('Each stereo pickup must have finite x and y coordinates.');
+    }
+    return normalizePoint2(position, { x: 0, y: 0 }, 0.92);
+  });
+}
+
 export class PlateModel extends WorkletModel {
   constructor(options = {}) {
+    const stereoPickups = normalizeStereoPickups(options.stereoPickups);
     super({
       model: 'plate',
       physical: { stiffness: 0.92 },
@@ -16,8 +30,9 @@ export class PlateModel extends WorkletModel {
       ...options,
       processorName: 'plate-processor',
       workletFile: 'plate.worklet.js',
-      output: { gain: 0.7 }
+      output: { gain: 0.7, channels: stereoPickups ? 2 : 1 }
     });
+    this.stereoPickups = stereoPickups;
   }
 
   validateState(state) {
@@ -45,7 +60,8 @@ export class PlateModel extends WorkletModel {
       resolution: this.state.quality,
       stiffness: this.state.physical.stiffness,
       damping: this.state.damping * 100,
-      pickup: this.state.pickup.position
+      pickup: this.state.pickup.position,
+      ...(this.stereoPickups ? { stereoPickups: this.stereoPickups.map((position) => ({ ...position })) } : {})
     };
   }
 

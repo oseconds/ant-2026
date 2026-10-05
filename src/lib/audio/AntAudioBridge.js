@@ -2,11 +2,18 @@ import { PlateModel } from '../models/plate/PlateModel.js';
 
 const MAX_STRIKE_STRENGTH = 0.05;
 const PLATE_COORDINATE_SCALE = 0.92 / Math.sqrt(2);
+const ANT_STEREO_PICKUPS = Object.freeze([
+  Object.freeze({ x: -0.32, y: -0.18 }),
+  Object.freeze({ x: 0.32, y: -0.18 })
+]);
 const VOLUME_RAMP_SECONDS = 0.02;
 
 /** Routes distance-step events into the existing shared Plate worklet. */
 export class AntAudioBridge {
-  constructor({ audioEngine, workletBaseUrl, plateFactory = (options) => new PlateModel(options) } = {}) {
+  constructor({ audioEngine, workletBaseUrl, plateFactory = (options) => new PlateModel({
+    ...options,
+    stereoPickups: ANT_STEREO_PICKUPS
+  }) } = {}) {
     if (!audioEngine) throw new TypeError('AntAudioBridge requires the shared AudioEngine.');
     this.audioEngine = audioEngine;
     this.workletBaseUrl = workletBaseUrl;
