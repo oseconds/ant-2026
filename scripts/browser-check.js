@@ -13,7 +13,7 @@ let browser;
 const probeSource = `
 (() => {
   const probe = window.__physicalAudioProbe = {
-    audioContexts: [], contextCloseCalls: 0, worklets: [], processorErrors: 0, workletModules: [],
+    audioContexts: [], contextCloseCalls: 0, worklets: [], gainNodes: [], processorErrors: 0, workletModules: [],
     workletMessages: [],
     pcmRms: [], workletRms: [], gl: { contexts: 0, deletedBuffers: 0, deletedPrograms: 0 },
     canvasListenersAdded: 0, canvasListenersRemoved: 0,
@@ -23,6 +23,20 @@ const probeSource = `
   window.AudioContext = class extends OriginalAudioContext {
     constructor(...args) {
       super(...args); probe.audioContexts.push(this);
+      const createGain = this.createGain.bind(this);
+      this.createGain = (...gainArgs) => {
+        const node = createGain(...gainArgs);
+        const record = { index: probe.gainNodes.length, context: this, node, ramps: [] };
+        probe.gainNodes.push(record);
+        try {
+          const linearRamp = node.gain.linearRampToValueAtTime.bind(node.gain);
+          node.gain.linearRampToValueAtTime = (value, endTime) => {
+            record.ramps.push({ value, endTime, at: performance.now() });
+            return linearRamp(value, endTime);
+          };
+        } catch (error) { record.rampProbeError = String(error); }
+        return node;
+      };
       const audioWorklet = this.audioWorklet;
       if (audioWorklet && !audioWorklet.__physicalProbeWrapped) {
         const addModule = audioWorklet.addModule.bind(audioWorklet);
@@ -266,6 +280,51 @@ async function readAntPopulation(page) {
   });
 }
 
+async function setAntVolume(page, value) {
+  const slider = page.locator('#ant-volume');
+  await slider.evaluate((input, nextValue) => {
+    input.value = String(nextValue);
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  }, value);
+  await page.waitForFunction(expected => document.querySelector('#ant-volume')?.value === String(expected)
+    && document.querySelector('#ant-volume-value')?.value === `${expected}%`, value);
+}
+
+async function readAntAudioVolume(page) {
+  return page.evaluate(async production => {
+    if (!production) {
+      const { app } = await import('/src/main.js');
+      return app.lab.model.getSnapshot().audio.volume;
+    }
+    return Number(document.querySelector('#ant-volume')?.value) / 100;
+  }, useProduction);
+}
+
+async function assertAntOutputGain(page, volume) {
+  const expectedGain = .7 * volume;
+  await page.waitForFunction(async ({ production, target }) => {
+    if (!production) {
+      const { app } = await import('/src/main.js');
+      const gain = app.lab.model.audioBridge?.plate?.worklet?.gainNode?.gain?.value;
+      return Number.isFinite(gain) && Math.abs(gain - target) < 1e-4;
+    }
+    return window.__physicalAudioProbe.gainNodes.some(record => record.ramps.some(ramp =>
+      Math.abs(ramp.value - target) < 1e-9) && Math.abs(record.node.gain.value - target) < 1e-4);
+  }, { production: useProduction, target: expectedGain }, { timeout: 8000 });
+  await page.waitForTimeout(60);
+  const actualGain = await page.evaluate(async production => {
+    if (!production) {
+      const { app } = await import('/src/main.js');
+      return app.lab.model.audioBridge.plate.worklet.gainNode.gain.value;
+    }
+    const records = window.__physicalAudioProbe.gainNodes.filter(record => record.ramps.length > 0);
+    return records.at(-1)?.node.gain.value;
+  }, useProduction);
+  assert.ok(Number.isFinite(actualGain));
+  assert.ok(Math.abs(actualGain - expectedGain) < 1e-4,
+    `ANT output gain is Plate baseline 0.7 × selected volume ${volume} (${actualGain} ≈ ${expectedGain})`);
+}
+
 async function verifyAnt(page, requestedUrls) {
   await waitForModel(page, 'ant');
   await verifyDocumentPresentation(page);
@@ -289,6 +348,15 @@ async function verifyAnt(page, requestedUrls) {
   const audioButton = page.locator('[data-action="ant-audio"]');
   assert.equal(await audioButton.getAttribute('aria-pressed'), 'false', 'ANT audio starts off');
   assert.match(await audioButton.textContent(), /Audio Off/i);
+  const volumeSlider = page.locator('#ant-volume');
+  assert.equal(await volumeSlider.count(), 1, 'ANT exposes one dedicated volume range');
+  assert.equal(await volumeSlider.getAttribute('type'), 'range');
+  assert.equal(await volumeSlider.getAttribute('min'), '0');
+  assert.equal(await volumeSlider.getAttribute('max'), '100');
+  assert.equal(await volumeSlider.getAttribute('step'), '1');
+  assert.equal(await page.locator('label[for="ant-volume"]').textContent().then(text => text.trim()), 'Volume');
+  assert.equal(await volumeSlider.inputValue(), '100', 'ANT volume defaults to 100 percent');
+  assert.equal(await page.locator('#ant-volume-value').evaluate(output => output.value), '100%');
   if (!useProduction) {
     const initialAudio = await page.evaluate(async () => {
       const { app } = await import('/src/main.js');
@@ -297,6 +365,7 @@ async function verifyAnt(page, requestedUrls) {
     assert.equal(initialAudio.enabled, false);
     assert.equal(initialAudio.loading, false);
     assert.equal(initialAudio.error, null);
+    assert.equal(initialAudio.volume, 1);
   }
   assert.equal(await page.evaluate(() => window.__physicalAudioProbe.workletModules.length), 0,
     'the explicit ANT audio toggle is off before any audio module loads');
@@ -376,7 +445,7 @@ async function verifyAnt(page, requestedUrls) {
     await page.screenshot({ path: 'test-results/ant-matured.png', fullPage: true });
   } else {
     await page.waitForTimeout(15000);
-    await page.screenshot({ path: 'test-results/ant-production.png', fullPage: true });
+    await page.screenshot({ path: 'test-results/ant-volume-production.png', fullPage: true });
   }
   progressedAudioMetrics = await page.evaluate(production => {
     const probe = window.__physicalAudioProbe;
@@ -391,6 +460,8 @@ async function verifyAnt(page, requestedUrls) {
         : { exact: simulationSeconds },
       contextCount: probe.audioContexts.length,
       contextState: probe.audioContexts[0]?.state,
+      selectedVolumePercent: Number(document.querySelector('#ant-volume')?.value),
+      effectiveOutputGainTarget: probe.gainNodes.flatMap(record => record.ramps.map(ramp => ramp.value)).at(-1) ?? null,
       loadedPlateWorkletModules: probe.workletModules.filter(item => item.loaded && /plate\.worklet\.js(?:$|\?)/.test(item.url)).length,
       processorErrors: probe.processorErrors,
       plateWorklets: records.map(record => ({
@@ -472,7 +543,7 @@ async function verifyAnt(page, requestedUrls) {
   assert.equal(afterSwitchAudioMetrics.totalStrikes, strikesAtSwitchClose, 'no Plate strikes arrive after all ports close');
   assert.equal(afterSwitchAudioMetrics.processorErrors, 0);
   await mkdir('test-results', { recursive: true });
-  await writeFile(`test-results/ant-audio-${useProduction ? 'production' : 'dev'}-metrics.json`,
+  await writeFile(`test-results/ant-volume-${useProduction ? 'production' : 'dev'}-metrics.json`,
     `${JSON.stringify({ progressedCapture: progressedAudioMetrics, afterSwitch: afterSwitchAudioMetrics,
       verifiedNoFutureStrikes: true }, null, 2)}\n`);
   assert.equal(await page.locator('#scene canvas').count(), 1, 'switching away leaves one current canvas');
@@ -501,6 +572,13 @@ async function verifyAntAudioToggle(page, audioButton) {
   });
   assert.equal(await page.evaluate(() => window.__physicalAudioProbe.audioContexts.length), 0,
     'the ANT bridge has no AudioContext before Audio On');
+  await setAntVolume(page, 65);
+  assert.ok(Math.abs(await readAntAudioVolume(page) - .65) < 1e-9,
+    'changing volume while Audio Off persists in ANT state');
+  assert.equal(await page.evaluate(() => window.__physicalAudioProbe.audioContexts.length), 0,
+    'changing volume while Audio Off does not initialize AudioContext');
+  assert.equal(await page.evaluate(() => window.__physicalAudioProbe.workletModules.length), 0,
+    'changing volume while Audio Off does not load the Plate worklet');
   await audioButton.click();
   await page.waitForFunction(() => document.querySelector('[data-action="ant-audio"]')?.getAttribute('aria-pressed') === 'true'
     && !/오디오 준비 중|오디오 오류/i.test(document.querySelector('#status')?.textContent || ''), null, { timeout: 10000 });
@@ -530,6 +608,16 @@ async function verifyAntAudioToggle(page, audioButton) {
   assert.equal(firstOn.plateModules, 1, 'ANT lazily loads the existing Plate worklet module');
   if (!useProduction) assert.ok(firstOn.events.length > 0, 'ANT generated real distance-based STEP events');
   assert.ok(firstOn.strikes.length > 0, 'STEP events reach the Plate worklet');
+  assert.ok(Math.abs(await readAntAudioVolume(page) - .65) < 1e-9,
+    'Audio On preserves the volume selected while Audio Off');
+  await assertAntOutputGain(page, .65);
+  await setAntVolume(page, 0);
+  assert.ok(Math.abs(await readAntAudioVolume(page)) < 1e-9, 'ANT volume can reach mute while audio is On');
+  await assertAntOutputGain(page, 0);
+  await setAntVolume(page, 35);
+  assert.ok(Math.abs(await readAntAudioVolume(page) - .35) < 1e-9,
+    'the volume range updates ANT audio state while audio is live');
+  await assertAntOutputGain(page, .35);
   const sqrtTwo = Math.SQRT2;
   for (const strike of firstOn.strikes) {
     const payload = strike.message.payload;
@@ -565,7 +653,10 @@ async function verifyAntAudioToggle(page, audioButton) {
       contextState: window.__antContext?.state, strikes: probe.workletMessages.filter(item => item.name === 'plate-processor'
         && item.message?.type === 'strike').length, record: probe.worklets[index] };
   }, firstRecordIndex);
+  offState.audio.volume = await readAntAudioVolume(page);
   assert.equal(offState.audio.enabled, false);
+  assert.ok(Math.abs(offState.audio.volume - .35) < 1e-9,
+    'Audio Off retains the live-selected volume');
   assert.equal(offState.contextCount, 1, 'Audio Off releases its worklet without closing the shared engine');
   assert.equal(offState.contextState, 'running');
   assert.equal(offState.strikes, offStrikeCount, 'Audio Off stops future Plate strikes');
@@ -597,6 +688,9 @@ async function verifyAntAudioToggle(page, audioButton) {
   }));
   assert.equal(reenabled.contextCount, 1, 're-enabling ANT reuses the same shared AudioContext');
   assert.equal(reenabled.sameContext, true);
+  assert.ok(Math.abs(await readAntAudioVolume(page) - .35) < 1e-9,
+    'Off/On preserves the selected volume');
+  await assertAntOutputGain(page, .35);
   assert.equal(reenabled.plateWorklets.length, 2, 're-enabling creates a fresh Plate worklet after the previous one closes');
   assert.ok(reenabled.plateWorklets.every(item => item.contextMatches));
   assert.ok(reenabled.freshStrikes > 0, 're-enabled Plate worklet receives fresh STEP strikes');

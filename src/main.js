@@ -172,6 +172,9 @@ export function mountLab(root) {
     if (antAudio) {
       antAudio.setAttribute('aria-pressed', String(snapshot.audio.enabled));
       antAudio.textContent = snapshot.audio.enabled ? 'Audio On' : 'Audio Off';
+      const volume = Math.round(snapshot.audio.volume * 100);
+      query('#ant-volume').value = volume;
+      query('#ant-volume-value').value = `${volume}%`;
     }
     query('#audio-info').hidden = definition.audio === false;
     query('footer').hidden = definition.audio === false;
@@ -266,6 +269,10 @@ export function mountLab(root) {
     else if (event.type === 'update') refresh();
   });
   root.addEventListener('input', (event) => {
+    if (event.target.dataset.action === 'ant-volume') {
+      if (lab.model && !lab.switching) run(() => lab.model.setAudioVolume(Number(event.target.value) / 100));
+      return;
+    }
     const path = event.target.dataset.path;
     if (event.target.type === 'number' && (!event.target.value || !event.target.validity.valid)) return;
     if (path && lab.model && !lab.switching) run(() => lab.configure(patchPath(path, event.target.tagName === 'SELECT' ? event.target.value : Number(event.target.value))));

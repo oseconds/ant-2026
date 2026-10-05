@@ -125,7 +125,10 @@ export const documentViews = {
     <p id="model-description"></p>
     ${scene('작은 점은 동등한 개미, 옅은 회색은 모두가 남긴 페로몬 흔적입니다.')}
     <p id="interaction-hint"></p>
-    <p><button type="button" data-action="ant-audio" aria-pressed="false">Audio Off</button></p>
+    <p><button type="button" data-action="ant-audio" aria-pressed="false">Audio Off</button>
+      <label for="ant-volume">Volume</label>
+      <input id="ant-volume" type="range" data-action="ant-volume" min="0" max="100" step="1" value="100">
+      <output id="ant-volume-value" for="ant-volume">100%</output></p>
     ${analysis('개체와 공유 흔적')}
     <details id="model-notes">
       <summary>공유 기억과 국소 상호작용</summary>

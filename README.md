@@ -161,7 +161,7 @@ ANT도 Lab registry로 전환하며, registry가 Lab의 기존 AudioEngine을 �
 
 ## ANT AUDIO v0: 이동 거리 기반 STEP
 
-연결은 `AntController → StepEventGenerator → AntAudioBridge → PlateModel → 기존 AudioEngine / plate.worklet.js`입니다. `AntAgent`와 p5 렌더러에는 오디오가 없으며, Plate 진동이나 오디오 상태를 ANT 행동에 되먹임하지 않습니다. 기존 Plate 설정·DSP·gain·pickup을 그대로 사용하고 별도 엔진·합성기·오디오 framework를 추가하지 않습니다.
+연결은 `AntController → StepEventGenerator → AntAudioBridge → PlateModel → 기존 AudioEngine / plate.worklet.js`입니다. `AntAgent`와 p5 렌더러에는 오디오가 없으며, Plate 진동이나 오디오 상태를 ANT 행동에 되먹임하지 않습니다. 기존 Plate 설정·DSP·pickup을 그대로 사용하고 별도 엔진·합성기·오디오 framework를 추가하지 않습니다.
 
 `StepEventGenerator.advance(agent, travelledDistance, simulationTimeMs)`는 `{ type: 'STEP', antId, position: { x, y }, strength, simulationTimeMs }` 배열을 반환합니다. 좌표는 개미의 현재 0–1 위치입니다. 개체별 거리 누적치가 stepLength를 넘을 때마다 전체 임계 거리를 소비하고 나머지를 보존합니다. 기본 stepLength는 0.018, strikeStrength는 0.035이며 각각 개체 ID에서 결정한 ±4%의 작은 편차를 한 번 할당합니다. 이동·스폰 난수를 소비하지 않습니다. 가속·주저·혼잡·재개는 실제 이동 거리를 통해서만 이벤트 빈도에 영향을 줍니다.
 
@@ -169,11 +169,13 @@ ANT도 Lab registry로 전환하며, registry가 Lab의 기존 AudioEngine을 �
 
 브리지는 단위 정사각형을 Plate의 반지름 0.92 원 안에 넣습니다. `plateX = (2x - 1) × 0.92 / √2`, `plateY = (2y - 1) × 0.92 / √2`이며 두 화면의 y축 방향을 유지합니다. 이 좌표로 기존 `PlateModel.strike()`를 호출합니다. 위치는 타격 지점만 바꾸고 pitch·filter·pickup은 바꾸지 않습니다.
 
-데모에는 `Audio Off / Audio On` 버튼 하나만 추가했습니다. On 클릭에서 기존 engine의 초기화·resume와 Plate Worklet 로드를 시작하므로 브라우저 autoplay 제한을 따릅니다. Off는 즉시 추가 타격을 차단하고 Plate를 정지·파괴합니다. 다시 On하면 같은 engine에서 Plate를 다시 준비합니다. ANT를 떠나거나 앱을 파괴할 때도 진행 중인 타격과 늦게 끝나는 초기화가 취소됩니다. On 상태는 저장 가능한 ANT 행동 설정에 포함하지 않아 모델을 다시 선택해도 자동으로 소리를 시작하지 않습니다.
+데모에는 `Audio Off / Audio On` 버튼과 그 옆의 `Volume` 슬라이더가 있습니다. 볼륨은 0–100%이며 기본 100%는 기존 Plate 출력 gain 0.7입니다. `setAudioVolume(0–1)`은 ANT Plate의 기존 출력 GainNode만 조절하며 20 ms ramp로 급격한 음량 변화를 완화합니다. 타격 강도와 STEP 타이밍은 그대로 유지합니다. Off에서도 볼륨을 바꿀 수 있고 같은 ANT 안에서 Off/On을 전환하면 선택한 볼륨을 유지하지만, 슬라이더 자체는 오디오를 초기화하지 않습니다. On 클릭에서 기존 engine의 초기화·resume와 Plate Worklet 로드를 시작하므로 브라우저 autoplay 제한을 따릅니다. Off는 즉시 추가 타격을 차단하고 Plate를 정지·파괴합니다. 다시 On하면 같은 engine에서 Plate를 다시 준비합니다. ANT를 떠나거나 앱을 파괴할 때도 진행 중인 타격과 늦게 끝나는 초기화가 취소됩니다. 오디오 상태와 볼륨은 저장 가능한 ANT 행동 설정에 포함하지 않아 모델을 다시 선택해도 자동으로 소리를 시작하지 않습니다.
 
-새 보호 한도는 비정상적인 긴 이동 입력에 대한 개체당 `advance()`당 최대 4 STEP과 브리지 타격 강도 상한 0.05입니다. 정상적인 작은 시간 간격의 이동에서는 거리 임계 이벤트를 모두 전달합니다. 한도를 넘는 전체 걸음은 버리고 분수 거리는 보존하므로 이후 프레임으로 폭주를 미루지 않습니다. 기존 Plate의 타격 큐 24개 제한, `sample / (1 + abs(sample))` 출력 제한과 gain 0.7은 변경하지 않았습니다.
+새 보호 한도는 비정상적인 긴 이동 입력에 대한 개체당 `advance()`당 최대 4 STEP과 브리지 타격 강도 상한 0.05입니다. 정상적인 작은 시간 간격의 이동에서는 거리 임계 이벤트를 모두 전달합니다. 한도를 넘는 전체 걸음은 버리고 분수 거리는 보존하므로 이후 프레임으로 폭주를 미루지 않습니다. 기존 Plate의 타격 큐 24개 제한과 `sample / (1 + abs(sample))` 출력 제한은 변경하지 않았고, ANT 볼륨의 최대 출력 gain은 기존 0.7입니다.
 
 [AUDIO v0의 선별 화면과 검증 기록](docs/ant/evidence/2026-10-05-audio-v0/README.md)에는 production 실행의 PCM·자원 수명 측정과 변경 전 controller에 대한 세 시드·120초 동작 일치 비교를 보존했습니다.
+
+[볼륨 UI 화면과 검증 기록](docs/ant/evidence/2026-10-05-audio-volume/README.md)에는 On/Off 옆의 슬라이더, 실제 GainNode 음소거·음량 변경·Off/On 유지 검증을 보존했습니다.
 
 단독 사용에서는 브리지에 기존 engine을 명시적으로 주입합니다. 데모의 Lab registry는 이 연결을 준비합니다.
 
@@ -187,6 +189,7 @@ const ants = new AntController({
 await ants.init();
 // 사용자 버튼 handler 안에서 호출:
 await ants.setAudioEnabled(true);
+ants.setAudioVolume(0.5); // 기존 출력 gain의 50%; STEP은 변경하지 않음.
 // 호출자의 animation callback에서 ants.update(timestamp)를 계속 호출.
 await ants.setAudioEnabled(false);
 await ants.destroy(); // 주입한 engine은 소유자가 별도로 정리.

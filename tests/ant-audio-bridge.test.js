@@ -10,7 +10,7 @@ function deferred() {
 }
 
 function fakeEngine(create = async () => {}) {
-  const engine = { calls: [], handles: [], createCount: 0, destroyCount: 0, init: async () => {} };
+  const engine = { calls: [], handles: [], createCount: 0, destroyCount: 0, context: { currentTime: 10 }, init: async () => {} };
   engine.createWorklet = async (...args) => {
     engine.createCount++;
     const pending = create(...args);
@@ -19,6 +19,12 @@ function fakeEngine(create = async () => {}) {
     const messages = [];
     const handle = {
       node: { port: { postMessage: (message) => messages.push(message), close() {}, onmessage: null }, disconnect() {} },
+      gainNode: { gain: {
+        value: args[5].gain, ramps: [],
+        cancelScheduledValues(time) { this.cancelTime = time; },
+        setValueAtTime(value, time) { this.value = value; this.startTime = time; },
+        linearRampToValueAtTime(value, time) { this.value = value; this.ramps.push({ value, time }); }
+      } },
       disconnectCount: 0,
       disconnect() { this.disconnectCount++; },
       failProcessor: () => args[4](new Error('simulated processor failure')),
@@ -34,6 +40,47 @@ function fakeEngine(create = async () => {}) {
 
 const step = (x, y, strength = 0.035) => ({
   type: 'STEP', antId: 'ant-1', position: { x, y }, strength, simulationTimeMs: 123
+});
+
+test('volume uses the existing output gain, retains Off/On settings and leaves STEP excitation unchanged', async () => {
+  const audio = fakeEngine();
+  const bridge = new AntAudioBridge({ audioEngine: audio });
+  assert.equal(bridge.volume, 1);
+  assert.equal(bridge.setVolume(0.5), 0.5);
+  assert.equal(audio.createCount, 0, 'moving the slider while Off never starts audio');
+  await bridge.setEnabled(true);
+  assert.equal(audio.calls[0].args[5].gain, 0.35);
+  const gain = audio.handles[0].gainNode.gain;
+  assert.equal(gain.value, 0.35);
+  bridge.setVolume(0);
+  assert.deepEqual(gain.ramps.at(-1), { value: 0, time: 10.02 });
+  assert.equal(gain.cancelTime, 10);
+  await bridge.handleStep(step(0.3, 0.6));
+  const strike = audio.handles[0].messages.find((message) => message.type === 'strike');
+  assert.equal(strike.payload.strength, 0.035, 'volume never scales the physical excitation');
+  bridge.setVolume(0.25);
+  await bridge.setEnabled(false);
+  await bridge.setEnabled(true);
+  assert.equal(bridge.volume, 0.25);
+  assert.equal(audio.handles[1].gainNode.gain.value, 0.175);
+  assert.equal(bridge.setVolume(2), 1);
+  assert.equal(audio.handles[1].gainNode.gain.value, 0.7, '100% retains the original Plate output level');
+  assert.equal(bridge.setVolume(-1), 0);
+  assert.equal(bridge.setVolume(NaN), 0);
+  assert.equal(bridge.setVolume(Infinity), 0);
+  await bridge.destroy();
+});
+
+test('volume changes during pending initialization reach the ready output gain', async () => {
+  const gate = deferred();
+  const audio = fakeEngine(() => gate.promise);
+  const bridge = new AntAudioBridge({ audioEngine: audio });
+  const enabling = bridge.setEnabled(true);
+  bridge.setVolume(0.2);
+  gate.resolve();
+  assert.equal(await enabling, true);
+  assert.ok(Math.abs(audio.handles[0].gainNode.gain.value - 0.14) < 1e-12);
+  await bridge.destroy();
 });
 
 test('bridge lazily creates the existing Plate and sends restrained spatial strikes', async () => {

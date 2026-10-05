@@ -96,7 +96,8 @@ export class AntController {
       audio: {
         enabled: this.audioBridge?.enabled ?? false,
         loading: this.audioBridge?.loading ?? false,
-        error: this.audioBridge?.error ?? null
+        error: this.audioBridge?.error ?? null,
+        volume: this.audioBridge?.volume ?? 1
       },
       analysis: {
         population: agents.length,
@@ -173,6 +174,14 @@ export class AntController {
     this.emit('update');
     try { return await pending; }
     finally { this.emit('update'); }
+  }
+
+  setAudioVolume(volume) {
+    this.assertAlive();
+    if (!this.audioBridge) return false;
+    const result = this.audioBridge.setVolume(volume);
+    this.emit('update');
+    return result;
   }
 
   async destroy() {
