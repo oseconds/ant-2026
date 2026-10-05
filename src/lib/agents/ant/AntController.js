@@ -5,6 +5,7 @@ import { GaitController } from './GaitController.js';
 import { BodyPoseController, gasterRearPoint } from './BodyPoseController.js';
 import { GasterDeposition } from './GasterDeposition.js';
 import { ColonyActivation } from './ColonyActivation.js';
+import { SurfaceField } from './SurfaceField.js';
 
 const STEP_MS = 1000 / 60;
 const MAX_FRAME_GAP_MS = 100;
@@ -55,7 +56,7 @@ const DEFAULT_STATE = Object.freeze({
 export class AntController {
   constructor({ state, random = Math.random, fieldFactory = (options) => new PheromoneField(options),
     gaitController = new GaitController(), bodyPoseController = new BodyPoseController(),
-    gasterDeposition = null, audioBridge = null } = {}) {
+    gasterDeposition = null, surfaceField = new SurfaceField(), audioBridge = null } = {}) {
     this.state = normalizeState(state || {});
     this.random = random;
     this.fieldFactory = fieldFactory;
@@ -77,6 +78,7 @@ export class AntController {
     this.bodyPoseController = bodyPoseController;
     this.gasterDeposition = gasterDeposition || new GasterDeposition({ mode: this.state.pheromone.depositionMode });
     this.colonyActivation = new ColonyActivation({ ceiling: this.state.population.count, origin: SPAWN_CENTER });
+    this.surfaceField = surfaceField;
     this.audioBridge = audioBridge;
   }
 
@@ -107,6 +109,7 @@ export class AntController {
       status: this.running ? 'active' : 'stopped',
       agents,
       pheromone: field,
+      surface: this.surfaceField.getSnapshot(),
       audio: {
         enabled: this.audioBridge?.enabled ?? false,
         loading: this.audioBridge?.loading ?? false,
@@ -231,6 +234,7 @@ export class AntController {
     this.bodyPoseController.reset();
     this.gasterDeposition.reset();
     this.colonyActivation.reset();
+    this.surfaceField.clear();
     await this.audioBridge?.destroy();
   }
 
@@ -240,6 +244,7 @@ export class AntController {
     const previousRear = current.map(agent => this.bodyPoseController.getSnapshot(agent)?.gasterRear
       || gasterRearPoint(agent));
     const sensed = current.map((agent) => this.occupancy.sense(agent, current));
+    this.surfaceField.relax(dt);
     this.field.decay(dt);
     const localTrails = current.map((agent) => this.senseLocalTrail(agent));
     for (let index = 0; index < current.length; index += 1) {
@@ -328,9 +333,10 @@ export class AntController {
       const contacts = this.gaitController.advance(observedAgent, travelled, dt,
         this.simulationTimeMs + dt * 1000, { from, to });
       for (const event of contacts) {
+        const responses = this.surfaceField.applyFootContact(event);
         this.emit('foot-contact', event);
         try {
-          const delivered = this.audioBridge?.handleFootContact(event);
+          const delivered = this.audioBridge?.handleFootContact(event, { responses });
           void Promise.resolve(delivered).catch(error => this.emit('error', { message: error.message }));
         } catch (error) { this.emit('error', { message: error.message }); }
       }
