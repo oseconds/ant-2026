@@ -4,6 +4,11 @@ const CONTACT_SEARCH_ITERATIONS = 24;
 // Earlier braking keeps a strong trail from carrying approaching bodies all
 // the way into the emergency contact guard.
 const BRAKING_HORIZON_SECONDS = 2.1;
+const FLOW_DIRECTION_COSINE = 0.85;
+const MOVING_SPEED = 0.008;
+const FOLLOWING_HEADWAY_SECONDS = 0.4;
+const FOLLOWING_RESPONSE_SECONDS = 0.9;
+const EMERGENCY_CONTACT_SECONDS = 0.25;
 
 /** Local body interaction, kept separate from the shared pheromone memory. */
 export class LocalOccupancy {
@@ -19,6 +24,7 @@ export class LocalOccupancy {
     let predictedFrontCrowding = 0;
     let leftCrowding = 0;
     let rightCrowding = 0;
+    let followingSpeedLimit = Infinity;
     let neighbors = 0;
     const hx = Math.cos(agent.heading);
     const hy = Math.sin(agent.heading);
@@ -35,6 +41,20 @@ export class LocalOccupancy {
       const frontWeight = ahead > 0 ? 0.35 + 0.65 * ahead * ahead : 0.16;
       const proximity = smoothFalloff(distance / this.senseRadius);
       neighbors += 1;
+
+      if (sameFlowAhead(agent, other)) {
+        // A moving body on this route regulates headway, not route choice.
+        // Leave lateral steering to pheromone; very close/fast-closing pairs
+        // fail this classification and keep the full avoidance below.
+        const along = dx * hx + dy * hy;
+        const forwardSpeed = other.vx * hx + other.vy * hy;
+        const speed = Math.hypot(agent.vx ?? 0, agent.vy ?? 0);
+        const comfortableDistance = agent.radius + other.radius
+          + Math.max(agent.personality.personalSpacing * 0.6, speed * FOLLOWING_HEADWAY_SECONDS);
+        followingSpeedLimit = Math.min(followingSpeedLimit,
+          Math.max(0, forwardSpeed + (along - comfortableDistance) / FOLLOWING_RESPONSE_SECONDS));
+        continue;
+      }
 
       // Close neighbors push strongly away; rear neighbors remain perceptible but mild.
       const close = smoothFalloff(distance / this.closeRange);
@@ -72,6 +92,7 @@ export class LocalOccupancy {
       frontCrowding: Math.min(1, Math.max(frontCrowding, predictedFrontCrowding)),
       leftCrowding: Math.min(1, leftCrowding),
       rightCrowding: Math.min(1, rightCrowding),
+      followingSpeedLimit,
       neighbors
     };
   }
@@ -88,6 +109,7 @@ export class LocalOccupancy {
       const along = rx * dx + ry * dy;
       if (along <= 0 || along >= lookahead) continue;
       const lateral = Math.abs(rx * dy - ry * dx);
+      if (sameFlowAhead(agent, other, heading)) continue;
       const width = agent.personality.personalSpacing * 0.9 + other.radius;
       if (lateral >= width * 3) continue;
       const alongWeight = Math.exp(-along / Math.max(0.008, lookahead * 0.48));
@@ -142,6 +164,34 @@ export class LocalOccupancy {
     }
     return scales;
   }
+}
+
+// Both actual movement and heading must agree. A stopped observer can use its
+// heading while restarting, but a stopped body ahead is always an obstacle.
+function sameFlowAhead(agent, other, heading = agent.heading) {
+  const hx = Math.cos(heading), hy = Math.sin(heading);
+  const rx = other.x - agent.x, ry = other.y - agent.y;
+  const along = rx * hx + ry * hy;
+  const lateral = Math.abs(rx * hy - ry * hx);
+  const distance = Math.hypot(rx, ry);
+  const bodyDistance = agent.radius + other.radius;
+  const spacing = agent.personality.personalSpacing;
+  if (along <= 0 || along / (distance || 1) < FLOW_DIRECTION_COSINE
+    || lateral > bodyDistance + spacing * 0.35
+    || distance <= bodyDistance + spacing * 0.2) return false;
+
+  const avx = agent.vx ?? 0, avy = agent.vy ?? 0;
+  const bvx = other.vx ?? 0, bvy = other.vy ?? 0;
+  const speed = Math.hypot(avx, avy), otherSpeed = Math.hypot(bvx, bvy);
+  if (otherSpeed < MOVING_SPEED
+    || Math.cos(other.heading - agent.heading) < FLOW_DIRECTION_COSINE
+    || (bvx * hx + bvy * hy) / otherSpeed < FLOW_DIRECTION_COSINE) return false;
+  if (speed >= MOVING_SPEED && ((avx * hx + avy * hy) / speed < FLOW_DIRECTION_COSINE
+    || (avx * bvx + avy * bvy) / (speed * otherSpeed) < FLOW_DIRECTION_COSINE)) return false;
+
+  const closingSpeed = ((avx - bvx) * rx + (avy - bvy) * ry) / distance;
+  return closingSpeed <= 0
+    || (distance - bodyDistance) / closingSpeed > EMERGENCY_CONTACT_SECONDS;
 }
 
 function directionalOccupancy(agent, other, heading) {

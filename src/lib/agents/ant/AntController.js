@@ -205,6 +205,8 @@ export class AntController {
       // Inertia limits braking; the swept contact guard is a final safeguard.
       desiredSpeed *= (1 - info.frontCrowding) ** 2;
       desiredSpeed *= 1 - Math.min(0.45, separationMagnitude * 0.1);
+      // Same-direction traffic caps pace without adding a steering target.
+      desiredSpeed = Math.min(desiredSpeed, info.followingSpeedLimit);
       if (agent.hesitationRemaining > 0) desiredSpeed *= HESITATION_SPEED_RATIO;
       if (edge.strength > 0.65) desiredSpeed *= 0.78;
       agent.targetSpeed = desiredSpeed;
