@@ -1,0 +1,13 @@
+ANT integrated refinement baseline
+Date: 2026-10-05
+HEAD: e45a99e9c232580e3806b540b5cdb9ff2fd2978b (Add render-only ANT body articulation)
+Command: npm test
+Result: exit 1; 127 tests, 123 passed, 4 failed.
+
+The four failures are confined to obsolete locomotion limits in these assertions:
+- tests/ant-controller.test.js:510 — “free movement preserves acceleration limits” bounds velocity delta by personality.acceleration / 60.
+- tests/ant-controller.test.js:541 — “anticipatory braking avoids an abrupt stop at full speed” applies the same personality acceleration bound during turning and avoidance.
+- tests/ant-controller.test.js:556 — one-step acceleration from rest must be below personality.acceleration / 30.
+- tests/ant-trail-following.test.js:150 — local trail steering must turn less than 0.04 radians per 60 Hz tick.
+
+Current approved AntAgent movement instead uses exponential response constants 32 (acceleration) and 37 (braking), a 4.5 rad/s heading-rate limit (0.075 rad per 60 Hz tick), and a maximum speed of preferredSpeed * 1.35. The failing assertions conflict with those current limits; this baseline does not by itself establish a production regression.

@@ -7,6 +7,7 @@ import { createServer, build, preview } from 'vite';
 import { chromium } from 'playwright';
 
 const useProduction = process.env.CHECK_PRODUCTION === '1' || process.argv.includes('--production');
+const recordAntEvidence = process.argv.includes('--record-ant-evidence');
 let server;
 let browser;
 
@@ -14,10 +15,15 @@ const probeSource = `
 (() => {
   const probe = window.__physicalAudioProbe = {
     audioContexts: [], contextCloseCalls: 0, worklets: [], gainNodes: [], processorErrors: 0, workletModules: [],
-    workletMessages: [], stereoPanners: 0,
+    workletMessages: [], audioConnections: [], stereoPanners: 0,
     pcmRms: [], workletRms: [], gl: { contexts: 0, deletedBuffers: 0, deletedPrograms: 0 },
     canvasListenersAdded: 0, canvasListenersRemoved: 0,
     rafScheduled: 0, rafCanceled: 0, liveRaf: new Set()
+  };
+  const audioNodeConnect = AudioNode.prototype.connect;
+  AudioNode.prototype.connect = function(destination, ...args) {
+    probe.audioConnections.push({ source: this, destination, at: performance.now() });
+    return audioNodeConnect.call(this, destination, ...args);
   };
   const OriginalAudioContext = window.AudioContext;
   window.AudioContext = class extends OriginalAudioContext {
@@ -317,7 +323,11 @@ async function readAntAnalysis(page) {
 }
 
 async function readAntPopulation(page) {
-  return page.locator('#ant-diagnostics').evaluate(element => Number(element.textContent.match(/^\s*(\d+)/)?.[1] || 0));
+  return page.locator('#ant-diagnostics').evaluate(element => {
+    const text = element.textContent.trim();
+    const match = text.match(/(?:^|[·/])\s*(\d+)\s+ants?\b/i) || text.match(/^\s*(\d+)/);
+    return Number(match?.[1] || 0);
+  });
 }
 
 async function setAntVolume(page, value) {
@@ -338,6 +348,196 @@ async function readAntAudioVolume(page) {
     }
     return Number(document.querySelector('#ant-volume')?.value) / 100;
   }, useProduction);
+}
+
+async function recordAntAudioEvidence(page) {
+  const captured = await page.evaluate(async () => {
+    const probe = window.__physicalAudioProbe;
+    const context = probe.audioContexts[0];
+    const plate = probe.worklets.filter(item => item.name === 'plate-processor' && item.portCloses === 0).at(-1);
+    const gain = plate?.outputGainNodes.at(-1);
+    const controller = window.__antAudioController || null;
+    if (!context || context.state !== 'running' || !plate || !gain) {
+      throw new Error('ANT audio evidence requires an active shared Plate and running AudioContext');
+    }
+    if (document.querySelector('[data-action="ant-audio"]')?.getAttribute('aria-pressed') !== 'true') {
+      throw new Error('ANT Audio On must be enabled before recording evidence');
+    }
+    const contextDestinationWasConnected = probe.audioConnections.some(connection =>
+      connection.source === gain && connection.destination === context.destination);
+    if (!contextDestinationWasConnected) {
+      throw new Error('Existing Plate-to-AudioContext output connection was not observed');
+    }
+
+    const mediaDestination = context.createMediaStreamDestination();
+    const gainBefore = gain.gain.value;
+    gain.connect(mediaDestination);
+    const parallelTapObserved = probe.audioConnections.some(connection =>
+      connection.source === gain && connection.destination === mediaDestination);
+    if (!parallelTapObserved || gain.gain.value !== gainBefore || !probe.audioConnections.some(connection =>
+      connection.source === gain && connection.destination === context.destination)) {
+      gain.disconnect(mediaDestination);
+      mediaDestination.stream.getTracks().forEach(track => track.stop());
+      throw new Error('Parallel evidence tap changed or failed to preserve the live output path');
+    }
+
+    const mimeType = ['audio/webm;codecs=opus', 'audio/webm']
+      .find(type => MediaRecorder.isTypeSupported(type));
+    if (!mimeType) {
+      gain.disconnect(mediaDestination);
+      mediaDestination.stream.getTracks().forEach(track => track.stop());
+      throw new Error('This Chrome build has no supported audio/webm MediaRecorder format');
+    }
+
+    const diagnosticsRead = () => {
+      if (controller) {
+        const snapshot = controller.getSnapshot();
+        return { simulationTimeMs: snapshot.analysis.simulationTimeMs, population: snapshot.analysis.population };
+      }
+      const text = document.querySelector('#ant-diagnostics')?.textContent?.trim() || '';
+      const match = text.match(/^\s*(?:(\d+):)?(\d+):(\d{2})\s*[·/]\s*(\d+)\s+ants?\b/i);
+      if (!match) {
+        const population = text.match(/(?:^|[·/])\s*(\d+)\s+ants?\b/i) || text.match(/^\s*(\d+)/);
+        return { simulationTimeMs: null, population: Number(population?.[1] ?? NaN) };
+      }
+      const elapsedSeconds = match[1]
+        ? Number(match[1]) * 3600 + Number(match[2]) * 60 + Number(match[3])
+        : Number(match[2]) * 60 + Number(match[3]);
+      return { simulationTimeMs: elapsedSeconds * 1000, population: Number(match[4]) };
+    };
+
+    const recorder = new MediaRecorder(mediaDestination.stream, { mimeType });
+    const chunks = [];
+    recorder.addEventListener('dataavailable', event => { if (event.data.size) chunks.push(event.data); });
+    const startTime = diagnosticsRead();
+    const startWallTime = performance.now();
+    const populationSamples = [];
+    const simulationSamples = [];
+    const sampleState = () => {
+      const state = diagnosticsRead();
+      if (Number.isFinite(state.population)) populationSamples.push(state.population);
+      if (Number.isFinite(state.simulationTimeMs)) simulationSamples.push(state.simulationTimeMs);
+    };
+    sampleState();
+    const interval = setInterval(sampleState, 250);
+    const startStrikeIndex = probe.workletMessages.length;
+    const startContactEventIndex = window.__antFootContactEvents?.length ?? null;
+    const plateIndex = plate.index;
+    try {
+      recorder.start(1000);
+      await new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => recorder.stop(), 20000);
+        recorder.addEventListener('error', () => { clearTimeout(timeout); reject(recorder.error || new Error('MediaRecorder failed')); }, { once: true });
+        recorder.addEventListener('stop', () => { clearTimeout(timeout); resolve(); }, { once: true });
+      });
+      const stopTime = diagnosticsRead();
+      const encoded = await new Blob(chunks, { type: mimeType }).arrayBuffer();
+      const decoded = await context.decodeAudioData(encoded.slice(0));
+      const perChannel = [];
+      let totalSamples = 0, nonFiniteSamples = 0, clippedSamples = 0, discontinuities = 0;
+      for (let channel = 0; channel < decoded.numberOfChannels; channel += 1) {
+        const data = decoded.getChannelData(channel);
+        let energy = 0, peak = 0, previous = 0;
+        for (let index = 0; index < data.length; index += 1) {
+          const value = data[index];
+          if (!Number.isFinite(value)) { nonFiniteSamples += 1; continue; }
+          const magnitude = Math.abs(value);
+          energy += value * value;
+          peak = Math.max(peak, magnitude);
+          if (magnitude >= .999) clippedSamples += 1;
+          if (index > 0 && Math.abs(value - previous) > .8) discontinuities += 1;
+          previous = value;
+        }
+        totalSamples += data.length;
+        perChannel.push({ channel, sampleCount: data.length, rms: Math.sqrt(energy / Math.max(1, data.length)), peak });
+      }
+      const durationSeconds = decoded.duration;
+      const contactEvents = startContactEventIndex === null ? null
+        : (window.__antFootContactEvents || []).slice(startContactEventIndex)
+          .filter(event => event.simulationTimeMs >= startTime.simulationTimeMs
+            && event.simulationTimeMs <= stopTime.simulationTimeMs);
+      const contactCountsByLeg = contactEvents?.flatMap(event => event.contacts.map(contact => contact.legId))
+        .reduce((counts, legId) => ({ ...counts, [legId]: (counts[legId] || 0) + 1 }), {}) ?? null;
+      const individualContacts = contactEvents?.flatMap(event => event.contacts.map(contact => ({
+        antId: event.antId, contactGroup: event.contactGroup, legId: contact.legId,
+        position: { x: contact.position.x, y: contact.position.y }, simulationTimeMs: event.simulationTimeMs
+      }))) ?? null;
+      const strikes = probe.workletMessages.slice(startStrikeIndex).filter(item => item.index === plateIndex
+        && item.message?.type === 'strike');
+      const bytes = new Uint8Array(encoded);
+      let binary = '';
+      for (let offset = 0; offset < bytes.length; offset += 0x8000) {
+        binary += String.fromCharCode(...bytes.subarray(offset, offset + 0x8000));
+      }
+      return {
+        mimeType,
+        durationSeconds,
+        byteLength: encoded.byteLength,
+        webmBase64: btoa(binary),
+        simulationTimeMs: { start: startTime.simulationTimeMs, end: stopTime.simulationTimeMs },
+        population: { min: Math.min(...populationSamples), max: Math.max(...populationSamples), samples: populationSamples.length },
+        audioContext: { state: context.state, sampleRate: context.sampleRate },
+        parallelTap: { preservedContextDestination: contextDestinationWasConnected,
+          gainUnchanged: gain.gain.value === gainBefore, outputGain: gain.gain.value },
+        events: {
+          plateStrikes: strikes.length,
+          contactEventCount: contactEvents?.length ?? null,
+          contactGroups: contactEvents?.reduce((counts, event) => ({
+            ...counts, [event.contactGroup]: (counts[event.contactGroup] || 0) + 1
+          }), {}) ?? null,
+          uniqueContactingAnts: contactEvents ? new Set(contactEvents.map(event => event.antId)).size : null,
+          individualContactsByLeg: contactCountsByLeg,
+          individualContacts,
+          contactDetailSource: contactEvents ? 'captured FOOT_CONTACT events and individual positions in Vite development' : null
+        },
+        pcm: { channelCount: decoded.numberOfChannels, channels: perChannel, totalSamples,
+          nonFiniteSamples, clippedSamples, clippedFraction: clippedSamples / Math.max(1, totalSamples),
+          discontinuitiesAbove0_8: discontinuities,
+          stereoChannelRmsDifference: perChannel.length === 2 ? Math.abs(perChannel[0].rms - perChannel[1].rms) : null,
+          silent: perChannel.every(channel => channel.rms < 1e-7) },
+        wallClockDurationSeconds: (performance.now() - startWallTime) / 1000,
+        simulationSamples
+      };
+    } finally {
+      clearInterval(interval);
+      if (recorder.state !== 'inactive') recorder.stop();
+      gain.disconnect(mediaDestination);
+      mediaDestination.stream.getTracks().forEach(track => track.stop());
+      mediaDestination.disconnect();
+    }
+  });
+  const { webmBase64, ...metrics } = captured;
+  const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+  const evidenceDirectory = resolve('test-results', `ant-refinement-${stamp}-${useProduction ? 'production' : 'dev'}`);
+  await mkdir(evidenceDirectory, { recursive: true });
+  const audioPath = resolve(evidenceDirectory, 'natural-run-audio.webm');
+  const screenshotPath = resolve(evidenceDirectory, 'natural-run-final.png');
+  const metricsPath = resolve(evidenceDirectory, 'natural-run-audio.json');
+  await writeFile(audioPath, Buffer.from(webmBase64, 'base64'));
+  await page.screenshot({ path: screenshotPath, fullPage: true });
+  await writeFile(metricsPath, `${JSON.stringify({ ...metrics,
+    audioFile: audioPath, screenshotFile: screenshotPath,
+    evidenceMode: useProduction ? 'production preview' : 'Vite development' }, null, 2)}\n`);
+  assert.equal(metrics.audioContext.state, 'running', 'AudioContext remains running through the recorded interval');
+  assert.equal(metrics.parallelTap.preservedContextDestination, true, 'the existing live audio destination remains connected');
+  assert.equal(metrics.parallelTap.gainUnchanged, true, 'the evidence tap does not change output gain');
+  assert.ok(metrics.durationSeconds >= 19, 'the natural audio evidence contains approximately 20 seconds');
+  assert.ok(Number.isFinite(metrics.simulationTimeMs.start) && Number.isFinite(metrics.simulationTimeMs.end)
+    && metrics.simulationTimeMs.end > metrics.simulationTimeMs.start,
+  'simulation time is recorded and advances during the clip');
+  assert.ok(metrics.population.samples > 0 && Number.isFinite(metrics.population.min)
+    && Number.isFinite(metrics.population.max), 'active population is sampled throughout the clip');
+  assert.ok(metrics.population.min >= 2, 'multiple ants remain active throughout recorded evidence');
+  assert.ok(metrics.events.plateStrikes > 0, 'the recording contains natural Plate strikes');
+  assert.equal(metrics.pcm.channelCount, 2, 'the captured ANT Plate stream preserves both pickup channels');
+  assert.equal(metrics.pcm.silent, false, 'decoded recorded Plate output is not silent');
+  assert.equal(metrics.pcm.nonFiniteSamples, 0, 'decoded Plate output has no non-finite PCM samples');
+  assert.ok(metrics.pcm.clippedFraction < .001, 'decoded Plate output contains no material clipped sample run');
+  if (!useProduction) {
+    assert.ok(metrics.events.contactEventCount > 0 && metrics.events.individualContacts?.length > 0,
+      'the natural recording interval includes individual FOOT_CONTACT positions');
+  }
+  console.log(`ANT audio evidence saved: ${audioPath}`);
 }
 
 async function assertAntOutputGain(page, volume) {
@@ -596,12 +796,29 @@ async function verifyAnt(page, requestedUrls) {
   assert.match(initialAnalysis[0], /ants/ , 'compact diagnostics reports population');
   assert.match(initialAnalysis[0], /mean speed/, 'compact diagnostics reports mean speed');
   assert.match(initialAnalysis[0], /pheromone/, 'compact diagnostics reports pheromone mass');
+  assert.match(initialAnalysis[0], /^\s*\d{2,}:\d{2}(?::\d{2})?\s*·\s*\d+\s+ants?\b/i,
+    'ANT diagnostics begins with elapsed simulation time and then active population');
+  if (!useProduction) {
+    const elapsedCheck = await page.evaluate(async () => {
+      const { app } = await import('/src/main.js');
+      const text = document.querySelector('#ant-diagnostics')?.textContent.trim() || '';
+      const displayed = text.match(/^\s*((?:\d+:)?\d+:\d{2})\s*·/)?.[1];
+      const time = displayed?.split(':').map(Number) || [];
+      const displayedSeconds = time.length === 3 ? time[0] * 3600 + time[1] * 60 + time[2]
+        : time.length === 2 ? time[0] * 60 + time[1] : NaN;
+      return { displayedSeconds, simulationSeconds: Math.floor(app.lab.model.simulationTimeMs / 1000) };
+    });
+    assert.equal(elapsedCheck.displayedSeconds, elapsedCheck.simulationSeconds,
+      'elapsed diagnostics are derived from the current simulation clock, not wall time');
+  }
   const initialMass = initialAnalysis[0];
   await page.waitForTimeout(900);
   const activeFrame = await readCanvasFrame(page);
   assert.notEqual(activeFrame, initialFrame, 'ANT agents continue moving in the active simulation');
   await page.waitForFunction(initial => {
-    const value = Number(document.querySelector('#ant-diagnostics')?.textContent.match(/^\s*(\d+)/)?.[1] || 0);
+    const text = document.querySelector('#ant-diagnostics')?.textContent.trim() || '';
+    const match = text.match(/(?:^|[·/])\s*(\d+)\s+ants?\b/i) || text.match(/^\s*(\d+)/);
+    const value = Number(match?.[1] || 0);
     return value > initial;
   }, initialPopulation, { timeout: 5000 });
   // Weak exploratory deposits can remain below the UI's two-decimal precision
@@ -663,16 +880,43 @@ async function verifyAnt(page, requestedUrls) {
     await page.evaluate(async () => {
       const { app } = await import('/src/main.js');
       const model = app.lab.model;
+      const { BODY_POSE_LIMITS } = await import('/src/lib/agents/ant/BodyPoseController.js');
       await model.setAudioEnabled(false);
       const startingSimulationTimeMs = model.simulationTimeMs;
       const turnSamples = {};
       const turnObservationCounts = { straight: 0, gentle: 0, sharp: 0, opposingClosePair: 0 };
+      const bodyPosePrevious = new Map();
+      const bodyPoseMetrics = { samples: 0, finite: true, maxHeadAbs: 0, maxGasterAbs: 0,
+        maxAntenna: 0, maxHeadStep: 0, maxGasterStep: 0, maxAntennaStep: 0, maxGasterRearRadius: 0 };
       let denseSpawnAreaPeak = 0;
-      const snapshotAnt = ant => ({ ...ant.getSnapshot(), gait: model.gaitController.getSnapshot(ant) });
+      const snapshotAnt = ant => ({ ...ant.getSnapshot(), gait: model.gaitController.getSnapshot(ant),
+        bodyPose: model.bodyPoseController.getSnapshot(ant) });
       for (let step = 0; step < 120 * 60; step += 1) {
         model.tick(1 / 60);
         const ants = model.agents;
         for (const ant of ants) {
+          const pose = model.bodyPoseController.getSnapshot(ant);
+          const values = [pose?.headYaw, pose?.gasterYaw, pose?.antennae?.left, pose?.antennae?.right,
+            pose?.gasterRear?.x, pose?.gasterRear?.y];
+          bodyPoseMetrics.samples += 1;
+          bodyPoseMetrics.finite &&= values.every(Number.isFinite);
+          bodyPoseMetrics.maxHeadAbs = Math.max(bodyPoseMetrics.maxHeadAbs, Math.abs(pose?.headYaw ?? 0));
+          bodyPoseMetrics.maxGasterAbs = Math.max(bodyPoseMetrics.maxGasterAbs, Math.abs(pose?.gasterYaw ?? 0));
+          bodyPoseMetrics.maxAntenna = Math.max(bodyPoseMetrics.maxAntenna, pose?.antennae?.left ?? 0,
+            pose?.antennae?.right ?? 0);
+          bodyPoseMetrics.maxGasterRearRadius = Math.max(bodyPoseMetrics.maxGasterRearRadius,
+            Math.hypot(pose?.gasterRear?.x - ant.x, pose?.gasterRear?.y - ant.y));
+          const previousPose = bodyPosePrevious.get(ant.id);
+          if (previousPose) {
+            bodyPoseMetrics.maxHeadStep = Math.max(bodyPoseMetrics.maxHeadStep, Math.abs(pose.headYaw - previousPose.headYaw));
+            bodyPoseMetrics.maxGasterStep = Math.max(bodyPoseMetrics.maxGasterStep,
+              Math.abs(pose.gasterYaw - previousPose.gasterYaw));
+            bodyPoseMetrics.maxAntennaStep = Math.max(bodyPoseMetrics.maxAntennaStep,
+              Math.abs(pose.antennae.left - previousPose.antennae.left),
+              Math.abs(pose.antennae.right - previousPose.antennae.right));
+          }
+          bodyPosePrevious.set(ant.id, { headYaw: pose.headYaw, gasterYaw: pose.gasterYaw,
+            antennae: { ...pose.antennae } });
           const speed = Math.hypot(ant.vx, ant.vy);
           const turnRate = Math.abs(ant.angularVelocity);
           if (speed > 0.02 && turnRate < 0.25) {
@@ -738,11 +982,15 @@ async function verifyAnt(page, requestedUrls) {
       window.__antArticulationMetrics = {
         additionalSimulatedSeconds: (model.simulationTimeMs - startingSimulationTimeMs) / 1000,
         totalSimulationTimeMs: model.simulationTimeMs,
-        turnObservationCounts,
+        rawAngularVelocityObservationCounts: turnObservationCounts,
+        bodyPose: { ...bodyPoseMetrics, expectedHeadLimit: BODY_POSE_LIMITS.headYaw,
+          expectedGasterLimit: BODY_POSE_LIMITS.gasterYaw,
+          rearPointsFinite: bodyPoseMetrics.finite },
         denseSpawnAreaPeak,
         sampledStates: Object.fromEntries(Object.entries(turnSamples).map(([name, sample]) => [name, {
           simulationTimeMs: sample.simulationTimeMs,
           angularVelocities: sample.agents.map(ant => ant.angularVelocity),
+          bodyPoses: sample.agents.map(ant => ant.bodyPose),
           antCount: sample.agents.length,
           distance: sample.distance ?? null,
           closingSpeed: sample.closingSpeed ?? null
@@ -757,6 +1005,8 @@ async function verifyAnt(page, requestedUrls) {
       return plate && probe.workletMessages.some(item => item.index === plate.index && item.message?.type === 'strike')
         && probe.workletRms.some(item => item.index === plate.index && item.rms > 1e-7);
     }, null, { timeout: 12000 });
+    await page.waitForFunction(() => (window.__antRendererPoseProbe?.framesWithBodyPose || 0) > 0,
+      null, { timeout: 8000 });
     await page.waitForTimeout(200);
     const turnoverCapture = await page.evaluate(async () => {
       const { app } = await import('/src/main.js');
@@ -782,7 +1032,8 @@ async function verifyAnt(page, requestedUrls) {
         observedAt: new Date().toISOString(),
         analysis: snapshot.analysis,
         activeAnts: snapshot.agents.length,
-        articulation: window.__antArticulationMetrics,
+        articulation: { ...window.__antArticulationMetrics,
+          rendererPoseConsumption: window.__antRendererPoseProbe || null },
         gait: {
           antsWithSixLegs: snapshot.agents.filter(agent => agent.gait?.legs?.length === 6).length,
           finitePhases: gaitPhases.every(Number.isFinite),
@@ -820,10 +1071,26 @@ async function verifyAnt(page, requestedUrls) {
     assert.equal(turnoverCapture.gait.invalidContactEvents, 0, 'all live foot contacts stay in the ANT domain');
     assert.ok(turnoverCapture.audio.enabled && turnoverCapture.audio.plateStrikes > 0,
       'live tripod contacts reach the shared Plate while the screenshot audio is on');
-    assert.ok(turnoverCapture.articulation.turnObservationCounts.straight > 0
-      && turnoverCapture.articulation.turnObservationCounts.gentle > 0
-      && turnoverCapture.articulation.turnObservationCounts.sharp > 0,
-    'natural simulation samples straight, gentle, and sharp turning states');
+    assert.ok(turnoverCapture.articulation.bodyPose.samples > 0
+      && turnoverCapture.articulation.bodyPose.finite
+      && turnoverCapture.articulation.bodyPose.rearPointsFinite,
+    'body pose and its gaster secretion point remain finite in the live framework-independent snapshot');
+    assert.ok(turnoverCapture.articulation.bodyPose.maxHeadAbs <= turnoverCapture.articulation.bodyPose.expectedHeadLimit + 1e-9
+      && turnoverCapture.articulation.bodyPose.maxGasterAbs <= turnoverCapture.articulation.bodyPose.expectedGasterLimit + 1e-9,
+    'continuous head and gaster articulation stay within their pose limits');
+    assert.ok(turnoverCapture.articulation.bodyPose.maxHeadStep < .03
+      && turnoverCapture.articulation.bodyPose.maxGasterStep < .02
+      && turnoverCapture.articulation.bodyPose.maxAntennaStep < .08,
+    'body and antenna poses evolve continuously between simulation steps instead of snapping with raw turn rate');
+    assert.ok(Object.values(turnoverCapture.articulation.sampledStates).every(sample =>
+      sample.bodyPoses.every(pose => pose && Number.isFinite(pose.headYaw)
+        && Number.isFinite(pose.gasterYaw) && Number.isFinite(pose.gasterRear?.x)
+        && Number.isFinite(pose.gasterRear?.y))),
+    'captured renderer snapshots include finite body poses and gaster tips');
+    assert.ok(turnoverCapture.articulation.rendererPoseConsumption?.frames > 0
+      && turnoverCapture.articulation.rendererPoseConsumption?.framesWithBodyPose > 0
+      && turnoverCapture.articulation.rendererPoseConsumption?.framesWithoutBodyPose === 0,
+    'the live AntRenderer receives the framework-independent body pose from controller snapshots');
     await writeFile('test-results/ant-gait-dev-metrics.json', `${JSON.stringify(turnoverCapture, null, 2)}\n`);
     await writeFile('test-results/ant-turnover-dev-capture.json', `${JSON.stringify(turnoverCapture, null, 2)}\n`);
     await writeFile('test-results/ant-articulation-turns.json', `${JSON.stringify(turnoverCapture.articulation, null, 2)}\n`);
@@ -883,6 +1150,7 @@ async function verifyAnt(page, requestedUrls) {
     await writeFile('test-results/ant-turnover-production-metrics.json', `${JSON.stringify(turnoverCapture, null, 2)}\n`);
     await page.screenshot({ path: 'test-results/ant-gait-production.png', fullPage: true });
   }
+  if (recordAntEvidence) await recordAntAudioEvidence(page);
   progressedAudioMetrics = await page.evaluate(production => {
     const probe = window.__physicalAudioProbe;
     const records = probe.worklets.filter(item => item.name === 'plate-processor');
@@ -1008,6 +1276,20 @@ async function verifyAntAudioToggle(page, audioButton) {
     const controller = app.lab.model;
     const bridge = controller.audioBridge;
     if (!bridge || typeof bridge.handleFootContact !== 'function') throw new Error('ANT audio bridge is not injected');
+    const { AntRenderer } = await import('/src/lib/renderers/AntRenderer.js');
+    const originalRender = AntRenderer.prototype.render;
+    window.__antRendererPoseProbe = { frames: 0, framesWithBodyPose: 0, framesWithoutBodyPose: 0 };
+    AntRenderer.prototype.render = function(snapshot, ...args) {
+      const probe = window.__antRendererPoseProbe;
+      if (probe && Array.isArray(snapshot?.agents)) {
+        probe.frames += 1;
+        if (snapshot.agents.length > 0 && snapshot.agents.every(agent => agent.bodyPose
+          && Number.isFinite(agent.bodyPose.headYaw) && Number.isFinite(agent.bodyPose.gasterYaw))) {
+          probe.framesWithBodyPose += 1;
+        } else probe.framesWithoutBodyPose += 1;
+      }
+      return originalRender.call(this, snapshot, ...args);
+    };
     window.__antAudioController = controller;
     window.__antFootContactEvents = [];
     const handleFootContact = bridge.handleFootContact.bind(bridge);

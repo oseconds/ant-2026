@@ -1,0 +1,4107 @@
+{
+  "provenance": {
+    "purpose": "Long seeded ANT run measuring dab deposition and colony activation feedback without parameter tuning.",
+    "source": "AntController public snapshots and FOOT_CONTACT events.",
+    "seeds": [
+      61,
+      20261005,
+      193
+    ],
+    "durationSeconds": 600,
+    "snapshotTimesSeconds": [
+      0,
+      15,
+      30,
+      60,
+      120,
+      180,
+      300,
+      600
+    ],
+    "feedbackModes": [
+      "on"
+    ],
+    "baselineSeedLimit": null,
+    "populationFeedbackSetting": "population.activationFeedback",
+    "field": {
+      "width": 96,
+      "height": 96,
+      "halfLifeSeconds": 15
+    },
+    "depositionMode": "continuous",
+    "simulationStepSeconds": 0.016666666666666666
+  },
+  "scenarios": [
+    {
+      "seed": 61,
+      "activationFeedback": true,
+      "snapshots": [
+        {
+          "simulationTimeSeconds": 0,
+          "activePopulation": 1,
+          "populationTarget": 28,
+          "totalSpawned": 1,
+          "totalRetired": 0,
+          "pheromoneMass": 0,
+          "meanTrailAdherence": 0,
+          "meanSpeed": 0,
+          "maximumLiveSpeed": 0,
+          "maximumCenterDistancePenetration": 0,
+          "minimumPhysicalSurfaceGap": null,
+          "bodyPoseFinite": true,
+          "finiteAgentStates": true,
+          "pheromoneFinite": true,
+          "pheromoneMap": {
+            "width": 96,
+            "height": 96,
+            "cells": 9216,
+            "countsByThreshold": {
+              "positive": 0,
+              "above0004": 0,
+              "above002": 0,
+              "above005": 0,
+              "above018": 0,
+              "nonFinite": 0
+            }
+          },
+          "activation": {
+            "evidence": 0,
+            "activation": 0,
+            "desiredPopulation": 8,
+            "recruitmentLimit": 8,
+            "enabled": true
+          },
+          "activationSignals": {
+            "evidence": 0,
+            "activation": 0,
+            "desiredPopulation": 8,
+            "recruitmentLimit": 8
+          },
+          "desiredPopulation": 8,
+          "localEvidence": 0,
+          "recruitmentLimit": 8,
+          "footContactGroups": 0,
+          "malformedFootContacts": 0,
+          "outOfBoundsFootContacts": 0,
+          "outOfBoundsFootPoints": 0,
+          "footContactCentroidMismatches": 0,
+          "spawnCadence": null
+        },
+        {
+          "simulationTimeSeconds": 14.999999999999813,
+          "activePopulation": 9,
+          "populationTarget": 28,
+          "totalSpawned": 11,
+          "totalRetired": 2,
+          "pheromoneMass": 17.740181125991512,
+          "meanTrailAdherence": 0.2680747399184066,
+          "meanSpeed": 0.0667293319352226,
+          "maximumLiveSpeed": 0.09864742777416297,
+          "maximumCenterDistancePenetration": 0,
+          "minimumPhysicalSurfaceGap": 0.013943398141992424,
+          "bodyPoseFinite": true,
+          "finiteAgentStates": true,
+          "pheromoneFinite": true,
+          "pheromoneMap": {
+            "width": 96,
+            "height": 96,
+            "cells": 9216,
+            "countsByThreshold": {
+              "positive": 735,
+              "above0004": 649,
+              "above002": 247,
+              "above005": 61,
+              "above018": 7,
+              "nonFinite": 0
+            }
+          },
+          "activation": {
+            "evidence": 0.332108688708047,
+            "activation": 0.06178954059595061,
+            "desiredPopulation": 9.235790811919012,
+            "recruitmentLimit": 9,
+            "enabled": true
+          },
+          "activationSignals": {
+            "evidence": 0.332108688708047,
+            "activation": 0.06178954059595061,
+            "desiredPopulation": 9.235790811919012,
+            "recruitmentLimit": 9
+          },
+          "desiredPopulation": 9.235790811919012,
+          "localEvidence": 0.332108688708047,
+          "recruitmentLimit": 9,
+          "footContactGroups": 343,
+          "malformedFootContacts": 0,
+          "outOfBoundsFootContacts": 0,
+          "outOfBoundsFootPoints": 0,
+          "footContactCentroidMismatches": 0,
+          "spawnCadence": {
+            "intervalCount": 10,
+            "meanIntervalMs": 1454.999999999983,
+            "minIntervalMs": 666.6666666666652,
+            "maxIntervalMs": 5916.666666666596,
+            "maxSpawnsInOneTick": 1
+          }
+        },
+        {
+          "simulationTimeSeconds": 30.000000000000753,
+          "activePopulation": 11,
+          "populationTarget": 28,
+          "totalSpawned": 17,
+          "totalRetired": 6,
+          "pheromoneMass": 37.95373356361338,
+          "meanTrailAdherence": 0.1680425221386671,
+          "meanSpeed": 0.0511687235838813,
+          "maximumLiveSpeed": 0.09059222432788182,
+          "maximumCenterDistancePenetration": 0,
+          "minimumPhysicalSurfaceGap": 0.062436195738415204,
+          "bodyPoseFinite": true,
+          "finiteAgentStates": true,
+          "pheromoneFinite": true,
+          "pheromoneMap": {
+            "width": 96,
+            "height": 96,
+            "cells": 9216,
+            "countsByThreshold": {
+              "positive": 1431,
+              "above0004": 1212,
+              "above002": 442,
+              "above005": 178,
+              "above018": 26,
+              "nonFinite": 0
+            }
+          },
+          "activation": {
+            "evidence": 0.5781804040478262,
+            "activation": 0.1750601403278055,
+            "desiredPopulation": 11.50120280655611,
+            "recruitmentLimit": 11,
+            "enabled": true
+          },
+          "activationSignals": {
+            "evidence": 0.5781804040478262,
+            "activation": 0.1750601403278055,
+            "desiredPopulation": 11.50120280655611,
+            "recruitmentLimit": 11
+          },
+          "desiredPopulation": 11.50120280655611,
+          "localEvidence": 0.5781804040478262,
+          "recruitmentLimit": 11,
+          "footContactGroups": 751,
+          "malformedFootContacts": 0,
+          "outOfBoundsFootContacts": 0,
+          "outOfBoundsFootPoints": 0,
+          "footContactCentroidMismatches": 0,
+          "spawnCadence": {
+            "intervalCount": 16,
+            "meanIntervalMs": 1756.2500000000384,
+            "minIntervalMs": 616.6666666667115,
+            "maxIntervalMs": 5916.666666666596,
+            "maxSpawnsInOneTick": 1
+          }
+        },
+        {
+          "simulationTimeSeconds": 59.999999999996994,
+          "activePopulation": 16,
+          "populationTarget": 28,
+          "totalSpawned": 40,
+          "totalRetired": 24,
+          "pheromoneMass": 113.86942894495122,
+          "meanTrailAdherence": 0.46331993313566455,
+          "meanSpeed": 0.07857505258947942,
+          "maximumLiveSpeed": 0.10749104965001789,
+          "maximumCenterDistancePenetration": 0,
+          "minimumPhysicalSurfaceGap": 0.039196155625274676,
+          "bodyPoseFinite": true,
+          "finiteAgentStates": true,
+          "pheromoneFinite": true,
+          "pheromoneMap": {
+            "width": 96,
+            "height": 96,
+            "cells": 9216,
+            "countsByThreshold": {
+              "positive": 2716,
+              "above0004": 1942,
+              "above002": 1031,
+              "above005": 627,
+              "above018": 155,
+              "nonFinite": 0
+            }
+          },
+          "activation": {
+            "evidence": 0.7177110735693737,
+            "activation": 0.4142437440789455,
+            "desiredPopulation": 16.284874881578908,
+            "recruitmentLimit": 16,
+            "enabled": true
+          },
+          "activationSignals": {
+            "evidence": 0.7177110735693737,
+            "activation": 0.4142437440789455,
+            "desiredPopulation": 16.284874881578908,
+            "recruitmentLimit": 16
+          },
+          "desiredPopulation": 16.284874881578908,
+          "localEvidence": 0.7177110735693737,
+          "recruitmentLimit": 16,
+          "footContactGroups": 2062,
+          "malformedFootContacts": 0,
+          "outOfBoundsFootContacts": 0,
+          "outOfBoundsFootPoints": 0,
+          "footContactCentroidMismatches": 0,
+          "spawnCadence": {
+            "intervalCount": 39,
+            "meanIntervalMs": 1498.7179487178776,
+            "minIntervalMs": 416.66666666660603,
+            "maxIntervalMs": 5916.666666666596,
+            "maxSpawnsInOneTick": 1
+          }
+        },
+        {
+          "simulationTimeSeconds": 120.00000000001204,
+          "activePopulation": 19,
+          "populationTarget": 28,
+          "totalSpawned": 121,
+          "totalRetired": 102,
+          "pheromoneMass": 221.35689935671383,
+          "meanTrailAdherence": 0.5416595335169276,
+          "meanSpeed": 0.05202262187294686,
+          "maximumLiveSpeed": 0.09155723465092391,
+          "maximumCenterDistancePenetration": 0,
+          "minimumPhysicalSurfaceGap": 0.02977187799831033,
+          "bodyPoseFinite": true,
+          "finiteAgentStates": true,
+          "pheromoneFinite": true,
+          "pheromoneMap": {
+            "width": 96,
+            "height": 96,
+            "cells": 9216,
+            "countsByThreshold": {
+              "positive": 4432,
+              "above0004": 3302,
+              "above002": 2356,
+              "above005": 1487,
+              "above018": 221,
+              "nonFinite": 0
+            }
+          },
+          "activation": {
+            "evidence": 0.7880436175936768,
+            "activation": 0.6971928524724809,
+            "desiredPopulation": 21.94385704944962,
+            "recruitmentLimit": 21,
+            "enabled": true
+          },
+          "activationSignals": {
+            "evidence": 0.7880436175936768,
+            "activation": 0.6971928524724809,
+            "desiredPopulation": 21.94385704944962,
+            "recruitmentLimit": 21
+          },
+          "desiredPopulation": 21.94385704944962,
+          "localEvidence": 0.7880436175936768,
+          "recruitmentLimit": 21,
+          "footContactGroups": 5523,
+          "malformedFootContacts": 0,
+          "outOfBoundsFootContacts": 0,
+          "outOfBoundsFootPoints": 0,
+          "footContactCentroidMismatches": 0,
+          "spawnCadence": {
+            "intervalCount": 120,
+            "meanIntervalMs": 995.5555555556546,
+            "minIntervalMs": 416.66666666660603,
+            "maxIntervalMs": 5916.666666666596,
+            "maxSpawnsInOneTick": 1
+          }
+        },
+        {
+          "simulationTimeSeconds": 179.99999999998678,
+          "activePopulation": 22,
+          "populationTarget": 28,
+          "totalSpawned": 196,
+          "totalRetired": 174,
+          "pheromoneMass": 221.06173304464414,
+          "meanTrailAdherence": 0.538683301252253,
+          "meanSpeed": 0.06055167205328491,
+          "maximumLiveSpeed": 0.09619214440482762,
+          "maximumCenterDistancePenetration": 0,
+          "minimumPhysicalSurfaceGap": 0.013184514169399017,
+          "bodyPoseFinite": true,
+          "finiteAgentStates": true,
+          "pheromoneFinite": true,
+          "pheromoneMap": {
+            "width": 96,
+            "height": 96,
+            "cells": 9216,
+            "countsByThreshold": {
+              "positive": 5635,
+              "above0004": 3841,
+              "above002": 2419,
+              "above005": 1478,
+              "above018": 195,
+              "nonFinite": 0
+            }
+          },
+          "activation": {
+            "evidence": 0.7489331853184165,
+            "activation": 0.7351439442718893,
+            "desiredPopulation": 22.702878885437787,
+            "recruitmentLimit": 22,
+            "enabled": true
+          },
+          "activationSignals": {
+            "evidence": 0.7489331853184165,
+            "activation": 0.7351439442718893,
+            "desiredPopulation": 22.702878885437787,
+            "recruitmentLimit": 22
+          },
+          "desiredPopulation": 22.702878885437787,
+          "localEvidence": 0.7489331853184165,
+          "recruitmentLimit": 22,
+          "footContactGroups": 9322,
+          "malformedFootContacts": 0,
+          "outOfBoundsFootContacts": 0,
+          "outOfBoundsFootPoints": 0,
+          "footContactCentroidMismatches": 0,
+          "spawnCadence": {
+            "intervalCount": 195,
+            "meanIntervalMs": 919.6581196580539,
+            "minIntervalMs": 416.66666666642413,
+            "maxIntervalMs": 5916.666666666596,
+            "maxSpawnsInOneTick": 1
+          }
+        },
+        {
+          "simulationTimeSeconds": 299.99999999998306,
+          "activePopulation": 17,
+          "populationTarget": 28,
+          "totalSpawned": 363,
+          "totalRetired": 346,
+          "pheromoneMass": 208.3286773238081,
+          "meanTrailAdherence": 0.5238546249691596,
+          "meanSpeed": 0.05543745996021862,
+          "maximumLiveSpeed": 0.10598873315144675,
+          "maximumCenterDistancePenetration": 0,
+          "minimumPhysicalSurfaceGap": 0.00662511571948338,
+          "bodyPoseFinite": true,
+          "finiteAgentStates": true,
+          "pheromoneFinite": true,
+          "pheromoneMap": {
+            "width": 96,
+            "height": 96,
+            "cells": 9216,
+            "countsByThreshold": {
+              "positive": 6451,
+              "above0004": 3793,
+              "above002": 2373,
+              "above005": 1342,
+              "above018": 180,
+              "nonFinite": 0
+            }
+          },
+          "activation": {
+            "evidence": 0.7536497606655428,
+            "activation": 0.7678150349735404,
+            "desiredPopulation": 23.356300699470808,
+            "recruitmentLimit": 23,
+            "enabled": true
+          },
+          "activationSignals": {
+            "evidence": 0.7536497606655428,
+            "activation": 0.7678150349735404,
+            "desiredPopulation": 23.356300699470808,
+            "recruitmentLimit": 23
+          },
+          "desiredPopulation": 23.356300699470808,
+          "localEvidence": 0.7536497606655428,
+          "recruitmentLimit": 23,
+          "footContactGroups": 16250,
+          "malformedFootContacts": 0,
+          "outOfBoundsFootContacts": 0,
+          "outOfBoundsFootPoints": 0,
+          "footContactCentroidMismatches": 0,
+          "spawnCadence": {
+            "intervalCount": 362,
+            "meanIntervalMs": 828.3609576426784,
+            "minIntervalMs": 416.66666666642413,
+            "maxIntervalMs": 5916.666666666596,
+            "maxSpawnsInOneTick": 1
+          }
+        },
+        {
+          "simulationTimeSeconds": 600.0000000000679,
+          "activePopulation": 19,
+          "populationTarget": 28,
+          "totalSpawned": 791,
+          "totalRetired": 772,
+          "pheromoneMass": 241.37663798997215,
+          "meanTrailAdherence": 0.5238164493970585,
+          "meanSpeed": 0.05471901789995751,
+          "maximumLiveSpeed": 0.0936240429584503,
+          "maximumCenterDistancePenetration": 0,
+          "minimumPhysicalSurfaceGap": 0.013243177106937998,
+          "bodyPoseFinite": true,
+          "finiteAgentStates": true,
+          "pheromoneFinite": true,
+          "pheromoneMap": {
+            "width": 96,
+            "height": 96,
+            "cells": 9216,
+            "countsByThreshold": {
+              "positive": 7302,
+              "above0004": 3959,
+              "above002": 2733,
+              "above005": 1664,
+              "above018": 227,
+              "nonFinite": 0
+            }
+          },
+          "activation": {
+            "evidence": 0.7875161649743908,
+            "activation": 0.7866560782667359,
+            "desiredPopulation": 23.73312156533472,
+            "recruitmentLimit": 23,
+            "enabled": true
+          },
+          "activationSignals": {
+            "evidence": 0.7875161649743908,
+            "activation": 0.7866560782667359,
+            "desiredPopulation": 23.73312156533472,
+            "recruitmentLimit": 23
+          },
+          "desiredPopulation": 23.73312156533472,
+          "localEvidence": 0.7875161649743908,
+          "recruitmentLimit": 23,
+          "footContactGroups": 34733,
+          "malformedFootContacts": 0,
+          "outOfBoundsFootContacts": 0,
+          "outOfBoundsFootPoints": 0,
+          "footContactCentroidMismatches": 0,
+          "spawnCadence": {
+            "intervalCount": 790,
+            "meanIntervalMs": 759.409282700508,
+            "minIntervalMs": 416.66666666569654,
+            "maxIntervalMs": 5916.666666666596,
+            "maxSpawnsInOneTick": 1
+          }
+        }
+      ],
+      "runwide": {
+        "maxSpeed": 0.11928359773124826,
+        "maxSpeedLimitExcess": 0,
+        "velocityLimitViolations": 0,
+        "maxTurnRate": 4.5,
+        "maxTurnRateLimit": 4.5,
+        "minSweptSurfaceGap": -6.444953543072174e-9,
+        "minCurrentSurfaceGap": -6.444953543072174e-9,
+        "sweptPairChecks": 5825110,
+        "sweptOverlapViolations": 230,
+        "sweptMaterialPenetrations": 0,
+        "sweptGrazingSamples": 230,
+        "sweptOverlapExamples": [
+          {
+            "timeSeconds": 20.300000000000047,
+            "firstId": "ant-3",
+            "secondId": "ant-11",
+            "gap": -9.90914936910281e-11,
+            "centerDistance": 0.011999999900908507,
+            "summedRadius": 0.012,
+            "firstStart": {
+              "x": 0.48179043672085886,
+              "y": 0.5804716780106869
+            },
+            "firstEnd": {
+              "x": 0.48179052846430553,
+              "y": 0.5804730355575062
+            },
+            "secondStart": {
+              "x": 0.4815007518130894,
+              "y": 0.5924712986834904
+            },
+            "secondEnd": {
+              "x": 0.4815007076849378,
+              "y": 0.5924695351110281
+            }
+          },
+          {
+            "timeSeconds": 20.316666666666716,
+            "firstId": "ant-3",
+            "secondId": "ant-11",
+            "gap": -9.90914936910281e-11,
+            "centerDistance": 0.011999999900908507,
+            "summedRadius": 0.012,
+            "firstStart": {
+              "x": 0.48179052846430553,
+              "y": 0.5804730355575062
+            },
+            "firstEnd": {
+              "x": 0.48179060008580377,
+              "y": 0.5804728046207309
+            },
+            "secondStart": {
+              "x": 0.4815007076849378,
+              "y": 0.5924695351110281
+            },
+            "secondEnd": {
+              "x": 0.48150065754887805,
+              "y": 0.592469586006471
+            }
+          },
+          {
+            "timeSeconds": 20.333333333333382,
+            "firstId": "ant-3",
+            "secondId": "ant-11",
+            "gap": -9.547738120951887e-11,
+            "centerDistance": 0.011999999904522619,
+            "summedRadius": 0.012,
+            "firstStart": {
+              "x": 0.48179060008580377,
+              "y": 0.5804728046207309
+            },
+            "firstEnd": {
+              "x": 0.4817906083506337,
+              "y": 0.580472928215905
+            },
+            "secondStart": {
+              "x": 0.48150065754887805,
+              "y": 0.592469586006471
+            },
+            "secondEnd": {
+              "x": 0.4815006535830871,
+              "y": 0.5924694245353026
+            }
+          },
+          {
+            "timeSeconds": 20.35000000000005,
+            "firstId": "ant-3",
+            "secondId": "ant-11",
+            "gap": -9.547738120951887e-11,
+            "centerDistance": 0.011999999904522619,
+            "summedRadius": 0.012,
+            "firstStart": {
+              "x": 0.4817906083506337,
+              "y": 0.580472928215905
+            },
+            "firstEnd": {
+              "x": 0.48179063543785133,
+              "y": 0.5804720298913886
+            },
+            "secondStart": {
+              "x": 0.4815006535830871,
+              "y": 0.5924694245353026
+            },
+            "secondEnd": {
+              "x": 0.48150062554983497,
+              "y": 0.5924703391427644
+            }
+          },
+          {
+            "timeSeconds": 20.36666666666672,
+            "firstId": "ant-3",
+            "secondId": "ant-11",
+            "gap": -9.99467678758359e-11,
+            "centerDistance": 0.011999999900053232,
+            "summedRadius": 0.012,
+            "firstStart": {
+              "x": 0.48179063543785133,
+              "y": 0.5804720298913886
+            },
+            "firstEnd": {
+              "x": 0.48179068517561185,
+              "y": 0.5804727709394575
+            },
+            "secondStart": {
+              "x": 0.48150062554983497,
+              "y": 0.5924703391427644
+            },
+            "secondEnd": {
+              "x": 0.4815005991417337,
+              "y": 0.5924692640809646
+            }
+          },
+          {
+            "timeSeconds": 20.383333333333386,
+            "firstId": "ant-3",
+            "secondId": "ant-11",
+            "gap": -9.99467678758359e-11,
+            "centerDistance": 0.011999999900053232,
+            "summedRadius": 0.012,
+            "firstStart": {
+              "x": 0.48179068517561185,
+              "y": 0.5804727709394575
+            },
+            "firstEnd": {
+              "x": 0.48179073496517455,
+              "y": 0.5804722040026565
+            },
+            "secondStart": {
+              "x": 0.4815005991417337,
+              "y": 0.5924692640809646
+            },
+            "secondEnd": {
+              "x": 0.4815005590649866,
+              "y": 0.5924696846553106
+            }
+          },
+          {
+            "timeSeconds": 20.400000000000055,
+            "firstId": "ant-3",
+            "secondId": "ant-11",
+            "gap": -9.39142635186796e-11,
+            "centerDistance": 0.011999999906085737,
+            "summedRadius": 0.012,
+            "firstStart": {
+              "x": 0.48179073496517455,
+              "y": 0.5804722040026565
+            },
+            "firstEnd": {
+              "x": 0.4817907613307065,
+              "y": 0.5804725963103347
+            },
+            "secondStart": {
+              "x": 0.4815005590649866,
+              "y": 0.5924696846553106
+            },
+            "secondEnd": {
+              "x": 0.48150054437293965,
+              "y": 0.5924690862913033
+            }
+          },
+          {
+            "timeSeconds": 20.41666666666672,
+            "firstId": "ant-3",
+            "secondId": "ant-11",
+            "gap": -9.39142635186796e-11,
+            "centerDistance": 0.011999999906085737,
+            "summedRadius": 0.012,
+            "firstStart": {
+              "x": 0.4817907613307065,
+              "y": 0.5804725963103347
+            },
+            "firstEnd": {
+              "x": 0.48179079856960216,
+              "y": 0.5804718386589395
+            },
+            "secondStart": {
+              "x": 0.48150054437293965,
+              "y": 0.5924690862913033
+            },
+            "secondEnd": {
+              "x": 0.481500510360265,
+              "y": 0.5924697633049483
+            }
+          }
+        ],
+        "worstSweptPair": {
+          "timeSeconds": 509.3000000002267,
+          "firstId": "ant-649",
+          "secondId": "ant-655",
+          "gap": -6.444953543072174e-9,
+          "centerDistance": 0.011999993555046457,
+          "summedRadius": 0.012,
+          "firstStart": {
+            "x": 0.37360085071174653,
+            "y": 0.5724079802224885
+          },
+          "firstEnd": {
+            "x": 0.37360085045115954,
+            "y": 0.5724079802067927
+          },
+          "secondStart": {
+            "x": 0.37314341195304657,
+            "y": 0.584399251943223
+          },
+          "secondEnd": {
+            "x": 0.3731434113379472,
+            "y": 0.5843992518148775
+          }
+        },
+        "minSweptCenterDistance": 0.011999993555046457,
+        "centerPassThroughEvents": 0,
+        "relativeDirectionFlipEvents": 0,
+        "currentOverlapViolations": 215,
+        "currentMaterialPenetrations": 0,
+        "currentGrazingSamples": 215,
+        "worstCurrentPair": {
+          "gap": -6.444953543072174e-9,
+          "firstId": "ant-649",
+          "secondId": "ant-655",
+          "centerDistance": 0.011999993555046457,
+          "summedRadius": 0.012
+        },
+        "finiteStateViolations": 0,
+        "bodyPoseFiniteViolations": 0,
+        "mapOrphanIdCount": 0,
+        "maxActivation": 0.7866560782667359,
+        "maxLocalEvidence": 0.8332939585854001,
+        "maxActivationStepDelta": 0.00018162429700174787,
+        "maxDesiredPopulation": 23.73312156533472,
+        "maxRecruitmentLimit": 23,
+        "activationBoundViolations": 0,
+        "populationMin": 1,
+        "populationMax": 23,
+        "populationRiseBins": 26,
+        "populationFallBins": 20,
+        "ticksWithRetirementWithoutBirth": 753,
+        "retirementsWithoutSameTickBirth": 757,
+        "retirements": 772,
+        "spawns": 790,
+        "orphanMapIdsAtEnd": 0
+      },
+      "tenSecondPopulation": [
+        {
+          "simulationTimeSeconds": 0,
+          "population": 1
+        },
+        {
+          "simulationTimeSeconds": 10.01666666666666,
+          "population": 8
+        },
+        {
+          "simulationTimeSeconds": 20.000000000000025,
+          "population": 9
+        },
+        {
+          "simulationTimeSeconds": 30.000000000000753,
+          "population": 11
+        },
+        {
+          "simulationTimeSeconds": 40.016666666666566,
+          "population": 12
+        },
+        {
+          "simulationTimeSeconds": 50.01666666666512,
+          "population": 14
+        },
+        {
+          "simulationTimeSeconds": 60.01666666666366,
+          "population": 16
+        },
+        {
+          "simulationTimeSeconds": 70.01666666666415,
+          "population": 16
+        },
+        {
+          "simulationTimeSeconds": 80.0000000000004,
+          "population": 16
+        },
+        {
+          "simulationTimeSeconds": 90.0000000000033,
+          "population": 16
+        },
+        {
+          "simulationTimeSeconds": 100.00000000000621,
+          "population": 19
+        },
+        {
+          "simulationTimeSeconds": 110.00000000000912,
+          "population": 19
+        },
+        {
+          "simulationTimeSeconds": 120.00000000001204,
+          "population": 19
+        },
+        {
+          "simulationTimeSeconds": 130.00000000001495,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 140.00000000001006,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 150.00000000000426,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 160.0166666666651,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 170.01666666665926,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 180.01666666665344,
+          "population": 22
+        },
+        {
+          "simulationTimeSeconds": 190.0166666666476,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 200.0166666666418,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 210.01666666663598,
+          "population": 22
+        },
+        {
+          "simulationTimeSeconds": 220.01666666663016,
+          "population": 17
+        },
+        {
+          "simulationTimeSeconds": 230.01666666662433,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 240.0166666666185,
+          "population": 17
+        },
+        {
+          "simulationTimeSeconds": 250.0166666666127,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 260.01666666660685,
+          "population": 19
+        },
+        {
+          "simulationTimeSeconds": 270.0166666666148,
+          "population": 16
+        },
+        {
+          "simulationTimeSeconds": 280.01666666662646,
+          "population": 15
+        },
+        {
+          "simulationTimeSeconds": 290.0166666666381,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 300.01666666664977,
+          "population": 17
+        },
+        {
+          "simulationTimeSeconds": 310.01666666666137,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 320.00000000000637,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 330.00000000001796,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 340.0000000000296,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 350.00000000004127,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 360.0000000000529,
+          "population": 19
+        },
+        {
+          "simulationTimeSeconds": 370.0000000000646,
+          "population": 19
+        },
+        {
+          "simulationTimeSeconds": 380.00000000007617,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 390.0000000000878,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 400.0000000000995,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 410.00000000011113,
+          "population": 23
+        },
+        {
+          "simulationTimeSeconds": 420.0000000001228,
+          "population": 19
+        },
+        {
+          "simulationTimeSeconds": 430.0000000001344,
+          "population": 19
+        },
+        {
+          "simulationTimeSeconds": 440.00000000014603,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 450.0000000001577,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 460.00000000016934,
+          "population": 16
+        },
+        {
+          "simulationTimeSeconds": 470.000000000181,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 480.0000000001926,
+          "population": 22
+        },
+        {
+          "simulationTimeSeconds": 490.00000000020424,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 500.0000000002159,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 510.00000000022754,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 520.0000000002392,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 530.0000000002309,
+          "population": 19
+        },
+        {
+          "simulationTimeSeconds": 540.0000000002076,
+          "population": 19
+        },
+        {
+          "simulationTimeSeconds": 550.0000000001843,
+          "population": 19
+        },
+        {
+          "simulationTimeSeconds": 560.000000000161,
+          "population": 19
+        },
+        {
+          "simulationTimeSeconds": 570.0000000001377,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 580.0000000001145,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 590.0000000000912,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 600.0000000000679,
+          "population": 19
+        }
+      ],
+      "footContact": {
+        "count": 34733,
+        "malformed": 0,
+        "outOfBounds": 0,
+        "outOfBoundsFootPoints": 0,
+        "centroidMismatch": 0,
+        "positionSamples": [
+          {
+            "antId": "ant-1",
+            "contactGroup": "A",
+            "position": {
+              "x": 0.4999665710365493,
+              "y": 0.7221859090229119
+            },
+            "contacts": [
+              {
+                "legId": "FL",
+                "position": {
+                  "x": 0.49599964793631796,
+                  "y": 0.7059036020267626
+                }
+              },
+              {
+                "legId": "MR",
+                "position": {
+                  "x": 0.5213236483456112,
+                  "y": 0.7351814947663387
+                }
+              },
+              {
+                "legId": "RL",
+                "position": {
+                  "x": 0.4825764168277189,
+                  "y": 0.7254726302756344
+                }
+              }
+            ],
+            "simulationTimeMs": 274.1278221731446
+          },
+          {
+            "antId": "ant-1",
+            "contactGroup": "B",
+            "position": {
+              "x": 0.5201572902612983,
+              "y": 0.7137644506522324
+            },
+            "contacts": [
+              {
+                "legId": "FR",
+                "position": {
+                  "x": 0.5364724930547685,
+                  "y": 0.7099350697874003
+                }
+              },
+              {
+                "legId": "ML",
+                "position": {
+                  "x": 0.49890485939031476,
+                  "y": 0.7005984268760854
+                }
+              },
+              {
+                "legId": "RR",
+                "position": {
+                  "x": 0.5250945183388116,
+                  "y": 0.7307598552932114
+                }
+              }
+            ],
+            "simulationTimeMs": 498.87952842470247
+          },
+          {
+            "antId": "ant-1",
+            "contactGroup": "A",
+            "position": {
+              "x": 0.5242344966745054,
+              "y": 0.6932825743428737
+            },
+            "contacts": [
+              {
+                "legId": "FL",
+                "position": {
+                  "x": 0.5278104934911182,
+                  "y": 0.676909967746257
+                }
+              },
+              {
+                "legId": "MR",
+                "position": {
+                  "x": 0.5377284007911269,
+                  "y": 0.7143283471177428
+                }
+              },
+              {
+                "legId": "RL",
+                "position": {
+                  "x": 0.5071645957412709,
+                  "y": 0.6886094081646212
+                }
+              }
+            ],
+            "simulationTimeMs": 741.4985812451341
+          },
+          {
+            "antId": "ant-1",
+            "contactGroup": "B",
+            "position": {
+              "x": 0.5460641430536526,
+              "y": 0.6945422604597684
+            },
+            "contacts": [
+              {
+                "legId": "FR",
+                "position": {
+                  "x": 0.5624100167028755,
+                  "y": 0.6982385308291597
+                }
+              },
+              {
+                "legId": "ML",
+                "position": {
+                  "x": 0.5327160534719266,
+                  "y": 0.6734037055300146
+                }
+              },
+              {
+                "legId": "RR",
+                "position": {
+                  "x": 0.5430663589861556,
+                  "y": 0.711984545020131
+                }
+              }
+            ],
+            "simulationTimeMs": 977.7748759595264
+          },
+          {
+            "antId": "ant-1",
+            "contactGroup": "A",
+            "position": {
+              "x": 0.5541635274145567,
+              "y": 0.6742237050049003
+            },
+            "contacts": [
+              {
+                "legId": "FL",
+                "position": {
+                  "x": 0.5577395242311695,
+                  "y": 0.6578510984082835
+                }
+              },
+              {
+                "legId": "MR",
+                "position": {
+                  "x": 0.5676574315311782,
+                  "y": 0.6952694777797693
+                }
+              },
+              {
+                "legId": "RL",
+                "position": {
+                  "x": 0.5370936264813222,
+                  "y": 0.6695505388266477
+                }
+              }
+            ],
+            "simulationTimeMs": 1190.5939594176461
+          },
+          {
+            "antId": "ant-2",
+            "contactGroup": "B",
+            "position": {
+              "x": 0.5170044600059667,
+              "y": 0.7138906333080918
+            },
+            "contacts": [
+              {
+                "legId": "FR",
+                "position": {
+                  "x": 0.5337542836350146,
+                  "y": 0.7133489614555945
+                }
+              },
+              {
+                "legId": "ML",
+                "position": {
+                  "x": 0.49876075153614063,
+                  "y": 0.6967974445690649
+                }
+              },
+              {
+                "legId": "RR",
+                "position": {
+                  "x": 0.5184983448467448,
+                  "y": 0.731525493899616
+                }
+              }
+            ],
+            "simulationTimeMs": 1218.3333054143927
+          },
+          {
+            "antId": "ant-1",
+            "contactGroup": "B",
+            "position": {
+              "x": 0.5759307345031773,
+              "y": 0.6751608996946271
+            },
+            "contacts": [
+              {
+                "legId": "FR",
+                "position": {
+                  "x": 0.5923448113419856,
+                  "y": 0.6785414442557444
+                }
+              },
+              {
+                "legId": "ML",
+                "position": {
+                  "x": 0.5621777141887093,
+                  "y": 0.6542835331885317
+                }
+              },
+              {
+                "legId": "RR",
+                "position": {
+                  "x": 0.5732696779788371,
+                  "y": 0.6926577216396052
+                }
+              }
+            ],
+            "simulationTimeMs": 1379.1161219000094
+          },
+          {
+            "antId": "ant-2",
+            "contactGroup": "A",
+            "position": {
+              "x": 0.5175568244941484,
+              "y": 0.6925907564346601
+            },
+            "contacts": [
+              {
+                "legId": "FL",
+                "position": {
+                  "x": 0.5138089130598554,
+                  "y": 0.6762566461166569
+                }
+              },
+              {
+                "legId": "MR",
+                "position": {
+                  "x": 0.5387374591792082,
+                  "y": 0.7058719730332267
+                }
+              },
+              {
+                "legId": "RL",
+                "position": {
+                  "x": 0.5001241012433817,
+                  "y": 0.6956436501540967
+                }
+              }
+            ],
+            "simulationTimeMs": 1453.727084304296
+          },
+          {
+            "antId": "ant-1",
+            "contactGroup": "A",
+            "position": {
+              "x": 0.583622925069184,
+              "y": 0.6546813764069634
+            },
+            "contacts": [
+              {
+                "legId": "FL",
+                "position": {
+                  "x": 0.5868648363116131,
+                  "y": 0.6382393567166634
+                }
+              },
+              {
+                "legId": "MR",
+                "position": {
+                  "x": 0.597542521553832,
+                  "y": 0.6754480524458624
+                }
+              },
+              {
+                "legId": "RL",
+                "position": {
+                  "x": 0.566461417342107,
+                  "y": 0.6503567200583645
+                }
+              }
+            ],
+            "simulationTimeMs": 1550.1125074488814
+          },
+          {
+            "antId": "ant-1",
+            "contactGroup": "B",
+            "position": {
+              "x": 0.6054591935009627,
+              "y": 0.6557160339335467
+            },
+            "contacts": [
+              {
+                "legId": "FR",
+                "position": {
+                  "x": 0.6218038029435584,
+                  "y": 0.6594178905176148
+                }
+              },
+              {
+                "legId": "ML",
+                "position": {
+                  "x": 0.5921183290950702,
+                  "y": 0.634572918342329
+                }
+              },
+              {
+                "legId": "RR",
+                "position": {
+                  "x": 0.6024554484642592,
+                  "y": 0.6731572929406965
+                }
+              }
+            ],
+            "simulationTimeMs": 1710.2807431026454
+          },
+          {
+            "antId": "ant-2",
+            "contactGroup": "B",
+            "position": {
+              "x": 0.537087548114103,
+              "y": 0.6844737360334329
+            },
+            "contacts": [
+              {
+                "legId": "FR",
+                "position": {
+                  "x": 0.553452704218099,
+                  "y": 0.6808637961874183
+                }
+              },
+              {
+                "legId": "ML",
+                "position": {
+                  "x": 0.5160138392313288,
+                  "y": 0.6710235020605949
+                }
+              },
+              {
+                "legId": "RR",
+                "position": {
+                  "x": 0.5417961008928812,
+                  "y": 0.7015339098522854
+                }
+              }
+            ],
+            "simulationTimeMs": 1724.0169303732769
+          },
+          {
+            "antId": "ant-1",
+            "contactGroup": "A",
+            "position": {
+              "x": 0.6135473275816675,
+              "y": 0.6353846137652193
+            },
+            "contacts": [
+              {
+                "legId": "FL",
+                "position": {
+                  "x": 0.6171111256186649,
+                  "y": 0.6190093475520704
+                }
+              },
+              {
+                "legId": "MR",
+                "position": {
+                  "x": 0.6270569073051836,
+                  "y": 0.6564203275799193
+                }
+              },
+              {
+                "legId": "RL",
+                "position": {
+                  "x": 0.5964739498211541,
+                  "y": 0.630724166163668
+                }
+              }
+            ],
+            "simulationTimeMs": 1865.3163198607253
+          }
+        ]
+      }
+    },
+    {
+      "seed": 20261005,
+      "activationFeedback": true,
+      "snapshots": [
+        {
+          "simulationTimeSeconds": 0,
+          "activePopulation": 1,
+          "populationTarget": 28,
+          "totalSpawned": 1,
+          "totalRetired": 0,
+          "pheromoneMass": 0,
+          "meanTrailAdherence": 0,
+          "meanSpeed": 0,
+          "maximumLiveSpeed": 0,
+          "maximumCenterDistancePenetration": 0,
+          "minimumPhysicalSurfaceGap": null,
+          "bodyPoseFinite": true,
+          "finiteAgentStates": true,
+          "pheromoneFinite": true,
+          "pheromoneMap": {
+            "width": 96,
+            "height": 96,
+            "cells": 9216,
+            "countsByThreshold": {
+              "positive": 0,
+              "above0004": 0,
+              "above002": 0,
+              "above005": 0,
+              "above018": 0,
+              "nonFinite": 0
+            }
+          },
+          "activation": {
+            "evidence": 0,
+            "activation": 0,
+            "desiredPopulation": 8,
+            "recruitmentLimit": 8,
+            "enabled": true
+          },
+          "activationSignals": {
+            "evidence": 0,
+            "activation": 0,
+            "desiredPopulation": 8,
+            "recruitmentLimit": 8
+          },
+          "desiredPopulation": 8,
+          "localEvidence": 0,
+          "recruitmentLimit": 8,
+          "footContactGroups": 0,
+          "malformedFootContacts": 0,
+          "outOfBoundsFootContacts": 0,
+          "outOfBoundsFootPoints": 0,
+          "footContactCentroidMismatches": 0,
+          "spawnCadence": null
+        },
+        {
+          "simulationTimeSeconds": 14.999999999999813,
+          "activePopulation": 8,
+          "populationTarget": 28,
+          "totalSpawned": 11,
+          "totalRetired": 3,
+          "pheromoneMass": 17.376886126032332,
+          "meanTrailAdherence": 0.3661250188588704,
+          "meanSpeed": 0.05612442829180437,
+          "maximumLiveSpeed": 0.09646150877160994,
+          "maximumCenterDistancePenetration": 0,
+          "minimumPhysicalSurfaceGap": 0.04685546379144981,
+          "bodyPoseFinite": true,
+          "finiteAgentStates": true,
+          "pheromoneFinite": true,
+          "pheromoneMap": {
+            "width": 96,
+            "height": 96,
+            "cells": 9216,
+            "countsByThreshold": {
+              "positive": 715,
+              "above0004": 645,
+              "above002": 194,
+              "above005": 59,
+              "above018": 18,
+              "nonFinite": 0
+            }
+          },
+          "activation": {
+            "evidence": 0.2348809360929765,
+            "activation": 0.0505429596903761,
+            "desiredPopulation": 9.010859193807523,
+            "recruitmentLimit": 9,
+            "enabled": true
+          },
+          "activationSignals": {
+            "evidence": 0.2348809360929765,
+            "activation": 0.0505429596903761,
+            "desiredPopulation": 9.010859193807523,
+            "recruitmentLimit": 9
+          },
+          "desiredPopulation": 9.010859193807523,
+          "localEvidence": 0.2348809360929765,
+          "recruitmentLimit": 9,
+          "footContactGroups": 334,
+          "malformedFootContacts": 0,
+          "outOfBoundsFootContacts": 0,
+          "outOfBoundsFootPoints": 0,
+          "footContactCentroidMismatches": 0,
+          "spawnCadence": {
+            "intervalCount": 10,
+            "meanIntervalMs": 1396.6666666666517,
+            "minIntervalMs": 500.0000000000002,
+            "maxIntervalMs": 4816.666666666502,
+            "maxSpawnsInOneTick": 1
+          }
+        },
+        {
+          "simulationTimeSeconds": 30.000000000000753,
+          "activePopulation": 9,
+          "populationTarget": 28,
+          "totalSpawned": 17,
+          "totalRetired": 8,
+          "pheromoneMass": 44.97203194334725,
+          "meanTrailAdherence": 0.35418625291034916,
+          "meanSpeed": 0.052976590577785705,
+          "maximumLiveSpeed": 0.07117101525848897,
+          "maximumCenterDistancePenetration": 0,
+          "minimumPhysicalSurfaceGap": 0.031064390473269057,
+          "bodyPoseFinite": true,
+          "finiteAgentStates": true,
+          "pheromoneFinite": true,
+          "pheromoneMap": {
+            "width": 96,
+            "height": 96,
+            "cells": 9216,
+            "countsByThreshold": {
+              "positive": 1388,
+              "above0004": 1146,
+              "above002": 386,
+              "above005": 196,
+              "above018": 60,
+              "nonFinite": 0
+            }
+          },
+          "activation": {
+            "evidence": 0.48492933579918907,
+            "activation": 0.12555361861721606,
+            "desiredPopulation": 10.511072372344321,
+            "recruitmentLimit": 10,
+            "enabled": true
+          },
+          "activationSignals": {
+            "evidence": 0.48492933579918907,
+            "activation": 0.12555361861721606,
+            "desiredPopulation": 10.511072372344321,
+            "recruitmentLimit": 10
+          },
+          "desiredPopulation": 10.511072372344321,
+          "localEvidence": 0.48492933579918907,
+          "recruitmentLimit": 10,
+          "footContactGroups": 730,
+          "malformedFootContacts": 0,
+          "outOfBoundsFootContacts": 0,
+          "outOfBoundsFootPoints": 0,
+          "footContactCentroidMismatches": 0,
+          "spawnCadence": {
+            "intervalCount": 16,
+            "meanIntervalMs": 1701.041666666701,
+            "minIntervalMs": 500.0000000000002,
+            "maxIntervalMs": 6716.666666667155,
+            "maxSpawnsInOneTick": 1
+          }
+        },
+        {
+          "simulationTimeSeconds": 59.999999999996994,
+          "activePopulation": 13,
+          "populationTarget": 28,
+          "totalSpawned": 37,
+          "totalRetired": 24,
+          "pheromoneMass": 85.1922983551085,
+          "meanTrailAdherence": 0.45682312358150845,
+          "meanSpeed": 0.06651048818565537,
+          "maximumLiveSpeed": 0.10193559919911692,
+          "maximumCenterDistancePenetration": 0,
+          "minimumPhysicalSurfaceGap": 0.0213252149418483,
+          "bodyPoseFinite": true,
+          "finiteAgentStates": true,
+          "pheromoneFinite": true,
+          "pheromoneMap": {
+            "width": 96,
+            "height": 96,
+            "cells": 9216,
+            "countsByThreshold": {
+              "positive": 2839,
+              "above0004": 1854,
+              "above002": 773,
+              "above005": 437,
+              "above018": 98,
+              "nonFinite": 0
+            }
+          },
+          "activation": {
+            "evidence": 0.6600152844506013,
+            "activation": 0.3458933906145282,
+            "desiredPopulation": 14.917867812290563,
+            "recruitmentLimit": 14,
+            "enabled": true
+          },
+          "activationSignals": {
+            "evidence": 0.6600152844506013,
+            "activation": 0.3458933906145282,
+            "desiredPopulation": 14.917867812290563,
+            "recruitmentLimit": 14
+          },
+          "desiredPopulation": 14.917867812290563,
+          "localEvidence": 0.6600152844506013,
+          "recruitmentLimit": 14,
+          "footContactGroups": 1818,
+          "malformedFootContacts": 0,
+          "outOfBoundsFootContacts": 0,
+          "outOfBoundsFootPoints": 0,
+          "footContactCentroidMismatches": 0,
+          "spawnCadence": {
+            "intervalCount": 36,
+            "meanIntervalMs": 1631.481481481403,
+            "minIntervalMs": 483.333333333263,
+            "maxIntervalMs": 6716.666666667155,
+            "maxSpawnsInOneTick": 1
+          }
+        },
+        {
+          "simulationTimeSeconds": 120.00000000001204,
+          "activePopulation": 20,
+          "populationTarget": 28,
+          "totalSpawned": 100,
+          "totalRetired": 80,
+          "pheromoneMass": 195.88628959535595,
+          "meanTrailAdherence": 0.476108224716424,
+          "meanSpeed": 0.06389203302966755,
+          "maximumLiveSpeed": 0.11615934480404622,
+          "maximumCenterDistancePenetration": 0,
+          "minimumPhysicalSurfaceGap": 0.017176345253951723,
+          "bodyPoseFinite": true,
+          "finiteAgentStates": true,
+          "pheromoneFinite": true,
+          "pheromoneMap": {
+            "width": 96,
+            "height": 96,
+            "cells": 9216,
+            "countsByThreshold": {
+              "positive": 4898,
+              "above0004": 3085,
+              "above002": 2070,
+              "above005": 1247,
+              "above018": 223,
+              "nonFinite": 0
+            }
+          },
+          "activation": {
+            "evidence": 0.7710417678800832,
+            "activation": 0.6563608381424908,
+            "desiredPopulation": 21.127216762849816,
+            "recruitmentLimit": 21,
+            "enabled": true
+          },
+          "activationSignals": {
+            "evidence": 0.7710417678800832,
+            "activation": 0.6563608381424908,
+            "desiredPopulation": 21.127216762849816,
+            "recruitmentLimit": 21
+          },
+          "desiredPopulation": 21.127216762849816,
+          "localEvidence": 0.7710417678800832,
+          "recruitmentLimit": 21,
+          "footContactGroups": 5012,
+          "malformedFootContacts": 0,
+          "outOfBoundsFootContacts": 0,
+          "outOfBoundsFootPoints": 0,
+          "footContactCentroidMismatches": 0,
+          "spawnCadence": {
+            "intervalCount": 99,
+            "meanIntervalMs": 1205.7239057240254,
+            "minIntervalMs": 433.33333333345945,
+            "maxIntervalMs": 6716.666666667155,
+            "maxSpawnsInOneTick": 1
+          }
+        },
+        {
+          "simulationTimeSeconds": 179.99999999998678,
+          "activePopulation": 18,
+          "populationTarget": 28,
+          "totalSpawned": 186,
+          "totalRetired": 168,
+          "pheromoneMass": 218.4743887459648,
+          "meanTrailAdherence": 0.42881158358727006,
+          "meanSpeed": 0.04850632433120145,
+          "maximumLiveSpeed": 0.10582195812089938,
+          "maximumCenterDistancePenetration": 0,
+          "minimumPhysicalSurfaceGap": 0.004047727055756036,
+          "bodyPoseFinite": true,
+          "finiteAgentStates": true,
+          "pheromoneFinite": true,
+          "pheromoneMap": {
+            "width": 96,
+            "height": 96,
+            "cells": 9216,
+            "countsByThreshold": {
+              "positive": 6110,
+              "above0004": 3856,
+              "above002": 2484,
+              "above005": 1504,
+              "above018": 169,
+              "nonFinite": 0
+            }
+          },
+          "activation": {
+            "evidence": 0.7673152631913993,
+            "activation": 0.7250850035238509,
+            "desiredPopulation": 22.501700070477018,
+            "recruitmentLimit": 22,
+            "enabled": true
+          },
+          "activationSignals": {
+            "evidence": 0.7673152631913993,
+            "activation": 0.7250850035238509,
+            "desiredPopulation": 22.501700070477018,
+            "recruitmentLimit": 22
+          },
+          "desiredPopulation": 22.501700070477018,
+          "localEvidence": 0.7673152631913993,
+          "recruitmentLimit": 22,
+          "footContactGroups": 8756,
+          "malformedFootContacts": 0,
+          "outOfBoundsFootContacts": 0,
+          "outOfBoundsFootPoints": 0,
+          "footContactCentroidMismatches": 0,
+          "spawnCadence": {
+            "intervalCount": 185,
+            "meanIntervalMs": 972.2522522521813,
+            "minIntervalMs": 416.66666666642413,
+            "maxIntervalMs": 6716.666666667155,
+            "maxSpawnsInOneTick": 1
+          }
+        },
+        {
+          "simulationTimeSeconds": 299.99999999998306,
+          "activePopulation": 22,
+          "populationTarget": 28,
+          "totalSpawned": 358,
+          "totalRetired": 336,
+          "pheromoneMass": 242.90462083372194,
+          "meanTrailAdherence": 0.5581877118517201,
+          "meanSpeed": 0.059442919397654864,
+          "maximumLiveSpeed": 0.10023892172469766,
+          "maximumCenterDistancePenetration": 0,
+          "minimumPhysicalSurfaceGap": 0.02985245102756982,
+          "bodyPoseFinite": true,
+          "finiteAgentStates": true,
+          "pheromoneFinite": true,
+          "pheromoneMap": {
+            "width": 96,
+            "height": 96,
+            "cells": 9216,
+            "countsByThreshold": {
+              "positive": 7182,
+              "above0004": 3923,
+              "above002": 2431,
+              "above005": 1548,
+              "above018": 270,
+              "nonFinite": 0
+            }
+          },
+          "activation": {
+            "evidence": 0.7922366924558119,
+            "activation": 0.7801614635555368,
+            "desiredPopulation": 23.603229271110735,
+            "recruitmentLimit": 23,
+            "enabled": true
+          },
+          "activationSignals": {
+            "evidence": 0.7922366924558119,
+            "activation": 0.7801614635555368,
+            "desiredPopulation": 23.603229271110735,
+            "recruitmentLimit": 23
+          },
+          "desiredPopulation": 23.603229271110735,
+          "localEvidence": 0.7922366924558119,
+          "recruitmentLimit": 23,
+          "footContactGroups": 16207,
+          "malformedFootContacts": 0,
+          "outOfBoundsFootContacts": 0,
+          "outOfBoundsFootPoints": 0,
+          "footContactCentroidMismatches": 0,
+          "spawnCadence": {
+            "intervalCount": 357,
+            "meanIntervalMs": 839.3557422968702,
+            "minIntervalMs": 416.66666666642413,
+            "maxIntervalMs": 6716.666666667155,
+            "maxSpawnsInOneTick": 1
+          }
+        },
+        {
+          "simulationTimeSeconds": 600.0000000000679,
+          "activePopulation": 17,
+          "populationTarget": 28,
+          "totalSpawned": 783,
+          "totalRetired": 766,
+          "pheromoneMass": 226.04195040070294,
+          "meanTrailAdherence": 0.5357547293852458,
+          "meanSpeed": 0.06146688257206225,
+          "maximumLiveSpeed": 0.10644211736951868,
+          "maximumCenterDistancePenetration": 0,
+          "minimumPhysicalSurfaceGap": 0.04984084111302717,
+          "bodyPoseFinite": true,
+          "finiteAgentStates": true,
+          "pheromoneFinite": true,
+          "pheromoneMap": {
+            "width": 96,
+            "height": 96,
+            "cells": 9216,
+            "countsByThreshold": {
+              "positive": 7904,
+              "above0004": 4044,
+              "above002": 2613,
+              "above005": 1537,
+              "above018": 189,
+              "nonFinite": 0
+            }
+          },
+          "activation": {
+            "evidence": 0.7426950363953039,
+            "activation": 0.7363955933576479,
+            "desiredPopulation": 22.727911867152958,
+            "recruitmentLimit": 22,
+            "enabled": true
+          },
+          "activationSignals": {
+            "evidence": 0.7426950363953039,
+            "activation": 0.7363955933576479,
+            "desiredPopulation": 22.727911867152958,
+            "recruitmentLimit": 22
+          },
+          "desiredPopulation": 22.727911867152958,
+          "localEvidence": 0.7426950363953039,
+          "recruitmentLimit": 22,
+          "footContactGroups": 35500,
+          "malformedFootContacts": 0,
+          "outOfBoundsFootContacts": 0,
+          "outOfBoundsFootPoints": 0,
+          "footContactCentroidMismatches": 0,
+          "spawnCadence": {
+            "intervalCount": 782,
+            "meanIntervalMs": 766.304347826176,
+            "minIntervalMs": 416.66666666569654,
+            "maxIntervalMs": 6716.666666667155,
+            "maxSpawnsInOneTick": 1
+          }
+        }
+      ],
+      "runwide": {
+        "maxSpeed": 0.11940494885702403,
+        "maxSpeedLimitExcess": 0,
+        "velocityLimitViolations": 0,
+        "maxTurnRate": 4.5,
+        "maxTurnRateLimit": 4.5,
+        "minSweptSurfaceGap": -1.0876996449360465e-8,
+        "minCurrentSurfaceGap": -1.0876996449360465e-8,
+        "sweptPairChecks": 5854671,
+        "sweptOverlapViolations": 208,
+        "sweptMaterialPenetrations": 0,
+        "sweptGrazingSamples": 208,
+        "sweptOverlapExamples": [
+          {
+            "timeSeconds": 99.86666666667284,
+            "firstId": "ant-63",
+            "secondId": "ant-68",
+            "gap": -9.420115208713664e-11,
+            "centerDistance": 0.011999999905798848,
+            "summedRadius": 0.012,
+            "firstStart": {
+              "x": 0.33437042575959963,
+              "y": 0.15872392342277125
+            },
+            "firstEnd": {
+              "x": 0.33446340098283595,
+              "y": 0.1584434338175734
+            },
+            "secondStart": {
+              "x": 0.3463802751598588,
+              "y": 0.15973871404911594
+            },
+            "secondEnd": {
+              "x": 0.34644073704628586,
+              "y": 0.15918060310773297
+            }
+          },
+          {
+            "timeSeconds": 99.88333333333951,
+            "firstId": "ant-63",
+            "secondId": "ant-68",
+            "gap": -1.9246846998111078e-10,
+            "centerDistance": 0.01199999980753153,
+            "summedRadius": 0.012,
+            "firstStart": {
+              "x": 0.33446340098283595,
+              "y": 0.1584434338175734
+            },
+            "firstEnd": {
+              "x": 0.33446340130899915,
+              "y": 0.15844343276005327
+            },
+            "secondStart": {
+              "x": 0.34644073704628586,
+              "y": 0.15918060310773297
+            },
+            "secondEnd": {
+              "x": 0.34644073733806224,
+              "y": 0.15918060100927728
+            }
+          },
+          {
+            "timeSeconds": 99.90000000000619,
+            "firstId": "ant-63",
+            "secondId": "ant-68",
+            "gap": -2.923491500966824e-10,
+            "centerDistance": 0.01199999970765085,
+            "summedRadius": 0.012,
+            "firstStart": {
+              "x": 0.33446340130899915,
+              "y": 0.15844343276005327
+            },
+            "firstEnd": {
+              "x": 0.33446340149456394,
+              "y": 0.1584434318983823
+            },
+            "secondStart": {
+              "x": 0.34644073733806224,
+              "y": 0.15918060100927728
+            },
+            "secondEnd": {
+              "x": 0.3464407374762871,
+              "y": 0.15918059929086498
+            }
+          },
+          {
+            "timeSeconds": 99.91666666667285,
+            "firstId": "ant-63",
+            "secondId": "ant-68",
+            "gap": -3.9170587433356996e-10,
+            "centerDistance": 0.011999999608294126,
+            "summedRadius": 0.012,
+            "firstStart": {
+              "x": 0.33446340149456394,
+              "y": 0.1584434318983823
+            },
+            "firstEnd": {
+              "x": 0.3344634020518454,
+              "y": 0.1584434299621935
+            },
+            "secondStart": {
+              "x": 0.3464407374762871,
+              "y": 0.15918059929086498
+            },
+            "secondEnd": {
+              "x": 0.3464407380342567,
+              "y": 0.15918059572611282
+            }
+          },
+          {
+            "timeSeconds": 99.93333333333953,
+            "firstId": "ant-63",
+            "secondId": "ant-68",
+            "gap": -4.904061184918262e-10,
+            "centerDistance": 0.011999999509593882,
+            "summedRadius": 0.012,
+            "firstStart": {
+              "x": 0.3344634020518454,
+              "y": 0.1584434299621935
+            },
+            "firstEnd": {
+              "x": 0.33446340224067184,
+              "y": 0.15844342905414413
+            },
+            "secondStart": {
+              "x": 0.3464407380342567,
+              "y": 0.15918059572611282
+            },
+            "secondEnd": {
+              "x": 0.346440738179229,
+              "y": 0.15918059392389894
+            }
+          },
+          {
+            "timeSeconds": 99.9500000000062,
+            "firstId": "ant-63",
+            "secondId": "ant-68",
+            "gap": -5.8997379377701e-10,
+            "centerDistance": 0.011999999410026206,
+            "summedRadius": 0.012,
+            "firstStart": {
+              "x": 0.33446340224067184,
+              "y": 0.15844342905414413
+            },
+            "firstEnd": {
+              "x": 0.33446340282764603,
+              "y": 0.15844342701369707
+            },
+            "secondStart": {
+              "x": 0.346440738179229,
+              "y": 0.15918059392389894
+            },
+            "secondEnd": {
+              "x": 0.3464407387752098,
+              "y": 0.15918059011629082
+            }
+          },
+          {
+            "timeSeconds": 99.96666666667286,
+            "firstId": "ant-63",
+            "secondId": "ant-68",
+            "gap": -6.88744245663786e-10,
+            "centerDistance": 0.011999999311255755,
+            "summedRadius": 0.012,
+            "firstStart": {
+              "x": 0.33446340282764603,
+              "y": 0.15844342701369707
+            },
+            "firstEnd": {
+              "x": 0.3344634030176667,
+              "y": 0.1584434260991995
+            },
+            "secondStart": {
+              "x": 0.3464407387752098,
+              "y": 0.15918059011629082
+            },
+            "secondEnd": {
+              "x": 0.3464407389232809,
+              "y": 0.1591805882755371
+            }
+          },
+          {
+            "timeSeconds": 99.98333333333954,
+            "firstId": "ant-63",
+            "secondId": "ant-68",
+            "gap": -7.88699276027538e-10,
+            "centerDistance": 0.011999999211300724,
+            "summedRadius": 0.012,
+            "firstStart": {
+              "x": 0.3344634030176667,
+              "y": 0.1584434260991995
+            },
+            "firstEnd": {
+              "x": 0.33446340360339577,
+              "y": 0.15844342406299014
+            },
+            "secondStart": {
+              "x": 0.3464407389232809,
+              "y": 0.1591805882755371
+            },
+            "secondEnd": {
+              "x": 0.3464407395169891,
+              "y": 0.1591805844825496
+            }
+          }
+        ],
+        "worstSweptPair": {
+          "timeSeconds": 271.8333333332836,
+          "firstId": "ant-249",
+          "secondId": "ant-309",
+          "gap": -1.0876996449360465e-8,
+          "centerDistance": 0.011999989123003551,
+          "summedRadius": 0.012,
+          "firstStart": {
+            "x": 0.48059066321459537,
+            "y": 0.6123564358029644
+          },
+          "firstEnd": {
+            "x": 0.4805906632130547,
+            "y": 0.6123564357973809
+          },
+          "secondStart": {
+            "x": 0.4833449013733272,
+            "y": 0.6240360725057903
+          },
+          "secondEnd": {
+            "x": 0.48334490310962863,
+            "y": 0.6240360719879616
+          }
+        },
+        "minSweptCenterDistance": 0.011999989123003551,
+        "centerPassThroughEvents": 0,
+        "relativeDirectionFlipEvents": 0,
+        "currentOverlapViolations": 200,
+        "currentMaterialPenetrations": 0,
+        "currentGrazingSamples": 200,
+        "worstCurrentPair": {
+          "gap": -1.0876996449360465e-8,
+          "firstId": "ant-249",
+          "secondId": "ant-309",
+          "centerDistance": 0.011999989123003551,
+          "summedRadius": 0.012
+        },
+        "finiteStateViolations": 0,
+        "bodyPoseFiniteViolations": 0,
+        "mapOrphanIdCount": 0,
+        "maxActivation": 0.7810472423135986,
+        "maxLocalEvidence": 0.8249194204342365,
+        "maxActivationStepDelta": 0.00015773195148591213,
+        "maxDesiredPopulation": 23.62094484627197,
+        "maxRecruitmentLimit": 23,
+        "activationBoundViolations": 0,
+        "populationMin": 1,
+        "populationMax": 23,
+        "populationRiseBins": 32,
+        "populationFallBins": 25,
+        "ticksWithRetirementWithoutBirth": 746,
+        "retirementsWithoutSameTickBirth": 752,
+        "retirements": 766,
+        "spawns": 782,
+        "orphanMapIdsAtEnd": 0
+      },
+      "tenSecondPopulation": [
+        {
+          "simulationTimeSeconds": 0,
+          "population": 1
+        },
+        {
+          "simulationTimeSeconds": 10.01666666666666,
+          "population": 8
+        },
+        {
+          "simulationTimeSeconds": 20.000000000000025,
+          "population": 9
+        },
+        {
+          "simulationTimeSeconds": 30.000000000000753,
+          "population": 9
+        },
+        {
+          "simulationTimeSeconds": 40.016666666666566,
+          "population": 11
+        },
+        {
+          "simulationTimeSeconds": 50.01666666666512,
+          "population": 11
+        },
+        {
+          "simulationTimeSeconds": 60.01666666666366,
+          "population": 13
+        },
+        {
+          "simulationTimeSeconds": 70.01666666666415,
+          "population": 16
+        },
+        {
+          "simulationTimeSeconds": 80.0000000000004,
+          "population": 17
+        },
+        {
+          "simulationTimeSeconds": 90.0000000000033,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 100.00000000000621,
+          "population": 15
+        },
+        {
+          "simulationTimeSeconds": 110.00000000000912,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 120.00000000001204,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 130.00000000001495,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 140.00000000001006,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 150.00000000000426,
+          "population": 17
+        },
+        {
+          "simulationTimeSeconds": 160.0166666666651,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 170.01666666665926,
+          "population": 17
+        },
+        {
+          "simulationTimeSeconds": 180.01666666665344,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 190.0166666666476,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 200.0166666666418,
+          "population": 17
+        },
+        {
+          "simulationTimeSeconds": 210.01666666663598,
+          "population": 16
+        },
+        {
+          "simulationTimeSeconds": 220.01666666663016,
+          "population": 23
+        },
+        {
+          "simulationTimeSeconds": 230.01666666662433,
+          "population": 16
+        },
+        {
+          "simulationTimeSeconds": 240.0166666666185,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 250.0166666666127,
+          "population": 23
+        },
+        {
+          "simulationTimeSeconds": 260.01666666660685,
+          "population": 15
+        },
+        {
+          "simulationTimeSeconds": 270.0166666666148,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 280.01666666662646,
+          "population": 23
+        },
+        {
+          "simulationTimeSeconds": 290.0166666666381,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 300.01666666664977,
+          "population": 22
+        },
+        {
+          "simulationTimeSeconds": 310.01666666666137,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 320.00000000000637,
+          "population": 17
+        },
+        {
+          "simulationTimeSeconds": 330.00000000001796,
+          "population": 23
+        },
+        {
+          "simulationTimeSeconds": 340.0000000000296,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 350.00000000004127,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 360.0000000000529,
+          "population": 22
+        },
+        {
+          "simulationTimeSeconds": 370.0000000000646,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 380.00000000007617,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 390.0000000000878,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 400.0000000000995,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 410.00000000011113,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 420.0000000001228,
+          "population": 22
+        },
+        {
+          "simulationTimeSeconds": 430.0000000001344,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 440.00000000014603,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 450.0000000001577,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 460.00000000016934,
+          "population": 17
+        },
+        {
+          "simulationTimeSeconds": 470.000000000181,
+          "population": 22
+        },
+        {
+          "simulationTimeSeconds": 480.0000000001926,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 490.00000000020424,
+          "population": 19
+        },
+        {
+          "simulationTimeSeconds": 500.0000000002159,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 510.00000000022754,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 520.0000000002392,
+          "population": 22
+        },
+        {
+          "simulationTimeSeconds": 530.0000000002309,
+          "population": 19
+        },
+        {
+          "simulationTimeSeconds": 540.0000000002076,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 550.0000000001843,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 560.000000000161,
+          "population": 22
+        },
+        {
+          "simulationTimeSeconds": 570.0000000001377,
+          "population": 17
+        },
+        {
+          "simulationTimeSeconds": 580.0000000001145,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 590.0000000000912,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 600.0000000000679,
+          "population": 17
+        }
+      ],
+      "footContact": {
+        "count": 35500,
+        "malformed": 0,
+        "outOfBounds": 0,
+        "outOfBoundsFootPoints": 0,
+        "centroidMismatch": 0,
+        "positionSamples": [
+          {
+            "antId": "ant-1",
+            "contactGroup": "A",
+            "position": {
+              "x": 0.4851512994231745,
+              "y": 0.7114408892553555
+            },
+            "contacts": [
+              {
+                "legId": "FL",
+                "position": {
+                  "x": 0.4801749603741426,
+                  "y": 0.6954382004291276
+                }
+              },
+              {
+                "legId": "MR",
+                "position": {
+                  "x": 0.5072785032346382,
+                  "y": 0.7230769045306096
+                }
+              },
+              {
+                "legId": "RL",
+                "position": {
+                  "x": 0.4680004346607427,
+                  "y": 0.7158075628063294
+                }
+              }
+            ],
+            "simulationTimeMs": 166.02338728979214
+          },
+          {
+            "antId": "ant-1",
+            "contactGroup": "B",
+            "position": {
+              "x": 0.5047645853603399,
+              "y": 0.7017682607743594
+            },
+            "contacts": [
+              {
+                "legId": "FR",
+                "position": {
+                  "x": 0.5208086980664252,
+                  "y": 0.6969271402971937
+                }
+              },
+              {
+                "legId": "ML",
+                "position": {
+                  "x": 0.4827311762408851,
+                  "y": 0.6899556030473816
+                }
+              },
+              {
+                "legId": "RR",
+                "position": {
+                  "x": 0.5107538817737094,
+                  "y": 0.7184220389785027
+                }
+              }
+            ],
+            "simulationTimeMs": 432.921016891504
+          },
+          {
+            "antId": "ant-2",
+            "contactGroup": "B",
+            "position": {
+              "x": 0.4798660301917466,
+              "y": 0.7197480945807897
+            },
+            "contacts": [
+              {
+                "legId": "FR",
+                "position": {
+                  "x": 0.4664311993227934,
+                  "y": 0.7097303443581787
+                }
+              },
+              {
+                "legId": "ML",
+                "position": {
+                  "x": 0.4834759701762688,
+                  "y": 0.7444862904185655
+                }
+              },
+              {
+                "legId": "RR",
+                "position": {
+                  "x": 0.4896909210761776,
+                  "y": 0.705027648965625
+                }
+              }
+            ],
+            "simulationTimeMs": 1036.073068006874
+          },
+          {
+            "antId": "ant-2",
+            "contactGroup": "A",
+            "position": {
+              "x": 0.46816870433167085,
+              "y": 0.7365748778708747
+            },
+            "contacts": [
+              {
+                "legId": "FL",
+                "position": {
+                  "x": 0.46516286262589024,
+                  "y": 0.7530616882246026
+                }
+              },
+              {
+                "legId": "MR",
+                "position": {
+                  "x": 0.4539527978178245,
+                  "y": 0.7160099076061361
+                }
+              },
+              {
+                "legId": "RL",
+                "position": {
+                  "x": 0.48539045255129787,
+                  "y": 0.7406530377818854
+                }
+              }
+            ],
+            "simulationTimeMs": 1201.2019889039284
+          },
+          {
+            "antId": "ant-2",
+            "contactGroup": "B",
+            "position": {
+              "x": 0.4485579151458443,
+              "y": 0.7417542382954413
+            },
+            "contacts": [
+              {
+                "legId": "FR",
+                "position": {
+                  "x": 0.43243261106903824,
+                  "y": 0.7463176326933144
+                }
+              },
+              {
+                "legId": "ML",
+                "position": {
+                  "x": 0.4703840924317451,
+                  "y": 0.7539455460630448
+                }
+              },
+              {
+                "legId": "RR",
+                "position": {
+                  "x": 0.4428570419367497,
+                  "y": 0.7249995361299647
+                }
+              }
+            ],
+            "simulationTimeMs": 1375.9692757063176
+          },
+          {
+            "antId": "ant-1",
+            "contactGroup": "A",
+            "position": {
+              "x": 0.4884346287846273,
+              "y": 0.6866722237157801
+            },
+            "contacts": [
+              {
+                "legId": "FL",
+                "position": {
+                  "x": 0.4718535536777632,
+                  "y": 0.6842395403618414
+                }
+              },
+              {
+                "legId": "MR",
+                "position": {
+                  "x": 0.508494591961658,
+                  "y": 0.6717521742072774
+                }
+              },
+              {
+                "legId": "RL",
+                "position": {
+                  "x": 0.48495574071446074,
+                  "y": 0.7040249565782215
+                }
+              }
+            ],
+            "simulationTimeMs": 1471.7360416309864
+          },
+          {
+            "antId": "ant-2",
+            "contactGroup": "A",
+            "position": {
+              "x": 0.4513506954769144,
+              "y": 0.7630872914096796
+            },
+            "contacts": [
+              {
+                "legId": "FL",
+                "position": {
+                  "x": 0.4560500034824716,
+                  "y": 0.7791735123539818
+                }
+              },
+              {
+                "legId": "MR",
+                "position": {
+                  "x": 0.4294276877158335,
+                  "y": 0.7510709803822642
+                }
+              },
+              {
+                "legId": "RL",
+                "position": {
+                  "x": 0.4685743952324381,
+                  "y": 0.759017381492793
+                }
+              }
+            ],
+            "simulationTimeMs": 1566.4462015934223
+          },
+          {
+            "antId": "ant-2",
+            "contactGroup": "B",
+            "position": {
+              "x": 0.4308914442351749,
+              "y": 0.7646062228837509
+            },
+            "contacts": [
+              {
+                "legId": "FR",
+                "position": {
+                  "x": 0.41598215223610646,
+                  "y": 0.7569535754930425
+                }
+              },
+              {
+                "legId": "ML",
+                "position": {
+                  "x": 0.4385513472955632,
+                  "y": 0.7884040354955322
+                }
+              },
+              {
+                "legId": "RR",
+                "position": {
+                  "x": 0.43814083317385494,
+                  "y": 0.7484610576626779
+                }
+              }
+            ],
+            "simulationTimeMs": 1779.166352966155
+          },
+          {
+            "antId": "ant-3",
+            "contactGroup": "B",
+            "position": {
+              "x": 0.5229710190731945,
+              "y": 0.7256094864929548
+            },
+            "contacts": [
+              {
+                "legId": "FR",
+                "position": {
+                  "x": 0.5391381658289507,
+                  "y": 0.7300223501638428
+                }
+              },
+              {
+                "legId": "ML",
+                "position": {
+                  "x": 0.510567234718609,
+                  "y": 0.7039033552465779
+                }
+              },
+              {
+                "legId": "RR",
+                "position": {
+                  "x": 0.5192076566720238,
+                  "y": 0.7429027540684435
+                }
+              }
+            ],
+            "simulationTimeMs": 1813.4376816827546
+          },
+          {
+            "antId": "ant-2",
+            "contactGroup": "A",
+            "position": {
+              "x": 0.4201185019085548,
+              "y": 0.7810088719939408
+            },
+            "contacts": [
+              {
+                "legId": "FL",
+                "position": {
+                  "x": 0.4169398251463796,
+                  "y": 0.7974632335446545
+                }
+              },
+              {
+                "legId": "MR",
+                "position": {
+                  "x": 0.4061191718407673,
+                  "y": 0.7602958626120779
+                }
+              },
+              {
+                "legId": "RL",
+                "position": {
+                  "x": 0.43729650873851766,
+                  "y": 0.78526751982509
+                }
+              }
+            ],
+            "simulationTimeMs": 2012.138175136586
+          },
+          {
+            "antId": "ant-3",
+            "contactGroup": "A",
+            "position": {
+              "x": 0.5315623809766821,
+              "y": 0.7054498256947459
+            },
+            "contacts": [
+              {
+                "legId": "FL",
+                "position": {
+                  "x": 0.5358350478282267,
+                  "y": 0.6892450634942163
+                }
+              },
+              {
+                "legId": "MR",
+                "position": {
+                  "x": 0.5441442284921711,
+                  "y": 0.7270532308221089
+                }
+              },
+              {
+                "legId": "RL",
+                "position": {
+                  "x": 0.5147078666096483,
+                  "y": 0.7000511827679123
+                }
+              }
+            ],
+            "simulationTimeMs": 2002.7536644794625
+          },
+          {
+            "antId": "ant-1",
+            "contactGroup": "B",
+            "position": {
+              "x": 0.4999271049882525,
+              "y": 0.6641947168502139
+            },
+            "contacts": [
+              {
+                "legId": "FR",
+                "position": {
+                  "x": 0.510926866115344,
+                  "y": 0.6515513290468233
+                }
+              },
+              {
+                "legId": "ML",
+                "position": {
+                  "x": 0.47498747796077867,
+                  "y": 0.6659339706357487
+                }
+              },
+              {
+                "legId": "RR",
+                "position": {
+                  "x": 0.5138669708886348,
+                  "y": 0.6750988508680696
+                }
+              }
+            ],
+            "simulationTimeMs": 2110.4204769683897
+          }
+        ]
+      }
+    },
+    {
+      "seed": 193,
+      "activationFeedback": true,
+      "snapshots": [
+        {
+          "simulationTimeSeconds": 0,
+          "activePopulation": 1,
+          "populationTarget": 28,
+          "totalSpawned": 1,
+          "totalRetired": 0,
+          "pheromoneMass": 0,
+          "meanTrailAdherence": 0,
+          "meanSpeed": 0,
+          "maximumLiveSpeed": 0,
+          "maximumCenterDistancePenetration": 0,
+          "minimumPhysicalSurfaceGap": null,
+          "bodyPoseFinite": true,
+          "finiteAgentStates": true,
+          "pheromoneFinite": true,
+          "pheromoneMap": {
+            "width": 96,
+            "height": 96,
+            "cells": 9216,
+            "countsByThreshold": {
+              "positive": 0,
+              "above0004": 0,
+              "above002": 0,
+              "above005": 0,
+              "above018": 0,
+              "nonFinite": 0
+            }
+          },
+          "activation": {
+            "evidence": 0,
+            "activation": 0,
+            "desiredPopulation": 8,
+            "recruitmentLimit": 8,
+            "enabled": true
+          },
+          "activationSignals": {
+            "evidence": 0,
+            "activation": 0,
+            "desiredPopulation": 8,
+            "recruitmentLimit": 8
+          },
+          "desiredPopulation": 8,
+          "localEvidence": 0,
+          "recruitmentLimit": 8,
+          "footContactGroups": 0,
+          "malformedFootContacts": 0,
+          "outOfBoundsFootContacts": 0,
+          "outOfBoundsFootPoints": 0,
+          "footContactCentroidMismatches": 0,
+          "spawnCadence": null
+        },
+        {
+          "simulationTimeSeconds": 14.999999999999813,
+          "activePopulation": 8,
+          "populationTarget": 28,
+          "totalSpawned": 11,
+          "totalRetired": 3,
+          "pheromoneMass": 19.988135663159483,
+          "meanTrailAdherence": 0.2911656276776121,
+          "meanSpeed": 0.05918907073824705,
+          "maximumLiveSpeed": 0.09066059930750782,
+          "maximumCenterDistancePenetration": 0,
+          "minimumPhysicalSurfaceGap": 0.015306759595376668,
+          "bodyPoseFinite": true,
+          "finiteAgentStates": true,
+          "pheromoneFinite": true,
+          "pheromoneMap": {
+            "width": 96,
+            "height": 96,
+            "cells": 9216,
+            "countsByThreshold": {
+              "positive": 711,
+              "above0004": 629,
+              "above002": 255,
+              "above005": 80,
+              "above018": 15,
+              "nonFinite": 0
+            }
+          },
+          "activation": {
+            "evidence": 0.40121862505464506,
+            "activation": 0.0732279555650577,
+            "desiredPopulation": 9.464559111301154,
+            "recruitmentLimit": 9,
+            "enabled": true
+          },
+          "activationSignals": {
+            "evidence": 0.40121862505464506,
+            "activation": 0.0732279555650577,
+            "desiredPopulation": 9.464559111301154,
+            "recruitmentLimit": 9
+          },
+          "desiredPopulation": 9.464559111301154,
+          "localEvidence": 0.40121862505464506,
+          "recruitmentLimit": 9,
+          "footContactGroups": 344,
+          "malformedFootContacts": 0,
+          "outOfBoundsFootContacts": 0,
+          "outOfBoundsFootPoints": 0,
+          "footContactCentroidMismatches": 0,
+          "spawnCadence": {
+            "intervalCount": 10,
+            "meanIntervalMs": 1343.3333333333203,
+            "minIntervalMs": 416.66666666666595,
+            "maxIntervalMs": 5916.666666666672,
+            "maxSpawnsInOneTick": 1
+          }
+        },
+        {
+          "simulationTimeSeconds": 30.000000000000753,
+          "activePopulation": 11,
+          "populationTarget": 28,
+          "totalSpawned": 22,
+          "totalRetired": 11,
+          "pheromoneMass": 57.86588153686898,
+          "meanTrailAdherence": 0.5529337868656854,
+          "meanSpeed": 0.05966809895626896,
+          "maximumLiveSpeed": 0.0929570955078383,
+          "maximumCenterDistancePenetration": 0,
+          "minimumPhysicalSurfaceGap": 0.022084008705609882,
+          "bodyPoseFinite": true,
+          "finiteAgentStates": true,
+          "pheromoneFinite": true,
+          "pheromoneMap": {
+            "width": 96,
+            "height": 96,
+            "cells": 9216,
+            "countsByThreshold": {
+              "positive": 1353,
+              "above0004": 1153,
+              "above002": 461,
+              "above005": 247,
+              "above018": 74,
+              "nonFinite": 0
+            }
+          },
+          "activation": {
+            "evidence": 0.43856394932194276,
+            "activation": 0.18228249241365982,
+            "desiredPopulation": 11.645649848273196,
+            "recruitmentLimit": 11,
+            "enabled": true
+          },
+          "activationSignals": {
+            "evidence": 0.43856394932194276,
+            "activation": 0.18228249241365982,
+            "desiredPopulation": 11.645649848273196,
+            "recruitmentLimit": 11
+          },
+          "desiredPopulation": 11.645649848273196,
+          "localEvidence": 0.43856394932194276,
+          "recruitmentLimit": 11,
+          "footContactGroups": 837,
+          "malformedFootContacts": 0,
+          "outOfBoundsFootContacts": 0,
+          "outOfBoundsFootPoints": 0,
+          "footContactCentroidMismatches": 0,
+          "spawnCadence": {
+            "intervalCount": 21,
+            "meanIntervalMs": 1380.9523809524133,
+            "minIntervalMs": 416.66666666666595,
+            "maxIntervalMs": 5916.666666666672,
+            "maxSpawnsInOneTick": 1
+          }
+        },
+        {
+          "simulationTimeSeconds": 59.999999999996994,
+          "activePopulation": 16,
+          "populationTarget": 28,
+          "totalSpawned": 48,
+          "totalRetired": 32,
+          "pheromoneMass": 128.83529460261343,
+          "meanTrailAdherence": 0.47145324978560443,
+          "meanSpeed": 0.06093873831038284,
+          "maximumLiveSpeed": 0.08379453192527438,
+          "maximumCenterDistancePenetration": 0,
+          "minimumPhysicalSurfaceGap": 0.04116214263428615,
+          "bodyPoseFinite": true,
+          "finiteAgentStates": true,
+          "pheromoneFinite": true,
+          "pheromoneMap": {
+            "width": 96,
+            "height": 96,
+            "cells": 9216,
+            "countsByThreshold": {
+              "positive": 2440,
+              "above0004": 1806,
+              "above002": 1144,
+              "above005": 807,
+              "above018": 174,
+              "nonFinite": 0
+            }
+          },
+          "activation": {
+            "evidence": 0.7765910379939682,
+            "activation": 0.4361606445083486,
+            "desiredPopulation": 16.723212890166973,
+            "recruitmentLimit": 16,
+            "enabled": true
+          },
+          "activationSignals": {
+            "evidence": 0.7765910379939682,
+            "activation": 0.4361606445083486,
+            "desiredPopulation": 16.723212890166973,
+            "recruitmentLimit": 16
+          },
+          "desiredPopulation": 16.723212890166973,
+          "localEvidence": 0.7765910379939682,
+          "recruitmentLimit": 16,
+          "footContactGroups": 2093,
+          "malformedFootContacts": 0,
+          "outOfBoundsFootContacts": 0,
+          "outOfBoundsFootPoints": 0,
+          "footContactCentroidMismatches": 0,
+          "spawnCadence": {
+            "intervalCount": 47,
+            "meanIntervalMs": 1262.0567375885907,
+            "minIntervalMs": 416.66666666666595,
+            "maxIntervalMs": 5916.666666666672,
+            "maxSpawnsInOneTick": 1
+          }
+        },
+        {
+          "simulationTimeSeconds": 120.00000000001204,
+          "activePopulation": 17,
+          "populationTarget": 28,
+          "totalSpawned": 119,
+          "totalRetired": 102,
+          "pheromoneMass": 210.46866341494717,
+          "meanTrailAdherence": 0.49428583917095625,
+          "meanSpeed": 0.0586635252288376,
+          "maximumLiveSpeed": 0.10400939800137315,
+          "maximumCenterDistancePenetration": 0,
+          "minimumPhysicalSurfaceGap": 0.010515795912496458,
+          "bodyPoseFinite": true,
+          "finiteAgentStates": true,
+          "pheromoneFinite": true,
+          "pheromoneMap": {
+            "width": 96,
+            "height": 96,
+            "cells": 9216,
+            "countsByThreshold": {
+              "positive": 4471,
+              "above0004": 3438,
+              "above002": 2422,
+              "above005": 1479,
+              "above018": 153,
+              "nonFinite": 0
+            }
+          },
+          "activation": {
+            "evidence": 0.7579988476429766,
+            "activation": 0.685385304966807,
+            "desiredPopulation": 21.707706099336143,
+            "recruitmentLimit": 21,
+            "enabled": true
+          },
+          "activationSignals": {
+            "evidence": 0.7579988476429766,
+            "activation": 0.685385304966807,
+            "desiredPopulation": 21.707706099336143,
+            "recruitmentLimit": 21
+          },
+          "desiredPopulation": 21.707706099336143,
+          "localEvidence": 0.7579988476429766,
+          "recruitmentLimit": 21,
+          "footContactGroups": 5652,
+          "malformedFootContacts": 0,
+          "outOfBoundsFootContacts": 0,
+          "outOfBoundsFootPoints": 0,
+          "footContactCentroidMismatches": 0,
+          "spawnCadence": {
+            "intervalCount": 118,
+            "meanIntervalMs": 1016.2429378532091,
+            "minIntervalMs": 416.66666666666595,
+            "maxIntervalMs": 5916.666666666672,
+            "maxSpawnsInOneTick": 1
+          }
+        },
+        {
+          "simulationTimeSeconds": 179.99999999998678,
+          "activePopulation": 19,
+          "populationTarget": 28,
+          "totalSpawned": 203,
+          "totalRetired": 184,
+          "pheromoneMass": 222.76303960959967,
+          "meanTrailAdherence": 0.5314347635124239,
+          "meanSpeed": 0.05486242139708005,
+          "maximumLiveSpeed": 0.09737961930502749,
+          "maximumCenterDistancePenetration": 0,
+          "minimumPhysicalSurfaceGap": 0.005481584166902569,
+          "bodyPoseFinite": true,
+          "finiteAgentStates": true,
+          "pheromoneFinite": true,
+          "pheromoneMap": {
+            "width": 96,
+            "height": 96,
+            "cells": 9216,
+            "countsByThreshold": {
+              "positive": 5746,
+              "above0004": 4063,
+              "above002": 2589,
+              "above005": 1478,
+              "above018": 187,
+              "nonFinite": 0
+            }
+          },
+          "activation": {
+            "evidence": 0.7741640481050486,
+            "activation": 0.7443032001087273,
+            "desiredPopulation": 22.886064002174546,
+            "recruitmentLimit": 22,
+            "enabled": true
+          },
+          "activationSignals": {
+            "evidence": 0.7741640481050486,
+            "activation": 0.7443032001087273,
+            "desiredPopulation": 22.886064002174546,
+            "recruitmentLimit": 22
+          },
+          "desiredPopulation": 22.886064002174546,
+          "localEvidence": 0.7741640481050486,
+          "recruitmentLimit": 22,
+          "footContactGroups": 9401,
+          "malformedFootContacts": 0,
+          "outOfBoundsFootContacts": 0,
+          "outOfBoundsFootPoints": 0,
+          "footContactCentroidMismatches": 0,
+          "spawnCadence": {
+            "intervalCount": 202,
+            "meanIntervalMs": 888.2838283827745,
+            "minIntervalMs": 416.66666666642413,
+            "maxIntervalMs": 5916.666666666672,
+            "maxSpawnsInOneTick": 1
+          }
+        },
+        {
+          "simulationTimeSeconds": 299.99999999998306,
+          "activePopulation": 20,
+          "populationTarget": 28,
+          "totalSpawned": 362,
+          "totalRetired": 342,
+          "pheromoneMass": 224.3514722766414,
+          "meanTrailAdherence": 0.5403794644115509,
+          "meanSpeed": 0.058619145524429775,
+          "maximumLiveSpeed": 0.11360249220275301,
+          "maximumCenterDistancePenetration": 0,
+          "minimumPhysicalSurfaceGap": 0.027893931980085645,
+          "bodyPoseFinite": true,
+          "finiteAgentStates": true,
+          "pheromoneFinite": true,
+          "pheromoneMap": {
+            "width": 96,
+            "height": 96,
+            "cells": 9216,
+            "countsByThreshold": {
+              "positive": 7016,
+              "above0004": 4062,
+              "above002": 2621,
+              "above005": 1472,
+              "above018": 183,
+              "nonFinite": 0
+            }
+          },
+          "activation": {
+            "evidence": 0.7587159868198625,
+            "activation": 0.7575764639537594,
+            "desiredPopulation": 23.151529279075188,
+            "recruitmentLimit": 23,
+            "enabled": true
+          },
+          "activationSignals": {
+            "evidence": 0.7587159868198625,
+            "activation": 0.7575764639537594,
+            "desiredPopulation": 23.151529279075188,
+            "recruitmentLimit": 23
+          },
+          "desiredPopulation": 23.151529279075188,
+          "localEvidence": 0.7587159868198625,
+          "recruitmentLimit": 23,
+          "footContactGroups": 16983,
+          "malformedFootContacts": 0,
+          "outOfBoundsFootContacts": 0,
+          "outOfBoundsFootPoints": 0,
+          "footContactCentroidMismatches": 0,
+          "spawnCadence": {
+            "intervalCount": 361,
+            "meanIntervalMs": 830.7017543859176,
+            "minIntervalMs": 416.66666666642413,
+            "maxIntervalMs": 5916.666666666672,
+            "maxSpawnsInOneTick": 1
+          }
+        },
+        {
+          "simulationTimeSeconds": 600.0000000000679,
+          "activePopulation": 22,
+          "populationTarget": 28,
+          "totalSpawned": 777,
+          "totalRetired": 755,
+          "pheromoneMass": 230.2000560036384,
+          "meanTrailAdherence": 0.4603903321921077,
+          "meanSpeed": 0.05906392009936408,
+          "maximumLiveSpeed": 0.1180974368042668,
+          "maximumCenterDistancePenetration": 8.674667617905585e-9,
+          "minimumPhysicalSurfaceGap": -8.674667617905585e-9,
+          "bodyPoseFinite": true,
+          "finiteAgentStates": true,
+          "pheromoneFinite": true,
+          "pheromoneMap": {
+            "width": 96,
+            "height": 96,
+            "cells": 9216,
+            "countsByThreshold": {
+              "positive": 7924,
+              "above0004": 3959,
+              "above002": 2455,
+              "above005": 1496,
+              "above018": 237,
+              "nonFinite": 0
+            }
+          },
+          "activation": {
+            "evidence": 0.7915025795081876,
+            "activation": 0.7828196279337208,
+            "desiredPopulation": 23.65639255867442,
+            "recruitmentLimit": 23,
+            "enabled": true
+          },
+          "activationSignals": {
+            "evidence": 0.7915025795081876,
+            "activation": 0.7828196279337208,
+            "desiredPopulation": 23.65639255867442,
+            "recruitmentLimit": 23
+          },
+          "desiredPopulation": 23.65639255867442,
+          "localEvidence": 0.7915025795081876,
+          "recruitmentLimit": 23,
+          "footContactGroups": 36015,
+          "malformedFootContacts": 0,
+          "outOfBoundsFootContacts": 0,
+          "outOfBoundsFootPoints": 0,
+          "footContactCentroidMismatches": 0,
+          "spawnCadence": {
+            "intervalCount": 776,
+            "meanIntervalMs": 772.8951890035246,
+            "minIntervalMs": 416.66666666569654,
+            "maxIntervalMs": 5916.666666666672,
+            "maxSpawnsInOneTick": 1
+          }
+        }
+      ],
+      "runwide": {
+        "maxSpeed": 0.11945702737676708,
+        "maxSpeedLimitExcess": 0,
+        "velocityLimitViolations": 0,
+        "maxTurnRate": 4.5,
+        "maxTurnRateLimit": 4.5,
+        "minSweptSurfaceGap": -8.674667617905585e-9,
+        "minCurrentSurfaceGap": -8.674667617905585e-9,
+        "sweptPairChecks": 6210836,
+        "sweptOverlapViolations": 354,
+        "sweptMaterialPenetrations": 0,
+        "sweptGrazingSamples": 354,
+        "sweptOverlapExamples": [
+          {
+            "timeSeconds": 52.249999999998124,
+            "firstId": "ant-27",
+            "secondId": "ant-30",
+            "gap": -9.104255543901374e-11,
+            "centerDistance": 0.011999999908957445,
+            "summedRadius": 0.012,
+            "firstStart": {
+              "x": 0.517737120668576,
+              "y": 0.1043875205674377
+            },
+            "firstEnd": {
+              "x": 0.51755334758914,
+              "y": 0.10380522097772812
+            },
+            "secondStart": {
+              "x": 0.5055723571247593,
+              "y": 0.10342913561898771
+            },
+            "secondEnd": {
+              "x": 0.5056492227156888,
+              "y": 0.10229134885226308
+            }
+          },
+          {
+            "timeSeconds": 52.26666666666479,
+            "firstId": "ant-27",
+            "secondId": "ant-30",
+            "gap": -1.819244702799816e-10,
+            "centerDistance": 0.01199999981807553,
+            "summedRadius": 0.012,
+            "firstStart": {
+              "x": 0.51755334758914,
+              "y": 0.10380522097772812
+            },
+            "firstEnd": {
+              "x": 0.5175533475117171,
+              "y": 0.10380522069225227
+            },
+            "secondStart": {
+              "x": 0.5056492227156888,
+              "y": 0.10229134885226308
+            },
+            "secondEnd": {
+              "x": 0.5056492227696612,
+              "y": 0.10229134825397204
+            }
+          },
+          {
+            "timeSeconds": 52.28333333333145,
+            "firstId": "ant-27",
+            "secondId": "ant-30",
+            "gap": -2.814861468913854e-10,
+            "centerDistance": 0.011999999718513853,
+            "summedRadius": 0.012,
+            "firstStart": {
+              "x": 0.5175533475117171,
+              "y": 0.10380522069225227
+            },
+            "firstEnd": {
+              "x": 0.5175533473797075,
+              "y": 0.10380522017331623
+            },
+            "secondStart": {
+              "x": 0.5056492227696612,
+              "y": 0.10229134825397204
+            },
+            "secondEnd": {
+              "x": 0.5056492228152538,
+              "y": 0.10229134712768018
+            }
+          },
+          {
+            "timeSeconds": 52.299999999998114,
+            "firstId": "ant-27",
+            "secondId": "ant-30",
+            "gap": -3.782961097154036e-10,
+            "centerDistance": 0.01199999962170389,
+            "summedRadius": 0.012,
+            "firstStart": {
+              "x": 0.5175533473797075,
+              "y": 0.10380522017331623
+            },
+            "firstEnd": {
+              "x": 0.5175533473180085,
+              "y": 0.10380521982207935
+            },
+            "secondStart": {
+              "x": 0.5056492228152538,
+              "y": 0.10229134712768018
+            },
+            "secondEnd": {
+              "x": 0.5056492229060842,
+              "y": 0.10229134634443322
+            }
+          },
+          {
+            "timeSeconds": 52.31666666666478,
+            "firstId": "ant-27",
+            "secondId": "ant-30",
+            "gap": -4.749790664948517e-10,
+            "centerDistance": 0.011999999525020934,
+            "summedRadius": 0.012,
+            "firstStart": {
+              "x": 0.5175533473180085,
+              "y": 0.10380521982207935
+            },
+            "firstEnd": {
+              "x": 0.5175533471958782,
+              "y": 0.10380521934216161
+            },
+            "secondStart": {
+              "x": 0.5056492229060842,
+              "y": 0.10229134634443322
+            },
+            "secondEnd": {
+              "x": 0.5056492229460908,
+              "y": 0.10229134535595046
+            }
+          },
+          {
+            "timeSeconds": 52.333333333331446,
+            "firstId": "ant-27",
+            "secondId": "ant-30",
+            "gap": -5.744061198909023e-10,
+            "centerDistance": 0.01199999942559388,
+            "summedRadius": 0.012,
+            "firstStart": {
+              "x": 0.5175533471958782,
+              "y": 0.10380521934216161
+            },
+            "firstEnd": {
+              "x": 0.5175533471325686,
+              "y": 0.10380521898168389
+            },
+            "secondStart": {
+              "x": 0.5056492229460908,
+              "y": 0.10229134535595046
+            },
+            "secondEnd": {
+              "x": 0.5056492230383766,
+              "y": 0.10229134456009882
+            }
+          },
+          {
+            "timeSeconds": 52.34999999999811,
+            "firstId": "ant-27",
+            "secondId": "ant-30",
+            "gap": -6.7362866673637e-10,
+            "centerDistance": 0.011999999326371334,
+            "summedRadius": 0.012,
+            "firstStart": {
+              "x": 0.5175533471325686,
+              "y": 0.10380521898168389
+            },
+            "firstEnd": {
+              "x": 0.5175533470083308,
+              "y": 0.10380521849342815
+            },
+            "secondStart": {
+              "x": 0.5056492230383766,
+              "y": 0.10229134456009882
+            },
+            "secondEnd": {
+              "x": 0.505649223078656,
+              "y": 0.10229134356469165
+            }
+          },
+          {
+            "timeSeconds": 52.36666666666477,
+            "firstId": "ant-27",
+            "secondId": "ant-30",
+            "gap": -7.71432877647027e-10,
+            "centerDistance": 0.011999999228567123,
+            "summedRadius": 0.012,
+            "firstStart": {
+              "x": 0.5175533470083308,
+              "y": 0.10380521849342815
+            },
+            "firstEnd": {
+              "x": 0.5175533469461124,
+              "y": 0.10380521813909599
+            },
+            "secondStart": {
+              "x": 0.505649223078656,
+              "y": 0.10229134356469165
+            },
+            "secondEnd": {
+              "x": 0.5056492231684234,
+              "y": 0.1022913427905053
+            }
+          }
+        ],
+        "worstSweptPair": {
+          "timeSeconds": 600.0000000000679,
+          "firstId": "ant-757",
+          "secondId": "ant-758",
+          "gap": -8.674667617905585e-9,
+          "centerDistance": 0.011999991325332382,
+          "summedRadius": 0.012,
+          "firstStart": {
+            "x": 0.6411081800902906,
+            "y": 0.2674705593474943
+          },
+          "firstEnd": {
+            "x": 0.6411081800324455,
+            "y": 0.26747055899388367
+          },
+          "secondStart": {
+            "x": 0.6530090800519397,
+            "y": 0.2659316070377683
+          },
+          "secondEnd": {
+            "x": 0.653009079910812,
+            "y": 0.265931606787625
+          }
+        },
+        "minSweptCenterDistance": 0.011999991325332382,
+        "centerPassThroughEvents": 0,
+        "relativeDirectionFlipEvents": 0,
+        "currentOverlapViolations": 301,
+        "currentMaterialPenetrations": 0,
+        "currentGrazingSamples": 301,
+        "worstCurrentPair": {
+          "gap": -8.674667617905585e-9,
+          "firstId": "ant-757",
+          "secondId": "ant-758",
+          "centerDistance": 0.011999991325332382,
+          "summedRadius": 0.012
+        },
+        "finiteStateViolations": 0,
+        "bodyPoseFiniteViolations": 0,
+        "mapOrphanIdCount": 0,
+        "maxActivation": 0.7837262097205027,
+        "maxLocalEvidence": 0.8206511706078438,
+        "maxActivationStepDelta": 0.00017520281371893875,
+        "maxDesiredPopulation": 23.674524194410054,
+        "maxRecruitmentLimit": 23,
+        "activationBoundViolations": 0,
+        "populationMin": 1,
+        "populationMax": 23,
+        "populationRiseBins": 28,
+        "populationFallBins": 20,
+        "ticksWithRetirementWithoutBirth": 731,
+        "retirementsWithoutSameTickBirth": 736,
+        "retirements": 755,
+        "spawns": 776,
+        "orphanMapIdsAtEnd": 0
+      },
+      "tenSecondPopulation": [
+        {
+          "simulationTimeSeconds": 0,
+          "population": 1
+        },
+        {
+          "simulationTimeSeconds": 10.01666666666666,
+          "population": 7
+        },
+        {
+          "simulationTimeSeconds": 20.000000000000025,
+          "population": 10
+        },
+        {
+          "simulationTimeSeconds": 30.000000000000753,
+          "population": 11
+        },
+        {
+          "simulationTimeSeconds": 40.016666666666566,
+          "population": 13
+        },
+        {
+          "simulationTimeSeconds": 50.01666666666512,
+          "population": 13
+        },
+        {
+          "simulationTimeSeconds": 60.01666666666366,
+          "population": 16
+        },
+        {
+          "simulationTimeSeconds": 70.01666666666415,
+          "population": 15
+        },
+        {
+          "simulationTimeSeconds": 80.0000000000004,
+          "population": 19
+        },
+        {
+          "simulationTimeSeconds": 90.0000000000033,
+          "population": 16
+        },
+        {
+          "simulationTimeSeconds": 100.00000000000621,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 110.00000000000912,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 120.00000000001204,
+          "population": 17
+        },
+        {
+          "simulationTimeSeconds": 130.00000000001495,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 140.00000000001006,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 150.00000000000426,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 160.0166666666651,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 170.01666666665926,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 180.01666666665344,
+          "population": 19
+        },
+        {
+          "simulationTimeSeconds": 190.0166666666476,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 200.0166666666418,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 210.01666666663598,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 220.01666666663016,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 230.01666666662433,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 240.0166666666185,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 250.0166666666127,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 260.01666666660685,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 270.0166666666148,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 280.01666666662646,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 290.0166666666381,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 300.01666666664977,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 310.01666666666137,
+          "population": 22
+        },
+        {
+          "simulationTimeSeconds": 320.00000000000637,
+          "population": 19
+        },
+        {
+          "simulationTimeSeconds": 330.00000000001796,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 340.0000000000296,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 350.00000000004127,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 360.0000000000529,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 370.0000000000646,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 380.00000000007617,
+          "population": 19
+        },
+        {
+          "simulationTimeSeconds": 390.0000000000878,
+          "population": 19
+        },
+        {
+          "simulationTimeSeconds": 400.0000000000995,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 410.00000000011113,
+          "population": 19
+        },
+        {
+          "simulationTimeSeconds": 420.0000000001228,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 430.0000000001344,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 440.00000000014603,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 450.0000000001577,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 460.00000000016934,
+          "population": 22
+        },
+        {
+          "simulationTimeSeconds": 470.000000000181,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 480.0000000001926,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 490.00000000020424,
+          "population": 17
+        },
+        {
+          "simulationTimeSeconds": 500.0000000002159,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 510.00000000022754,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 520.0000000002392,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 530.0000000002309,
+          "population": 22
+        },
+        {
+          "simulationTimeSeconds": 540.0000000002076,
+          "population": 19
+        },
+        {
+          "simulationTimeSeconds": 550.0000000001843,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 560.000000000161,
+          "population": 21
+        },
+        {
+          "simulationTimeSeconds": 570.0000000001377,
+          "population": 18
+        },
+        {
+          "simulationTimeSeconds": 580.0000000001145,
+          "population": 17
+        },
+        {
+          "simulationTimeSeconds": 590.0000000000912,
+          "population": 20
+        },
+        {
+          "simulationTimeSeconds": 600.0000000000679,
+          "population": 22
+        }
+      ],
+      "footContact": {
+        "count": 36015,
+        "malformed": 0,
+        "outOfBounds": 0,
+        "outOfBoundsFootPoints": 0,
+        "centroidMismatch": 0,
+        "positionSamples": [
+          {
+            "antId": "ant-1",
+            "contactGroup": "A",
+            "position": {
+              "x": 0.48521372026790344,
+              "y": 0.7240286663350095
+            },
+            "contacts": [
+              {
+                "legId": "FL",
+                "position": {
+                  "x": 0.47102880718445944,
+                  "y": 0.7151046402920657
+                }
+              },
+              {
+                "legId": "MR",
+                "position": {
+                  "x": 0.5095914333480018,
+                  "y": 0.7184845609081261
+                }
+              },
+              {
+                "legId": "RL",
+                "position": {
+                  "x": 0.47502092027124904,
+                  "y": 0.7384967978048366
+                }
+              }
+            ],
+            "simulationTimeMs": 229.63846215534397
+          },
+          {
+            "antId": "ant-1",
+            "contactGroup": "B",
+            "position": {
+              "x": 0.4903743882276106,
+              "y": 0.702469869850466
+            },
+            "contacts": [
+              {
+                "legId": "FR",
+                "position": {
+                  "x": 0.49296632960799713,
+                  "y": 0.6859129426029167
+                }
+              },
+              {
+                "legId": "ML",
+                "position": {
+                  "x": 0.4701784104768977,
+                  "y": 0.7172052857825904
+                }
+              },
+              {
+                "legId": "RR",
+                "position": {
+                  "x": 0.5079784245979372,
+                  "y": 0.7042913811658909
+                }
+              }
+            ],
+            "simulationTimeMs": 421.6038403498368
+          },
+          {
+            "antId": "ant-1",
+            "contactGroup": "A",
+            "position": {
+              "x": 0.46970284996600475,
+              "y": 0.6956581742547675
+            },
+            "contacts": [
+              {
+                "legId": "FL",
+                "position": {
+                  "x": 0.4531246397140081,
+                  "y": 0.6932060435811301
+                }
+              },
+              {
+                "legId": "MR",
+                "position": {
+                  "x": 0.48978030001441597,
+                  "y": 0.6807616646114466
+                }
+              },
+              {
+                "legId": "RL",
+                "position": {
+                  "x": 0.4662036101695903,
+                  "y": 0.7130068145717258
+                }
+              }
+            ],
+            "simulationTimeMs": 631.3755703800044
+          },
+          {
+            "antId": "ant-2",
+            "contactGroup": "B",
+            "position": {
+              "x": 0.4980488077790143,
+              "y": 0.6977758339910604
+            },
+            "contacts": [
+              {
+                "legId": "FR",
+                "position": {
+                  "x": 0.512457854625596,
+                  "y": 0.6892184179690937
+                }
+              },
+              {
+                "legId": "ML",
+                "position": {
+                  "x": 0.4738212492491035,
+                  "y": 0.6916085487147212
+                }
+              },
+              {
+                "legId": "RR",
+                "position": {
+                  "x": 0.5078673194623432,
+                  "y": 0.7125005352893664
+                }
+              }
+            ],
+            "simulationTimeMs": 1281.7382549485137
+          },
+          {
+            "antId": "ant-1",
+            "contactGroup": "B",
+            "position": {
+              "x": 0.4673839834211623,
+              "y": 0.6735009790604258
+            },
+            "contacts": [
+              {
+                "legId": "FR",
+                "position": {
+                  "x": 0.4655756418945366,
+                  "y": 0.6568402497569685
+                }
+              },
+              {
+                "legId": "ML",
+                "position": {
+                  "x": 0.4517211966979245,
+                  "y": 0.6929865406910889
+                }
+              },
+              {
+                "legId": "RR",
+                "position": {
+                  "x": 0.4848551116710256,
+                  "y": 0.6706761467332201
+                }
+              }
+            ],
+            "simulationTimeMs": 1439.2102496707885
+          },
+          {
+            "antId": "ant-2",
+            "contactGroup": "A",
+            "position": {
+              "x": 0.49242675504103384,
+              "y": 0.6764444770489692
+            },
+            "contacts": [
+              {
+                "legId": "FL",
+                "position": {
+                  "x": 0.4893918424758396,
+                  "y": 0.6599629933256624
+                }
+              },
+              {
+                "legId": "MR",
+                "position": {
+                  "x": 0.513010539820541,
+                  "y": 0.6906331275891343
+                }
+              },
+              {
+                "legId": "RL",
+                "position": {
+                  "x": 0.4748778828267209,
+                  "y": 0.6787373102321108
+                }
+              }
+            ],
+            "simulationTimeMs": 1469.9597503185487
+          },
+          {
+            "antId": "ant-2",
+            "contactGroup": "B",
+            "position": {
+              "x": 0.5134318105248001,
+              "y": 0.6707621867294506
+            },
+            "contacts": [
+              {
+                "legId": "FR",
+                "position": {
+                  "x": 0.5301353347777867,
+                  "y": 0.6694048814837927
+                }
+              },
+              {
+                "legId": "ML",
+                "position": {
+                  "x": 0.49437676851890244,
+                  "y": 0.6545783869854637
+                }
+              },
+              {
+                "legId": "RR",
+                "position": {
+                  "x": 0.5157833282777113,
+                  "y": 0.6883032917190954
+                }
+              }
+            ],
+            "simulationTimeMs": 1652.8342227540854
+          },
+          {
+            "antId": "ant-2",
+            "contactGroup": "A",
+            "position": {
+              "x": 0.5147204934437013,
+              "y": 0.6492507964027123
+            },
+            "contacts": [
+              {
+                "legId": "FL",
+                "position": {
+                  "x": 0.5131385778033544,
+                  "y": 0.6325670455382686
+                }
+              },
+              {
+                "legId": "MR",
+                "position": {
+                  "x": 0.53398456113495,
+                  "y": 0.6651852149985378
+                }
+              },
+              {
+                "legId": "RL",
+                "position": {
+                  "x": 0.49703834139279957,
+                  "y": 0.6500001286713305
+                }
+              }
+            ],
+            "simulationTimeMs": 1842.7438480661506
+          },
+          {
+            "antId": "ant-3",
+            "contactGroup": "B",
+            "position": {
+              "x": 0.4833342666535091,
+              "y": 0.7147558452188181
+            },
+            "contacts": [
+              {
+                "legId": "FR",
+                "position": {
+                  "x": 0.47809708351417257,
+                  "y": 0.6988366143088447
+                }
+              },
+              {
+                "legId": "ML",
+                "position": {
+                  "x": 0.47207119065074316,
+                  "y": 0.737075189271812
+                }
+              },
+              {
+                "legId": "RR",
+                "position": {
+                  "x": 0.49983452579561144,
+                  "y": 0.7083557320757973
+                }
+              }
+            ],
+            "simulationTimeMs": 1987.0278351018883
+          },
+          {
+            "antId": "ant-1",
+            "contactGroup": "A",
+            "position": {
+              "x": 0.4469551956063773,
+              "y": 0.6724642215269132
+            },
+            "contacts": [
+              {
+                "legId": "FL",
+                "position": {
+                  "x": 0.4306745573807836,
+                  "y": 0.6764379878722505
+                }
+              },
+              {
+                "legId": "MR",
+                "position": {
+                  "x": 0.4599418036362242,
+                  "y": 0.6511016839463933
+                }
+              },
+              {
+                "legId": "RL",
+                "position": {
+                  "x": 0.4502492258021243,
+                  "y": 0.6898529927620957
+                }
+              }
+            ],
+            "simulationTimeMs": 2013.2965858762336
+          },
+          {
+            "antId": "ant-2",
+            "contactGroup": "B",
+            "position": {
+              "x": 0.5299220479959116,
+              "y": 0.6362285356648784
+            },
+            "contacts": [
+              {
+                "legId": "FR",
+                "position": {
+                  "x": 0.540193246014539,
+                  "y": 0.6229864628942678
+                }
+              },
+              {
+                "legId": "ML",
+                "position": {
+                  "x": 0.5051197302789566,
+                  "y": 0.6393678088080154
+                }
+              },
+              {
+                "legId": "RR",
+                "position": {
+                  "x": 0.5444531676942391,
+                  "y": 0.6463313352923519
+                }
+              }
+            ],
+            "simulationTimeMs": 2045.9747336493704
+          },
+          {
+            "antId": "ant-1",
+            "contactGroup": "B",
+            "position": {
+              "x": 0.43849993844743107,
+              "y": 0.6522837139333149
+            },
+            "contacts": [
+              {
+                "legId": "FR",
+                "position": {
+                  "x": 0.4346174657490736,
+                  "y": 0.6359810636657507
+                }
+              },
+              {
+                "legId": "ML",
+                "position": {
+                  "x": 0.42540316909449344,
+                  "y": 0.6735788925546825
+                }
+              },
+              {
+                "legId": "RR",
+                "position": {
+                  "x": 0.45547918049872615,
+                  "y": 0.6472911855795114
+                }
+              }
+            ],
+            "simulationTimeMs": 2202.1232813017514
+          }
+        ]
+      }
+    }
+  ]
+}

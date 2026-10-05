@@ -259,6 +259,8 @@ await ants.destroy(); // 주입한 engine은 소유자가 별도로 정리.
 
 [Head/gaster articulation 실험 기록과 straight·turning 자연 상태 스크린샷](docs/ant/evidence/2026-10-05-articulation/README.md)을 보존했습니다.
 
+[현재 integrated refinement 기록](docs/ant/evidence/2026-10-05-integrated-refinement/README.md)에는 최초 4개 실패와 최종 155개 통과, body pose / gaster dab / local activation 규칙, 실제 motion·자연 오디오, 세 시드의 10분 검증과 수치 접촉 오차·청감 검증 한계를 보존했습니다.
+
 ## AudioWorklet protocol
 
 모든 메시지는 `{ type, payload }` envelope를 사용합니다.
