@@ -194,49 +194,45 @@ function drawSnapshot(p, snapshot, renderer) {
 }
 
 function drawAnt(p, agent, width, height, diameterScale) {
-  const radius = Number.isFinite(agent.radius) && agent.radius > 0
-    ? agent.radius
-    : 0.006;
+  const radius =
+    Number.isFinite(agent.radius) && agent.radius > 0
+      ? agent.radius
+      : 0.006;
 
   const centerX = agent.x * width;
   const centerY = agent.y * height;
 
-  const legs = Array.isArray(agent.gait?.legs)
-    ? agent.gait.legs
-    : null;
+  const legs = Array.isArray(agent.gait?.legs) ? agent.gait.legs : null;
 
-  // fallback: gait geometry가 없으면 기존 점 표시
-  if (!legs) {
+  const isPointLike = (point) =>
+    point &&
+    Number.isFinite(point.x) &&
+    Number.isFinite(point.y);
+
+  // gait 데이터가 없으면 fallback 점
+  if (!legs || legs.length === 0) {
     p.noStroke();
-    p.fill(48);
-    p.circle(
-      centerX,
-      centerY,
-      Math.max(1, radius * diameterScale)
-    );
+    p.fill(40);
+    p.circle(centerX, centerY, Math.max(1.5, radius * diameterScale));
     return;
   }
 
-  // --------------------------------
-  // LEGS
-  // 기존 gait geometry 그대로 사용
-  // --------------------------------
-  const minimumStroke = 0.65;
+  const r = radius * diameterScale;
 
-  p.stroke(64);
-  p.strokeWeight(
-    Math.max(
-      minimumStroke,
-      radius * diameterScale * 0.11
-    )
-  );
+  // ----------------------------
+  // LEGS
+  // gait geometry 그대로 그림
+  // ----------------------------
+  p.stroke(70);
+  p.strokeWeight(Math.max(0.55, r * 0.075));
+  p.strokeCap(p.ROUND);
+  p.strokeJoin(p.ROUND);
+  p.noFill();
 
   for (const leg of legs) {
-    if (
-      !isPoint(leg.root) ||
-      !isPoint(leg.knee) ||
-      !isPoint(leg.foot)
-    ) continue;
+    if (!isPointLike(leg.root) || !isPointLike(leg.knee) || !isPointLike(leg.foot)) {
+      continue;
+    }
 
     p.line(
       leg.root.x * width,
@@ -253,60 +249,62 @@ function drawAnt(p, agent, width, height, diameterScale) {
     );
   }
 
-  // --------------------------------
-  // BODY LOCAL SPACE
-  // --------------------------------
+  p.noStroke();
+  p.fill(70);
+
+  for (const leg of legs) {
+    if (!isPointLike(leg.knee)) continue;
+    p.circle(
+      leg.knee.x * width,
+      leg.knee.y * height,
+      Math.max(0.7, r * 0.06)
+    );
+  }
+
+  // ----------------------------
+  // LOCAL BODY SPACE
+  // ----------------------------
   p.push();
-
   p.translate(centerX, centerY);
-  p.rotate(
-    Number.isFinite(agent.heading)
-      ? agent.heading
-      : 0
-  );
+  p.rotate(Number.isFinite(agent.heading) ? agent.heading : 0);
 
-  const r = radius * diameterScale;
-
-  // --------------------------------
+  // ----------------------------
   // ANTENNAE
-  // 2-segment elbowed antennae
-  // --------------------------------
-  p.strokeWeight(
-    Math.max(
-      0.35,
-      r * 0.055
-    )
-  );
+  // 너무 ㄱ자처럼 과하게 말고,
+  // 길게 뻗었다가 살짝 꺾이는 느낌
+  // ----------------------------
+  p.stroke(85);
+  p.strokeWeight(Math.max(0.35, r * 0.055));
+  p.strokeCap(p.ROUND);
+  p.noFill();
 
   // left antenna
   p.line(
-    1.48 * r, -0.14 * r,
-    1.88 * r, -0.36 * r
+    1.28 * r, -0.23 * r,
+    1.85 * r, -0.42 * r
   );
-
   p.line(
-    1.88 * r, -0.36 * r,
-    2.38 * r, -0.58 * r
+    1.85 * r, -0.42 * r,
+    2.45 * r, -0.68 * r
   );
 
   // right antenna
   p.line(
-    1.48 * r, 0.14 * r,
-    1.88 * r, 0.36 * r
+    1.28 * r, 0.23 * r,
+    1.85 * r, 0.42 * r
   );
-
   p.line(
-    1.88 * r, 0.36 * r,
-    2.38 * r, 0.58 * r
+    1.85 * r, 0.42 * r,
+    2.45 * r, 0.68 * r
   );
 
-  // --------------------------------
+  // ----------------------------
   // BODY
-  // 몸을 마지막에 그려서
-  // 다리/더듬이 root를 덮음
-  // --------------------------------
+  // 몸통을 마지막에 그려서
+  // 다리/더듬이 뿌리 부분을 자연스럽게 덮음
+  // ----------------------------
   p.noStroke();
-  p.fill(34);
+  p.fill(28);
 
   // gaster
   p.ellipse(
