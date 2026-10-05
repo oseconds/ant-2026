@@ -1,4 +1,5 @@
 import './style.css';
+import { formatSimulationTime } from './lib/utils/simulationTime.js';
 import { Lab, StringInspectorRenderer, SPHERE_MATERIALS } from './lib/index.js';
 import { CanvasInteraction } from './demo/CanvasInteraction.js';
 import { demoDefinitions, readPath, patchPath } from './demo/definitions.js';
@@ -245,7 +246,7 @@ export function mountLab(root) {
       query('#physical-info').textContent = '크기와 재질을 바꾸면 공진 주파수와 질량이 달라집니다. 구 표면의 타격 위치와 pickup은 각각 독립적으로 저장됩니다.';
     } else if (state.model === 'ant') {
       const diagnostics = query('#ant-diagnostics');
-      if (diagnostics) diagnostics.textContent = `${analysis.population} ants / mean speed ${analysis.meanSpeed.toFixed(3)} / pheromone ${analysis.pheromoneMass.toFixed(1)}`;
+      if (diagnostics) diagnostics.textContent = `${formatSimulationTime(analysis.simulationTimeMs)} · ${analysis.population} ants / mean speed ${analysis.meanSpeed.toFixed(3)} / pheromone ${analysis.pheromoneMass.toFixed(1)}`;
     }
     query('#analysis tbody')?.replaceChildren(...items);
   }

@@ -185,6 +185,14 @@ function drawSnapshot(p, snapshot, renderer) {
   const field = snapshot?.pheromone;
   if (field?.values?.length && field.width > 0 && field.height > 0) {
     const image = updateFieldImage(p, renderer, field);
+    // The field remains at its native grid resolution and fixed alpha values;
+    // only the display interpolation is softened when it is scaled to canvas.
+    if (p.drawingContext) {
+      p.drawingContext.imageSmoothingEnabled = true;
+      if ('imageSmoothingQuality' in p.drawingContext) {
+        p.drawingContext.imageSmoothingQuality = 'high';
+      }
+    }
     p.image(image, 0, 0, width, height);
   }
 

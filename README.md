@@ -162,7 +162,7 @@ Gaster 후단은 petiole pivot `−0.90r`에서 articulated gaster의 center `�
 
 `FOOT_CONTACT`는 `{ type, antId, contactGroup: 'A' | 'B', contacts, position, strength, simulationTimeMs }`입니다. `contacts`에는 실제 tripod의 각 `{ legId, position: { x, y } }`가 있으며, 영역 밖 발은 clamp 없이 제외되어 1–3개가 남을 수 있습니다. `position`은 남은 발의 centroid이고, 0개면 이벤트를 내지 않습니다. 큰 advance에서도 phase/remainder를 모두 전진시키면서 최대 4개 tripod event만 냅니다. 각 group은 shared Plate에 centroid로 한 번만 타격됩니다.
 
-Renderer는 기존 field 값을 frame별 max에 맞춰 재정규화하지 않습니다. `base = smoothstep(0.004, 0.050, value)`, `route = smoothstep(0.040, 0.180, value)`, `alpha = min(112, round(base × 22 + route × 90))`을 사용합니다. 흰 배경·회색 field·짙은 ant 표현을 유지하며 field 크기와 농도, 감쇠·침적은 바꾸지 않습니다.
+Renderer는 기존 field 값을 frame별 max에 맞춰 재정규화하지 않습니다. `base = smoothstep(0.004, 0.050, value)`, `route = smoothstep(0.040, 0.180, value)`, `alpha = min(112, round(base × 22 + route × 90))`을 사용합니다. 기존 96×96 image를 확대할 때 canvas image smoothing과 high quality interpolation을 켭니다. 농도 배열·alpha transfer·field 해상도·행동 sampling은 바꾸지 않습니다.
 
 이전 리더/복사본·지연 재생·LIVE/LOOP 상태와 LOOP/RELEASE 버튼·L/R 단축키는 제거했습니다. 일반적인 timestamp/x/y 링 버퍼인 `TrajectoryBuffer`와 그 테스트는 다른 실험에 재사용할 수 있도록 유지합니다.
 
@@ -186,6 +186,8 @@ await ants.destroy();
 ANT도 Lab registry로 전환하며, registry가 Lab의 기존 AudioEngine을 공유하는 `AntAudioBridge`를 controller에 주입합니다. 기본 Audio Off에서는 AudioContext나 Plate Worklet을 만들지 않습니다. 전환하면 기존 RAF·ResizeObserver·p5 instance와 ANT의 Plate 자원을 정리하고 controller를 파괴합니다. 공유 AudioEngine의 최종 파괴는 Lab이 담당합니다. SvelteKit에서 `AntRenderer`를 사용할 때는 `p5` dependency를 설치하고 onMount 이후 `init()`하세요. 개체와 공유장만 사용하는 환경에서는 p5를 import하거나 실행할 필요가 없습니다. 호르몬·먹이·둥지·장애물은 구현하지 않습니다. 몸체 회피는 soft local interaction이며 개미의 생물학이나 rigid-body physics를 재현하지 않습니다.
 
 ## 데모 표시
+
+ANT diagnostics 앞에 `simulationTimeMs`의 경과 시간을 `mm:ss`로 표시하고, 한 시간부터 `hh:mm:ss`를 사용합니다. 벽시계 시간이 아니므로 pause 상태에서 진행하지 않습니다.
 
 첫 로드는 ANT이며 내비게이션 순서는 ANT, String, Plate, Sphere입니다. 상단 제목은 작은 `Lab` 한 단어입니다. ANT에는 제목·캔버스·Audio On/Off·Volume·기존 개체 수/평균 속도/페로몬 총량을 한 줄로 표시합니다. 설명문·캡션·상호작용 안내·공유 기억 설명 details와 정상 실행 상태 문구는 보이는 ANT 화면에서 제거하고 canvas의 접근 가능한 설명은 유지합니다. `Loading…`·`Loading audio…`와 오류는 접근 가능한 status 영역에서 알립니다. 페이지의 중복 소개·footer 안내를 제거하고 JSON은 하단의 접힌 `State (JSON)` details로 남깁니다. String·Plate·Sphere의 기능 컨트롤·inspector·개별 모델 설명은 유지합니다.
 

@@ -40,6 +40,8 @@ test('AntRenderer paints equal agent marks and a cached pheromone field without 
   assert.equal(circles.length, 3);
   assert.equal(new Set(circles.map(([, , , diameter]) => diameter)).size, 1);
   assert.equal(calls.filter(([name]) => name === 'image').length, 1);
+  assert.equal(calls.find(([name]) => name === 'imageSmoothingEnabled')[1], true);
+  assert.equal(calls.find(([name]) => name === 'imageSmoothingQuality')[1], 'high');
   assert.deepEqual([...values], savedValues);
   const fieldImage = calls.find(([name]) => name === 'createImage')[1];
   assert.deepEqual([...fieldImage.pixels].filter((_, i) => i % 4 === 3), [0, 0, 23, 112]);
@@ -217,6 +219,10 @@ function makeP5(calls, { deferSetup = false, manualSetup = false, failSetup = fa
       calls.push(['p5-parent', parent]);
       const p = {
         P2D: '2d', ROUND: 'round', width: 0, height: 0,
+        drawingContext: {
+          set imageSmoothingEnabled(value) { calls.push(['imageSmoothingEnabled', value]); },
+          set imageSmoothingQuality(value) { calls.push(['imageSmoothingQuality', value]); }
+        },
         pixelDensity: (...args) => calls.push(['pixelDensity', ...args]),
         createCanvas: (...args) => {
           calls.push(['createCanvas', ...args]); p.width = args[0]; p.height = args[1];
