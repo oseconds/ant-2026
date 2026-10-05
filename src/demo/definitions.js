@@ -39,10 +39,10 @@ export const demoDefinitions = {
     ]
   },
   ant: {
-    label: 'ANT', title: 'ANT · 환경에 남기는 기억', Renderer: AntRenderer,
-    description: '각 개미는 독립적으로 탐색하며 이동 경로에 페로몬을 남깁니다. 공유 흔적과 가까운 개체를 감지하여 방향과 속도를 조금씩 바꿉니다.',
-    hint: '옅은 흔적은 시간이 지나면 사라집니다. 강한 흔적도 항상 따르지는 않으며, 혼잡하면 가까운 빈 방향으로 돌아갑니다.',
-    canvasDescription: '동등한 개미들을 작은 점으로, 공유 페로몬장을 옅은 회색으로 표시합니다.',
+    label: 'ANT', title: 'ANT', Renderer: AntRenderer,
+    description: '',
+    hint: '동등한 개미는 검은 점, 공유 페로몬 흔적은 옅은 회색 선으로 표시합니다.',
+    canvasDescription: '동등한 개미는 검은 점, 모두가 남긴 페로몬 흔적은 옅은 회색 선으로 표시합니다.',
     audio: false,
     interaction: false, // This visual experiment has no physical-model pointer adapter.
     update: (controller, time) => controller.update(time),

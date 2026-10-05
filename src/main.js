@@ -8,19 +8,17 @@ export function mountLab(root) {
   root.innerHTML = `
     <main>
       <header>
-        <h1>물리 오디오 실험</h1>
-        <p>현, 원형 판, 구의 진동을 브라우저에서 듣고 살펴보는 작은 실험 페이지입니다.</p>
+        <h1>Lab</h1>
         <nav aria-label="물리 모델 선택"></nav>
       </header>
       <hr>
       <article id="experiment" aria-labelledby="model-title"></article>
       <div id="status-home"><div id="audio-status">
-        <p id="status" role="status" aria-live="polite">모델 준비 중…</p>
+        <p id="status" role="status" aria-live="polite" aria-atomic="true">모델 준비 중…</p>
         <p id="audio-info"></p>
       </div></div>
       <hr>
-      <details id="state-details"><summary>설정값 보기 (JSON)</summary><pre id="state-json"></pre></details>
-      <footer><p><small>오디오는 첫 타격 또는 패턴 재생에서 시작합니다. 스피커나 헤드폰의 음량을 조절해 들으세요.</small></p></footer>
+      <details id="state-details"><summary>State (JSON)</summary><pre id="state-json"></pre></details>
     </main>`;
   const query = (selector) => root.querySelector(selector);
   const audioStatus = query('#audio-status');
@@ -31,7 +29,8 @@ export function mountLab(root) {
   let frameId = null, selectionVersion = 0, disposed = false, errorMessage = null;
   let definition = null;
 
-  for (const [name, item] of Object.entries(demoDefinitions)) {
+  for (const name of ['ant', 'string', 'plate', 'sphere']) {
+    const item = demoDefinitions[name];
     const button = document.createElement('button');
     button.type = 'button';
     button.dataset.model = name;
@@ -42,7 +41,11 @@ export function mountLab(root) {
 
   function reportError(error) {
     errorMessage = error.message || String(error);
-    query('#status').textContent = errorMessage;
+    const status = query('#status');
+    if (status.textContent !== errorMessage) status.textContent = errorMessage;
+    if (status.dataset.status !== 'error') status.dataset.status = 'error';
+    if (status.getAttribute('role') !== 'alert') status.setAttribute('role', 'alert');
+    if (status.getAttribute('aria-live') !== 'assertive') status.setAttribute('aria-live', 'assertive');
   }
   function run(action) {
     errorMessage = null;
@@ -165,9 +168,21 @@ export function mountLab(root) {
       if (input) input.value = value;
       if (output) output.value = control.format ? control.format(value) : String(value);
     });
-    const statusText = { idle: '연주 준비 완료', ready: '연주 준비 완료', loading: '오디오 준비 중…', playing: '현 재생 중', active: state.model === 'ant' ? '개미와 공유 흔적 갱신 중' : '공진 중', stopped: '정지', error: snapshot.error || '오디오 오류' };
-    query('#status').textContent = errorMessage || snapshot.audio?.error
-      || (snapshot.audio?.loading ? '오디오 준비 중…' : statusText[status] || status);
+    const statusText = { idle: '연주 준비 완료', ready: '연주 준비 완료', loading: 'Loading…', playing: '현 재생 중', active: '공진 중', stopped: '정지', error: snapshot.error || '오디오 오류' };
+    const statusElement = query('#status');
+    const isError = Boolean(errorMessage || snapshot.error || snapshot.audio?.error || status === 'error');
+    const isLoading = !isError && Boolean(snapshot.audio?.loading || status === 'loading');
+    const antActive = state.model === 'ant' && !isError && !isLoading;
+    const statusTextValue = errorMessage || snapshot.error || snapshot.audio?.error
+      || (snapshot.audio?.loading ? (state.model === 'ant' ? 'Loading audio…' : '오디오 준비 중…')
+        : antActive ? '' : statusText[status] || status);
+    if (statusElement.textContent !== statusTextValue) statusElement.textContent = statusTextValue;
+    const statusKind = isError ? 'error' : isLoading ? 'loading' : 'ready';
+    if (statusElement.dataset.status !== statusKind) statusElement.dataset.status = statusKind;
+    const statusRole = isError ? 'alert' : 'status';
+    if (statusElement.getAttribute('role') !== statusRole) statusElement.setAttribute('role', statusRole);
+    const liveMode = isError ? 'assertive' : 'polite';
+    if (statusElement.getAttribute('aria-live') !== liveMode) statusElement.setAttribute('aria-live', liveMode);
     const antAudio = query('[data-action="ant-audio"]');
     if (antAudio) {
       antAudio.setAttribute('aria-pressed', String(snapshot.audio.enabled));
@@ -177,7 +192,6 @@ export function mountLab(root) {
       query('#ant-volume-value').value = `${volume}%`;
     }
     query('#audio-info').hidden = definition.audio === false;
-    query('footer').hidden = definition.audio === false;
     query('#audio-info').textContent = definition.audio === false ? '' : lab.audio.context ? `${lab.audio.context.sampleRate.toLocaleString()} Hz / ${lab.audio.context.state}` : '첫 타격에서 오디오 시작';
     query('#state-json').textContent = JSON.stringify(state, null, 2);
     if (query('#pickup-info')) query('#pickup-info').textContent = `Pickup 위치: (${positionText(state.pickup.position)})`;
@@ -230,13 +244,10 @@ export function mountLab(root) {
       );
       query('#physical-info').textContent = '크기와 재질을 바꾸면 공진 주파수와 질량이 달라집니다. 구 표면의 타격 위치와 pickup은 각각 독립적으로 저장됩니다.';
     } else if (state.model === 'ant') {
-      items.push(
-        metricRow('개체 수', analysis.population),
-        metricRow('평균 속도', `${analysis.meanSpeed.toFixed(3)} / s`),
-        metricRow('페로몬 총량', analysis.pheromoneMass.toFixed(2))
-      );
+      const diagnostics = query('#ant-diagnostics');
+      if (diagnostics) diagnostics.textContent = `${analysis.population} ants / mean speed ${analysis.meanSpeed.toFixed(3)} / pheromone ${analysis.pheromoneMass.toFixed(1)}`;
     }
-    query('#analysis tbody').replaceChildren(...items);
+    query('#analysis tbody')?.replaceChildren(...items);
   }
 
   async function selectModel(name) {
@@ -244,7 +255,11 @@ export function mountLab(root) {
     if (lab.modelName && !lab.switching) savedStates.set(lab.modelName, lab.getState());
     unmountScene();
     definition = null; errorMessage = null;
-    query('#status').textContent = '모델 전환 중…';
+    const status = query('#status');
+    if (status.textContent !== 'Loading…') status.textContent = 'Loading…';
+    status.dataset.status = 'loading';
+    status.setAttribute('role', 'status');
+    status.setAttribute('aria-live', 'polite');
     // Preserve the live status region and place it beside each model's canvas.
     query('#status-home').append(audioStatus);
     query('#experiment').replaceChildren();
@@ -256,8 +271,10 @@ export function mountLab(root) {
       query('#experiment').innerHTML = documentViews[name];
       query('[data-audio-status]').append(audioStatus);
       query('#model-title').textContent = definition.title;
-      query('#model-description').textContent = definition.description;
-      query('#interaction-hint').textContent = definition.hint;
+      const description = query('#model-description');
+      if (description) description.textContent = definition.description;
+      const hint = query('#interaction-hint');
+      if (hint) hint.textContent = definition.hint;
       for (const tab of root.querySelectorAll('[data-model]')) tab.setAttribute('aria-pressed', String(tab.dataset.model === name));
       mountControls();
       if (await mountScene(name, version)) refresh();
@@ -310,7 +327,7 @@ export function mountLab(root) {
     await lab.destroy();
   };
   globalThis.addEventListener('pagehide', () => { void destroy(); }, { once: true, signal: events.signal });
-  const ready = selectModel('string');
+  const ready = selectModel('ant');
   return { lab, ready, selectModel, destroy };
 }
 

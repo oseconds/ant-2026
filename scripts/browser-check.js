@@ -14,7 +14,7 @@ const probeSource = `
 (() => {
   const probe = window.__physicalAudioProbe = {
     audioContexts: [], contextCloseCalls: 0, worklets: [], gainNodes: [], processorErrors: 0, workletModules: [],
-    workletMessages: [],
+    workletMessages: [], stereoPanners: 0,
     pcmRms: [], workletRms: [], gl: { contexts: 0, deletedBuffers: 0, deletedPrograms: 0 },
     canvasListenersAdded: 0, canvasListenersRemoved: 0,
     rafScheduled: 0, rafCanceled: 0, liveRaf: new Set()
@@ -61,7 +61,10 @@ const probeSource = `
       construct(Target, args) {
         const node = Reflect.construct(Target, args);
         const context = args[0];
-        const record = { index: probe.worklets.length, name: args[1], context, node, portCloses: 0, messagesAfterClose: 0, rms: 0, timer: null };
+        const nodeOptions = args[2] || {};
+        const record = { index: probe.worklets.length, name: args[1], context, node, portCloses: 0, messagesAfterClose: 0,
+          outputChannelCount: [...(nodeOptions.outputChannelCount || [])], processorOptions: nodeOptions.processorOptions || {},
+          outputGainNodes: [], rms: 0, leftRms: 0, rightRms: 0, timer: null };
         probe.worklets.push(record);
         node.addEventListener('processorerror', () => { probe.processorErrors += 1; });
         const close = node.port.close.bind(node.port);
@@ -74,27 +77,59 @@ const probeSource = `
           probe.workletMessages.push({ index: record.index, name: record.name, message: captured, at: performance.now(), closed: record.portCloses > 0 });
           return postMessage(message, ...transfer);
         };
+        const connect = node.connect.bind(node);
+        node.connect = (destination, ...connectArgs) => {
+          if (probe.gainNodes.some(item => item.node === destination)
+            && !record.outputGainNodes.includes(destination)) record.outputGainNodes.push(destination);
+          return connect(destination, ...connectArgs);
+        };
         try {
-          const analyser = context.createAnalyser();
-          analyser.fftSize = 2048;
-          const silent = context.createGain();
-          silent.gain.value = 0;
-          node.connect(analyser);
-          analyser.connect(silent);
-          silent.connect(context.destination);
-          const samples = new Float32Array(analyser.fftSize);
+          const stereo = record.outputChannelCount[0] === 2;
+          const analyserSize = 2048;
+          const left = context.createAnalyser(), leftSamples = new Float32Array(analyserSize);
+          left.fftSize = analyserSize;
+          let right = null, rightSamples = null, splitter = null;
+          if (stereo) {
+            right = context.createAnalyser(); right.fftSize = analyserSize;
+            rightSamples = new Float32Array(analyserSize);
+            splitter = context.createChannelSplitter(2);
+            node.connect(splitter);
+            splitter.connect(left, 0);
+            splitter.connect(right, 1);
+          } else node.connect(left);
+          for (const analyser of [left, ...(right ? [right] : [])]) {
+            const silent = context.createGain();
+            silent.gain.value = 0;
+            analyser.connect(silent);
+            silent.connect(context.destination);
+          }
           record.timer = setInterval(() => {
             if (context.state === 'closed') return;
-            analyser.getFloatTimeDomainData(samples);
-            let energy = 0;
-            for (const value of samples) energy += value * value;
-            record.rms = Math.sqrt(energy / samples.length);
-            probe.workletRms.push({ index: record.index, name: record.name, rms: record.rms });
+            const rms = samples => {
+              let energy = 0;
+              for (const value of samples) energy += value * value;
+              return Math.sqrt(energy / samples.length);
+            };
+            left.getFloatTimeDomainData(leftSamples);
+            record.leftRms = rms(leftSamples);
+            record.rightRms = 0;
+            if (right) { right.getFloatTimeDomainData(rightSamples); record.rightRms = rms(rightSamples); }
+            record.rms = stereo ? Math.max(record.leftRms, record.rightRms) : record.leftRms;
+            probe.workletRms.push({ index: record.index, name: record.name, rms: record.rms,
+              leftRms: record.leftRms, rightRms: record.rightRms });
           }, 40);
         } catch (error) { record.probeError = String(error); }
         return node;
       }
     });
+  }
+
+  if (window.AudioContext?.prototype?.createStereoPanner) {
+    const createStereoPanner = window.AudioContext.prototype.createStereoPanner;
+    window.AudioContext.prototype.createStereoPanner = function(...args) {
+      probe.stereoPanners += 1;
+      return createStereoPanner.apply(this, args);
+    };
   }
 
   if (window.AudioBufferSourceNode) {
@@ -228,6 +263,7 @@ async function verifyDocumentPresentation(page) {
   });
   assert.ok(presentation.lightBackground, `body background is light: ${presentation.background}`);
   assert.equal(presentation.h1Count, 1, 'document has one primary heading');
+  assert.equal(await page.locator('h1').textContent(), 'Lab');
   assert.ok(presentation.navCount, 'model selection uses a labeled nav');
   assert.equal(presentation.modelButtons, 4, 'all model choices remain available');
   assert.ok(presentation.currentButtonPressed, 'selected native model button exposes aria-pressed');
@@ -253,8 +289,15 @@ async function verifyModelSemantics(page, name) {
   }));
   if (name === 'ant') assert.equal(actual.legends.length, 0, 'ANT has no retired playback control fieldset');
   else assert.ok(actual.legends.length > 0 && actual.legends.every(Boolean), 'control groups have descriptive native legends');
-  assert.ok(actual.analysisHeaders.length > 0 && actual.tableRows > 0, 'analysis uses a semantic table');
-  assert.deepEqual(actual.notes, ['details', 'details'], 'model notes and JSON state use native details');
+  if (name === 'ant') {
+    assert.equal(actual.analysisHeaders.length, 0, 'ANT diagnostics use a compact line instead of a table');
+    assert.equal(actual.tableRows, 0);
+    assert.deepEqual(actual.notes, ['details'], 'ANT retains only its collapsed JSON detail');
+  } else {
+    assert.ok(actual.analysisHeaders.length > 0 && actual.tableRows > 0, 'analysis uses a semantic table');
+    assert.deepEqual(actual.notes, ['details', 'details'], 'model notes and JSON state use native details');
+  }
+
   assert.equal(actual.inspectorVisible, name === 'string', 'String inspector visibility follows the selected model');
   if (name === 'string') {
     assert.ok(await page.locator('#string-inspector h3').count(), 'String inspector has its own heading');
@@ -270,14 +313,11 @@ async function readCanvasFrame(page) {
 }
 
 async function readAntAnalysis(page) {
-  return page.locator('#analysis tbody').evaluate(tbody => [...tbody.rows].map(row => row.textContent.trim()));
+  return page.locator('#ant-diagnostics').evaluate(element => [element.textContent.trim()]);
 }
 
 async function readAntPopulation(page) {
-  return page.locator('#analysis tbody').evaluate(tbody => {
-    const row = [...tbody.rows].find(item => /population|agents|개체/i.test(item.cells[0]?.textContent || ''));
-    return Number((row?.cells[row.cells.length - 1]?.textContent || '').replace(/[^\d.-]/g, ''));
-  });
+  return page.locator('#ant-diagnostics').evaluate(element => Number(element.textContent.match(/^\s*(\d+)/)?.[1] || 0));
 }
 
 async function setAntVolume(page, value) {
@@ -325,6 +365,36 @@ async function assertAntOutputGain(page, volume) {
     `ANT output gain is Plate baseline 0.7 × selected volume ${volume} (${actualGain} ≈ ${expectedGain})`);
 }
 
+async function verifyAntStatusStates(page) {
+  if (useProduction) return;
+  await page.evaluate(async () => {
+    const { app } = await import('/src/main.js');
+    app.lab.model.audioBridge._loading = true;
+    app.lab.model.emit('update');
+  });
+  await page.waitForFunction(() => document.querySelector('#status')?.textContent === 'Loading audio…'
+    && document.querySelector('#status')?.getAttribute('role') === 'status'
+    && document.querySelector('#status')?.getAttribute('aria-live') === 'polite');
+  await page.evaluate(async () => {
+    const { app } = await import('/src/main.js');
+    app.lab.model.audioBridge._loading = false;
+    app.lab.model.audioBridge._error = 'Audio initialization test error';
+    app.lab.model.emit('update');
+  });
+  await page.waitForFunction(() => document.querySelector('#status')?.textContent === 'Audio initialization test error'
+    && document.querySelector('#status')?.getAttribute('role') === 'alert'
+    && document.querySelector('#status')?.getAttribute('aria-live') === 'assertive'
+    && document.querySelector('#status')?.dataset.status === 'error');
+  await page.evaluate(async () => {
+    const { app } = await import('/src/main.js');
+    app.lab.model.audioBridge._error = null;
+    app.lab.model.emit('update');
+  });
+  await page.waitForFunction(() => document.querySelector('#status')?.textContent === ''
+    && document.querySelector('#status')?.getAttribute('role') === 'status'
+    && document.querySelector('#status')?.getAttribute('aria-live') === 'polite');
+}
+
 async function verifyAnt(page, requestedUrls) {
   await waitForModel(page, 'ant');
   await verifyDocumentPresentation(page);
@@ -332,6 +402,24 @@ async function verifyAnt(page, requestedUrls) {
 
   const state = await readState(page);
   assert.equal(state.model, 'ant');
+  const navigation = await page.locator('nav button[data-model]').evaluateAll(buttons => buttons.map(button => button.dataset.model));
+  assert.deepEqual(navigation, ['ant', 'string', 'plate', 'sphere'], 'navigation starts with ANT and retains all supporting models');
+  assert.equal((await page.locator('#model-title').textContent()).trim(), 'ANT');
+  assert.equal(await page.locator('#model-description, #interaction-hint, #experiment figcaption, #model-notes, #analysis').count(), 0,
+    'ANT hides descriptive prose, figure caption, explanatory notes, and the analysis table');
+  assert.equal(await page.locator('#ant-diagnostics').count(), 1);
+  assert.equal(await page.locator('#ant-diagnostics').getAttribute('aria-label'), 'Live ANT diagnostics');
+  assert.equal(await page.locator('footer').count(), 0, 'the generic footer copy is removed');
+  assert.equal(await page.locator('#state-details').evaluate(details => details.open), false,
+    'raw JSON stays collapsed in the normal view');
+  assert.equal(await page.locator('#state-details summary').textContent(), 'State (JSON)');
+  const statusAttributes = await page.locator('#status').evaluate(status => ({
+    role: status.getAttribute('role'), live: status.getAttribute('aria-live'), text: status.textContent.trim()
+  }));
+  assert.equal(statusAttributes.role, 'status');
+  assert.equal(statusAttributes.live, 'polite');
+  assert.equal(statusAttributes.text, '', 'ANT ready status is visually empty and takes no text space');
+  await verifyAntStatusStates(page);
   assert.equal(state.population.count, 28, 'ANT retains the default target population');
   assert.equal(state.pheromone.halfLifeSeconds, 3, 'ANT uses the tuned pheromone half-life');
   assert.equal(state.pheromone.radius, .0045, 'ANT uses the tuned deposit radius');
@@ -377,25 +465,22 @@ async function verifyAnt(page, requestedUrls) {
     'ANT begins below its target population and does not spawn all agents at once');
   const initialFrame = await readCanvasFrame(page);
   const initialAnalysis = await readAntAnalysis(page);
-  assert.ok(initialAnalysis.some(row => /population|agents|개체/i.test(row)), 'analysis reports population');
-  assert.ok(initialAnalysis.some(row => /mean speed|평균 속도/i.test(row)), 'analysis reports mean speed');
-  const initialMass = initialAnalysis.find(row => /pheromone|페로몬/i.test(row));
-  assert.ok(initialMass, 'analysis reports pheromone mass');
+  assert.match(initialAnalysis[0], /ants/ , 'compact diagnostics reports population');
+  assert.match(initialAnalysis[0], /mean speed/, 'compact diagnostics reports mean speed');
+  assert.match(initialAnalysis[0], /pheromone/, 'compact diagnostics reports pheromone mass');
+  const initialMass = initialAnalysis[0];
   await page.waitForTimeout(900);
   const activeFrame = await readCanvasFrame(page);
   assert.notEqual(activeFrame, initialFrame, 'ANT agents continue moving in the active simulation');
   await page.waitForFunction(initial => {
-    const rows = [...document.querySelectorAll('#analysis tbody tr')];
-    const row = rows.find(item => /population|agents|개체/i.test(item.cells[0]?.textContent || ''));
-    const value = Number((row?.cells[row.cells.length - 1]?.textContent || '').replace(/[^\d.-]/g, ''));
+    const value = Number(document.querySelector('#ant-diagnostics')?.textContent.match(/^\s*(\d+)/)?.[1] || 0);
     return value > initial;
   }, initialPopulation, { timeout: 5000 });
   // Weak exploratory deposits can remain below the UI's two-decimal precision
   // during initial hesitation. Observe an update instead of assuming its timing.
   await page.waitForFunction(initial => {
-    const row = [...document.querySelectorAll('#analysis tbody tr')]
-      .find(item => /pheromone|페로몬/i.test(item.cells[0]?.textContent || ''));
-    return Boolean(row && row.textContent.trim() !== initial);
+    const diagnostics = document.querySelector('#ant-diagnostics')?.textContent.trim();
+    return Boolean(diagnostics && diagnostics !== initial);
   }, initialMass, { timeout: 5000 });
   const activeAnalysis = await readAntAnalysis(page);
   const activeMass = activeAnalysis.find(row => /pheromone|페로몬/i.test(row));
@@ -445,14 +530,16 @@ async function verifyAnt(page, requestedUrls) {
     await page.screenshot({ path: 'test-results/ant-matured.png', fullPage: true });
   } else {
     await page.waitForTimeout(15000);
-    await page.screenshot({ path: 'test-results/ant-volume-production.png', fullPage: true });
+    await page.screenshot({ path: 'test-results/ant-stereo-production.png', fullPage: true });
   }
   progressedAudioMetrics = await page.evaluate(production => {
     const probe = window.__physicalAudioProbe;
     const records = probe.worklets.filter(item => item.name === 'plate-processor');
+    const currentStereoWorklet = records.at(-1);
+    const stereoSamples = probe.workletRms.filter(item => item.index === currentStereoWorklet?.index);
     let simulationSeconds = null;
     if (!production && window.__antAudioController) {
-      simulationSeconds = window.__antAudioController.getSnapshot().simulationTimeMs / 1000;
+      simulationSeconds = window.__antAudioController.getSnapshot().analysis.simulationTimeMs / 1000;
     }
     return {
       phase: 'after progressed ANT screenshot, before model switch',
@@ -462,6 +549,14 @@ async function verifyAnt(page, requestedUrls) {
       contextState: probe.audioContexts[0]?.state,
       selectedVolumePercent: Number(document.querySelector('#ant-volume')?.value),
       effectiveOutputGainTarget: probe.gainNodes.flatMap(record => record.ramps.map(ramp => ramp.value)).at(-1) ?? null,
+      stereo: {
+        outputChannelCount: currentStereoWorklet?.outputChannelCount,
+        pickupPositions: currentStereoWorklet?.processorOptions?.stereoPickups,
+        outputGainNodeCount: currentStereoWorklet?.outputGainNodes.length,
+        leftPeakRms: Math.max(0, ...stereoSamples.map(item => item.leftRms || 0)),
+        rightPeakRms: Math.max(0, ...stereoSamples.map(item => item.rightRms || 0)),
+        maxChannelDifference: Math.max(0, ...stereoSamples.map(item => Math.abs((item.leftRms || 0) - (item.rightRms || 0))))
+      },
       loadedPlateWorkletModules: probe.workletModules.filter(item => item.loaded && /plate\.worklet\.js(?:$|\?)/.test(item.url)).length,
       processorErrors: probe.processorErrors,
       plateWorklets: records.map(record => ({
@@ -543,7 +638,7 @@ async function verifyAnt(page, requestedUrls) {
   assert.equal(afterSwitchAudioMetrics.totalStrikes, strikesAtSwitchClose, 'no Plate strikes arrive after all ports close');
   assert.equal(afterSwitchAudioMetrics.processorErrors, 0);
   await mkdir('test-results', { recursive: true });
-  await writeFile(`test-results/ant-volume-${useProduction ? 'production' : 'dev'}-metrics.json`,
+  await writeFile(`test-results/ant-stereo-${useProduction ? 'production' : 'dev'}-metrics.json`,
     `${JSON.stringify({ progressedCapture: progressedAudioMetrics, afterSwitch: afterSwitchAudioMetrics,
       verifiedNoFutureStrikes: true }, null, 2)}\n`);
   assert.equal(await page.locator('#scene canvas').count(), 1, 'switching away leaves one current canvas');
@@ -586,17 +681,26 @@ async function verifyAntAudioToggle(page, audioButton) {
   assert.match(await audioButton.textContent(), /Audio On/i);
   await page.waitForFunction(() => {
     const probe = window.__physicalAudioProbe;
-    return probe.worklets.some(item => item.name === 'plate-processor')
+    const stereoIndex = probe.worklets.find(item => item.name === 'plate-processor' && item.outputChannelCount[0] === 2)?.index;
+    return probe.worklets.some(item => item.name === 'plate-processor' && item.outputChannelCount[0] === 2)
       && probe.workletMessages.some(item => item.name === 'plate-processor' && item.message?.type === 'strike')
-      && probe.workletRms.some(item => item.name === 'plate-processor' && item.rms > 1e-7);
+      && probe.workletRms.some(item => item.index === stereoIndex && item.leftRms > 1e-7 && item.rightRms > 1e-7);
   }, null, { timeout: 12000 });
   const firstOn = await page.evaluate(() => {
     const probe = window.__physicalAudioProbe;
     window.__antContext = probe.audioContexts[0];
     const worklets = probe.worklets.map((item, index) => ({ index, name: item.name, contextMatches: item.context === window.__antContext }));
     const strikes = probe.workletMessages.filter(item => item.name === 'plate-processor' && item.message?.type === 'strike');
+    const plate = probe.worklets.find(item => item.name === 'plate-processor');
+    const channelSamples = probe.workletRms.filter(item => item.index === plate?.index);
+    const channelPeak = key => Math.max(0, ...channelSamples.map(item => item[key] || 0));
+    const channelDifference = Math.max(0, ...channelSamples.map(item => Math.abs((item.leftRms || 0) - (item.rightRms || 0))));
     return { contextCount: probe.audioContexts.length, contextState: window.__antContext?.state, worklets,
       plateModules: probe.workletModules.filter(item => item.loaded && /plate\.worklet\.js(?:$|\?)/.test(item.url)).length,
+      stereo: { outputChannelCount: plate?.outputChannelCount, processorOptions: plate?.processorOptions,
+        leftPeakRms: channelPeak('leftRms'), rightPeakRms: channelPeak('rightRms'),
+        maxChannelDifference: channelDifference, outputGainNodeCount: plate?.outputGainNodes.length,
+        stereoPanners: probe.stereoPanners },
       strikes, events: window.__antStepEvents || [] };
   });
   assert.equal(firstOn.contextCount, 1, 'Audio On lazily creates exactly one shared AudioContext');
@@ -606,6 +710,17 @@ async function verifyAntAudioToggle(page, audioButton) {
   assert.ok(firstOn.worklets.filter(item => item.name === 'plate-processor').every(item => item.contextMatches),
     'the Plate worklet is attached to Lab.audio’s shared context');
   assert.equal(firstOn.plateModules, 1, 'ANT lazily loads the existing Plate worklet module');
+  assert.deepEqual(firstOn.stereo.outputChannelCount, [2], 'ANT Plate worklet requests two output channels');
+  const stereoPickups = firstOn.stereo.processorOptions.stereoPickups;
+  assert.deepEqual(stereoPickups, [{ x: -.32, y: -.18 }, { x: .32, y: -.18 }],
+    'the one shared ANT Plate uses two fixed symmetric physical pickups');
+  assert.ok(firstOn.stereo.leftPeakRms > 1e-7 && firstOn.stereo.rightPeakRms > 1e-7,
+    'both physical pickup channels produce nonzero worklet output');
+  assert.ok(firstOn.stereo.maxChannelDifference > 1e-8,
+    'the observed stereo pickup signals differ during the natural ANT run');
+  assert.equal(firstOn.stereo.outputGainNodeCount, 1,
+    'both channels use one shared output gain node for equal volume scaling');
+  assert.equal(firstOn.stereo.stereoPanners, 0, 'stereo is not implemented with an x-position panner');
   if (!useProduction) assert.ok(firstOn.events.length > 0, 'ANT generated real distance-based STEP events');
   assert.ok(firstOn.strikes.length > 0, 'STEP events reach the Plate worklet');
   assert.ok(Math.abs(await readAntAudioVolume(page) - .65) < 1e-9,
@@ -680,7 +795,8 @@ async function verifyAntAudioToggle(page, audioButton) {
     contextCount: window.__physicalAudioProbe.audioContexts.length,
     sameContext: window.__physicalAudioProbe.audioContexts[0] === window.__antContext,
     plateWorklets: window.__physicalAudioProbe.worklets.filter(item => item.name === 'plate-processor').map(item => ({
-      index: item.index, contextMatches: item.context === window.__antContext, portCloses: item.portCloses
+      index: item.index, contextMatches: item.context === window.__antContext, portCloses: item.portCloses,
+      outputChannelCount: item.outputChannelCount, outputGainNodeCount: item.outputGainNodes.length
     })),
     freshStrikes: window.__physicalAudioProbe.workletMessages.filter(item => item.name === 'plate-processor'
       && item.message?.type === 'strike' && item.index === window.__physicalAudioProbe.worklets
@@ -693,6 +809,8 @@ async function verifyAntAudioToggle(page, audioButton) {
   await assertAntOutputGain(page, .35);
   assert.equal(reenabled.plateWorklets.length, 2, 're-enabling creates a fresh Plate worklet after the previous one closes');
   assert.ok(reenabled.plateWorklets.every(item => item.contextMatches));
+  assert.deepEqual(reenabled.plateWorklets[1].outputChannelCount, [2], 're-enabled ANT creates a stereo Plate worklet');
+  assert.equal(reenabled.plateWorklets[1].outputGainNodeCount, 1);
   assert.ok(reenabled.freshStrikes > 0, 're-enabled Plate worklet receives fresh STEP strikes');
   assert.ok(reenabled.plateWorklets[0].portCloses > 0, 'the prior Plate worklet was closed before re-enabling');
   assert.ok(reenabled.plateWorklets[1].portCloses === 0);
@@ -732,15 +850,17 @@ async function verifyBrowser(baseUrl) {
   await page.addInitScript(probeSource);
   await page.goto(baseUrl, { waitUntil: 'networkidle' });
   if (useProduction) {
-    await page.waitForFunction(() => document.querySelector('#state-json')?.textContent.includes('"model": "string"'));
+    await page.waitForFunction(() => document.querySelector('#state-json')?.textContent.includes('"model": "ant"'));
   } else {
     await page.evaluate(async () => { const { app } = await import('/src/main.js'); await app.ready; });
   }
   await page.locator('#simulation-canvas').waitFor({ state: 'visible' });
 
-  assert.equal((await readState(page)).model, 'string');
+  assert.equal((await readState(page)).model, 'ant', 'the demo opens directly on ANT');
+  const initialNav = await page.locator('nav button[data-model]').evaluateAll(buttons => buttons.map(button => button.textContent.trim()));
+  assert.deepEqual(initialNav, ['ANT', 'String', 'Plate', 'Sphere']);
   assert.equal(await page.evaluate(() => window.__physicalAudioProbe.audioContexts.length), 0,
-    'initial String selection does not initialize Web Audio before interaction');
+    'initial ANT selection does not initialize Web Audio before interaction');
   await verifyAnt(page, requestedUrls);
   assert.equal((await readState(page)).model, 'string', 'ANT verification returns to the String instrument');
   await verifyDocumentPresentation(page);
@@ -778,6 +898,9 @@ async function verifyBrowser(baseUrl) {
   await page.locator('[data-action="strike"]').click();
   await page.waitForFunction(() => window.__physicalAudioProbe.worklets.some(item => item.name === 'plate-processor'));
   await page.waitForFunction(() => window.__physicalAudioProbe.workletRms.some(item => item.name === 'plate-processor' && item.rms > 1e-7), null, { timeout: 8000 });
+  const standalonePlateOutput = await page.evaluate(() => window.__physicalAudioProbe.worklets
+    .filter(item => item.name === 'plate-processor' && item.portCloses === 0).at(-1)?.outputChannelCount);
+  assert.deepEqual(standalonePlateOutput, [1], 'the standalone Plate demo remains mono');
   assert.deepEqual((await readState(page)).pickup.position, movedPickup, 'plate strike leaves pickup unchanged');
   await mkdir('test-results', { recursive: true });
   await page.screenshot({ path: 'test-results/plate.png', fullPage: true });
@@ -792,6 +915,9 @@ async function verifyBrowser(baseUrl) {
   await page.locator('[data-action="strike"]').click();
   await page.waitForFunction(() => window.__physicalAudioProbe.worklets.some(item => item.name === 'sphere-processor'));
   await page.waitForFunction(() => window.__physicalAudioProbe.workletRms.some(item => item.name === 'sphere-processor' && item.rms > 1e-7), null, { timeout: 8000 });
+  const sphereOutput = await page.evaluate(() => window.__physicalAudioProbe.worklets
+    .filter(item => item.name === 'sphere-processor' && item.portCloses === 0).at(-1)?.outputChannelCount);
+  assert.deepEqual(sphereOutput, [1], 'the Sphere model remains mono');
   await page.locator('[data-action="pickup"]').click();
   await clickCanvas(page, .5, .5);
   const sphereState = await readState(page);

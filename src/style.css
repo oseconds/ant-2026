@@ -18,6 +18,7 @@ main {
 }
 
 h1, h2, h3 { line-height: 1.25; }
+h1 { margin: .4rem 0 .75rem; font-size: 1.15rem; font-weight: normal; }
 nav button { margin: 0 .5rem .5rem 0; }
 nav button[aria-pressed="true"] { font-weight: bold; }
 hr { border: 0; border-top: 1px solid #bbb; margin: 1.5rem 0; }
@@ -52,6 +53,16 @@ th { font-weight: normal; }
 thead th { font-weight: bold; }
 #analysis th, #buffer-metrics th { min-width: 9rem; }
 #pattern-table th, #pattern-table td { padding-right: 2rem; }
+
+#status { margin: .25rem 0; color: #6b6b6b; font-size: .875rem; }
+#status:empty { margin: 0; }
+#status[data-status="loading"] { color: #745d00; }
+#status[data-status="error"] { color: #9b1c1c; font-weight: bold; }
+#state-details { color: #6b6b6b; font-size: .875rem; }
+#state-json { font-size: .8rem; }
+.ant-audio-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin: .5rem 0; }
+.ant-audio-controls input[type="range"] { width: 10rem; max-width: 100%; }
+#ant-diagnostics { margin: .25rem 0; color: #555; font-size: .9rem; font-variant-numeric: tabular-nums; }
 
 #buffer-detail { width: 100%; height: 190px; }
 #buffer-overview { width: 100%; height: 170px; }

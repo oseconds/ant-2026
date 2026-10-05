@@ -122,18 +122,13 @@ export const documentViews = {
 
   ant: `
     <h2 id="model-title"></h2>
-    <p id="model-description"></p>
-    ${scene('작은 점은 동등한 개미, 옅은 회색은 모두가 남긴 페로몬 흔적입니다.')}
-    <p id="interaction-hint"></p>
-    <p><button type="button" data-action="ant-audio" aria-pressed="false">Audio Off</button>
+    <figure>
+      <div id="scene" class="scene"></div>
+    </figure>
+    <div data-audio-status></div>
+    <p class="ant-audio-controls"><button type="button" data-action="ant-audio" aria-pressed="false">Audio Off</button>
       <label for="ant-volume">Volume</label>
       <input id="ant-volume" type="range" data-action="ant-volume" min="0" max="100" step="1" value="100">
       <output id="ant-volume-value" for="ant-volume">100%</output></p>
-    ${analysis('개체와 공유 흔적')}
-    <details id="model-notes">
-      <summary>공유 기억과 국소 상호작용</summary>
-      <p>페로몬은 이동한 거리에 비례해 쌓이고 시간에 따라 줄어듭니다. 각 개미의 탐색 성향과 흔적 감도는 유지되며, 강한 흔적은 선택 확률을 높입니다.</p>
-      <p>가까운 몸체는 서로 밀어내고, 앞이 붐비면 감속하거나 더 여유 있는 방향으로 부드럽게 돌아갑니다. 페로몬의 유인과 몸체의 점유는 별도로 계산합니다.</p>
-      <p>리더나 복사본 역할은 없습니다. 경로의 강화·이탈·분기·합류는 각 개체의 국소적인 선택에서 나타납니다.</p>
-    </details>`
+    <p id="ant-diagnostics" aria-label="Live ANT diagnostics"></p>`
 };
