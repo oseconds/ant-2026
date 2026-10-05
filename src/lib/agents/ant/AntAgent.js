@@ -35,31 +35,42 @@ export class AntAgent {
   /** Keep directional intent smooth while allowing deliberate, slow changes. */
   turnToward(targetHeading, dtSeconds) {
     const error = angleDelta(this.heading, targetHeading);
-    this.angularVelocity += clamp(error * this.personality.turnResponsiveness - this.angularVelocity * 1.35,
-      -5, 5) * dtSeconds;
-    this.angularVelocity = clamp(this.angularVelocity, -2.2, 2.2);
-    this.heading = wrapAngle(this.heading + this.angularVelocity * dtSeconds);
+    const maxTurnRate = 6.5; // rad/s
+
+    const turn = clamp(
+      error,
+      -maxTurnRate * dtSeconds,
+      maxTurnRate * dtSeconds
+    );
+
+    this.heading = wrapAngle(this.heading + turn);
+    this.angularVelocity = dtSeconds > 0 ? turn / dtSeconds : 0;
   }
 
   accelerateToward(speed, dtSeconds) {
     const desiredX = Math.cos(this.heading) * speed;
     const desiredY = Math.sin(this.heading) * speed;
-    const acceleration = this.personality.acceleration;
-    const damping = this.personality.damping;
-    let ax = (desiredX - this.vx) * 2 - this.vx * damping * 0.15;
-    let ay = (desiredY - this.vy) * 2 - this.vy * damping * 0.15;
-    const accelerationMagnitude = Math.hypot(ax, ay);
-    if (accelerationMagnitude > acceleration) {
-      ax *= acceleration / accelerationMagnitude;
-      ay *= acceleration / accelerationMagnitude;
-    }
-    this.vx += ax * dtSeconds;
-    this.vy += ay * dtSeconds;
-    const maxSpeed = this.personality.preferredSpeed * 1.35;
+
     const currentSpeed = Math.hypot(this.vx, this.vy);
-    if (currentSpeed > maxSpeed) {
-      this.vx *= maxSpeed / currentSpeed;
-      this.vy *= maxSpeed / currentSpeed;
+
+    const accelerationResponse = 12;
+    const brakeResponse = 32;
+
+    const response =
+      speed < currentSpeed
+        ? brakeResponse
+        : accelerationResponse;
+    const blend = 1 - Math.exp(-response * dtSeconds);
+
+    this.vx += (desiredX - this.vx) * blend;
+    this.vy += (desiredY - this.vy) * blend;
+
+    const maxSpeed = this.personality.preferredSpeed * 1.35;
+    const nextSpeed = Math.hypot(this.vx, this.vy);
+
+    if (nextSpeed > maxSpeed) {
+      this.vx *= maxSpeed / nextSpeed;
+      this.vy *= maxSpeed / nextSpeed;
     }
   }
 

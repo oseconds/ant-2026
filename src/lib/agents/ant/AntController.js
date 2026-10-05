@@ -224,9 +224,18 @@ export class AntController {
       const separationMagnitude = Math.hypot(info.separationX, info.separationY);
       // Keep the current forward motion while the three local bands make small
       // corrections. Nearby bodies still constrain steering and contact.
-      const localTurn = clamp(localTrails[index].steering * (0.35 + 0.65 * agent.trailAdherence)
-        - agent.angularVelocity * LOCAL_TURN_DAMPING * agent.trailAdherence,
-        -LOCAL_STEERING_LIMIT, LOCAL_STEERING_LIMIT);
+      const steeringAngularVelocity = clamp(
+        agent.angularVelocity,
+        -2.2,
+        2.2
+      );
+
+      const localTurn = clamp(
+        localTrails[index].steering * (0.35 + 0.65 * agent.trailAdherence)
+        - steeringAngularVelocity * LOCAL_TURN_DAMPING * agent.trailAdherence,
+        -LOCAL_STEERING_LIMIT,
+        LOCAL_STEERING_LIMIT
+      );
       let targetHeading = blendAngle(agent.intentHeading, agent.heading,
         agent.trailAdherence * ADHERENCE_HEADING_WEIGHT)
         + localTurn;
@@ -453,8 +462,10 @@ export class AntController {
     }));
     // Balance the whole cross-section instead of aiming at an argmax point.
     const balance = (right - left) / (left + center + right + 1e-9);
-    return { left, center, right, strength, coherence,
-      steering: LOCAL_STEERING_LIMIT * balance * strength };
+    return {
+      left, center, right, strength, coherence,
+      steering: LOCAL_STEERING_LIMIT * balance * strength
+    };
   }
 
   updateTrailAdherence(agent, localTrail, dt) {
