@@ -35,7 +35,7 @@ export class AntAgent {
   /** Keep directional intent smooth while allowing deliberate, slow changes. */
   turnToward(targetHeading, dtSeconds) {
     const error = angleDelta(this.heading, targetHeading);
-    const maxTurnRate = 6.5; // rad/s
+    const maxTurnRate = 4.5; // rad/s
 
     const turn = clamp(
       error,
@@ -53,8 +53,8 @@ export class AntAgent {
 
     const currentSpeed = Math.hypot(this.vx, this.vy);
 
-    const accelerationResponse = 12;
-    const brakeResponse = 32;
+    const accelerationResponse = 32;
+    const brakeResponse = 37;
 
     const response =
       speed < currentSpeed
