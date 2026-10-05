@@ -2,6 +2,7 @@ import { AntAgent } from './AntAgent.js';
 import { LocalOccupancy } from './LocalOccupancy.js';
 import { PheromoneField } from './PheromoneField.js';
 import { GaitController } from './GaitController.js';
+import { BodyPoseController } from './BodyPoseController.js';
 
 const STEP_MS = 1000 / 60;
 const MAX_FRAME_GAP_MS = 100;
@@ -50,7 +51,7 @@ const DEFAULT_STATE = Object.freeze({
 /** Framework independent population and shared-environment simulation. */
 export class AntController {
   constructor({ state, random = Math.random, fieldFactory = (options) => new PheromoneField(options),
-    gaitController = new GaitController(), audioBridge = null } = {}) {
+    gaitController = new GaitController(), bodyPoseController = new BodyPoseController(), audioBridge = null } = {}) {
     this.state = normalizeState(state || {});
     this.random = random;
     this.fieldFactory = fieldFactory;
@@ -69,6 +70,7 @@ export class AntController {
     this.field = null;
     this.occupancy = new LocalOccupancy();
     this.gaitController = gaitController;
+    this.bodyPoseController = bodyPoseController;
     this.audioBridge = audioBridge;
   }
 
@@ -88,7 +90,8 @@ export class AntController {
   getSnapshot() {
     const agents = this.agents.map((agent) => ({
       ...agent.getSnapshot(),
-      gait: this.gaitController.getSnapshot(agent)
+      gait: this.gaitController.getSnapshot(agent),
+      bodyPose: this.bodyPoseController.getSnapshot(agent)
     }));
     const field = this.field?.getSnapshot() || { width: 0, height: 0, values: new Float32Array(), maxValue: 0, totalMass: 0 };
     let speedTotal = 0;
@@ -152,6 +155,7 @@ export class AntController {
     this.totalRetired += this.agents.length - retainedCount;
     this.agents.length = retainedCount;
     this.gaitController.retain?.(this.agents.map(agent => agent.id));
+    this.bodyPoseController.retain(this.agents.map(agent => agent.id));
     for (const agent of this.agents) agent.radius = this.state.behavior.bodyRadius;
     if (this.agents.length >= this.state.population.count) {
       this.nextSpawnTimeMs = null;
@@ -206,6 +210,7 @@ export class AntController {
     this.lastFrameTimestamp = null;
     this.accumulatorMs = 0;
     this.gaitController.reset?.();
+    this.bodyPoseController.reset();
     await this.audioBridge?.destroy();
   }
 
@@ -297,6 +302,7 @@ export class AntController {
       // Observe final travel, including collision braking. No audio operation
       // contributes to movement, its random stream, or the shared trail field.
       const observedAgent = { ...agent, x: to.x, y: to.y };
+      this.bodyPoseController.advance(observedAgent, dt);
       const contacts = this.gaitController.advance(observedAgent, travelled, dt,
         this.simulationTimeMs + dt * 1000, { from, to });
       for (const event of contacts) {
@@ -316,6 +322,7 @@ export class AntController {
       this.agents = survivors;
       this.totalRetired += retiredCount;
       this.gaitController.retain?.(survivors.map(agent => agent.id));
+      this.bodyPoseController.retain(survivors.map(agent => agent.id));
     }
     this.simulationTimeMs += dt * 1000;
     if (retiredCount && this.agents.length < this.state.population.count && this.nextSpawnTimeMs === null) {

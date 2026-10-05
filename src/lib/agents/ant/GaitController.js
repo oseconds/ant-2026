@@ -163,6 +163,8 @@ function calculateLegGeometry(agent, phase) {
 
   // 앞 / 중간 / 뒤 다리의 몸통 부착 위치
   const rootOffsets = [0.45, 0.0, -0.45];
+  // Hide each attachment beneath the thorax silhouette; the fore/aft roots stay put.
+  const rootAcross = [0.30, 0.34, 0.32];
 
   // 앞 / 중간 / 뒤 다리의 기본 앞뒤 foot 위치
   const footOffsets = [1.95, 0.0, -2.00];
@@ -173,13 +175,13 @@ function calculateLegGeometry(agent, phase) {
 
   // knee가 root→foot 선분 상에서 놓일 비율
   // 앞다리는 조금 root 쪽, 뒷다리는 조금 foot 쪽
-  const kneeAlong = [0.34, 0.50, 0.66];
+  const kneeAlong = [0.32, 0.44, 0.54];
 
   // knee를 바깥으로 얼마나 밀지
-  const kneeOutwardBySegment = [0.56, 0.60, 0.58];
+  const kneeOutwardBySegment = [0.50, 0.56, 0.52];
 
   // 앞다리는 약간 앞으로, 뒷다리는 약간 뒤로 bias
-  const kneeForeAftBias = [0.16, 0.0, -0.16];
+  const kneeForeAftBias = [0.14, 0.0, -0.14];
 
   return LEGS.map(({ id, side, segment, tripod }) => {
     const legPhase = positiveModulo(
@@ -219,7 +221,7 @@ function calculateLegGeometry(agent, phase) {
       forward,
       lateral,
       rootOffsets[segment] * radius,
-      side * 0.42 * radius
+      side * rootAcross[segment] * radius
     );
 
     const foot = localPoint(

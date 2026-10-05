@@ -11,6 +11,7 @@ export { AntRenderer } from './renderers/AntRenderer.js';
 export { AntController } from './agents/ant/AntController.js';
 export { StepEventGenerator } from './agents/ant/StepEventGenerator.js';
 export { GaitController } from './agents/ant/GaitController.js';
+export { BodyPoseController, BODY_GEOMETRY, BODY_POSE_LIMITS } from './agents/ant/BodyPoseController.js';
 export { AntAgent } from './agents/ant/AntAgent.js';
 export { PheromoneField } from './agents/ant/PheromoneField.js';
 export { LocalOccupancy } from './agents/ant/LocalOccupancy.js';

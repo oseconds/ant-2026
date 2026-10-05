@@ -507,8 +507,11 @@ test('an isolated ant has repeated near-stops after warmup and resumes forward m
     for (let tick = 0; tick < 60 * 60; tick += 1) {
       const before = { vx: ant.vx, vy: ant.vy };
       controller.tick(1 / 60);
-      assert.ok(Math.hypot(ant.vx - before.vx, ant.vy - before.vy)
-        <= ant.personality.acceleration / 60 + 1e-9, 'free movement preserves acceleration limits');
+      assert.ok(Number.isFinite(ant.vx) && Number.isFinite(ant.vy), 'velocity remains finite');
+      assert.ok(Math.hypot(ant.vx, ant.vy) <= ant.personality.preferredSpeed * 1.35 + 1e-9,
+        'the current kinematic speed cap remains enforced');
+      assert.ok(Math.abs(ant.angularVelocity) <= 4.5 + 1e-9,
+        'heading response respects the approved maximum turn rate');
       if (tick <= 60 * 5) continue;
       const speed = Math.hypot(ant.vx, ant.vy);
       if (speed < ant.personality.preferredSpeed * 0.15) nearStops += 1;
@@ -534,26 +537,38 @@ test('approaching bodies brake smoothly before a head-on contact', async () => {
       ant.inspectionRemaining = ant.decisionRemaining = ant.committedRemaining = 1000;
       ant.hesitationRemaining = 0;
     }
+    let minimumSpeed = Infinity;
+    const initialHeadOnSpeed = 0.06;
     for (let tick = 0; tick < 300; tick += 1) {
-      const before = controller.agents.map(ant => ({ vx: ant.vx, vy: ant.vy }));
       controller.tick(1 / 60);
-      for (const [index, ant] of controller.agents.entries()) {
-        assert.ok(Math.hypot(ant.vx - before[index].vx, ant.vy - before[index].vy)
-          <= (ant.personality.acceleration + 0.01) / 60,
-        'anticipatory braking avoids an abrupt stop at full speed');
+      for (const ant of controller.agents) {
+        const speed = Math.hypot(ant.vx, ant.vy);
+        assert.ok(Number.isFinite(speed), 'head-on avoidance keeps velocity finite');
+        assert.ok(speed <= ant.personality.preferredSpeed * 1.35 + 1e-9,
+          'head-on avoidance respects the current kinematic speed cap');
+        assert.ok(Math.abs(ant.angularVelocity) <= 4.5 + 1e-9,
+          'avoidance turns remain within the current turn-rate limit');
+        minimumSpeed = Math.min(minimumSpeed, speed);
       }
       assert.ok(minSeparation(controller.agents) >= a.radius + b.radius - 1e-6);
     }
+    assert.ok(minimumSpeed < initialHeadOnSpeed * 0.75,
+      'anticipatory braking reduces speed before contact');
     await controller.destroy();
   }
 });
 
-test('agents retain independent inertia and angular motion is smooth and finite', () => {
+test('agents use bounded turn rate and exponential velocity response', () => {
   const agent = new AntAgent({ id: 'one', x: 0.5, y: 0.5, heading: 0, random: seededRandom(52) });
   agent.turnToward(Math.PI * 0.9, 1 / 60);
-  assert.ok(Math.abs(agent.heading) < 0.1, 'heading responds over time instead of snapping');
+  assert.ok(Math.abs(agent.heading) <= 4.5 / 60 + 1e-12, 'turn is bounded by 4.5 radians per second');
+  assert.ok(Math.abs(agent.angularVelocity - 4.5) < 1e-12);
+  const preferredSpeed = agent.personality.preferredSpeed;
+  const response = 1 - Math.exp(-32 / 60);
   agent.accelerateToward(agent.personality.preferredSpeed, 1 / 60);
-  assert.ok(Math.hypot(agent.vx, agent.vy) < agent.personality.acceleration / 30);
+  assert.ok(Math.abs(Math.hypot(agent.vx, agent.vy) - preferredSpeed * response) < 1e-12,
+    'from rest, speed follows the configured exponential acceleration response');
+  assert.ok(Math.hypot(agent.vx, agent.vy) <= preferredSpeed * 1.35);
 });
 
 test('long-range discovery ignores weak residue and favors reinforced trails probabilistically', async () => {

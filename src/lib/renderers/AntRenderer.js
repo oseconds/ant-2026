@@ -1,8 +1,4 @@
-import { ANT_MAX_TURN_RATE } from '../agents/ant/AntAgent.js';
-
-const HEAD_YAW_MAX = 0.23;
-const GASTER_YAW_MAX = 0.12;
-const HEAD_PIVOT_X = 0.54;
+import { BODY_GEOMETRY } from '../agents/ant/BodyPoseController.js';
 
 /**
  * p5 instance-mode view for the ANT experiment.
@@ -192,7 +188,7 @@ function drawSnapshot(p, snapshot, renderer) {
     p.image(image, 0, 0, width, height);
   }
 
-  const diameterScale = Math.min(width, height) * 2;
+  const diameterScale = Math.min(width, height) * BODY_GEOMETRY.radiusScale;
   for (const agent of snapshot?.agents || []) {
     if (!isPoint(agent)) continue;
     drawAnt(p, agent, width, height, diameterScale);
@@ -224,20 +220,17 @@ function drawAnt(p, agent, width, height, diameterScale) {
   }
 
   const r = radius * diameterScale;
-  const turnSignal = clamp(
-    Number.isFinite(agent.angularVelocity) ? agent.angularVelocity / ANT_MAX_TURN_RATE : 0,
-    -1,
-    1
-  );
-  const headYaw = turnSignal * HEAD_YAW_MAX;
-  const gasterYaw = -turnSignal * GASTER_YAW_MAX;
+  const pose = agent.bodyPose;
+  const headYaw = Number.isFinite(pose?.headYaw) ? pose.headYaw : 0;
+  const gasterYaw = Number.isFinite(pose?.gasterYaw) ? pose.gasterYaw : 0;
+  const antennae = pose?.antennae || null;
 
   // ----------------------------
   // LEGS
   // gait geometry 그대로 그림
   // ----------------------------
-  p.stroke(70);
-  p.strokeWeight(Math.max(0.55, r * 0.075));
+  p.stroke(65);
+  p.strokeWeight(Math.max(0.45, r * 0.06));
   p.strokeCap(p.ROUND);
   p.strokeJoin(p.ROUND);
   p.noFill();
@@ -263,7 +256,7 @@ function drawAnt(p, agent, width, height, diameterScale) {
   }
 
   p.noStroke();
-  p.fill(70);
+  p.fill(65);
 
   for (const leg of legs) {
     if (!isPointLike(leg.knee)) continue;
@@ -288,28 +281,29 @@ function drawAnt(p, agent, width, height, diameterScale) {
   p.noStroke();
   p.fill(28);
   // petiole
-  p.ellipse(-0.90 * r, 0, 0.28 * r, 0.22 * r); // petiole
+  p.ellipse(BODY_GEOMETRY.gasterPivotX * r, 0, 0.28 * r, 0.22 * r); // petiole
   // thorax
   p.ellipse(0, 0, 1.05 * r, 0.70 * r); // thorax
   // head
-  drawHead(p, r, headYaw);
+  drawHead(p, r, headYaw, antennae);
 
   p.pop();
 }
 
 function drawGaster(p, r, yaw) {
   p.push();
-  p.translate(-0.90 * r, 0); // petiole 연결점 근처를 축으로 반대 방향으로 살짝 늦춥니다.
+  p.translate(BODY_GEOMETRY.gasterPivotX * r, 0); // shared pivot for the body pose and secretion point.
   p.rotate(yaw);
   p.noStroke();
   p.fill(28);
-  p.ellipse(-0.45 * r, 0, 1.60 * r, 1.02 * r);
+  p.ellipse(BODY_GEOMETRY.gasterCenterX * r, 0,
+    BODY_GEOMETRY.gasterHalfLength * 2 * r, 1.02 * r);
   p.pop();
 }
 
-function drawHead(p, r, yaw) {
+function drawHead(p, r, yaw, antennae) {
   p.push();
-  p.translate(HEAD_PIVOT_X * r, 0); // thorax 앞쪽을 축으로 head와 antennae를 함께 움직입니다.
+  p.translate(BODY_GEOMETRY.headPivotX * r, 0); // thorax 앞쪽을 축으로 head and antennae together.
   p.rotate(yaw);
   p.stroke(85);
   p.strokeWeight(Math.max(0.35, r * 0.055));
@@ -322,15 +316,21 @@ function drawHead(p, r, yaw) {
   // 길게 뻗었다가 살짝 꺾이는 느낌
   // 얇은 두 분절을 head-local 좌표로 그려, 긴 형태는 유지하고 회전만 따라가게 합니다.
   // ----------------------------
-  const rootX = (1.28 - HEAD_PIVOT_X) * r;
-  const elbowX = (1.85 - HEAD_PIVOT_X) * r;
-  const tipX = (2.45 - HEAD_PIVOT_X) * r;
-  // left antenna
-  p.line(rootX, -0.23 * r, elbowX, -0.42 * r);
-  p.line(elbowX, -0.42 * r, tipX, -0.68 * r);
-  // right antenna
-  p.line(rootX, 0.23 * r, elbowX, 0.42 * r);
-  p.line(elbowX, 0.42 * r, tipX, 0.68 * r);
+  const rootX = (1.28 - BODY_GEOMETRY.headPivotX) * r;
+  const elbowBaseX = (1.85 - BODY_GEOMETRY.headPivotX) * r;
+  const tipBaseX = (2.45 - BODY_GEOMETRY.headPivotX) * r;
+  const left = antennaEngagement(antennae?.left);
+  const right = antennaEngagement(antennae?.right);
+  const drawAntenna = (side, engagement) => {
+    const spread = side * (0.42 + 0.055 * engagement) * r;
+    const tipSpread = side * (0.68 + 0.095 * engagement) * r;
+    const elbowX = elbowBaseX + 0.045 * engagement * r;
+    const tipX = tipBaseX + 0.12 * engagement * r;
+    p.line(rootX, side * 0.23 * r, elbowX, spread);
+    p.line(elbowX, spread, tipX, tipSpread);
+  };
+  drawAntenna(-1, left);
+  drawAntenna(1, right);
 
   // ----------------------------
   // BODY
@@ -340,7 +340,7 @@ function drawHead(p, r, yaw) {
   // ----------------------------
   p.noStroke();
   p.fill(28);
-  p.ellipse((1.09 - HEAD_PIVOT_X) * r, 0, 1.08 * r, 0.86 * r);
+  p.ellipse((1.09 - BODY_GEOMETRY.headPivotX) * r, 0, 1.08 * r, 0.86 * r);
   p.pop();
 }
 
@@ -383,6 +383,10 @@ function smoothstep(min, max, value) {
 
 function isPoint(value) {
   return value && Number.isFinite(value.x) && Number.isFinite(value.y);
+}
+
+function antennaEngagement(value) {
+  return Number.isFinite(value) ? clamp(value, 0, 1) : 0;
 }
 
 function clamp(value, min, max) {

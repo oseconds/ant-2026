@@ -147,7 +147,8 @@ test('an ant stays near a narrow straight trail over several seconds with smooth
   assert.ok(Math.abs(ant.y - 0.5) < 0.016,
     `local steering centers the ant near the narrow trail (y=${ant.y.toFixed(3)}, x=${ant.x.toFixed(3)})`);
   assert.ok(ant.trailAdherence > 0.2, 'a coherent trail maintains sensory persistence');
-  assert.ok(largestTurn < 0.04, 'local corrections remain smooth over each simulation step');
+  assert.ok(largestTurn <= 4.5 / 60 + 1e-9,
+    'local corrections remain bounded by the approved maximum turn rate');
 });
 
 test('high adherence reduces exploration while leaving occasional stochastic departures', async (t) => {

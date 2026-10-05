@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { AntRenderer, pheromoneValueToAlpha } from '../src/lib/renderers/AntRenderer.js';
-import { ANT_MAX_TURN_RATE, AntAgent } from '../src/lib/agents/ant/AntAgent.js';
+import { AntAgent } from '../src/lib/agents/ant/AntAgent.js';
+import { BODY_GEOMETRY } from '../src/lib/agents/ant/BodyPoseController.js';
 import { GaitController } from '../src/lib/agents/ant/GaitController.js';
 
 test('AntRenderer paints equal agent marks and a cached pheromone field without changing the snapshot', async () => {
@@ -87,9 +88,16 @@ test('articulated ants draw snapshot gait legs and a four-part body without muta
   await renderer.destroy();
 });
 
-test('turn-only head lead and opposing gaster lag are smooth, mirrored, and clamped', async () => {
+test('renderer uses the detached smoothed body pose instead of raw angular velocity', async () => {
   const turnSnapshots = [];
-  for (const angularVelocity of [0, 2.25, -2.25, 100, -100]) {
+  const cases = [
+    { angularVelocity: 0, headYaw: 0.1, gasterYaw: -0.06 },
+    { angularVelocity: 2.25, headYaw: 0.1, gasterYaw: -0.06 },
+    { angularVelocity: -2.25, headYaw: 0.1, gasterYaw: -0.06 },
+    { angularVelocity: 100, headYaw: -0.1, gasterYaw: 0.06 },
+    { angularVelocity: -100, headYaw: -0.1, gasterYaw: 0.06 }
+  ];
+  for (const { angularVelocity, headYaw, gasterYaw } of cases) {
     const calls = [];
     const parent = makeParent();
     const canvas = makeCanvas(parent);
@@ -99,7 +107,10 @@ test('turn-only head lead and opposing gaster lag are smooth, mirrored, and clam
 
     const ant = new AntAgent({ id: 'ant-articulation', x: 0.4, y: 0.6, heading: 0.7, random: () => 0.5 });
     ant.angularVelocity = angularVelocity;
-    const agentSnapshot = { ...ant.getSnapshot(), gait: new GaitController().getSnapshot(ant) };
+    const agentSnapshot = { ...ant.getSnapshot(),
+      bodyPose: { turnSignal: 0.5, headYaw, gasterYaw, antennae: { left: 0.8, right: 0.2 },
+        gasterRear: { x: 0.3, y: 0.6 } },
+      gait: new GaitController().getSnapshot(ant) };
     const stateBeforeDraw = structuredClone(agentSnapshot);
     const movementBeforeDraw = {
       x: ant.x, y: ant.y, vx: ant.vx, vy: ant.vy,
@@ -108,11 +119,12 @@ test('turn-only head lead and opposing gaster lag are smooth, mirrored, and clam
     renderer.render({ agents: [agentSnapshot], pheromone: { width: 0, height: 0, values: new Float32Array() } });
 
     const rotations = calls.filter(([name]) => name === 'rotate').map(([, angle]) => angle);
-    const signal = Math.max(-1, Math.min(1, angularVelocity / ANT_MAX_TURN_RATE));
     assert.equal(rotations.length, 3, 'thorax frame, gaster joint, and head joint each rotate once');
     assert.ok(Math.abs(rotations[0] - ant.heading) < 1e-12, 'the thorax remains on agent.heading');
-    assert.ok(Math.abs(rotations[1] - -signal * 0.12) < 1e-12, 'the gaster lags in the opposite direction');
-    assert.ok(Math.abs(rotations[2] - signal * 0.23) < 1e-12, 'the head leads with a bounded yaw');
+    assert.ok(Math.abs(rotations[1] - gasterYaw) < 1e-12, 'the gaster consumes the model pose');
+    assert.ok(Math.abs(rotations[2] - headYaw) < 1e-12, 'the head consumes the model pose');
+    assert.equal(Math.abs(rotations[2]) <= .12, true, 'the model pose stays within the subtler head range');
+    assert.equal(Math.abs(rotations[1]) <= .08, true, 'the model pose stays within the subtler gaster range');
     assert.deepEqual(agentSnapshot, stateBeforeDraw, 'rendering leaves the snapshot and leg geometry unchanged');
     assert.deepEqual({ x: ant.x, y: ant.y, vx: ant.vx, vy: ant.vy,
       heading: ant.heading, angularVelocity: ant.angularVelocity }, movementBeforeDraw,
@@ -120,10 +132,44 @@ test('turn-only head lead and opposing gaster lag are smooth, mirrored, and clam
     const headRotationIndex = calls.findIndex(([name, angle]) => name === 'rotate' && Math.abs(angle - rotations[2]) < 1e-12);
     assert.equal(calls.slice(headRotationIndex + 1).filter(([name]) => name === 'line').length, 4,
       'all four antenna segments are drawn in the head-local transform');
-    turnSnapshots.push(calls.filter(([name]) => name === 'line').slice(0, 12));
+    const lines = calls.filter(([name]) => name === 'line');
+    turnSnapshots.push({ legs: lines.slice(0, 12), antennae: lines.slice(12) });
     await renderer.destroy();
   }
-  assert.deepEqual(turnSnapshots[0], turnSnapshots[1], 'head articulation does not rotate or rewrite gait leg geometry');
+  assert.deepEqual(turnSnapshots[0].legs, turnSnapshots[1].legs,
+    'head articulation does not rotate or rewrite gait leg geometry');
+  assert.deepEqual(turnSnapshots[0].antennae, turnSnapshots[1].antennae,
+    'raw angular-velocity changes do not alter antenna geometry when the pose stays fixed');
+  assert.deepEqual(turnSnapshots[3].antennae, turnSnapshots[4].antennae,
+    'opposite raw turn values do not alter a shared detached antenna pose');
+});
+
+test('antenna engagement changes only its own antenna and remains in the articulated head frame', async () => {
+  const getAntennaLines = async (antennae) => {
+    const calls = [];
+    const canvas = makeCanvas(makeParent());
+    canvas.getBoundingClientRect = () => ({ width: 240, height: 240 });
+    const renderer = new AntRenderer(canvas, { loadP5: async () => ({ default: makeP5(calls) }) });
+    await renderer.init();
+    const ant = movingAnt('ant-antenna-posture', .5, .5, 0);
+    const gait = new GaitController();
+    renderer.render({ agents: [{ ...ant, bodyPose: { headYaw: 0, gasterYaw: 0, antennae },
+      gait: gait.getSnapshot(ant) }], pheromone: { width: 0, height: 0, values: new Float32Array() } });
+    const lines = calls.filter(([name]) => name === 'line').slice(12);
+    await renderer.destroy();
+    return lines;
+  };
+
+  const neutral = await getAntennaLines({ left: 0, right: 0 });
+  const leftActive = await getAntennaLines({ left: 1, right: 0 });
+  const rightActive = await getAntennaLines({ left: 0, right: 1 });
+  assert.equal(neutral.length, 4);
+  assert.ok(leftActive[1][3] > neutral[1][3] && leftActive[1][4] < neutral[1][4],
+    'left engagement subtly extends and opens only the left tip');
+  assert.deepEqual(leftActive.slice(2), neutral.slice(2), 'left engagement leaves the right antenna unchanged');
+  assert.ok(rightActive[3][3] > neutral[3][3] && rightActive[3][4] > neutral[3][4],
+    'right engagement mirrors the subtle extension and spread');
+  assert.deepEqual(rightActive.slice(0, 2), neutral.slice(0, 2), 'right engagement leaves the left antenna unchanged');
 });
 
 test('destroy cancels initialization while the p5 module is still loading', async () => {
