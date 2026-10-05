@@ -1,0 +1,397 @@
+{
+  "date": "2026-10-05",
+  "codeCommit": "f33fe3173cc063027f778cc541860f44e649d545",
+  "trafficCommit": "8d209a27a7c3c3aa3ce65a147e5bad63ce211a55",
+  "renderer": "Production AntRenderer via Vite/headless Chromium; unchanged default snapshots only.",
+  "scenario": "Default native-model runs: no manually placed agents or pre-deposited trails. Times are simulation seconds.",
+  "curve": "0.5 + 5 * trailAdherence^2",
+  "durationSeconds": 120,
+  "stepSeconds": 0.016666666666666666,
+  "defaults": {
+    "population": 28,
+    "halfLifeSeconds": 3,
+    "amountPerUnitDistance": 4.5,
+    "radius": 0.0045,
+    "reinforcementGain": 5,
+    "reinforcementCurve": "0.5 + configuredGain * trailAdherence^2",
+    "sensorDistance": 0.042,
+    "sensorWidth": 0.014,
+    "bodyRadius": 0.006
+  },
+  "images": [
+    {
+      "file": "seed193-041s.png",
+      "seed": 193,
+      "simulationSeconds": 41,
+      "width": 850,
+      "height": 851,
+      "sha256": "f629b99faa2d592a3f018e25681d70e4615f6fd220e386e4da342d2d9958a438",
+      "sourceArtifact": "test-results/ant-reinforcement-b05-g5-late-search-seed193-temporal-41s.png"
+    },
+    {
+      "file": "seed193-042s.png",
+      "seed": 193,
+      "simulationSeconds": 42,
+      "width": 850,
+      "height": 851,
+      "sha256": "5e01dc2ba8b2fb7f292f946aa5a1428386c28ee0ca4611dbf25ebb0e4f7286bf",
+      "sourceArtifact": "test-results/ant-reinforcement-b05-g5-late-search-seed193-temporal-42s.png"
+    },
+    {
+      "file": "seed193-042p5s.png",
+      "seed": 193,
+      "simulationSeconds": 42.5,
+      "width": 850,
+      "height": 851,
+      "sha256": "08ebd0eb1c8b1abfa425a4f43c3da04fb5afff3cfa2e7b41308a7a3c643ee53b",
+      "sourceArtifact": "test-results/ant-reinforcement-b05-g5-late-search-seed193-temporal-42p5s.png"
+    },
+    {
+      "file": "seed61-120s.png",
+      "seed": 61,
+      "simulationSeconds": 120,
+      "width": 850,
+      "height": 851,
+      "sha256": "b23319366bca007a5409bba4147b14b7afc1ee93ae1fff3650d4c2aacdb992f2",
+      "sourceArtifact": "test-results/ant-reinforcement-b05-g5-seed61-default-120s.png"
+    }
+  ],
+  "lateChainSearch": {
+    "afterSeconds": 30,
+    "windowSeconds": 1,
+    "sampleEverySeconds": 0.5,
+    "minimumConnectedAgents": 3,
+    "edgesRequireDistanceAtMost": 0.06,
+    "directionCosineAtLeast": 0.85,
+    "lateralAtMost": 0.018
+  },
+  "seed193": {
+    "finite": true,
+    "maxSpeed": 0.1010014595460571,
+    "minSweptSurfaceGap": -6.855227972085709E-09,
+    "temporalSequence": [
+      {
+        "seconds": 41,
+        "orderedChain": [
+          {
+            "id": "ant-15",
+            "x": 0.306936242668208,
+            "y": 0.1619973571404866,
+            "vx": 0.040436416778198106,
+            "vy": 0.028042969873224095,
+            "heading": 0.8292491256113017,
+            "trailAdherence": 0.32256116360096176,
+            "nearbyFieldMean": 0.020542683079838753,
+            "nearbyFieldMax": 0.07503513991832733
+          },
+          {
+            "id": "ant-11",
+            "x": 0.2742069211462308,
+            "y": 0.13912185050088108,
+            "vx": 0.0455628832496753,
+            "vy": 0.01789009646476266,
+            "heading": 0.5119984183744801,
+            "trailAdherence": 0.7878614660390625,
+            "nearbyFieldMean": 0.04715215938631445,
+            "nearbyFieldMax": 0.16689307987689972
+          },
+          {
+            "id": "ant-13",
+            "x": 0.23252837188732814,
+            "y": 0.12556135242740052,
+            "vx": 0.044228816148459485,
+            "vy": 0.024040748073863943,
+            "heading": 0.5403391520474958,
+            "trailAdherence": 0.6430350813991942,
+            "nearbyFieldMean": 0.06764356275137591,
+            "nearbyFieldMax": 0.17548896372318268
+          }
+        ],
+        "pairs": [
+          {
+            "ahead": "ant-11",
+            "behind": "ant-13",
+            "distance": 0.043829083681131704,
+            "directionDot": 0.9923552239866388
+          },
+          {
+            "ahead": "ant-15",
+            "behind": "ant-11",
+            "distance": 0.03993115689918836,
+            "directionDot": 0.9731614435013202
+          }
+        ]
+      },
+      {
+        "seconds": 41.5,
+        "orderedChain": [
+          {
+            "id": "ant-15",
+            "x": 0.32397131081676,
+            "y": 0.1770775216101924,
+            "vx": 0.027551399629422754,
+            "vy": 0.030810728670880003,
+            "heading": 1.0959317272436877,
+            "trailAdherence": 0.24870759680166077,
+            "nearbyFieldMean": 0.013285674749770097,
+            "nearbyFieldMax": 0.055558979511260986
+          },
+          {
+            "id": "ant-11",
+            "x": 0.2963642047981753,
+            "y": 0.14983232073489372,
+            "vx": 0.04192130023389726,
+            "vy": 0.023548830838881877,
+            "heading": 0.6203828565411253,
+            "trailAdherence": 0.7449213739902938,
+            "nearbyFieldMean": 0.055782760622807674,
+            "nearbyFieldMax": 0.18449662625789642
+          },
+          {
+            "id": "ant-13",
+            "x": 0.2548871163494623,
+            "y": 0.1382197951782575,
+            "vx": 0.045120908576712866,
+            "vy": 0.025582216285835402,
+            "heading": 0.48601210226198077,
+            "trailAdherence": 0.8281936735497679,
+            "nearbyFieldMean": 0.08170890478262056,
+            "nearbyFieldMax": 0.2797382175922394
+          }
+        ],
+        "pairs": [
+          {
+            "ahead": "ant-11",
+            "behind": "ant-13",
+            "distance": 0.043072028231624884,
+            "directionDot": 0.9999921290142191
+          },
+          {
+            "ahead": "ant-15",
+            "behind": "ant-11",
+            "distance": 0.038787282367507406,
+            "directionDot": 0.9462444767841084
+          }
+        ]
+      },
+      {
+        "seconds": 42,
+        "orderedChain": [
+          {
+            "id": "ant-15",
+            "x": 0.33491686556623257,
+            "y": 0.19307651177674642,
+            "vx": 0.017816278492271735,
+            "vy": 0.03460024657971841,
+            "heading": 1.2985038984274748,
+            "trailAdherence": 0.19943668612176485,
+            "nearbyFieldMean": 0.012795256989193149,
+            "nearbyFieldMax": 0.04415883123874664
+          },
+          {
+            "id": "ant-11",
+            "x": 0.3153709771109929,
+            "y": 0.16195619621244714,
+            "vx": 0.034207339722010996,
+            "vy": 0.024531290220585245,
+            "heading": 0.7334007964612219,
+            "trailAdherence": 0.6208509062189794,
+            "nearbyFieldMean": 0.04507350272292064,
+            "nearbyFieldMax": 0.18612264096736908
+          },
+          {
+            "id": "ant-13",
+            "x": 0.2773248651199752,
+            "y": 0.149945147622018,
+            "vx": 0.044093328415150686,
+            "vy": 0.02061444542275483,
+            "heading": 0.34090523380810467,
+            "trailAdherence": 0.8487633125200785,
+            "nearbyFieldMean": 0.10679335525734739,
+            "nearbyFieldMax": 0.22441451251506805
+          }
+        ],
+        "pairs": [
+          {
+            "ahead": "ant-11",
+            "behind": "ant-13",
+            "distance": 0.039897016503426815,
+            "directionDot": 0.9829716576786449
+          },
+          {
+            "ahead": "ant-15",
+            "behind": "ant-11",
+            "distance": 0.036749364570373734,
+            "directionDot": 0.8901363165177432
+          }
+        ]
+      },
+      {
+        "seconds": 42.5,
+        "orderedChain": [
+          {
+            "id": "ant-15",
+            "x": 0.3413663779940799,
+            "y": 0.2133601793394896,
+            "vx": 0.006451082541009831,
+            "vy": 0.04618700183528201,
+            "heading": 1.7280222770431521,
+            "trailAdherence": 0.15625233110542078,
+            "nearbyFieldMean": 0.013885533863989016,
+            "nearbyFieldMax": 0.03840339556336403
+          },
+          {
+            "id": "ant-11",
+            "x": 0.3300738489323092,
+            "y": 0.173410196715763,
+            "vx": 0.028012221773694553,
+            "vy": 0.023428811827120196,
+            "heading": 0.7443265464102371,
+            "trailAdherence": 0.6237873922171893,
+            "nearbyFieldMean": 0.044903931518395744,
+            "nearbyFieldMax": 0.13478025794029236
+          },
+          {
+            "id": "ant-13",
+            "x": 0.297951464200477,
+            "y": 0.15839916909747803,
+            "vx": 0.03839216059138866,
+            "vy": 0.013796365605791835,
+            "heading": 0.2685320159848992,
+            "trailAdherence": 0.7826523730633009,
+            "nearbyFieldMean": 0.1010056469304901,
+            "nearbyFieldMax": 0.22559517621994019
+          }
+        ],
+        "pairs": [
+          {
+            "ahead": "ant-11",
+            "behind": "ant-13",
+            "distance": 0.035456713765051,
+            "directionDot": 0.9388403568586647
+          }
+        ]
+      }
+    ]
+  },
+  "seed27SearchResult": "No qualifying connected three-ant sequence persisted across the one-second window after 30 seconds.",
+  "seed61At120Seconds": {
+    "simulationTimeMs": 120000.00000001203,
+    "population": 28,
+    "meanSpeed": 0.05976022589339901,
+    "pheromoneMass": 17.77824537713995,
+    "field": {
+      "cellCount": 9216,
+      "positiveCells": 7486,
+      "aboveHalfSaturation035": 41,
+      "zeroOrBelow": 1730,
+      "allCellMedian": 2.811931381074828E-06,
+      "allCellP95": 0.012348548509180546,
+      "allCellP99": 0.024582084268331528,
+      "nonzeroMedian": 2.686361040105112E-05,
+      "nonzeroP95": 0.01445412915199995,
+      "nonzeroP99": 0.026003140956163406,
+      "peak": 0.2059985250234604
+    },
+    "adherence": {
+      "samples": 185267,
+      "mean": 0.10709445929821006,
+      "p50": 0.0339939923119905,
+      "p90": 0.29845497023805245,
+      "p99": 0.9191658176118996,
+      "max": 0.9991202490988981
+    },
+    "deposition": {
+      "lowAdherence": {
+        "count": 144043,
+        "distance": 134.5226740486038,
+        "requestedAmount": 310.8224061502043
+      },
+      "highAdherence": {
+        "count": 6794,
+        "distance": 4.17186881690634,
+        "requestedAmount": 72.17089761484166
+      },
+      "other": {
+        "count": 28531,
+        "distance": 23.22181106031231,
+        "requestedAmount": 105.91290968811519
+      },
+      "traveledDistance": 161.91635502099666
+    },
+    "minSweptSurfaceGap": -2.4608085421803927E-08,
+    "minEndpointSurfaceGap": -2.4608085421803927E-08,
+    "maxSpeed": 0.10201040594116964,
+    "finite": true,
+    "peakAlignedPairs": 10,
+    "peakAlignedPairsSecond": 19.233333333333334,
+    "recentChainSeries": [
+      {
+        "seconds": 116,
+        "alignedPairs": 0
+      },
+      {
+        "seconds": 117,
+        "alignedPairs": 0
+      },
+      {
+        "seconds": 118,
+        "alignedPairs": 0
+      },
+      {
+        "seconds": 119,
+        "alignedPairs": 1
+      },
+      {
+        "seconds": 120,
+        "alignedPairs": 0
+      }
+    ],
+    "untouchedDecaySample": [
+      {
+        "index": 3248,
+        "value": 3.2466429544797393E-09,
+        "secondsSinceDeposit": 69
+      },
+      {
+        "index": 3249,
+        "value": 3.2081943768247356E-09,
+        "secondsSinceDeposit": 69
+      },
+      {
+        "index": 3343,
+        "value": 0.00018164966604672372,
+        "secondsSinceDeposit": 23
+      },
+      {
+        "index": 3438,
+        "value": 1.2401638116443792E-07,
+        "secondsSinceDeposit": 53
+      },
+      {
+        "index": 3534,
+        "value": 1.568742913349297E-09,
+        "secondsSinceDeposit": 71
+      },
+      {
+        "index": 3629,
+        "value": 9.42627593758516E-06,
+        "secondsSinceDeposit": 34
+      },
+      {
+        "index": 3725,
+        "value": 1.1135530257888604E-05,
+        "secondsSinceDeposit": 34
+      },
+      {
+        "index": 3820,
+        "value": 0.006331803277134895,
+        "secondsSinceDeposit": 25
+      }
+    ]
+  },
+  "limitations": [
+    "The seed193 three-ant chain was observed for one second. Its front link breaks by 42.5 seconds.",
+    "The seed61 120-second frame remains broadly dispersed. These captures do not establish sustained population-wide processions or increased procession frequency."
+  ]
+}
