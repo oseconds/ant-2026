@@ -6,6 +6,7 @@ import { BodyPoseController, gasterRearPoint } from './BodyPoseController.js';
 import { GasterDeposition } from './GasterDeposition.js';
 import { ColonyActivation } from './ColonyActivation.js';
 import { SurfaceField } from './SurfaceField.js';
+import { TrailPlateBirth } from './TrailPlateBirth.js';
 
 const STEP_MS = 1000 / 60;
 const MAX_FRAME_GAP_MS = 100;
@@ -46,6 +47,7 @@ const SPAWN_PLACEMENT_ATTEMPTS = 12;
 const SPAWN_CLEARANCE = 0.004;
 const DEFAULT_STATE = Object.freeze({
   model: 'ant',
+  audioExperiment: { mode: 'bornSurface' },
   population: { count: 28, activationFeedback: true },
   pheromone: { halfLifeSeconds: 15, amountPerUnitDistance: 4.5, radius: 0.0045, reinforcementGain: 5,
     depositionMode: 'dab' },
@@ -56,7 +58,8 @@ const DEFAULT_STATE = Object.freeze({
 export class AntController {
   constructor({ state, random = Math.random, fieldFactory = (options) => new PheromoneField(options),
     gaitController = new GaitController(), bodyPoseController = new BodyPoseController(),
-    gasterDeposition = null, surfaceField = new SurfaceField(), audioBridge = null } = {}) {
+    gasterDeposition = null, surfaceField = new SurfaceField(),
+    trailPlateBirth = new TrailPlateBirth(), audioBridge = null } = {}) {
     this.state = normalizeState(state || {});
     this.random = random;
     this.fieldFactory = fieldFactory;
@@ -79,7 +82,9 @@ export class AntController {
     this.gasterDeposition = gasterDeposition || new GasterDeposition({ mode: this.state.pheromone.depositionMode });
     this.colonyActivation = new ColonyActivation({ ceiling: this.state.population.count, origin: SPAWN_CENTER });
     this.surfaceField = surfaceField;
+    this.trailPlateBirth = trailPlateBirth;
     this.audioBridge = audioBridge;
+    this.audioBridge?.setMode?.(this.state.audioExperiment.mode);
   }
 
   async init() {
@@ -110,7 +115,9 @@ export class AntController {
       agents,
       pheromone: field,
       surface: this.surfaceField.getSnapshot(),
+      surfacePlates: this.trailPlateBirth.getSnapshot(),
       audio: {
+        mode: this.state.audioExperiment.mode,
         enabled: this.audioBridge?.enabled ?? false,
         loading: this.audioBridge?.loading ?? false,
         error: this.audioBridge?.error ?? null,
@@ -162,6 +169,7 @@ export class AntController {
   configure(patch = {}) {
     this.assertAlive();
     this.state = normalizeState(mergeState(this.state, patch));
+    this.audioBridge?.setMode?.(this.state.audioExperiment.mode);
     if (this.gasterDeposition.mode !== this.state.pheromone.depositionMode) {
       for (const agent of this.agents) this.applyDeposits(this.gasterDeposition.retire(agent.id,
         this.bodyPoseController.getSnapshot(agent)?.gasterRear || gasterRearPoint(agent)));
@@ -204,6 +212,7 @@ export class AntController {
   async setAudioEnabled(enabled) {
     this.assertAlive();
     if (!this.audioBridge) return false;
+    this.audioBridge.syncPlates?.(this.trailPlateBirth.getPlates());
     const pending = this.audioBridge.setEnabled(Boolean(enabled));
     this.emit('update');
     try { return await pending; }
@@ -235,6 +244,7 @@ export class AntController {
     this.gasterDeposition.reset();
     this.colonyActivation.reset();
     this.surfaceField.clear();
+    this.trailPlateBirth.reset();
     await this.audioBridge?.destroy();
   }
 
@@ -334,6 +344,7 @@ export class AntController {
         this.simulationTimeMs + dt * 1000, { from, to });
       for (const event of contacts) {
         const responses = this.surfaceField.applyFootContact(event);
+        this.trailPlateBirth.observeFootContact(event);
         this.emit('foot-contact', event);
         try {
           const delivered = this.audioBridge?.handleFootContact(event, { responses });
@@ -354,6 +365,12 @@ export class AntController {
       this.gasterDeposition.retain(survivors.map(agent => agent.id));
     }
     this.simulationTimeMs += dt * 1000;
+    const births = this.trailPlateBirth.advance({ pheromone: this.field, surface: this.surfaceField,
+      simulationTimeMs: this.simulationTimeMs });
+    if (births.length) {
+      this.audioBridge?.syncPlates?.(this.trailPlateBirth.getPlates());
+      for (const plate of births) this.emit('plate-birth', plate);
+    }
     // Recruitment follows slowly accumulated entrance-route evidence, rather
     // than individual exits. A lower desired count never culls living agents.
     if (this.state.population.activationFeedback) this.colonyActivation.advance(this.field, dt);
@@ -551,6 +568,7 @@ export class AntController {
 function normalizeState(input) {
   const state = mergeState(DEFAULT_STATE, input);
   state.model = 'ant';
+  state.audioExperiment.mode = state.audioExperiment.mode === 'legacy' ? 'legacy' : 'bornSurface';
   state.population.count = Math.round(clampFinite(state.population.count, 8, 100, DEFAULT_STATE.population.count));
   state.population.activationFeedback = state.population.activationFeedback !== false;
   state.pheromone.halfLifeSeconds = clampFinite(state.pheromone.halfLifeSeconds, 0.5, 120, DEFAULT_STATE.pheromone.halfLifeSeconds);
@@ -568,6 +586,7 @@ function normalizeState(input) {
 function mergeState(base, patch) {
   return {
     ...clone(base), ...clone(patch),
+    audioExperiment: { ...clone(base.audioExperiment), ...clone(patch.audioExperiment || {}) },
     population: { ...clone(base.population), ...clone(patch.population || {}) },
     pheromone: { ...clone(base.pheromone), ...clone(patch.pheromone || {}) },
     behavior: { ...clone(base.behavior), ...clone(patch.behavior || {}) }

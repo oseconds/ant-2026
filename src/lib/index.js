@@ -1,5 +1,7 @@
 export { AudioEngine } from './audio/AudioEngine.js';
 export { AntAudioBridge } from './audio/AntAudioBridge.js';
+export { AntEnvironmentAudioBridge } from './audio/AntEnvironmentAudioBridge.js';
+export { SurfaceAudioBridge } from './audio/SurfaceAudioBridge.js';
 export { StringModel } from './models/string/StringModel.js';
 export { PlateModel } from './models/plate/PlateModel.js';
 export { SphereModel, SPHERE_MATERIALS } from './models/sphere/SphereModel.js';
@@ -15,6 +17,7 @@ export { BodyPoseController, BODY_GEOMETRY, BODY_POSE_LIMITS } from './agents/an
 export { GasterDeposition } from './agents/ant/GasterDeposition.js';
 export { ColonyActivation } from './agents/ant/ColonyActivation.js';
 export { SurfaceField } from './agents/ant/SurfaceField.js';
+export { TrailPlateBirth } from './agents/ant/TrailPlateBirth.js';
 export { AntAgent } from './agents/ant/AntAgent.js';
 export { PheromoneField } from './agents/ant/PheromoneField.js';
 export { LocalOccupancy } from './agents/ant/LocalOccupancy.js';

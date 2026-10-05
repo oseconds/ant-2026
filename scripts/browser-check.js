@@ -697,7 +697,7 @@ async function verifyAntStatusStates(page) {
   if (useProduction) return;
   await page.evaluate(async () => {
     const { app } = await import('/src/main.js');
-    app.lab.model.audioBridge._loading = true;
+    app.lab.model.audioBridge.selected._loading = true;
     app.lab.model.emit('update');
   });
   await page.waitForFunction(() => document.querySelector('#status')?.textContent === 'Loading audio…'
@@ -705,8 +705,8 @@ async function verifyAntStatusStates(page) {
     && document.querySelector('#status')?.getAttribute('aria-live') === 'polite');
   await page.evaluate(async () => {
     const { app } = await import('/src/main.js');
-    app.lab.model.audioBridge._loading = false;
-    app.lab.model.audioBridge._error = 'Audio initialization test error';
+    app.lab.model.audioBridge.selected._loading = false;
+    app.lab.model.audioBridge.selected._error = 'Audio initialization test error';
     app.lab.model.emit('update');
   });
   await page.waitForFunction(() => document.querySelector('#status')?.textContent === 'Audio initialization test error'
@@ -715,7 +715,7 @@ async function verifyAntStatusStates(page) {
     && document.querySelector('#status')?.dataset.status === 'error');
   await page.evaluate(async () => {
     const { app } = await import('/src/main.js');
-    app.lab.model.audioBridge._error = null;
+    app.lab.model.audioBridge.selected._error = null;
     app.lab.model.emit('update');
   });
   await page.waitForFunction(() => document.querySelector('#status')?.textContent === ''
@@ -730,6 +730,7 @@ async function verifyAnt(page, requestedUrls) {
 
   const state = await readState(page);
   assert.equal(state.model, 'ant');
+  assert.equal(state.audioExperiment?.mode, 'bornSurface', 'ANT opens with surface-born audio selected');
   const navigation = await page.locator('nav button[data-model]').evaluateAll(buttons => buttons.map(button => button.dataset.model));
   assert.deepEqual(navigation, ['ant', 'string', 'plate', 'sphere'], 'navigation starts with ANT and retains all supporting models');
   assert.equal((await page.locator('#model-title').textContent()).trim(), 'ANT');
@@ -1150,10 +1151,11 @@ async function verifyAnt(page, requestedUrls) {
     await writeFile('test-results/ant-turnover-production-metrics.json', `${JSON.stringify(turnoverCapture, null, 2)}\n`);
     await page.screenshot({ path: 'test-results/ant-gait-production.png', fullPage: true });
   }
-  if (recordAntEvidence) await recordAntAudioEvidence(page);
+  if (recordAntEvidence && !useProduction) await recordAntAudioEvidence(page);
   progressedAudioMetrics = await page.evaluate(production => {
     const probe = window.__physicalAudioProbe;
-    const records = probe.worklets.filter(item => item.name === 'plate-processor');
+    const processorName = production ? 'surface-plate-processor' : 'plate-processor';
+    const records = probe.worklets.filter(item => item.name === processorName);
     const currentStereoWorklet = records.at(-1);
     const stereoSamples = probe.workletRms.filter(item => item.index === currentStereoWorklet?.index);
     let simulationSeconds = null;
@@ -1162,6 +1164,7 @@ async function verifyAnt(page, requestedUrls) {
     }
     return {
       phase: 'after progressed ANT screenshot, before model switch',
+      processorName,
       simulationSeconds: production ? { approximate: 30, basis: 'additional live RAF progression wait; earlier startup time excluded' }
         : { exact: simulationSeconds },
       contextCount: probe.audioContexts.length,
@@ -1176,7 +1179,8 @@ async function verifyAnt(page, requestedUrls) {
         rightPeakRms: Math.max(0, ...stereoSamples.map(item => item.rightRms || 0)),
         maxChannelDifference: Math.max(0, ...stereoSamples.map(item => Math.abs((item.leftRms || 0) - (item.rightRms || 0))))
       },
-      loadedPlateWorkletModules: probe.workletModules.filter(item => item.loaded && /plate\.worklet\.js(?:$|\?)/.test(item.url)).length,
+      loadedAntWorkletModules: probe.workletModules.filter(item => item.loaded
+        && /(?:surface-plate|plate)\.worklet\.js(?:$|\?)/.test(item.url)).length,
       processorErrors: probe.processorErrors,
       plateWorklets: records.map(record => ({
         index: record.index,
@@ -1197,17 +1201,22 @@ async function verifyAnt(page, requestedUrls) {
   const antAudioBeforeSwitch = await page.evaluate(() => {
     const probe = window.__physicalAudioProbe;
     window.__antAudioSwitchController = window.__antAudioController;
-    window.__antAudioSwitchRecordIndex = probe.worklets.map(item => item.name).lastIndexOf('plate-processor');
-    return { index: window.__antAudioSwitchRecordIndex };
+    const state = JSON.parse(document.querySelector('#state-json').textContent);
+    window.__antAudioSwitchProcessorName = state.audioExperiment?.mode === 'legacy'
+      ? 'plate-processor' : 'surface-plate-processor';
+    window.__antAudioSwitchRecordIndex = probe.worklets.map(item => item.name)
+      .lastIndexOf(window.__antAudioSwitchProcessorName);
+    return { index: window.__antAudioSwitchRecordIndex, processorName: window.__antAudioSwitchProcessorName };
   });
-  assert.ok(antAudioBeforeSwitch.index >= 0, 'the re-enabled ANT Plate worklet is present before switching away');
+  assert.ok(antAudioBeforeSwitch.index >= 0, 'the selected ANT audio worklet is present before switching away');
   await waitForModel(page, 'string');
   await page.waitForFunction(index => {
     const record = window.__physicalAudioProbe.worklets[index];
     return record && record.portCloses > 0;
   }, antAudioBeforeSwitch.index);
   const strikesAtSwitchClose = await page.evaluate(() => window.__physicalAudioProbe.workletMessages.filter(item =>
-    item.name === 'plate-processor' && item.message?.type === 'strike').length);
+    (item.name === 'plate-processor' || item.name === 'surface-plate-processor')
+      && item.message?.type === 'strike').length);
   await page.waitForTimeout(180);
   const afterAntAudioSwitch = await page.evaluate(async production => {
     let appModel;
@@ -1220,8 +1229,8 @@ async function verifyAnt(page, requestedUrls) {
       enabled: window.__antAudioSwitchController?.getSnapshot().audio?.enabled,
       contextCount: window.__physicalAudioProbe.audioContexts.length,
       contextState: window.__physicalAudioProbe.audioContexts[0]?.state,
-      strikeCount: window.__physicalAudioProbe.workletMessages.filter(item => item.name === 'plate-processor'
-        && item.message?.type === 'strike').length,
+      strikeCount: window.__physicalAudioProbe.workletMessages.filter(item => (item.name === 'plate-processor'
+        || item.name === 'surface-plate-processor') && item.message?.type === 'strike').length,
       messagesAfterClose: record?.messagesAfterClose,
       appModel
     };
@@ -1233,17 +1242,20 @@ async function verifyAnt(page, requestedUrls) {
   assert.equal(afterAntAudioSwitch.strikeCount, strikesAtSwitchClose,
     'switching away sends no stale ANT strikes');
   assert.equal(afterAntAudioSwitch.messagesAfterClose, 0,
-    'the ANT Plate worklet receives no message after its port closes');
+    'the ANT audio worklet receives no message after its port closes');
   const afterSwitchAudioMetrics = await page.evaluate(() => {
     const probe = window.__physicalAudioProbe;
-    const records = probe.worklets.filter(item => item.name === 'plate-processor');
+    const records = probe.worklets.filter(item => item.name === 'plate-processor'
+      || item.name === 'surface-plate-processor');
+    const strikes = probe.workletMessages.filter(item => (item.name === 'plate-processor'
+      || item.name === 'surface-plate-processor') && item.message?.type === 'strike');
     return {
       phase: 'after switching away and 180ms settling interval',
       contextCount: probe.audioContexts.length,
       contextState: probe.audioContexts[0]?.state,
       processorErrors: probe.processorErrors,
       allPortsClosed: records.length > 0 && records.every(record => record.portCloses > 0),
-      totalStrikes: probe.workletMessages.filter(item => item.name === 'plate-processor' && item.message?.type === 'strike').length,
+      totalStrikes: strikes.length,
       plateWorklets: records.map(record => ({
         index: record.index,
         portCloses: record.portCloses,
@@ -1253,8 +1265,8 @@ async function verifyAnt(page, requestedUrls) {
       }))
     };
   });
-  assert.equal(afterSwitchAudioMetrics.allPortsClosed, true, 'switching away closes every ANT Plate worklet');
-  assert.equal(afterSwitchAudioMetrics.totalStrikes, strikesAtSwitchClose, 'no Plate strikes arrive after all ports close');
+  assert.equal(afterSwitchAudioMetrics.allPortsClosed, true, 'switching away closes every ANT audio worklet');
+  assert.equal(afterSwitchAudioMetrics.totalStrikes, strikesAtSwitchClose, 'no ANT strikes arrive after all ports close');
   assert.equal(afterSwitchAudioMetrics.processorErrors, 0);
   await mkdir('test-results', { recursive: true });
   await writeFile(`test-results/ant-stereo-${useProduction ? 'production' : 'dev'}-metrics.json`,
@@ -1271,6 +1283,16 @@ async function verifyAnt(page, requestedUrls) {
 }
 
 async function verifyAntAudioToggle(page, audioButton) {
+  await verifyBornSurfaceAudioLifecycle(page, audioButton);
+  if (useProduction) return;
+  await page.evaluate(async () => {
+    const { app } = await import('/src/main.js');
+    app.lab.model.configure({ audioExperiment: { mode: 'legacy' } });
+  });
+  await page.waitForFunction(() => JSON.parse(document.querySelector('#state-json').textContent)
+    .audioExperiment?.mode === 'legacy'
+    && document.querySelector('[data-action="ant-audio"]')?.getAttribute('aria-pressed') === 'false');
+
   if (!useProduction) await page.evaluate(async () => {
     const { app } = await import('/src/main.js');
     const controller = app.lab.model;
@@ -1301,15 +1323,19 @@ async function verifyAntAudioToggle(page, audioButton) {
       return handleFootContact(event);
     };
   });
-  assert.equal(await page.evaluate(() => window.__physicalAudioProbe.audioContexts.length), 0,
-    'the ANT bridge has no AudioContext before Audio On');
+  const legacyBaseline = await page.evaluate(() => ({
+    contexts: window.__physicalAudioProbe.audioContexts.length,
+    plateModules: window.__physicalAudioProbe.workletModules.filter(item => /\/plate\.worklet\.js(?:$|\?)/.test(item.url)).length
+  }));
+  assert.equal(legacyBaseline.plateModules, 0, 'legacy Plate module remains unloaded before selecting its backend');
   await setAntVolume(page, 65);
   assert.ok(Math.abs(await readAntAudioVolume(page) - .65) < 1e-9,
     'changing volume while Audio Off persists in ANT state');
-  assert.equal(await page.evaluate(() => window.__physicalAudioProbe.audioContexts.length), 0,
-    'changing volume while Audio Off does not initialize AudioContext');
-  assert.equal(await page.evaluate(() => window.__physicalAudioProbe.workletModules.length), 0,
-    'changing volume while Audio Off does not load the Plate worklet');
+  assert.equal(await page.evaluate(() => window.__physicalAudioProbe.audioContexts.length), legacyBaseline.contexts,
+    'changing volume while Audio Off does not create another AudioContext');
+  assert.equal(await page.evaluate(() => window.__physicalAudioProbe.workletModules
+    .filter(item => /\/plate\.worklet\.js(?:$|\?)/.test(item.url)).length), legacyBaseline.plateModules,
+  'changing volume while Audio Off does not load the legacy Plate worklet');
   await audioButton.click();
   await page.waitForFunction(() => document.querySelector('[data-action="ant-audio"]')?.getAttribute('aria-pressed') === 'true'
     && !/오디오 준비 중|오디오 오류/i.test(document.querySelector('#status')?.textContent || ''), null, { timeout: 10000 });
@@ -1336,7 +1362,7 @@ async function verifyAntAudioToggle(page, audioButton) {
     const channelPeak = key => Math.max(0, ...channelSamples.map(item => item[key] || 0));
     const channelDifference = Math.max(0, ...channelSamples.map(item => Math.abs((item.leftRms || 0) - (item.rightRms || 0))));
     return { contextCount: probe.audioContexts.length, contextState: window.__antContext?.state, worklets,
-      plateModules: probe.workletModules.filter(item => item.loaded && /plate\.worklet\.js(?:$|\?)/.test(item.url)).length,
+      plateModules: probe.workletModules.filter(item => item.loaded && /\/plate\.worklet\.js(?:$|\?)/.test(item.url)).length,
       stereo: { outputChannelCount: plate?.outputChannelCount, processorOptions: plate?.processorOptions,
         leftPeakRms: channelPeak('leftRms'), rightPeakRms: channelPeak('rightRms'),
         maxChannelDifference: channelDifference, outputGainNodeCount: plate?.outputGainNodes.length,
@@ -1463,6 +1489,78 @@ async function verifyAntAudioToggle(page, audioButton) {
   assert.ok(reenabled.freshStrikes > 0, 're-enabled Plate worklet receives fresh tripod contacts');
   assert.ok(reenabled.plateWorklets[0].portCloses > 0, 'the prior Plate worklet was closed before re-enabling');
   assert.ok(reenabled.plateWorklets[1].portCloses === 0);
+}
+
+async function verifyBornSurfaceAudioLifecycle(page, audioButton) {
+  const initial = await readState(page);
+  assert.equal(initial.audioExperiment?.mode, 'bornSurface', 'new ANT sessions default to born-surface audio');
+  assert.equal(await page.evaluate(() => window.__physicalAudioProbe.audioContexts.length), 0,
+    'born-surface ANT creates no audio context before an explicit gesture');
+
+  const waitForSurfaceWorklet = async (minimumCount) => page.waitForFunction(count =>
+    window.__physicalAudioProbe.worklets.filter(item => item.name === 'surface-plate-processor').length >= count,
+  minimumCount, { timeout: 10000 });
+  const surfaceWorkletIndices = async () => page.evaluate(() => window.__physicalAudioProbe.worklets
+    .map((item, index) => item.name === 'surface-plate-processor' ? index : -1).filter(index => index >= 0));
+  const assertQuietBeforeBirth = async (index, label) => {
+    await page.waitForFunction(workletIndex => window.__physicalAudioProbe.workletRms
+      .some(item => item.index === workletIndex), index, { timeout: 3000 });
+    const messages = await page.evaluate(workletIndex => window.__physicalAudioProbe.workletMessages
+      .filter(item => item.index === workletIndex).map(item => item.message?.type), index);
+    assert.equal(messages.some(type => type === 'birth' || type === 'strike'), false,
+      `${label} has no fabricated plate birth or strike before natural route evidence exists`);
+    const rms = await page.evaluate(workletIndex => window.__physicalAudioProbe.workletRms
+      .filter(item => item.index === workletIndex).map(item => item.rms), index);
+    assert.ok(rms.length > 0 && Math.max(...rms) <= 1e-8,
+      `${label} remains silent while it has no naturally born surface (samples=${rms.length}, peak=${Math.max(0, ...rms)})`);
+    if (!useProduction) {
+      const plateCount = await page.evaluate(async () => {
+        const { app } = await import('/src/main.js');
+        return app.lab.model.getSnapshot().surfacePlates.plates.length;
+      });
+      assert.equal(plateCount, 0, `${label} begins with no surface plate descriptors`);
+    }
+  };
+
+  await audioButton.click();
+  await page.waitForFunction(() => document.querySelector('[data-action="ant-audio"]')?.getAttribute('aria-pressed') === 'true');
+  await waitForSurfaceWorklet(1);
+  await page.waitForTimeout(250);
+  let indices = await surfaceWorkletIndices();
+  assert.equal(indices.length, 1, 'born-surface Audio On creates one surface processor');
+  await assertQuietBeforeBirth(indices[0], 'first born-surface processor');
+
+  await audioButton.click();
+  await page.waitForFunction(index => {
+    const record = window.__physicalAudioProbe.worklets[index];
+    return document.querySelector('[data-action="ant-audio"]')?.getAttribute('aria-pressed') === 'false'
+      && record?.portCloses > 0;
+  }, indices[0], { timeout: 8000 });
+  await page.waitForTimeout(100);
+  assert.equal(await page.evaluate(index => window.__physicalAudioProbe.worklets[index].messagesAfterClose,
+    indices[0]), 0, 'Audio Off closes the surface processor without later messages');
+
+  await audioButton.click();
+  await page.waitForFunction(() => document.querySelector('[data-action="ant-audio"]')?.getAttribute('aria-pressed') === 'true');
+  await waitForSurfaceWorklet(2);
+  indices = await surfaceWorkletIndices();
+  await assertQuietBeforeBirth(indices[1], 're-enabled born-surface processor');
+  const contextCount = await page.evaluate(() => window.__physicalAudioProbe.audioContexts.length);
+  assert.equal(contextCount, 1, 'surface Off/On reuses the shared Lab AudioContext');
+
+  await waitForModel(page, 'plate');
+  await page.waitForFunction(index => window.__physicalAudioProbe.worklets[index]?.portCloses > 0,
+    indices[1], { timeout: 8000 });
+  await waitForModel(page, 'ant');
+  assert.equal(await audioButton.getAttribute('aria-pressed'), 'false', 'returning to ANT starts with audio off');
+  assert.equal((await readState(page)).audioExperiment?.mode, 'bornSurface',
+    'returning to ANT keeps the default born-surface experiment');
+
+  await audioButton.click();
+  await page.waitForFunction(() => document.querySelector('[data-action="ant-audio"]')?.getAttribute('aria-pressed') === 'true');
+  await waitForSurfaceWorklet(3);
+  indices = await surfaceWorkletIndices();
+  await assertQuietBeforeBirth(indices[2], 'ANT processor after Plate-to-ANT return');
 }
 
 async function verifyMobileLayout(page, filename) {
@@ -1670,7 +1768,7 @@ async function verifyBrowser(baseUrl) {
   assert.equal(appResult.processorErrors, 0);
   assert.equal(appResult.activeRaf, 0);
   const workletModules = await page.evaluate(() => window.__physicalAudioProbe.workletModules);
-  for (const filename of ['plate.worklet.js', 'sphere.worklet.js']) {
+  for (const filename of ['plate.worklet.js', 'surface-plate.worklet.js', 'sphere.worklet.js']) {
     assert.ok(workletModules.some(module => module.loaded
       && new URL(module.url, baseUrl).pathname.endsWith(`/worklets/${filename}`)),
     `worklet URL loads successfully: ${filename}`);
