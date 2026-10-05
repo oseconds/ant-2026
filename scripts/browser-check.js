@@ -365,6 +365,124 @@ async function assertAntOutputGain(page, volume) {
     `ANT output gain is Plate baseline 0.7 × selected volume ${volume} (${actualGain} ≈ ${expectedGain})`);
 }
 
+async function runDeterministicTurnoverEvidence(page) {
+  return page.evaluate(async () => {
+    const { AntController, StepEventGenerator } = await import('/src/lib/index.js');
+    const seed = 0x20261005;
+    let randomState = seed >>> 0;
+    const random = () => {
+      randomState = (Math.imul(randomState, 1664525) + 1013904223) >>> 0;
+      return randomState / 0x100000000;
+    };
+    const stepEventGenerator = new StepEventGenerator();
+    const model = new AntController({ random, stepEventGenerator });
+    await model.init();
+    let stepEventCount = 0, invalidStepEventCount = 0;
+    model.subscribe(({ type, payload }) => {
+      if (type !== 'step') return;
+      stepEventCount += 1;
+      const { x, y } = payload.position || {};
+      if (!Number.isFinite(x) || !Number.isFinite(y) || x < 0 || x > 1 || y < 0 || y > 1) invalidStepEventCount += 1;
+    });
+    const samples = [];
+    const spawnEvents = [{ second: 0, id: model.agents[0]?.id }];
+    const retirementEvents = [];
+    const seenIds = new Set(model.agents.map(agent => agent.id));
+    let maxSpawnsInOneTick = 0;
+    let firstRetirementField = null;
+    const sample = (second) => {
+      const snapshot = model.getSnapshot();
+      samples.push({
+        requestedSeconds: second,
+        simulationSeconds: snapshot.analysis.simulationTimeMs / 1000,
+        population: snapshot.analysis.population,
+        totalSpawned: snapshot.analysis.totalSpawned,
+        totalRetired: snapshot.analysis.totalRetired,
+        pheromoneMass: snapshot.analysis.pheromoneMass
+      });
+    };
+    sample(0);
+    const checkpoints = new Set([5, 10, 20, 40, 60, 120]);
+    for (let tick = 1; tick <= 120 * 60; tick += 1) {
+      const previousIds = new Set(model.agents.map(agent => agent.id));
+      const previousRetired = model.totalRetired;
+      const previousSpawned = model.totalSpawned;
+      const massBefore = model.field.values.reduce((sum, value) => sum + value, 0);
+      const nonzeroCellsBefore = model.field.values.reduce((count, value) => count + (value > 0 ? 1 : 0), 0);
+      model.tick(1 / 60);
+      const currentIds = new Set(model.agents.map(agent => agent.id));
+      const newIds = [...currentIds].filter(id => !seenIds.has(id));
+      if (newIds.length) {
+        maxSpawnsInOneTick = Math.max(maxSpawnsInOneTick, newIds.length);
+        for (const id of newIds) {
+          seenIds.add(id);
+          const agent = model.agents.find(candidate => candidate.id === id);
+          spawnEvents.push({
+            second: model.simulationTimeMs / 1000,
+            id,
+            distanceFromEntrance: agent ? Math.hypot(agent.x - .5, agent.y - .72) : null,
+            initialTrailAdherence: agent?.trailAdherence ?? null
+          });
+        }
+      }
+      const departed = [...previousIds].filter(id => !currentIds.has(id));
+      if (departed.length) {
+        retirementEvents.push({
+          second: model.simulationTimeMs / 1000,
+          ids: departed,
+          stepStateRemoved: departed.every(id => !stepEventGenerator.ants.has(id))
+        });
+        if (!firstRetirementField) {
+          firstRetirementField = {
+            massBefore: massBefore,
+            massAfter: model.field.values.reduce((sum, value) => sum + value, 0),
+            nonzeroCellsBefore: nonzeroCellsBefore,
+            nonzeroCellsAfter: model.field.values.reduce((count, value) => count + (value > 0 ? 1 : 0), 0)
+          };
+        }
+      }
+      if (model.totalRetired < previousRetired || model.totalSpawned - previousSpawned > 1) {
+        throw new Error('turnover counters moved backwards or spawned multiple replacements in one tick');
+      }
+      const seconds = tick / 60;
+      if (checkpoints.has(seconds)) sample(seconds);
+    }
+    const activeIds = new Set(model.agents.map(agent => agent.id));
+    const final = model.getSnapshot();
+    const spawnIntervals = spawnEvents.slice(2).map((event, index) => event.second - spawnEvents[index + 1].second);
+    const result = {
+      scenario: 'deterministic standalone AntController run; no forced exits, no audio bridge; default population and field settings',
+      seed,
+      halfLifeSeconds: model.state.pheromone.halfLifeSeconds,
+      populationTarget: model.state.population.count,
+      samples,
+      spawnEvents: { count: spawnEvents.length, first: spawnEvents.slice(0, 8), last: spawnEvents.slice(-4) },
+      retirementEvents: { count: retirementEvents.reduce((count, event) => count + event.ids.length, 0), first: retirementEvents.slice(0, 8) },
+      firstRetirementField,
+      finalActiveIds: [...activeIds],
+      uniqueIdsSeen: seenIds.size,
+      stepEventCount,
+      invalidStepEventCount,
+      maxSpawnsInOneTick,
+      spawnIntervalsSeconds: spawnIntervals,
+      finalAnalysis: final.analysis,
+      validations: {
+        multipleRetirements: model.totalRetired >= 2,
+        replacementsOccur: model.totalSpawned > model.state.population.count,
+        fieldPersistsAcrossRetirement: Boolean(firstRetirementField?.massBefore > 0 && firstRetirementField?.massAfter > 0
+          && firstRetirementField?.nonzeroCellsAfter > 0),
+        replacementIdsAreUnique: seenIds.size === model.totalSpawned,
+        stepStatesRemovedOnExit: retirementEvents.every(event => event.stepStateRemoved),
+        gradualOneAtATime: maxSpawnsInOneTick <= 1 && spawnIntervals.every(interval => interval >= .4 - 1e-9),
+        stepEventsRemainInDomain: invalidStepEventCount === 0,
+        activePopulationWithinTarget: final.analysis.population <= model.state.population.count
+      }
+    };
+    await model.destroy();
+    return result;
+  });
+}
+
 async function verifyAntStatusStates(page) {
   if (useProduction) return;
   await page.evaluate(async () => {
@@ -421,7 +539,7 @@ async function verifyAnt(page, requestedUrls) {
   assert.equal(statusAttributes.text, '', 'ANT ready status is visually empty and takes no text space');
   await verifyAntStatusStates(page);
   assert.equal(state.population.count, 28, 'ANT retains the default target population');
-  assert.equal(state.pheromone.halfLifeSeconds, 3, 'ANT uses the tuned pheromone half-life');
+  assert.equal(state.pheromone.halfLifeSeconds, 15, 'ANT uses the longer environmental memory');
   assert.equal(state.pheromone.radius, .0045, 'ANT uses the tuned deposit radius');
   assert.equal(await page.locator('#ant-playback').count(), 0, 'ANT has no obsolete loop/release controls');
   assert.equal(await page.locator('[data-action="ant-loop"], [data-action="ant-release"]').count(), 0,
@@ -503,18 +621,29 @@ async function verifyAnt(page, requestedUrls) {
         pheromoneSize: snapshot.pheromone.values.length,
         pheromoneGridSize: snapshot.pheromone.width * snapshot.pheromone.height,
         totalMass: snapshot.pheromone.totalMass,
-        meanSpeed: snapshot.analysis.meanSpeed
+        meanSpeed: snapshot.analysis.meanSpeed,
+        analysis: snapshot.analysis
       };
     });
     assert.equal(summary.status, 'active');
-    assert.ok(summary.agents >= activePopulation && summary.agents < state.population.count,
-      'the live population keeps growing gradually between UI and snapshot reads');
+    assert.ok(summary.agents >= activePopulation && summary.agents <= state.population.count,
+      'the live population remains within the configured target');
+    assert.equal(summary.analysis.totalSpawned, summary.agents + summary.analysis.totalRetired,
+      'cumulative spawn and retirement counters reconcile with active population');
     assert.equal(summary.radii.length, 1, 'agents share one body radius');
     assert.equal(summary.pheromoneIsFloat32, true);
     assert.ok(summary.pheromoneGridSize > 0 && summary.pheromoneSize === summary.pheromoneGridSize,
       'pheromone field values match its configured grid');
     assert.ok(Number.isFinite(summary.totalMass) && summary.totalMass > 0);
     assert.ok(Number.isFinite(summary.meanSpeed));
+
+    const turnover = await runDeterministicTurnoverEvidence(page);
+    await mkdir('test-results', { recursive: true });
+    await writeFile('test-results/ant-turnover-dev-metrics.json', `${JSON.stringify(turnover, null, 2)}\n`);
+    for (const [name, passed] of Object.entries(turnover.validations)) {
+      assert.equal(passed, true, `default turnover evidence: ${name}`);
+    }
+    assert.ok(turnover.samples.every(sample => sample.population <= state.population.count));
   }
   assert.equal(await page.evaluate(() => window.__physicalAudioProbe.liveRaf.size), 1,
     'ANT uses the single application animation frame');
@@ -524,13 +653,29 @@ async function verifyAnt(page, requestedUrls) {
     await page.evaluate(async () => {
       const { app } = await import('/src/main.js');
       const model = app.lab.model;
-      for (let step = 0; step < 40 * 60; step += 1) model.tick(1 / 60);
+      await model.setAudioEnabled(false);
+      for (let step = 0; step < 20 * 60; step += 1) model.tick(1 / 60);
+      model.emit('update');
     });
     await page.waitForTimeout(200);
-    await page.screenshot({ path: 'test-results/ant-matured.png', fullPage: true });
+    const turnoverCapture = await page.evaluate(async () => {
+      const { app } = await import('/src/main.js');
+      const snapshot = app.lab.model.getSnapshot();
+      return { scenario: 'default live ANT app after 20 additional simulated seconds; existing canvas renderer',
+        analysis: snapshot.analysis, activeAnts: snapshot.agents.length };
+    });
+    await writeFile('test-results/ant-turnover-dev-capture.json', `${JSON.stringify(turnoverCapture, null, 2)}\n`);
+    await page.screenshot({ path: 'test-results/ant-turnover-dev.png', fullPage: true });
   } else {
-    await page.waitForTimeout(15000);
-    await page.screenshot({ path: 'test-results/ant-stereo-production.png', fullPage: true });
+    await page.waitForTimeout(30000);
+    const turnoverCapture = await page.evaluate(() => ({
+      scenario: 'default live production ANT app after an additional approximately 30 seconds of wall-clock RAF progression',
+      observedAt: new Date().toISOString(),
+      diagnostics: document.querySelector('#ant-diagnostics')?.textContent.trim() || null,
+      audioEnabled: document.querySelector('[data-action="ant-audio"]')?.getAttribute('aria-pressed') === 'true'
+    }));
+    await writeFile('test-results/ant-turnover-production-metrics.json', `${JSON.stringify(turnoverCapture, null, 2)}\n`);
+    await page.screenshot({ path: 'test-results/ant-turnover-production.png', fullPage: true });
   }
   progressedAudioMetrics = await page.evaluate(production => {
     const probe = window.__physicalAudioProbe;
@@ -543,7 +688,7 @@ async function verifyAnt(page, requestedUrls) {
     }
     return {
       phase: 'after progressed ANT screenshot, before model switch',
-      simulationSeconds: production ? { approximate: 20, basis: 'live RAF runtime including 15-second screenshot progression wait' }
+      simulationSeconds: production ? { approximate: 30, basis: 'additional live RAF progression wait; earlier startup time excluded' }
         : { exact: simulationSeconds },
       contextCount: probe.audioContexts.length,
       contextState: probe.audioContexts[0]?.state,

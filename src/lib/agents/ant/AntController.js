@@ -43,7 +43,7 @@ const SPAWN_CLEARANCE = 0.004;
 const DEFAULT_STATE = Object.freeze({
   model: 'ant',
   population: { count: 28 },
-  pheromone: { halfLifeSeconds: 3, amountPerUnitDistance: 4.5, radius: 0.0045, reinforcementGain: 5 },
+  pheromone: { halfLifeSeconds: 15, amountPerUnitDistance: 4.5, radius: 0.0045, reinforcementGain: 5 },
   behavior: { sensorDistance: 0.042, sensorWidth: 0.014, bodyRadius: 0.006 }
 });
 
@@ -63,6 +63,8 @@ export class AntController {
     this.simulationTimeMs = 0;
     this.nextSpawnTimeMs = null;
     this.nextAgentId = 1;
+    this.totalSpawned = 0;
+    this.totalRetired = 0;
     this.agents = [];
     this.field = null;
     this.occupancy = new LocalOccupancy();
@@ -101,6 +103,8 @@ export class AntController {
       },
       analysis: {
         population: agents.length,
+        totalSpawned: this.totalSpawned,
+        totalRetired: this.totalRetired,
         meanSpeed: agents.length ? speedTotal / agents.length : 0,
         pheromoneMass: field.totalMass,
         simulationTimeMs: this.simulationTimeMs,
@@ -141,7 +145,9 @@ export class AntController {
     if (this.field) this.field.decayHalfLifeSeconds = this.state.pheromone.halfLifeSeconds;
     // A changed population target must not bypass gradual entry or erase the
     // shared history that already exists. Keep surviving agents and their traits.
-    this.agents.length = Math.min(this.agents.length, this.state.population.count);
+    const retainedCount = Math.min(this.agents.length, this.state.population.count);
+    this.totalRetired += this.agents.length - retainedCount;
+    this.agents.length = retainedCount;
     this.stepEventGenerator.retain?.(this.agents.map(agent => agent.id));
     for (const agent of this.agents) agent.radius = this.state.behavior.bodyRadius;
     if (this.agents.length >= this.state.population.count) {
@@ -214,7 +220,7 @@ export class AntController {
       const info = sensed[index];
       const separationMagnitude = Math.hypot(info.separationX, info.separationY);
       // Keep the current forward motion while the three local bands make small
-      // corrections. Occupancy and boundary steering still have the final say.
+      // corrections. Nearby bodies still constrain steering and contact.
       const localTurn = clamp(localTrails[index].steering * (0.35 + 0.65 * agent.trailAdherence)
         - agent.angularVelocity * LOCAL_TURN_DAMPING * agent.trailAdherence,
         -LOCAL_STEERING_LIMIT, LOCAL_STEERING_LIMIT);
@@ -230,9 +236,6 @@ export class AntController {
         targetHeading = blendAngle(targetHeading, agent.heading + side * 0.42,
           Math.min(0.58, info.frontCrowding * 0.6));
       }
-      const edge = boundarySteering(agent);
-      if (edge.strength > 0) targetHeading = blendAngle(targetHeading, edge.heading, Math.min(0.8, edge.strength * 0.7));
-
       agent.turnToward(targetHeading, dt);
       const cycle = Math.sin(agent.speedPhase);
       let desiredSpeed = agent.personality.preferredSpeed * (0.58 + 0.34 * (cycle + 1) * 0.5);
@@ -242,7 +245,6 @@ export class AntController {
       // Same-direction traffic caps pace without adding a steering target.
       desiredSpeed = Math.min(desiredSpeed, info.followingSpeedLimit);
       if (agent.hesitationRemaining > 0) desiredSpeed *= HESITATION_SPEED_RATIO;
-      if (edge.strength > 0.65) desiredSpeed *= 0.78;
       agent.targetSpeed = desiredSpeed;
       agent.accelerateToward(desiredSpeed, dt);
       agent.vx += info.separationX * SEPARATION_ACCELERATION * dt;
@@ -251,9 +253,6 @@ export class AntController {
         x: clamp(agent.vx * dt, -0.008, 0.008),
         y: clamp(agent.vy * dt, -0.008, 0.008)
       };
-      const edgeScale = boundaryScale(agent, movement);
-      movement.x *= edgeScale;
-      movement.y *= edgeScale;
       // Coherent following earns nonlinear reinforcement; every moving ant
       // retains a weak trace that can seed a new branch.
       movement.depositionMultiplier = DEPOSITION_BASELINE + this.state.pheromone.reinforcementGain
@@ -262,34 +261,52 @@ export class AntController {
     });
 
     const collisionScales = this.occupancy.constrainDisplacements(current, displacements);
+    const survivors = [];
     for (let index = 0; index < current.length; index += 1) {
       const agent = current[index];
       const displacement = displacements[index];
       const scale = collisionScales[index];
       const from = { x: agent.x, y: agent.y };
-      agent.x = clamp(agent.x + displacement.x * scale, agent.radius, 1 - agent.radius);
-      agent.y = clamp(agent.y + displacement.y * scale, agent.radius, 1 - agent.radius);
+      agent.x += displacement.x * scale;
+      agent.y += displacement.y * scale;
       if (scale < 0.999) {
         agent.vx *= scale;
         agent.vy *= scale;
       }
-      const travelled = Math.hypot(agent.x - from.x, agent.y - from.y);
-      if (travelled > 1e-8) this.field.depositSegment(from, { x: agent.x, y: agent.y }, {
+      const exiting = agent.x < 0 || agent.x > 1 || agent.y < 0 || agent.y > 1;
+      // Contact is resolved on the outward motion. Only its observed portion
+      // contributes to environmental memory and distance-based STEP accounting.
+      const to = exiting ? observedSegmentEnd(from, agent) : { x: agent.x, y: agent.y };
+      const travelled = Math.hypot(to.x - from.x, to.y - from.y);
+      if (travelled > 1e-8) this.field.depositSegment(from, to, {
         amountPerUnitDistance: this.state.pheromone.amountPerUnitDistance * displacement.depositionMultiplier,
         radius: this.state.pheromone.radius
       });
       // Observe final travel, including collision braking. No audio operation
       // contributes to movement, its random stream, or the shared trail field.
-      for (const event of this.stepEventGenerator.advance(agent, travelled, this.simulationTimeMs + dt * 1000)) {
+      const observedAgent = exiting ? { ...agent, x: to.x, y: to.y } : agent;
+      for (const event of this.stepEventGenerator.advance(observedAgent, travelled, this.simulationTimeMs + dt * 1000)) {
         this.emit('step', event);
         try {
           const delivered = this.audioBridge?.handleStep(event);
           void Promise.resolve(delivered).catch(error => this.emit('error', { message: error.message }));
         } catch (error) { this.emit('error', { message: error.message }); }
       }
-      this.advanceBehaviorClocks(agent, dt);
+      if (!exiting) {
+        this.advanceBehaviorClocks(agent, dt);
+        survivors.push(agent);
+      }
+    }
+    const retiredCount = current.length - survivors.length;
+    if (retiredCount) {
+      this.agents = survivors;
+      this.totalRetired += retiredCount;
+      this.stepEventGenerator.retain?.(survivors.map(agent => agent.id));
     }
     this.simulationTimeMs += dt * 1000;
+    if (retiredCount && this.agents.length < this.state.population.count && this.nextSpawnTimeMs === null) {
+      this.scheduleNextSpawn();
+    }
     // Use the simulation clock, not browser timers. A delayed frame or blocked
     // entry never releases a batch of overdue agents.
     if (this.nextSpawnTimeMs !== null && this.simulationTimeMs + 1e-9 >= this.nextSpawnTimeMs) {
@@ -312,6 +329,7 @@ export class AntController {
         id: 'ant-' + this.nextAgentId++, x, y, radius, random: this.random,
         heading: SPAWN_HEADING + signed(this.random) * SPAWN_HEADING_SPREAD
       }));
+      this.totalSpawned += 1;
       if (this.agents.length < this.state.population.count) this.scheduleNextSpawn();
       else this.nextSpawnTimeMs = null;
       return true;
@@ -354,12 +372,9 @@ export class AntController {
       const jitter = 0.12 * (1 - 0.8 * persistence);
       const heading = wrapAngle(agent.heading + offset + (this.random() - 0.5) * jitter);
       const distance = this.state.behavior.sensorDistance;
-      const x = agent.x + Math.cos(heading) * distance;
-      const y = agent.y + Math.sin(heading) * distance;
       const trail = trailResponse(this.senseTrail(agent, heading));
       const crowding = this.occupancy.crowdingInDirection(agent, agents, heading, distance * 1.45);
-      const wall = boundaryPenalty(x, y);
-      return { heading, offset, trail, crowding, wall };
+      return { heading, offset, trail, crowding };
     });
     // A flat field offers no clear directional cue, even if all sensors are
     // elevated. Trail confidence is a continuous sensor value, not a role.
@@ -372,7 +387,7 @@ export class AntController {
     agent.committedRemaining = 0.3 + this.random() * 0.9;
     for (const option of options) {
       option.score = option.trail * agent.personality.pheromoneSensitivity * TRAIL_SCORE_GAIN
-        - option.crowding * 3.2 - option.wall * 2.4
+        - option.crowding * 3.2
         + (Math.cos(option.offset) - 1) * confidence * 0.55
         + (Math.cos(option.offset) - 1) * agent.trailAdherence * ADHERENCE_DIRECTION_SCORE
         + (this.random() - 0.5) * 0.42 * (1 - 0.85 * confidence);
@@ -394,8 +409,9 @@ export class AntController {
       // Favor a centered trail but retain distant narrow peaks; averaging
       // empty cells here would dilute the very trail we want to discover.
       const weight = 1 - Math.abs(offset) * 0.45;
-      signal = Math.max(signal, this.field.sample(x + nx * sensorWidth * offset,
-        y + ny * sensorWidth * offset) * weight);
+      const sx = x + nx * sensorWidth * offset, sy = y + ny * sensorWidth * offset;
+      if (sx < 0 || sx > 1 || sy < 0 || sy > 1) continue;
+      signal = Math.max(signal, this.field.sample(sx, sy) * weight);
     }
     return signal;
   }
@@ -490,27 +506,15 @@ function trailResponse(signal, halfSaturation = TRAIL_HALF_SATURATION) {
 }
 function wrapAngle(value) { return ((value + Math.PI) % TAU + TAU) % TAU - Math.PI; }
 function blendAngle(from, to, amount) { return from + wrapAngle(to - from) * amount; }
-function boundaryPenalty(x, y) {
-  const edge = Math.min(x, y, 1 - x, 1 - y);
-  return edge >= 0.09 ? 0 : (0.09 - edge) / 0.09;
-}
-function boundarySteering(agent) {
-  const margin = 0.09;
-  let x = 0, y = 0;
-  if (agent.x < margin) x += (margin - agent.x) / margin;
-  if (agent.x > 1 - margin) x -= (agent.x - (1 - margin)) / margin;
-  if (agent.y < margin) y += (margin - agent.y) / margin;
-  if (agent.y > 1 - margin) y -= (agent.y - (1 - margin)) / margin;
-  const strength = Math.hypot(x, y);
-  return { heading: Math.atan2(y, x), strength: Math.min(1, strength) };
-}
-function boundaryScale(agent, displacement) {
-  let scale = 1;
-  if (displacement.x < 0 && agent.x + displacement.x < agent.radius) scale = Math.min(scale, (agent.x - agent.radius) / -displacement.x);
-  else if (displacement.x > 0 && agent.x + displacement.x > 1 - agent.radius) scale = Math.min(scale, (1 - agent.radius - agent.x) / displacement.x);
-  if (displacement.y < 0 && agent.y + displacement.y < agent.radius) scale = Math.min(scale, (agent.y - agent.radius) / -displacement.y);
-  else if (displacement.y > 0 && agent.y + displacement.y > 1 - agent.radius) scale = Math.min(scale, (1 - agent.radius - agent.y) / displacement.y);
-  return clamp(scale, 0, 1);
+function observedSegmentEnd(from, to) {
+  const dx = to.x - from.x, dy = to.y - from.y;
+  let fraction = 1;
+  if (to.x < 0) fraction = Math.min(fraction, -from.x / dx);
+  else if (to.x > 1) fraction = Math.min(fraction, (1 - from.x) / dx);
+  if (to.y < 0) fraction = Math.min(fraction, -from.y / dy);
+  else if (to.y > 1) fraction = Math.min(fraction, (1 - from.y) / dy);
+  // Roundoff protection for the accounting endpoint, never a movement clamp.
+  return { x: clamp(from.x + dx * fraction, 0, 1), y: clamp(from.y + dy * fraction, 0, 1) };
 }
 function weightedChoice(options, random, temperature) {
   const max = Math.max(...options.map((option) => option.score));

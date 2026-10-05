@@ -1,6 +1,6 @@
 const DEFAULT_WIDTH = 96;
 const DEFAULT_HEIGHT = 96;
-const DEFAULT_HALF_LIFE_SECONDS = 3;
+const DEFAULT_HALF_LIFE_SECONDS = 15;
 const DEFAULT_MAX_VALUE = 8;
 const DEFAULT_AMOUNT_PER_UNIT_DISTANCE = 4.5;
 const DEFAULT_RADIUS = 0.0045;
@@ -28,12 +28,13 @@ export class PheromoneField {
     this.values.fill(0);
   }
 
-  /** Bilinear sample in normalized coordinates, clamped at field edges. */
+  /** Bilinear sample in normalized coordinates; outside the observed square is empty. */
   sample(x, y) {
     x = coordinate(x, 'x');
     y = coordinate(y, 'y');
-    const gx = clamp01(x) * (this.width - 1);
-    const gy = clamp01(y) * (this.height - 1);
+    if (x < 0 || x > 1 || y < 0 || y > 1) return 0;
+    const gx = x * (this.width - 1);
+    const gy = y * (this.height - 1);
     const x0 = Math.floor(gx);
     const y0 = Math.floor(gy);
     const x1 = Math.min(this.width - 1, x0 + 1);
@@ -59,8 +60,11 @@ export class PheromoneField {
     amountPerUnitDistance = nonNegativeFinite(amountPerUnitDistance, 'amountPerUnitDistance');
     radius = positiveFinite(radius, 'radius');
 
-    const dx = end.x - start.x;
-    const dy = end.y - start.y;
+    const clipped = clipSegmentToDomain(start, end);
+    if (!clipped) return 0;
+
+    const dx = clipped.end.x - clipped.start.x;
+    const dy = clipped.end.y - clipped.start.y;
     const distance = Math.hypot(dx, dy);
     if (distance === 0 || amountPerUnitDistance === 0) return 0;
 
@@ -75,7 +79,7 @@ export class PheromoneField {
 
     for (let sampleIndex = 0; sampleIndex < sampleCount; sampleIndex += 1) {
       const t = (sampleIndex + 0.5) / sampleCount;
-      this.depositBrush(start.x + dx * t, start.y + dy * t, sliceAmount, radius, sigma, support);
+      this.depositBrush(clipped.start.x + dx * t, clipped.start.y + dy * t, sliceAmount, radius, sigma, support);
     }
     return totalAmount;
   }
@@ -150,7 +154,33 @@ export class PheromoneField {
 
 function point(value, name) {
   if (!value || typeof value !== 'object') throw new TypeError(`${name} must contain finite x and y coordinates.`);
-  return { x: clamp01(coordinate(value.x, `${name}.x`)), y: clamp01(coordinate(value.y, `${name}.y`)) };
+  return { x: coordinate(value.x, `${name}.x`), y: coordinate(value.y, `${name}.y`) };
+}
+
+/** Clip a segment to the observed normalized square without inventing edge travel. */
+function clipSegmentToDomain(start, end) {
+  const dx = end.x - start.x;
+  const dy = end.y - start.y;
+  let t0 = 0;
+  let t1 = 1;
+  const p = [-dx, dx, -dy, dy];
+  const q = [start.x, 1 - start.x, start.y, 1 - start.y];
+
+  for (let index = 0; index < 4; index += 1) {
+    if (p[index] === 0) {
+      if (q[index] < 0) return null;
+      continue;
+    }
+    const ratio = q[index] / p[index];
+    if (p[index] < 0) t0 = Math.max(t0, ratio);
+    else t1 = Math.min(t1, ratio);
+    if (t0 > t1) return null;
+  }
+
+  return {
+    start: { x: start.x + dx * t0, y: start.y + dy * t0 },
+    end: { x: start.x + dx * t1, y: start.y + dy * t1 }
+  };
 }
 
 function coordinate(value, name) {
