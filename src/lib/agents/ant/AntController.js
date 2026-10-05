@@ -22,6 +22,8 @@ const ADHERENCE_RISE_SECONDS = 0.25;
 const ADHERENCE_FADE_SECONDS = 1.8;
 const ADHERENCE_HEADING_WEIGHT = 0.82;
 const ADHERENCE_DIRECTION_SCORE = 3;
+const DEPOSITION_BASELINE = 0.5;
+const DEPOSITION_ADHERENCE_EXPONENT = 2;
 const SEPARATION_ACCELERATION = 0.003;
 const HESITATION_SPEED_RATIO = 0.05;
 const HESITATION_MIN_SECONDS = 0.7;
@@ -40,7 +42,7 @@ const SPAWN_CLEARANCE = 0.004;
 const DEFAULT_STATE = Object.freeze({
   model: 'ant',
   population: { count: 28 },
-  pheromone: { halfLifeSeconds: 3, amountPerUnitDistance: 4.5, radius: 0.0045, reinforcementGain: 0.45 },
+  pheromone: { halfLifeSeconds: 3, amountPerUnitDistance: 4.5, radius: 0.0045, reinforcementGain: 5 },
   behavior: { sensorDistance: 0.042, sensorWidth: 0.014, bodyRadius: 0.006 }
 });
 
@@ -220,10 +222,10 @@ export class AntController {
       const edgeScale = boundaryScale(agent, movement);
       movement.x *= edgeScale;
       movement.y *= edgeScale;
-      // Read the field before any ant deposits this step. Reinforcement varies
-      // continuously with the trail ahead, rather than an explorer/follower role.
-      movement.depositionMultiplier = 1 + this.state.pheromone.reinforcementGain
-        * trailResponse(this.senseTrail(agent, agent.heading));
+      // Coherent following earns nonlinear reinforcement; every moving ant
+      // retains a weak trace that can seed a new branch.
+      movement.depositionMultiplier = DEPOSITION_BASELINE + this.state.pheromone.reinforcementGain
+        * agent.trailAdherence ** DEPOSITION_ADHERENCE_EXPONENT;
       return movement;
     });
 
@@ -420,7 +422,7 @@ function normalizeState(input) {
   state.pheromone.halfLifeSeconds = clampFinite(state.pheromone.halfLifeSeconds, 0.5, 120, DEFAULT_STATE.pheromone.halfLifeSeconds);
   state.pheromone.amountPerUnitDistance = clampFinite(state.pheromone.amountPerUnitDistance, 0.1, 30, DEFAULT_STATE.pheromone.amountPerUnitDistance);
   state.pheromone.radius = clampFinite(state.pheromone.radius, 0.002, 0.04, DEFAULT_STATE.pheromone.radius);
-  state.pheromone.reinforcementGain = clampFinite(state.pheromone.reinforcementGain, 0, 1, DEFAULT_STATE.pheromone.reinforcementGain);
+  state.pheromone.reinforcementGain = clampFinite(state.pheromone.reinforcementGain, 0, 5, DEFAULT_STATE.pheromone.reinforcementGain);
   state.behavior.sensorDistance = clampFinite(state.behavior.sensorDistance, 0.012, 0.1, 0.042);
   state.behavior.sensorWidth = clampFinite(state.behavior.sensorWidth, 0.004, 0.04, DEFAULT_STATE.behavior.sensorWidth);
   state.behavior.bodyRadius = clampFinite(state.behavior.bodyRadius, 0.003, 0.015, 0.006);

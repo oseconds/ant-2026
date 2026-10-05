@@ -296,6 +296,13 @@ async function verifyAnt(page, requestedUrls) {
     const value = Number((row?.cells[row.cells.length - 1]?.textContent || '').replace(/[^\d.-]/g, ''));
     return value > initial;
   }, initialPopulation, { timeout: 5000 });
+  // Weak exploratory deposits can remain below the UI's two-decimal precision
+  // during initial hesitation. Observe an update instead of assuming its timing.
+  await page.waitForFunction(initial => {
+    const row = [...document.querySelectorAll('#analysis tbody tr')]
+      .find(item => /pheromone|페로몬/i.test(item.cells[0]?.textContent || ''));
+    return Boolean(row && row.textContent.trim() !== initial);
+  }, initialMass, { timeout: 5000 });
   const activeAnalysis = await readAntAnalysis(page);
   const activeMass = activeAnalysis.find(row => /pheromone|페로몬/i.test(row));
   assert.notEqual(activeMass, initialMass, 'active simulation updates pheromone mass');

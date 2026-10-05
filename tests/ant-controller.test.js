@@ -44,6 +44,47 @@ function minSeparation(agents) {
   return minimum;
 }
 
+async function captureOneDeposit({ adherence, rawSignal = 0, amountPerUnitDistance = 4.5,
+  reinforcementGain = 5, stationary = false } = {}) {
+  const controller = new AntController({
+    random: seededRandom(75),
+    state: { pheromone: { amountPerUnitDistance, reinforcementGain } }
+  });
+  await controller.init();
+  const agent = controller.agents[0];
+  controller.agents = [agent];
+  controller.nextSpawnTimeMs = null;
+  agent.x = 0.5;
+  agent.y = 0.5;
+  agent.heading = 0;
+  agent.intentHeading = 0;
+  agent.vx = stationary ? 0 : 0.04;
+  agent.vy = 0;
+  agent.trailAdherence = adherence;
+  agent.hesitationRemaining = 0;
+  agent.inspectionRemaining = 100;
+  agent.decisionRemaining = 100;
+  agent.committedRemaining = 100;
+  if (stationary) agent.accelerateToward = () => {};
+  controller.senseLocalTrail = () => ({ strength: adherence, coherence: 1, steering: 0 });
+  controller.field.sample = () => rawSignal;
+
+  const deposits = [];
+  const depositSegment = controller.field.depositSegment.bind(controller.field);
+  controller.field.depositSegment = (from, to, options) => {
+    deposits.push({
+      distance: Math.hypot(to.x - from.x, to.y - from.y),
+      amountPerUnitDistance: options.amountPerUnitDistance,
+      radius: options.radius
+    });
+    return depositSegment(from, to, options);
+  };
+  controller.tick(1 / 60);
+  const pheromoneMass = controller.field.getSnapshot().totalMass;
+  await controller.destroy();
+  return { deposits, pheromoneMass };
+}
+
 test('population has equal agents with stable individual personalities and shared pheromone memory', async () => {
   const controller = new AntController({ random: seededRandom(10) });
   await controller.init();
@@ -516,24 +557,60 @@ test('a wide sensor discovers a thin adjacent trail without broadening the phero
   await controller.destroy();
 });
 
-test('distance deposition gains a small continuous reinforcement boost', async () => {
-  async function depositionRates(signal) {
-    const rates = [];
-    const controller = new AntController({ random: seededRandom(75) });
-    await controller.init();
-    controller.field.sample = () => signal;
-    controller.field.depositSegment = (_from, _to, options) => { rates.push(options.amountPerUnitDistance); };
-    controller.tick(1 / 60);
-    await controller.destroy();
-    assert.ok(rates.length > 0);
-    return rates;
+test('distance deposition follows a convex adherence-only reinforcement curve', async () => {
+  const adherenceLevels = [0, 0.1, 0.5, 0.9, 1];
+  const captures = await Promise.all(adherenceLevels.map(adherence =>
+    captureOneDeposit({ adherence })));
+  const rates = captures.map(({ deposits }) => {
+    assert.equal(deposits.length, 1, 'each moving ant deposits one traveled segment');
+    return deposits[0].amountPerUnitDistance;
+  });
+  const expectedMultipliers = adherenceLevels.map(value => 0.5 + 5 * value ** 2);
+  for (let index = 0; index < rates.length; index += 1) {
+    assert.ok(Math.abs(rates[index] / 4.5 - expectedMultipliers[index]) < 1e-12,
+      'adherence ' + adherenceLevels[index] + ' uses the configured quadratic multiplier');
   }
-  const isolated = await depositionRates(0);
-  const weak = await depositionRates(0.005);
-  const middle = await depositionRates(0.035);
-  const reinforced = await depositionRates(0.14);
-  assert.ok(isolated.every(rate => rate === 4.5));
-  assert.ok(weak.every(rate => rate < 4.5 * 1.01));
-  assert.ok(middle.every(rate => rate > weak[0] && rate < reinforced[0]));
-  assert.ok(reinforced.every(rate => rate > 4.5 * 1.4 && rate <= 4.5 * 1.45));
+  const slopes = rates.slice(1).map((rate, index) =>
+    (rate - rates[index]) / (adherenceLevels[index + 1] - adherenceLevels[index]));
+  assert.ok(slopes.every((slope, index) => index === 0 || slope > slopes[index - 1]),
+    'successive slopes increase as adherence strengthens');
+  assert.ok(rates[0] > 0 && rates[0] < 4.5, 'weakly adherent exploration still leaves a trace');
+  assert.ok(rates.at(-1) >= rates[0] * 11, 'a coherent path receives a substantial reinforcement');
+  assert.ok(captures.every(({ deposits }) => deposits[0].radius === 0.0045),
+    'the reinforcement change preserves the configured deposition radius');
+});
+
+test('raw pheromone concentration does not add to adherence-based deposition', async () => {
+  const emptyField = await captureOneDeposit({ adherence: 0.7, rawSignal: 0 });
+  const strongField = await captureOneDeposit({ adherence: 0.7, rawSignal: 0.14 });
+  assert.equal(emptyField.deposits.length, 1);
+  assert.equal(strongField.deposits.length, 1);
+  assert.equal(emptyField.deposits[0].amountPerUnitDistance,
+    strongField.deposits[0].amountPerUnitDistance);
+  assert.equal(emptyField.deposits[0].distance, strongField.deposits[0].distance);
+});
+
+test('configured base amount and bounded reinforcement gain scale real deposits', async () => {
+  const baseAmount = 2.5;
+  const noGain = await captureOneDeposit({ adherence: 1, amountPerUnitDistance: baseAmount, reinforcementGain: 0 });
+  const aboveMaximum = await captureOneDeposit({ adherence: 1, amountPerUnitDistance: baseAmount, reinforcementGain: 7 });
+  const negativeGain = await captureOneDeposit({ adherence: 0.5, amountPerUnitDistance: baseAmount, reinforcementGain: -2 });
+  assert.equal(noGain.deposits[0].amountPerUnitDistance, baseAmount * 0.5,
+    'zero configurable gain retains the weak baseline trace');
+  assert.equal(aboveMaximum.deposits[0].amountPerUnitDistance, baseAmount * 5.5,
+    'the normalized gain clamps at 5');
+  assert.equal(negativeGain.deposits[0].amountPerUnitDistance, baseAmount * 0.5,
+    'negative gain clamps at 0');
+  assert.ok(noGain.pheromoneMass > 0 && aboveMaximum.pheromoneMass > noGain.pheromoneMass,
+    'the configured base and reinforcement affect the actual shared field');
+
+  const defaultController = new AntController({ random: seededRandom(75) });
+  assert.equal(defaultController.getState().pheromone.reinforcementGain, 5);
+  await defaultController.destroy();
+});
+
+test('a stationary ant adds no pheromone despite the nonzero deposition baseline', async () => {
+  const stopped = await captureOneDeposit({ adherence: 1, stationary: true });
+  assert.equal(stopped.deposits.length, 0);
+  assert.equal(stopped.pheromoneMass, 0);
 });
