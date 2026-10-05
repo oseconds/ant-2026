@@ -45,6 +45,9 @@ test('tripod touchdowns alternate B then A and share their foot geometry with sn
   assert.deepEqual(events[1].contacts.map(contact => contact.legId), ['FL', 'MR', 'RL']);
   for (const event of events) {
     assert.equal(event.type, 'FOOT_CONTACT');
+    assert.deepEqual(Object.keys(event), [
+      'type', 'antId', 'contactGroup', 'contacts', 'position', 'strength', 'simulationTimeMs'
+    ], 'the FOOT_CONTACT contract remains unchanged');
     assert.equal(event.contacts.length, 3);
     assert.ok(event.contacts.every(contact => Number.isFinite(contact.position.x)
       && Number.isFinite(contact.position.y)
@@ -59,6 +62,28 @@ test('tripod touchdowns alternate B then A and share their foot geometry with sn
   assert.ok(gait.getSnapshot(end).legs.every(leg => Number.isFinite(leg.root.x)
     && Number.isFinite(leg.root.y) && Number.isFinite(leg.knee.x) && Number.isFinite(leg.knee.y)
     && Number.isFinite(leg.foot.x) && Number.isFinite(leg.foot.y)));
+});
+
+test('knee bends are visible while leg geometry stays finite and deterministic', () => {
+  const first = new GaitController({ strideVariation: 0 });
+  const second = new GaitController({ strideVariation: 0 });
+  const ant = movingAnt('ant-knee-readability', 0.5, 0.5, 0.3);
+  first.getOrCreate(ant.id).phase = 0.25;
+  second.getOrCreate(ant.id).phase = 0.25;
+  const legs = first.getSnapshot(ant).legs;
+  assert.deepEqual(legs, second.getSnapshot(ant).legs,
+    'the same ant ID and gait phase produce the same leg snapshot');
+  for (const leg of legs) {
+    for (const point of [leg.root, leg.knee, leg.foot]) {
+      assert.ok(Number.isFinite(point.x) && Number.isFinite(point.y));
+    }
+    const firstX = leg.knee.x - leg.root.x;
+    const firstY = leg.knee.y - leg.root.y;
+    const secondX = leg.foot.x - leg.knee.x;
+    const secondY = leg.foot.y - leg.knee.y;
+    assert.ok(Math.abs(firstX * secondY - firstY * secondX) > 1e-8,
+      `${leg.id} reads as two non-collinear leg segments`);
+  }
 });
 
 test('leg geometry rotates with body heading and keeps left/right and front/rear ordering', () => {

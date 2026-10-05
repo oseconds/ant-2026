@@ -139,16 +139,18 @@ ANT 메뉴의 목표 개체 수는 28입니다. 시작할 때는 하단 중앙 �
 
 책임은 다음처럼 분리합니다.
 
-- `AntAgent`: 개체별 이동 상태, 관성, 지속적인 성향.
+- `AntAgent`: 개체별 이동 상태, 관성, 지속적인 성향. snapshot은 실제 turn rate도 읽기 전용 값으로 전달합니다.
 - `PheromoneField`: 공유 외부 기억. `depositSegment()`, `sample()`, `decay(dtSeconds)`, `clear()`, `getSnapshot()`을 독립적으로 제공합니다.
 - `LocalOccupancy`: 주변 몸체 점유와 방향별 혼잡, 근거리 분리와 이동 선분의 접촉 제약. 페로몬을 알지 않습니다.
 - `GaitController`: 실제 이동 거리만으로 ID 기반 stride/phase를 진행합니다. 여섯 leg의 root/knee/foot geometry snapshot과 교대하는 tripod FOOT_CONTACT를 같은 phase에서 만듭니다. heading·속도·trail·collision을 바꾸지 않고 behavior random도 읽지 않습니다.
 - `AntController`: 위 시스템들을 연결하고 명시적인 시간에 따라 개체군을 진행합니다. `getState()`는 JSON 설정, `getSnapshot()`은 개체와 gait geometry, 격자 복사본입니다. 접촉 제약 뒤의 관측 가능한 실제 이동 구간을 `GaitController`에 전달하고, 이벤트를 선택적으로 주입된 오디오 브리지에 넘깁니다. Web Audio·DOM·p5 코드는 포함하지 않습니다.
-- `AntRenderer`: p5 instance-mode로 oriented head/thorax/abdomen과 6개의 2-segment leg를 snapshot에서 그립니다. 공유 pheromone field는 고정된 two-scale grayscale transfer로 표시합니다. p5는 `init()`에서만 동적으로 불러오고 `noLoop()`와 `redraw()`를 사용하며 main.js의 RAF가 update와 render를 호출합니다. sketch는 gait나 model을 갱신하지 않고 p5.sound도 포함하지 않습니다.
+- `AntRenderer`: p5 instance-mode로 articulated head/thorax/petiole/gaster, 안테나, 6개의 2-segment leg를 snapshot에서 그립니다. 공유 pheromone field는 고정된 two-scale grayscale transfer로 표시합니다. p5는 `init()`에서만 동적으로 불러오고 `noLoop()`와 `redraw()`를 사용하며 main.js의 RAF가 update와 render를 호출합니다. sketch는 gait나 model을 갱신하지 않고 p5.sound도 포함하지 않습니다.
 
-현재 몸체는 collision radius를 유지하는 하나의 `AntAgent`입니다. snapshot의 visual body에는 heading 기준으로 head `+0.90r`, thorax `0`, abdomen `−1.05r` 중심을 사용하며 각각의 종·횡 크기는 `(1.05r, 0.85r)`, `(1.10r, 0.90r)`, `(1.55r, 1.05r)`입니다. 여섯 leg는 앞·중간·뒤 root 위치 `+0.45r / 0 / −0.45r`, lateral `±0.42r`에서 발 `+1.20r / 0 / −1.20r`, lateral `±1.70r`로 이어집니다. knee는 root와 발 중간에 바깥쪽 `0.12r` 편향을 줍니다.
+물리 collision body는 하나의 `AntAgent`와 기존 radius `0.006`으로 유지합니다. 화면에서는 heading을 기준으로 gaster `−1.35r`·`1.60r × 1.02r`, petiole `−0.90r`·`0.28r × 0.22r`, thorax `0`·`1.05r × 0.70r`, head `+1.09r`·`1.08r × 0.86r`를 그립니다. 여섯 leg의 root는 `+0.45r / 0 / −0.45r`, foot 앞뒤 오프셋은 `+1.95r / 0 / −2.00r`, lateral reach는 `3.05r / 3.10r / 3.25r`, gait 왕복폭은 `0.52r`입니다. Knee geometry는 along `[0.42, 0.50, 0.58]`, outward `[0.44r, 0.48r, 0.48r]`, 앞뒤 편향 `[+0.10r, 0, −0.10r]`입니다.
 
 `GaitController`의 한 cycle은 ID 해시로 지속 편차 ±8%를 정한 `0.036` 이동 단위이고, touchdown은 약 `0.018`마다 생깁니다. phase 시작값과 접촉 세기 편차 ±4%도 ant ID에서 해시합니다. AntController의 random source는 호출하지 않습니다. Tripod A는 FL/MR/RL, B는 FR/ML/RR이고 half-cycle씩 교대합니다. 각 leg의 stance 비율은 0.62이며 stance에서 발을 몸체 기준 뒤로 옮기고 swing은 smoothstep으로 앞쪽에 돌려놓으며 약간 안쪽으로 접습니다. Renderer가 계산을 다시 만들지 않고 이 snapshot geometry를 그립니다.
+
+Turn articulation은 `turnSignal = clamp(angularVelocity / 4.5, −1, 1)`에서만 유도합니다. Head는 thorax 앞쪽 `+0.54r` pivot에서 최대 `+0.23 rad` yaw로 회전을 살짝 앞서고, 두 antennae는 같은 head-local transform을 따라갑니다. Gaster는 petiole `−0.90r`을 pivot으로 최대 `−0.12 rad` yaw를 줘 반대로 조금 늦춥니다. `angularVelocity = 0`이면 두 상대 회전 모두 0입니다. Thorax heading, 여섯 발 위치, gait phase, FOOT_CONTACT는 그대로입니다. 현재 locomotion tuning인 max turn rate `4.5 rad/s`, acceleration response `32`, braking response `37`, max speed `preferredSpeed × 1.35`도 변경하지 않았으며, trail steering의 기존 angular-velocity clamp `±2.2`도 유지합니다. 이 회전은 그리기용이며 관절 물리·body collision·행동 상태를 추가하지 않습니다.
 
 `FOOT_CONTACT`는 `{ type, antId, contactGroup: 'A' | 'B', contacts, position, strength, simulationTimeMs }`입니다. `contacts`에는 실제 tripod의 각 `{ legId, position: { x, y } }`가 있으며, 영역 밖 발은 clamp 없이 제외되어 1–3개가 남을 수 있습니다. `position`은 남은 발의 centroid이고, 0개면 이벤트를 내지 않습니다. 큰 advance에서도 phase/remainder를 모두 전진시키면서 최대 4개 tripod event만 냅니다. 각 group은 shared Plate에 centroid로 한 번만 타격됩니다.
 
@@ -173,7 +175,7 @@ await renderer.destroy(); // p5.remove()로 canvas와 내부 listener 정리
 await ants.destroy();
 ```
 
-ANT도 Lab registry로 전환하며, registry가 Lab의 기존 AudioEngine을 공유하는 `AntAudioBridge`를 controller에 주입합니다. 기본 Audio Off에서는 AudioContext나 Plate Worklet을 만들지 않습니다. 전환하면 기존 RAF·ResizeObserver·p5 instance와 ANT의 Plate 자원을 정리하고 controller를 파괴합니다. 공유 AudioEngine의 최종 파괴는 Lab이 담당합니다. SvelteKit에서 `AntRenderer`를 사용할 때는 `p5` dependency를 설치하고 onMount 이후 `init()`하세요. 개체와 공유장만 사용하는 환경에서는 p5를 import하거나 실행할 필요가 없습니다. 호르몬·먹이·둥지·장애물과 다리·보행 애니메이션은 구현하지 않습니다. 몸체 회피는 soft local interaction이며 개미의 생물학이나 rigid-body physics를 재현하지 않습니다.
+ANT도 Lab registry로 전환하며, registry가 Lab의 기존 AudioEngine을 공유하는 `AntAudioBridge`를 controller에 주입합니다. 기본 Audio Off에서는 AudioContext나 Plate Worklet을 만들지 않습니다. 전환하면 기존 RAF·ResizeObserver·p5 instance와 ANT의 Plate 자원을 정리하고 controller를 파괴합니다. 공유 AudioEngine의 최종 파괴는 Lab이 담당합니다. SvelteKit에서 `AntRenderer`를 사용할 때는 `p5` dependency를 설치하고 onMount 이후 `init()`하세요. 개체와 공유장만 사용하는 환경에서는 p5를 import하거나 실행할 필요가 없습니다. 호르몬·먹이·둥지·장애물은 구현하지 않습니다. 몸체 회피는 soft local interaction이며 개미의 생물학이나 rigid-body physics를 재현하지 않습니다.
 
 ## 데모 표시
 
@@ -237,7 +239,9 @@ await ants.destroy(); // 주입한 engine은 소유자가 별도로 정리.
 
 이 단계에서는 페로몬 반감기·침적량, 개체 수, 격자 해상도, `trailAdherence`, 생성, 오디오, encounter rate, quorum, raid, UI를 바꾸지 않습니다. 성공 기준은 여러 개미가 같은 경로 위에 간격을 두고 이어서 이동하는 장면이 실제 화면에서 보이고, 접촉/통과가 발생하지 않는 것입니다. 자동 검증 결과만으로 이 시각 기준이 충족됐다고 판단하지 않습니다.
 
-방향 인지형 교통·adherence 기반 페로몬 강화·거리 기반 AUDIO v0·볼륨·공유 Plate 스테레오 이후, 이번 단계에서 여섯 다리 tripod gait와 같은 위상에서 생성되는 FOOT_CONTACT를 추가했습니다. 현재 보행 출력이 기본이며, `StepEventGenerator`는 비교 실험을 위한 거리 STEP 기준으로 남아 있습니다. 이번 변경은 ANT의 이동 결정과 공유 페로몬 동역학을 그대로 두고 gait 표시·접촉 사건·field의 시각 표현만 바꿉니다. `TrajectoryBuffer`는 일반 유틸리티로 남기며 ANT의 행동/리듬 재생 장치로 다시 연결하지 않습니다. 장기적으로 다시 쓰더라도 집단의 과거를 담는 별도 기억층으로 취급합니다.
+방향 인지형 교통·adherence 기반 페로몬 강화·거리 기반 AUDIO v0·볼륨·공유 Plate 스테레오 이후, 여섯 다리 tripod gait와 같은 위상에서 생성되는 FOOT_CONTACT를 추가했습니다. 다음 단계에서는 현재 이동 tuning과 gait geometry를 보존한 채 head/antenna lead와 gaster lag를 render-only로 표현합니다. 이 회전은 `angularVelocity` snapshot에만 의존하고 행동·발 접촉·충돌을 바꾸지 않습니다. `StepEventGenerator`는 비교 실험용 거리 STEP 기준으로 남겨 둡니다. `TrajectoryBuffer`는 일반 유틸리티로 남기며 ANT의 행동/리듬 재생 장치로 다시 연결하지 않습니다.
+
+[Head/gaster articulation 실험 기록과 straight·turning 자연 상태 스크린샷](docs/ant/evidence/2026-10-05-articulation/README.md)을 보존했습니다.
 
 ## AudioWorklet protocol
 

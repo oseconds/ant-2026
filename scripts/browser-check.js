@@ -664,7 +664,90 @@ async function verifyAnt(page, requestedUrls) {
       const { app } = await import('/src/main.js');
       const model = app.lab.model;
       await model.setAudioEnabled(false);
-      for (let step = 0; step < 20 * 60; step += 1) model.tick(1 / 60);
+      const startingSimulationTimeMs = model.simulationTimeMs;
+      const turnSamples = {};
+      const turnObservationCounts = { straight: 0, gentle: 0, sharp: 0, opposingClosePair: 0 };
+      let denseSpawnAreaPeak = 0;
+      const snapshotAnt = ant => ({ ...ant.getSnapshot(), gait: model.gaitController.getSnapshot(ant) });
+      for (let step = 0; step < 120 * 60; step += 1) {
+        model.tick(1 / 60);
+        const ants = model.agents;
+        for (const ant of ants) {
+          const speed = Math.hypot(ant.vx, ant.vy);
+          const turnRate = Math.abs(ant.angularVelocity);
+          if (speed > 0.02 && turnRate < 0.25) {
+            turnObservationCounts.straight += 1;
+            if (!turnSamples.straight) turnSamples.straight = {
+              simulationTimeMs: model.simulationTimeMs,
+              turnRate: ant.angularVelocity,
+              agents: [snapshotAnt(ant)]
+            };
+          } else if (speed > 0.02 && turnRate >= 0.25 && turnRate < 2) {
+            turnObservationCounts.gentle += 1;
+            if (!turnSamples.gentle) turnSamples.gentle = {
+              simulationTimeMs: model.simulationTimeMs,
+              turnRate: ant.angularVelocity,
+              agents: [snapshotAnt(ant)]
+            };
+          } else if (speed > 0.02 && turnRate >= 3) {
+            turnObservationCounts.sharp += 1;
+            if (!turnSamples.sharp) turnSamples.sharp = {
+              simulationTimeMs: model.simulationTimeMs,
+              turnRate: ant.angularVelocity,
+              agents: [snapshotAnt(ant)]
+            };
+          }
+        }
+
+        const spawnArea = ants.filter(ant => Math.hypot(ant.x - 0.5, ant.y - 0.72) <= 0.055);
+        denseSpawnAreaPeak = Math.max(denseSpawnAreaPeak, spawnArea.length);
+        if (spawnArea.length >= 3 && !turnSamples.denseSpawnArea) {
+          turnSamples.denseSpawnArea = {
+            simulationTimeMs: model.simulationTimeMs,
+            count: spawnArea.length,
+            agents: spawnArea.map(snapshotAnt)
+          };
+        }
+
+        if (!turnSamples.opposingClosePair) {
+          for (let first = 0; first < ants.length && !turnSamples.opposingClosePair; first += 1) {
+            const a = ants[first];
+            for (let second = first + 1; second < ants.length; second += 1) {
+              const b = ants[second];
+              const dx = b.x - a.x, dy = b.y - a.y;
+              const distance = Math.hypot(dx, dy);
+              if (distance <= 1e-9 || distance > 0.07 || Math.cos(a.heading - b.heading) >= -0.5) continue;
+              const closingSpeed = ((a.vx - b.vx) * dx + (a.vy - b.vy) * dy) / distance;
+              if (closingSpeed <= 0.004) continue;
+              turnObservationCounts.opposingClosePair += 1;
+              turnSamples.opposingClosePair = {
+                simulationTimeMs: model.simulationTimeMs,
+                distance,
+                closingSpeed,
+                agents: [snapshotAnt(a), snapshotAnt(b)]
+              };
+              break;
+            }
+          }
+        }
+
+        if (step >= 20 * 60 && turnSamples.straight && turnSamples.gentle && turnSamples.sharp
+          && turnSamples.denseSpawnArea && turnSamples.opposingClosePair) break;
+      }
+      window.__antArticulationSamples = turnSamples;
+      window.__antArticulationMetrics = {
+        additionalSimulatedSeconds: (model.simulationTimeMs - startingSimulationTimeMs) / 1000,
+        totalSimulationTimeMs: model.simulationTimeMs,
+        turnObservationCounts,
+        denseSpawnAreaPeak,
+        sampledStates: Object.fromEntries(Object.entries(turnSamples).map(([name, sample]) => [name, {
+          simulationTimeMs: sample.simulationTimeMs,
+          angularVelocities: sample.agents.map(ant => ant.angularVelocity),
+          antCount: sample.agents.length,
+          distance: sample.distance ?? null,
+          closingSpeed: sample.closingSpeed ?? null
+        }]))
+      };
       await model.setAudioEnabled(true);
       model.emit('update');
     });
@@ -695,10 +778,11 @@ async function verifyAnt(page, requestedUrls) {
         && item.message?.type === 'strike');
       const gaitPhases = snapshot.agents.map(agent => agent.gait?.phase);
       return {
-        scenario: 'default live ANT app after 20 additional simulated seconds with audio active; existing canvas renderer',
+        scenario: `default live ANT app at ${(snapshot.analysis.simulationTimeMs / 1000).toFixed(1)} total simulated seconds with audio active; existing canvas renderer`,
         observedAt: new Date().toISOString(),
         analysis: snapshot.analysis,
         activeAnts: snapshot.agents.length,
+        articulation: window.__antArticulationMetrics,
         gait: {
           antsWithSixLegs: snapshot.agents.filter(agent => agent.gait?.legs?.length === 6).length,
           finitePhases: gaitPhases.every(Number.isFinite),
@@ -736,8 +820,56 @@ async function verifyAnt(page, requestedUrls) {
     assert.equal(turnoverCapture.gait.invalidContactEvents, 0, 'all live foot contacts stay in the ANT domain');
     assert.ok(turnoverCapture.audio.enabled && turnoverCapture.audio.plateStrikes > 0,
       'live tripod contacts reach the shared Plate while the screenshot audio is on');
+    assert.ok(turnoverCapture.articulation.turnObservationCounts.straight > 0
+      && turnoverCapture.articulation.turnObservationCounts.gentle > 0
+      && turnoverCapture.articulation.turnObservationCounts.sharp > 0,
+    'natural simulation samples straight, gentle, and sharp turning states');
     await writeFile('test-results/ant-gait-dev-metrics.json', `${JSON.stringify(turnoverCapture, null, 2)}\n`);
     await writeFile('test-results/ant-turnover-dev-capture.json', `${JSON.stringify(turnoverCapture, null, 2)}\n`);
+    await writeFile('test-results/ant-articulation-turns.json', `${JSON.stringify(turnoverCapture.articulation, null, 2)}\n`);
+    for (const poseName of Object.keys(turnoverCapture.articulation.sampledStates)) {
+      const dataUrl = await page.evaluate(async name => {
+        const { app } = await import('/src/main.js');
+        const model = app.lab.model;
+        const sample = window.__antArticulationSamples[name];
+        const { AntRenderer } = await import('/src/lib/renderers/AntRenderer.js');
+        const host = document.createElement('div');
+        host.style.cssText = 'position:fixed;left:0;top:0;width:640px;height:640px;z-index:9999';
+        const canvas = document.createElement('canvas');
+        host.appendChild(canvas);
+        document.body.appendChild(host);
+        const preview = new AntRenderer(canvas);
+        await preview.init({ width: 640, height: 640, pixelRatio: 1 });
+        const focus = sample.agents.reduce((sum, ant) => ({ x: sum.x + ant.x, y: sum.y + ant.y }), { x: 0, y: 0 });
+        focus.x /= sample.agents.length;
+        focus.y /= sample.agents.length;
+        const zoom = sample.agents.length > 1 ? 4.5 : 8;
+        const focusedAgents = sample.agents.map(ant => ({
+          ...ant,
+          x: 0.5 + (ant.x - focus.x) * zoom,
+          y: 0.5 + (ant.y - focus.y) * zoom,
+          radius: ant.radius * zoom,
+          gait: {
+            ...ant.gait,
+            legs: ant.gait.legs.map(leg => Object.fromEntries(
+              ['root', 'knee', 'foot'].map(key => [key, {
+                x: 0.5 + (leg[key].x - focus.x) * zoom,
+                y: 0.5 + (leg[key].y - focus.y) * zoom
+              }])
+            ))
+          }
+        }));
+        preview.render({ agents: focusedAgents });
+        await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        const image = canvas.toDataURL('image/png');
+        await preview.destroy();
+        host.remove();
+        return image;
+      }, poseName);
+      const imageBytes = Buffer.from(dataUrl.slice(dataUrl.indexOf(',') + 1), 'base64');
+      await writeFile(`test-results/ant-articulation-${poseName}.png`, imageBytes);
+    }
+    await page.screenshot({ path: 'test-results/ant-articulation-live.png', fullPage: true });
     await page.screenshot({ path: 'test-results/ant-gait-dev.png', fullPage: true });
   } else {
     await page.waitForTimeout(30000);
@@ -908,6 +1040,10 @@ async function verifyAntAudioToggle(page, audioButton) {
       && probe.workletMessages.some(item => item.name === 'plate-processor' && item.message?.type === 'strike')
       && probe.workletRms.some(item => item.index === stereoIndex && item.leftRms > 1e-7 && item.rightRms > 1e-7);
   }, null, { timeout: 12000 });
+  if (!useProduction) await page.waitForFunction(() => {
+    const events = window.__antFootContactEvents || [];
+    return events.some(event => event.contactGroup === 'A') && events.some(event => event.contactGroup === 'B');
+  }, null, { timeout: 8000 });
   const firstOn = await page.evaluate(() => {
     const probe = window.__physicalAudioProbe;
     window.__antContext = probe.audioContexts[0];

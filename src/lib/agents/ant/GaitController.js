@@ -173,13 +173,13 @@ function calculateLegGeometry(agent, phase) {
 
   // knee가 root→foot 선분 상에서 놓일 비율
   // 앞다리는 조금 root 쪽, 뒷다리는 조금 foot 쪽
-  const kneeAlong = [0.42, 0.50, 0.58];
+  const kneeAlong = [0.34, 0.50, 0.66];
 
   // knee를 바깥으로 얼마나 밀지
-  const kneeOutwardBySegment = [0.44, 0.48, 0.48];
+  const kneeOutwardBySegment = [0.56, 0.60, 0.58];
 
   // 앞다리는 약간 앞으로, 뒷다리는 약간 뒤로 bias
-  const kneeForeAftBias = [0.10, 0.0, -0.10];
+  const kneeForeAftBias = [0.16, 0.0, -0.16];
 
   return LEGS.map(({ id, side, segment, tripod }) => {
     const legPhase = positiveModulo(

@@ -1,3 +1,9 @@
+import { ANT_MAX_TURN_RATE } from '../agents/ant/AntAgent.js';
+
+const HEAD_YAW_MAX = 0.23;
+const GASTER_YAW_MAX = 0.12;
+const HEAD_PIVOT_X = 0.54;
+
 /**
  * p5 instance-mode view for the ANT experiment.
  *
@@ -218,6 +224,13 @@ function drawAnt(p, agent, width, height, diameterScale) {
   }
 
   const r = radius * diameterScale;
+  const turnSignal = clamp(
+    Number.isFinite(agent.angularVelocity) ? agent.angularVelocity / ANT_MAX_TURN_RATE : 0,
+    -1,
+    1
+  );
+  const headYaw = turnSignal * HEAD_YAW_MAX;
+  const gasterYaw = -turnSignal * GASTER_YAW_MAX;
 
   // ----------------------------
   // LEGS
@@ -263,81 +276,71 @@ function drawAnt(p, agent, width, height, diameterScale) {
 
   // ----------------------------
   // LOCAL BODY SPACE
+  // 다리 좌표는 기존처럼 thorax heading을 기준으로 유지합니다.
   // ----------------------------
   p.push();
   p.translate(centerX, centerY);
   p.rotate(Number.isFinite(agent.heading) ? agent.heading : 0);
 
-  // ----------------------------
-  // ANTENNAE
-  // 너무 ㄱ자처럼 과하게 말고,
-  // 길게 뻗었다가 살짝 꺾이는 느낌
-  // ----------------------------
+  // 몸통은 뒤에서 앞으로 그려 좁은 petiole이 두 부분을 이어 주게 합니다.
+  // gaster
+  drawGaster(p, r, gasterYaw);
+  p.noStroke();
+  p.fill(28);
+  // petiole
+  p.ellipse(-0.90 * r, 0, 0.28 * r, 0.22 * r); // petiole
+  // thorax
+  p.ellipse(0, 0, 1.05 * r, 0.70 * r); // thorax
+  // head
+  drawHead(p, r, headYaw);
+
+  p.pop();
+}
+
+function drawGaster(p, r, yaw) {
+  p.push();
+  p.translate(-0.90 * r, 0); // petiole 연결점 근처를 축으로 반대 방향으로 살짝 늦춥니다.
+  p.rotate(yaw);
+  p.noStroke();
+  p.fill(28);
+  p.ellipse(-0.45 * r, 0, 1.60 * r, 1.02 * r);
+  p.pop();
+}
+
+function drawHead(p, r, yaw) {
+  p.push();
+  p.translate(HEAD_PIVOT_X * r, 0); // thorax 앞쪽을 축으로 head와 antennae를 함께 움직입니다.
+  p.rotate(yaw);
   p.stroke(85);
   p.strokeWeight(Math.max(0.35, r * 0.055));
   p.strokeCap(p.ROUND);
   p.noFill();
 
+  // ----------------------------
+  // ANTENNAE
+  // 너무 ㄱ자처럼 과하게 말고,
+  // 길게 뻗었다가 살짝 꺾이는 느낌
+  // 얇은 두 분절을 head-local 좌표로 그려, 긴 형태는 유지하고 회전만 따라가게 합니다.
+  // ----------------------------
+  const rootX = (1.28 - HEAD_PIVOT_X) * r;
+  const elbowX = (1.85 - HEAD_PIVOT_X) * r;
+  const tipX = (2.45 - HEAD_PIVOT_X) * r;
   // left antenna
-  p.line(
-    1.28 * r, -0.23 * r,
-    1.85 * r, -0.42 * r
-  );
-  p.line(
-    1.85 * r, -0.42 * r,
-    2.45 * r, -0.68 * r
-  );
-
+  p.line(rootX, -0.23 * r, elbowX, -0.42 * r);
+  p.line(elbowX, -0.42 * r, tipX, -0.68 * r);
   // right antenna
-  p.line(
-    1.28 * r, 0.23 * r,
-    1.85 * r, 0.42 * r
-  );
-  p.line(
-    1.85 * r, 0.42 * r,
-    2.45 * r, 0.68 * r
-  );
+  p.line(rootX, 0.23 * r, elbowX, 0.42 * r);
+  p.line(elbowX, 0.42 * r, tipX, 0.68 * r);
 
   // ----------------------------
   // BODY
   // 몸통을 마지막에 그려서
   // 다리/더듬이 뿌리 부분을 자연스럽게 덮음
+  // 여기서는 head가 마지막 body part라 antenna 뿌리를 덮습니다.
   // ----------------------------
   p.noStroke();
   p.fill(28);
-
-  // gaster
-  p.ellipse(
-    -1.35 * r,
-    0,
-    1.60 * r,
-    1.02 * r
-  );
-
-  // petiole
-  p.ellipse(
-    -0.90 * r,
-    0,
-    0.28 * r,
-    0.22 * r
-  );
-
-  // thorax
-  p.ellipse(
-    0,
-    0,
-    1.05 * r,
-    0.70 * r
-  );
-
-  // head
-  p.ellipse(
-    1.09 * r,
-    0,
-    1.08 * r,
-    0.86 * r
-  );
-
+  p.ellipse((1.09 - HEAD_PIVOT_X) * r, 0, 1.08 * r, 0.86 * r);
   p.pop();
 }
 
@@ -380,6 +383,10 @@ function smoothstep(min, max, value) {
 
 function isPoint(value) {
   return value && Number.isFinite(value.x) && Number.isFinite(value.y);
+}
+
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
 }
 
 function positiveSize(value) {

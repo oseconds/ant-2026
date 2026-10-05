@@ -1,4 +1,6 @@
 const TAU = Math.PI * 2;
+// Renderer가 실제 이동 turn rate를 같은 기준으로 정규화할 때 사용합니다.
+export const ANT_MAX_TURN_RATE = 4.5;
 
 /** Equal, stateful ant agent. It knows neither its neighbors nor how it is drawn. */
 export class AntAgent {
@@ -35,12 +37,10 @@ export class AntAgent {
   /** Keep directional intent smooth while allowing deliberate, slow changes. */
   turnToward(targetHeading, dtSeconds) {
     const error = angleDelta(this.heading, targetHeading);
-    const maxTurnRate = 4.5; // rad/s
-
     const turn = clamp(
       error,
-      -maxTurnRate * dtSeconds,
-      maxTurnRate * dtSeconds
+      -ANT_MAX_TURN_RATE * dtSeconds,
+      ANT_MAX_TURN_RATE * dtSeconds
     );
 
     this.heading = wrapAngle(this.heading + turn);
@@ -77,7 +77,7 @@ export class AntAgent {
   getSnapshot() {
     return {
       id: this.id, x: this.x, y: this.y, vx: this.vx, vy: this.vy,
-      heading: this.heading, radius: this.radius,
+      heading: this.heading, angularVelocity: this.angularVelocity, radius: this.radius,
       trailAdherence: this.trailAdherence,
       personality: { ...this.personality }
     };

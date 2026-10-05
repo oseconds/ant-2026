@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { AntRenderer, pheromoneValueToAlpha } from '../src/lib/renderers/AntRenderer.js';
+import { ANT_MAX_TURN_RATE, AntAgent } from '../src/lib/agents/ant/AntAgent.js';
 import { GaitController } from '../src/lib/agents/ant/GaitController.js';
 
 test('AntRenderer paints equal agent marks and a cached pheromone field without changing the snapshot', async () => {
@@ -63,7 +64,7 @@ test('pheromone display uses two fixed scales with monotonic weak trace and stro
   assert.ok(alpha.every(value => value <= 112));
 });
 
-test('articulated ants draw six gait legs and an oriented three-part body from the snapshot geometry', async () => {
+test('articulated ants draw snapshot gait legs and a four-part body without mutating the snapshot', async () => {
   const calls = [];
   const parent = makeParent();
   const canvas = makeCanvas(parent);
@@ -79,11 +80,50 @@ test('articulated ants draw six gait legs and an oriented three-part body from t
   const before = structuredClone(snapshot.agents[0]);
   renderer.render(snapshot);
   assert.deepEqual(snapshot.agents[0], before, 'the renderer does not write to its model snapshot');
-  assert.equal(calls.filter(([name]) => name === 'line').length, 12);
-  assert.equal(calls.filter(([name]) => name === 'ellipse').length, 3);
-  assert.equal(calls.filter(([name]) => name === 'circle').length, 0);
+  assert.equal(calls.filter(([name]) => name === 'line').length, 16, 'six legs and two two-segment antennae are drawn');
+  assert.equal(calls.filter(([name]) => name === 'ellipse').length, 4, 'gaster, petiole, thorax, and head are drawn');
+  assert.equal(calls.filter(([name]) => name === 'circle').length, 6, 'the existing visible knee markers are retained');
   assert.ok(calls.some(([name, ...args]) => name === 'rotate' && args[0] === ant.heading));
   await renderer.destroy();
+});
+
+test('turn-only head lead and opposing gaster lag are smooth, mirrored, and clamped', async () => {
+  const turnSnapshots = [];
+  for (const angularVelocity of [0, 2.25, -2.25, 100, -100]) {
+    const calls = [];
+    const parent = makeParent();
+    const canvas = makeCanvas(parent);
+    canvas.getBoundingClientRect = () => ({ width: 240, height: 240 });
+    const renderer = new AntRenderer(canvas, { loadP5: async () => ({ default: makeP5(calls) }) });
+    await renderer.init();
+
+    const ant = new AntAgent({ id: 'ant-articulation', x: 0.4, y: 0.6, heading: 0.7, random: () => 0.5 });
+    ant.angularVelocity = angularVelocity;
+    const agentSnapshot = { ...ant.getSnapshot(), gait: new GaitController().getSnapshot(ant) };
+    const stateBeforeDraw = structuredClone(agentSnapshot);
+    const movementBeforeDraw = {
+      x: ant.x, y: ant.y, vx: ant.vx, vy: ant.vy,
+      heading: ant.heading, angularVelocity: ant.angularVelocity
+    };
+    renderer.render({ agents: [agentSnapshot], pheromone: { width: 0, height: 0, values: new Float32Array() } });
+
+    const rotations = calls.filter(([name]) => name === 'rotate').map(([, angle]) => angle);
+    const signal = Math.max(-1, Math.min(1, angularVelocity / ANT_MAX_TURN_RATE));
+    assert.equal(rotations.length, 3, 'thorax frame, gaster joint, and head joint each rotate once');
+    assert.ok(Math.abs(rotations[0] - ant.heading) < 1e-12, 'the thorax remains on agent.heading');
+    assert.ok(Math.abs(rotations[1] - -signal * 0.12) < 1e-12, 'the gaster lags in the opposite direction');
+    assert.ok(Math.abs(rotations[2] - signal * 0.23) < 1e-12, 'the head leads with a bounded yaw');
+    assert.deepEqual(agentSnapshot, stateBeforeDraw, 'rendering leaves the snapshot and leg geometry unchanged');
+    assert.deepEqual({ x: ant.x, y: ant.y, vx: ant.vx, vy: ant.vy,
+      heading: ant.heading, angularVelocity: ant.angularVelocity }, movementBeforeDraw,
+    'rendering does not modify AntAgent movement state');
+    const headRotationIndex = calls.findIndex(([name, angle]) => name === 'rotate' && Math.abs(angle - rotations[2]) < 1e-12);
+    assert.equal(calls.slice(headRotationIndex + 1).filter(([name]) => name === 'line').length, 4,
+      'all four antenna segments are drawn in the head-local transform');
+    turnSnapshots.push(calls.filter(([name]) => name === 'line').slice(0, 12));
+    await renderer.destroy();
+  }
+  assert.deepEqual(turnSnapshots[0], turnSnapshots[1], 'head articulation does not rotate or rewrite gait leg geometry');
 });
 
 test('destroy cancels initialization while the p5 module is still loading', async () => {
@@ -130,7 +170,7 @@ function makeP5(calls, { deferSetup = false, manualSetup = false, failSetup = fa
     constructor(sketch, parent) {
       calls.push(['p5-parent', parent]);
       const p = {
-        P2D: '2d', width: 0, height: 0,
+        P2D: '2d', ROUND: 'round', width: 0, height: 0,
         pixelDensity: (...args) => calls.push(['pixelDensity', ...args]),
         createCanvas: (...args) => {
           calls.push(['createCanvas', ...args]); p.width = args[0]; p.height = args[1];
@@ -152,11 +192,14 @@ function makeP5(calls, { deferSetup = false, manualSetup = false, failSetup = fa
         image: (...args) => calls.push(['image', ...args]),
         noStroke: () => calls.push(['noStroke']), stroke: (...args) => calls.push(['stroke', ...args]),
         strokeWeight: (...args) => calls.push(['strokeWeight', ...args]),
+        strokeCap: (...args) => calls.push(['strokeCap', ...args]),
+        strokeJoin: (...args) => calls.push(['strokeJoin', ...args]),
         line: (...args) => calls.push(['line', ...args]),
         push: () => calls.push(['push']), pop: () => calls.push(['pop']),
         translate: (...args) => calls.push(['translate', ...args]),
         rotate: (...args) => calls.push(['rotate', ...args]),
         ellipse: (...args) => calls.push(['ellipse', ...args]),
+        noFill: () => calls.push(['noFill']),
         fill: (...args) => calls.push(['fill', ...args]), circle: (...args) => calls.push(['circle', ...args])
       };
       sketch(p);
