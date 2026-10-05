@@ -111,8 +111,10 @@ test('same-flow classification is independent of neighbor order and restores eme
 });
 
 test('strong-trail procession advances with headway, low lateral drift, and no swept overlap', async () => {
-  const controller = new AntController({ random: seededRandom(707) });
+  const controller = new AntController({ random: seededRandom(707),
+    state: { population: { activationFeedback: false } } });
   await controller.init();
+  controller.syncRecruitment = () => {};
   const random = seededRandom(718);
   const positions = [0.32, 0.38, 0.44, 0.50];
   controller.agents = positions.map((x, index) => {

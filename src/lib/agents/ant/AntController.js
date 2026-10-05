@@ -4,6 +4,7 @@ import { PheromoneField } from './PheromoneField.js';
 import { GaitController } from './GaitController.js';
 import { BodyPoseController, gasterRearPoint } from './BodyPoseController.js';
 import { GasterDeposition } from './GasterDeposition.js';
+import { ColonyActivation } from './ColonyActivation.js';
 
 const STEP_MS = 1000 / 60;
 const MAX_FRAME_GAP_MS = 100;
@@ -44,7 +45,7 @@ const SPAWN_PLACEMENT_ATTEMPTS = 12;
 const SPAWN_CLEARANCE = 0.004;
 const DEFAULT_STATE = Object.freeze({
   model: 'ant',
-  population: { count: 28 },
+  population: { count: 28, activationFeedback: true },
   pheromone: { halfLifeSeconds: 15, amountPerUnitDistance: 4.5, radius: 0.0045, reinforcementGain: 5,
     depositionMode: 'dab' },
   behavior: { sensorDistance: 0.042, sensorWidth: 0.014, bodyRadius: 0.006 }
@@ -75,6 +76,7 @@ export class AntController {
     this.gaitController = gaitController;
     this.bodyPoseController = bodyPoseController;
     this.gasterDeposition = gasterDeposition || new GasterDeposition({ mode: this.state.pheromone.depositionMode });
+    this.colonyActivation = new ColonyActivation({ ceiling: this.state.population.count, origin: SPAWN_CENTER });
     this.audioBridge = audioBridge;
   }
 
@@ -118,6 +120,11 @@ export class AntController {
         meanSpeed: agents.length ? speedTotal / agents.length : 0,
         pheromoneMass: field.totalMass,
         simulationTimeMs: this.simulationTimeMs,
+        colonyActivation: { ...this.colonyActivation.getSnapshot(),
+          enabled: this.state.population.activationFeedback,
+          desiredPopulation: this.state.population.activationFeedback
+            ? this.colonyActivation.getSnapshot().desiredPopulation : this.state.population.count,
+          recruitmentLimit: this.recruitmentLimit },
         minSeparation: minimumSeparation(agents)
       }
     };
@@ -161,17 +168,18 @@ export class AntController {
     // A changed population target must not bypass gradual entry or erase the
     // shared history that already exists. Keep surviving agents and their traits.
     const retainedCount = Math.min(this.agents.length, this.state.population.count);
+    for (const agent of this.agents.slice(retainedCount)) {
+      this.applyDeposits(this.gasterDeposition.retire(agent.id,
+        this.bodyPoseController.getSnapshot(agent)?.gasterRear || gasterRearPoint(agent)));
+    }
     this.totalRetired += this.agents.length - retainedCount;
     this.agents.length = retainedCount;
     this.gaitController.retain?.(this.agents.map(agent => agent.id));
     this.bodyPoseController.retain(this.agents.map(agent => agent.id));
     this.gasterDeposition.retain(this.agents.map(agent => agent.id));
     for (const agent of this.agents) agent.radius = this.state.behavior.bodyRadius;
-    if (this.agents.length >= this.state.population.count) {
-      this.nextSpawnTimeMs = null;
-    } else if (this.initialized && this.running && this.nextSpawnTimeMs === null) {
-      this.scheduleNextSpawn();
-    }
+    this.colonyActivation.configure({ ceiling: this.state.population.count });
+    this.syncRecruitment();
     this.emit('update');
     return this.getState();
   }
@@ -222,6 +230,7 @@ export class AntController {
     this.gaitController.reset?.();
     this.bodyPoseController.reset();
     this.gasterDeposition.reset();
+    this.colonyActivation.reset();
     await this.audioBridge?.destroy();
   }
 
@@ -339,9 +348,10 @@ export class AntController {
       this.gasterDeposition.retain(survivors.map(agent => agent.id));
     }
     this.simulationTimeMs += dt * 1000;
-    if (retiredCount && this.agents.length < this.state.population.count && this.nextSpawnTimeMs === null) {
-      this.scheduleNextSpawn();
-    }
+    // Recruitment follows slowly accumulated entrance-route evidence, rather
+    // than individual exits. A lower desired count never culls living agents.
+    if (this.state.population.activationFeedback) this.colonyActivation.advance(this.field, dt);
+    this.syncRecruitment();
     // Use the simulation clock, not browser timers. A delayed frame or blocked
     // entry never releases a batch of overdue agents.
     if (this.nextSpawnTimeMs !== null && this.simulationTimeMs + 1e-9 >= this.nextSpawnTimeMs) {
@@ -351,7 +361,10 @@ export class AntController {
 
   spawnNextAnt() {
     if (this.destroyed || !this.initialized || !this.running
-      || this.agents.length >= this.state.population.count) return false;
+      || this.agents.length >= this.recruitmentLimit) {
+      this.nextSpawnTimeMs = null;
+      return false;
+    }
     const radius = this.state.behavior.bodyRadius;
     for (let attempt = 0; attempt < SPAWN_PLACEMENT_ATTEMPTS; attempt += 1) {
       const angle = this.random() * TAU;
@@ -365,7 +378,7 @@ export class AntController {
         heading: SPAWN_HEADING + signed(this.random) * SPAWN_HEADING_SPREAD
       }));
       this.totalSpawned += 1;
-      if (this.agents.length < this.state.population.count) this.scheduleNextSpawn();
+      if (this.agents.length < this.recruitmentLimit) this.scheduleNextSpawn();
       else this.nextSpawnTimeMs = null;
       return true;
     }
@@ -376,6 +389,16 @@ export class AntController {
   scheduleNextSpawn() {
     this.nextSpawnTimeMs = this.simulationTimeMs
       + SPAWN_INTERVAL_MIN_MS + this.random() * SPAWN_INTERVAL_RANGE_MS;
+  }
+
+  get recruitmentLimit() {
+    return this.state.population.activationFeedback
+      ? this.colonyActivation.getSnapshot().recruitmentLimit : this.state.population.count;
+  }
+
+  syncRecruitment() {
+    if (this.agents.length >= this.recruitmentLimit) this.nextSpawnTimeMs = null;
+    else if (this.initialized && this.running && this.nextSpawnTimeMs === null) this.scheduleNextSpawn();
   }
 
   applyDeposits(deposits) {
@@ -523,6 +546,7 @@ function normalizeState(input) {
   const state = mergeState(DEFAULT_STATE, input);
   state.model = 'ant';
   state.population.count = Math.round(clampFinite(state.population.count, 8, 100, DEFAULT_STATE.population.count));
+  state.population.activationFeedback = state.population.activationFeedback !== false;
   state.pheromone.halfLifeSeconds = clampFinite(state.pheromone.halfLifeSeconds, 0.5, 120, DEFAULT_STATE.pheromone.halfLifeSeconds);
   state.pheromone.amountPerUnitDistance = clampFinite(state.pheromone.amountPerUnitDistance, 0.1, 30, DEFAULT_STATE.pheromone.amountPerUnitDistance);
   state.pheromone.radius = clampFinite(state.pheromone.radius, 0.002, 0.04, DEFAULT_STATE.pheromone.radius);

@@ -10,8 +10,9 @@ function seededRandom(seed = 41) {
 
 async function oneAnt(mode = 'continuous') {
   const controller = new AntController({ random: seededRandom(),
-    state: { population: { count: 1 }, pheromone: { depositionMode: mode } } });
+    state: { population: { activationFeedback: false }, pheromone: { depositionMode: mode } } });
   await controller.init();
+  controller.syncRecruitment = () => {};
   const ant = controller.agents[0];
   ant.x = 0.5; ant.y = 0.5; ant.heading = 0; ant.intentHeading = 0;
   ant.vx = 0.04; ant.vy = 0;

@@ -19,6 +19,10 @@ function runTicks(controller, count, dt = 1000 / 60) {
 // Movement stress cases supply their own bodies so they test the unchanged
 // movement rules independently of the demonstration's gradual entry.
 function movementFixture(controller, count, random = seededRandom(17)) {
+  controller.configure({ population: { activationFeedback: false } });
+  // This fixture deliberately controls the active set rather than testing the
+  // now-independent recruitment scheduler.
+  controller.syncRecruitment = () => {};
   controller.agents = Array.from({ length: count }, (_, index) => new AntAgent({
     id: 'fixture-' + index, x: 0.5, y: 0.5, random,
     radius: controller.state.behavior.bodyRadius
@@ -145,7 +149,8 @@ test('population has equal agents with stable individual personalities and share
 });
 
 test('ants enter one at a time from a common region with irregular delays and distinct headings', async () => {
-  const controller = new AntController({ random: seededRandom(61) });
+  const controller = new AntController({ random: seededRandom(61),
+    state: { population: { activationFeedback: false } } });
   await controller.init();
   await controller.init();
   assert.equal(controller.agents.length, 1, 'repeated init does not add an ant');
@@ -229,7 +234,8 @@ test('occupied spawn space delays entry without allocating an overlapping agent 
 });
 
 test('changing the target preserves shared history and introduces additional ants gradually', async () => {
-  const controller = new AntController({ random: seededRandom(11), state: { population: { count: 8 } } });
+  const controller = new AntController({ random: seededRandom(11),
+    state: { population: { count: 8, activationFeedback: false } } });
   await controller.init();
   freezeAgents(controller);
   runFrozenTicks(controller, 60 * 15);
@@ -495,8 +501,10 @@ test('stop and destroy halt simulation and detach listeners', async () => {
 
 test('an isolated ant has repeated near-stops after warmup and resumes forward movement', async () => {
   for (const seed of [9, 52, 240]) {
-    const controller = new AntController({ random: seededRandom(seed) });
+    const controller = new AntController({ random: seededRandom(seed),
+      state: { population: { activationFeedback: false } } });
     await controller.init();
+    controller.syncRecruitment = () => {};
     const ant = controller.agents[0];
     controller.agents = [ant];
     controller.nextSpawnTimeMs = null;

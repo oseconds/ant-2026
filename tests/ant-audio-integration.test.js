@@ -81,13 +81,15 @@ test('controller measures final post-contact displacement rather than intended v
   const gait = new GaitController({ strideVariation: 0 });
   const advanceGait = gait.advance.bind(gait);
   let steps = 0;
-  const controller = new AntController({ random: countedRandom(7), gaitController: gait });
+  const controller = new AntController({ random: countedRandom(7), gaitController: gait,
+    state: { population: { activationFeedback: false } } });
   gait.advance = (agent, distance, dt, time, segment) => {
     observations.push({ x: agent.x, y: agent.y, distance, dt, time, segment });
     return advanceGait(agent, distance, dt, time, segment);
   };
   controller.subscribe(({ type }) => { if (type === 'foot-contact') steps += 1; });
   await controller.init();
+  controller.syncRecruitment = () => {};
   controller.nextSpawnTimeMs = null;
   const agent = controller.agents[0];
   agent.x = agent.y = 0.5;
@@ -113,9 +115,10 @@ test('controller measures final post-contact displacement rather than intended v
 });
 
 async function isolatedContacts(hesitating) {
-  const controller = new AntController({ random: countedRandom(4),
+  const controller = new AntController({ random: countedRandom(4), state: { population: { activationFeedback: false } },
     gaitController: new GaitController({ strideVariation: 0 }) });
   await controller.init();
+  controller.syncRecruitment = () => {};
   controller.nextSpawnTimeMs = null;
   const agent = controller.agents[0];
   agent.x = 0.25; agent.y = 0.5;

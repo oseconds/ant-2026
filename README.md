@@ -22,6 +22,9 @@ src/
       PheromoneField.js           # 거리 기반 침적·감쇠·공간 샘플링
       LocalOccupancy.js           # 몸체 점유 감지·회피·접촉 방지
       GaitController.js           # 실제 이동 거리, 여섯 다리 geometry, tripod 접촉
+      BodyPoseController.js       # 평활화한 head/gaster/antenna pose와 후단 geometry
+      GasterDeposition.js         # thorax 거리 dose를 gaster 후단 연속/dab 침적으로 변환
+      ColonyActivation.js         # 입구 주변 경로 증거와 느린 모집 압력
       StepEventGenerator.js       # 이전 거리 기반 STEP 기준 구현
     models/
       BaseModel.js                # 설정, 구독, 공통 모델 계약
@@ -36,6 +39,7 @@ src/
     lab/modelRegistry.js          # 모델 생성 registry
     utils/state.js                # JSON 설정 병합·복사·좌표 검증
     utils/TrajectoryBuffer.js     # 일반적인 timestamp/x/y 링 버퍼
+    utils/simulationTime.js       # 경과 simulation time 표시
     index.js                      # 공개 ESM 진입점
   demo/
     definitions.js                # 데모의 렌더러·컨트롤 metadata
@@ -119,13 +123,15 @@ Plate·Sphere에서는 **Pickup 이동** 버튼 또는 **Shift+클릭/드래그*
 
 ## ANT: 환경을 공유 기억으로 다루기
 
-ANT 메뉴의 목표 개체 수는 28입니다. 시작할 때는 하단 중앙 부근의 작은 원 안에 일반 개체 하나만 놓입니다. 이후 시뮬레이션 시간이 400–900 ms씩 흐를 때마다 최대 한 개체를 추가하며, 생성 위치가 점유되어 있으면 약 120 ms 뒤 다시 시도합니다. 별도의 wall-clock timer는 사용하지 않으므로 시뮬레이션이 멈추면 생성도 멈춥니다. 모든 개체는 같은 `AntAgent` 모델을 사용하며, 지정된 리더·지연된 복사본·리더 선출은 없습니다. 개체마다 위치·속도·방향·관성과 지속적인 성향을 가지며, 선호 속도·흔적 감도·탐색 성향·회전 반응·가속·감쇠·개인 간격이 조금씩 다릅니다. 움직임은 가속과 감속, 짧은 머뭇거림, 방향 검사, 전진을 섞습니다. 좌표는 0–1이고 시간은 호출자가 전달합니다. 큰 프레임 간격은 100 ms까지만 반영합니다.
+ANT의 기본 모집 상한은 28입니다. 시작할 때는 하단 중앙 부근의 작은 원 안에 일반 개체 하나만 놓입니다. 현재 모집 한도 아래에서는 시뮬레이션 시간이 400–900 ms씩 흐를 때마다 최대 한 개체를 추가하며, 생성 위치가 점유되어 있으면 약 120 ms 뒤 다시 시도합니다. 별도의 wall-clock timer는 사용하지 않으므로 시뮬레이션이 멈추면 생성도 멈춥니다. 모든 개체는 같은 `AntAgent` 모델을 사용하며, 지정된 리더·지연된 복사본·리더 선출은 없습니다. 개체마다 위치·속도·방향·관성과 지속적인 성향을 가지며, 선호 속도·흔적 감도·탐색 성향·회전 반응·가속·감쇠·개인 간격이 조금씩 다릅니다. 움직임은 가속과 감속, 짧은 머뭇거림, 방향 검사, 전진을 섞습니다. 좌표는 0–1이고 시간은 호출자가 전달합니다. 큰 프레임 간격은 100 ms까지만 반영합니다.
 
 0–1 정사각형은 관측 영역입니다. 경계가 가깝다는 이유만으로 안쪽 조향·감속·이동 제한을 적용하지 않습니다. 접촉 제약을 적용한 이동이 영역 밖으로 나가면 그 개체를 퇴장시키며, 반사·순환·순간 이동은 없습니다. 마지막 이동은 최초 경계 교차점까지의 실제 관측 선분만 페로몬 침적과 locomotion/gait 접촉 계산에 반영합니다. 개체의 gait 위상·stride·접촉 편차 상태도 제거하지만 공유장은 유지합니다. 영역 밖 센서는 신호 0을 읽고, 침적 선분은 영역과 실제로 교차한 부분만 사용하므로 밖의 이동을 가장자리 흔적으로 바꾸지 않습니다.
 
-퇴장으로 목표보다 적어지면 같은 입구·시뮬레이션 시계·400–900 ms 생성 간격으로 보충합니다. 이미 예정된 생성 시각은 유지하고, 한 번의 due tick에는 최대 하나만 생성하므로 여러 개체가 떠나도 한꺼번에 보충하지 않습니다. 새 개체는 계속 증가하는 고유 ID와 새 성향·행동 시계·adherence·gait 상태로 시작합니다. `getSnapshot().analysis`의 `population`, `totalSpawned`, `totalRetired`는 현재 수와 누적 생성·제거 수를 제공하며 화면에 새 지표를 추가하지 않습니다. `totalRetired`에는 설정으로 목표 수를 줄일 때 제거된 개체도 포함합니다.
+`ColonyActivation`은 입구 중심 `(0.5, 0.72)`에서 반경 `[0.06, 0.09, 0.12]`의 16방향을 읽습니다. 각 값을 `v / (v + 0.04)`로 포화하고 반경 3개 평균을 구한 뒤 가장 강한 4방향의 평균을 local evidence로 사용합니다. 정확한 spawn pixel과 원격 global mass는 모집 입력이 아닙니다. `a += (evidence − a) × (1 − exp(−dt / 45))`로 45초 시간 상수의 연속 activation을 만들고, 원하는 개체 수는 `8 + (population.count − 8) × a`, 실제 모집 한도는 그 정수 내림입니다. 기본 floor 8·ceiling 28이며 기존 설정 ceiling 범위 8–100을 유지합니다. 이 floor는 즉시 8개를 유지하는 강제 보정이 아니라 점진 모집의 최소 목표입니다.
 
-개체들은 실제로 이동한 선분에 거리 비례 페로몬을 계속 조금씩 남깁니다. 정지한 개체는 침적하지 않습니다. 공유장은 기본 96×96 격자이며 15초 반감기로 지수 감쇠합니다. 재방문 없는 흔적은 60초 뒤 약 6.25%만 남습니다. 이번 연속성 실험에서 기본 반감기만 3초에서 15초로 변경했고, 침적량·반경·강화 계수·감각 및 조향 계수는 유지했습니다. 침적 반경은 0.0045 정규화 좌표이고, 센서는 0.042 앞쪽에서 좌우 ±0.014 범위의 다섯 지점을 읽습니다. 침적을 넓히지 않고 가까운 얇은 경로를 발견할 수 있습니다.
+매 tick의 모집 압력과 자연 퇴장은 독립적입니다. 목표가 내려가도 개체를 강제 제거하지 않고, 목표 이상이면 새 모집만 멈춥니다. 한도 아래에서 기존 pending timer는 유지하고 없으면 생성 간격을 예약합니다. 한 due tick에는 최대 하나만 생성합니다. `population.activationFeedback: false`로 기존 고정 상한 모집을 비교할 수 있으며 기본은 true입니다. 새 개체는 계속 증가하는 고유 ID와 새 성향·행동 시계·adherence·gait 상태로 시작합니다. `getSnapshot().analysis.colonyActivation`에 evidence·activation·desiredPopulation·recruitmentLimit·enabled를 제공하지만 화면에 별도 지표는 추가하지 않습니다. `totalRetired`에는 명시적으로 설정 ceiling을 줄일 때 기존 방식으로 제거된 개체도 포함합니다.
+
+개체들은 실제 이동 거리에 비례하는 페로몬을 articulated gaster 후단에서 남깁니다. 기본 dab은 거리 누적을 사용하고 정지·제자리 회전은 새 dose를 만들지 않습니다. 공유장은 기본 96×96 격자이며 기존 15초 반감기로 지수 감쇠합니다. 재방문 없는 흔적은 60초 뒤 약 6.25%만 남습니다. 이번 pass에서는 반감기·침적량·반경·강화 계수·감각 및 조향 계수를 유지했습니다. 침적 반경은 0.0045 정규화 좌표이고, 센서는 0.042 앞쪽에서 좌우 ±0.014 범위의 다섯 지점을 읽습니다.
 
 원거리 농도 반응은 3차 Hill 곡선이며 0.035에서 절반입니다. 약하고 퍼진 신호는 거의 무시하고, 강해진 경로에는 반응이 급격히 커집니다. 방향별 신호 차이가 커지면 탐색·조향 잡음을 줄이되 명시적인 무작위 탐색 확률은 최소 4% 유지합니다. 방향 단서가 없으면 개체별 탐색 성향을 더 많이 적용합니다. 침적량은 이동 거리당 기준값 4.5에 `0.5 + reinforcementGain × trailAdherence²`를 곱합니다. 기본 강화 계수는 5이며 설정 범위는 0–5입니다. 탐색 중에도 0.5배의 흔적을 남기고, 이미 일관된 경로를 따라갈수록 연속적으로 최대 5.5배까지 강화합니다. 순간적인 농도나 별도 역할로 침적량을 정하지 않으며, 흔적의 강화·이탈·분기·합류는 이름 붙인 집단 상태 없이 국소 선택에서 나타납니다.
 
@@ -133,7 +139,7 @@ ANT 메뉴의 목표 개체 수는 28입니다. 시작할 때는 하단 중앙 �
 
 페로몬 강화 후 기본 실행의 [선별 스크린샷과 측정 기록](docs/ant/evidence/2026-10-05-reinforcement/README.md)을 Git에 보존했습니다. 짧은 자연 행렬의 유지·해체와 120초의 분산 상태를 함께 보여줍니다.
 
-[개체 교체와 환경 기억의 연속성 기록](docs/ant/evidence/2026-10-05-turnover/README.md)에는 현재 기본 설정의 고정 시드 600초 실행, 여러 시점의 누적 생성·퇴장·활성 수와 페로몬 총량, 진행된 production 화면을 보존합니다. 개체 교체와 공유장 유지의 검증이며, 안정된 자연 행렬이 형성됐다는 판정은 별도 시각 증거가 필요합니다.
+[개체 교체와 환경 기억의 연속성 기록](docs/ant/evidence/2026-10-05-turnover/README.md)에는 당시 고정 상한 모집 설정의 600초 실행과 화면을 보존합니다. 현재의 느린 population feedback 전 단계 기록이며, 안정된 자연 행렬이 형성됐다는 판정은 별도 시각 증거가 필요합니다.
 
 페로몬은 가고 싶은 방향의 유인이고, 몸체 점유는 이동 가능한 공간의 제약입니다. 가까운 이웃은 강한 분리력을 주고, 앞쪽 혼잡은 감속과 여유 있는 쪽으로의 조향을 유도합니다. 상대 접근 속도로 접촉까지의 시간을 추정해 미리 제동하며, 뒤쪽 이웃의 영향은 약합니다. 작은 시간 간격과 이동 선분 검사로 몸체의 통과를 막으며 rigid-body impulse나 위치 순간 이동을 사용하지 않습니다. 이 규칙들은 특정 교통 상태를 지시하지 않습니다.
 
@@ -249,7 +255,7 @@ await ants.destroy(); // 주입한 engine은 소유자가 별도로 정리.
 
 이 단계에서는 페로몬 반감기·침적량, 개체 수, 격자 해상도, `trailAdherence`, 생성, 오디오, encounter rate, quorum, raid, UI를 바꾸지 않습니다. 성공 기준은 여러 개미가 같은 경로 위에 간격을 두고 이어서 이동하는 장면이 실제 화면에서 보이고, 접촉/통과가 발생하지 않는 것입니다. 자동 검증 결과만으로 이 시각 기준이 충족됐다고 판단하지 않습니다.
 
-방향 인지형 교통·adherence 기반 페로몬 강화·거리 기반 AUDIO v0·볼륨·공유 Plate 스테레오 이후, 여섯 다리 tripod gait와 같은 위상에서 생성되는 FOOT_CONTACT를 추가했습니다. 다음 단계에서는 현재 이동 tuning과 gait geometry를 보존한 채 head/antenna lead와 gaster lag를 render-only로 표현합니다. 이 회전은 `angularVelocity` snapshot에만 의존하고 행동·발 접촉·충돌을 바꾸지 않습니다. `StepEventGenerator`는 비교 실험용 거리 STEP 기준으로 남겨 둡니다. `TrajectoryBuffer`는 일반 유틸리티로 남기며 ANT의 행동/리듬 재생 장치로 다시 연결하지 않습니다.
+현재 ANT는 방향 인지형 교통·adherence 강화·tripod FOOT_CONTACT·공유 Plate 스테레오 위에 평활화한 body pose, 기존 L/R 감각의 antenna 시각화, gaster 후단 dab, 표시 보간과 elapsed time, 느린 local colony activation을 연결했습니다. 다음 오디오 실험은 `FOOT_CONTACT → SurfaceField / material state → shared Plate`이며 이 pass에는 포함하지 않습니다. Encounter/social pressure도 후속 실험입니다. `StepEventGenerator`는 거리 STEP 비교 기준으로, `TrajectoryBuffer`는 일반 유틸리티로 남깁니다.
 
 [Head/gaster articulation 실험 기록과 straight·turning 자연 상태 스크린샷](docs/ant/evidence/2026-10-05-articulation/README.md)을 보존했습니다.
 
