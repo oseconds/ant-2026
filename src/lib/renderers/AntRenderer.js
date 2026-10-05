@@ -194,35 +194,152 @@ function drawSnapshot(p, snapshot, renderer) {
 }
 
 function drawAnt(p, agent, width, height, diameterScale) {
-  const radius = Number.isFinite(agent.radius) && agent.radius > 0 ? agent.radius : 0.006;
-  const centerX = agent.x * width, centerY = agent.y * height;
-  const legs = Array.isArray(agent.gait?.legs) ? agent.gait.legs : null;
+  const radius = Number.isFinite(agent.radius) && agent.radius > 0
+    ? agent.radius
+    : 0.006;
+
+  const centerX = agent.x * width;
+  const centerY = agent.y * height;
+
+  const legs = Array.isArray(agent.gait?.legs)
+    ? agent.gait.legs
+    : null;
+
+  // fallback: gait geometry가 없으면 기존 점 표시
   if (!legs) {
     p.noStroke();
     p.fill(48);
-    p.circle(centerX, centerY, Math.max(1, radius * diameterScale));
+    p.circle(
+      centerX,
+      centerY,
+      Math.max(1, radius * diameterScale)
+    );
     return;
   }
 
+  // --------------------------------
+  // LEGS
+  // 기존 gait geometry 그대로 사용
+  // --------------------------------
   const minimumStroke = 0.65;
+
   p.stroke(64);
-  p.strokeWeight(Math.max(minimumStroke, radius * diameterScale * 0.11));
+  p.strokeWeight(
+    Math.max(
+      minimumStroke,
+      radius * diameterScale * 0.11
+    )
+  );
+
   for (const leg of legs) {
-    if (!isPoint(leg.root) || !isPoint(leg.knee) || !isPoint(leg.foot)) continue;
-    p.line(leg.root.x * width, leg.root.y * height, leg.knee.x * width, leg.knee.y * height);
-    p.line(leg.knee.x * width, leg.knee.y * height, leg.foot.x * width, leg.foot.y * height);
+    if (
+      !isPoint(leg.root) ||
+      !isPoint(leg.knee) ||
+      !isPoint(leg.foot)
+    ) continue;
+
+    p.line(
+      leg.root.x * width,
+      leg.root.y * height,
+      leg.knee.x * width,
+      leg.knee.y * height
+    );
+
+    p.line(
+      leg.knee.x * width,
+      leg.knee.y * height,
+      leg.foot.x * width,
+      leg.foot.y * height
+    );
   }
 
+  // --------------------------------
+  // BODY LOCAL SPACE
+  // --------------------------------
   p.push();
+
   p.translate(centerX, centerY);
-  p.rotate(Number.isFinite(agent.heading) ? agent.heading : 0);
+  p.rotate(
+    Number.isFinite(agent.heading)
+      ? agent.heading
+      : 0
+  );
+
+  const r = radius * diameterScale;
+
+  // --------------------------------
+  // ANTENNAE
+  // 2-segment elbowed antennae
+  // --------------------------------
+  p.strokeWeight(
+    Math.max(
+      0.35,
+      r * 0.055
+    )
+  );
+
+  // left antenna
+  p.line(
+    1.48 * r, -0.14 * r,
+    1.88 * r, -0.36 * r
+  );
+
+  p.line(
+    1.88 * r, -0.36 * r,
+    2.38 * r, -0.58 * r
+  );
+
+  // right antenna
+  p.line(
+    1.48 * r, 0.14 * r,
+    1.88 * r, 0.36 * r
+  );
+
+  p.line(
+    1.88 * r, 0.36 * r,
+    2.38 * r, 0.58 * r
+  );
+
+  // --------------------------------
+  // BODY
+  // 몸을 마지막에 그려서
+  // 다리/더듬이 root를 덮음
+  // --------------------------------
   p.noStroke();
   p.fill(34);
-  p.ellipse(-1.05 * radius * diameterScale, 0,
-    1.55 * radius * diameterScale, 1.05 * radius * diameterScale);
-  p.ellipse(0, 0, 1.1 * radius * diameterScale, 0.9 * radius * diameterScale);
-  p.ellipse(0.9 * radius * diameterScale, 0,
-    1.05 * radius * diameterScale, 0.85 * radius * diameterScale);
+
+  // gaster
+  p.ellipse(
+    -1.35 * r,
+    0,
+    1.60 * r,
+    1.02 * r
+  );
+
+  // petiole
+  p.ellipse(
+    -0.90 * r,
+    0,
+    0.28 * r,
+    0.22 * r
+  );
+
+  // thorax
+  p.ellipse(
+    0,
+    0,
+    1.05 * r,
+    0.70 * r
+  );
+
+  // head
+  p.ellipse(
+    1.09 * r,
+    0,
+    1.08 * r,
+    0.86 * r
+  );
+
   p.pop();
 }
 
