@@ -2,7 +2,8 @@ import { AntAgent } from './AntAgent.js';
 import { LocalOccupancy } from './LocalOccupancy.js';
 import { PheromoneField } from './PheromoneField.js';
 import { GaitController } from './GaitController.js';
-import { BodyPoseController } from './BodyPoseController.js';
+import { BodyPoseController, gasterRearPoint } from './BodyPoseController.js';
+import { GasterDeposition } from './GasterDeposition.js';
 
 const STEP_MS = 1000 / 60;
 const MAX_FRAME_GAP_MS = 100;
@@ -44,14 +45,16 @@ const SPAWN_CLEARANCE = 0.004;
 const DEFAULT_STATE = Object.freeze({
   model: 'ant',
   population: { count: 28 },
-  pheromone: { halfLifeSeconds: 15, amountPerUnitDistance: 4.5, radius: 0.0045, reinforcementGain: 5 },
+  pheromone: { halfLifeSeconds: 15, amountPerUnitDistance: 4.5, radius: 0.0045, reinforcementGain: 5,
+    depositionMode: 'dab' },
   behavior: { sensorDistance: 0.042, sensorWidth: 0.014, bodyRadius: 0.006 }
 });
 
 /** Framework independent population and shared-environment simulation. */
 export class AntController {
   constructor({ state, random = Math.random, fieldFactory = (options) => new PheromoneField(options),
-    gaitController = new GaitController(), bodyPoseController = new BodyPoseController(), audioBridge = null } = {}) {
+    gaitController = new GaitController(), bodyPoseController = new BodyPoseController(),
+    gasterDeposition = null, audioBridge = null } = {}) {
     this.state = normalizeState(state || {});
     this.random = random;
     this.fieldFactory = fieldFactory;
@@ -71,6 +74,7 @@ export class AntController {
     this.occupancy = new LocalOccupancy();
     this.gaitController = gaitController;
     this.bodyPoseController = bodyPoseController;
+    this.gasterDeposition = gasterDeposition || new GasterDeposition({ mode: this.state.pheromone.depositionMode });
     this.audioBridge = audioBridge;
   }
 
@@ -148,6 +152,11 @@ export class AntController {
   configure(patch = {}) {
     this.assertAlive();
     this.state = normalizeState(mergeState(this.state, patch));
+    if (this.gasterDeposition.mode !== this.state.pheromone.depositionMode) {
+      for (const agent of this.agents) this.applyDeposits(this.gasterDeposition.retire(agent.id,
+        this.bodyPoseController.getSnapshot(agent)?.gasterRear || gasterRearPoint(agent)));
+      this.gasterDeposition.mode = this.state.pheromone.depositionMode;
+    }
     if (this.field) this.field.decayHalfLifeSeconds = this.state.pheromone.halfLifeSeconds;
     // A changed population target must not bypass gradual entry or erase the
     // shared history that already exists. Keep surviving agents and their traits.
@@ -156,6 +165,7 @@ export class AntController {
     this.agents.length = retainedCount;
     this.gaitController.retain?.(this.agents.map(agent => agent.id));
     this.bodyPoseController.retain(this.agents.map(agent => agent.id));
+    this.gasterDeposition.retain(this.agents.map(agent => agent.id));
     for (const agent of this.agents) agent.radius = this.state.behavior.bodyRadius;
     if (this.agents.length >= this.state.population.count) {
       this.nextSpawnTimeMs = null;
@@ -211,12 +221,15 @@ export class AntController {
     this.accumulatorMs = 0;
     this.gaitController.reset?.();
     this.bodyPoseController.reset();
+    this.gasterDeposition.reset();
     await this.audioBridge?.destroy();
   }
 
   tick(dt) {
     if (this.destroyed || !this.initialized || !this.running || !Number.isFinite(dt) || dt <= 0) return;
     const current = this.agents;
+    const previousRear = current.map(agent => this.bodyPoseController.getSnapshot(agent)?.gasterRear
+      || gasterRearPoint(agent));
     const sensed = current.map((agent) => this.occupancy.sense(agent, current));
     this.field.decay(dt);
     const localTrails = current.map((agent) => this.senseLocalTrail(agent));
@@ -295,14 +308,14 @@ export class AntController {
       // contributes to environmental memory and gait/contact accounting.
       const to = exiting ? observedSegmentEnd(from, agent) : { x: agent.x, y: agent.y };
       const travelled = Math.hypot(to.x - from.x, to.y - from.y);
-      if (travelled > 1e-8) this.field.depositSegment(from, to, {
-        amountPerUnitDistance: this.state.pheromone.amountPerUnitDistance * displacement.depositionMultiplier,
-        radius: this.state.pheromone.radius
-      });
       // Observe final travel, including collision braking. No audio operation
       // contributes to movement, its random stream, or the shared trail field.
       const observedAgent = { ...agent, x: to.x, y: to.y };
-      this.bodyPoseController.advance(observedAgent, dt);
+      this.bodyPoseController.advance(observedAgent, dt, localTrails[index]);
+      const rear = this.bodyPoseController.getSnapshot(observedAgent)?.gasterRear || gasterRearPoint(observedAgent);
+      this.applyDeposits(this.gasterDeposition.advance(agent.id, travelled, previousRear[index], rear,
+        this.state.pheromone.amountPerUnitDistance * displacement.depositionMultiplier));
+      if (exiting) this.applyDeposits(this.gasterDeposition.retire(agent.id, rear));
       const contacts = this.gaitController.advance(observedAgent, travelled, dt,
         this.simulationTimeMs + dt * 1000, { from, to });
       for (const event of contacts) {
@@ -323,6 +336,7 @@ export class AntController {
       this.totalRetired += retiredCount;
       this.gaitController.retain?.(survivors.map(agent => agent.id));
       this.bodyPoseController.retain(survivors.map(agent => agent.id));
+      this.gasterDeposition.retain(survivors.map(agent => agent.id));
     }
     this.simulationTimeMs += dt * 1000;
     if (retiredCount && this.agents.length < this.state.population.count && this.nextSpawnTimeMs === null) {
@@ -362,6 +376,16 @@ export class AntController {
   scheduleNextSpawn() {
     this.nextSpawnTimeMs = this.simulationTimeMs
       + SPAWN_INTERVAL_MIN_MS + this.random() * SPAWN_INTERVAL_RANGE_MS;
+  }
+
+  applyDeposits(deposits) {
+    for (const deposit of deposits) {
+      const radius = this.state.pheromone.radius;
+      if (deposit.type === 'point') this.field?.depositPoint(deposit.position, { amount: deposit.amount, radius });
+      else this.field?.depositSegment(deposit.from, deposit.to, {
+        amountPerUnitDistance: deposit.amountPerUnitDistance, radius
+      });
+    }
   }
 
   updateIntention(agent, agents, occupancy, dt, localTrail = this.senseLocalTrail(agent)) {
@@ -503,6 +527,9 @@ function normalizeState(input) {
   state.pheromone.amountPerUnitDistance = clampFinite(state.pheromone.amountPerUnitDistance, 0.1, 30, DEFAULT_STATE.pheromone.amountPerUnitDistance);
   state.pheromone.radius = clampFinite(state.pheromone.radius, 0.002, 0.04, DEFAULT_STATE.pheromone.radius);
   state.pheromone.reinforcementGain = clampFinite(state.pheromone.reinforcementGain, 0, 5, DEFAULT_STATE.pheromone.reinforcementGain);
+  if (!['dab', 'continuous'].includes(state.pheromone.depositionMode)) {
+    state.pheromone.depositionMode = DEFAULT_STATE.pheromone.depositionMode;
+  }
   state.behavior.sensorDistance = clampFinite(state.behavior.sensorDistance, 0.012, 0.1, 0.042);
   state.behavior.sensorWidth = clampFinite(state.behavior.sensorWidth, 0.004, 0.04, DEFAULT_STATE.behavior.sensorWidth);
   state.behavior.bodyRadius = clampFinite(state.behavior.bodyRadius, 0.003, 0.015, 0.006);

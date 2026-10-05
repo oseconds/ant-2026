@@ -33,6 +33,7 @@ export class BodyPoseController {
 
     // These are the already-computed local bands, never samples at antenna tips.
     const left = positive(localTrail?.left), right = positive(localTrail?.right);
+    pose.localPheromone = { left, center: positive(localTrail?.center), right };
     const leftSignal = left / (left + 0.018), rightSignal = right / (right + 0.018);
     const difference = leftSignal - rightSignal;
     const bias = Math.sign(difference) * Math.max(0, Math.abs(difference) - 0.04) / 0.96;
@@ -51,13 +52,15 @@ export class BodyPoseController {
       headYaw: pose.headYaw,
       gasterYaw: pose.gasterYaw,
       antennae: { ...pose.antennae },
+      localPheromone: { ...pose.localPheromone },
       gasterRear: gasterRearPoint(agent, pose.gasterYaw)
     };
   }
 
   getOrCreate(id) {
     if (!this.ants.has(id)) this.ants.set(id, {
-      turnSignal: 0, headYaw: 0, gasterYaw: 0, antennae: { left: 0, right: 0 }
+      turnSignal: 0, headYaw: 0, gasterYaw: 0, antennae: { left: 0, right: 0 },
+      localPheromone: { left: 0, center: 0, right: 0 }
     });
     return this.ants.get(id);
   }

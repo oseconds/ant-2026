@@ -198,11 +198,18 @@ test('body-pose observation cannot change movement, pheromone, gait contacts, or
     retain() {},
     reset() {}
   };
+  const createNoOpGasterDeposition = () => ({
+    mode: 'continuous',
+    advance() { return []; },
+    retire() { return []; },
+    retain() {},
+    reset() {}
+  });
   const options = { state: { population: { count: 8 } } };
   const withPose = new AntController({ ...options, random: withPoseRandom,
-    bodyPoseController: new BodyPoseController() });
+    bodyPoseController: new BodyPoseController(), gasterDeposition: createNoOpGasterDeposition() });
   const withoutPose = new AntController({ ...options, random: withoutPoseRandom,
-    bodyPoseController: noOpBodyPose });
+    bodyPoseController: noOpBodyPose, gasterDeposition: createNoOpGasterDeposition() });
   await Promise.all([withPose.init(), withoutPose.init()]);
   const poseContacts = [], noPoseContacts = [];
   withPose.subscribe(event => { if (event.type === 'foot-contact') poseContacts.push(event.payload); });
@@ -218,6 +225,7 @@ test('body-pose observation cannot change movement, pheromone, gait contacts, or
         'all agent movement and gait snapshots remain identical at each second');
       assert.deepEqual(poseSnapshot.pheromone.values, noPoseSnapshot.pheromone.values,
         'the shared pheromone field is unchanged by pose observation');
+      assert.equal(poseSnapshot.pheromone.totalMass, 0, 'the injected deposition no-op keeps both fields empty');
       assert.equal(withPoseRandom.callCount(), withoutPoseRandom.callCount(),
         'body pose consumes no behavior randomness');
     }

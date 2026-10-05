@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { AntController } from '../src/lib/agents/ant/AntController.js';
 import { GaitController } from '../src/lib/agents/ant/GaitController.js';
 import { AntAgent } from '../src/lib/agents/ant/AntAgent.js';
+import { gasterRearPoint } from '../src/lib/agents/ant/BodyPoseController.js';
 
 function seededRandom(seed) {
   let value = seed >>> 0;
@@ -44,9 +45,12 @@ test('outward exits on every side and corner use only the first boundary hit for
   ];
 
   for (const [index, scenario] of cases.entries()) {
-    const controller = new AntController({ random: seededRandom(101 + index), state: { population: { count: 1 } } });
+    const controller = new AntController({ random: seededRandom(101 + index),
+      state: { population: { count: 1 }, pheromone: { depositionMode: 'continuous' } } });
     await controller.init();
     const ant = nearBoundaryAgent(controller, scenario.start, scenario.velocity);
+    const initialRear = gasterRearPoint({ ...ant, x: scenario.start.x, y: scenario.start.y }, 0);
+    const finalRear = gasterRearPoint({ ...ant, x: scenario.end.x, y: scenario.end.y }, 0);
     const expectedDistance = Math.hypot(scenario.end.x - scenario.start.x,
       scenario.end.y - scenario.start.y);
     const gaitState = controller.gaitController.getOrCreate(ant.id);
@@ -77,11 +81,14 @@ test('outward exits on every side and corner use only the first boundary hit for
     assert.ok(ant.x < 0 || ant.x > 1 || ant.y < 0 || ant.y > 1,
       scenario.name + ': the retired body continued outward without a final position clamp');
     assert.ok(depositedSegment);
-    assert.deepEqual(depositedSegment.to, scenario.end, scenario.name + ': accounting stops at first boundary intersection');
+    assert.deepEqual(depositedSegment.from, initialRear,
+      scenario.name + ': pheromone starts at the gaster rear tip');
+    assert.deepEqual(depositedSegment.to, finalRear,
+      scenario.name + ': pheromone ends at the same clipped-pose rear tip');
     const observedDistance = Math.hypot(depositedSegment.to.x - depositedSegment.from.x,
       depositedSegment.to.y - depositedSegment.from.y);
     assert.ok(Math.abs(observedDistance - expectedDistance) < 1e-12,
-      scenario.name + ': deposition and gait accounting use only observed distance');
+      scenario.name + ': same-pose rear travel follows the observed thorax distance');
     assert.ok(Math.abs(gaitTravel.distance - expectedDistance) < 1e-12,
       scenario.name + ': gait receives only the in-domain travel rather than the full outward displacement');
     assert.deepEqual(gaitTravel.segment, { from: scenario.start, to: scenario.end });

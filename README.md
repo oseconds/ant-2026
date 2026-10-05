@@ -143,16 +143,22 @@ ANT 메뉴의 목표 개체 수는 28입니다. 시작할 때는 하단 중앙 �
 - `PheromoneField`: 공유 외부 기억. `depositSegment()`, `sample()`, `decay(dtSeconds)`, `clear()`, `getSnapshot()`을 독립적으로 제공합니다.
 - `LocalOccupancy`: 주변 몸체 점유와 방향별 혼잡, 근거리 분리와 이동 선분의 접촉 제약. 페로몬을 알지 않습니다.
 - `GaitController`: 실제 이동 거리만으로 ID 기반 stride/phase를 진행합니다. 여섯 leg의 root/knee/foot geometry snapshot과 교대하는 tripod FOOT_CONTACT를 같은 phase에서 만듭니다. heading·속도·trail·collision을 바꾸지 않고 behavior random도 읽지 않습니다.
+- `BodyPoseController`: 기존 turn rate와 이미 계산한 L/C/R 농도에서 평활화한 head/gaster/antenna pose를 만듭니다. 같은 gaster pose가 renderer와 침적 후단 위치의 기준입니다.
+- `GasterDeposition`: 실제 thorax 이동 거리에 해당하는 강화량을 gaster 후단 경로에 전달합니다. 기본 `depositionMode: 'dab'`은 거리 `0.006`마다 누적 dose를 방출하며, `'continuous'`로 동일 후단 경로의 연속 침적을 비교할 수 있습니다.
 - `AntController`: 위 시스템들을 연결하고 명시적인 시간에 따라 개체군을 진행합니다. `getState()`는 JSON 설정, `getSnapshot()`은 개체와 gait geometry, 격자 복사본입니다. 접촉 제약 뒤의 관측 가능한 실제 이동 구간을 `GaitController`에 전달하고, 이벤트를 선택적으로 주입된 오디오 브리지에 넘깁니다. Web Audio·DOM·p5 코드는 포함하지 않습니다.
 - `AntRenderer`: p5 instance-mode로 articulated head/thorax/petiole/gaster, 안테나, 6개의 2-segment leg를 snapshot에서 그립니다. 공유 pheromone field는 고정된 two-scale grayscale transfer로 표시합니다. p5는 `init()`에서만 동적으로 불러오고 `noLoop()`와 `redraw()`를 사용하며 main.js의 RAF가 update와 render를 호출합니다. sketch는 gait나 model을 갱신하지 않고 p5.sound도 포함하지 않습니다.
 
-물리 collision body는 하나의 `AntAgent`와 기존 radius `0.006`으로 유지합니다. 화면에서는 heading을 기준으로 gaster `−1.35r`·`1.60r × 1.02r`, petiole `−0.90r`·`0.28r × 0.22r`, thorax `0`·`1.05r × 0.70r`, head `+1.09r`·`1.08r × 0.86r`를 그립니다. 여섯 leg의 root는 `+0.45r / 0 / −0.45r`, foot 앞뒤 오프셋은 `+1.95r / 0 / −2.00r`, lateral reach는 `3.05r / 3.10r / 3.25r`, gait 왕복폭은 `0.52r`입니다. Knee geometry는 along `[0.42, 0.50, 0.58]`, outward `[0.44r, 0.48r, 0.48r]`, 앞뒤 편향 `[+0.10r, 0, −0.10r]`입니다.
+물리 collision body는 하나의 `AntAgent`와 기존 radius `0.006`으로 유지합니다. 화면에서는 heading을 기준으로 gaster `−1.35r`·`1.60r × 1.02r`, petiole `−0.90r`·`0.28r × 0.22r`, thorax `0`·`1.05r × 0.70r`, head `+1.09r`·`1.08r × 0.86r`를 그립니다. 여섯 leg의 root 앞뒤 위치는 `+0.45r / 0 / −0.45r`, lateral attachment는 `[0.30r, 0.34r, 0.32r]`입니다. Foot 앞뒤 오프셋 `+1.95r / 0 / −2.00r`, lateral reach `3.05r / 3.10r / 3.25r`, gait 왕복폭 `0.52r`은 유지합니다. Knee along은 `[0.32, 0.44, 0.54]`, outward는 `[0.50r, 0.56r, 0.52r]`, 앞뒤 편향은 `[+0.14r, 0, −0.14r]`입니다. 회색 65의 얇은 다리를 먼저 그리고 body를 위에 그려 root가 thorax 안으로 가려집니다.
 
 `GaitController`의 한 cycle은 ID 해시로 지속 편차 ±8%를 정한 `0.036` 이동 단위이고, touchdown은 약 `0.018`마다 생깁니다. phase 시작값과 접촉 세기 편차 ±4%도 ant ID에서 해시합니다. AntController의 random source는 호출하지 않습니다. Tripod A는 FL/MR/RL, B는 FR/ML/RR이고 half-cycle씩 교대합니다. 각 leg의 stance 비율은 0.62이며 stance에서 발을 몸체 기준 뒤로 옮기고 swing은 smoothstep으로 앞쪽에 돌려놓으며 약간 안쪽으로 접습니다. Renderer가 계산을 다시 만들지 않고 이 snapshot geometry를 그립니다.
 
 `BodyPoseController`가 시뮬레이션 시간으로 body kinematics를 진행하며 snapshot과 renderer가 같은 pose를 사용합니다. Raw turn rate를 ±4.5로 정규화하고 0.04의 연속 dead zone 뒤 0.30초 지수 평활화를 적용합니다. Head yaw는 그 신호 ×0.12를 0.12초로, 반대 방향 gaster yaw는 ×−0.08을 0.45초로 다시 평활화합니다. 순간적인 부호 변화가 관절을 바로 뒤집지 않고, 직진으로 돌아오면 자연스럽게 중립으로 수렴합니다. Head pivot은 `+0.54r`, gaster pivot은 petiole의 `−0.90r`입니다. 모델의 몸체 렌더 단위는 `r = 2 × bodyRadius`이며, 공유 geometry로 gaster 후단 위치도 제공합니다. Antenna는 같은 head transform을 사용합니다. Pose는 steering·충돌·센서·속도·gait phase에 입력하지 않습니다.
 
 이동 tuning인 max turn rate `4.5 rad/s`, acceleration response `32`, braking response `37`, max speed `preferredSpeed × 1.35`, trail steering angular-velocity clamp `±2.2`는 유지했습니다. 기존 실패 4개 중 세 개는 현재 코드가 사용하지 않는 `personality.acceleration`의 프레임별 Δv 상한을 검사했고, 하나는 60 Hz 회전을 0.04 rad 미만으로 제한했습니다. 해당 검증을 현재의 지수 응답과 승인된 0.075 rad/tick 한도에 맞추며 주저·전진·경로 중심·미리 제동·충돌 검사도 유지합니다.
+
+Antenna는 기존 L/R 값을 `v / (v + 0.018)`로 포화하고 좌우 차이에 0.04 dead zone을 적용한 뒤 0.40초로 평활화합니다. 높은 양측 신호는 약한 공통 engagement를 주고 우세한 쪽만 조금 더 벌어집니다. 이미 계산한 L/C/R 원값도 body pose snapshot에 복사하며 추가 센서 샘플·tip 기반 sensing·steering 되먹임은 없습니다.
+
+Gaster 후단은 petiole pivot `−0.90r`에서 articulated gaster의 center `−0.45r`와 반길이 `0.80r`를 합친 local tip `−1.25r`를 yaw로 회전한 점입니다. 이를 thorax heading으로 world 변환합니다. Dose는 후단 이동 길이가 아니라 collision 뒤 실제 thorax 이동 × `4.5 × (0.5 + 5 × trailAdherence²)`로 계산합니다. Dab spacing `0.006`은 기본 stride `0.036`의 1/6입니다. 남은 거리·dose는 다음 tick에 보존하고 퇴장 시 최종 후단에 방출합니다. 제자리 회전은 새 dose를 만들지 않으며 영역 밖 후단은 clamp 없이 field에서 제외됩니다. 비정상 큰 입력은 최대 256개의 spaced dab 뒤 나머지 dose를 endpoint 한 점으로 모아 보존합니다. 같은 경로·강화량 비교에서 연속/dab 총량의 상대 차이는 약 `1.47e−8`이며, 자연 실행의 경로 변화에 따른 강화량 차이는 별도입니다.
 
 `FOOT_CONTACT`는 `{ type, antId, contactGroup: 'A' | 'B', contacts, position, strength, simulationTimeMs }`입니다. `contacts`에는 실제 tripod의 각 `{ legId, position: { x, y } }`가 있으며, 영역 밖 발은 clamp 없이 제외되어 1–3개가 남을 수 있습니다. `position`은 남은 발의 centroid이고, 0개면 이벤트를 내지 않습니다. 큰 advance에서도 phase/remainder를 모두 전진시키면서 최대 4개 tripod event만 냅니다. 각 group은 shared Plate에 centroid로 한 번만 타격됩니다.
 

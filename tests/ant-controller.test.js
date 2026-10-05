@@ -68,7 +68,7 @@ async function captureOneDeposit({ adherence, rawSignal = 0, amountPerUnitDistan
   reinforcementGain = 5, stationary = false } = {}) {
   const controller = new AntController({
     random: seededRandom(75),
-    state: { pheromone: { amountPerUnitDistance, reinforcementGain } }
+    state: { pheromone: { amountPerUnitDistance, reinforcementGain, depositionMode: 'continuous' } }
   });
   await controller.init();
   const agent = controller.agents[0];

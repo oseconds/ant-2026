@@ -95,6 +95,19 @@ test('segments outside the field leave no edge trail while crossing travel depos
   assert.equal(crossing.sample(0.75, 0.5), 0, 'the outside portion cannot form an edge trail');
 });
 
+test('point deposition preserves a fixed amount with the existing brush and ignores outside points', () => {
+  const field = new PheromoneField({ width: 48, height: 48 });
+  assert.equal(field.depositPoint({ x: 0.5, y: 0.5 }, { amount: 0.25, radius: 0.02 }), 0.25);
+  assert.ok(Math.abs(field.getSnapshot().totalMass - 0.25) < 1e-6);
+  assert.ok(field.sample(0.5, 0.5) > field.sample(0.53, 0.5));
+
+  const beforeOutside = field.getSnapshot().totalMass;
+  assert.equal(field.depositPoint({ x: 1.001, y: 0.5 }, { amount: 0.5, radius: 0.02 }), 0);
+  assert.equal(field.getSnapshot().totalMass, beforeOutside, 'outside points do not create edge deposits');
+  assert.throws(() => field.depositPoint({ x: Number.NaN, y: 0.5 }, { amount: 0.5 }), /finite/);
+  assert.throws(() => field.depositPoint({ x: 0.5, y: 0.5 }, { amount: -1 }), /non-negative/);
+});
+
 test('default half-life is fifteen seconds and abandoned traces retain one sixteenth after one minute', () => {
   const narrow = new PheromoneField();
   const wide = new PheromoneField();

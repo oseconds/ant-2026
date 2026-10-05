@@ -84,6 +84,16 @@ export class PheromoneField {
     return totalAmount;
   }
 
+  /** Deposit a fixed amount at one in-domain normalized point with the shared brush. */
+  depositPoint(position, { amount, radius = DEFAULT_RADIUS } = {}) {
+    const location = point(position, 'position');
+    amount = nonNegativeFinite(amount, 'amount');
+    radius = positiveFinite(radius, 'radius');
+    if (location.x < 0 || location.x > 1 || location.y < 0 || location.y > 1 || amount === 0) return 0;
+    this.depositBrush(location.x, location.y, amount, radius, radius * 0.5, radius);
+    return amount;
+  }
+
   /** Exponential decay; equal elapsed time produces equal remaining signal. */
   decay(dtSeconds) {
     dtSeconds = nonNegativeFinite(dtSeconds, 'dtSeconds');
