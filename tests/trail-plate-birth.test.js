@@ -126,6 +126,45 @@ test('transverse route support changes ribbon width while retaining bounded phys
   }
 });
 
+test('distant qualifying branches survive skeleton pruning while short dead-end growth stays out of the plate', () => {
+  const branches = new TrailPlateBirth();
+  const branchPoint = (x, y) => (x >= 0.025 && x <= 0.66
+    && Math.abs(y - TRAIL_PLATE_SOURCE_ORIGIN.y) <= 0.012)
+    || (Math.abs(x - 0.4) <= 0.012 && y >= 0.025 && y <= TRAIL_PLATE_SOURCE_ORIGIN.y);
+  const branchedPheromone = { sample(x, y) { return branchPoint(x, y) ? 0.12 : 0; } };
+  const branchedSurface = { sampleSupport(x, y) { return branchPoint(x, y) ? 0.025 : 0; } };
+  const [network] = observeUntilBirth(branches, branchedPheromone, branchedSurface, { seconds: 60 });
+  assert.ok(network);
+  assert.ok(network.centerline.some(node => node.y < 0.1 && Math.abs(node.x - 0.4) < 0.02),
+    'the distant source-connected branch is retained');
+  assert.ok(network.centerline.some(node => node.y > 0.7 && node.x < 0.2),
+    'the other qualifying source-to-boundary branch is retained too');
+  assertConnectedPlate(network);
+
+  const growing = new TrailPlateBirth();
+  let twigEnabled = false;
+  const growingPheromone = { sample(x, y) {
+    const main = x >= 0.025 && x <= 0.66 && Math.abs(y - TRAIL_PLATE_SOURCE_ORIGIN.y) <= 0.012;
+    const twig = twigEnabled && Math.abs(x - 0.4) <= 0.012 && y >= 0.72 && y <= 0.79;
+    return main || twig ? 0.12 : 0;
+  } };
+  const growingSurface = { sampleSupport(x, y) {
+    const main = x >= 0.025 && x <= 0.66 && Math.abs(y - TRAIL_PLATE_SOURCE_ORIGIN.y) <= 0.012;
+    const twig = twigEnabled && Math.abs(x - 0.4) <= 0.012 && y >= 0.72 && y <= 0.79;
+    return main || twig ? 0.025 : 0;
+  } };
+  const [original] = observeUntilBirth(growing, growingPheromone, growingSurface, { seconds: 60 });
+  assert.ok(original);
+  twigEnabled = true;
+  const afterGrowth = observeUntilBirth(growing, growingPheromone, growingSurface, {
+    startMs: original.bornAtSimulationTimeMs + 100000, seconds: 10
+  });
+  assert.equal(afterGrowth.length, 0,
+    'dead-end branch growth preserves corridor identity and cannot bypass refractory/contact evidence');
+  assert.equal(growing.getPlates()[0], original, 'branch growth cannot replace the frozen first plate');
+  assert.ok(original.centerline.every(node => node.y <= 0.74), 'short dead-end twigs are pruned');
+});
+
 test('spawn-center pixels, remote trails, chemical-only ridges, and short paths cannot qualify', () => {
   const system = new TrailPlateBirth();
   const centerHot = { sample(x, y) {

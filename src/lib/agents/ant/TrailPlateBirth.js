@@ -90,12 +90,12 @@ export class TrailPlateBirth {
     if (this.plates.length >= this.maxBirths) return [];
 
     const descriptor = freezeDescriptor(this.createDescriptor(nowCandidate, simulationTimeMs));
-    const corridorMask = nowCandidate.mask.slice();
     const record = {
       id: descriptor.id,
-      corridorMask,
+      corridorMask: descriptor.mask,
+      principalPath: descriptor.principalPath,
       bornAtSimulationTimeMs: simulationTimeMs,
-      footContactsAtBirth: this.countFootContacts(corridorMask)
+      footContactsAtBirth: this.countFootContacts(descriptor.mask)
     };
     this.birthRecords.push(record);
     this.plates.push(descriptor);
@@ -173,7 +173,8 @@ export class TrailPlateBirth {
   findSameCorridorBirth(candidate) {
     let best = null, bestSimilarity = 0;
     for (const record of this.birthRecords) {
-      const similarity = maskSimilarity(record.corridorMask, candidate.mask);
+      const similarity = Math.max(maskSimilarity(record.corridorMask, candidate.mask),
+        pathSimilarity(record.principalPath, candidate.path));
       if (similarity > bestSimilarity) { best = record; bestSimilarity = similarity; }
     }
     return bestSimilarity >= TRAIL_PLATE_SIMILARITY_THRESHOLD ? best : null;
@@ -188,7 +189,7 @@ export class TrailPlateBirth {
   }
 
   createDescriptor(candidate, simulationTimeMs) {
-    const corridorMask = candidate.mask;
+    const corridorMask = candidate.supportedMask;
     const component = candidate.component;
     const skeletonIndices = candidate.skeletonIndices;
     const nodeIndices = [...skeletonIndices].sort((a, b) => a - b);
@@ -217,7 +218,7 @@ export class TrailPlateBirth {
     const supportNorm = clamp(candidate.meanSupport / 0.08, 0, 1);
     const chemicalNorm = clamp(meanChemical, 0, 1);
     const widths = centerline.map(node => node.halfWidth);
-    const mask = rasterizeRibbon(centerline);
+    const mask = candidate.mask;
     return {
       id: 'trail-plate-' + (this.plates.length + 1),
       bornAtSimulationTimeMs: simulationTimeMs,
@@ -270,7 +271,15 @@ function selectCandidate(mask, supports, chemicalMemory) {
     const targetIndices = component.filter(index => nearObservationBoundary(gridPoint(index)));
     if (!sourceIndices.length || !targetIndices.length) continue;
 
-    const sourceSeeds = sourceIndices.slice().sort((a, b) => a - b);
+    const sourceSeeds = [sourceIndices.slice().sort((a, b) => {
+      const pointA = gridPoint(a), pointB = gridPoint(b);
+      const middleRadius = (TRAIL_PLATE_SOURCE_RADII[0] + TRAIL_PLATE_SOURCE_RADII[1]) * 0.5;
+      const deltaA = Math.abs(Math.hypot(pointA.x - TRAIL_PLATE_SOURCE_ORIGIN.x,
+        pointA.y - TRAIL_PLATE_SOURCE_ORIGIN.y) - middleRadius);
+      const deltaB = Math.abs(Math.hypot(pointB.x - TRAIL_PLATE_SOURCE_ORIGIN.x,
+        pointB.y - TRAIL_PLATE_SOURCE_ORIGIN.y) - middleRadius);
+      return deltaA - deltaB || a - b;
+    })[0]];
     const distance = new Float64Array(CELL_COUNT); distance.fill(Infinity);
     const parent = new Int32Array(CELL_COUNT); parent.fill(-2);
     const heap = new MinHeap();
@@ -300,12 +309,28 @@ function selectCandidate(mask, supports, chemicalMemory) {
     }
     const geodesicLength = farthest / (TRAIL_PLATE_GRID_SIZE - 1);
     if (target < 0 || geodesicLength < TRAIL_PLATE_MIN_GEODESIC_LENGTH) continue;
-    const path = [];
-    for (let index = target; index >= 0; index = parent[index]) path.push(index);
-    path.reverse();
+    const path = tracePath(target, parent);
+    const network = new Uint8Array(CELL_COUNT);
+    // Keep only skeleton branches that connect an annular source to an actual
+    // distant observation-boundary target. Short exploratory dead-end twigs
+    // remain evidence for the field, but do not become modeled plate area.
+    for (const endpoint of targetIndices) {
+      if (distance[endpoint] / (TRAIL_PLATE_GRID_SIZE - 1) < TRAIL_PLATE_MIN_GEODESIC_LENGTH) continue;
+      for (const index of tracePath(endpoint, parent)) network[index] = 1;
+    }
+    const networkIndices = [];
+    for (const index of component) if (network[index]) networkIndices.push(index);
+    const networkComponent = new Uint8Array(CELL_COUNT);
+    for (const index of networkIndices) networkComponent[index] = 1;
     const source = path[0], sourcePoint = gridPoint(source), targetPoint = gridPoint(target);
     const corridorMask = maskComponent(mask, source);
-    const skeletonIndices = component;
+    const distances = distanceToCorridorEdge(corridorMask);
+    const ribbonCenterline = networkIndices.map(index => ({
+      ...gridPoint(index), index,
+      halfWidth: clamp(distances[index] / (TRAIL_PLATE_GRID_SIZE - 1),
+        TRAIL_PLATE_HALF_WIDTH_RANGE[0], TRAIL_PLATE_HALF_WIDTH_RANGE[1])
+    }));
+    const ribbonMask = rasterizeRibbon(ribbonCenterline);
     let supportTotal = 0, chemicalTotal = 0, supportCells = 0;
     for (let index = 0; index < CELL_COUNT; index += 1) {
       if (corridorMask[index]) {
@@ -315,9 +340,10 @@ function selectCandidate(mask, supports, chemicalMemory) {
       }
     }
     const candidate = {
-      mask: corridorMask,
-      skeletonIndices,
-      component: componentSet,
+      mask: ribbonMask,
+      supportedMask: corridorMask,
+      skeletonIndices: networkIndices,
+      component: networkComponent,
       path,
       source: { ...sourcePoint, index: source },
       target: { ...targetPoint, index: target },
@@ -388,6 +414,12 @@ function maskComponent(mask, start) {
     }
   }
   return connected;
+}
+function tracePath(endpoint, parent) {
+  const path = [];
+  for (let index = endpoint; index >= 0; index = parent[index]) path.push(index);
+  path.reverse();
+  return path;
 }
 
 function distanceToCorridorEdge(mask) {
