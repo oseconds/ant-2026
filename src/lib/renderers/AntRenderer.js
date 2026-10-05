@@ -21,6 +21,7 @@ export class AntRenderer {
     this.snapshot = null;
     this.fieldImage = null;
     this.fieldSize = null;
+    this.plateImages = new WeakMap();
     this.width = 1;
     this.height = 1;
     this.pixelRatio = 1;
@@ -97,6 +98,7 @@ export class AntRenderer {
     this.destroyed = true;
     this.snapshot = null;
     this.fieldImage = null;
+    this.plateImages = new WeakMap();
     this.resolveInitialization?.(false);
     this.rejectInitialization = null;
     const removal = this.#removeInstance();
@@ -181,6 +183,26 @@ const ESTABLISHED_ROUTE_ALPHA = 90;
 function drawSnapshot(p, snapshot, renderer) {
   const width = p.width, height = p.height;
   p.background(255);
+
+  // Frozen material is a solid, restrained layer beneath current chemical memory.
+  // Cache each immutable birth mask once; later field changes cannot reshape it.
+  for (const plate of snapshot?.surfacePlates?.plates || []) {
+    if (!plate?.grid || !plate.mask?.length) continue;
+    let image = renderer.plateImages.get(plate);
+    if (!image) {
+      image = p.createImage(plate.grid.width, plate.grid.height);
+      image.loadPixels();
+      for (let index = 0; index < plate.mask.length; index += 1) {
+        image.pixels[index * 4] = 70;
+        image.pixels[index * 4 + 1] = 70;
+        image.pixels[index * 4 + 2] = 70;
+        image.pixels[index * 4 + 3] = plate.mask[index] ? 10 : 0;
+      }
+      image.updatePixels();
+      renderer.plateImages.set(plate, image);
+    }
+    p.image(image, 0, 0, width, height);
+  }
 
   const field = snapshot?.pheromone;
   if (field?.values?.length && field.width > 0 && field.height > 0) {

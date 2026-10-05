@@ -1,6 +1,6 @@
 # Physical Audio Lab
 
-독립적인 물리 오디오 라이브러리와 vanilla Vite 데모입니다. 첫 화면은 ANT이며 String, Circular Plate, Solid Sphere는 같은 페이지의 보조 실험으로 열 수 있습니다. ANT는 동등한 개체들이 환경에 흔적을 남기며 움직이는 실험입니다. 이동 거리로 진행하는 여섯 다리 tripod gait가 시각 표현과 FOOT_CONTACT를 함께 만들며, 접촉 중심점을 하나의 공유 Plate와 두 물리 픽업에서 스테레오로 들을 수 있습니다. `src/lib`는 SvelteKit으로 옮겨 사용할 수 있습니다.
+독립적인 물리 오디오 라이브러리와 vanilla Vite 데모입니다. 첫 화면은 ANT이며 String, Circular Plate, Solid Sphere는 같은 페이지의 보조 실험으로 열 수 있습니다. ANT는 동등한 개체들이 환경에 흔적을 남기며 움직이는 실험입니다. 여섯 다리 tripod gait의 실제 발 접촉은 느린 SurfaceField를 갱신하고, 지속적인 화학·기계 경로에서 태어난 동결 Plate 층을 공간적으로 타격합니다. 첫 Plate 생성 전에는 Plate 공명이 없습니다. `src/lib`는 SvelteKit으로 옮겨 사용할 수 있습니다.
 
 ```bash
 npm install
@@ -166,7 +166,7 @@ Antenna는 기존 L/R 값을 `v / (v + 0.018)`로 포화하고 좌우 차이에 
 
 Gaster 후단은 petiole pivot `−0.90r`에서 articulated gaster의 center `−0.45r`와 반길이 `0.80r`를 합친 local tip `−1.25r`를 yaw로 회전한 점입니다. 이를 thorax heading으로 world 변환합니다. Dose는 후단 이동 길이가 아니라 collision 뒤 실제 thorax 이동 × `4.5 × (0.5 + 5 × trailAdherence²)`로 계산합니다. Dab spacing `0.006`은 기본 stride `0.036`의 1/6입니다. 남은 거리·dose는 다음 tick에 보존하고 퇴장 시 최종 후단에 방출합니다. 제자리 회전은 새 dose를 만들지 않으며 영역 밖 후단은 clamp 없이 field에서 제외됩니다. 비정상 큰 입력은 최대 256개의 spaced dab 뒤 나머지 dose를 endpoint 한 점으로 모아 보존합니다. 같은 경로·강화량 비교에서 연속/dab 총량의 상대 차이는 약 `1.47e−8`이며, 자연 실행의 경로 변화에 따른 강화량 차이는 별도입니다.
 
-`FOOT_CONTACT`는 `{ type, antId, contactGroup: 'A' | 'B', contacts, position, strength, simulationTimeMs }`입니다. `contacts`에는 실제 tripod의 각 `{ legId, position: { x, y } }`가 있으며, 영역 밖 발은 clamp 없이 제외되어 1–3개가 남을 수 있습니다. `position`은 남은 발의 centroid이고, 0개면 이벤트를 내지 않습니다. 큰 advance에서도 phase/remainder를 모두 전진시키면서 최대 4개 tripod event만 냅니다. 각 group은 shared Plate에 centroid로 한 번만 타격됩니다.
+`FOOT_CONTACT`는 `{ type, antId, contactGroup: 'A' | 'B', contacts, position, strength, simulationTimeMs }`입니다. `contacts`에는 실제 tripod의 각 `{ legId, position: { x, y } }`가 있으며, 영역 밖 발은 clamp 없이 제외되어 1–3개가 남을 수 있습니다. `position`은 남은 발의 centroid이고, 0개면 이벤트를 내지 않습니다. 큰 advance에서도 phase/remainder를 모두 전진시키면서 최대 4개 tripod event만 냅니다. 기본 bornSurface에서는 개별 발이 SurfaceField와 해당 위치의 Plate 층을 갱신·타격합니다. legacy 비교 모드에서는 group centroid로 기존 공유 Plate를 한 번 타격합니다.
 
 Renderer는 기존 field 값을 frame별 max에 맞춰 재정규화하지 않습니다. `base = smoothstep(0.004, 0.050, value)`, `route = smoothstep(0.040, 0.180, value)`, `alpha = min(112, round(base × 22 + route × 90))`을 사용합니다. 기존 96×96 image를 확대할 때 canvas image smoothing과 high quality interpolation을 켭니다. 농도 배열·alpha transfer·field 해상도·행동 sampling은 바꾸지 않습니다.
 
@@ -189,7 +189,7 @@ await renderer.destroy(); // p5.remove()로 canvas와 내부 listener 정리
 await ants.destroy();
 ```
 
-ANT도 Lab registry로 전환하며, registry가 Lab의 기존 AudioEngine을 공유하는 `AntAudioBridge`를 controller에 주입합니다. 기본 Audio Off에서는 AudioContext나 Plate Worklet을 만들지 않습니다. 전환하면 기존 RAF·ResizeObserver·p5 instance와 ANT의 Plate 자원을 정리하고 controller를 파괴합니다. 공유 AudioEngine의 최종 파괴는 Lab이 담당합니다. SvelteKit에서 `AntRenderer`를 사용할 때는 `p5` dependency를 설치하고 onMount 이후 `init()`하세요. 개체와 공유장만 사용하는 환경에서는 p5를 import하거나 실행할 필요가 없습니다. 호르몬·먹이·둥지·장애물은 구현하지 않습니다. 몸체 회피는 soft local interaction이며 개미의 생물학이나 rigid-body physics를 재현하지 않습니다.
+ANT도 Lab registry로 전환하며, registry가 Lab의 기존 AudioEngine을 공유하는 `AntEnvironmentAudioBridge`를 controller에 주입합니다. 기본 Audio Off에서는 AudioContext나 Plate Worklet을 만들지 않습니다. 전환하면 기존 RAF·ResizeObserver·p5 instance와 ANT의 Plate 자원을 정리하고 controller를 파괴합니다. 공유 AudioEngine의 최종 파괴는 Lab이 담당합니다. SvelteKit에서 `AntRenderer`를 사용할 때는 `p5` dependency를 설치하고 onMount 이후 `init()`하세요. 개체와 공유장만 사용하는 환경에서는 p5를 import하거나 실행할 필요가 없습니다. 호르몬·먹이·둥지·장애물은 구현하지 않습니다. 몸체 회피는 soft local interaction이며 개미의 생물학이나 rigid-body physics를 재현하지 않습니다.
 
 ## 데모 표시
 
@@ -197,7 +197,23 @@ ANT diagnostics 앞에 `simulationTimeMs`의 경과 시간을 `mm:ss`로 표시�
 
 첫 로드는 ANT이며 내비게이션 순서는 ANT, String, Plate, Sphere입니다. 상단 제목은 작은 `Lab` 한 단어입니다. ANT에는 제목·캔버스·Audio On/Off·Volume·기존 개체 수/평균 속도/페로몬 총량을 한 줄로 표시합니다. 설명문·캡션·상호작용 안내·공유 기억 설명 details와 정상 실행 상태 문구는 보이는 ANT 화면에서 제거하고 canvas의 접근 가능한 설명은 유지합니다. `Loading…`·`Loading audio…`와 오류는 접근 가능한 status 영역에서 알립니다. 페이지의 중복 소개·footer 안내를 제거하고 JSON은 하단의 접힌 `State (JSON)` details로 남깁니다. String·Plate·Sphere의 기능 컨트롤·inspector·개별 모델 설명은 유지합니다.
 
-## ANT AUDIO: tripod FOOT_CONTACT와 공유 Plate 스테레오
+## ANT SurfaceField와 동결 Plate 층
+
+기본 연결은 `AntController → GaitController → SurfaceField / TrailPlateBirth → AntEnvironmentAudioBridge → SurfaceAudioBridge → surface-plate.worklet.js`입니다. `audioExperiment.mode`는 `bornSurface`가 기본이며 `legacy`로 기존 circular Plate를 비교할 수 있습니다. 이 선택은 환경이나 ANT 행동을 바꾸지 않습니다. 같은 기존 AudioEngine과 Volume을 사용하고 새로운 UI 패널은 없습니다. 일반 Plate 탭의 PlateModel과 plate.worklet.js는 변경하지 않습니다.
+
+SurfaceField는 96×96의 compaction 한 채널입니다. 유효한 각 발 접촉의 실제 위치 주변 반경 0.012에서 `c += (1-c) × 0.025 × GaussianWeight`로 0–1에 포화합니다. Group centroid, body 위치, heading 회전, 접촉 없는 정지는 기계적 흔적을 만들지 않습니다. 시뮬레이션 시간의 `c *= exp(-ln(2) × dt / 1800)`으로 천천히 완화하며 기존 pheromone의 15 s 반감기는 유지합니다. 행동 RNG를 소비하지 않습니다. 접촉 직전 compaction이 높아질수록 impulse footprint 반경은 0.014에서 0.009로 좁아지고 strength transfer는 0.95에서 1.05로 바뀝니다. 피치·pan·필터를 직접 제어하지 않습니다.
+
+Plate 분석은 매 1 simulated second 수행합니다. 절대 pheromone 농도 `v`를 `v/(v+0.04)`로 포화하고 20 s time constant로 누적한 chemical memory가 0.30 이상이며, 반경 0.025의 SurfaceField support가 0.015 이상인 cell을 후보로 선택합니다. 프레임 최대값으로 정규화하지 않습니다. 후보를 Zhang–Suen thinning으로 골격화하고 8-neighbor graph의 cardinal/diagonal 길이를 쓰는 deterministic Dijkstra로 연결 경로를 구합니다. Source는 `(0.5,0.72)` 주변 반경 0.055–0.115 고리이며 target은 열린 관측 경계 0.05 이내입니다. Source–target geodesic length가 0.30 이상이고 경로가 20 s 지속되어야 생성할 수 있습니다. Spawn-local blob이나 짧은 transient는 거부합니다.
+
+Birth 시 centerline 주변의 chemical+traffic 지지 영역까지의 transverse distance로 half-width를 0.012–0.030에 제한하고 disk ribbon을 rasterize합니다. Geometry/mask/graph/width/material/birth time/provenance를 깊이 동결합니다. Chemical evidence `q∈[0,1]`와 support의 bounded consolidation `s=clamp(meanSupport/0.08,0,1)`로 stiffness `0.65+0.5q`, density `1+0.2s`, damping baseline `0.25+0.2q`를 정합니다. 두 pickup은 principal path geodesic의 25%와 75%에 가장 가까운 유효한 경로 cell입니다. 이후 페로몬 변화가 기존 Plate를 변형하지 않습니다.
+
+층은 최대 12개를 보존하며 조용히 제거하지 않습니다. 한도에 도달하면 `surfacePlates.limitReached`로 알립니다. 모든 생성 사이에는 10 s 간격이 있고, 비슷한 경로에는 90 s refractory와 추가 실제 발 접촉 30개가 함께 필요합니다. 새 층을 기존 mask와 union하지 않습니다. Renderer는 동결 mask를 한 번 cache하여 live pheromone 아래에 약한 회색 solid ribbon으로 그립니다. 겹친 층은 시각적으로 누적됩니다.
+
+SurfaceAudioBridge는 Audio On 사용자 동작에서 ANT worklet 하나와 기존 GainNode 하나를 만듭니다. 발 위치가 포함된 각 동결 Plate에만 타격하고, Plate가 없으면 정확한 무음입니다. 최대 group strength 0.05를 유효한 발 수와 그 발 아래의 층 수의 제곱근으로 나누며 전체 squared impulse budget을 제한합니다. Plate가 없는 발의 에너지는 다른 발에 재분배하지 않습니다. Off에서 발생한 접촉을 나중에 재생하거나 queue하지 않습니다. Off/On은 vibration 자원을 재생성하되 같은 run의 동결 환경은 유지하고, ANT를 떠나면 controller와 환경을 함께 파괴합니다.
+
+새 ANT processor는 96-grid 동결 mask를 32-grid sparse finite-difference bending layer로 계산합니다. 각 층에 Dirichlet graph Laplacian과 그 제곱을 적용하고 overlap cell에는 양방향 restoring spring을 연결합니다. DSP 격자는 chemical/SurfaceField 해상도를 바꾸지 않습니다. 상수 재질의 선형 근사이며 실측 ground 모델은 아닙니다. 형상이 모드에 영향을 주고 per-ant voice·panner·musical pitch mapping은 없습니다. 수치식과 sample-rate/energy/CPU 검증 및 실제 출력 비교는 Surface Plate evidence에 기록합니다.
+
+## ANT AUDIO: legacy 공유 Plate 비교 기준
 
 활성 연결은 `AntController → GaitController → AntAudioBridge.handleFootContact() → PlateModel → 기존 AudioEngine / plate.worklet.js`입니다. 동일한 gait phase가 renderer의 여섯 다리와 발 접촉 이벤트를 만듭니다. `AntAgent`와 p5 렌더러에는 오디오가 없고, Plate 진동이나 오디오 상태를 ANT 행동에 되먹임하지 않습니다. 기존 Plate DSP를 재사용하며 별도 엔진·합성기·오디오 framework를 추가하지 않습니다.
 
@@ -229,6 +245,7 @@ FOOT_CONTACT 생성은 Audio Off 동안에도 model에서 진행하지만 브리
 import { AntController, GaitController, AntAudioBridge } from './src/lib/index.js';
 
 const ants = new AntController({
+  state: { audioExperiment: { mode: 'legacy' } },
   gaitController: new GaitController(),
   audioBridge: new AntAudioBridge({ audioEngine: existingAudioEngine })
 });
@@ -255,7 +272,7 @@ await ants.destroy(); // 주입한 engine은 소유자가 별도로 정리.
 
 이 단계에서는 페로몬 반감기·침적량, 개체 수, 격자 해상도, `trailAdherence`, 생성, 오디오, encounter rate, quorum, raid, UI를 바꾸지 않습니다. 성공 기준은 여러 개미가 같은 경로 위에 간격을 두고 이어서 이동하는 장면이 실제 화면에서 보이고, 접촉/통과가 발생하지 않는 것입니다. 자동 검증 결과만으로 이 시각 기준이 충족됐다고 판단하지 않습니다.
 
-현재 ANT는 방향 인지형 교통·adherence 강화·tripod FOOT_CONTACT·공유 Plate 스테레오 위에 평활화한 body pose, 기존 L/R 감각의 antenna 시각화, gaster 후단 dab, 표시 보간과 elapsed time, 느린 local colony activation을 연결했습니다. 다음 오디오 실험은 `FOOT_CONTACT → SurfaceField / material state → shared Plate`이며 이 pass에는 포함하지 않습니다. Encounter/social pressure도 후속 실험입니다. `StepEventGenerator`는 거리 STEP 비교 기준으로, `TrajectoryBuffer`는 일반 유틸리티로 남깁니다.
+현재 ANT는 방향 인지형 교통·adherence 강화·tripod FOOT_CONTACT 위에 body pose, 기존 L/R 감각의 antenna 시각화, gaster 후단 dab, 표시 보간과 elapsed time, 느린 local colony activation을 유지합니다. 새 환경 실험은 개별 `FOOT_CONTACT → SurfaceField → frozen Plate births → shared layered audio`입니다. 기존 circular Plate는 legacy 오디오 비교 기준으로 보존합니다. Encounter/social pressure는 후속 실험입니다. `StepEventGenerator`는 거리 STEP 비교 기준으로, `TrajectoryBuffer`는 일반 유틸리티로 남깁니다.
 
 [Head/gaster articulation 실험 기록과 straight·turning 자연 상태 스크린샷](docs/ant/evidence/2026-10-05-articulation/README.md)을 보존했습니다.
 

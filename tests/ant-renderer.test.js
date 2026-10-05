@@ -67,6 +67,25 @@ test('pheromone display uses two fixed scales with monotonic weak trace and stro
   assert.ok(alpha.every(value => value <= 112));
 });
 
+test('historical plate masks draw beneath live pheromone and cache frozen geometry', async () => {
+  const calls = [], parent = makeParent(), canvas = makeCanvas(parent);
+  const renderer = new AntRenderer(canvas, { loadP5: async () => ({ default: makeP5(calls) }) });
+  await renderer.init({ width: 100, height: 100 });
+  const plate = Object.freeze({ grid: Object.freeze({ width: 2, height: 2 }),
+    mask: Object.freeze([1, 0, 1, 0]) });
+  const snapshot = { agents: [], surfacePlates: { plates: [plate] },
+    pheromone: { width: 2, height: 2, values: new Float32Array([0, 0.1, 0, 0]) } };
+  renderer.render(snapshot);
+  const images = calls.filter(([name]) => name === 'createImage').map(([, image]) => image);
+  assert.equal(images.length, 2);
+  assert.deepEqual([...images[0].pixels].filter((_, i) => i % 4 === 3), [10, 0, 10, 0]);
+  assert.ok(calls.filter(([name]) => name === 'image')[0][1] === images[0], 'material draws first');
+  renderer.render(snapshot);
+  assert.equal(calls.filter(([name]) => name === 'createImage').length, 2, 'both images are reused');
+  assert.deepEqual(plate.mask, [1, 0, 1, 0]);
+  await renderer.destroy();
+});
+
 test('articulated ants draw snapshot gait legs and a four-part body without mutating the snapshot', async () => {
   const calls = [];
   const parent = makeParent();
