@@ -1,0 +1,41 @@
+{
+  "runId": "2026-10-06T11-08-56-558Z",
+  "seed": 20261005,
+  "head": "23e24ff21a49965c54a61976068fa5f28fe073f4",
+  "chromeVersion": "154.0.8037.98",
+  "chromeExecutable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+  "chromeMode": "headless installed Chrome",
+  "volume": 0.35,
+  "productionMode": "Vite preview of built dist",
+  "start": {
+    "wallMs": 1791284937769,
+    "performanceMs": 885.3000000007451,
+    "simulationTimeMs": 116.66666666666669,
+    "audioTime": 0.010666666666666666,
+    "contextState": "running",
+    "sampleRate": 48000,
+    "volume": 0.35,
+    "gain": 0.24500000476837158,
+    "mode": "bornSurface"
+  },
+  "originalWorkletSha256": "0d5289950a000ee9aa3264b9b6bdffedd13bca2d28a0bab281be03ca6a45efd5",
+  "servedTransform": {
+    "entryOriginalSha256": "dcb2e14e1406b9539c36a5b31fcdc8cdcabe024c8f89c42585c3756ac298e9b0",
+    "entryServedSha256": "b760a05db1e79c52054e7bcd8ddd114e99b7ef83b5f8078e71236b283b63357b",
+    "workletServedSha256": "fb943a3cdbb48aac5b200cdce8a58bc8178c25901aac0a77dfd997dc222bf8d7",
+    "workletDiagnosticExtension": "\nconst __runtimeOriginalDiagnostics = SurfacePlateProcessor.prototype.getDiagnostics;\nSurfacePlateProcessor.prototype.getDiagnostics = function () {\n  const result = __runtimeOriginalDiagnostics.call(this);\n  const layers = this.topology?.layerIds || [];\n  const activeNodesByLayer = new Uint32Array(layers.length);\n  for (let i = 0; i < this.activeCount; i++) activeNodesByLayer[this.nodeLayer[this.active[i]]]++;\n  result.runtimeLayerActivity = layers.map((id, index) => ({ id,\n    totalNodes: this.topology.nodeOffsets[index + 1] - this.topology.nodeOffsets[index],\n    activeNodes: activeNodesByLayer[index] }));\n  result.runtimeTotalNodes = this.current.length;\n  return result;\n};\n",
+    "entryReplacement": "Qr(document.getElementById(\"app\"))",
+    "workletOriginalSha256": "0d5289950a000ee9aa3264b9b6bdffedd13bca2d28a0bab281be03ca6a45efd5"
+  },
+  "diagnosticsAreAsynchronous": true,
+  "baselineHead": "3a41e6be6784de71e290ff3f6475416ceaeeb883",
+  "scope": "Natural bornSurface ANT run with opt-in counters only; production thresholds, forces, routing, behavior, and topology remain unchanged.",
+  "diagnosticSettings": {
+    "sleepSteps": 12000,
+    "sleepEnergy": 1e-10,
+    "forceThreshold": 1e-8,
+    "contactPulseMs": 3,
+    "contactRecoveryMs": 75,
+    "plateDampingMultiplier": 50
+  }
+}

@@ -1,0 +1,1109 @@
+{
+  "source": "Exact 30-Plate Chrome worklet snapshot plus its recorded message stream through 2500 physics steps",
+  "snapshotStep": 1534928,
+  "endStep": 1537428,
+  "simulatedSeconds": 0.4166666666666667,
+  "conditionsAreDiagnosticHarnessOnly": true,
+  "variants": [
+    {
+      "id": "A",
+      "name": "full system",
+      "condition": "full",
+      "replayStrikes": true,
+      "startStep": 1534928,
+      "endStep": 1537428,
+      "simulatedSeconds": 0.4166666666666667,
+      "recordedTopologyMessages": 0,
+      "replayedTopologyMessages": 0,
+      "replayedStrikeMessages": 1033,
+      "recordedStrikeMessages": 1033,
+      "acceptedStrikes": 50602,
+      "global": {
+        "sleeps": 0,
+        "activeNodes": 9806,
+        "wakeReasons": {
+          "directFootContact": {
+            "occurrences": 2890,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 2890,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.01916200333855039,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "intraPlatePropagation": {
+            "occurrences": 5904991,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 5904991,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.21276841551902242,
+            "thresholdTriggers": 1934997,
+            "maxTriggerMagnitude": 0.21276841551902242,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "zAdjacentCoupling": {
+            "occurrences": 3876525,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 3876525,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.000013004324776668883,
+            "thresholdTriggers": 1783884,
+            "maxTriggerMagnitude": 0.000008775996405173622,
+            "maxZComponentMagnitude": 0.000013004324776668883,
+            "maxSphereComponentMagnitude": 1.2792012448412387e-7,
+            "sphereAssistedTriggers": 266
+          },
+          "sphereFoundationCoupling": {
+            "occurrences": 205176,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 205176,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.0000029619633074096965,
+            "thresholdTriggers": 205176,
+            "maxTriggerMagnitude": 0.0000029619633074096965,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "topologyReinstall": {
+            "occurrences": 0,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 0,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          }
+        },
+        "blockers": {
+          "quietEnergy": {
+            "occurrences": 1934999,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 1934999,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.21349378915272652,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "localLinkForce": {
+            "occurrences": 1803482,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 1803482,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.000010531196104680466,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "localPlateForce": {
+            "occurrences": 1934913,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 1934913,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.00494759859544751,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "localSphereForce": {
+            "occurrences": 12473,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 12473,
+            "asleepToAwake": 0,
+            "maxMagnitude": 1.8781523447956408e-7,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          }
+        },
+        "zLinkBranchTriggers": 1783884,
+        "sphereAssistedZLinkBranchTriggers": 543
+      },
+      "oldestPlate": {
+        "role": "oldest",
+        "layerId": "trail-plate-1",
+        "nodeCount": 119,
+        "detailedTrackingStartedAtPhysicsStep": 1534928,
+        "directStrikeResetCount": 0,
+        "intraPlateResetCount": 909999,
+        "zResetCount": 443254,
+        "sphereResetCount": 205176,
+        "topologyReinstallResetCount": 0,
+        "wakeReasons": {
+          "directFootContact": {
+            "occurrences": 0,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 0,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "intraPlatePropagation": {
+            "occurrences": 909999,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 909999,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.0011950536411809258,
+            "thresholdTriggers": 297499,
+            "maxTriggerMagnitude": 0.0011950536411809258,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "zAdjacentCoupling": {
+            "occurrences": 443254,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 443254,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.000006507762807342859,
+            "thresholdTriggers": 257516,
+            "maxTriggerMagnitude": 0.0000022645231591275123,
+            "maxZComponentMagnitude": 0.000006507762807342859,
+            "maxSphereComponentMagnitude": 1.2792012448412387e-7,
+            "sphereAssistedTriggers": 131
+          },
+          "sphereFoundationCoupling": {
+            "occurrences": 205176,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 205176,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.0000029619633074096965,
+            "thresholdTriggers": 205176,
+            "maxTriggerMagnitude": 0.0000029619633074096965,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "topologyReinstall": {
+            "occurrences": 0,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 0,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          }
+        },
+        "blockers": {
+          "quietEnergy": {
+            "occurrences": 297500,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 297500,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.0012143833003932431,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "localLinkForce": {
+            "occurrences": 263200,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 263200,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.0000027174278989338934,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "localPlateForce": {
+            "occurrences": 297466,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 297466,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.0007158810115311927,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "localSphereForce": {
+            "occurrences": 12473,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 12473,
+            "asleepToAwake": 0,
+            "maxMagnitude": 1.8781523447956408e-7,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          }
+        },
+        "zLinkBranchTriggers": 257516,
+        "sphereAssistedZLinkBranchTriggers": 543,
+        "maxZLinkBranchMagnitude": 0.0000022645231591275123,
+        "blockerPercentOfActiveNodeSteps": {
+          "quietEnergy": 100,
+          "plateForce": 99.98857142857143,
+          "zForce": 88.47058823529412,
+          "sphereForce": 4.192605042016806
+        },
+        "activeNodeSteps": 297500,
+        "sleeps": 0,
+        "maxEnergyQuietReached": 0,
+        "meanPerNodeMaxEnergyQuietReached": 0,
+        "maxCurrentEnergyQuiet": 0,
+        "fractionNodesEverReachingSleepSteps": {
+          "pct25": 0,
+          "pct50": 0,
+          "pct75": 0,
+          "pct100": 0
+        }
+      }
+    },
+    {
+      "id": "B",
+      "name": "Sphere coupling disabled",
+      "condition": "sphere-off",
+      "replayStrikes": true,
+      "startStep": 1534928,
+      "endStep": 1537428,
+      "simulatedSeconds": 0.4166666666666667,
+      "recordedTopologyMessages": 0,
+      "replayedTopologyMessages": 0,
+      "replayedStrikeMessages": 1033,
+      "recordedStrikeMessages": 1033,
+      "acceptedStrikes": 50602,
+      "global": {
+        "sleeps": 0,
+        "activeNodes": 9806,
+        "wakeReasons": {
+          "directFootContact": {
+            "occurrences": 2890,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 2890,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.01916200333855039,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "intraPlatePropagation": {
+            "occurrences": 5904991,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 5904991,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.21276846738729807,
+            "thresholdTriggers": 1934997,
+            "maxTriggerMagnitude": 0.21276846738729807,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "zAdjacentCoupling": {
+            "occurrences": 3876403,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 3876403,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.000013004310444649984,
+            "thresholdTriggers": 1783741,
+            "maxTriggerMagnitude": 0.000008776000596124936,
+            "maxZComponentMagnitude": 0.000013004310444649984,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "sphereFoundationCoupling": {
+            "occurrences": 0,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 0,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "topologyReinstall": {
+            "occurrences": 0,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 0,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          }
+        },
+        "blockers": {
+          "quietEnergy": {
+            "occurrences": 1934999,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 1934999,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.21349383906823133,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "localLinkForce": {
+            "occurrences": 1803494,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 1803494,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.000010531201133822242,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "localPlateForce": {
+            "occurrences": 1934925,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 1934925,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.004947587099963631,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "localSphereForce": {
+            "occurrences": 0,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 0,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          }
+        },
+        "zLinkBranchTriggers": 1783741,
+        "sphereAssistedZLinkBranchTriggers": 0
+      },
+      "oldestPlate": {
+        "role": "oldest",
+        "layerId": "trail-plate-1",
+        "nodeCount": 119,
+        "detailedTrackingStartedAtPhysicsStep": 1534928,
+        "directStrikeResetCount": 0,
+        "intraPlateResetCount": 909999,
+        "zResetCount": 443199,
+        "sphereResetCount": 0,
+        "topologyReinstallResetCount": 0,
+        "wakeReasons": {
+          "directFootContact": {
+            "occurrences": 0,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 0,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "intraPlatePropagation": {
+            "occurrences": 909999,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 909999,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.0011951487015120334,
+            "thresholdTriggers": 297499,
+            "maxTriggerMagnitude": 0.0011951487015120334,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "zAdjacentCoupling": {
+            "occurrences": 443199,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 443199,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.0000065077605959402405,
+            "thresholdTriggers": 257375,
+            "maxTriggerMagnitude": 0.000002264570433446378,
+            "maxZComponentMagnitude": 0.0000065077605959402405,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "sphereFoundationCoupling": {
+            "occurrences": 0,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 0,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "topologyReinstall": {
+            "occurrences": 0,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 0,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          }
+        },
+        "blockers": {
+          "quietEnergy": {
+            "occurrences": 297500,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 297500,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.0012144816662490931,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "localLinkForce": {
+            "occurrences": 263216,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 263216,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.0000027174846281187866,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "localPlateForce": {
+            "occurrences": 297474,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 297474,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.0007158783077641374,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "localSphereForce": {
+            "occurrences": 0,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 0,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          }
+        },
+        "zLinkBranchTriggers": 257375,
+        "sphereAssistedZLinkBranchTriggers": 0,
+        "maxZLinkBranchMagnitude": 0.000002264570433446378,
+        "blockerPercentOfActiveNodeSteps": {
+          "quietEnergy": 100,
+          "plateForce": 99.99126050420168,
+          "zForce": 88.47596638655462,
+          "sphereForce": 0
+        },
+        "activeNodeSteps": 297500,
+        "sleeps": 0,
+        "maxEnergyQuietReached": 0,
+        "meanPerNodeMaxEnergyQuietReached": 0,
+        "maxCurrentEnergyQuiet": 0,
+        "fractionNodesEverReachingSleepSteps": {
+          "pct25": 0,
+          "pct50": 0,
+          "pct75": 0,
+          "pct100": 0
+        }
+      }
+    },
+    {
+      "id": "C",
+      "name": "Z coupling disabled",
+      "condition": "z-off",
+      "replayStrikes": true,
+      "startStep": 1534928,
+      "endStep": 1537428,
+      "simulatedSeconds": 0.4166666666666667,
+      "recordedTopologyMessages": 0,
+      "replayedTopologyMessages": 0,
+      "replayedStrikeMessages": 1033,
+      "recordedStrikeMessages": 1033,
+      "acceptedStrikes": 50602,
+      "global": {
+        "sleeps": 0,
+        "activeNodes": 9806,
+        "wakeReasons": {
+          "directFootContact": {
+            "occurrences": 2890,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 2890,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.01916200333855039,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "intraPlatePropagation": {
+            "occurrences": 5904989,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 5904989,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.1987502514118387,
+            "thresholdTriggers": 1934996,
+            "maxTriggerMagnitude": 0.1987502514118387,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "zAdjacentCoupling": {
+            "occurrences": 0,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 0,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0,
+            "thresholdTriggers": 11145,
+            "maxTriggerMagnitude": 1.5649426169927294e-7,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "sphereFoundationCoupling": {
+            "occurrences": 205316,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 205316,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.0000029619668616444114,
+            "thresholdTriggers": 205316,
+            "maxTriggerMagnitude": 0.0000029619668616444114,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "topologyReinstall": {
+            "occurrences": 0,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 0,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          }
+        },
+        "blockers": {
+          "quietEnergy": {
+            "occurrences": 1935000,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 1935000,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.19942644363296128,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "localLinkForce": {
+            "occurrences": 0,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 0,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "localPlateForce": {
+            "occurrences": 1934912,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 1934912,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.0049734054540122325,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "localSphereForce": {
+            "occurrences": 12472,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 12472,
+            "asleepToAwake": 0,
+            "maxMagnitude": 1.878153000754269e-7,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          }
+        },
+        "zLinkBranchTriggers": 11145,
+        "sphereAssistedZLinkBranchTriggers": 11145
+      },
+      "oldestPlate": {
+        "role": "oldest",
+        "layerId": "trail-plate-1",
+        "nodeCount": 119,
+        "detailedTrackingStartedAtPhysicsStep": 1534928,
+        "directStrikeResetCount": 0,
+        "intraPlateResetCount": 909991,
+        "zResetCount": 0,
+        "sphereResetCount": 205316,
+        "topologyReinstallResetCount": 0,
+        "wakeReasons": {
+          "directFootContact": {
+            "occurrences": 0,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 0,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "intraPlatePropagation": {
+            "occurrences": 909991,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 909991,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.0011950568618745694,
+            "thresholdTriggers": 297497,
+            "maxTriggerMagnitude": 0.0011950568618745694,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "zAdjacentCoupling": {
+            "occurrences": 0,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 0,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0,
+            "thresholdTriggers": 11145,
+            "maxTriggerMagnitude": 1.5649426169927294e-7,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "sphereFoundationCoupling": {
+            "occurrences": 205316,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 205316,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.0000029619668616444114,
+            "thresholdTriggers": 205316,
+            "maxTriggerMagnitude": 0.0000029619668616444114,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "topologyReinstall": {
+            "occurrences": 0,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 0,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          }
+        },
+        "blockers": {
+          "quietEnergy": {
+            "occurrences": 297500,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 297500,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.0012143808063824811,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "localLinkForce": {
+            "occurrences": 0,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 0,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "localPlateForce": {
+            "occurrences": 297469,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 297469,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.0007161720746632079,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "localSphereForce": {
+            "occurrences": 12472,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 12472,
+            "asleepToAwake": 0,
+            "maxMagnitude": 1.878153000754269e-7,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          }
+        },
+        "zLinkBranchTriggers": 11145,
+        "sphereAssistedZLinkBranchTriggers": 11145,
+        "maxZLinkBranchMagnitude": 1.5649426169927294e-7,
+        "blockerPercentOfActiveNodeSteps": {
+          "quietEnergy": 100,
+          "plateForce": 99.98957983193277,
+          "zForce": 0,
+          "sphereForce": 4.192268907563025
+        },
+        "activeNodeSteps": 297500,
+        "sleeps": 0,
+        "maxEnergyQuietReached": 0,
+        "meanPerNodeMaxEnergyQuietReached": 0,
+        "maxCurrentEnergyQuiet": 0,
+        "fractionNodesEverReachingSleepSteps": {
+          "pct25": 0,
+          "pct50": 0,
+          "pct75": 0,
+          "pct100": 0
+        }
+      }
+    },
+    {
+      "id": "D",
+      "name": "direct strikes disabled after snapshot",
+      "condition": "full",
+      "replayStrikes": false,
+      "startStep": 1534928,
+      "endStep": 1537428,
+      "simulatedSeconds": 0.4166666666666667,
+      "recordedTopologyMessages": 0,
+      "replayedTopologyMessages": 0,
+      "replayedStrikeMessages": 0,
+      "recordedStrikeMessages": 1033,
+      "acceptedStrikes": 49569,
+      "global": {
+        "sleeps": 0,
+        "activeNodes": 9806,
+        "wakeReasons": {
+          "directFootContact": {
+            "occurrences": 0,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 0,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "intraPlatePropagation": {
+            "occurrences": 5904989,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 5904989,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.06295453827837624,
+            "thresholdTriggers": 1934996,
+            "maxTriggerMagnitude": 0.06295453827837624,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "zAdjacentCoupling": {
+            "occurrences": 3747744,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 3747744,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.000008157252832428923,
+            "thresholdTriggers": 1730091,
+            "maxTriggerMagnitude": 0.0000062641047215874745,
+            "maxZComponentMagnitude": 0.000008157252832428923,
+            "maxSphereComponentMagnitude": 8.832336991402659e-8,
+            "sphereAssistedTriggers": 326
+          },
+          "sphereFoundationCoupling": {
+            "occurrences": 205224,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 205224,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.0000029619633074096965,
+            "thresholdTriggers": 205224,
+            "maxTriggerMagnitude": 0.0000029619633074096965,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "topologyReinstall": {
+            "occurrences": 0,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 0,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          }
+        },
+        "blockers": {
+          "quietEnergy": {
+            "occurrences": 1934999,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 1934999,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.06320684927936716,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "localLinkForce": {
+            "occurrences": 1756905,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 1756905,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.000007516925964600759,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "localPlateForce": {
+            "occurrences": 1934901,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 1934901,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.004242067862262933,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "localSphereForce": {
+            "occurrences": 12489,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 12489,
+            "asleepToAwake": 0,
+            "maxMagnitude": 1.8781523447956408e-7,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          }
+        },
+        "zLinkBranchTriggers": 1730091,
+        "sphereAssistedZLinkBranchTriggers": 587
+      },
+      "oldestPlate": {
+        "role": "oldest",
+        "layerId": "trail-plate-1",
+        "nodeCount": 119,
+        "detailedTrackingStartedAtPhysicsStep": 1534928,
+        "directStrikeResetCount": 0,
+        "intraPlateResetCount": 909994,
+        "zResetCount": 425778,
+        "sphereResetCount": 205224,
+        "topologyReinstallResetCount": 0,
+        "wakeReasons": {
+          "directFootContact": {
+            "occurrences": 0,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 0,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "intraPlatePropagation": {
+            "occurrences": 909994,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 909994,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.0011950536317536843,
+            "thresholdTriggers": 297498,
+            "maxTriggerMagnitude": 0.0011950536317536843,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "zAdjacentCoupling": {
+            "occurrences": 425778,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 425778,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.000005773999055317541,
+            "thresholdTriggers": 248692,
+            "maxTriggerMagnitude": 0.0000012259285604647054,
+            "maxZComponentMagnitude": 0.000005773999055317541,
+            "maxSphereComponentMagnitude": 8.832336991402659e-8,
+            "sphereAssistedTriggers": 122
+          },
+          "sphereFoundationCoupling": {
+            "occurrences": 205224,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 205224,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.0000029619633074096965,
+            "thresholdTriggers": 205224,
+            "maxTriggerMagnitude": 0.0000029619633074096965,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "topologyReinstall": {
+            "occurrences": 0,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 0,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          }
+        },
+        "blockers": {
+          "quietEnergy": {
+            "occurrences": 297499,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 297499,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.0012143833035765498,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "localLinkForce": {
+            "occurrences": 255357,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 255357,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.0000014711143310144756,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "localPlateForce": {
+            "occurrences": 297473,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 297473,
+            "asleepToAwake": 0,
+            "maxMagnitude": 0.0007158817654581413,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          },
+          "localSphereForce": {
+            "occurrences": 12489,
+            "nonzeroQuietResets": 0,
+            "alreadyAwake": 12489,
+            "asleepToAwake": 0,
+            "maxMagnitude": 1.8781523447956408e-7,
+            "thresholdTriggers": 0,
+            "maxTriggerMagnitude": 0,
+            "maxZComponentMagnitude": 0,
+            "maxSphereComponentMagnitude": 0,
+            "sphereAssistedTriggers": 0
+          }
+        },
+        "zLinkBranchTriggers": 248692,
+        "sphereAssistedZLinkBranchTriggers": 587,
+        "maxZLinkBranchMagnitude": 0.0000012259285604647054,
+        "blockerPercentOfActiveNodeSteps": {
+          "quietEnergy": 99.99966386554622,
+          "plateForce": 99.9909243697479,
+          "zForce": 85.83428571428571,
+          "sphereForce": 4.197983193277311
+        },
+        "activeNodeSteps": 297500,
+        "sleeps": 0,
+        "maxEnergyQuietReached": 0,
+        "meanPerNodeMaxEnergyQuietReached": 0,
+        "maxCurrentEnergyQuiet": 0,
+        "fractionNodesEverReachingSleepSteps": {
+          "pct25": 0,
+          "pct50": 0,
+          "pct75": 0,
+          "pct100": 0
+        }
+      }
+    }
+  ]
+}
