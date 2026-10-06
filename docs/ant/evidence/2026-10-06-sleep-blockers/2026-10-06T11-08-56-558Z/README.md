@@ -72,6 +72,21 @@ The harness replayed the exact post-30 snapshot and the first 2,500 recorded phy
 
 The short ablations agree with the natural counters: removing Sphere or Z coupling did not unblock energy or Plate force, and disabling direct strikes did not change the oldest layer's quiet streak in this window. These are diagnostic harness conditions only; they do not modify production topology or behavior.
 
+## 10-second controlled decay replay
+
+The exact 30-layer snapshot at physics step `1,534,928` was replayed for 60,000 steps (10 s) in each condition. All started with the same dynamic-state hash. No strike or topology messages were applied; the 30-layer captured topology remained fixed in all four cases, and D explicitly had topology frozen. The captured contact-force ring was preserved, but the oldest Plate had no pending direct-contact forces. The diagnostic-only runtime hooks read already-computed recurrence forces and quiet energy; `surface-plate.worklet.js` was not changed.
+
+Signed work uses the solver-space discrete proxy `force × midpoint velocity`, not physical joules. Damping is shown as positive dissipated work. The complete per-second Plate energy proxy, quiet-energy proxy, cumulative and interval work, active-node count, and quiet streak are in `decay-10s-diagnosis.json`.
+
+| Condition | First sleep | Nodes asleep at 10 s | Signed Z work | Signed Sphere work | Damping dissipated | Oldest direct-contact input |
+|---|---:|---:|---:|---:|---:|---:|
+| A. Full network, no new strikes | 6.0502 s | 119 / 119 | `-2.7885e-7` | `+2.7274e-9` | `1.0009e-4` | 0 |
+| B. Z off, no new strikes | 5.9933 s | 119 / 119 | 0 | `+2.7130e-9` | `1.0037e-4` | 0 |
+| C. Sphere off, no new strikes | 6.0500 s | 119 / 119 | `-2.7903e-7` | 0 | `1.0008e-4` | 0 |
+| D. Z and Sphere off, topology frozen | 5.9932 s | 119 / 119 | 0 | 0 | `1.0036e-4` | 0 |
+
+**Result:** the oldest Plate sleeps in every condition, including D, so its internal decay and sleep path work from this snapshot. Z coupling removes a small net amount of solver-space energy from the oldest Plate; Sphere contributes only a tiny positive amount relative to damping. The 10 s results identify continued natural excitation as necessary to explain why the Plate stayed awake in the seeded run; the captured state itself does not exhibit a numerical floor that prevents sleep.
+
 ## Runtime and artifacts
 
 - The short exact-state Node harness check used a 10-layer / 3,080-node OFF preflight snapshot, one OFF warmup, and two paired 2,500-step OFF/ON runs. OFF samples were 14.512 s and 8.791 s; ON samples were 32.903 s and 26.840 s. Final solver-state hashes were identical. The measured all-layer detail branch was approximately 127% slower by the reported two-sample median, so the capture was narrowed to current oldest/middle/newest detail before the natural diagnostic run.
