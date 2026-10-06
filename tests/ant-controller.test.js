@@ -629,7 +629,7 @@ test('a wide sensor discovers a thin adjacent trail without broadening the phero
   await controller.destroy();
 });
 
-test('distance deposition follows a convex adherence-only reinforcement curve', async () => {
+test('distance deposition keeps convex adherence reinforcement above the evidence baseline', async () => {
   const adherenceLevels = [0, 0.1, 0.5, 0.9, 1];
   const captures = await Promise.all(adherenceLevels.map(adherence =>
     captureOneDeposit({ adherence })));
@@ -637,7 +637,7 @@ test('distance deposition follows a convex adherence-only reinforcement curve', 
     assert.equal(deposits.length, 1, 'each moving ant deposits one traveled segment');
     return deposits[0].amountPerUnitDistance;
   });
-  const expectedMultipliers = adherenceLevels.map(value => 0.5 + 5 * value ** 2);
+  const expectedMultipliers = adherenceLevels.map(value => 0.375 + 0.125 * value + 5 * value ** 2);
   for (let index = 0; index < rates.length; index += 1) {
     assert.ok(Math.abs(rates[index] / 4.5 - expectedMultipliers[index]) < 1e-12,
       'adherence ' + adherenceLevels[index] + ' uses the configured quadratic multiplier');
@@ -652,7 +652,7 @@ test('distance deposition follows a convex adherence-only reinforcement curve', 
     'the reinforcement change preserves the configured deposition radius');
 });
 
-test('raw pheromone concentration does not add to adherence-based deposition', async () => {
+test('far pheromone concentration does not add to deposition at fixed local evidence', async () => {
   const emptyField = await captureOneDeposit({ adherence: 0.7, rawSignal: 0 });
   const strongField = await captureOneDeposit({ adherence: 0.7, rawSignal: 0.14 });
   assert.equal(emptyField.deposits.length, 1);
@@ -671,7 +671,7 @@ test('configured base amount and bounded reinforcement gain scale real deposits'
     'zero configurable gain retains the weak baseline trace');
   assert.equal(aboveMaximum.deposits[0].amountPerUnitDistance, baseAmount * 5.5,
     'the normalized gain clamps at 5');
-  assert.equal(negativeGain.deposits[0].amountPerUnitDistance, baseAmount * 0.5,
+  assert.equal(negativeGain.deposits[0].amountPerUnitDistance, baseAmount * 0.4375,
     'negative gain clamps at 0');
   assert.ok(noGain.pheromoneMass > 0 && aboveMaximum.pheromoneMass > noGain.pheromoneMass,
     'the configured base and reinforcement affect the actual shared field');

@@ -57,7 +57,7 @@ test('controller deposits continuous dose between pose-specific rear endpoints u
   const depositedDose = Math.hypot(deposits[0].to.x - deposits[0].from.x,
     deposits[0].to.y - deposits[0].from.y) * deposits[0].amountPerUnitDistance;
   const expectedDose = thoraxTravel * controller.state.pheromone.amountPerUnitDistance
-    * (0.5 + 5 * ant.trailAdherence ** 2);
+    * (0.375 + 5 * ant.trailAdherence ** 2);
   assert.ok(Math.abs(depositedDose - expectedDose) < 1e-10,
     'rear geometry changes the segment rate while dose remains weighted by thorax distance');
   assert.equal(samples.length, 1, 'body pose reuses the single already-computed local trail observation');
@@ -122,6 +122,6 @@ test('same pose preserves traveled-distance quantity for continuous deposition',
   assert.ok(Math.abs(rearDistance - thoraxDistance) < 1e-10,
     'straight motion with unchanged pose gives matching rear and thorax travel');
   assert.ok(Math.abs(dose - thoraxDistance * controller.state.pheromone.amountPerUnitDistance
-    * (0.5 + 5 * ant.trailAdherence ** 2)) < 1e-10);
+    * (0.375 + 5 * ant.trailAdherence ** 2)) < 1e-10);
   await controller.destroy();
 });

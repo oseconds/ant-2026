@@ -327,7 +327,8 @@ export class AntController {
             };
             // Coherent following earns nonlinear reinforcement; every moving ant
             // retains a weak trace that can seed a new branch.
-            movement.depositionMultiplier = DEPOSITION_BASELINE + this.state.pheromone.reinforcementGain
+            movement.depositionMultiplier = DEPOSITION_BASELINE * (0.75 + 0.25 * localTrails[index].strength)
+                + this.state.pheromone.reinforcementGain
                 * agent.trailAdherence ** DEPOSITION_ADHERENCE_EXPONENT;
             return movement;
         });
@@ -503,8 +504,11 @@ export class AntController {
         const confidence = Math.max(agent.trailConfidence, agent.trailAdherence);
         const exploration = Math.max(MIN_EXPLORATION_PROBABILITY,
             agent.personality.exploration * (1.2 - confidence));
-        agent.decisionRemaining = (0.25 + this.random() * 0.42) * (1 + 0.35 * confidence);
-        agent.committedRemaining = 0.3 + this.random() * 0.9;
+        // Absolute near evidence is distinct from directional contrast: a strong
+        // flat field keeps the existing intervals without claiming a route.
+        const evidenceDuration = 0.8 + 0.2 * localTrail.strength;
+        agent.decisionRemaining = (0.25 + this.random() * 0.42) * (1 + 0.35 * confidence) * evidenceDuration;
+        agent.committedRemaining = (0.3 + this.random() * 0.9) * evidenceDuration;
         for (const option of options) {
             option.score = option.trail * agent.personality.pheromoneSensitivity * TRAIL_SCORE_GAIN
                 - option.crowding * 3.2
