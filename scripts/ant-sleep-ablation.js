@@ -1,10 +1,12 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { gunzipSync } from 'node:zlib';
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import vm from 'node:vm';
 
 const [snapshotArg, resultArg, outputArg] = process.argv.slice(2);
+const benchmark = process.argv.includes('--benchmark');
 assert.ok(snapshotArg && resultArg && outputArg,
   'Usage: node scripts/ant-sleep-ablation.js <snapshot.json.gz> <snapshot-following-2s.json> <output.json>');
 
@@ -23,10 +25,11 @@ function revive(value) {
 
 const snapshot = revive(JSON.parse(gunzipSync(await readFile(resolve(snapshotArg))).toString('utf8')));
 const following = JSON.parse(await readFile(resolve(resultArg), 'utf8'));
-const futureStrikes = following.result?.futureStrikes || following.futureStrikes;
-assert.ok(snapshot.topology?.layerIds?.length >= 30, 'Snapshot must contain at least 30 Plate layers');
+const futureEvents = following.result?.futureEvents || following.futureEvents;
+assert.ok(snapshot.topology?.layerIds?.length >= (benchmark ? 10 : 30),
+  `Snapshot must contain at least ${benchmark ? 10 : 30} Plate layers`);
 assert.ok(snapshot.dynamic?.physicsSteps > 0, 'Snapshot must contain a live processor state');
-assert.ok(Array.isArray(futureStrikes), 'The natural follow-up FOOT_CONTACT strike stream is missing');
+assert.ok(Array.isArray(futureEvents), 'The natural follow-up worklet message stream is missing');
 
 let Processor;
 class AudioWorkletProcessorStub {
@@ -53,9 +56,9 @@ function copyTopology(topology, condition) {
   return copy;
 }
 
-function makeProcessor(condition) {
+function makeProcessor(condition, diagnosticsEnabled = true) {
   const processor = new Processor();
-  processor.setSleepDiagnostics(true);
+  processor.setSleepDiagnostics(diagnosticsEnabled);
   processor.installTopology(copyTopology(snapshot.topology, condition));
   const state = snapshot.dynamic;
   for (const key of ['current', 'previous', 'next', 'energyQuiet', 'awake', 'contactForces',
@@ -69,13 +72,49 @@ function makeProcessor(condition) {
   processor.contactCursor = state.contactCursor;
   processor.telemetry = { ...state.telemetry };
   processor.telemetry.physicsSteps = state.physicsSteps;
-  processor.clearSleepDiagnosticCounters();
+  if (diagnosticsEnabled) processor.clearSleepDiagnosticCounters();
   return processor;
 }
 
 const windowSteps = 12000;
 const snapshotStep = snapshot.dynamic.physicsSteps;
 const endStep = snapshotStep + windowSteps;
+function hashFinalState(processor) {
+  const digest = createHash('sha256');
+  for (const key of ['current', 'previous', 'next', 'energyQuiet', 'awake', 'contactForces',
+    'contactMemory', 'lastContactStep', 'sphereCurrent', 'spherePrevious']) {
+    const value = processor[key];
+    digest.update(Buffer.from(value.buffer, value.byteOffset, value.byteLength));
+  }
+  digest.update(JSON.stringify({ active: [...processor.active.subarray(0, processor.activeCount)],
+    activeCount: processor.activeCount, physicsSteps: processor.telemetry.physicsSteps,
+    topology: processor.topology.layerIds }));
+  return digest.digest('hex');
+}
+
+function runWindow(condition, diagnosticsEnabled, replayStrikes = true) {
+  const processor = makeProcessor(condition, diagnosticsEnabled);
+  let eventIndex = 0, deliveredStrikes = 0, deliveredTopologies = 0;
+  const events = futureEvents.filter(event => event.physicsStep <= endStep);
+  const started = process.hrtime.bigint();
+  while (processor.telemetry.physicsSteps < endStep) {
+    while (eventIndex < events.length && events[eventIndex].physicsStep <= processor.telemetry.physicsSteps) {
+      const event = events[eventIndex++];
+      if (event.type === 'topology') {
+        processor.handleMessage({ type: event.type, payload: copyTopology(event.payload, condition) });
+        deliveredTopologies++;
+      } else if (event.type === 'strike' && replayStrikes) {
+        processor.handleMessage({ type: event.type, payload: event.payload });
+        deliveredStrikes++;
+      }
+    }
+    processor.advancePhysics();
+  }
+  const elapsedMs = Number(process.hrtime.bigint() - started) / 1e6;
+  return { processor, elapsedMs, events, deliveredStrikes, deliveredTopologies,
+    finalStateSha256: hashFinalState(processor) };
+}
+
 const variants = [
   { id: 'A', name: 'full system', condition: 'full', replayStrikes: true },
   { id: 'B', name: 'Sphere coupling disabled', condition: 'sphere-off', replayStrikes: true },
@@ -83,38 +122,68 @@ const variants = [
   { id: 'D', name: 'direct strikes disabled after snapshot', condition: 'full', replayStrikes: false }
 ];
 const results = [];
-for (const variant of variants) {
-  const processor = makeProcessor(variant.condition);
-  let strikeIndex = 0, deliveredStrikes = 0;
-  const strikes = futureStrikes.filter(event => event.physicsStep <= endStep);
-  while (processor.telemetry.physicsSteps < endStep) {
-    if (variant.replayStrikes) {
-      while (strikeIndex < strikes.length && strikes[strikeIndex].physicsStep <= processor.telemetry.physicsSteps) {
-        processor.handleMessage({ type: 'strike', payload: strikes[strikeIndex].payload });
-        strikeIndex++; deliveredStrikes++;
-      }
+if (benchmark) {
+  // Warm each branch once, then alternate measured runs against the same snapshot and event stream.
+  const warmOff = runWindow('full', false);
+  const warmOn = runWindow('full', true);
+  assert.equal(warmOff.finalStateSha256, warmOn.finalStateSha256,
+    'Diagnostics ON changed solver state relative to OFF during warm-up');
+  const samples = { off: [], on: [] };
+  let referenceState = warmOff.finalStateSha256;
+  for (let repeat = 0; repeat < 5; repeat++) {
+    const order = repeat % 2 ? ['on', 'off'] : ['off', 'on'];
+    for (const mode of order) {
+      const run = runWindow('full', mode === 'on');
+      assert.equal(run.finalStateSha256, referenceState,
+        `Diagnostics ${mode.toUpperCase()} changed solver state across matched runs`);
+      samples[mode].push(run.elapsedMs);
     }
-    processor.advancePhysics();
   }
-  const diagnostics = processor.getDiagnostics();
-  const sleep = diagnostics.sleepDiagnostics;
-  results.push({ ...variant, startStep: snapshotStep, endStep: processor.telemetry.physicsSteps,
-    simulatedSeconds: windowSteps / 6000, recordedStrikeMessages: strikes.length,
-    replayedStrikeMessages: deliveredStrikes, acceptedStrikes: processor.telemetry.strikes,
-    global: { sleeps: diagnostics.sleeps, activeNodes: diagnostics.activeNodes,
-      wakeReasons: sleep.wakeReasons, blockers: sleep.blockers,
-      zLinkBranchTriggers: sleep.zLinkBranchTriggers,
-      sphereAssistedZLinkBranchTriggers: sleep.sphereAssistedZLinkBranchTriggers },
-    oldestPlate: sleep.selectedLayers.find(layer => layer.role === 'oldest') });
-  console.log(JSON.stringify({ variant: variant.id, steps: processor.telemetry.physicsSteps,
-    oldestMaxQuiet: results.at(-1).oldestPlate.maxEnergyQuietReached,
-    oldestSleeps: results.at(-1).oldestPlate.sleeps }));
-}
+  const median = values => [...values].sort((a, b) => a - b)[Math.floor(values.length / 2)];
+  const offMedianMs = median(samples.off), onMedianMs = median(samples.on);
+  const output = { source: 'Exact natural 10-Plate Chrome worklet snapshot plus its recorded next-12000-step message stream',
+    benchmark: 'Node AudioWorkletProcessor harness; processor setup excluded, topology and event replay included',
+    snapshotStep, endStep, simulatedSeconds: windowSteps / 6000, topologyLayers: snapshot.topology.layerIds.length,
+    topologyNodes: snapshot.topology.nodeGridIndices.length,
+    recordedTopologyMessages: futureEvents.filter(event => event.type === 'topology' && event.physicsStep <= endStep).length,
+    recordedStrikeMessages: futureEvents.filter(event => event.type === 'strike' && event.physicsStep <= endStep).length,
+    warmupMs: { off: warmOff.elapsedMs, on: warmOn.elapsedMs }, samplesMs: samples,
+    medianMs: { off: offMedianMs, on: onMedianMs },
+    stepsPerSecond: { off: windowSteps / (offMedianMs / 1000), on: windowSteps / (onMedianMs / 1000) },
+    equivalentAudioRealtimeRatio: { off: windowSteps / (offMedianMs / 1000) / 6000,
+      on: windowSteps / (onMedianMs / 1000) / 6000 },
+    relativeOverheadPercent: 100 * (onMedianMs / offMedianMs - 1),
+    finalSolverStateIdentical: true, smallOverheadThresholdPercent: 5 };
+  await writeFile(resolve(outputArg), JSON.stringify(output, null, 2));
+  console.log(JSON.stringify({ output: resolve(outputArg), relativeOverheadPercent: output.relativeOverheadPercent,
+    samplesMs: output.samplesMs, finalSolverStateIdentical: output.finalSolverStateIdentical }, null, 2));
+} else {
+  for (const variant of variants) {
+    const run = runWindow(variant.condition, true, variant.replayStrikes);
+    const { processor, events, deliveredStrikes, deliveredTopologies } = run;
+    const diagnostics = processor.getDiagnostics();
+    const sleep = diagnostics.sleepDiagnostics;
+    results.push({ ...variant, startStep: snapshotStep, endStep: processor.telemetry.physicsSteps,
+      simulatedSeconds: windowSteps / 6000,
+      recordedTopologyMessages: events.filter(event => event.type === 'topology').length,
+      replayedTopologyMessages: deliveredTopologies, replayedStrikeMessages: deliveredStrikes,
+      recordedStrikeMessages: events.filter(event => event.type === 'strike').length,
+      acceptedStrikes: processor.telemetry.strikes,
+      global: { sleeps: diagnostics.sleeps, activeNodes: diagnostics.activeNodes,
+        wakeReasons: sleep.wakeReasons, blockers: sleep.blockers,
+        zLinkBranchTriggers: sleep.zLinkBranchTriggers,
+        sphereAssistedZLinkBranchTriggers: sleep.sphereAssistedZLinkBranchTriggers },
+      oldestPlate: sleep.selectedLayers.find(layer => layer.role === 'oldest') });
+    console.log(JSON.stringify({ variant: variant.id, steps: processor.telemetry.physicsSteps,
+      oldestMaxQuiet: results.at(-1).oldestPlate.maxEnergyQuietReached,
+      oldestSleeps: results.at(-1).oldestPlate.sleeps }));
+  }
 
-const output = { source: 'Exact 30-Plate Chrome worklet snapshot plus its recorded next-12000-step strike stream',
-  snapshotStep, endStep, simulatedSeconds: 2, conditionsAreDiagnosticHarnessOnly: true, variants: results };
-await writeFile(resolve(outputArg), JSON.stringify(output, null, 2));
-console.log(JSON.stringify({ output: resolve(outputArg), variants: results.map(result => ({
-  id: result.id, oldestMaxQuiet: result.oldestPlate.maxEnergyQuietReached,
-  oldestSleeps: result.oldestPlate.sleeps, oldestResets: result.oldestPlate.wakeReasons
-})) }, null, 2));
+  const output = { source: 'Exact 30-Plate Chrome worklet snapshot plus its recorded next-12000-step message stream',
+    snapshotStep, endStep, simulatedSeconds: 2, conditionsAreDiagnosticHarnessOnly: true, variants: results };
+  await writeFile(resolve(outputArg), JSON.stringify(output, null, 2));
+  console.log(JSON.stringify({ output: resolve(outputArg), variants: results.map(result => ({
+    id: result.id, oldestMaxQuiet: result.oldestPlate.maxEnergyQuietReached,
+    oldestSleeps: result.oldestPlate.sleeps, oldestResets: result.oldestPlate.wakeReasons
+  })) }, null, 2));
+}

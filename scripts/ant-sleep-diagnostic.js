@@ -16,7 +16,10 @@ const DIAGNOSTICS_INTERVAL_MS = 5000;
 const WINDOW_SECONDS = 8;
 const MAX_SIMULATION_SECONDS = 600;
 const MAX_WALL_SECONDS = 900;
-const OUT_DIR = resolve('docs/ant/evidence/2026-10-06-sleep-blockers');
+const PREFLIGHT = process.argv.includes('--preflight');
+const TARGET_PLATES = PREFLIGHT ? 10 : 30;
+const OUT_DIR = resolve(PREFLIGHT ? 'test-results/ant-sleep-diagnostic-preflight'
+  : 'docs/ant/evidence/2026-10-06-sleep-blockers');
 const CHROME = process.env.BROWSER_EXECUTABLE_PATH || 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
 const runId = new Date().toISOString().replace(/[:.]/g, '-');
 const runDir = resolve(OUT_DIR, runId);
@@ -174,7 +177,8 @@ try {
     return bridge?.enabled && !bridge.loading && bridge.surface?.worklet?.node
       && window.__runtimeProbe.contexts.at(-1)?.state === 'running';
   }, null, { timeout: 30000 });
-  await page.evaluate(() => window.__runtimeApp.lab.model.audioBridge.surface.post('sleep-diagnostics', { enabled: true }));
+  if (!PREFLIGHT)
+    await page.evaluate(() => window.__runtimeApp.lab.model.audioBridge.surface.post('sleep-diagnostics', { enabled: true }));
 
   const audioAtStart = await page.evaluate(() => ({ wallMs: Date.now(), performanceMs: performance.now(),
     simulationTimeMs: window.__runtimeApp.lab.model.simulationTimeMs,
@@ -220,7 +224,9 @@ try {
     originalWorkletSha256: sha256, servedTransform: rendererCapture,
     diagnosticsAreAsynchronous: true,
     baselineHead: BASELINE_HEAD,
-    scope: 'Natural bornSurface ANT run with opt-in counters only; production thresholds, forces, routing, behavior, and topology remain unchanged.',
+    scope: PREFLIGHT
+      ? 'Diagnostics OFF natural bornSurface preflight; records one live processor state and following worklet message stream for matched OFF/ON overhead comparison.'
+      : 'Natural bornSurface ANT run with opt-in counters only; production thresholds, forces, routing, behavior, and topology remain unchanged.',
     diagnosticSettings: { sleepSteps: 12000, sleepEnergy: 1e-10, forceThreshold: 1e-8,
       contactPulseMs: 3, contactRecoveryMs: 75, plateDampingMultiplier: 50 } }, null, 2));
 
@@ -276,10 +282,10 @@ try {
           sleepDiagnostics: record.data.payload.sleepDiagnostics };
         sleepMilestones.push(milestone);
         await writeFile(resolve(runDir, 'sleep-milestones.json'), JSON.stringify(sleepMilestones, null, 2));
-        const isThirty = pendingMilestoneDiagnostic.count === 30;
+        const isTarget = pendingMilestoneDiagnostic.count === TARGET_PLATES;
         pendingMilestoneDiagnostic = null;
         milestoneDiagnosticInFlight = false;
-        if (isThirty && !snapshotRequested) {
+        if (isTarget && !snapshotRequested) {
           snapshotRequested = true;
           await page.evaluate(() => window.__runtimeApp.lab.model.audioBridge.surface.post('sleep-diagnostic-snapshot'));
         }
@@ -372,10 +378,11 @@ try {
       completedWindows.push(result);
       await appendFile(windowsPath, `${JSON.stringify(result)}\n`);
       rowsByLayer.pop();
-      if (result.topology.plateCount >= 30 && result.audioPerWall !== null && result.audioPerWall < 0.9) lowRealtimeWindows += 1;
-      else if (result.topology.plateCount >= 30) lowRealtimeWindows = 0;
-      if (result.topology.plateCount >= 30 && lowRealtimeWindows >= 2 && milestoneDone.has('30-plates')
-        && completedWindows.some(item => item.label === '30-plates')) {
+      if (result.topology.plateCount >= TARGET_PLATES && result.audioPerWall !== null && result.audioPerWall < 0.9) lowRealtimeWindows += 1;
+      else if (result.topology.plateCount >= TARGET_PLATES) lowRealtimeWindows = 0;
+      const targetLabel = `${TARGET_PLATES}-plates`;
+      if (result.topology.plateCount >= TARGET_PLATES && lowRealtimeWindows >= 2 && milestoneDone.has(targetLabel)
+        && completedWindows.some(item => item.label === targetLabel)) {
         if (sleepDiagnosticResult) { stopReason = 'diagnostic-window-complete'; break; }
       }
     }
