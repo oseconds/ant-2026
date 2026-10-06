@@ -77,6 +77,8 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
     this.sleepDiagnosticsEnabled = false;
     this.sleepDiagnosticLayers = new Map();
     this.sleepDiagnosticLayerByIndex = [];
+    this.sleepDiagnosticTrackedNodes = new Uint8Array(0);
+    this.sleepDiagnosticCouplingNodes = new Uint8Array(0);
     this.sleepDiagnosticMaxQuiet = new Uint16Array(0);
     this.sleepDiagnosticLocalLinkForce = new Float64Array(0);
     this.sleepDiagnosticLocalPlateForce = new Float64Array(0);
@@ -159,6 +161,7 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
     this.contactMemory = new Float32Array(n);
     this.lastContactStep = new Float64Array(n);
     this.buildNodeLinks(t);
+    if (this.sleepDiagnosticsEnabled) this.buildSleepDiagnosticCouplingMask();
     for (let l = 0; l < t.layerIds.length; l++) {
       const start = t.nodeOffsets[l], end = t.nodeOffsets[l + 1];
       for (let i = start; i < end; i++) this.nodeLayer[i] = l;
@@ -175,6 +178,9 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
         this.current[target] = oldCurrent[source]; this.previous[target] = oldPrevious[source];
         this.energyQuiet[target] = oldQuiet[source];
         if (this.sleepDiagnosticsEnabled) this.sleepDiagnosticMaxQuiet[target] = oldDiagnosticMaxQuiet[source];
+        if (this.sleepDiagnosticsEnabled && this.sleepDiagnosticTrackedNodes[target]
+          && this.energyQuiet[target] > this.sleepDiagnosticMaxQuiet[target])
+          this.sleepDiagnosticMaxQuiet[target] = this.energyQuiet[target];
         this.contactMemory[target] = oldContactMemory[source];
         this.lastContactStep[target] = oldLastContactStep[source];
         for (let step = 0; step < CONTACT_PULSE_STEPS; step++) {
@@ -280,9 +286,10 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
   wakeNode(node, reason = 0, magnitude = 0, options = null) {
     if (node < 0 || node >= this.awake.length) return;
     const alreadyAwake = options?.alreadyAwake ?? Boolean(this.awake[node]);
-    if (this.sleepDiagnosticsEnabled && reason > 0)
+    if (this.sleepDiagnosticsEnabled && this.sleepDiagnosticTrackedNodes[node] && reason > 0)
       this.recordSleepWakeAttempt(node, reason, magnitude, alreadyAwake, options);
-    if (this.sleepDiagnosticsEnabled) this.recordSleepQuietMaximum(node, this.energyQuiet[node]);
+    if (this.sleepDiagnosticsEnabled && this.sleepDiagnosticTrackedNodes[node])
+      this.recordSleepQuietMaximum(node, this.energyQuiet[node]);
     this.energyQuiet[node] = 0;
     if (this.awake[node]) return;
     if (this.inPhysicsStep) {
@@ -295,13 +302,14 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
     }
     this.awake[node] = 1;
     this.active[this.activeCount++] = node; this.telemetry.wakes++;
-    if (this.sleepDiagnosticsEnabled && reason > 0 && !options?.suppressTransition)
+    if (this.sleepDiagnosticsEnabled && this.sleepDiagnosticTrackedNodes[node]
+      && reason > 0 && !options?.suppressTransition)
       this.recordSleepAwakeTransition(node, reason);
   }
 
   wakeNeighborhood(node, reason = 0, magnitude = 0) {
     const neighbors = this.topology.neighborIndices;
-    if (this.sleepDiagnosticsEnabled && reason > 0) {
+    if (this.sleepDiagnosticsEnabled && this.sleepDiagnosticTrackedNodes[node] && reason > 0) {
       const layerStats = this.sleepDiagnosticLayerByIndex[this.nodeLayer[node]];
       const stat = layerStats?.wakeReasons[SLEEP_DIAGNOSTIC_WAKE_REASONS[reason - 1]];
       if (stat) { stat.thresholdTriggers++; stat.maxTriggerMagnitude = Math.max(stat.maxTriggerMagnitude, Math.abs(magnitude)); }
@@ -315,6 +323,7 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
   setSleepDiagnostics(enabled) {
     if (!enabled || this.sleepDiagnosticsEnabled) { this.sleepDiagnosticsEnabled = enabled; return; }
     this.sleepDiagnosticsEnabled = true;
+    this.sleepDiagnosticLayers = new Map();
     this.sleepDiagnosticMaxQuiet = new Uint16Array(this.current.length);
     this.sleepDiagnosticLocalLinkForce = new Float64Array(this.current.length);
     this.sleepDiagnosticLocalPlateForce = new Float64Array(this.current.length);
@@ -323,7 +332,10 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
     for (let node = 0; node < this.energyQuiet.length; node++)
       this.sleepDiagnosticMaxQuiet[node] = this.energyQuiet[node];
     this.pendingWakeReason = new Uint8Array(this.current.length);
-    if (this.topology) this.ensureSleepDiagnosticLayers(this.topology);
+    if (this.topology) {
+      this.ensureSleepDiagnosticLayers(this.topology);
+      this.buildSleepDiagnosticCouplingMask();
+    }
   }
 
   makeSleepDiagnosticLayer(layerId, nodeCount) {
@@ -332,7 +344,8 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
       maxMagnitude: 0, thresholdTriggers: 0, maxTriggerMagnitude: 0,
       maxZComponentMagnitude: 0, maxSphereComponentMagnitude: 0, sphereAssistedTriggers: 0
     }]));
-    return { layerId, nodeCount, sleepEvaluations: 0, sleeps: 0, zLinkBranchTriggers: 0,
+    return { layerId, nodeCount, detailedTrackingStartedAtPhysicsStep: this.telemetry.physicsSteps,
+      sleepEvaluations: 0, sleeps: 0, zLinkBranchTriggers: 0,
       sphereAssistedZLinkBranchTriggers: 0, maxZLinkBranchMagnitude: 0,
       wakeReasons: makeCounts(SLEEP_DIAGNOSTIC_WAKE_REASONS),
       blockers: makeCounts(SLEEP_DIAGNOSTIC_BLOCKERS) };
@@ -340,17 +353,36 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
 
   ensureSleepDiagnosticLayers(topology) {
     this.sleepDiagnosticLayerByIndex = new Array(topology.layerIds.length);
+    this.sleepDiagnosticTrackedNodes = new Uint8Array(topology.nodeGridIndices.length);
+    const selected = new Set(topology.layerIds.length ? [0, Math.floor((topology.layerIds.length - 1) / 2),
+      topology.layerIds.length - 1] : []);
     for (let layer = 0; layer < topology.layerIds.length; layer++) {
+      if (!selected.has(layer)) continue;
       const id = topology.layerIds[layer], count = topology.nodeOffsets[layer + 1] - topology.nodeOffsets[layer];
       let stat = this.sleepDiagnosticLayers.get(id);
       if (!stat) { stat = this.makeSleepDiagnosticLayer(id, count); this.sleepDiagnosticLayers.set(id, stat); }
       else stat.nodeCount = count;
       this.sleepDiagnosticLayerByIndex[layer] = stat;
+      this.sleepDiagnosticTrackedNodes.fill(1, topology.nodeOffsets[layer], topology.nodeOffsets[layer + 1]);
+    }
+  }
+
+  buildSleepDiagnosticCouplingMask() {
+    this.sleepDiagnosticCouplingNodes = new Uint8Array(this.current.length);
+    if (!this.sleepDiagnosticsEnabled) return;
+    for (let node = 0; node < this.current.length; node++) {
+      for (let q = this.linkOffsets[node]; q < this.linkOffsets[node + 1]; q++) {
+        const other = this.linkNodes[q];
+        if (node < other && (this.sleepDiagnosticTrackedNodes[node] || this.sleepDiagnosticTrackedNodes[other])) {
+          this.sleepDiagnosticCouplingNodes[node] = 1;
+          this.sleepDiagnosticCouplingNodes[other] = 1;
+        }
+      }
     }
   }
 
   recordSleepQuietMaximum(node, value) {
-    if (!this.sleepDiagnosticsEnabled || !value) return;
+    if (!this.sleepDiagnosticsEnabled || !this.sleepDiagnosticTrackedNodes[node] || !value) return;
     if (value > this.sleepDiagnosticMaxQuiet[node]) this.sleepDiagnosticMaxQuiet[node] = value;
   }
 
@@ -389,7 +421,8 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
   clearSleepDiagnosticCounters() {
     this.sleepDiagnosticLayers = new Map();
     if (this.topology) this.ensureSleepDiagnosticLayers(this.topology);
-    for (let node = 0; node < this.energyQuiet.length; node++)
+    this.sleepDiagnosticMaxQuiet.fill(0);
+    for (let node = 0; node < this.energyQuiet.length; node++) if (this.sleepDiagnosticTrackedNodes[node])
       this.sleepDiagnosticMaxQuiet[node] = this.energyQuiet[node];
   }
 
@@ -447,6 +480,7 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
       }
       const percent = count => stat.sleepEvaluations ? 100 * count / stat.sleepEvaluations : 0;
       return { role, layerId: id, nodeCount: end - start,
+        detailedTrackingStartedAtPhysicsStep: stat.detailedTrackingStartedAtPhysicsStep,
         directStrikeResetCount: stat.wakeReasons.directFootContact.occurrences,
         intraPlateResetCount: stat.wakeReasons.intraPlatePropagation.occurrences,
         zResetCount: stat.wakeReasons.zAdjacentCoupling.occurrences,
@@ -483,7 +517,9 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
         sphereFoundationCoupling: 'advanceNodules modal coupling abs(coupling) > 1e-8 -> wake foundation',
         topologyReinstall: 'installTopology re-wakes a node that was already awake before recompilation'
       },
-      blockerDenominator: 'active node-step evaluations; each blocker is counted independently',
+      diagnosticScope: 'Detailed counters and per-node quiet maxima cover only the current oldest, middle, and newest Plate layers; other layers use the original sleep-check path.',
+      blockerDenominator: 'selected-layer active node-step evaluations; each blocker is counted independently',
+      detailedLayerIds: [...this.sleepDiagnosticLayers.keys()],
       sleepEvaluations: all.sleepEvaluations, sleeps: all.sleeps,
       zLinkBranchTriggers: layerIds.reduce((sum, id) => sum + (this.sleepDiagnosticLayers.get(id)?.zLinkBranchTriggers || 0), 0),
       sphereAssistedZLinkBranchTriggers: layerIds.reduce((sum, id) => sum
@@ -543,6 +579,8 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
     const couplings = t.adjacentLinkNodes, coeffs = t.adjacentLinkCoefficients;
     for (let a = 0; a < steppingCount; a++) {
       const node = this.active[a], layer = this.nodeLayer[node], mi = layer * 4;
+      const diagnosticLayer = this.sleepDiagnosticsEnabled ? this.sleepDiagnosticLayerByIndex[layer] : null;
+      const diagnosticCoupling = this.sleepDiagnosticsEnabled && this.sleepDiagnosticCouplingNodes[node] !== 0;
       const value = cur[node], vel = value - this.previous[node];
       energyBefore += value * value + vel * vel;
       let lapOfLap = -4 * lap[node], base = node * 4;
@@ -556,8 +594,8 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
         const rawZForce = this.linkCoefficients[q] * delta;
         const zForce = rawZForce / mats[mi + 2];
         linkForce += zForce;
-        if (this.sleepDiagnosticsEnabled) {
-          diagnosticZForce += zForce;
+        if (diagnosticCoupling) diagnosticZForce += zForce;
+        if (diagnosticLayer) {
           diagnosticLocalLinkForce += rawZForce;
         }
         if (node < other) this.telemetry.couplingWorkProxy += Math.abs(this.linkCoefficients[q] * delta
@@ -574,9 +612,9 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
         const rawSphereForce = (this.sphereWeight[ni] || 0) * 0.000025 * (modalContact - value);
         const sphereForce = rawSphereForce / mats[mi + 2];
         linkForce += sphereForce;
-        if (this.sleepDiagnosticsEnabled) diagnosticSphereForce += sphereForce;
+        if (diagnosticCoupling) diagnosticSphereForce += sphereForce;
       }
-      if (this.sleepDiagnosticsEnabled) {
+      if (diagnosticLayer) {
         this.sleepDiagnosticLocalLinkForce[node] = diagnosticLocalLinkForce;
         this.sleepDiagnosticLocalPlateForce[node] = mats[mi] * lapOfLap - mats[mi + 1] * lap[node] / mats[mi + 2];
       }
@@ -591,8 +629,8 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
       const e = next * next + (next - value) ** 2 + lapOfLap * lapOfLap * 0.0001;
       if (e > WAKE_ENERGY) this.wakeNeighborhood(node, WAKE_REASON.INTRA_PLATE, e);
       if (Math.abs(linkForce) > 1e-8) {
-        if (this.sleepDiagnosticsEnabled) {
-          const sourceStats = this.sleepDiagnosticLayerByIndex[layer];
+        if (diagnosticLayer) {
+          const sourceStats = diagnosticLayer;
           if (sourceStats) {
             sourceStats.zLinkBranchTriggers++;
             sourceStats.maxZLinkBranchMagnitude = Math.max(sourceStats.maxZLinkBranchMagnitude, Math.abs(linkForce));
@@ -619,9 +657,9 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
       const node = this.active[a], value = this.next[node], vel = value - this.current[node];
       const layer = this.nodeLayer[node], bendingPotential = mats[layer * 4] * lap[node] * lap[node];
       const quietEnergy = value * value + vel * vel + bendingPotential;
-      if (this.sleepDiagnosticsEnabled) {
-        const layerStats = this.sleepDiagnosticLayerByIndex[layer];
-        if (layerStats) layerStats.sleepEvaluations++;
+      const layerStats = this.sleepDiagnosticsEnabled ? this.sleepDiagnosticLayerByIndex[layer] : null;
+      if (layerStats) {
+        layerStats.sleepEvaluations++;
         const localLinkForce = this.sleepDiagnosticLocalLinkForce[node];
         const localPlateForce = this.sleepDiagnosticLocalPlateForce[node];
         const stepStamp = this.telemetry.physicsSteps + 1;
@@ -678,7 +716,8 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
       if (!this.awake[node]) {
         this.awake[node] = 1; this.energyQuiet[node] = 0;
         this.active[this.activeCount++] = node; this.telemetry.wakes++;
-        if (this.sleepDiagnosticsEnabled && reason > 0) this.recordSleepAwakeTransition(node, reason);
+        if (this.sleepDiagnosticsEnabled && this.sleepDiagnosticTrackedNodes[node] && reason > 0)
+          this.recordSleepAwakeTransition(node, reason);
       }
     }
     this.pendingCount = 0;
@@ -747,6 +786,8 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
     const diagnosticStepStamp = this.telemetry.physicsSteps + 1;
     for (let n = 0; n < this.noduleIds.length; n++) {
       const foundation = nodes[n];
+      const diagnosticFoundationTracked = this.sleepDiagnosticsEnabled && foundation !== NO_NODE
+        && foundation < this.current.length && this.sleepDiagnosticTrackedNodes[foundation] !== 0;
       let modalContact = 0;
       let diagnosticModalContact = 0;
       for (let mode = 0; mode < 12; mode++) modalContact += this.sphereFoundationShape[n * 12 + mode] * u[n * 12 + mode];
@@ -762,13 +803,13 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
         }
         const next = c[i] * old - d[i] * p[i] + coupling;
         p[i] = old; u[i] = Number.isFinite(next) ? next : 0;
-        if (this.sleepDiagnosticsEnabled)
+        if (diagnosticFoundationTracked)
           diagnosticModalContact += this.sphereFoundationShape[i] * u[i];
         if (foundation !== NO_NODE && Math.abs(coupling) > 1e-8)
           this.wakeNode(foundation, WAKE_REASON.SPHERE_FOUNDATION, Math.abs(coupling));
         if (foundation !== NO_NODE && foundation < this.current.length) this.telemetry.sphereCouplingTransfers++;
       }
-      if (this.sleepDiagnosticsEnabled && foundation !== NO_NODE && foundation < this.current.length) {
+      if (diagnosticFoundationTracked) {
         if (this.sleepDiagnosticSphereForceStamp[foundation] !== diagnosticStepStamp) {
           this.sleepDiagnosticSphereForceStamp[foundation] = diagnosticStepStamp;
           this.sleepDiagnosticLocalSphereForce[foundation] = 0;
