@@ -23,10 +23,15 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
       births: 0, strikes: 0, dropped: 0, nonFinite: 0, clipped: 0,
       cpuMaxMs: null, maxOutputAbs: 0
     };
-    this.decimation = Math.max(1, Math.round(sampleRate / PHYSICS_RATE));
-    this.physicsRate = sampleRate / this.decimation;
+    this.physicsRate = PHYSICS_RATE;
+    this.decimationPhase = 0;
+    this.samplesSincePhysicsStep = 0;
     this.lastOutputL = 0;
     this.lastOutputR = 0;
+    this.outputLeftQueue = new Float32Array(64);
+    this.outputRightQueue = new Float32Array(64);
+    this.outputQueueHead = 0;
+    this.outputQueueLength = 0;
     this.overlapCoupling = [];
     this.timingAvailable = typeof performance !== 'undefined' && typeof performance.now === 'function';
     this.port.onmessage = (event) => this.handleMessage(event.data);
@@ -58,6 +63,10 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
       for (const layer of this.layers.values()) clearVibration(layer);
       this.lastOutputL = 0;
       this.lastOutputR = 0;
+      this.outputQueueHead = 0;
+      this.outputQueueLength = 0;
+      this.decimationPhase = 0;
+      this.samplesSincePhysicsStep = 0;
     } else if (message.type === 'diagnostics') {
       this.port.postMessage({ type: 'diagnostics', payload: {
         ...this.telemetry, layers: this.layers.size, physicsRate: this.physicsRate,
@@ -69,6 +78,8 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
       this.layers.clear();
       this.layerList = [];
       this.couplingGroups = [];
+      this.outputQueueHead = 0;
+      this.outputQueueLength = 0;
     }
   }
 
@@ -111,39 +122,61 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
     if (this.destroyed || !this.layers.size) return true;
 
     const layers = this.layerList;
-    const factor = this.decimation;
-    for (let frame = 0; frame < left.length; frame += factor) {
-      for (let layerIndex = 0; layerIndex < layers.length; layerIndex += 1) prepareLaplacian(layers[layerIndex]);
-      if (this.couplingGroups?.length) applyCouplings(this.couplingGroups);
-      let outL = 0, outR = 0;
-      for (let layerIndex = 0; layerIndex < layers.length; layerIndex += 1) {
-        const layer = layers[layerIndex];
-        advanceLayer(layer, this.telemetry);
-        outL += readPickup(layer, 0);
-        outR += readPickup(layer, 1);
+    for (let frame = 0; frame < left.length; frame += 1) {
+      this.decimationPhase += PHYSICS_RATE;
+      this.samplesSincePhysicsStep += 1;
+      if (this.decimationPhase >= sampleRate) {
+        this.decimationPhase -= sampleRate;
+        this.advancePhysics(layers);
+        const count = this.samplesSincePhysicsStep;
+        for (let step = 1; step <= count; step += 1) {
+          const amount = step / count;
+          if (this.outputQueueLength >= this.outputLeftQueue.length) {
+            this.telemetry.dropped += 1;
+            break;
+          }
+          const tail = (this.outputQueueHead + this.outputQueueLength) % this.outputLeftQueue.length;
+          this.outputLeftQueue[tail] = this.lastOutputL + (this.physicsOutputL - this.lastOutputL) * amount;
+          this.outputRightQueue[tail] = this.lastOutputR + (this.physicsOutputR - this.lastOutputR) * amount;
+          this.outputQueueLength += 1;
+        }
+        this.lastOutputL = this.physicsOutputL;
+        this.lastOutputR = this.physicsOutputR;
+        this.samplesSincePhysicsStep = 0;
       }
-      outL *= PICKUP_MIX;
-      outR *= PICKUP_MIX;
-      if (!Number.isFinite(outL) || !Number.isFinite(outR)) {
-        this.telemetry.nonFinite += 1;
-        outL = 0;
-        outR = 0;
-        for (const layer of layers) clearVibration(layer);
+      if (this.outputQueueLength > 0) {
+        left[frame] = this.outputLeftQueue[this.outputQueueHead];
+        right[frame] = this.outputRightQueue[this.outputQueueHead];
+        this.outputQueueHead = (this.outputQueueHead + 1) % this.outputLeftQueue.length;
+        this.outputQueueLength -= 1;
       }
-      this.telemetry.maxOutputAbs = Math.max(this.telemetry.maxOutputAbs, Math.abs(outL), Math.abs(outR));
-      if (Math.abs(outL) > 1 || Math.abs(outR) > 1) this.telemetry.clipped += 1;
-      outL /= 1 + Math.abs(outL);
-      outR /= 1 + Math.abs(outR);
-      for (let offset = 0; offset < factor && frame + offset < left.length; offset += 1) {
-        const amount = (offset + 1) / factor;
-        left[frame + offset] = this.lastOutputL + (outL - this.lastOutputL) * amount;
-        right[frame + offset] = this.lastOutputR + (outR - this.lastOutputR) * amount;
-      }
-      this.lastOutputL = outL;
-      this.lastOutputR = outR;
     }
     if (this.timingAvailable && started) this.telemetry.cpuMaxMs = Math.max(this.telemetry.cpuMaxMs ?? 0, performance.now() - started);
     return true;
+  }
+
+  advancePhysics(layers) {
+    for (let layerIndex = 0; layerIndex < layers.length; layerIndex += 1) prepareLaplacian(layers[layerIndex]);
+    if (this.couplingGroups?.length) applyCouplings(this.couplingGroups);
+    let outL = 0, outR = 0;
+    for (let layerIndex = 0; layerIndex < layers.length; layerIndex += 1) {
+      const layer = layers[layerIndex];
+      advanceLayer(layer, this.telemetry);
+      outL += readPickup(layer, 0);
+      outR += readPickup(layer, 1);
+    }
+    outL *= PICKUP_MIX;
+    outR *= PICKUP_MIX;
+    if (!Number.isFinite(outL) || !Number.isFinite(outR)) {
+      this.telemetry.nonFinite += 1;
+      outL = 0;
+      outR = 0;
+      for (let layerIndex = 0; layerIndex < layers.length; layerIndex += 1) clearVibration(layers[layerIndex]);
+    }
+    this.telemetry.maxOutputAbs = Math.max(this.telemetry.maxOutputAbs, Math.abs(outL), Math.abs(outR));
+    if (Math.abs(outL) > 1 || Math.abs(outR) > 1) this.telemetry.clipped += 1;
+    this.physicsOutputL = outL / (1 + Math.abs(outL));
+    this.physicsOutputR = outR / (1 + Math.abs(outR));
   }
 }
 

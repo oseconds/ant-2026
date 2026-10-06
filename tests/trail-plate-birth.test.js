@@ -204,6 +204,17 @@ test('real FOOT_CONTACT accumulation, corridor refractory, global spacing, and b
     startMs: initial.bornAtSimulationTimeMs + 105000, seconds: 1
   });
   assert.equal(afterRefractory.length, 1, 'new actual feet plus elapsed refractory permit a second birth');
+  const second = afterRefractory[0];
+  for (let index = 0; index < 40; index += 1) {
+    system.observeFootContact({ type: 'FOOT_CONTACT', contacts: [
+      { position: { x: 0.35, y: TRAIL_PLATE_SOURCE_ORIGIN.y } }
+    ] });
+  }
+  const thirdTooSoon = observeUntilBirth(system, pheromone, surface, {
+    startMs: second.bornAtSimulationTimeMs + 10000, seconds: 10
+  });
+  assert.equal(thirdTooSoon.length, 0,
+    'a third repeat uses the newest matching birth for its 90-second cooldown even with fresh contacts');
 
   const snapshot = system.getSnapshot();
   assert.equal(snapshot.plates.length, 2);

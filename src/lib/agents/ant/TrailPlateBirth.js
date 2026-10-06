@@ -171,13 +171,16 @@ export class TrailPlateBirth {
   }
 
   findSameCorridorBirth(candidate) {
-    let best = null, bestSimilarity = 0;
+    let newestMatch = null;
     for (const record of this.birthRecords) {
       const similarity = Math.max(maskSimilarity(record.corridorMask, candidate.mask),
         pathSimilarity(record.principalPath, candidate.path));
-      if (similarity > bestSimilarity) { best = record; bestSimilarity = similarity; }
+      if (similarity < TRAIL_PLATE_SIMILARITY_THRESHOLD) continue;
+      if (!newestMatch || record.bornAtSimulationTimeMs > newestMatch.bornAtSimulationTimeMs) {
+        newestMatch = record;
+      }
     }
-    return bestSimilarity >= TRAIL_PLATE_SIMILARITY_THRESHOLD ? best : null;
+    return newestMatch;
   }
 
   countFootContacts(mask) {

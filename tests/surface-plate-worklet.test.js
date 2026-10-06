@@ -127,6 +127,70 @@ test('overlapping layers couple reciprocally, retain their births, and reset vib
   assert.equal(processor.layers.size, 0);
 });
 
+test('44.1 kHz state and interpolation are invariant across a 128-frame process boundary', () => {
+  const single = instantiate(44100).processor;
+  const split = instantiate(44100).processor;
+  const plate = descriptor();
+  single.handleMessage({ type: 'birth', payload: { plate } });
+  split.handleMessage({ type: 'birth', payload: { plate } });
+  for (const processor of [single, split]) {
+    const layer = processor.layers.get('route');
+    for (let i = 0; i < layer.current.length; i += 1) {
+      const initial = Math.sin(Math.PI * (i + 1) / (layer.current.length + 1));
+      layer.current[i] = initial;
+      layer.previous[i] = initial;
+    }
+  }
+  const whole = [new Float32Array(256), new Float32Array(256)];
+  single.process([], [[whole[0], whole[1]]]);
+  const first = [new Float32Array(128), new Float32Array(128)];
+  const second = [new Float32Array(128), new Float32Array(128)];
+  split.process([], [[first[0], first[1]]]);
+  split.process([], [[second[0], second[1]]]);
+  assert.deepEqual([...whole[0]], [...first[0], ...second[0]]);
+  assert.deepEqual([...whole[1]], [...first[1], ...second[1]]);
+  assert.equal(single.decimationPhase, split.decimationPhase);
+  assert.equal(single.samplesSincePhysicsStep, split.samplesSincePhysicsStep);
+  assert.deepEqual([...single.layers.get('route').current], [...split.layers.get('route').current]);
+});
+
+function coupledEnergy(processor) {
+  let energy = 0;
+  for (const layer of processor.layerList) energy += totalEnergy(layer);
+  for (const group of processor.couplingGroups) {
+    for (let i = 0; i < group.entries.length; i += 1) {
+      const a = group.entries[i];
+      for (let j = i + 1; j < group.entries.length; j += 1) {
+        const b = group.entries[j];
+        const currentDifference = a.layer.current[a.node] - b.layer.current[b.node];
+        const previousDifference = a.layer.previous[a.node] - b.layer.previous[b.node];
+        energy += 0.5 * group.coefficient * currentDifference * previousDifference;
+      }
+    }
+  }
+  return energy;
+}
+
+test('three coupled layers lose unforced discrete energy at 44.1/48/96 kHz', () => {
+  for (const rate of [44100, 48000, 96000]) {
+    const { processor } = instantiate(rate);
+    for (const id of ['a', 'b', 'c']) processor.handleMessage({ type: 'birth', payload: { plate: descriptor(id) } });
+    const firstLayer = processor.layers.get('a');
+    for (let i = 0; i < firstLayer.current.length; i += 1) {
+      const initial = Math.sin(Math.PI * (i + 1) / (firstLayer.current.length + 1));
+      firstLayer.current[i] = initial;
+      firstLayer.previous[i] = initial;
+    }
+    const initialEnergy = coupledEnergy(processor);
+    const buffers = [[new Float32Array(128), new Float32Array(128)]];
+    for (let quantum = 0; quantum < Math.ceil(rate * 0.25 / 128); quantum += 1) processor.process([], buffers);
+    const finalEnergy = coupledEnergy(processor);
+    assert.ok(Number.isFinite(finalEnergy) && finalEnergy >= 0);
+    assert.ok(finalEnergy < initialEnergy, `${rate} Hz coupled energy did not decay`);
+    assert.equal(processor.telemetry.nonFinite, 0);
+  }
+});
+
 test('rejects invalid masks and pickups before allocating worklet state', () => {
   const { processor } = instantiate(48000);
   const empty = descriptor('empty');
