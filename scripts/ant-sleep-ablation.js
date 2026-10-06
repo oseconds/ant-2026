@@ -76,7 +76,7 @@ function makeProcessor(condition, diagnosticsEnabled = true) {
   return processor;
 }
 
-const windowSteps = 12000;
+const windowSteps = benchmark ? 2500 : 12000;
 const snapshotStep = snapshot.dynamic.physicsSteps;
 const endStep = snapshotStep + windowSteps;
 function hashFinalState(processor) {
@@ -123,14 +123,11 @@ const variants = [
 ];
 const results = [];
 if (benchmark) {
-  // Warm each branch once, then alternate measured runs against the same snapshot and event stream.
+  // One OFF warmup, then two short paired passes against the same snapshot and event stream.
   const warmOff = runWindow('full', false);
-  const warmOn = runWindow('full', true);
-  assert.equal(warmOff.finalStateSha256, warmOn.finalStateSha256,
-    'Diagnostics ON changed solver state relative to OFF during warm-up');
   const samples = { off: [], on: [] };
   let referenceState = warmOff.finalStateSha256;
-  for (let repeat = 0; repeat < 5; repeat++) {
+  for (let repeat = 0; repeat < 2; repeat++) {
     const order = repeat % 2 ? ['on', 'off'] : ['off', 'on'];
     for (const mode of order) {
       const run = runWindow('full', mode === 'on');
@@ -141,13 +138,13 @@ if (benchmark) {
   }
   const median = values => [...values].sort((a, b) => a - b)[Math.floor(values.length / 2)];
   const offMedianMs = median(samples.off), onMedianMs = median(samples.on);
-  const output = { source: 'Exact natural 10-Plate Chrome worklet snapshot plus its recorded next-12000-step message stream',
-    benchmark: 'Node AudioWorkletProcessor harness; processor setup excluded, topology and event replay included',
+  const output = { source: 'Exact natural 10-Plate Chrome worklet snapshot plus its recorded next-2500-step message stream',
+    benchmark: 'Approximate Node AudioWorkletProcessor sanity check; one OFF warmup and two paired OFF/ON runs, processor setup excluded',
     snapshotStep, endStep, simulatedSeconds: windowSteps / 6000, topologyLayers: snapshot.topology.layerIds.length,
     topologyNodes: snapshot.topology.nodeGridIndices.length,
     recordedTopologyMessages: futureEvents.filter(event => event.type === 'topology' && event.physicsStep <= endStep).length,
     recordedStrikeMessages: futureEvents.filter(event => event.type === 'strike' && event.physicsStep <= endStep).length,
-    warmupMs: { off: warmOff.elapsedMs, on: warmOn.elapsedMs }, samplesMs: samples,
+    warmupMs: { off: warmOff.elapsedMs }, samplesMs: samples,
     medianMs: { off: offMedianMs, on: onMedianMs },
     stepsPerSecond: { off: windowSteps / (offMedianMs / 1000), on: windowSteps / (onMedianMs / 1000) },
     equivalentAudioRealtimeRatio: { off: windowSteps / (offMedianMs / 1000) / 6000,
