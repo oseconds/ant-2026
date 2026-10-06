@@ -18,6 +18,7 @@ export { GasterDeposition } from './agents/ant/GasterDeposition.js';
 export { ColonyActivation } from './agents/ant/ColonyActivation.js';
 export { SurfaceField } from './agents/ant/SurfaceField.js';
 export { TrailPlateBirth } from './agents/ant/TrailPlateBirth.js';
+export { MaterialStratigraphy } from './agents/ant/MaterialStratigraphy.js';
 export { AntAgent } from './agents/ant/AntAgent.js';
 export { PheromoneField } from './agents/ant/PheromoneField.js';
 export { LocalOccupancy } from './agents/ant/LocalOccupancy.js';
