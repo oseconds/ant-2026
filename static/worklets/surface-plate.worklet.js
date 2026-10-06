@@ -1,405 +1,536 @@
-const SURFACE_GRID = 32;
+const GRID = 32;
 const SOURCE_GRID = 96;
-const MAX_PLATES = 12;
-const PICKUP_MIX = 1 / Math.sqrt(MAX_PLATES);
-const MAX_ROUTE_COUPLING = 0.000025;
-const PHYSICS_RATE = 6000;
-const EPSILON = 1e-12;
+const RATE = 6000;
+const MAX_LAYERS = 256;
+const MAX_NODULES = 32;
+const MIX = 1 / Math.sqrt(12);
+const NO_NODE = 0xffffffff;
+const SLEEP_ENERGY = 1e-10;
+const SLEEP_STEPS = RATE * 2;
+const WAKE_ENERGY = 1e-10;
+const EPS = 1e-20;
 
-/**
- * A fixed-grid, masked finite-difference bending plate for each frozen ANT
- * corridor. The layers remain independent except for equal-and-opposite
- * springs where their masks overlap. This is a simplified linear model, not
- * an implementation of the cited physical-model paper.
- */
+/** Sparse, fixed-rate masked plate solver. Topology is compiled off-thread;
+ * process() uses only packed typed arrays and preallocated scratch state. */
 class SurfacePlateProcessor extends AudioWorkletProcessor {
-  constructor(options = {}) {
+  constructor() {
     super();
-    this.layers = new Map();
-    this.layerList = [];
-    this.maxPlates = Math.min(MAX_PLATES, Math.max(1, options.processorOptions?.maxPlates || MAX_PLATES));
     this.destroyed = false;
-    this.telemetry = {
-      births: 0, strikes: 0, dropped: 0, nonFinite: 0, clipped: 0,
-      cpuMaxMs: null, maxOutputAbs: 0
-    };
-    this.physicsRate = PHYSICS_RATE;
-    this.decimationPhase = 0;
-    this.samplesSincePhysicsStep = 0;
-    this.lastOutputL = 0;
-    this.lastOutputR = 0;
-    this.outputLeftQueue = new Float32Array(64);
-    this.outputRightQueue = new Float32Array(64);
-    this.outputQueueHead = 0;
-    this.outputQueueLength = 0;
-    this.overlapCoupling = [];
-    this.timingAvailable = typeof performance !== 'undefined' && typeof performance.now === 'function';
+    this.topology = null;
+    this.current = new Float32Array(0);
+    this.previous = new Float32Array(0);
+    this.next = new Float32Array(0);
+    this.lap = new Float32Array(0);
+    this.lapStamp = new Uint32Array(0);
+    this.nodeLayer = new Uint16Array(0);
+    this.energyQuiet = new Uint16Array(0);
+    this.awake = new Uint8Array(0);
+    this.pendingWake = new Uint8Array(0);
+    this.pendingNodes = new Int32Array(0);
+    this.pendingCount = 0;
+    this.active = new Int32Array(0);
+    this.activeCount = 0;
+    this.epoch = 1;
+    this.phase = 0;
+    this.samplesSinceStep = 0;
+    this.lastL = 0; this.lastR = 0;
+    this.queueL = new Float32Array(64); this.queueR = new Float32Array(64);
+    this.queueHead = 0; this.queueLength = 0;
+    this.outputL = 0; this.outputR = 0;
+    this.telemetry = { topologies: 0, strikes: 0, dropped: 0, droppedRoutes: 0, nonFinite: 0,
+      clipped: 0, wakes: 0, sleeps: 0, truncatedTailEnergy: 0,
+      physicsSteps: 0, energyDelta: 0, couplingWorkProxy: 0,
+      deepPlateCouplingTransfers: 0, sphereCouplingTransfers: 0, maxOutputAbs: 0 };
     this.port.onmessage = (event) => this.handleMessage(event.data);
   }
 
   handleMessage(message) {
     if (!message || typeof message.type !== 'string') return;
-    const payload = message.payload || {};
-    if (message.type === 'birth') {
-      const plate = payload.plate;
-      if (!validPlate(plate) || (!this.layers.has(plate.id) && this.layers.size >= this.maxPlates)) {
-        this.telemetry.dropped += 1;
-        return;
-      }
-      if (!this.layers.has(plate.id)) {
-        this.layers.set(plate.id, makeLayer(plate, this.physicsRate));
-        this.telemetry.births += 1;
-        this.rebuildCouplings();
-      }
-    } else if (message.type === 'strike') {
-      const layer = this.layers.get(payload.plateId);
-      if (!layer || !validPoint(payload.position) || !finite(payload.strength) || payload.strength <= 0) {
-        this.telemetry.dropped += 1;
-        return;
-      }
-      if (!applyStrike(layer, payload)) this.telemetry.dropped += 1;
-      else this.telemetry.strikes += 1;
+    const p = message.payload || {};
+    if (message.type === 'topology') {
+      if (!validTopology(p)) { this.telemetry.dropped++; return; }
+      this.installTopology(p);
+      return;
+    }
+    if (message.type === 'strike') {
+      if (!this.topology || !applyStrike(this, p)) { this.telemetry.dropped++; this.telemetry.droppedRoutes++; }
+      else this.telemetry.strikes++;
     } else if (message.type === 'stop') {
-      for (const layer of this.layers.values()) clearVibration(layer);
-      this.lastOutputL = 0;
-      this.lastOutputR = 0;
-      this.outputQueueHead = 0;
-      this.outputQueueLength = 0;
-      this.decimationPhase = 0;
-      this.samplesSincePhysicsStep = 0;
+      this.clearVibration();
+      this.phase = 0; this.samplesSinceStep = 0; this.lastL = 0; this.lastR = 0;
+      this.queueHead = 0; this.queueLength = 0;
     } else if (message.type === 'diagnostics') {
-      this.port.postMessage({ type: 'diagnostics', payload: {
-        ...this.telemetry, layers: this.layers.size, physicsRate: this.physicsRate,
-        timingAvailable: this.timingAvailable, overlapCoupling: this.overlapCoupling.map((item) => ({ ...item }))
-      } });
+      this.port.postMessage({ type: 'diagnostics', payload: this.getDiagnostics() });
     } else if (message.type === 'destroy') {
-      this.destroyed = true;
-      for (const layer of this.layers.values()) clearVibration(layer);
-      this.layers.clear();
-      this.layerList = [];
-      this.couplingGroups = [];
-      this.outputQueueHead = 0;
-      this.outputQueueLength = 0;
+      this.destroyed = true; this.clearVibration(); this.topology = null;
+      this.queueHead = 0; this.queueLength = 0;
     }
   }
 
-  rebuildCouplings() {
-    const layers = [...this.layers.values()];
-    this.layerList = layers;
-    const groups = [];
-    const overlapCounts = new Map();
-    for (let gridIndex = 0; gridIndex < SURFACE_GRID * SURFACE_GRID; gridIndex += 1) {
-      const entries = [];
-      for (const layer of layers) {
-        const node = layer.indexByGrid[gridIndex];
-        if (node >= 0) entries.push({ layer, node });
+  installTopology(t) {
+    const old = this.topology, oldCurrent = this.current, oldPrevious = this.previous;
+    const oldQuiet = this.energyQuiet, oldAwake = this.awake;
+    const oldSphereCurrent = this.sphereCurrent, oldSpherePrevious = this.spherePrevious;
+    const oldOffsets = old?.nodeOffsets, oldIndices = old?.nodeGridIndices;
+    const n = t.nodeGridIndices.length;
+    this.topology = t;
+    this.current = new Float32Array(n); this.previous = new Float32Array(n); this.next = new Float32Array(n);
+    this.lap = new Float32Array(n); this.lapStamp = new Uint32Array(n);
+    this.nodeLayer = new Uint16Array(n); this.energyQuiet = new Uint16Array(n);
+    this.awake = new Uint8Array(n); this.active = new Int32Array(n); this.activeCount = 0;
+    this.pendingWake = new Uint8Array(n); this.pendingNodes = new Int32Array(n); this.pendingCount = 0;
+    this.buildNodeLinks(t);
+    for (let l = 0; l < t.layerIds.length; l++) {
+      const start = t.nodeOffsets[l], end = t.nodeOffsets[l + 1];
+      for (let i = start; i < end; i++) this.nodeLayer[i] = l;
+      if (!old) continue;
+      let prior = -1;
+      for (let j = 0; j < old.layerIds.length; j++) if (old.layerIds[j] === t.layerIds[l]) { prior = j; break; }
+      if (prior < 0 || oldOffsets[prior + 1] - oldOffsets[prior] !== end - start) continue;
+      let same = true;
+      for (let i = 0; i < end - start; i++) if (oldIndices[oldOffsets[prior] + i] !== t.nodeGridIndices[start + i]) { same = false; break; }
+      if (!same) continue;
+      const priorStart = oldOffsets[prior];
+      for (let i = 0; i < end - start; i++) {
+        const source = priorStart + i, target = start + i;
+        this.current[target] = oldCurrent[source]; this.previous[target] = oldPrevious[source];
+        this.energyQuiet[target] = oldQuiet[source];
+        if (oldAwake[source]) this.wakeNode(target);
       }
-      if (entries.length > 1) {
-        groups.push({ entries, coefficient: layers[0].couplingCoefficient });
-        for (let i = 0; i < entries.length; i += 1) {
-          for (let j = i + 1; j < entries.length; j += 1) {
-            const left = entries[i].layer.id, right = entries[j].layer.id;
-            const key = `${left}\u0000${right}`;
-            overlapCounts.set(key, (overlapCounts.get(key) || 0) + 1);
+    }
+    this.prepareNodules(t, old, oldSphereCurrent, oldSpherePrevious);
+    this.telemetry.topologies++;
+  }
+
+  buildNodeLinks(t) {
+    const n = t.nodeGridIndices.length, pairCount = t.adjacentLinkCoefficients.length;
+    const counts = new Uint32Array(n);
+    for (let p = 0; p < pairCount; p++) { counts[t.adjacentLinkNodes[p * 2]]++; counts[t.adjacentLinkNodes[p * 2 + 1]]++; }
+    this.linkOffsets = new Uint32Array(n + 1);
+    for (let i = 0; i < n; i++) this.linkOffsets[i + 1] = this.linkOffsets[i] + counts[i];
+    this.linkNodes = new Uint32Array(this.linkOffsets[n]);
+    this.linkCoefficients = new Float32Array(this.linkOffsets[n]);
+    const cursor = this.linkOffsets.slice(0, n);
+    for (let p = 0; p < pairCount; p++) {
+      const a = t.adjacentLinkNodes[p * 2], b = t.adjacentLinkNodes[p * 2 + 1], k = t.adjacentLinkCoefficients[p];
+      let i = cursor[a]++; this.linkNodes[i] = b; this.linkCoefficients[i] = k;
+      i = cursor[b]++; this.linkNodes[i] = a; this.linkCoefficients[i] = k;
+    }
+  }
+
+  prepareNodules(t, old, oldSphereCurrent, oldSpherePrevious) {
+    const count = t.noduleIds?.length || 0;
+    this.noduleIds = t.noduleIds || [];
+    this.sphereCurrent = new Float32Array(count * 12);
+    this.spherePrevious = new Float32Array(count * 12);
+    this.sphereRadius = new Float32Array(count * 12);
+    this.sphereCos = new Float32Array(count * 12);
+    this.sphereDamping = new Float32Array(count * 12);
+    this.spherePickupL = new Float32Array(count * 12);
+    this.spherePickupR = new Float32Array(count * 12);
+    this.sphereFoundation = t.noduleCouplingNodeIndices || new Uint32Array(0);
+    this.sphereWeight = t.noduleCouplingWeights || new Float32Array(0);
+    this.sphereMass = new Float32Array(count);
+    this.sphereCouple = new Float32Array(count * 12);
+    this.sphereFoundationShape = new Float32Array(count * 12);
+    this.sphereLinkOffsets = new Uint32Array(this.current.length + 1);
+    const linkCounts = new Uint16Array(this.current.length);
+    for (let n = 0; n < count; n++) if (this.sphereFoundation[n] !== NO_NODE && this.sphereFoundation[n] < this.current.length) linkCounts[this.sphereFoundation[n]]++;
+    for (let i = 0; i < this.current.length; i++) this.sphereLinkOffsets[i + 1] = this.sphereLinkOffsets[i] + linkCounts[i];
+    this.sphereLinkModes = new Uint32Array(this.sphereLinkOffsets[this.current.length]);
+    const sphereCursor = this.sphereLinkOffsets.slice(0, this.current.length);
+    const rootsS = [4.4934, 2.0816, 2.0816, 2.0816, 3.3421, 3.3421, 3.3421, 3.3421, 3.3421];
+    const rootsP = [2.0816, 2.0816, 2.0816];
+    const degrees = [0, 1, 1, 1, 2, 2, 2, 2, 2, 1, 1, 1];
+    const branch = [0,0,0,0,0,0,0,0,0,1,1,1];
+    const alpha = [rootsS[0], ...rootsS.slice(1,4), ...rootsS.slice(4,9), ...rootsP];
+    const rho = t.noduleMaterials || new Float32Array(0);
+    const radii = t.nodulePhysicalRadiiMeters || new Float32Array(0);
+    for (let n = 0; n < count; n++) {
+      const density = rho[n * 3], young = rho[n * 3 + 1], nu = rho[n * 3 + 2];
+      const radius = radii[n];
+      this.sphereMass[n] = density * radius ** 3;
+      const shear = Math.sqrt(young / (2 * (1 + nu) * density));
+      const longitudinal = Math.sqrt(young * (1 - nu) / ((1 + nu) * (1 - 2 * nu) * density));
+      for (let m = 0; m < 12; m++) {
+        const frequency = (branch[m] ? longitudinal : shear) * alpha[m] / (2 * Math.PI * radius);
+        if (!(frequency > 0 && frequency <= RATE * 0.4)) continue;
+        const modalDamping = t.nodules?.[n]?.material?.damping ?? 0.35;
+        const seconds = 5.2 / (1 + frequency / 7800) / (0.52 + 3.1 * modalDamping);
+        const r = Math.exp(-1 / (Math.max(0.18, seconds) * RATE));
+        this.sphereRadius[n * 12 + m] = r;
+        this.sphereCos[n * 12 + m] = 2 * r * Math.cos(2 * Math.PI * frequency / RATE);
+        this.sphereDamping[n * 12 + m] = r * r;
+        const shape = modalShape(degrees[m], modeOrder(m), n, t);
+        this.spherePickupL[n * 12 + m] = shape[0];
+        this.spherePickupR[n * 12 + m] = shape[1];
+        const foundation = this.sphereFoundation[n];
+        const layer = t.noduleFoundationLayerIndices[n];
+        const fxy = foundation !== NO_NODE && foundation < this.current.length ? [
+          t.nodeGridIndices[foundation] % GRID / (GRID - 1),
+          Math.floor(t.nodeGridIndices[foundation] / GRID) / (GRID - 1)
+        ] : [0.5, 0.5];
+        const nxy = [t.nodulePositionsXY[n * 2], t.nodulePositionsXY[n * 2 + 1]];
+        const depth = t.nodules?.[n]?.burial?.buriedDepthMeters || 0.04;
+        this.sphereFoundationShape[n * 12 + m] = realSH(degrees[m], modeOrder(m),
+          nxy[0] - fxy[0], nxy[1] - fxy[1], depth);
+      }
+      if (this.sphereFoundation[n] !== NO_NODE && this.sphereFoundation[n] < this.current.length)
+        this.sphereLinkModes[sphereCursor[this.sphereFoundation[n]]++] = n;
+      if (old) {
+        let oi = -1;
+        for (let j = 0; j < (old.noduleIds?.length || 0); j++) if (old.noduleIds[j] === this.noduleIds[n]) { oi = j; break; }
+        if (oi >= 0 && old.nodulePhysicalRadiiMeters[oi] === radius) {
+          // Dynamic sphere state is copied only when the same frozen nodule remains.
+          if (oldSphereCurrent && oldSpherePrevious) {
+            this.sphereCurrent.set(oldSphereCurrent.subarray(oi * 12, oi * 12 + 12), n * 12);
+            this.spherePrevious.set(oldSpherePrevious.subarray(oi * 12, oi * 12 + 12), n * 12);
           }
         }
       }
     }
-    this.couplingGroups = groups;
-    this.overlapCoupling = [...overlapCounts].map(([key, overlapCells]) => {
-      const [left, right] = key.split('\u0000');
-      return { plateIds: [left, right], overlapCells, gridSize: SURFACE_GRID, coefficient: layers[0].couplingCoefficient };
-    });
+  }
+
+  wakeNode(node) {
+    if (node < 0 || node >= this.awake.length) return;
+    this.energyQuiet[node] = 0;
+    if (this.awake[node]) return;
+    if (this.inPhysicsStep) {
+      if (!this.pendingWake[node]) { this.pendingWake[node] = 1; this.pendingNodes[this.pendingCount++] = node; }
+      return;
+    }
+    this.awake[node] = 1;
+    this.active[this.activeCount++] = node; this.telemetry.wakes++;
+  }
+
+  wakeNeighborhood(node) {
+    const neighbors = this.topology.neighborIndices;
+    for (let k = 0; k < 4; k++) { const other = neighbors[node * 4 + k]; if (other >= 0) this.wakeNode(other); }
   }
 
   process(_inputs, outputs) {
-    if (this.destroyed) {
-      for (const channel of outputs[0] || []) channel.fill(0);
-      return false;
-    }
-    const started = typeof performance !== 'undefined' ? performance.now() : 0;
-    const channels = outputs[0] || [];
-    const left = channels[0], right = channels[1];
-    if (!left || !right) return true;
-    left.fill(0);
-    right.fill(0);
-    if (!this.layers.size) return true;
-
-    const layers = this.layerList;
-    for (let frame = 0; frame < left.length; frame += 1) {
-      this.decimationPhase += PHYSICS_RATE;
-      this.samplesSincePhysicsStep += 1;
-      if (this.decimationPhase >= sampleRate) {
-        this.decimationPhase -= sampleRate;
-        this.advancePhysics(layers);
-        const count = this.samplesSincePhysicsStep;
-        for (let step = 1; step <= count; step += 1) {
-          const amount = step / count;
-          if (this.outputQueueLength >= this.outputLeftQueue.length) {
-            this.telemetry.dropped += 1;
-            break;
-          }
-          const tail = (this.outputQueueHead + this.outputQueueLength) % this.outputLeftQueue.length;
-          this.outputLeftQueue[tail] = this.lastOutputL + (this.physicsOutputL - this.lastOutputL) * amount;
-          this.outputRightQueue[tail] = this.lastOutputR + (this.physicsOutputR - this.lastOutputR) * amount;
-          this.outputQueueLength += 1;
+    const channels = outputs[0] || [], left = channels[0], right = channels[1];
+    if (!left || !right) return !this.destroyed;
+    left.fill(0); right.fill(0);
+    if (this.destroyed) return false;
+    if (!this.topology) return true;
+    for (let frame = 0; frame < left.length; frame++) {
+      this.phase += RATE; this.samplesSinceStep++;
+      if (this.phase >= sampleRate) {
+        this.phase -= sampleRate;
+        this.advancePhysics();
+        const count = this.samplesSinceStep;
+        for (let s = 1; s <= count; s++) {
+          const tail = (this.queueHead + this.queueLength) & 63, a = s / count;
+          this.queueL[tail] = this.lastL + (this.outputL - this.lastL) * a;
+          this.queueR[tail] = this.lastR + (this.outputR - this.lastR) * a;
+          this.queueLength++;
         }
-        this.lastOutputL = this.physicsOutputL;
-        this.lastOutputR = this.physicsOutputR;
-        this.samplesSincePhysicsStep = 0;
+        this.lastL = this.outputL; this.lastR = this.outputR; this.samplesSinceStep = 0;
       }
-      if (this.outputQueueLength > 0) {
-        left[frame] = this.outputLeftQueue[this.outputQueueHead];
-        right[frame] = this.outputRightQueue[this.outputQueueHead];
-        this.outputQueueHead = (this.outputQueueHead + 1) % this.outputLeftQueue.length;
-        this.outputQueueLength -= 1;
+      if (this.queueLength) {
+        left[frame] = this.queueL[this.queueHead]; right[frame] = this.queueR[this.queueHead];
+        this.queueHead = (this.queueHead + 1) & 63; this.queueLength--;
       }
     }
-    if (this.timingAvailable && started) this.telemetry.cpuMaxMs = Math.max(this.telemetry.cpuMaxMs ?? 0, performance.now() - started);
     return true;
   }
 
-  advancePhysics(layers) {
-    for (let layerIndex = 0; layerIndex < layers.length; layerIndex += 1) prepareLaplacian(layers[layerIndex]);
-    if (this.couplingGroups?.length) applyCouplings(this.couplingGroups);
-    let outL = 0, outR = 0;
-    for (let layerIndex = 0; layerIndex < layers.length; layerIndex += 1) {
-      const layer = layers[layerIndex];
-      advanceLayer(layer, this.telemetry);
-      outL += readPickup(layer, 0);
-      outR += readPickup(layer, 1);
+  advancePhysics() {
+    const t = this.topology, N = this.current.length;
+    if (!N) { this.outputL = 0; this.outputR = 0; this.telemetry.physicsSteps++; return; }
+    if (!this.activeCount && !this.noduleIds?.length) {
+      this.outputL = 0; this.outputR = 0; this.telemetry.physicsSteps++; this.telemetry.activeSphereModes = 0; return;
     }
-    outL *= PICKUP_MIX;
-    outR *= PICKUP_MIX;
-    if (!Number.isFinite(outL) || !Number.isFinite(outR)) {
-      this.telemetry.nonFinite += 1;
-      outL = 0;
-      outR = 0;
-      for (let layerIndex = 0; layerIndex < layers.length; layerIndex += 1) clearVibration(layers[layerIndex]);
+    this.inPhysicsStep = true;
+    const steppingCount = this.activeCount;
+    this.epoch = (this.epoch + 1) >>> 0 || 1;
+    const stamp = this.lapStamp, lap = this.lap, cur = this.current, neigh = t.neighborIndices;
+    // Compute Laplacian only on the active nodes and their one-cell stencil.
+    for (let a = 0; a < steppingCount; a++) {
+      const node = this.active[a]; this.computeLap(node);
+      for (let d = 0; d < 4; d++) { const v = neigh[node * 4 + d]; if (v >= 0) this.computeLap(v); }
     }
-    this.telemetry.maxOutputAbs = Math.max(this.telemetry.maxOutputAbs, Math.abs(outL), Math.abs(outR));
-    if (Math.abs(outL) > 1 || Math.abs(outR) > 1) this.telemetry.clipped += 1;
-    this.physicsOutputL = outL / (1 + Math.abs(outL));
-    this.physicsOutputR = outR / (1 + Math.abs(outR));
+    let energyBefore = 0, energyAfter = 0, outL = 0, outR = 0;
+    const nodeOffsets = t.nodeOffsets, mats = t.materialCoefficients;
+    const couplings = t.adjacentLinkNodes, coeffs = t.adjacentLinkCoefficients;
+    for (let a = 0; a < steppingCount; a++) {
+      const node = this.active[a], layer = this.nodeLayer[node], mi = layer * 4;
+      const value = cur[node], vel = value - this.previous[node];
+      energyBefore += value * value + vel * vel;
+      let lapOfLap = -4 * lap[node], base = node * 4;
+      for (let d = 0; d < 4; d++) { const other = neigh[base + d]; if (other >= 0) lapOfLap += lap[other]; }
+      let linkForce = 0;
+      const cell = t.nodeGridIndices[node];
+      // Sparse adjacent links are indexed by coarse cell; only links touching this node are precompiled into CSR.
+      const lo = this.linkOffsets[node], hi = this.linkOffsets[node + 1];
+      for (let q = lo; q < hi; q++) {
+        const other = this.linkNodes[q], delta = cur[other] - value;
+        linkForce += this.linkCoefficients[q] * delta / mats[mi + 2];
+        if (node < other) this.telemetry.couplingWorkProxy += Math.abs(this.linkCoefficients[q] * delta
+          * ((cur[node] - this.previous[node]) - (cur[other] - this.previous[other])));
+        this.telemetry.deepPlateCouplingTransfers++;
+      }
+      for (let q = this.sphereLinkOffsets[node]; q < this.sphereLinkOffsets[node + 1]; q++) {
+        const ni = this.sphereLinkModes[q];
+        let modalContact = 0;
+        for (let m = 0; m < 12; m++) {
+          const modeIndex = ni * 12 + m;
+          modalContact += this.sphereFoundationShape[modeIndex] * this.sphereCurrent[modeIndex];
+        }
+        linkForce += (this.sphereWeight[ni] || 0) * 0.000025 * (modalContact - value) / mats[mi + 2];
+      }
+      const bending = mats[mi], tension = mats[mi + 1], density = mats[mi + 2], damping = mats[mi + 3];
+      const next = 2 * value - this.previous[node] - bending * lapOfLap
+        + tension * lap[node] / density - damping * vel + linkForce;
+      if (!Number.isFinite(next)) { this.telemetry.nonFinite++; this.current[node] = this.previous[node] = 0; this.next[node] = 0; continue; }
+      this.next[node] = next;
+      energyAfter += next * next + (next - value) ** 2;
+      if (node === t.pickupNodeIndices[layer * 2]) outL += next;
+      if (node === t.pickupNodeIndices[layer * 2 + 1]) outR += next;
+      const e = next * next + (next - value) ** 2 + lapOfLap * lapOfLap * 0.0001;
+      if (e > WAKE_ENERGY) this.wakeNeighborhood(node);
+      if (Math.abs(linkForce) > 1e-8) {
+        const from = this.linkOffsets[node], to = this.linkOffsets[node + 1];
+        for (let q = from; q < to; q++) this.wakeNode(this.linkNodes[q]);
+      }
+    }
+    // Update sphere oscillators and reciprocal foundation springs.
+    this.advanceNodules();
+    for (let n = 0; n < this.noduleIds.length; n++) for (let m = 0; m < 12; m++) {
+      const i = n * 12 + m; outL += this.sphereCurrent[i] * this.spherePickupL[i];
+      outR += this.sphereCurrent[i] * this.spherePickupR[i];
+    }
+    for (let a = 0; a < steppingCount; ) {
+      const node = this.active[a], value = this.next[node], vel = value - this.current[node];
+      const layer = this.nodeLayer[node], bendingPotential = mats[layer * 4] * lap[node] * lap[node];
+      const quietEnergy = value * value + vel * vel + bendingPotential;
+      if (quietEnergy < SLEEP_ENERGY && Math.abs(this.localLinkForce(node)) < 1e-8
+        && Math.abs(this.localPlateForce(node)) < 1e-8 && Math.abs(this.localSphereForce(node)) < 1e-8) {
+        if (this.energyQuiet[node] < 65535) this.energyQuiet[node]++;
+        if (this.energyQuiet[node] >= SLEEP_STEPS) {
+          this.telemetry.truncatedTailEnergy += quietEnergy;
+          this.current[node] = this.previous[node] = this.next[node] = 0;
+          this.awake[node] = 0; this.energyQuiet[node] = 0;
+          this.telemetry.sleeps++;
+          a++;
+          continue;
+        }
+      } else this.energyQuiet[node] = 0;
+      this.previous[node] = this.current[node]; this.current[node] = this.next[node]; this.next[node] = 0;
+      a++;
+    }
+    // Compact sleeping original nodes, then append local wakes for the next physical step.
+    let write = 0;
+    for (let a = 0; a < steppingCount; a++) if (this.awake[this.active[a]]) this.active[write++] = this.active[a];
+    this.activeCount = write;
+    this.inPhysicsStep = false;
+    for (let i = 0; i < this.pendingCount; i++) {
+      const node = this.pendingNodes[i]; this.pendingWake[node] = 0;
+      if (!this.awake[node]) { this.awake[node] = 1; this.energyQuiet[node] = 0; this.active[this.activeCount++] = node; this.telemetry.wakes++; }
+    }
+    this.pendingCount = 0;
+    const mixL = outL * MIX, mixR = outR * MIX;
+    this.telemetry.maxOutputAbs = Math.max(this.telemetry.maxOutputAbs, Math.abs(mixL), Math.abs(mixR));
+    if (Math.abs(mixL) > 1 || Math.abs(mixR) > 1) this.telemetry.clipped++;
+    this.outputL = mixL / (1 + Math.abs(mixL)); this.outputR = mixR / (1 + Math.abs(mixR));
+    this.telemetry.physicsSteps++;
+    this.telemetry.energyDelta = energyAfter - energyBefore;
+    let activeSphereModes = 0;
+    for (let i = 0; i < this.sphereCurrent.length; i++) if (this.sphereCurrent[i] ** 2 + this.spherePrevious[i] ** 2 >= SLEEP_ENERGY) activeSphereModes++;
+    this.telemetry.activeSphereModes = activeSphereModes;
+  }
+
+  computeLap(node) {
+    if (this.lapStamp[node] === this.epoch) return;
+    const n = this.topology.neighborIndices, c = this.current, off = node * 4;
+    let value = -4 * c[node];
+    for (let d = 0; d < 4; d++) { const q = n[off + d]; if (q >= 0) value += c[q]; }
+    this.lap[node] = value; this.lapStamp[node] = this.epoch;
+  }
+
+  localLinkForce(node) {
+    let force = 0, v = this.current[node];
+    for (let i = this.linkOffsets[node]; i < this.linkOffsets[node + 1]; i++) force += this.linkCoefficients[i] * (this.current[this.linkNodes[i]] - v);
+    return force;
+  }
+
+  localPlateForce(node) {
+    const t = this.topology, layer = this.nodeLayer[node], mi = layer * 4, off = node * 4;
+    let bilap = -4 * this.lap[node];
+    for (let d = 0; d < 4; d++) { const q = t.neighborIndices[off + d]; if (q >= 0) bilap += this.lap[q]; }
+    const m = t.materialCoefficients;
+    return m[mi] * bilap - m[mi + 1] * this.lap[node] / m[mi + 2];
+  }
+
+  localSphereForce(node) {
+    let force = 0;
+    for (let q = this.sphereLinkOffsets[node]; q < this.sphereLinkOffsets[node + 1]; q++) {
+      const n = this.sphereLinkModes[q]; let modalContact = 0;
+      for (let m = 0; m < 12; m++) modalContact += this.sphereFoundationShape[n * 12 + m] * this.sphereCurrent[n * 12 + m];
+      force += (this.sphereWeight[n] || 0) * 0.000025 * (modalContact - this.current[node]);
+    }
+    return force;
+  }
+
+  advanceNodules() {
+    if (!this.noduleIds?.length) return;
+    const u = this.sphereCurrent, p = this.spherePrevious, r = this.sphereRadius, c = this.sphereCos, d = this.sphereDamping;
+    const nodes = this.sphereFoundation, weights = this.sphereWeight;
+    for (let n = 0; n < this.noduleIds.length; n++) {
+      const foundation = nodes[n];
+      let modalContact = 0;
+      for (let mode = 0; mode < 12; mode++) modalContact += this.sphereFoundationShape[n * 12 + mode] * u[n * 12 + mode];
+      for (let m = 0; m < 12; m++) {
+        const i = n * 12 + m, old = u[i];
+        let coupling = 0;
+        if (foundation !== NO_NODE && foundation < this.current.length) {
+          coupling = weights[n] * 0.000025 * this.sphereFoundationShape[i]
+            * (this.current[foundation] - modalContact) / Math.max(this.sphereMass[n], 1e-6);
+          const force = weights[n] * 0.000025 * this.sphereFoundationShape[i] * (this.current[foundation] - modalContact);
+          const modalVelocity = u[i] - p[i], plateVelocity = this.current[foundation] - this.previous[foundation];
+          this.telemetry.couplingWorkProxy += Math.abs(force * (plateVelocity - this.sphereFoundationShape[i] * modalVelocity));
+        }
+        const next = c[i] * old - d[i] * p[i] + coupling;
+        p[i] = old; u[i] = Number.isFinite(next) ? next : 0;
+        if (foundation !== NO_NODE && Math.abs(coupling) > 1e-8) this.wakeNode(foundation);
+        if (foundation !== NO_NODE && foundation < this.current.length) this.telemetry.sphereCouplingTransfers++;
+      }
+    }
+  }
+  sphereCouplingShape(n, m) { return this.spherePickupL[n * 12 + m]; }
+
+  clearVibration() {
+    this.current.fill(0); this.previous.fill(0); this.next.fill(0); this.sphereCurrent?.fill(0); this.spherePrevious?.fill(0);
+    this.activeCount = 0; this.awake.fill(0); this.energyQuiet.fill(0);
+  }
+
+  getDiagnostics() {
+    let awakeLayers = 0;
+    const flags = new Uint8Array(this.topology?.layerIds.length || 0);
+    for (let i = 0; i < this.activeCount; i++) flags[this.nodeLayer[this.active[i]]] = 1;
+    for (let i = 0; i < flags.length; i++) awakeLayers += flags[i];
+    return { ...this.telemetry, layers: this.topology?.layerIds.length || 0,
+      activeNodes: this.activeCount, awakeLayers, sleepingLayers: (this.topology?.layerIds.length || 0) - awakeLayers,
+      physicsRate: RATE, topologyGeneration: this.topology?.generation ?? null,
+      couplingLinks: this.topology?.adjacentLinkCoefficients.length || 0,
+      noduleCount: this.noduleIds?.length || 0, mix: MIX,
+      truncatedTailRiskThreshold: SLEEP_ENERGY, quietStepsThreshold: SLEEP_STEPS };
   }
 }
 
-function makeLayer(plate, rate) {
-  const width = SURFACE_GRID, height = SURFACE_GRID, count = width * height;
-  const mask = new Uint8Array(count);
-  for (let sy = 0; sy < SOURCE_GRID; sy += 1) {
-    const row = sy * SOURCE_GRID;
-    const gy = Math.floor(sy * height / SOURCE_GRID);
-    for (let sx = 0; sx < SOURCE_GRID; sx += 1) {
-      if (!plate.mask[row + sx]) continue;
-      const gx = Math.floor(sx * width / SOURCE_GRID);
-      mask[gy * width + gx] = 1;
-    }
-  }
-  // Keep coarse rasterization connected wherever the authoritative 96-grid graph has an edge.
-  for (const edge of plate.edges || []) {
-    if (!Array.isArray(edge) || edge.length !== 2 || !Number.isInteger(edge[0]) || !Number.isInteger(edge[1])) continue;
-    const ax = edge[0] % SOURCE_GRID, ay = Math.floor(edge[0] / SOURCE_GRID);
-    const bx = edge[1] % SOURCE_GRID, by = Math.floor(edge[1] / SOURCE_GRID);
-    const x0 = Math.floor(ax * width / SOURCE_GRID), y0 = Math.floor(ay * height / SOURCE_GRID);
-    const x1 = Math.floor(bx * width / SOURCE_GRID), y1 = Math.floor(by * height / SOURCE_GRID);
-    if (Math.abs(x1 - x0) === 1 && Math.abs(y1 - y0) === 1) {
-      const bridge = y0 * width + x1;
-      if (!mask[bridge]) mask[bridge] = 1;
-    }
-  }
-
-  const indexByGrid = new Int32Array(count).fill(-1), gridIndices = [];
-  for (let index = 0; index < count; index += 1) {
-    if (!mask[index]) continue;
-    indexByGrid[index] = gridIndices.length;
-    gridIndices.push(index);
-  }
-  const n = gridIndices.length;
-  const neighbors = new Int32Array(n * 4).fill(-1);
-  for (let node = 0; node < n; node += 1) {
-    const gridIndex = gridIndices[node], x = gridIndex % width, y = Math.floor(gridIndex / width);
-    let neighborIndex = node * 4;
-    for (const [dx, dy] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) {
-      const nx = x + dx, ny = y + dy;
-      if (nx < 0 || nx >= width || ny < 0 || ny >= height) continue;
-      const neighbor = indexByGrid[ny * width + nx];
-      if (neighbor >= 0) neighbors[neighborIndex] = neighbor;
-      neighborIndex += 1;
-    }
-  }
-
-  const stiffness = clamp(plate.material.stiffness, 0.65, 1.15);
-  const density = clamp(plate.material.density, 1, 1.2);
-  const damping = clamp(plate.material.damping, 0.25, 0.45);
-  const rateScale = (PHYSICS_RATE / rate) ** 2;
-  const bending = 0.012 * stiffness / density * rateScale;
-  const tension = 0.0002 * rateScale;
-  const coupling = MAX_ROUTE_COUPLING * rateScale;
-  const couplingRow = coupling * (MAX_PLATES - 1) / density;
-  // Dirichlet four-neighbor graph Laplacian has lambda_max <= 8; this leaves a wide CFL margin.
-  if (64 * bending + 8 * tension + 2 * couplingRow >= 3.25) throw new Error('Unstable surface plate coefficients.');
-  return {
-    id: plate.id, width, indexByGrid, gridIndices, neighbors,
-    current: new Float32Array(n), previous: new Float32Array(n), next: new Float32Array(n),
-    laplacian: new Float32Array(n), biharmonic: new Float32Array(n), coupling: new Float32Array(n),
-    pickups: plate.pickups.map((point) => nearestActive(indexByGrid, point)),
-    bending, tension, density, couplingCoefficient: coupling,
-    damping: (0.000009 + damping * 0.000018) * PHYSICS_RATE / rate
-  };
-}
-
-function prepareLaplacian(layer) {
-  const { current, laplacian, neighbors } = layer;
-  const count = current.length;
-  for (let i = 0; i < current.length; i += 1) {
-    let value = -4 * current[i];
-    const offset = i * 4;
-    const n0 = neighbors[offset], n1 = neighbors[offset + 1], n2 = neighbors[offset + 2], n3 = neighbors[offset + 3];
-    if (n0 >= 0) value += current[n0];
-    if (n1 >= 0) value += current[n1];
-    if (n2 >= 0) value += current[n2];
-    if (n3 >= 0) value += current[n3];
-    laplacian[i] = value;
-  }
-  const { biharmonic } = layer;
-  for (let i = 0; i < current.length; i += 1) {
-    let value = -4 * laplacian[i];
-    const offset = i * 4;
-    const n0 = neighbors[offset], n1 = neighbors[offset + 1], n2 = neighbors[offset + 2], n3 = neighbors[offset + 3];
-    if (n0 >= 0) value += laplacian[n0];
-    if (n1 >= 0) value += laplacian[n1];
-    if (n2 >= 0) value += laplacian[n2];
-    if (n3 >= 0) value += laplacian[n3];
-    biharmonic[i] = value;
-  }
-}
-
-function applyCouplings(groups) {
-  for (let groupIndex = 0; groupIndex < groups.length; groupIndex += 1) {
-    const group = groups[groupIndex];
-    let sum = 0;
-    const entries = group.entries;
-    for (let entryIndex = 0; entryIndex < entries.length; entryIndex += 1) {
-      const entry = entries[entryIndex];
-      sum += entry.layer.current[entry.node];
-    }
-    const participantCount = entries.length;
-    for (let entryIndex = 0; entryIndex < entries.length; entryIndex += 1) {
-      const entry = entries[entryIndex];
-      const layer = entry.layer, node = entry.node;
-      layer.coupling[node] += group.coefficient
-        * (sum - participantCount * layer.current[node]) / layer.density;
-    }
-  }
-}
-
-function advanceLayer(layer, telemetry) {
-  const { current, previous, next, laplacian, biharmonic, bending, tension, damping, density, coupling } = layer;
-  for (let i = 0; i < current.length; i += 1) {
-    const velocity = current[i] - previous[i];
-    next[i] = 2 * current[i] - previous[i]
-      + tension * laplacian[i] / density
-      - bending * biharmonic[i]
-      - damping * velocity + coupling[i];
-    if (!Number.isFinite(next[i])) {
-      telemetry.nonFinite += 1;
-      clearVibration(layer);
-      return;
-    }
-  }
-  const temp = layer.previous;
-  layer.previous = layer.current;
-  layer.current = layer.next;
-  layer.next = temp;
-  layer.next.fill(0);
-  layer.coupling.fill(0);
-}
-
-function applyStrike(layer, strike) {
-  const px = Math.max(0, Math.min(SURFACE_GRID - 1, Math.round(strike.position.x * (SURFACE_GRID - 1))));
-  const py = Math.max(0, Math.min(SURFACE_GRID - 1, Math.round(strike.position.y * (SURFACE_GRID - 1))));
-  const center = layer.indexByGrid[py * SURFACE_GRID + px];
-  if (center < 0) {
-    // The contact is inside the 96-grid mask but can fall between coarse samples; choose the nearest active node.
-    const nearest = nearestActive(layer.indexByGrid, strike.position);
-    if (nearest < 0) return false;
-    return applyKernel(layer, nearest, strike);
-  }
-  return applyKernel(layer, center, strike);
-}
-
-function applyKernel(layer, center, strike) {
-  const centerGrid = layer.gridIndices[center], cx = centerGrid % SURFACE_GRID, cy = Math.floor(centerGrid / SURFACE_GRID);
-  const radius = Math.max(0.35, strike.footprintRadius * (SURFACE_GRID - 1));
-  const radiusSq = radius * radius;
-  const sigmaSq = Math.max(0.12, radiusSq * 0.35);
-  const indices = [], weights = [];
-  for (let i = 0; i < layer.gridIndices.length; i += 1) {
-    const grid = layer.gridIndices[i], dx = grid % SURFACE_GRID - cx, dy = Math.floor(grid / SURFACE_GRID) - cy;
-    const d2 = dx * dx + dy * dy;
-    if (d2 > Math.max(1, radiusSq * 9)) continue;
-    const weight = Math.exp(-0.5 * d2 / sigmaSq);
-    indices.push(i); weights.push(weight);
-  }
-  const norm = Math.sqrt(weights.reduce((sum, weight) => sum + weight * weight, 0));
-  if (norm <= EPSILON) return false;
-  const impulse = Math.min(0.05, strike.strength);
-  for (let i = 0; i < indices.length; i += 1) {
-    const delta = impulse * weights[i] / norm / Math.sqrt(layer.density);
-    layer.previous[indices[i]] -= delta;
+function validTopology(t) {
+  if (!t || t.version !== 1 || t.solverGrid !== GRID || t.sourceGrid !== SOURCE_GRID
+    || !Array.isArray(t.layerIds) || t.layerIds.length > MAX_LAYERS
+    || !(t.nodeOffsets instanceof Int32Array) || t.nodeOffsets.length !== t.layerIds.length + 1
+    || !(t.nodeGridIndices instanceof Uint16Array) || t.nodeOffsets[t.layerIds.length] !== t.nodeGridIndices.length
+    || !(t.neighborIndices instanceof Int32Array) || t.neighborIndices.length !== t.nodeGridIndices.length * 4
+    || !(t.pickupNodeIndices instanceof Uint32Array) || t.pickupNodeIndices.length !== t.layerIds.length * 2
+    || !(t.materialCoefficients instanceof Float32Array) || t.materialCoefficients.length !== t.layerIds.length * 4
+    || !(t.routingTopLayerByCell96 instanceof Int16Array) || t.routingTopLayerByCell96.length !== SOURCE_GRID * SOURCE_GRID
+    || !(t.adjacentLinkNodes instanceof Uint32Array) || t.adjacentLinkNodes.length % 2
+    || !(t.adjacentLinkCoefficients instanceof Float32Array) || t.adjacentLinkCoefficients.length * 2 !== t.adjacentLinkNodes.length
+    || !Array.isArray(t.noduleIds) || t.noduleIds.length > MAX_NODULES
+    || !(t.noduleFoundationLayerIndices instanceof Int16Array) || t.noduleFoundationLayerIndices.length !== t.noduleIds.length
+    || !(t.noduleCouplingNodeIndices instanceof Uint32Array) || t.noduleCouplingNodeIndices.length !== t.noduleIds.length
+    || !(t.nodulePositionsXY instanceof Float32Array) || t.nodulePositionsXY.length !== t.noduleIds.length * 2
+    || !(t.nodulePhysicalRadiiMeters instanceof Float32Array) || t.nodulePhysicalRadiiMeters.length !== t.noduleIds.length
+    || !(t.noduleMaterials instanceof Float32Array) || t.noduleMaterials.length !== t.noduleIds.length * 3
+    || !(t.noduleCouplingWeights instanceof Float32Array) || t.noduleCouplingWeights.length !== t.noduleIds.length) return false;
+  const n = t.nodeGridIndices.length;
+  for (let i = 0; i < t.nodeOffsets.length; i++) if (!Number.isInteger(t.nodeOffsets[i]) || t.nodeOffsets[i] < 0 || t.nodeOffsets[i] > n || (i && t.nodeOffsets[i] < t.nodeOffsets[i-1])) return false;
+  for (let i = 0; i < t.neighborIndices.length; i++) if (t.neighborIndices[i] < -1 || t.neighborIndices[i] >= n) return false;
+  for (let i = 0; i < t.nodeGridIndices.length; i++) if (t.nodeGridIndices[i] >= GRID * GRID) return false;
+  for (let i = 0; i < t.pickupNodeIndices.length; i++) if (t.pickupNodeIndices[i] >= n) return false;
+  for (let i = 0; i < t.materialCoefficients.length; i++) if (!Number.isFinite(t.materialCoefficients[i]) || t.materialCoefficients[i] < 0) return false;
+  for (let i = 0; i < t.routingTopLayerByCell96.length; i++) if (t.routingTopLayerByCell96[i] < -1 || t.routingTopLayerByCell96[i] >= t.layerIds.length) return false;
+  for (let i = 0; i < t.adjacentLinkNodes.length; i++) if (t.adjacentLinkNodes[i] >= n) return false;
+  for (let i = 0; i < t.adjacentLinkCoefficients.length; i++) if (!Number.isFinite(t.adjacentLinkCoefficients[i]) || t.adjacentLinkCoefficients[i] < 0 || t.adjacentLinkCoefficients[i] > 0.000025001) return false;
+  for (let i = 0; i < t.noduleIds.length; i++) {
+    const foundation = t.noduleFoundationLayerIndices[i], node = t.noduleCouplingNodeIndices[i];
+    if (typeof t.noduleIds[i] !== 'string' || !t.noduleIds[i]
+      || (foundation < -1 || foundation >= t.layerIds.length)
+      || (node !== NO_NODE && node >= n)
+      || !Number.isFinite(t.nodulePhysicalRadiiMeters[i]) || t.nodulePhysicalRadiiMeters[i] <= 0
+      || !Number.isFinite(t.noduleCouplingWeights[i]) || t.noduleCouplingWeights[i] < 0 || t.noduleCouplingWeights[i] > 1) return false;
+    for (let k = 0; k < 3; k++) if (!Number.isFinite(t.noduleMaterials[i * 3 + k])) return false;
+    if (t.noduleMaterials[i * 3] <= 0 || t.noduleMaterials[i * 3 + 1] <= 0 || t.noduleMaterials[i * 3 + 2] < 0 || t.noduleMaterials[i * 3 + 2] >= 0.5) return false;
+    if (!validPoint({x:t.nodulePositionsXY[i*2],y:t.nodulePositionsXY[i*2+1]})) return false;
   }
   return true;
 }
 
-function readPickup(layer, pickupIndex) {
-  const node = layer.pickups[pickupIndex];
-  return node < 0 ? 0 : layer.current[node];
+function applyStrike(proc, p) {
+  const t = proc.topology;
+  if (!validPoint(p.position) || !Number.isFinite(p.strength) || p.strength <= 0) return false;
+  const sx = Math.round(p.position.x * (SOURCE_GRID - 1)), sy = Math.round(p.position.y * (SOURCE_GRID - 1));
+  const layer = t.routingTopLayerByCell96[sy * SOURCE_GRID + sx];
+  if (layer < 0 || (p.layerId && t.layerIds[layer] !== p.layerId) || (p.plateId && t.layerIds[layer] !== p.plateId)) return false;
+  const begin = t.nodeOffsets[layer], end = t.nodeOffsets[layer + 1];
+  const radius = Number.isFinite(p.footprintRadius) && p.footprintRadius > 0 ? p.footprintRadius : 0.01;
+  const sigma = radius * (GRID - 1);
+  const x = p.position.x * (GRID - 1), y = p.position.y * (GRID - 1);
+  let normSq = 0;
+  for (let node = begin; node < end; node++) {
+    const cell = t.nodeGridIndices[node], gx = cell % GRID, gy = Math.floor(cell / GRID);
+    const w = integratedGaussian(gx, gy, x, y, sigma); normSq += w * w;
+  }
+  const norm = Math.sqrt(normSq); if (!(norm > EPS)) return false;
+  const impulse = Math.min(0.05, p.strength), density = t.materialCoefficients[layer * 4 + 2];
+  const reach = 4 * sigma + 0.5;
+  for (let node = begin; node < end; node++) {
+    const cell = t.nodeGridIndices[node], gx = cell % GRID, gy = Math.floor(cell / GRID);
+    if (Math.abs(gx - x) > reach || Math.abs(gy - y) > reach) continue;
+    const w = integratedGaussian(gx, gy, x, y, sigma);
+    if (w * w < 1e-12 * normSq) continue;
+    proc.previous[node] -= impulse * w / norm / Math.sqrt(density);
+    proc.wakeNode(node);
+  }
+  return true;
 }
-function nearestActive(indexByGrid, point) {
-  const x = Math.round(point.x * (SURFACE_GRID - 1)), y = Math.round(point.y * (SURFACE_GRID - 1));
-  const maxRadius = SURFACE_GRID;
-  for (let radius = 0; radius < maxRadius; radius += 1) {
-    for (let dy = -radius; dy <= radius; dy += 1) {
-      const y1 = y + dy;
-      if (y1 < 0 || y1 >= SURFACE_GRID) continue;
-      for (let dx = -radius; dx <= radius; dx += 1) {
-        if (Math.max(Math.abs(dx), Math.abs(dy)) !== radius) continue;
-        const x1 = x + dx;
-        if (x1 < 0 || x1 >= SURFACE_GRID) continue;
-        const node = indexByGrid[y1 * SURFACE_GRID + x1];
-        if (node >= 0) return node;
-      }
+
+function integratedGaussian(cx, cy, x, y, sigma) {
+  // Three-point quadrature over each node's Voronoi cell keeps the footprint
+  // continuous even when the contact lies exactly on a solver node.
+  const q = 0.7745966692414834, w0 = 0.5555555555555556, w1 = 0.8888888888888888;
+  let total = 0;
+  for (let iy = -1; iy <= 1; iy++) {
+    const oy = iy === 0 ? 0 : iy * q * 0.5, wy = iy === 0 ? w1 : w0;
+    for (let ix = -1; ix <= 1; ix++) {
+      const ox = ix === 0 ? 0 : ix * q * 0.5, wx = ix === 0 ? w1 : w0;
+      const dx = cx + ox - x, dy = cy + oy - y;
+      total += wx * wy * Math.exp(-(dx * dx + dy * dy) / (2 * sigma * sigma));
     }
   }
-  return -1;
+  return total;
 }
-function clearVibration(layer) {
-  layer.current.fill(0); layer.previous.fill(0); layer.next.fill(0);
-  layer.coupling.fill(0);
-}
-function validPlate(plate) {
-  if (!plate || typeof plate.id !== 'string' || !plate.id
-    || plate.grid?.width !== SOURCE_GRID || plate.grid?.height !== SOURCE_GRID
-    || !plate.mask || plate.mask.length !== SOURCE_GRID * SOURCE_GRID || plate.pickups?.length !== 2
-    || !plate.material || !finite(plate.material.stiffness) || plate.material.stiffness < 0.65 || plate.material.stiffness > 1.15
-    || !finite(plate.material.density) || plate.material.density < 1 || plate.material.density > 1.2
-    || !finite(plate.material.damping) || plate.material.damping < 0.25 || plate.material.damping > 0.45
-    || !plate.pickups.every(validPoint) || !Array.isArray(plate.edges || [])) return false;
-  let occupied = false;
-  for (let index = 0; index < plate.mask.length; index += 1) {
-    const value = plate.mask[index];
-    if (value !== 0 && value !== 1) return false;
-    if (value === 1) occupied = true;
+
+function modeOrder(index) { return index === 0 ? 0 : index <= 3 ? index - 2 : index <= 8 ? index - 6 : index - 10; }
+function modalShape(degree, m, nodule, topology) {
+  const nxy = topology.nodulePositionsXY || [];
+  const layer = topology.noduleFoundationLayerIndices?.[nodule] ?? -1;
+  const result = [0, 0];
+  for (let side = 0; side < 2; side++) {
+    let px = nxy[nodule * 2] || 0.5, py = nxy[nodule * 2 + 1] || 0.5;
+    if (layer >= 0) {
+      const node = topology.pickupNodeIndices[layer * 2 + side], cell = topology.nodeGridIndices[node];
+      px = (cell % GRID) / (GRID - 1); py = Math.floor(cell / GRID) / (GRID - 1);
+    }
+    const z = topology.nodules?.[nodule]?.burial?.buriedDepthMeters || 0.04;
+    result[side] = realSH(degree, m, px - nxy[nodule * 2], py - nxy[nodule * 2 + 1], z);
   }
-  if (!occupied || !plate.pickups.every((point) => plate.mask[
-    Math.round(point.y * (SOURCE_GRID - 1)) * SOURCE_GRID + Math.round(point.x * (SOURCE_GRID - 1))
-  ] === 1)) return false;
-  return (plate.edges || []).every((edge) => Array.isArray(edge) && edge.length === 2
-    && edge.every((index) => Number.isInteger(index) && index >= 0 && index < SOURCE_GRID ** 2));
+  return result;
 }
-function validPoint(point) { return point && finite(point.x) && finite(point.y) && point.x >= 0 && point.x <= 1 && point.y >= 0 && point.y <= 1; }
-function finite(value) { return typeof value === 'number' && Number.isFinite(value); }
-function clamp(value, min, max) { return Math.max(min, Math.min(max, value)); }
+function realSH(l, m, x, y, z) {
+  const norm = Math.sqrt(x*x+y*y+z*z) || 1; x/=norm; y/=norm; z/=norm;
+  if (l === 0) return 0.2820947918;
+  if (l === 1) return m === -1 ? 0.4886025119*y : m === 0 ? 0.4886025119*z : 0.4886025119*x;
+  if (m === -2) return 1.0925484306*x*y;
+  if (m === -1) return 1.0925484306*y*z;
+  if (m === 0) return 0.3153915653*(3*z*z-1);
+  if (m === 1) return 1.0925484306*x*z;
+  return 0.5462742153*(x*x-y*y);
+}
+function validPoint(p) { return p && Number.isFinite(p.x) && Number.isFinite(p.y) && p.x >= 0 && p.x <= 1 && p.y >= 0 && p.y <= 1; }
 
 registerProcessor('surface-plate-processor', SurfacePlateProcessor);

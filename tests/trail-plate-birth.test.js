@@ -223,7 +223,7 @@ test('real FOOT_CONTACT accumulation, corridor refractory, global spacing, and b
   assert.equal(system.observeFootContact({ type: 'STEP', contacts: [
     { position: { x: 0.35, y: TRAIL_PLATE_SOURCE_ORIGIN.y } }
   ] }), 0, 'synthetic non-FOOT_CONTACT events do not count as physical evidence');
-  assert.ok(TRAIL_PLATE_MAX_BIRTHS === 12);
+  assert.equal(TRAIL_PLATE_MAX_BIRTHS, 256, 'explicit transport ceiling replaces the historical twelve-layer stop');
 
   const stableDescriptor = system.getPlates()[0];
   system.reset();

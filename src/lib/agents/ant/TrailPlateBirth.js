@@ -12,7 +12,9 @@ export const TRAIL_PLATE_SIMILARITY_THRESHOLD = 0.6;
 export const TRAIL_PLATE_SAME_CORRIDOR_REFRACTORY_MS = 90000;
 export const TRAIL_PLATE_REQUIRED_NEW_FOOT_CONTACTS = 30;
 export const TRAIL_PLATE_GLOBAL_BIRTH_GAP_MS = 10000;
-export const TRAIL_PLATE_MAX_BIRTHS = 12;
+// Transport/storage safety ceiling, not a trail qualification or material rule.
+// Older descriptors are never evicted; reaching this ceiling is reported.
+export const TRAIL_PLATE_MAX_BIRTHS = 256;
 export const TRAIL_PLATE_MIN_GEODESIC_LENGTH = 0.30;
 export const TRAIL_PLATE_HALF_WIDTH_RANGE = Object.freeze([0.012, 0.030]);
 

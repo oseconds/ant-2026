@@ -2,231 +2,132 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
+import { compileSurfaceTopology } from '../src/lib/audio/compileSurfaceTopology.js';
 
 const source = readFileSync(new URL('../static/worklets/surface-plate.worklet.js', import.meta.url), 'utf8');
-
-function descriptor(id = 'route') {
-  const mask = new Array(96 * 96).fill(0);
-  for (let x = 20; x <= 40; x += 1) mask[48 * 96 + x] = 1;
-  return { id, grid: { width: 96, height: 96 }, mask, edges: [],
-    pickups: [{ x: 0.28, y: 0.5 }, { x: 0.4, y: 0.5 }],
-    material: { stiffness: 0.9, density: 1.1, damping: 0.35 } };
+function plate(id='route', x0=30, x1=66, y0=47, y1=49) {
+  const mask = new Array(96*96).fill(0);
+  for (let y=y0;y<=y1;y++) for(let x=x0;x<=x1;x++) mask[y*96+x]=1;
+  return { id, grid:{width:96,height:96}, mask, edges:[],
+    pickups:[{x:x0/95,y:((y0+y1)/2)/95},{x:x1/95,y:((y0+y1)/2)/95}],
+    material:{stiffness:.9,density:1.1,damping:.35} };
 }
-
-function instantiate(rate) {
-  let Processor;
-  const messages = [];
-  class AudioWorkletProcessor {
-    constructor() { this.port = { onmessage: null, postMessage: (message) => messages.push(message) }; }
-  }
-  vm.runInNewContext(source, {
-    AudioWorkletProcessor, sampleRate: rate, Float32Array, Uint8Array, Int32Array,
-    Map, Array, Math, Number, Object, performance: globalThis.performance,
-    registerProcessor: (_name, implementation) => { Processor = implementation; }
-  });
-  const processor = new Processor({ processorOptions: { maxPlates: 12 } });
-  return { processor, messages };
+function topology(...plates) { return compileSurfaceTopology({plates, stratigraphy:{layerOrder:plates.map(p=>p.id)}}); }
+function instantiate(rate=48000) {
+  let Processor; const messages=[];
+  class AudioWorkletProcessor { constructor(){this.port={onmessage:null,postMessage:m=>messages.push(m)};} }
+  vm.runInNewContext(source,{AudioWorkletProcessor,sampleRate:rate,Float32Array,Uint8Array,Uint16Array,Uint32Array,Int8Array,Int16Array,Int32Array,Array,Math,Number,Object,performance:globalThis.performance,registerProcessor:(_n,p)=>Processor=p});
+  return {processor:new Processor(),messages};
 }
+function install(p,t) { p.handleMessage({type:'topology',payload:t}); }
+function run(p,count=128) { const left=new Float32Array(count),right=new Float32Array(count); p.process([],[[left,right]]); return {left,right}; }
+function energy(p) { let e=0; for(let i=0;i<p.current.length;i++) e+=p.current[i]**2+p.previous[i]**2; for(let i=0;i<p.sphereCurrent.length;i++)e+=p.sphereCurrent[i]**2+p.spherePrevious[i]**2; return e; }
+function seedNode(p,node,amplitude=.01) { p.current[node]=amplitude; p.previous[node]=amplitude; p.wakeNode(node); }
 
-function run(processor, count = 128) {
-  const left = new Float32Array(count), right = new Float32Array(count);
-  processor.process([], [[left, right]]);
-  return { left, right };
-}
-
-function totalEnergy(layer) {
-  let kinetic = 0, bending = 0, tension = 0;
-  for (let i = 0; i < layer.current.length; i += 1) {
-    let lap = -4 * layer.current[i], priorLap = -4 * layer.previous[i];
-    const offset = i * 4;
-    for (let slot = 0; slot < 4; slot += 1) {
-      const neighbor = layer.neighbors[offset + slot];
-      if (neighbor >= 0) {
-        lap += layer.current[neighbor];
-        priorLap += layer.previous[neighbor];
-      }
-    }
-    const velocity = layer.current[i] - layer.previous[i];
-    kinetic += 0.5 * layer.density * velocity ** 2;
-    bending += 0.5 * layer.density * layer.bending * lap * priorLap;
-    tension += -0.5 * layer.tension * layer.current[i] * priorLap;
-  }
-  return kinetic + bending + tension;
-}
-
-test('emits silence before birth, then independently excites stereo pickups with one masked layer', () => {
-  const { processor } = instantiate(48000);
-  const before = run(processor);
-  assert.ok(before.left.every((sample) => sample === 0));
-  assert.ok(before.right.every((sample) => sample === 0));
-  processor.handleMessage({ type: 'birth', payload: { plate: descriptor() } });
-  assert.equal(processor.layers.size, 1);
-  processor.handleMessage({ type: 'strike', payload: {
-    plateId: 'route', position: { x: 0.3, y: 0.5 }, strength: 0.035,
-    footprintRadius: 0.012, hardness: 0.3
-  } });
-  let leftEnergy = 0, rightEnergy = 0;
-  for (let i = 0; i < 8; i += 1) {
-    const output = run(processor);
-    for (const sample of output.left) leftEnergy += sample * sample;
-    for (const sample of output.right) rightEnergy += sample * sample;
-  }
-  assert.ok(leftEnergy > 0 && rightEnergy > 0);
-  assert.notEqual(leftEnergy, rightEnergy, 'pickup coordinates should produce distinct stereo signals');
-  assert.equal(processor.telemetry.nonFinite, 0);
+test('compiled topology stays silent until contact, routes the exposed plate, and outputs stereo',()=>{
+  const {processor}=instantiate();
+  assert.ok([...run(processor).left].every(x=>x===0));
+  const t=topology(plate()); install(processor,t);
+  assert.equal(processor.topology,t); assert.equal(processor.activeCount,0);
+  processor.handleMessage({type:'strike',payload:{plateId:'route',layerId:'route',position:{x:.5,y:.505},strength:.035,footprintRadius:.012}});
+  assert.ok(processor.activeCount>0);
+  let l=0,r=0; for(let i=0;i<8;i++){const out=run(processor); for(const x of out.left)l+=x*x;for(const x of out.right)r+=x*x;}
+  assert.ok(l>0&&r>0); assert.notEqual(l,r); assert.equal(processor.telemetry.nonFinite,0);
 });
 
-test('single-mode excitation-free dynamics remain within the analytical discrete-time energy bound at 44.1/48/96 kHz', () => {
-  for (const rate of [44100, 48000, 96000]) {
-    const { processor } = instantiate(rate);
-    processor.handleMessage({ type: 'birth', payload: { plate: descriptor() } });
-    const layer = processor.layers.get('route');
-    const n = layer.gridIndices.length;
-    assert.ok(n >= 8);
-    for (let i = 0; i < n; i += 1) {
-      const displacement = Math.sin(Math.PI * (i + 1) / (n + 1));
-      layer.current[i] = displacement;
-      layer.previous[i] = displacement;
-    }
-    const eigenvalue = 4 - 2 * Math.cos(Math.PI / (n + 1));
-    const omegaSquared = layer.bending * eigenvalue ** 2
-      + layer.tension * eigenvalue / layer.density;
-    assert.ok(omegaSquared > 0 && omegaSquared < 4, `unstable mode at ${rate} Hz: ${omegaSquared}`);
-    const theoreticalMax = 1 / Math.sqrt(1 - omegaSquared / 4);
-    const initialEnergy = totalEnergy(layer);
-    let peak = Math.max(...layer.current);
-    for (let i = 0; i < Math.ceil(rate / 128); i += 1) {
-      run(processor);
-      for (const displacement of layer.current) peak = Math.max(peak, Math.abs(displacement));
-    }
-    assert.ok(peak <= theoreticalMax + 1e-4,
-      `${rate} Hz amplitude ${peak} exceeded discrete modal bound ${theoreticalMax}`);
-    const currentEnergy = totalEnergy(layer);
-    assert.ok(Number.isFinite(currentEnergy) && currentEnergy >= 0);
-    assert.ok(currentEnergy < initialEnergy, `${rate} Hz excitation-free energy did not decay`);
-    assert.ok(processor.telemetry.nonFinite === 0);
+test('same-point contact widths create measurably different spatial distributions at equal impulse energy',()=>{
+  const t=topology(plate('route',24,72,24,72));
+  const narrow=instantiate().processor,wide=instantiate().processor; install(narrow,t);install(wide,t);
+  const start=t.nodeOffsets[0],end=t.nodeOffsets[1];
+  for(const position of [{x:16/31,y:16/31},{x:.503,y:.487}]) {
+    narrow.clearVibration();wide.clearVibration();
+    for(const [p,r] of [[narrow,.009],[wide,.014]])p.handleMessage({type:'strike',payload:{plateId:'route',position,strength:.035,footprintRadius:r}});
+    const stat=p=>{let e=0,m=0;for(let i=start;i<end;i++){const v=p.previous[i]**2,cell=t.nodeGridIndices[i],dx=cell%32-position.x*31,dy=Math.floor(cell/32)-position.y*31;e+=v;m+=v*(dx*dx+dy*dy);}return [e,m/e];};
+    const [en,mn]=stat(narrow),[ew,mw]=stat(wide);
+    assert.ok(Math.abs(en-ew)<1e-8); assert.ok(mw>mn*1.05,`${mn} -> ${mw}`);
   }
 });
 
-test('overlapping layers couple reciprocally, retain their births, and reset vibration on stop', () => {
-  const { processor } = instantiate(48000);
-  const first = descriptor('first');
-  const second = descriptor('second');
-  processor.handleMessage({ type: 'birth', payload: { plate: first } });
-  processor.handleMessage({ type: 'birth', payload: { plate: second } });
-  assert.ok(processor.couplingGroups.length > 0);
-  const a = processor.layers.get('first'), b = processor.layers.get('second');
-  a.previous[0] = -0.035;
-  for (let i = 0; i < 32; i += 1) run(processor);
-  assert.ok(a.current.some((value) => value !== 0));
-  assert.ok(b.current.some((value) => value !== 0), 'overlap should transmit a small reciprocal response');
-  processor.handleMessage({ type: 'stop' });
-  assert.ok([...a.current, ...a.previous, ...b.current, ...b.previous].every((value) => value === 0));
-  assert.equal(processor.layers.size, 2);
-  processor.handleMessage({ type: 'destroy' });
-  assert.equal(processor.layers.size, 0);
-  assert.equal(processor.process([], [[new Float32Array(128), new Float32Array(128)]]), false,
-    'a destroyed processor releases its active processing lifetime');
+test('recompilation preserves vibration only for unchanged layer geometry and resets changed geometry',()=>{
+  const p=instantiate().processor,a=plate('a'),b=plate('b');
+  const first=topology(a,b);install(p,first);
+  seedNode(p,first.pickupNodeIndices[0],.02);seedNode(p,first.pickupNodeIndices[2],.03);
+  const revisedA=plate('a2',30,66,40,56);revisedA.id='a';const second=topology(revisedA,b);
+  install(p,second);
+  assert.ok([...p.current.subarray(second.nodeOffsets[0],second.nodeOffsets[1])].every(v=>v===0),
+    'changed geometry must start without stale vibration');
+  assert.ok(Math.abs(p.current[second.pickupNodeIndices[2]]-.03)<1e-7,
+    'unchanged layer retains its state');
 });
 
-test('44.1 kHz state and interpolation are invariant across a 128-frame process boundary', () => {
-  const single = instantiate(44100).processor;
-  const split = instantiate(44100).processor;
-  const plate = descriptor();
-  single.handleMessage({ type: 'birth', payload: { plate } });
-  split.handleMessage({ type: 'birth', payload: { plate } });
-  for (const processor of [single, split]) {
-    const layer = processor.layers.get('route');
-    for (let i = 0; i < layer.current.length; i += 1) {
-      const initial = Math.sin(Math.PI * (i + 1) / (layer.current.length + 1));
-      layer.current[i] = initial;
-      layer.previous[i] = initial;
-    }
-  }
-  const whole = [new Float32Array(256), new Float32Array(256)];
-  single.process([], [[whole[0], whole[1]]]);
-  const first = [new Float32Array(128), new Float32Array(128)];
-  const second = [new Float32Array(128), new Float32Array(128)];
-  split.process([], [[first[0], first[1]]]);
-  split.process([], [[second[0], second[1]]]);
-  assert.deepEqual([...whole[0]], [...first[0], ...second[0]]);
-  assert.deepEqual([...whole[1]], [...first[1], ...second[1]]);
-  assert.equal(single.decimationPhase, split.decimationPhase);
-  assert.equal(single.samplesSincePhysicsStep, split.samplesSincePhysicsStep);
-  assert.deepEqual([...single.layers.get('route').current], [...split.layers.get('route').current]);
+test('local reciprocal overlap transfers vibration without coupling merely co-binned 96-grid masks',()=>{
+  const lower=plate('lower',30,62,44,50),upper=plate('upper',46,76,44,50);
+  const t=topology(lower,upper),p=instantiate().processor;install(p,t);
+  assert.ok(t.adjacentLinkNodes.length>0);
+  const node=t.adjacentLinkNodes[0];seedNode(p,node,.03);
+  for(let i=0;i<32;i++)run(p);
+  const other=t.adjacentLinkNodes[1];assert.ok(Math.abs(p.current[other])>0);
+  const disjoint=topology(plate('left',0,0,0,0),plate('right',1,1,0,0));
+  assert.equal(disjoint.adjacentLinkNodes.length,0);
 });
 
-function coupledEnergy(processor) {
-  let energy = 0;
-  for (const layer of processor.layerList) energy += totalEnergy(layer);
-  for (const group of processor.couplingGroups) {
-    for (let i = 0; i < group.entries.length; i += 1) {
-      const a = group.entries[i];
-      for (let j = i + 1; j < group.entries.length; j += 1) {
-        const b = group.entries[j];
-        const currentDifference = a.layer.current[a.node] - b.layer.current[b.node];
-        const previousDifference = a.layer.previous[a.node] - b.layer.previous[b.node];
-        energy += 0.5 * group.coefficient * currentDifference * previousDifference;
-      }
-    }
-  }
-  return energy;
-}
+test('44100 Hz fractional phase and interpolated output are invariant across process quantum splits',()=>{
+  const a=instantiate(44100).processor,b=instantiate(44100).processor,t=topology(plate());install(a,t);install(b,t);
+  for(const p of [a,b]) { const n=t.pickupNodeIndices[0];seedNode(p,n,.02); }
+  const all=[new Float32Array(256),new Float32Array(256)];a.process([],[[all[0],all[1]]]);
+  const x=[new Float32Array(128),new Float32Array(128)],y=[new Float32Array(128),new Float32Array(128)];
+  b.process([],[[x[0],x[1]]]);b.process([],[[y[0],y[1]]]);
+  assert.deepEqual([...all[0]],[...x[0],...y[0]]);assert.deepEqual([...all[1]],[...x[1],...y[1]]);
+  assert.equal(a.phase,b.phase);assert.equal(a.telemetry.physicsSteps,b.telemetry.physicsSteps);
+});
 
-test('three coupled layers lose unforced discrete energy at 44.1/48/96 kHz', () => {
-  for (const rate of [44100, 48000, 96000]) {
-    const { processor } = instantiate(rate);
-    for (const id of ['a', 'b', 'c']) processor.handleMessage({ type: 'birth', payload: { plate: descriptor(id) } });
-    const firstLayer = processor.layers.get('a');
-    for (let i = 0; i < firstLayer.current.length; i += 1) {
-      const initial = Math.sin(Math.PI * (i + 1) / (firstLayer.current.length + 1));
-      firstLayer.current[i] = initial;
-      firstLayer.previous[i] = initial;
-    }
-    const initialEnergy = coupledEnergy(processor);
-    const buffers = [[new Float32Array(128), new Float32Array(128)]];
-    for (let quantum = 0; quantum < Math.ceil(rate * 0.25 / 128); quantum += 1) processor.process([], buffers);
-    const finalEnergy = coupledEnergy(processor);
-    assert.ok(Number.isFinite(finalEnergy) && finalEnergy >= 0);
-    assert.ok(finalEnergy < initialEnergy, `${rate} Hz coupled energy did not decay`);
-    assert.equal(processor.telemetry.nonFinite, 0);
+test('quiet local nodes sleep after the tail threshold and later local contact wakes them',()=>{
+  const t=topology(plate()),p=instantiate(48000).processor;install(p,t);
+  const node=t.pickupNodeIndices[0];p.current[node]=1e-8;p.wakeNode(node);
+  const frames=Math.ceil(48000*2.1/128);for(let i=0;i<frames;i++)run(p);
+  assert.ok(p.telemetry.sleeps>0);assert.ok(p.telemetry.truncatedTailEnergy>=0);assert.ok(p.activeCount<t.nodeGridIndices.length);
+  const wakes=p.telemetry.wakes;p.handleMessage({type:'strike',payload:{plateId:'route',position:{x:48/95,y:48/95},strength:.035,footprintRadius:.01}});
+  assert.ok(p.telemetry.wakes>wakes);const hitCell=16*32+16;const hitNode=t.nodeGridIndices.findIndex(cell=>cell===hitCell);
+  assert.ok(hitNode>=0&&p.awake[hitNode]);
+});
+
+test('a fresh contact resets an awake node quiet timer before it can be truncated',()=>{
+  const t=topology(plate()),p=instantiate().processor;install(p,t);const node=t.pickupNodeIndices[0];
+  p.wakeNode(node);p.energyQuiet[node]=23999;
+  p.handleMessage({type:'strike',payload:{plateId:'route',position:{x:30/95,y:48/95},strength:1e-7,footprintRadius:.009}});
+  assert.equal(p.energyQuiet[node],0);
+  for(let i=0;i<8;i++)run(p);
+  assert.equal(p.awake[node],1);assert.equal(p.telemetry.sleeps,0);
+});
+
+test('coupled layers and 12 buried-sphere modes remain finite and dissipate over two seconds',()=>{
+  for(const rate of [44100,48000,96000]) {
+    const a=plate('a'),b=plate('b');
+    const nodule={id:'sphere',position:{x:.5,y:.5},physicalRadiusMeters:.024,material:{density:2000,youngModulus:800000,poisson:.3,damping:.35},burial:{buriedDepthMeters:.04},coupling:{plateId:'a',weight:.2,position:{x:.5,y:.5}}};
+    const t=compileSurfaceTopology({plates:[a,b],nodules:[nodule],stratigraphy:{layerOrder:['a','b']}});
+    const p=instantiate(rate).processor;install(p,t);
+    assert.equal(p.sphereCurrent.length,12);
+    const node=t.pickupNodeIndices[0];seedNode(p,node,.02);p.sphereCurrent[0]=.01;p.spherePrevious[0]=.009;
+    const initial=energy(p);for(let i=0;i<Math.ceil(rate*2/128);i++)run(p);
+    const final=energy(p);assert.ok(Number.isFinite(final)&&final<initial,`${rate}: ${initial} -> ${final}`);
+    assert.equal(p.telemetry.nonFinite,0);
   }
 });
 
-test('rejects invalid masks and pickups before allocating worklet state', () => {
-  const { processor } = instantiate(48000);
-  const empty = descriptor('empty');
-  empty.mask.fill(0);
-  const offMaskPickup = descriptor('off-mask-pickup');
-  offMaskPickup.pickups[1] = { x: 0.9, y: 0.9 };
-  processor.handleMessage({ type: 'birth', payload: { plate: empty } });
-  processor.handleMessage({ type: 'birth', payload: { plate: offMaskPickup } });
-  assert.equal(processor.layers.size, 0);
-  assert.equal(processor.telemetry.dropped, 2);
+test('limits topology to packed capacity and reports active/sleep/coupling telemetry',()=>{
+  const {processor}=instantiate();
+  const plates=[];for(let i=0;i<256;i++)plates.push(plate(`p${i}`,30,60,48,48));
+  const t=topology(...plates);install(processor,t);
+  assert.equal(processor.topology.layerIds.length,256);
+  assert.equal(processor.getDiagnostics().mix,1/Math.sqrt(12));
+  assert.equal(processor.getDiagnostics().layers,256);
+  assert.equal(processor.getDiagnostics().activeNodes,0);
 });
 
-test('twelve maximum-width corridor masks fit the 48 kHz worklet quantum budget', () => {
-  const { processor } = instantiate(48000);
-  for (let route = 0; route < 12; route += 1) {
-    const plate = descriptor(`wide-${route}`);
-    plate.mask.fill(0);
-    for (let x = 0; x < 96; x += 1) {
-      for (let y = 45; y <= 50; y += 1) plate.mask[y * 96 + x] = 1;
-    }
-    plate.pickups = [{ x: 0.25, y: 0.5 }, { x: 0.75, y: 0.5 }];
-    processor.handleMessage({ type: 'birth', payload: { plate } });
-  }
-  assert.equal(processor.layers.size, 12);
-  const buffers = [[new Float32Array(128), new Float32Array(128)]];
-  for (let quantum = 0; quantum < 10; quantum += 1) processor.process([], buffers);
-  const timings = [];
-  for (let quantum = 0; quantum < 100; quantum += 1) {
-    const started = performance.now();
-    processor.process([], buffers);
-    timings.push(performance.now() - started);
-  }
-  timings.sort((a, b) => a - b);
-  const p95Ms = timings[Math.floor((timings.length - 1) * 0.95)];
-  assert.ok(p95Ms < 2.67,
-    `p95 measured 48 kHz quantum was ${p95Ms.toFixed(3)} ms (budget 2.667 ms)`);
+test('rejects malformed packed topology without replacing active solver state',()=>{
+  const p=instantiate().processor,good=topology(plate());install(p,good);
+  const node=good.pickupNodeIndices[0];seedNode(p,node,.01);
+  const bad=topology(plate('bad'));bad.materialCoefficients[0]=-1;
+  p.handleMessage({type:'topology',payload:bad});
+  assert.equal(p.topology,good);assert.equal(p.current[node],Math.fround(.01));assert.equal(p.telemetry.dropped,1);
 });
