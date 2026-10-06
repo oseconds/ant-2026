@@ -4,7 +4,7 @@ Date: 2026-10-06 (Asia/Seoul)
 
 ## Results
 
-- Final `npm test`: passed, 227 tests; 0 failures, 0 skipped. Node reported 3,432.1 ms. The earlier 225-test run preceded two evidence-helper tests for complete ten-second windows and actual zoom pixel rendering. ANT/app/DSP source is unchanged since the successful build and browser checks.
+- Final `npm test`: passed, 227 tests; 0 failures, 0 skipped. The final redirected repeat reported 3,106.9 ms. The earlier 225-test run preceded two evidence-helper tests for complete ten-second windows and actual zoom pixel rendering. ANT/app/DSP source is unchanged since the successful browser checks.
 - `npm run build`: passed with Vite 6.4.3; production bundle emitted. Existing dependency annotation and large-chunk advisories were printed; no build error.
 - `npm run test:browser` with `BROWSER_EXECUTABLE_PATH=C:\Program Files\Google\Chrome\Application\chrome.exe`: passed in Vite development mode.
 - `CHECK_PRODUCTION=1 npm run test:browser` with the same Chrome path: passed against the production preview.
@@ -22,4 +22,6 @@ These automated checks establish browser lifecycle and protocol behavior. They d
 
 The actual Chrome screenshots and paired metrics from `test-results` are preserved here as `browser-dev-ant.png` / `browser-dev-metrics.json` and `browser-production-ant.png` / `browser-production-metrics.json`. Their source screenshots were written at 2026-10-06 14:13:27 and 14:14:17 Asia/Seoul. The development screenshot shows live ANT at 35% Volume. The production browser-check screenshot shows live ANT at 100% Volume; its paired metrics report 30 approximate simulated seconds, one shared context and no processor errors. These are browser lifecycle smoke-check screenshots. They are not the required 35%-Volume synchronized stereo audio capture with waveform and spectrogram.
 
-`build.stdout.txt`, `browser-dev.stdout.txt`, and `browser-production.stdout.txt` preserve the successful command output returned by the terminal tool. The commands were not originally redirected to files, so these are saved copies of the captured stdout, not raw shell transcript files. Build duration reported by Vite was 3.25 s; the production-preview build during the browser check reported 2.46 s. Both builds had the same non-fatal dependency annotation and large-chunk warnings. Browser output reported success in both modes, with no errors.
+`final-tests.txt` and `build.stdout.txt` now preserve the final successful commands redirected to files; Vite reported 2.60 s on this build. `browser-dev.stdout.txt` and `browser-production.stdout.txt` preserve saved copies of the earlier successful terminal-tool stdout, not originally redirected raw shell transcripts. The production-preview build during the browser check reported 2.46 s. Builds had the same non-fatal dependency annotation and large-chunk warnings. Browser output reported success in both modes, with no errors.
+
+The later full 600 s real capture demonstrated a separate mature-runtime failure: simulation/wall clock reached about 600 s while AudioContext reached about 333 s. Lifecycle/protocol checks passing must not be interpreted as all-awake realtime scheduling passing. Exact recording and native stereo metrics are in [the evidence index](README.md).
