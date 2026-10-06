@@ -1,0 +1,60 @@
+TAP version 13
+# Subtest: absolute uniform evidence adds neither route confidence nor adherence nor random draws
+ok 1 - absolute uniform evidence adds neither route confidence nor adherence nor random draws
+  ---
+  duration_ms: 5.2844
+  type: 'test'
+  ...
+# Subtest: weak evidence shortens decision clocks and intermediate evidence restores them continuously
+not ok 2 - weak evidence shortens decision clocks and intermediate evidence restores them continuously
+  ---
+  duration_ms: 3.7709
+  type: 'test'
+  location: 'C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\tests\\ant-low-evidence.test.js:85:1'
+  failureType: 'testCodeFailure'
+  error: 'decision duration: 0.45999999999999996 versus 0.368'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    near (file:///C:/Users/5dudt/Documents/Github/codex-simul/tests/ant-low-evidence.test.js:14:10)
+    TestContext.<anonymous> (file:///C:/Users/5dudt/Documents/Github/codex-simul/tests/ant-low-evidence.test.js:88:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: weak evidence reduces only the baseline trace and intermediate evidence restores it continuously
+not ok 3 - weak evidence reduces only the baseline trace and intermediate evidence restores it continuously
+  ---
+  duration_ms: 12.812
+  type: 'test'
+  location: 'C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\tests\\ant-low-evidence.test.js:99:1'
+  failureType: 'testCodeFailure'
+  error: 'distance-normalized baseline dose: 0.5 versus 0.375'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    near (file:///C:/Users/5dudt/Documents/Github/codex-simul/tests/ant-low-evidence.test.js:14:10)
+    TestContext.<anonymous> (file:///C:/Users/5dudt/Documents/Github/codex-simul/tests/ant-low-evidence.test.js:102:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: absolute evidence preserves the full quadratic adherence reinforcement increment
+ok 4 - absolute evidence preserves the full quadratic adherence reinforcement increment
+  ---
+  duration_ms: 6.7325
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 2
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 34.3287

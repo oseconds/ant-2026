@@ -1,0 +1,444 @@
+{
+  "scales": {
+    "pheromone": {
+      "maximum": 0.18,
+      "ticks": [
+        0,
+        0.04,
+        0.08,
+        0.12,
+        0.18
+      ],
+      "unit": "raw concentration",
+      "transform": "linear"
+    },
+    "occupancy": {
+      "maximum": 5,
+      "knee": 0.05,
+      "ticks": [
+        0,
+        0.05,
+        0.1,
+        0.5,
+        1,
+        5
+      ],
+      "unit": "ant-seconds / cell, last 30 s",
+      "transform": "log1p(value / 0.05)"
+    },
+    "coverage": {
+      "unit": "ever visited, ant center",
+      "transform": "binary cumulative ant-seconds > 0"
+    }
+  },
+  "seeds": [
+    {
+      "seed": 20261005,
+      "overview": "seed20261005-maps-overview.png",
+      "detail": "seed20261005-120s-600s-maps-detail.png",
+      "checkpoints": [
+        {
+          "variant": "BEFORE",
+          "seconds": 30,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\before\\seed20261005-30s-maps.json",
+          "sourceSha256": "5eb62eeed622e8230d1503570d43f653048d8c22997fb506cb7a4d185c3ba79d",
+          "pheromoneValuesSha256": "a428894bbcea1a840fb60ff03368f5a6d28e2c99954910c36e363f34a2fcdae2",
+          "concentrationsAboveScale": 20,
+          "occupancyAboveScale": 0,
+          "cumulativeCoverage": 0.19287109375
+        },
+        {
+          "variant": "AFTER",
+          "seconds": 30,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\after\\seed20261005-30s-maps.json",
+          "sourceSha256": "f4c4a897c0915504f511e03a30c92c5fad874c56650da4a7e789effb7bc6bbd5",
+          "pheromoneValuesSha256": "09d430f4fc9f1112d1593569be6c20200209cd53baa62a908fc04d62b3e99cb2",
+          "concentrationsAboveScale": 39,
+          "occupancyAboveScale": 0,
+          "cumulativeCoverage": 0.192138671875
+        },
+        {
+          "variant": "BEFORE",
+          "seconds": 60,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\before\\seed20261005-60s-maps.json",
+          "sourceSha256": "49a1c7bfda3435cb0e2c3d9bcdd9ce8791c5106408615aa0c848c8fe4d2d2029",
+          "pheromoneValuesSha256": "5bdd813e62d90a10c707a07b9542ba69275dc81532915087f749402cfd5cd7ec",
+          "concentrationsAboveScale": 94,
+          "occupancyAboveScale": 1,
+          "cumulativeCoverage": 0.405517578125
+        },
+        {
+          "variant": "AFTER",
+          "seconds": 60,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\after\\seed20261005-60s-maps.json",
+          "sourceSha256": "32437fcd1ecb3705080eff7497942b9471ee73621f0afac555d62a1e23f7b296",
+          "pheromoneValuesSha256": "40e61ca4cb2452804af4524d324c10e6a4b2f41ea831b8ca131107af710f2a55",
+          "concentrationsAboveScale": 96,
+          "occupancyAboveScale": 1,
+          "cumulativeCoverage": 0.388916015625
+        },
+        {
+          "variant": "BEFORE",
+          "seconds": 120,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\before\\seed20261005-120s-maps.json",
+          "sourceSha256": "5f8d68f5fdeb89ad6c56bdbb92e181b40b9fe17f2756054b27dc338b3374ed23",
+          "pheromoneValuesSha256": "7bf1ecbb6426791684002eb5a46923fb5bd84312fda42460663fb0a41fa6b784",
+          "concentrationsAboveScale": 271,
+          "occupancyAboveScale": 3,
+          "cumulativeCoverage": 0.62841796875
+        },
+        {
+          "variant": "AFTER",
+          "seconds": 120,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\after\\seed20261005-120s-maps.json",
+          "sourceSha256": "a5790e507998953aac8af8c4fd80515087a75868466c059459890c03cc7706c8",
+          "pheromoneValuesSha256": "1a4776abef3271fc2b28cd87f481fa2a65d465629181a91f5625cc5841a20a33",
+          "concentrationsAboveScale": 135,
+          "occupancyAboveScale": 4,
+          "cumulativeCoverage": 0.657470703125
+        },
+        {
+          "variant": "BEFORE",
+          "seconds": 300,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\before\\seed20261005-300s-maps.json",
+          "sourceSha256": "765fda44932d64e58b8333b1196ba78780a443fde4bce645da13d974e1024f15",
+          "pheromoneValuesSha256": "79a2eedf588048964800ac262526f2700f0d2c26055af79692a973d74d30e540",
+          "concentrationsAboveScale": 330,
+          "occupancyAboveScale": 6,
+          "cumulativeCoverage": 0.865478515625
+        },
+        {
+          "variant": "AFTER",
+          "seconds": 300,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\after\\seed20261005-300s-maps.json",
+          "sourceSha256": "0181793788a63a44d4856ff5e954f5dd15e27612fa10537251f79ab907ae892c",
+          "pheromoneValuesSha256": "27235cc7491d55826fcf3a2ef4da383a1a34e1fb04c4e6ecd46f10245fc4dfab",
+          "concentrationsAboveScale": 213,
+          "occupancyAboveScale": 4,
+          "cumulativeCoverage": 0.849365234375
+        },
+        {
+          "variant": "BEFORE",
+          "seconds": 600,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\before\\seed20261005-600s-maps.json",
+          "sourceSha256": "bd2fb62fe484d5bf1ec034bdb4f37862025da4e1546f0c88a2769e36fc4777f9",
+          "pheromoneValuesSha256": "0e3838bffd68cddcd252cbd2f3ab8b95f461055305e0dd72278aa7c4f163d526",
+          "concentrationsAboveScale": 273,
+          "occupancyAboveScale": 4,
+          "cumulativeCoverage": 0.90625
+        },
+        {
+          "variant": "AFTER",
+          "seconds": 600,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\after\\seed20261005-600s-maps.json",
+          "sourceSha256": "0b334ad759b652f229f9834f92c9f613b4a503aad8ac085d6a8fa059cb6810b1",
+          "pheromoneValuesSha256": "0dc7e100ecd5dadb1b88df8b92d73964f0868da5641cb12be5741c3c24182a9e",
+          "concentrationsAboveScale": 203,
+          "occupancyAboveScale": 3,
+          "cumulativeCoverage": 0.893310546875
+        }
+      ]
+    },
+    {
+      "seed": 20261006,
+      "overview": "seed20261006-maps-overview.png",
+      "detail": "seed20261006-120s-600s-maps-detail.png",
+      "checkpoints": [
+        {
+          "variant": "BEFORE",
+          "seconds": 30,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\before\\seed20261006-30s-maps.json",
+          "sourceSha256": "4bfde4404bccb84ef890f9dbebd2c7ad4e3c7b8d7646cb00d71bc512f1088509",
+          "pheromoneValuesSha256": "53c1516f7f0fe8fa2e6f43929e6354aa7a1aec88967c5ef7f2b285c6979ed7ed",
+          "concentrationsAboveScale": 34,
+          "occupancyAboveScale": 1,
+          "cumulativeCoverage": 0.1982421875
+        },
+        {
+          "variant": "AFTER",
+          "seconds": 30,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\after\\seed20261006-30s-maps.json",
+          "sourceSha256": "2de3c4ecb36e60a5096374cccf6db0f5740ac6e20e382cf317fd17ae996c9b6d",
+          "pheromoneValuesSha256": "b6ba672d06d7b61cf5929c4deb9091a5070ba5deea8c5d6e53ed58a1391685fe",
+          "concentrationsAboveScale": 13,
+          "occupancyAboveScale": 0,
+          "cumulativeCoverage": 0.225341796875
+        },
+        {
+          "variant": "BEFORE",
+          "seconds": 60,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\before\\seed20261006-60s-maps.json",
+          "sourceSha256": "ec288b9149d73ef22e0b514c4d1cc9191349a38b74b83126581b1dc4c3c5b03a",
+          "pheromoneValuesSha256": "feaf3e5ca79ebb3669b5fb91062fd5b28afe9a624839076289b3cdd230e3b327",
+          "concentrationsAboveScale": 143,
+          "occupancyAboveScale": 1,
+          "cumulativeCoverage": 0.34423828125
+        },
+        {
+          "variant": "AFTER",
+          "seconds": 60,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\after\\seed20261006-60s-maps.json",
+          "sourceSha256": "c550bc9037600f4ac698ffcd60ec43d7bd25bccffa8410fa58df5caa45738aeb",
+          "pheromoneValuesSha256": "0c9b1b404f9f7be1a2041fd74439728fda16c9155ad146b5461885bc2b55e7e0",
+          "concentrationsAboveScale": 31,
+          "occupancyAboveScale": 0,
+          "cumulativeCoverage": 0.410888671875
+        },
+        {
+          "variant": "BEFORE",
+          "seconds": 120,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\before\\seed20261006-120s-maps.json",
+          "sourceSha256": "938c1f3ec82860d8532d4202ade943de78ae2d039e4a107056a39c698c12f816",
+          "pheromoneValuesSha256": "ba0b134b8d5fc6ee4271dd908face7b69bf64409a6776eeffceeb465f877d458",
+          "concentrationsAboveScale": 229,
+          "occupancyAboveScale": 3,
+          "cumulativeCoverage": 0.5986328125
+        },
+        {
+          "variant": "AFTER",
+          "seconds": 120,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\after\\seed20261006-120s-maps.json",
+          "sourceSha256": "69af94260fef23897815197f39f1aa18ba44ad3a4177cdbb269eb6203b6be29f",
+          "pheromoneValuesSha256": "55664959bab228641ae6bb59105d4013a66f273f1c53c391b332f283de10462f",
+          "concentrationsAboveScale": 138,
+          "occupancyAboveScale": 3,
+          "cumulativeCoverage": 0.657470703125
+        },
+        {
+          "variant": "BEFORE",
+          "seconds": 300,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\before\\seed20261006-300s-maps.json",
+          "sourceSha256": "1cff08341dee4becc0989444ee1748d05d47ad06d2415de4d23ebf928af9462b",
+          "pheromoneValuesSha256": "b064e1fdee81bed3cef8f1816d72bba370deae0a1a671fb896f8f1ff0ae30195",
+          "concentrationsAboveScale": 306,
+          "occupancyAboveScale": 5,
+          "cumulativeCoverage": 0.803466796875
+        },
+        {
+          "variant": "AFTER",
+          "seconds": 300,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\after\\seed20261006-300s-maps.json",
+          "sourceSha256": "4a51c664be73fde3054ca8d11f45ed94662d03c2c6978ffdaddb773550bed4c6",
+          "pheromoneValuesSha256": "af656f7a5bdef91fbd3e4a8bde7e2f7d93c362859542846680739ed1af9c7529",
+          "concentrationsAboveScale": 170,
+          "occupancyAboveScale": 4,
+          "cumulativeCoverage": 0.86181640625
+        },
+        {
+          "variant": "BEFORE",
+          "seconds": 600,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\before\\seed20261006-600s-maps.json",
+          "sourceSha256": "3a80e0d1aca2f57797d6dd406a1d580f74255f67f187164c3f59054108d77209",
+          "pheromoneValuesSha256": "65017f17215fcaa5698263810216b328c95762a92d108730ca6d32c112e64c61",
+          "concentrationsAboveScale": 201,
+          "occupancyAboveScale": 6,
+          "cumulativeCoverage": 0.876708984375
+        },
+        {
+          "variant": "AFTER",
+          "seconds": 600,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\after\\seed20261006-600s-maps.json",
+          "sourceSha256": "0e94e75bea23e0ceeb6fb378f816f814904b07e5f2f23eb8bdb08acc94f52f8f",
+          "pheromoneValuesSha256": "10783a62c307df8ee1a85e923da792d16be16ced66f1abdc0aaa40a299f15b5a",
+          "concentrationsAboveScale": 206,
+          "occupancyAboveScale": 2,
+          "cumulativeCoverage": 0.934814453125
+        }
+      ]
+    },
+    {
+      "seed": 20261007,
+      "overview": "seed20261007-maps-overview.png",
+      "detail": "seed20261007-120s-600s-maps-detail.png",
+      "checkpoints": [
+        {
+          "variant": "BEFORE",
+          "seconds": 30,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\before\\seed20261007-30s-maps.json",
+          "sourceSha256": "c2ccf5de4cfd6ffaa7228829093a367472bdb0274ce8269c39acbb9458b379c9",
+          "pheromoneValuesSha256": "2a6c6596e8eb47c998c94b2ea4fae7e3444a99e2b035535ef53ab49bd6779deb",
+          "concentrationsAboveScale": 64,
+          "occupancyAboveScale": 0,
+          "cumulativeCoverage": 0.190185546875
+        },
+        {
+          "variant": "AFTER",
+          "seconds": 30,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\after\\seed20261007-30s-maps.json",
+          "sourceSha256": "2a5011b11601ee91faf8d672cb8679fa4d3046f1ecaa058226266a33cfdffd15",
+          "pheromoneValuesSha256": "2c2ce44ab835c8edc34500be026c4aaa5fcfee5ba4e983af076a6fec3ed10532",
+          "concentrationsAboveScale": 23,
+          "occupancyAboveScale": 2,
+          "cumulativeCoverage": 0.158447265625
+        },
+        {
+          "variant": "BEFORE",
+          "seconds": 60,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\before\\seed20261007-60s-maps.json",
+          "sourceSha256": "97dc4f214c1d4d5f539cf7884f98266ad556b5e44f0ec24b6bc7e17fe1481f2b",
+          "pheromoneValuesSha256": "045af763a81c8847888ecb1c73d3bc22f8998bd10e476a1743a2b1cbacdf53d4",
+          "concentrationsAboveScale": 131,
+          "occupancyAboveScale": 0,
+          "cumulativeCoverage": 0.35302734375
+        },
+        {
+          "variant": "AFTER",
+          "seconds": 60,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\after\\seed20261007-60s-maps.json",
+          "sourceSha256": "65217ed04d9ff4c2783ea5aac6b0e4ddf67642ce6f5e21de2157104bc84e296e",
+          "pheromoneValuesSha256": "f6cf3c29cb4544753755b53bd00d953ee8bd62dbe14d3a69f93985737c1be23d",
+          "concentrationsAboveScale": 91,
+          "occupancyAboveScale": 1,
+          "cumulativeCoverage": 0.356201171875
+        },
+        {
+          "variant": "BEFORE",
+          "seconds": 120,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\before\\seed20261007-120s-maps.json",
+          "sourceSha256": "7e0713d82525da0de78df5bcd75c1689ec2c5b8cc6e5e0d9712db2c070093c79",
+          "pheromoneValuesSha256": "2a982246bd93201f52b216fe3ef8debbcd445b962cee7b154f3744462c2397b6",
+          "concentrationsAboveScale": 138,
+          "occupancyAboveScale": 3,
+          "cumulativeCoverage": 0.599853515625
+        },
+        {
+          "variant": "AFTER",
+          "seconds": 120,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\after\\seed20261007-120s-maps.json",
+          "sourceSha256": "0a9bbfd0a11528b8bdaeadab6038fb2838ff9e0d1927749b10df6b390a911e17",
+          "pheromoneValuesSha256": "37e70ed474009a31a2041558d2c44bf8738cb1d0aeed316e99a1d57981d45763",
+          "concentrationsAboveScale": 161,
+          "occupancyAboveScale": 1,
+          "cumulativeCoverage": 0.630859375
+        },
+        {
+          "variant": "BEFORE",
+          "seconds": 300,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\before\\seed20261007-300s-maps.json",
+          "sourceSha256": "456dae906f0caa112c54ffa7536c7594f8b9bae7fc95db0ea8b12d0eb3bb9f8c",
+          "pheromoneValuesSha256": "a7319bb36b85e36b7a8727e793e4d28ba9c5efa7ad6bd57f40475661c6484baf",
+          "concentrationsAboveScale": 260,
+          "occupancyAboveScale": 5,
+          "cumulativeCoverage": 0.830322265625
+        },
+        {
+          "variant": "AFTER",
+          "seconds": 300,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\after\\seed20261007-300s-maps.json",
+          "sourceSha256": "42715b0430a919c20a67f98d804f7b08e7b244356e2c67b80c036222fb6bb50e",
+          "pheromoneValuesSha256": "9568d3be54954192989f6df3a072bc85b6ab7d637d11e3a1fef75323503b1a7e",
+          "concentrationsAboveScale": 163,
+          "occupancyAboveScale": 5,
+          "cumulativeCoverage": 0.844970703125
+        },
+        {
+          "variant": "BEFORE",
+          "seconds": 600,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\before\\seed20261007-600s-maps.json",
+          "sourceSha256": "f7b29406293e83d46daaf70367be9560f918b1ba32d1b1d93a57b423f3c5cbae",
+          "pheromoneValuesSha256": "7dc0293f995f3b5652cdf44bd671e654bcfcff80a80663e8afd45916eb9a4fa4",
+          "concentrationsAboveScale": 226,
+          "occupancyAboveScale": 5,
+          "cumulativeCoverage": 0.885986328125
+        },
+        {
+          "variant": "AFTER",
+          "seconds": 600,
+          "source": "C:\\Users\\5dudt\\Documents\\Github\\codex-simul\\docs\\ant\\evidence\\2026-10-07-founder-effect-refinement\\after\\seed20261007-600s-maps.json",
+          "sourceSha256": "8b65b08caee1e901061fb10999e30325b7d5143495074bb4eecf9e60694477ed",
+          "pheromoneValuesSha256": "2bd1a232e152ead9ca884e8988428c1e397c0f19303cd2544de4720f4814f9b8",
+          "concentrationsAboveScale": 252,
+          "occupancyAboveScale": 3,
+          "cumulativeCoverage": 0.926025390625
+        }
+      ]
+    }
+  ],
+  "normalization": "No frame, seed, variant or clip maximum is used.",
+  "chromeCrosscheck": [
+    {
+      "variant": "BEFORE",
+      "seed": 20261005,
+      "seconds": 30,
+      "nodePheromoneValuesSha256": "a428894bbcea1a840fb60ff03368f5a6d28e2c99954910c36e363f34a2fcdae2",
+      "chromePheromoneValuesSha256": "a428894bbcea1a840fb60ff03368f5a6d28e2c99954910c36e363f34a2fcdae2",
+      "equal": true
+    },
+    {
+      "variant": "AFTER",
+      "seed": 20261005,
+      "seconds": 30,
+      "nodePheromoneValuesSha256": "09d430f4fc9f1112d1593569be6c20200209cd53baa62a908fc04d62b3e99cb2",
+      "chromePheromoneValuesSha256": "09d430f4fc9f1112d1593569be6c20200209cd53baa62a908fc04d62b3e99cb2",
+      "equal": true
+    },
+    {
+      "variant": "BEFORE",
+      "seed": 20261005,
+      "seconds": 60,
+      "nodePheromoneValuesSha256": "5bdd813e62d90a10c707a07b9542ba69275dc81532915087f749402cfd5cd7ec",
+      "chromePheromoneValuesSha256": "1a18dfc42b2231ce1055a072dc0cfe84233de0346b0a2ef750c5cd9ed86c982e",
+      "equal": false
+    },
+    {
+      "variant": "AFTER",
+      "seed": 20261005,
+      "seconds": 60,
+      "nodePheromoneValuesSha256": "40e61ca4cb2452804af4524d324c10e6a4b2f41ea831b8ca131107af710f2a55",
+      "chromePheromoneValuesSha256": "9edc308455ad55e9336c15bafe311ad2c82147a3f66ac2079cc52afce2a07509",
+      "equal": false
+    },
+    {
+      "variant": "BEFORE",
+      "seed": 20261005,
+      "seconds": 120,
+      "nodePheromoneValuesSha256": "7bf1ecbb6426791684002eb5a46923fb5bd84312fda42460663fb0a41fa6b784",
+      "chromePheromoneValuesSha256": "58a635db3baee12e31b79129b2e144f841e3a390fa13f5f7d5da6a0cd409c0c6",
+      "equal": false
+    },
+    {
+      "variant": "AFTER",
+      "seed": 20261005,
+      "seconds": 120,
+      "nodePheromoneValuesSha256": "1a4776abef3271fc2b28cd87f481fa2a65d465629181a91f5625cc5841a20a33",
+      "chromePheromoneValuesSha256": "4d52678d1073aa4f25c5ea86f9c4b60a141e311596084be9a132eb71ee39d35c",
+      "equal": false
+    },
+    {
+      "variant": "BEFORE",
+      "seed": 20261005,
+      "seconds": 300,
+      "nodePheromoneValuesSha256": "79a2eedf588048964800ac262526f2700f0d2c26055af79692a973d74d30e540",
+      "chromePheromoneValuesSha256": "ee1eb17348345862265203aa3d1311611c5657bda2ae914405685d26e046ed52",
+      "equal": false
+    },
+    {
+      "variant": "AFTER",
+      "seed": 20261005,
+      "seconds": 300,
+      "nodePheromoneValuesSha256": "27235cc7491d55826fcf3a2ef4da383a1a34e1fb04c4e6ecd46f10245fc4dfab",
+      "chromePheromoneValuesSha256": "786d859451896ba3b96b51a2f396c220065c523dbebf1d6a08dc39b3ba349802",
+      "equal": false
+    },
+    {
+      "variant": "BEFORE",
+      "seed": 20261005,
+      "seconds": 600,
+      "nodePheromoneValuesSha256": "0e3838bffd68cddcd252cbd2f3ab8b95f461055305e0dd72278aa7c4f163d526",
+      "chromePheromoneValuesSha256": "9c8f9a088c0d463626b90a323ceaa1f989ffa78db0f4fe36f892cb03c0648c14",
+      "equal": false
+    },
+    {
+      "variant": "AFTER",
+      "seed": 20261005,
+      "seconds": 600,
+      "nodePheromoneValuesSha256": "0dc7e100ecd5dadb1b88df8b92d73964f0868da5641cb12be5741c3c24182a9e",
+      "chromePheromoneValuesSha256": "accd86678d3de600741b734cd5f1c9bb1ad84973b5050a6471e2a30d39fb4ebd",
+      "equal": false
+    }
+  ],
+  "crossEngineLimit": "Node maps and Chrome snapshots are independent natural runs using the same controller source, initial seed and 60 Hz defaults. Small numerical differences can diverge routes and RNG scheduling; exact grid equality is reported, not assumed.",
+  "coordinates": "Pheromone nodes x=column/95,y=row/95. Occupancy ant-center samples use round(x*63),round(y*63). x right, y down; square normalized domain [0,1].",
+  "occupancy": "Recent 30 completed one-second buckets, each containing every 60 Hz ant-center sample. Cumulative coverage is the fraction of cells with cumulativeAntSeconds > 0.",
+  "chromeRendererComparison": "chrome-seed20261005-120s-600s-comparison.png"
+}
