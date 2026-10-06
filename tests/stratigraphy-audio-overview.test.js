@@ -4,6 +4,7 @@ import {
   buildStratigraphyAudioOverview,
   decodeStereoFloatWav,
   renderStratigraphyAudioOverview,
+  renderStratigraphyAudioZooms,
   selectStratigraphyAudioZoomWindows,
   STRATIGRAPHY_AUDIO_OVERVIEW_PRESET
 } from '../scripts/stratigraphy-audio-overview.js';
@@ -44,6 +45,13 @@ test('zoom selection gives stable representative windows for 180s and 600s runs'
   assert.deepEqual(long.map(window => window.reason), ['early', 'first plate birth', 'densest FOOT_CONTACT bucket', 'late']);
   assert.deepEqual([long[0].startSeconds, long[3].endSeconds], [0, 600]);
   assert.equal(long[2].startSeconds, 250);
+});
+
+test('detail selection rejects short runs and does not duplicate the only complete ten-second window', () => {
+  assert.throws(() => selectStratigraphyAudioZoomWindows({ simulationDurationSeconds: 5 }), /at least 10/);
+  const windows = selectStratigraphyAudioZoomWindows({ simulationDurationSeconds: 10 });
+  assert.equal(windows.length, 1);
+  assert.deepEqual([windows[0].startSeconds, windows[0].endSeconds], [0, 10]);
 });
 
 test('overview maps actual continuous PCM and anchored events into fixed-size signal and contact panels', () => {
@@ -90,10 +98,43 @@ test('waveform and spectrogram timeline columns follow nonuniform simulation/aud
       { simulationTimeMs: 0, audioSampleIndex: 0 },
       { simulationTimeMs: 6000, audioSampleIndex: 144_000 },
       { simulationTimeMs: 12_000, audioSampleIndex: sampleCount }
-    ], events: [] });
+    ], events: [{ type: 'FOOT_CONTACT', simulationTimeMs: 4000, payload: { contacts: [{}] } }] });
   const waveformPeakBin = overview.channels.left.waveform.findIndex(bin => bin.max > .79);
   assert.ok(waveformPeakBin >= 580 && waveformPeakBin <= 600,
     'the sample at 6 seconds of audio maps to 4 seconds on the anchored simulation axis');
+  const zoom = overview.overlays.zooms[0].channels.left;
+  const zoomPeakBin = zoom.waveform.findIndex(bin => bin.max > .79);
+  assert.ok(zoomPeakBin >= 658 && zoomPeakBin <= 662,
+    'detail keeps ten audio seconds so the impulse remains at six audio seconds');
+  assert.equal(overview.overlays.zooms[0].audioDurationSeconds, 10);
+  assert.equal(overview.overlays.zooms[0].events[0].audioOffsetSeconds, 6);
+  const spectrum = zoom.spectrogram;
+  const maximum = Math.max(...spectrum.luminance.subarray(0, spectrum.width));
+  const peakColumn = spectrum.luminance.subarray(0, spectrum.width).indexOf(maximum);
+  assert.ok(peakColumn >= 645 && peakColumn <= 675);
+  assert.deepEqual([spectrum.width, spectrum.height], [1100, 350]);
+});
+
+test('ten-second zoom renderer accepts actual builder output with fixed grayscale pixel panels', () => {
+  const samples = new Float32Array(16_000 * 10);
+  const overview = buildStratigraphyAudioOverview({ channels: { left: samples, right: samples },
+    sampleRate: 16_000, simulationDurationSeconds: 10, clockAnchors: anchors(10, samples.length) });
+  const context = { fillRect() {}, fillText() {}, drawImage() {}, strokeRect() {},
+    beginPath() {}, moveTo() {}, lineTo() {}, stroke() {},
+    putImageData() {}, createImageData(width, height) {
+      assert.ok(Number.isInteger(width) && width > 0 && Number.isInteger(height) && height > 0);
+      return { width, height, data: new Uint8ClampedArray(width * height * 4) };
+    } };
+  const canvas = { getContext: () => context };
+  const previous = globalThis.document;
+  globalThis.document = { createElement: () => ({ getContext: () => context }) };
+  try {
+    renderStratigraphyAudioZooms(canvas, overview);
+    assert.deepEqual([canvas.width, canvas.height], [1200, 1000]);
+  } finally {
+    if (previous === undefined) delete globalThis.document;
+    else globalThis.document = previous;
+  }
 });
 
 test('WAV decoder accepts little-endian IEEE float32 stereo and rejects incompatible layouts', () => {

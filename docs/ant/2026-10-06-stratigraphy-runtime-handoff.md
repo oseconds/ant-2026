@@ -62,7 +62,7 @@ Historical evidence and 10 s comparison sheets remain untouched. New details use
 
 Spectrograms use FFT1024, symmetric Hann, hop256, 0–8000 Hz, −100..0 dBFS and grayscale gamma1: `round(255*clamp((db+100)/100,0,1))`. Full-run overviews are 1800×1200 and map PCM through measured simulation/audio clock anchors. Fixed-dBFS peak pooling within each overview pixel is documented and does not normalize brightness. Birth markers P1/P2 and count arrows are thin grayscale with labels above data. No removal markers are manufactured. Actual individual feet are counted in 10 s buckets: 2400 contacts fills a fixed 28 px strip.
 
-180 s selects 0–10, 85–95 and 170–180 s. 600 s selects early, first-birth neighborhood, densest contact bucket and late, with deterministic duplicate-window handling. Every 10 s detail has separate L/R and the same fixed analysis parameters. Neither waveform nor spectrogram has a per-clip normalization path. Actual recordings, measurement limits, final verification and commit sequence are recorded in the evidence index.
+180 s selects starts near 0, 85 and 170 simulation seconds. 600 s selects early, first-birth neighborhood, densest contact bucket and late, with deterministic duplicate-window handling. Every detail contains exactly ten decoded-audio seconds, with separate L/R and identical fixed analysis parameters. Its actual simulation span is labeled and contact ticks are mapped through clock anchors to audio offsets; modal decay is not time-warped to a ten-second simulation span. Neither waveform nor spectrogram has a per-clip normalization path. Actual recordings, measurement limits, final verification and commit sequence are recorded in the evidence index.
 
 ## Future extensions
 

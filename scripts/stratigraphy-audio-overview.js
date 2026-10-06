@@ -49,7 +49,7 @@ export const STRATIGRAPHY_AUDIO_OVERVIEW_PRESET = freeze({
     frequencyMinHz: 0,
     frequencyMaxHz: 8000,
     gamma: 1,
-    note: 'Each detail window is analyzed at the same fixed scale; no peak normalization or padding.'
+    note: 'Exactly 10 decoded-audio seconds, selected from simulation milestones; actual simulation span and contact timing are mapped through clock anchors. No normalization or padding.'
   }),
   spectrogramAggregation: 'maximum fixed-dBFS frame value per overview pixel column and frequency row',
   contactScale: '2400 individual FOOT_CONTACT contacts per 10-second bucket fills the fixed 28-pixel strip',
@@ -150,8 +150,8 @@ export function buildStratigraphyAudioOverview({
 
 /** Select deterministic 10-second windows covering early, birth/dense, and late material. */
 export function selectStratigraphyAudioZoomWindows({ simulationDurationSeconds, events = [] } = {}) {
-  if (!Number.isFinite(simulationDurationSeconds) || simulationDurationSeconds <= 0) {
-    throw new RangeError('simulationDurationSeconds must be positive.');
+  if (!Number.isFinite(simulationDurationSeconds) || simulationDurationSeconds < 10) {
+    throw new RangeError('A full 10-second detail window requires at least 10 simulation seconds.');
   }
   const duration = 10;
   const maxStart = Math.max(0, simulationDurationSeconds - duration);
@@ -159,7 +159,8 @@ export function selectStratigraphyAudioZoomWindows({ simulationDurationSeconds, 
   if (simulationDurationSeconds <= 180) {
     return freeze([0, simulationDurationSeconds / 2 - duration / 2, maxStart]
       .map((start, index) => freeze({ startSeconds: clampStart(start), endSeconds: clampStart(start) + duration,
-        reason: ['early', 'middle', 'late'][index] })));
+        reason: ['early', 'middle', 'late'][index] }))
+      .filter((window, index, windows) => windows.findIndex(item => item.startSeconds === window.startSeconds) === index));
   }
 
   const contacts = events.map(normalizeEvent).filter(event => event.type === 'FOOT_CONTACT');
@@ -234,7 +235,7 @@ export function renderStratigraphyAudioZooms(canvas, overview, zoomIndices = nul
     const zoom = chosen[row];
     const top = row * rowHeight;
     ctx.fillStyle = '#111'; ctx.font = '14px sans-serif';
-    ctx.fillText(`${zoom.reason} · ${zoom.startSeconds.toFixed(2)}–${zoom.endSeconds.toFixed(2)} s`, 12, top + 18);
+    ctx.fillText(`${zoom.reason} · 10 s audio · simulation ${zoom.actualSimulationStartSeconds.toFixed(2)}–${zoom.actualSimulationEndSeconds.toFixed(2)} s`, 12, top + 18);
     const specW = width - 100, specH = 350;
     drawSpectrogram(ctx, zoom.channels.left.spectrogram, 78, top + 32, specW, specH);
     drawSpectrogram(ctx, zoom.channels.right.spectrogram, 78, top + 405, specW, specH);
@@ -244,7 +245,7 @@ export function renderStratigraphyAudioZooms(canvas, overview, zoomIndices = nul
     ctx.fillText('L 0–8000 Hz', 8, top + 50); ctx.fillText('R 0–8000 Hz', 8, top + 423);
     ctx.fillText('L waveform ±1', 8, top + 786); ctx.fillText('R waveform ±1', 8, top + 878);
     drawZoomEventTicks(ctx, zoom.events, 78, top + 32, specW, 10, zoom.startSeconds);
-    drawTimeAxis(ctx, 78, specW, top + 962, 10, zoom.startSeconds);
+    drawTimeAxis(ctx, 78, specW, top + 962, 10, 0);
   }
   return canvas;
 }
@@ -382,8 +383,16 @@ function buildAnchoredWaveform(samples, anchors, durationSeconds, binCount) {
 }
 
 function buildZoom(window, channels, sampleRate, anchors, events) {
-  const startIndex = Math.max(0, Math.floor(simulationTimeToSampleIndex(window.startSeconds * 1000, anchors)));
-  const endIndex = Math.min(channels.left.length, Math.floor(simulationTimeToSampleIndex(window.endSeconds * 1000, anchors)));
+  const duration = STRATIGRAPHY_AUDIO_OVERVIEW_PRESET.zoom.durationSeconds;
+  const sampleCount = Math.round(duration * sampleRate);
+  if (channels.left.length < sampleCount) throw new RangeError('Detail views require 10 complete decoded-audio seconds.');
+  const startIndex = Math.min(channels.left.length - sampleCount,
+    Math.max(0, Math.floor(simulationTimeToSampleIndex(window.startSeconds * 1000, anchors))));
+  const endIndex = startIndex + sampleCount;
+  const startMs = sampleIndexToSimulationMs(startIndex, anchors);
+  const endMs = sampleIndexToSimulationMs(endIndex, anchors);
+  const audioAnchors = [{ simulationTimeMs: 0, audioSampleIndex: 0 },
+    { simulationTimeMs: duration * 1000, audioSampleIndex: sampleCount }];
   const zoomChannels = {};
   for (const name of ['left', 'right']) {
     const samples = channels[name].subarray(startIndex, endIndex);
@@ -396,12 +405,22 @@ function buildZoom(window, channels, sampleRate, anchors, events) {
       maxDbfs: STRATIGRAPHY_AUDIO_OVERVIEW_PRESET.zoom.maxDbfs,
       waveformBins: 1100
     });
-    zoomChannels[name] = freeze(result);
+    zoomChannels[name] = freeze({ ...result,
+      waveform: buildAnchoredWaveform(samples, audioAnchors, duration, 1100),
+      spectrogram: freeze({
+        ...compressSpectrogram(result.spectrogram, 1100, 350, audioAnchors, duration),
+        fftSize: result.spectrogram.fftSize, hopSize: result.spectrogram.hopSize,
+        binHz: result.spectrogram.binHz, frameCount: result.spectrogram.frameCount
+      })
+    });
   }
-  return freeze({ ...window, channels: freeze(zoomChannels), windowStartSeconds: window.startSeconds, events: freeze(events.filter(event => {
-    const seconds = event.simulationTimeMs / 1000;
-    return seconds >= window.startSeconds && seconds <= window.endSeconds;
-  })) });
+  return freeze({ ...window, channels: freeze(zoomChannels), audioStartSampleIndex: startIndex,
+    audioEndSampleIndex: endIndex, audioDurationSeconds: duration,
+    actualSimulationStartSeconds: startMs / 1000, actualSimulationEndSeconds: endMs / 1000,
+    windowStartSeconds: window.startSeconds,
+    events: freeze(events.filter(event => event.simulationTimeMs >= startMs && event.simulationTimeMs <= endMs)
+      .map(event => freeze({ ...event, audioOffsetSeconds:
+        (simulationTimeToSampleIndex(event.simulationTimeMs, anchors) - startIndex) / sampleRate }))) });
 }
 
 function simulationTimeToSampleIndex(timeMs, anchors) {
@@ -497,7 +516,7 @@ function drawZoomEventTicks(ctx, events, x, y, width, duration, windowStartSecon
   for (const event of events) {
     if (event.type !== 'FOOT_CONTACT' && event.type !== 'PLATE_BIRTH' && event.type !== 'PLATE_REMOVAL') continue;
     const offset = event.simulationTimeMs / 1000;
-    const px = x + (offset - windowStartSeconds) / duration * width;
+    const px = x + (event.audioOffsetSeconds ?? offset - windowStartSeconds) / duration * width;
     if (px < x || px > x + width) continue;
     ctx.strokeStyle = gray(100); ctx.lineWidth = 1;
     ctx.beginPath(); ctx.moveTo(px, y); ctx.lineTo(px, y + 7); ctx.stroke();

@@ -10,7 +10,7 @@ This pass preserves immutable corridor births and adds a separate mutable materi
 |---|---|---|
 | Starting test suite | 191/191 | `baseline-tests.txt` |
 | Starting build | pass | `baseline-build.txt` |
-| Final test suite | 225/225 | `final-tests.txt` |
+| Final test suite | 227/227 | `final-tests.txt` |
 | Final build | pass | `build.stdout.txt` |
 | Chrome development | pass | `browser-dev.stdout.txt`, `browser-dev-metrics.json`, `browser-dev-ant.png` |
 | Chrome production preview | pass | `browser-production.stdout.txt`, `browser-production-metrics.json`, `browser-production-ant.png` |
@@ -60,7 +60,7 @@ Detail preset `ant-surface-stratigraphy-v1`: 10 s, 1200×1000; comparison sheet 
 
 All spectrograms use FFT1024, symmetric Hann, hop256, 0–8000 Hz, −100..0 dBFS and gamma 1. Brightness is `round(255*clamp((db+100)/100,0,1))`: −100/−80/−60/−40/−20/0 dBFS maps to 0/51/102/153/204/255. Overview pixels use fixed-dBFS maximum pooling over their time/frequency bins, not per-image contrast. This can emphasize a transient within a wide bin and is documented in the preset.
 
-Measured AudioContext sample anchors map real audio to simulation time. Plate births get thin P1/P2 markers and count arrows, labels above data. The model has no removal/death operation, so none is invented. Real individual feet fill a fixed 28 px contact strip in 10 s buckets; 2400 feet fills the strip. 180 s selects early/middle/late 10 s details; 600 s selects early/first-birth neighborhood/densest bucket/late, deterministically. Full-run audio must be genuinely continuous; disconnected ten-second clips are not stitched into an overview.
+Measured AudioContext sample anchors map real audio to simulation time. Plate births get thin P1/P2 markers and count arrows, labels above data. The model has no removal/death operation, so none is invented. Real individual feet fill a fixed 28 px contact strip in 10 s simulation buckets; 2400 feet fills the strip. 180 s selects early/middle/late detail starts; 600 s selects early/first-birth neighborhood/densest bucket/late, deterministically. Each detail contains exactly ten decoded-audio seconds, with its actual simulation span labeled and FOOT_CONTACT ticks mapped to audio time. Modal decay is not stretched to fit ten simulated seconds. Full-run audio must be genuinely continuous; disconnected ten-second clips are not stitched into an overview.
 
 ## Reproduction
 

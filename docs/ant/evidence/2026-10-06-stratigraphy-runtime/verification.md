@@ -4,7 +4,7 @@ Date: 2026-10-06 (Asia/Seoul)
 
 ## Results
 
-- `npm test`: passed, 225 tests; 0 failures, 0 skipped. Node reported 2,871.6 ms.
+- Final `npm test`: passed, 227 tests; 0 failures, 0 skipped. Node reported 3,432.1 ms. The earlier 225-test run preceded two evidence-helper tests for complete ten-second windows and actual zoom pixel rendering. ANT/app/DSP source is unchanged since the successful build and browser checks.
 - `npm run build`: passed with Vite 6.4.3; production bundle emitted. Existing dependency annotation and large-chunk advisories were printed; no build error.
 - `npm run test:browser` with `BROWSER_EXECUTABLE_PATH=C:\Program Files\Google\Chrome\Application\chrome.exe`: passed in Vite development mode.
 - `CHECK_PRODUCTION=1 npm run test:browser` with the same Chrome path: passed against the production preview.
