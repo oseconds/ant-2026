@@ -195,3 +195,18 @@ test('metadata cap, read-only topology reuse and reset retain deterministic boun
   assert.equal(system.getFootLoadAt(CENTER.x, CENTER.y), 0);
   assert.equal(system.getSnapshot().stratigraphy.topLayerByCell[CENTER_INDEX], -1);
 });
+
+test('default metadata ceiling preserves more than the previous twelve plate limit without eviction', () => {
+  const system = new MaterialStratigraphy({ width: SIZE, height: SIZE });
+  for (let index = 0; index < 13; index += 1) {
+    assert.ok(system.addPlate(plate(`layer-${index + 1}`, { bornAtSimulationTimeMs: index * 1000 })));
+  }
+  const snapshot = system.getSnapshot();
+  assert.equal(snapshot.plates.length, 13);
+  assert.equal(snapshot.stratigraphy.layerOrder.length, 13);
+  assert.equal(snapshot.stratigraphy.layerCountByCell[CENTER_INDEX], 13);
+  assert.equal(snapshot.stratigraphy.topLayerByCell[CENTER_INDEX], 12);
+  assert.equal(snapshot.stratigraphy.plateHistory[0].maxBurialLayerCount, 12);
+  assert.ok(Math.abs(snapshot.stratigraphy.plateHistory[0].maxBurialDepthMeters
+    - snapshot.stratigraphy.totalDepthByCellMeters[CENTER_INDEX]) < 1e-8);
+});

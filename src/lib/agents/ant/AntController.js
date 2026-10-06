@@ -7,6 +7,7 @@ import { GasterDeposition } from './GasterDeposition.js';
 import { ColonyActivation } from './ColonyActivation.js';
 import { SurfaceField } from './SurfaceField.js';
 import { TrailPlateBirth } from './TrailPlateBirth.js';
+import { MaterialStratigraphy } from './MaterialStratigraphy.js';
 
 const STEP_MS = 1000 / 60;
 const MAX_FRAME_GAP_MS = 100;
@@ -59,7 +60,8 @@ export class AntController {
   constructor({ state, random = Math.random, fieldFactory = (options) => new PheromoneField(options),
     gaitController = new GaitController(), bodyPoseController = new BodyPoseController(),
     gasterDeposition = null, surfaceField = new SurfaceField(),
-    trailPlateBirth = new TrailPlateBirth(), audioBridge = null } = {}) {
+    trailPlateBirth = new TrailPlateBirth(), materialStratigraphy = new MaterialStratigraphy(),
+    audioBridge = null } = {}) {
     this.state = normalizeState(state || {});
     this.random = random;
     this.fieldFactory = fieldFactory;
@@ -83,6 +85,7 @@ export class AntController {
     this.colonyActivation = new ColonyActivation({ ceiling: this.state.population.count, origin: SPAWN_CENTER });
     this.surfaceField = surfaceField;
     this.trailPlateBirth = trailPlateBirth;
+    this.materialStratigraphy = materialStratigraphy;
     this.audioBridge = audioBridge;
     this.audioBridge?.setMode?.(this.state.audioExperiment.mode);
   }
@@ -116,6 +119,7 @@ export class AntController {
       pheromone: field,
       surface: this.surfaceField.getSnapshot(),
       surfacePlates: this.trailPlateBirth.getSnapshot(),
+      stratigraphy: this.materialStratigraphy.getSnapshot(),
       audio: {
         mode: this.state.audioExperiment.mode,
         enabled: this.audioBridge?.enabled ?? false,
@@ -212,7 +216,7 @@ export class AntController {
   async setAudioEnabled(enabled) {
     this.assertAlive();
     if (!this.audioBridge) return false;
-    this.audioBridge.syncPlates?.(this.trailPlateBirth.getPlates());
+    this.syncEnvironmentAudio();
     const pending = this.audioBridge.setEnabled(Boolean(enabled));
     this.emit('update');
     try { return await pending; }
@@ -225,6 +229,14 @@ export class AntController {
     const result = this.audioBridge.setVolume(volume);
     this.emit('update');
     return result;
+  }
+
+  syncEnvironmentAudio() {
+    if (typeof this.audioBridge?.syncMaterial === 'function') {
+      this.audioBridge.syncMaterial(this.materialStratigraphy.getAudioState());
+    } else {
+      this.audioBridge?.syncPlates?.(this.trailPlateBirth.getPlates());
+    }
   }
 
   async destroy() {
@@ -245,12 +257,14 @@ export class AntController {
     this.colonyActivation.reset();
     this.surfaceField.clear();
     this.trailPlateBirth.reset();
+    this.materialStratigraphy.reset();
     await this.audioBridge?.destroy();
   }
 
   tick(dt) {
     if (this.destroyed || !this.initialized || !this.running || !Number.isFinite(dt) || dt <= 0) return;
     const current = this.agents;
+    const materialRevision = this.materialStratigraphy.revision;
     const previousRear = current.map(agent => this.bodyPoseController.getSnapshot(agent)?.gasterRear
       || gasterRearPoint(agent));
     const sensed = current.map((agent) => this.occupancy.sense(agent, current));
@@ -345,6 +359,7 @@ export class AntController {
       for (const event of contacts) {
         const responses = this.surfaceField.applyFootContact(event);
         this.trailPlateBirth.observeFootContact(event);
+        this.materialStratigraphy.applyFootContact(event, this.surfaceField);
         this.emit('foot-contact', event);
         try {
           const delivered = this.audioBridge?.handleFootContact(event, { responses });
@@ -368,9 +383,15 @@ export class AntController {
     const births = this.trailPlateBirth.advance({ pheromone: this.field, surface: this.surfaceField,
       simulationTimeMs: this.simulationTimeMs });
     if (births.length) {
-      this.audioBridge?.syncPlates?.(this.trailPlateBirth.getPlates());
-      for (const plate of births) this.emit('plate-birth', plate);
+      for (const plate of births) {
+        this.materialStratigraphy.addPlate(plate);
+        this.emit('plate-birth', plate);
+      }
     }
+    const nodules = this.materialStratigraphy.advance({ surface: this.surfaceField,
+      simulationTimeMs: this.simulationTimeMs });
+    for (const nodule of nodules) this.emit('sphere-birth', nodule);
+    if (this.materialStratigraphy.revision !== materialRevision) this.syncEnvironmentAudio();
     // Recruitment follows slowly accumulated entrance-route evidence, rather
     // than individual exits. A lower desired count never culls living agents.
     if (this.state.population.activationFeedback) this.colonyActivation.advance(this.field, dt);

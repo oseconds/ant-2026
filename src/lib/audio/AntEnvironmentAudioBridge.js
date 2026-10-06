@@ -32,6 +32,7 @@ export class AntEnvironmentAudioBridge {
   }
 
   syncPlates(plates) { return this.surface.syncPlates(plates); }
+  syncMaterial(material) { return this.surface.syncMaterial(material); }
   setEnabled(enabled) { return this.destroyed ? Promise.resolve(false) : this.selected.setEnabled(enabled); }
   handleFootContact(event, context) { return this.selected.handleFootContact(event, context); }
   stop() { this.legacy.stop(); this.surface.stop(); }

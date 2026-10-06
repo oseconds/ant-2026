@@ -136,7 +136,7 @@ export class MaterialStratigraphy {
       if (this.candidateSinceMs[cell] < 0) this.candidateSinceMs[cell] = simulationTimeMs;
       if (simulationTimeMs - this.candidateSinceMs[cell]
         < MATERIAL_STRATIGRAPHY_NODULE_QUALIFICATION.persistenceMs) continue;
-      if (this._nearExistingNodule(x, y, MATERIAL_STRATIGRAPHY_NODULE_QUALIFICATION.radiusRange[0])) {
+      if (this._nearExistingNodule(x, y, MATERIAL_STRATIGRAPHY_NODULE_QUALIFICATION.radiusRange[1])) {
         this.candidateSinceMs[cell] = -1;
         continue;
       }

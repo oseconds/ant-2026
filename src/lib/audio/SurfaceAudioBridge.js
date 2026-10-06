@@ -1,8 +1,10 @@
+import { compileSurfaceTopology } from './compileSurfaceTopology.js';
+
 const WORKLET_NAME = 'surface-plate-processor';
 const WORKLET_URL = '/worklets/surface-plate.worklet.js';
 const OUTPUT_GAIN = 0.7;
 const MAX_GROUP_STRENGTH = 0.05;
-const MAX_PLATES = 12;
+const MAX_LAYERS = 256;
 const GRID_SIZE = 96;
 
 /** ANT trail surfaces share one stereo worklet and the application's AudioEngine. */
@@ -14,6 +16,10 @@ export class SurfaceAudioBridge {
     this.workletFactory = workletFactory;
     this.worklet = null;
     this.plates = new Map();
+    this.topology = null;
+    this.routingTopLayerByCell96 = null;
+    this.topologyGeneration = 0;
+    this.materialRevision = null;
     this._enabled = false;
     this._loading = false;
     this._error = null;
@@ -24,7 +30,9 @@ export class SurfaceAudioBridge {
     this.cleanupPromise = null;
     this.diagnostics = {
       births: 0, routedFootEvents: 0, routedFeet: 0, strikeRoutes: 0,
-      unroutedContacts: 0, ignoredWhileDisabled: 0, dropped: 0, processorErrors: 0
+      supportedFeet: 0, unsupportedFeet: 0, directExposedStrikes: 0,
+      injectedImpulseEnergy: 0, events: 0, unroutedContacts: 0,
+      capacityRejectedLayers: 0, ignoredWhileDisabled: 0, dropped: 0, processorErrors: 0
     };
   }
 
@@ -53,17 +61,59 @@ export class SurfaceAudioBridge {
 
   /** Store only immutable, valid descriptors. At capacity this never evicts an older surface. */
   syncPlates(plates) {
+    const added = this.storePlates(plates);
+    if (added && this.compileTopology({ plates: [...this.plates.values()] })) {
+      if (this.worklet && !this._loading) this.post('topology', { ...this.topology, maxLayers: MAX_LAYERS });
+    }
+    return added;
+  }
+
+  storePlates(plates) {
     if (!Array.isArray(plates)) return 0;
     let added = 0;
     for (const source of plates) {
-      if (!validPlate(source) || this.plates.has(source.id) || this.plates.size >= MAX_PLATES) continue;
+      if (!validPlate(source) || this.plates.has(source.id)) continue;
+      if (this.plates.size >= MAX_LAYERS) {
+        this.diagnostics.capacityRejectedLayers += 1;
+        continue;
+      }
       const plate = freezePlate(source);
       this.plates.set(plate.id, plate);
       added += 1;
       this.diagnostics.births += 1;
-      if (this.worklet && !this._loading) this.post('birth', { plate });
     }
     return added;
+  }
+
+  /** Compile material exposure and packed mechanics from the stratigraphy snapshot. */
+  syncMaterial(snapshot) {
+    if (!validMaterialSnapshot(snapshot)) return false;
+    const revision = `${snapshot.stratigraphy.revision ?? snapshot.revision}:${snapshot.noduleRevision ?? snapshot.stratigraphy.revision}`;
+    const added = this.storePlates(snapshot.plates);
+    if (revision === this.materialRevision && this.topology && !added) return true;
+    const plates = [...this.plates.values()];
+    if (!this.compileTopology({ plates, nodules: snapshot.nodules || [], stratigraphy: snapshot.stratigraphy })) return false;
+    this.materialRevision = revision;
+    if (this.worklet && !this._loading) this.post('topology', { ...this.topology, maxLayers: MAX_LAYERS });
+    return true;
+  }
+
+  compileTopology({ plates = [...this.plates.values()], nodules = [], stratigraphy = null } = {}) {
+    let compiled;
+    try {
+      compiled = compileSurfaceTopology({ plates, nodules, stratigraphy,
+        generation: ++this.topologyGeneration, maxLayers: MAX_LAYERS });
+    } catch {
+      this.diagnostics.dropped += 1;
+      return false;
+    }
+    if (!validCompiledTopology(compiled, plates)) {
+      this.diagnostics.dropped += 1;
+      return false;
+    }
+    this.topology = compiled;
+    this.routingTopLayerByCell96 = compiled.routingTopLayerByCell96;
+    return true;
   }
 
   /** Invoke directly from the explicit Audio On gesture. Historical contacts are never replayed. */
@@ -76,6 +126,8 @@ export class SurfaceAudioBridge {
     if (this._enabled && this.enablePromise) return this.enablePromise;
     if (this._enabled && this.worklet && !this._loading) return Promise.resolve(true);
 
+    if (!this.topology && !this.compileTopology({ plates: [...this.plates.values()] })) return Promise.resolve(false);
+
     const generation = ++this.generation;
     this._enabled = true;
     this._loading = true;
@@ -86,7 +138,7 @@ export class SurfaceAudioBridge {
       ? this.workletFactory({ audioEngine: this.audioEngine, workletBaseUrl: this.workletBaseUrl,
         onMessage, onError, gain: OUTPUT_GAIN * this._volume })
       : this.audioEngine.createWorklet(WORKLET_NAME, `${this.workletBaseUrl}${WORKLET_URL.split('/').pop()}`,
-        { maxPlates: MAX_PLATES }, onMessage, onError, { gain: OUTPUT_GAIN * this._volume, channels: 2 });
+        { maxLayers: MAX_LAYERS }, onMessage, onError, { gain: OUTPUT_GAIN * this._volume, channels: 2 });
     const pending = Promise.resolve(create).then((handle) => {
       if (this.destroyed || !this._enabled || generation !== this.generation) {
         handle?.disconnect?.();
@@ -94,7 +146,7 @@ export class SurfaceAudioBridge {
       }
       this.worklet = handle;
       this._loading = false;
-      for (const plate of this.plates.values()) this.post('birth', { plate });
+      this.post('topology', { ...this.topology, maxLayers: MAX_LAYERS });
       return true;
     }).catch((error) => {
       if (!this.destroyed && generation === this.generation) {
@@ -121,6 +173,7 @@ export class SurfaceAudioBridge {
       this.diagnostics.dropped += 1;
       return false;
     }
+    this.diagnostics.events += 1;
     const groupStrength = Math.min(MAX_GROUP_STRENGTH, strength);
     const responseByLeg = new Map(responses.map((response) => [response?.legId, response]));
     const feet = [];
@@ -130,11 +183,10 @@ export class SurfaceAudioBridge {
       const transfer = clamp(Number(response.strengthTransfer), 0.95, 1.05);
       const radius = clamp(Number(response.footprintRadius), 0.009, 0.014);
       if (!Number.isFinite(transfer) || !Number.isFinite(radius)) continue;
-      const matching = [];
-      for (const plate of this.plates.values()) {
-        if (containsPoint(plate, response.position)) matching.push(plate);
-      }
-      feet.push({ response, transfer, radius, matching });
+      const plate = this.exposedPlateAt(response.position);
+      if (plate) this.diagnostics.supportedFeet += 1;
+      else this.diagnostics.unsupportedFeet += 1;
+      feet.push({ response, transfer, radius, matching: plate ? [plate] : [] });
     }
     const routes = feet.flatMap((foot) => foot.matching.map((plate) => ({ ...foot, plate })));
     if (!routes.length) {
@@ -145,7 +197,7 @@ export class SurfaceAudioBridge {
       this.diagnostics.ignoredWhileDisabled += 1;
       return false;
     }
-    // L2-normalize across all feet and all containing masks. Non-routed feet retain their share.
+    // L2-normalize only across exposed routes. Unsupported feet retain their share.
     const norm = Math.sqrt(routes.reduce((sum, route) => sum
       + (route.transfer / Math.sqrt(route.matching.length)) ** 2, 0));
     const maxNorm = Math.sqrt(feet.length);
@@ -154,16 +206,40 @@ export class SurfaceAudioBridge {
     for (const route of routes) {
       this.post('strike', {
         plateId: route.plate.id,
+        layerId: route.plate.id,
         position: route.response.position,
         strength: perFootBase * route.transfer / Math.sqrt(route.matching.length) * scale,
         footprintRadius: route.radius,
         hardness: clamp(Number(route.response.hardness), 0, 1)
       });
+      this.diagnostics.directExposedStrikes += 1;
+      const strikeStrength = perFootBase * route.transfer / Math.sqrt(route.matching.length) * scale;
+      this.diagnostics.injectedImpulseEnergy += strikeStrength * strikeStrength;
     }
     this.diagnostics.routedFootEvents += 1;
     this.diagnostics.routedFeet += new Set(routes.map((route) => route.response.legId)).size;
     this.diagnostics.strikeRoutes += routes.length;
     return true;
+  }
+
+  exposedPlateAt(position) {
+    const x = Math.max(0, Math.min(GRID_SIZE - 1, Math.round(position.x * (GRID_SIZE - 1))));
+    const y = Math.max(0, Math.min(GRID_SIZE - 1, Math.round(position.y * (GRID_SIZE - 1))));
+    const cell = y * GRID_SIZE + x;
+    if (this.routingTopLayerByCell96) {
+      const layerIndex = this.routingTopLayerByCell96[cell];
+      if (!Number.isInteger(layerIndex) || layerIndex < 0) return null;
+      const id = this.topology?.layerIds?.[layerIndex];
+      const plate = this.plates.get(id);
+      return plate && containsPoint(plate, position) ? plate : null;
+    }
+    // Compatibility path for bridge fixtures without a stratigraphy model:
+    // insertion order is bottom-to-top, so the last overlapping plate is exposed.
+    const plates = [...this.plates.values()];
+    for (let index = plates.length - 1; index >= 0; index -= 1) {
+      if (containsPoint(plates[index], position)) return plates[index];
+    }
+    return null;
   }
 
   handleWorkletMessage(message, generation) {
@@ -202,6 +278,9 @@ export class SurfaceAudioBridge {
     this.stop();
     await this.cleanupPromise;
     this.plates.clear();
+    this.topology = null;
+    this.routingTopLayerByCell96 = null;
+    this.materialRevision = null;
   }
 }
 
@@ -227,6 +306,21 @@ function validPlate(plate) {
   ] === 1)) return false;
   return (plate.edges ?? []).every((edge) => Array.isArray(edge) && edge.length === 2
     && edge.every((index) => Number.isInteger(index) && index >= 0 && index < GRID_SIZE ** 2));
+}
+function validMaterialSnapshot(snapshot) {
+  return snapshot && Array.isArray(snapshot.plates) && snapshot.stratigraphy?.version === 1
+    && (ArrayBuffer.isView(snapshot.stratigraphy.topLayerByCell)
+      || Array.isArray(snapshot.stratigraphy.topLayerByCell))
+    && snapshot.stratigraphy.topLayerByCell.length === GRID_SIZE ** 2
+    && Array.isArray(snapshot.nodules ?? []);
+}
+function validCompiledTopology(topology, plates) {
+  return topology?.version === 1 && topology.solverGrid === 32 && topology.sourceGrid === GRID_SIZE
+    && Array.isArray(topology.layerIds) && topology.layerIds.length <= MAX_LAYERS
+    && (ArrayBuffer.isView(topology.routingTopLayerByCell96)
+      || Array.isArray(topology.routingTopLayerByCell96))
+    && topology.routingTopLayerByCell96.length === GRID_SIZE ** 2
+    && topology.layerIds.every((id) => typeof id === 'string' && plates.some((plate) => plate.id === id));
 }
 function freezePlate(source) {
   return cloneFreeze(source);

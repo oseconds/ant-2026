@@ -26,9 +26,10 @@ class EmptySurfaceField {
 }
 
 function antPhysicsSnapshot(snapshot) {
-  const { surface, surfacePlates, ...rest } = snapshot;
+  const { surface, surfacePlates, stratigraphy, ...rest } = snapshot;
   void surface;
   void surfacePlates;
+  void stratigraphy;
   return rest;
 }
 
