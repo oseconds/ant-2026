@@ -9,6 +9,17 @@ const SLEEP_ENERGY = 1e-10;
 const SLEEP_STEPS = RATE * 2;
 const WAKE_ENERGY = 1e-10;
 const EPS = 1e-20;
+const CONTACT_PULSE_STEPS = Math.round(RATE * 0.003);
+const CONTACT_RECOVERY_STEPS = RATE * 0.075;
+const CONTACT_REFERENCE_DELTA_V = 0.020;
+const CONTACT_MAX_COMPLIANCE_LOSS = 0.25;
+const CONTACT_ENVELOPE = new Float64Array(CONTACT_PULSE_STEPS);
+let contactEnvelopeSum = 0;
+for (let step = 0; step < CONTACT_PULSE_STEPS; step++) {
+  CONTACT_ENVELOPE[step] = Math.sin(Math.PI * (step + 0.5) / CONTACT_PULSE_STEPS);
+  contactEnvelopeSum += CONTACT_ENVELOPE[step];
+}
+for (let step = 0; step < CONTACT_PULSE_STEPS; step++) CONTACT_ENVELOPE[step] /= contactEnvelopeSum;
 
 /** Sparse, fixed-rate masked plate solver. Topology is compiled off-thread;
  * process() uses only packed typed arrays and preallocated scratch state. */
@@ -37,10 +48,16 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
     this.queueL = new Float32Array(64); this.queueR = new Float32Array(64);
     this.queueHead = 0; this.queueLength = 0;
     this.outputL = 0; this.outputR = 0;
+    this.contactForces = new Float32Array(0);
+    this.contactMemory = new Float32Array(0);
+    this.lastContactStep = new Float64Array(0);
+    this.contactCursor = 0;
     this.telemetry = { topologies: 0, strikes: 0, dropped: 0, droppedRoutes: 0, nonFinite: 0,
       clipped: 0, wakes: 0, sleeps: 0, truncatedTailEnergy: 0,
       physicsSteps: 0, energyDelta: 0, couplingWorkProxy: 0,
-      deepPlateCouplingTransfers: 0, sphereCouplingTransfers: 0, maxOutputAbs: 0 };
+      deepPlateCouplingTransfers: 0, sphereCouplingTransfers: 0, maxOutputAbs: 0,
+      requestedContactImpulseSquared: 0, compliantContactImpulseSquared: 0,
+      contactPulseNodeSteps: 0, contactAttenuatedNodeContributions: 0 };
     this.port.onmessage = (event) => this.handleMessage(event.data);
   }
 
@@ -70,6 +87,8 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
   installTopology(t) {
     const old = this.topology, oldCurrent = this.current, oldPrevious = this.previous;
     const oldQuiet = this.energyQuiet, oldAwake = this.awake;
+    const oldContactForces = this.contactForces, oldContactMemory = this.contactMemory;
+    const oldLastContactStep = this.lastContactStep, oldNodeCount = this.current.length;
     const oldSphereCurrent = this.sphereCurrent, oldSpherePrevious = this.spherePrevious;
     const oldOffsets = old?.nodeOffsets, oldIndices = old?.nodeGridIndices;
     const n = t.nodeGridIndices.length;
@@ -79,6 +98,11 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
     this.nodeLayer = new Uint16Array(n); this.energyQuiet = new Uint16Array(n);
     this.awake = new Uint8Array(n); this.active = new Int32Array(n); this.activeCount = 0;
     this.pendingWake = new Uint8Array(n); this.pendingNodes = new Int32Array(n); this.pendingCount = 0;
+    // Add overlapping finite forces in a node/step ring, with no event pool or
+    // event dropping. Only topology installation allocates this scratch state.
+    this.contactForces = new Float32Array(n * CONTACT_PULSE_STEPS);
+    this.contactMemory = new Float32Array(n);
+    this.lastContactStep = new Float64Array(n);
     this.buildNodeLinks(t);
     for (let l = 0; l < t.layerIds.length; l++) {
       const start = t.nodeOffsets[l], end = t.nodeOffsets[l + 1];
@@ -95,6 +119,11 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
         const source = priorStart + i, target = start + i;
         this.current[target] = oldCurrent[source]; this.previous[target] = oldPrevious[source];
         this.energyQuiet[target] = oldQuiet[source];
+        this.contactMemory[target] = oldContactMemory[source];
+        this.lastContactStep[target] = oldLastContactStep[source];
+        for (let step = 0; step < CONTACT_PULSE_STEPS; step++) {
+          this.contactForces[step * n + target] = oldContactForces[step * oldNodeCount + source];
+        }
         if (oldAwake[source]) this.wakeNode(target);
       }
     }
@@ -238,6 +267,7 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
 
   advancePhysics() {
     const t = this.topology, N = this.current.length;
+    this.applyContactForces();
     if (!N) { this.outputL = 0; this.outputR = 0; this.telemetry.physicsSteps++; return; }
     if (!this.activeCount && !this.noduleIds?.length) {
       this.outputL = 0; this.outputR = 0; this.telemetry.physicsSteps++; this.telemetry.activeSphereModes = 0; return;
@@ -341,6 +371,21 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
     this.telemetry.activeSphereModes = activeSphereModes;
   }
 
+  applyContactForces() {
+    const offset = this.contactCursor * this.current.length;
+    for (let a = 0; a < this.activeCount; a++) {
+      const node = this.active[a], force = this.contactForces[offset + node];
+      if (force !== 0) {
+        // Integrate this step's force as a velocity increment before the
+        // unchanged Plate/Z/Sphere recurrence. Discrete envelope sum is one.
+        this.previous[node] -= force;
+        this.telemetry.contactPulseNodeSteps++;
+        this.contactForces[offset + node] = 0;
+      }
+    }
+    this.contactCursor = (this.contactCursor + 1) % CONTACT_PULSE_STEPS;
+  }
+
   computeLap(node) {
     if (this.lapStamp[node] === this.epoch) return;
     const n = this.topology.neighborIndices, c = this.current, off = node * 4;
@@ -403,6 +448,8 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
   clearVibration() {
     this.current.fill(0); this.previous.fill(0); this.next.fill(0); this.sphereCurrent?.fill(0); this.spherePrevious?.fill(0);
     this.activeCount = 0; this.awake.fill(0); this.energyQuiet.fill(0);
+    this.contactForces.fill(0); this.contactMemory.fill(0); this.lastContactStep.fill(0);
+    this.contactCursor = 0;
   }
 
   getDiagnostics() {
@@ -421,7 +468,10 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
       physicsRate: RATE, topologyGeneration: this.topology?.generation ?? null,
       couplingLinks: this.topology?.adjacentLinkCoefficients.length || 0,
       noduleCount: this.noduleIds?.length || 0, activeSphereModes, integratedSphereModes, mix: MIX,
-      truncatedTailRiskThreshold: SLEEP_ENERGY, quietStepsThreshold: SLEEP_STEPS };
+      truncatedTailRiskThreshold: SLEEP_ENERGY, quietStepsThreshold: SLEEP_STEPS,
+      contactPulseDurationMs: 1000 * CONTACT_PULSE_STEPS / RATE, contactPulseSteps: CONTACT_PULSE_STEPS,
+      contactRecoveryTimeMs: 1000 * CONTACT_RECOVERY_STEPS / RATE,
+      contactReferenceDeltaV: CONTACT_REFERENCE_DELTA_V, contactMaximumComplianceLoss: CONTACT_MAX_COMPLIANCE_LOSS };
   }
 }
 
@@ -500,7 +550,22 @@ function applyStrike(proc, p) {
     if (Math.abs(gx - x) > reach || Math.abs(gy - y) > reach) continue;
     const w = integratedGaussian(gx, gy, x, y, sigma);
     if (w * w < 1e-12 * normSq) continue;
-    proc.previous[node] -= impulse * w / norm / Math.sqrt(density);
+    const deltaV = impulse * w / norm / Math.sqrt(density);
+    const elapsed = Math.max(0, proc.telemetry.physicsSteps - proc.lastContactStep[node]);
+    const memory = proc.contactMemory[node] * Math.exp(-elapsed / CONTACT_RECOVERY_STEPS);
+    const transfer = 1 - CONTACT_MAX_COMPLIANCE_LOSS * memory;
+    // Short local compliance from actual recent loading, independent of all
+    // other regions, ant identity, output level and resonator lifecycle.
+    proc.contactMemory[node] = memory + (1 - memory) * Math.min(1, Math.abs(deltaV) / CONTACT_REFERENCE_DELTA_V);
+    proc.lastContactStep[node] = proc.telemetry.physicsSteps;
+    const delivered = deltaV * transfer;
+    for (let step = 0; step < CONTACT_PULSE_STEPS; step++) {
+      const slot = (proc.contactCursor + step) % CONTACT_PULSE_STEPS;
+      proc.contactForces[slot * proc.current.length + node] += delivered * CONTACT_ENVELOPE[step];
+    }
+    proc.telemetry.requestedContactImpulseSquared += deltaV * deltaV;
+    proc.telemetry.compliantContactImpulseSquared += delivered * delivered;
+    if (transfer < 1) proc.telemetry.contactAttenuatedNodeContributions++;
     proc.wakeNode(node);
   }
   return true;

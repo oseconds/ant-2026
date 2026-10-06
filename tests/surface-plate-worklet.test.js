@@ -5,6 +5,7 @@ import vm from 'node:vm';
 import { compileSurfaceTopology } from '../src/lib/audio/compileSurfaceTopology.js';
 
 const source = readFileSync(new URL('../static/worklets/surface-plate.worklet.js', import.meta.url), 'utf8');
+const instantaneousSource = readFileSync(new URL('./fixtures/surface-plate.instantaneous-2d9430b.js', import.meta.url), 'utf8');
 function plate(id='route', x0=30, x1=66, y0=47, y1=49) {
   const mask = new Array(96*96).fill(0);
   for (let y=y0;y<=y1;y++) for(let x=x0;x<=x1;x++) mask[y*96+x]=1;
@@ -13,16 +14,18 @@ function plate(id='route', x0=30, x1=66, y0=47, y1=49) {
     material:{stiffness:.9,density:1.1,damping:.35} };
 }
 function topology(...plates) { return compileSurfaceTopology({plates, stratigraphy:{layerOrder:plates.map(p=>p.id)}}); }
-function instantiate(rate=48000) {
+function instantiate(rate=48000, workletSource=source) {
   let Processor; const messages=[];
   class AudioWorkletProcessor { constructor(){this.port={onmessage:null,postMessage:m=>messages.push(m)};} }
-  vm.runInNewContext(source,{AudioWorkletProcessor,sampleRate:rate,Float32Array,Uint8Array,Uint16Array,Uint32Array,Int8Array,Int16Array,Int32Array,Array,Math,Number,Object,performance:globalThis.performance,registerProcessor:(_n,p)=>Processor=p});
+  vm.runInNewContext(workletSource,{AudioWorkletProcessor,sampleRate:rate,Float32Array,Uint8Array,Uint16Array,Uint32Array,Int8Array,Int16Array,Int32Array,Array,Math,Number,Object,performance:globalThis.performance,registerProcessor:(_n,p)=>Processor=p});
   return {processor:new Processor(),messages};
 }
 function install(p,t) { p.handleMessage({type:'topology',payload:t}); }
 function run(p,count=128) { const left=new Float32Array(count),right=new Float32Array(count); p.process([],[[left,right]]); return {left,right}; }
 function energy(p) { let e=0; for(let i=0;i<p.current.length;i++) e+=p.current[i]**2+p.previous[i]**2; for(let i=0;i<p.sphereCurrent.length;i++)e+=p.sphereCurrent[i]**2+p.spherePrevious[i]**2; return e; }
 function seedNode(p,node,amplitude=.01) { p.current[node]=amplitude; p.previous[node]=amplitude; p.wakeNode(node); }
+function pendingImpulse(p,node) { let value=0;for(let step=0;step<18;step++)value+=p.contactForces[step*p.current.length+node];return value; }
+function impulseEnergy(p) { let value=0;for(let node=0;node<p.current.length;node++)value+=pendingImpulse(p,node)**2;return value; }
 
 test('compiled topology stays silent until contact, routes the exposed plate, and outputs stereo',()=>{
   const {processor}=instantiate();
@@ -42,7 +45,7 @@ test('same-point contact widths create measurably different spatial distribution
   for(const position of [{x:16/31,y:16/31},{x:.503,y:.487}]) {
     narrow.clearVibration();wide.clearVibration();
     for(const [p,r] of [[narrow,.009],[wide,.014]])p.handleMessage({type:'strike',payload:{plateId:'route',position,strength:.035,footprintRadius:r}});
-    const stat=p=>{let e=0,m=0;for(let i=start;i<end;i++){const v=p.previous[i]**2,cell=t.nodeGridIndices[i],dx=cell%32-position.x*31,dy=Math.floor(cell/32)-position.y*31;e+=v;m+=v*(dx*dx+dy*dy);}return [e,m/e];};
+    const stat=p=>{let e=0,m=0;for(let i=start;i<end;i++){const v=pendingImpulse(p,i)**2,cell=t.nodeGridIndices[i],dx=cell%32-position.x*31,dy=Math.floor(cell/32)-position.y*31;e+=v;m+=v*(dx*dx+dy*dy);}return [e,m/e];};
     const [en,mn]=stat(narrow),[ew,mw]=stat(wide);
     assert.ok(Math.abs(en-ew)<1e-8); assert.ok(mw>mn*1.05,`${mn} -> ${mw}`);
   }
@@ -156,4 +159,102 @@ test('stop clears output and destroy halts integration without replaying queued 
   const count=p.telemetry.physicsSteps,left=new Float32Array(128).fill(1),right=new Float32Array(128).fill(1);
   assert.equal(p.process([],[[left,right]]),false);
   assert.ok([...left,...right].every(value=>value===0));assert.equal(p.telemetry.physicsSteps,count);
+});
+
+test('an isolated finite half-sine contact spans 18 steps and preserves baseline per-node impulse',()=>{
+  const t=topology(plate('route',24,72,24,72));
+  const baseline=instantiate(48000,instantaneousSource).processor,p=instantiate().processor;
+  install(baseline,t);install(p,t);
+  const strike={type:'strike',payload:{plateId:'route',position:{x:.503,y:.487},strength:.035,footprintRadius:.012}};
+  baseline.handleMessage(strike);p.handleMessage(strike);
+  assert.ok(p.previous.every(value=>value===0),'force is not an immediate velocity jump');
+  const shape=[];
+  for(let step=0;step<18;step++) {
+    const before=p.previous.slice();p.applyContactForces();
+    shape.push(p.previous.reduce((sum,value,node)=>sum+Math.abs(value-before[node]),0));
+  }
+  assert.ok(shape.every(value=>value>0));assert.ok(shape[8]>shape[0]*8);
+  assert.ok(Math.abs(shape[0]-shape[17])<1e-8);
+  for(let node=0;node<p.previous.length;node++)assert.ok(Math.abs(p.previous[node]-baseline.previous[node])<1e-8);
+  const after=p.previous.slice();p.applyContactForces();assert.deepEqual(p.previous,after);
+  assert.equal(p.contactForces.some(value=>value!==0),false);
+  assert.equal(p.getDiagnostics().contactPulseDurationMs,3);
+  assert.equal(p.getDiagnostics().contactRecoveryTimeMs,75);
+});
+
+test('local compliance attenuates rapid repeated contact, recovers, and leaves a distant contact fresh',()=>{
+  const t=topology(plate('route',20,76,20,76));
+  const p=instantiate().processor,fresh=instantiate().processor;
+  install(p,t);install(fresh,t);
+  const at=position=>({type:'strike',payload:{plateId:'route',position,strength:.035,footprintRadius:.012}});
+  const here={x:.4,y:.4},there={x:.65,y:.65};
+  p.handleMessage(at(here));const first=impulseEnergy(p);
+  for(let i=0;i<18;i++)p.applyContactForces();
+  p.handleMessage(at(here));const repeat=impulseEnergy(p);
+  assert.ok(repeat<first*.90&&repeat>=first*.75**2-1e-9,`${first} -> ${repeat}`);
+  for(let i=0;i<18;i++)p.applyContactForces();
+  p.handleMessage(at(there));fresh.handleMessage(at(there));
+  assert.ok(Math.abs(impulseEnergy(p)-impulseEnergy(fresh))<1e-9,'other region is fully expressive');
+  for(let i=0;i<18;i++)p.applyContactForces();
+  // Recovery advances using actual physics steps, with no wall-clock timer.
+  run(p,48000*.4);
+  p.handleMessage(at(here));assert.ok(impulseEnergy(p)>first*.99);
+  assert.equal(p.telemetry.strikes,4);assert.equal(p.telemetry.droppedRoutes,0);
+});
+
+test('every valid overlapping contact is scheduled without a global gate and remains within its impulse budget',()=>{
+  const p=instantiate().processor;install(p,topology(plate()));
+  for(let i=0;i<60;i++)p.handleMessage({type:'strike',payload:{plateId:'route',position:{x:.5,y:48/95},strength:.02,footprintRadius:.01}});
+  assert.equal(p.telemetry.strikes,60);assert.equal(p.telemetry.dropped,0);assert.equal(p.telemetry.droppedRoutes,0);
+  assert.ok(p.telemetry.compliantContactImpulseSquared<=p.telemetry.requestedContactImpulseSquared);
+  assert.ok(p.telemetry.compliantContactImpulseSquared>=p.telemetry.requestedContactImpulseSquared*.75**2-1e-8);
+  assert.ok(impulseEnergy(p)>0);
+  run(p,48000);assert.equal(p.telemetry.nonFinite,0);
+});
+
+test('same-geometry topology recompiles retain pulse phase and local recovery while changed geometry starts fresh',()=>{
+  const a=plate('a',24,72,24,72),p=instantiate().processor;install(p,topology(a));
+  p.handleMessage({type:'strike',payload:{plateId:'a',position:{x:.5,y:.5},strength:.035,footprintRadius:.012}});
+  run(p,24);const cursor=p.contactCursor,queued=p.contactForces.slice(),memory=p.contactMemory.slice();
+  install(p,topology(a));assert.equal(p.contactCursor,cursor);
+  assert.deepEqual(p.contactForces,queued);assert.deepEqual(p.contactMemory,memory);
+  const oldNodes=p.current.length;install(p,topology(a,plate('new',20,76,1,2)));
+  assert.equal(p.contactCursor,cursor);
+  for(let step=0;step<18;step++)for(let node=0;node<oldNodes;node++)
+    assert.equal(p.contactForces[step*p.current.length+node],queued[step*oldNodes+node]);
+  assert.deepEqual(p.contactMemory.slice(0,oldNodes),memory);
+  install(p,topology(plate('a',24,72,40,50)));
+  assert.ok(p.contactForces.every(value=>value===0));assert.ok(p.contactMemory.every(value=>value===0));
+});
+
+test('stop removes all pending force and contact compliance without later replay',()=>{
+  const p=instantiate().processor;install(p,topology(plate()));
+  p.handleMessage({type:'strike',payload:{plateId:'route',position:{x:.5,y:48/95},strength:.035}});
+  assert.ok(p.contactForces.some(value=>value!==0));assert.ok(p.contactMemory.some(value=>value!==0));
+  p.handleMessage({type:'stop',payload:{}});
+  assert.ok(p.contactForces.every(value=>value===0));assert.ok(p.contactMemory.every(value=>value===0));
+  assert.ok(run(p,1024).left.every(value=>value===0));
+});
+
+test('finite contacts remain sample-rate and quantum-split invariant with no non-finite or clipped output',()=>{
+  const t=topology(plate());
+  for(const rate of [44100,48000,96000]) {
+    const a=instantiate(rate).processor,b=instantiate(rate).processor;install(a,t);install(b,t);
+    const strike={type:'strike',payload:{plateId:'route',position:{x:.5,y:48/95},strength:.035,footprintRadius:.012}};
+    a.handleMessage(strike);b.handleMessage(strike);
+    const full=run(a,4096),split=[];
+    for(const count of [1,127,37,91,512,256,3072])split.push(...run(b,count).left);
+    assert.deepEqual([...full.left],split);assert.equal(a.telemetry.nonFinite,0);assert.equal(a.telemetry.clipped,0);
+  }
+});
+
+test('without direct contact, historical Plate/Z/Sphere recurrence matches the committed baseline exactly',()=>{
+  const a=plate('a'),b=plate('b');
+  const nodule={id:'sphere',position:{x:.5,y:.5},physicalRadiusMeters:.024,material:{density:2000,youngModulus:800000,poisson:.3,damping:.35},burial:{buriedDepthMeters:.04},coupling:{plateId:'a',weight:.2,position:{x:.5,y:.5}}};
+  const t=compileSurfaceTopology({plates:[a,b],nodules:[nodule],stratigraphy:{layerOrder:['a','b']}});
+  const p=instantiate().processor,baseline=instantiate(48000,instantaneousSource).processor;
+  for(const model of [p,baseline]) {install(model,t);seedNode(model,t.pickupNodeIndices[0],.02);model.sphereCurrent[0]=.01;model.spherePrevious[0]=.009;}
+  assert.deepEqual(run(p,8192),run(baseline,8192));
+  assert.deepEqual(p.current,baseline.current);assert.deepEqual(p.sphereCurrent,baseline.sphereCurrent);
+  assert.equal(p.telemetry.sleeps,baseline.telemetry.sleeps);assert.equal(p.telemetry.wakes,baseline.telemetry.wakes);
 });
