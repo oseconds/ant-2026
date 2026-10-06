@@ -22,6 +22,8 @@ export class AntRenderer {
     this.fieldImage = null;
     this.fieldSize = null;
     this.plateImages = new WeakMap();
+    this.materialImage = null;
+    this.materialRevision = null;
     this.width = 1;
     this.height = 1;
     this.pixelRatio = 1;
@@ -99,6 +101,8 @@ export class AntRenderer {
     this.snapshot = null;
     this.fieldImage = null;
     this.plateImages = new WeakMap();
+    this.materialImage = null;
+    this.materialRevision = null;
     this.resolveInitialization?.(false);
     this.rejectInitialization = null;
     const removal = this.#removeInstance();
@@ -185,8 +189,29 @@ function drawSnapshot(p, snapshot, renderer) {
   p.background(255);
 
   // Frozen material is a solid, restrained layer beneath current chemical memory.
-  // Cache each immutable birth mask once; later field changes cannot reshape it.
-  for (const plate of snapshot?.surfacePlates?.plates || []) {
+  // Compile one restrained material image per topology revision; live pheromone
+  // never changes the frozen historical masks or their physical Z columns.
+  const material = snapshot?.stratigraphy;
+  const topology = material?.stratigraphy || material;
+  if (topology?.topLayerByCell?.length && material.width > 0 && material.height > 0) {
+    if (!renderer.materialImage || renderer.materialRevision !== material.revision) {
+      const image = p.createImage(material.width, material.height);
+      image.loadPixels();
+      for (let index = 0; index < topology.topLayerByCell.length; index += 1) {
+        const depthCount = topology.layerCountByCell?.[index] || 1;
+        image.pixels[index * 4] = 100;
+        image.pixels[index * 4 + 1] = 100;
+        image.pixels[index * 4 + 2] = 100;
+        image.pixels[index * 4 + 3] = topology.topLayerByCell[index] >= 0
+          ? Math.min(21, 9 + depthCount * 1.25) : 0;
+      }
+      image.updatePixels();
+      renderer.materialImage = image;
+      renderer.materialRevision = material.revision;
+    }
+    p.image(renderer.materialImage, 0, 0, width, height);
+  }
+  for (const plate of material ? [] : snapshot?.surfacePlates?.plates || []) {
     if (!plate?.grid || !plate.mask?.length) continue;
     let image = renderer.plateImages.get(plate);
     if (!image) {

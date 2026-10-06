@@ -407,6 +407,12 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
 
   getDiagnostics() {
     let awakeLayers = 0;
+    let activeSphereModes = 0, integratedSphereModes = 0;
+    for (let mode = 0; mode < (this.sphereCurrent?.length || 0); mode++) {
+      if (this.sphereRadius[mode] > 0) integratedSphereModes++;
+      const velocity = this.sphereCurrent[mode] - this.spherePrevious[mode];
+      if (this.sphereCurrent[mode] ** 2 + velocity ** 2 >= SLEEP_ENERGY) activeSphereModes++;
+    }
     const flags = new Uint8Array(this.topology?.layerIds.length || 0);
     for (let i = 0; i < this.activeCount; i++) flags[this.nodeLayer[this.active[i]]] = 1;
     for (let i = 0; i < flags.length; i++) awakeLayers += flags[i];
@@ -414,7 +420,7 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
       activeNodes: this.activeCount, awakeLayers, sleepingLayers: (this.topology?.layerIds.length || 0) - awakeLayers,
       physicsRate: RATE, topologyGeneration: this.topology?.generation ?? null,
       couplingLinks: this.topology?.adjacentLinkCoefficients.length || 0,
-      noduleCount: this.noduleIds?.length || 0, mix: MIX,
+      noduleCount: this.noduleIds?.length || 0, activeSphereModes, integratedSphereModes, mix: MIX,
       truncatedTailRiskThreshold: SLEEP_ENERGY, quietStepsThreshold: SLEEP_STEPS };
   }
 }
@@ -442,6 +448,17 @@ function validTopology(t) {
   for (let i = 0; i < t.neighborIndices.length; i++) if (t.neighborIndices[i] < -1 || t.neighborIndices[i] >= n) return false;
   for (let i = 0; i < t.nodeGridIndices.length; i++) if (t.nodeGridIndices[i] >= GRID * GRID) return false;
   for (let i = 0; i < t.pickupNodeIndices.length; i++) if (t.pickupNodeIndices[i] >= n) return false;
+  for (let layer = 0; layer < t.layerIds.length; layer++) {
+    const start = t.nodeOffsets[layer], end = t.nodeOffsets[layer + 1];
+    for (let side = 0; side < 2; side++) {
+      const pickup = t.pickupNodeIndices[layer * 2 + side];
+      if (pickup < start || pickup >= end) return false;
+    }
+    for (let node = start; node < end; node++) for (let direction = 0; direction < 4; direction++) {
+      const neighbor = t.neighborIndices[node * 4 + direction];
+      if (neighbor !== -1 && (neighbor < start || neighbor >= end)) return false;
+    }
+  }
   for (let i = 0; i < t.materialCoefficients.length; i++) if (!Number.isFinite(t.materialCoefficients[i]) || t.materialCoefficients[i] < 0) return false;
   for (let i = 0; i < t.routingTopLayerByCell96.length; i++) if (t.routingTopLayerByCell96[i] < -1 || t.routingTopLayerByCell96[i] >= t.layerIds.length) return false;
   for (let i = 0; i < t.adjacentLinkNodes.length; i++) if (t.adjacentLinkNodes[i] >= n) return false;

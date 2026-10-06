@@ -85,7 +85,9 @@ test('quiet local nodes sleep after the tail threshold and later local contact w
   const t=topology(plate()),p=instantiate(48000).processor;install(p,t);
   const node=t.pickupNodeIndices[0];p.current[node]=1e-8;p.wakeNode(node);
   const frames=Math.ceil(48000*2.1/128);for(let i=0;i<frames;i++)run(p);
-  assert.ok(p.telemetry.sleeps>0);assert.ok(p.telemetry.truncatedTailEnergy>=0);assert.ok(p.activeCount<t.nodeGridIndices.length);
+  assert.ok(p.telemetry.sleeps>0);assert.ok(p.telemetry.truncatedTailEnergy>=0);
+  assert.ok(p.telemetry.truncatedTailEnergy<1e-14, 'sub-threshold sleep truncates only the controlled negligible tail');
+  assert.ok(p.activeCount<t.nodeGridIndices.length);
   const wakes=p.telemetry.wakes;p.handleMessage({type:'strike',payload:{plateId:'route',position:{x:48/95,y:48/95},strength:.035,footprintRadius:.01}});
   assert.ok(p.telemetry.wakes>wakes);const hitCell=16*32+16;const hitNode=t.nodeGridIndices.findIndex(cell=>cell===hitCell);
   assert.ok(hitNode>=0&&p.awake[hitNode]);
@@ -130,4 +132,28 @@ test('rejects malformed packed topology without replacing active solver state',(
   const bad=topology(plate('bad'));bad.materialCoefficients[0]=-1;
   p.handleMessage({type:'topology',payload:bad});
   assert.equal(p.topology,good);assert.equal(p.current[node],Math.fround(.01));assert.equal(p.telemetry.dropped,1);
+});
+
+test('rejects pickup or stencil indices that cross physical layer boundaries',()=>{
+  const p=instantiate().processor,good=topology(plate('a'),plate('b'));install(p,good);
+  const badPickup=topology(plate('a'),plate('b'));
+  badPickup.pickupNodeIndices[0]=badPickup.nodeOffsets[1];
+  p.handleMessage({type:'topology',payload:badPickup});
+  assert.equal(p.topology,good);
+  const badStencil=topology(plate('a'),plate('b'));
+  badStencil.neighborIndices[0]=badStencil.nodeOffsets[1];
+  p.handleMessage({type:'topology',payload:badStencil});
+  assert.equal(p.topology,good);assert.equal(p.telemetry.dropped,2);
+});
+
+test('stop clears output and destroy halts integration without replaying queued output',()=>{
+  const p=instantiate(44100).processor,t=topology(plate());install(p,t);
+  seedNode(p,t.pickupNodeIndices[0],.02);run(p);
+  p.handleMessage({type:'stop',payload:{}});
+  assert.equal(p.activeCount,0);assert.equal(p.queueLength,0);
+  assert.ok([...run(p).left].every(value=>value===0));
+  p.handleMessage({type:'destroy',payload:{}});
+  const count=p.telemetry.physicsSteps,left=new Float32Array(128).fill(1),right=new Float32Array(128).fill(1);
+  assert.equal(p.process([],[[left,right]]),false);
+  assert.ok([...left,...right].every(value=>value===0));assert.equal(p.telemetry.physicsSteps,count);
 });
