@@ -1,0 +1,210 @@
+{
+  "status": "node-vm-shared-worklet-material-range-engineering-check",
+  "interpretation": "Synthetic frozen descriptor variants on the first natural Plate geometry; same captured isolated strike; not a Chrome recording and not separate natural Plate births.",
+  "source": {
+    "baselineHead": "7f8ebf8d50752341383d1bd3d90e568fc2340fdd",
+    "candidateWorkletSha256": "166268f95706db8c5a462dc7cdfb32e981da821b5ad7a42b89414901f752c3a4",
+    "runSeed": 20261005,
+    "plateId": "trail-plate-1",
+    "birthSimulationTimeMs": 124016.66666667987,
+    "geometrySha256": "6fc7862b5e6a6c6e98546b4946bcce670c72ccfe9aab60d2af81badd38b3b3e3"
+  },
+  "solver": {
+    "physicsRateHz": 6000,
+    "sampleRateHz": 48000,
+    "durationSeconds": 10,
+    "outputGain": 0.245,
+    "dampingMapping": "compiled = 9e-6 + 18e-6 * frozen material.damping; Plate recurrence coefficient = compiled * 50; Sphere damping is not scaled",
+    "pulseDurationMs": 3,
+    "pulseSteps": 18,
+    "localRecoveryMs": 75,
+    "windowMs": 50,
+    "hopMs": 10,
+    "crossingSustainMs": 500,
+    "noPerRenderNormalization": true
+  },
+  "cases": [
+    {
+      "materialDamping": 0.25,
+      "compiledPlateDampingCoefficient": 0.000013500000022759195,
+      "expectedUnscaledDampingCoefficient": 0.0000135,
+      "effectiveWorkletPlateDampingCoefficient": 0.0006749999999999999,
+      "strike": {
+        "plateId": "trail-plate-1",
+        "layerId": "trail-plate-1",
+        "position": {
+          "x": 0.5484083214174219,
+          "y": 0.6348488461736526
+        },
+        "strength": 0.019735057158195637,
+        "footprintRadius": 0.011800759180427015,
+        "hardness": 0.4398481639145969
+      },
+      "input": {
+        "acceptedStrikeCount": 1,
+        "droppedRoutes": 0,
+        "requestedContactImpulseSquared": 0.0003245603878122376,
+        "compliantContactImpulseSquared": 0.0003245603878122376
+      },
+      "pcm": {
+        "durationSeconds": 10,
+        "windowMs": 50,
+        "hopMs": 10,
+        "rmsL": 0.00006196982464422295,
+        "rmsR": 0.000031110879650665506,
+        "peakL": 0.0007900565979070961,
+        "peakR": 0.0005169746000319719,
+        "finiteSamples": 960000,
+        "nonFinite": 0,
+        "clipping": 0,
+        "crossings": {
+          "L": {
+            "referenceTimeSeconds": 0.045,
+            "referenceRms": 0.00038139033992952106,
+            "referenceDbfs": -68.37260622414499,
+            "T20Seconds": 1.1300000000000001,
+            "T20Status": "after last above-threshold 50 ms RMS window, then sustained below for 500 ms",
+            "T20LastAboveThresholdSeconds": 1.165,
+            "T40Seconds": 2.27,
+            "T40Status": "after last above-threshold 50 ms RMS window, then sustained below for 500 ms",
+            "T40LastAboveThresholdSeconds": 2.305,
+            "T60Seconds": 3.41,
+            "T60Status": "after last above-threshold 50 ms RMS window, then sustained below for 500 ms",
+            "T60LastAboveThresholdSeconds": 3.445
+          },
+          "R": {
+            "referenceTimeSeconds": 0.045,
+            "referenceRms": 0.00018775548915878217,
+            "referenceDbfs": -74.52814714490236,
+            "T20Seconds": 1.1500000000000001,
+            "T20Status": "after last above-threshold 50 ms RMS window, then sustained below for 500 ms",
+            "T20LastAboveThresholdSeconds": 1.185,
+            "T40Seconds": 2.3200000000000003,
+            "T40Status": "after last above-threshold 50 ms RMS window, then sustained below for 500 ms",
+            "T40LastAboveThresholdSeconds": 2.355,
+            "T60Seconds": 3.52,
+            "T60Status": "after last above-threshold 50 ms RMS window, then sustained below for 500 ms",
+            "T60LastAboveThresholdSeconds": 3.555
+          }
+        }
+      },
+      "sleep": {
+        "threshold": {
+          "quietEnergy": 1e-10,
+          "consecutiveSteps": 12000
+        },
+        "firstSleep": {
+          "physicsStep": 40263,
+          "count": 1,
+          "timeSeconds": 6.7105
+        },
+        "lastSleep": {
+          "physicsStep": 44559,
+          "count": 119,
+          "timeSeconds": 7.4265
+        },
+        "transitionCount": 111,
+        "finalSleepCount": 119,
+        "truncatedTailEnergy": 5.267866771871221e-16
+      },
+      "topology": {
+        "plates": [
+          "trail-plate-1"
+        ],
+        "zLinks": 0,
+        "noduleCount": 0
+      }
+    },
+    {
+      "materialDamping": 0.45,
+      "compiledPlateDampingCoefficient": 0.000017099999240599573,
+      "expectedUnscaledDampingCoefficient": 0.000017100000000000002,
+      "effectiveWorkletPlateDampingCoefficient": 0.0008550000000000001,
+      "strike": {
+        "plateId": "trail-plate-1",
+        "layerId": "trail-plate-1",
+        "position": {
+          "x": 0.5484083214174219,
+          "y": 0.6348488461736526
+        },
+        "strength": 0.019735057158195637,
+        "footprintRadius": 0.011800759180427015,
+        "hardness": 0.4398481639145969
+      },
+      "input": {
+        "acceptedStrikeCount": 1,
+        "droppedRoutes": 0,
+        "requestedContactImpulseSquared": 0.0003245603878122376,
+        "compliantContactImpulseSquared": 0.0003245603878122376
+      },
+      "pcm": {
+        "durationSeconds": 10,
+        "windowMs": 50,
+        "hopMs": 10,
+        "rmsL": 0.00005512042957099144,
+        "rmsR": 0.00002756686076522617,
+        "peakL": 0.0007635377696715295,
+        "peakR": 0.0005073049105703831,
+        "finiteSamples": 960000,
+        "nonFinite": 0,
+        "clipping": 0,
+        "crossings": {
+          "L": {
+            "referenceTimeSeconds": 0.025,
+            "referenceRms": 0.0003767393759254388,
+            "referenceDbfs": -68.47917971945779,
+            "T20Seconds": 0.9,
+            "T20Status": "after last above-threshold 50 ms RMS window, then sustained below for 500 ms",
+            "T20LastAboveThresholdSeconds": 0.915,
+            "T40Seconds": 1.81,
+            "T40Status": "after last above-threshold 50 ms RMS window, then sustained below for 500 ms",
+            "T40LastAboveThresholdSeconds": 1.825,
+            "T60Seconds": 2.71,
+            "T60Status": "after last above-threshold 50 ms RMS window, then sustained below for 500 ms",
+            "T60LastAboveThresholdSeconds": 2.725
+          },
+          "R": {
+            "referenceTimeSeconds": 0.045,
+            "referenceRms": 0.00018389993771479322,
+            "referenceDbfs": -74.70836835706838,
+            "T20Seconds": 0.95,
+            "T20Status": "after last above-threshold 50 ms RMS window, then sustained below for 500 ms",
+            "T20LastAboveThresholdSeconds": 0.985,
+            "T40Seconds": 1.87,
+            "T40Status": "after last above-threshold 50 ms RMS window, then sustained below for 500 ms",
+            "T40LastAboveThresholdSeconds": 1.905,
+            "T60Seconds": 2.74,
+            "T60Status": "after last above-threshold 50 ms RMS window, then sustained below for 500 ms",
+            "T60LastAboveThresholdSeconds": 2.775
+          }
+        }
+      },
+      "sleep": {
+        "threshold": {
+          "quietEnergy": 1e-10,
+          "consecutiveSteps": 12000
+        },
+        "firstSleep": {
+          "physicsStep": 34316,
+          "count": 1,
+          "timeSeconds": 5.719333333333333
+        },
+        "lastSleep": {
+          "physicsStep": 37977,
+          "count": 119,
+          "timeSeconds": 6.3295
+        },
+        "transitionCount": 113,
+        "finalSleepCount": 119,
+        "truncatedTailEnergy": 5.536877566481477e-17
+      },
+      "topology": {
+        "plates": [
+          "trail-plate-1"
+        ],
+        "zLinks": 0,
+        "noduleCount": 0
+      }
+    }
+  ]
+}

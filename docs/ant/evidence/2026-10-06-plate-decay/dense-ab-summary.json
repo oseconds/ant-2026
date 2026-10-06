@@ -1,0 +1,71 @@
+{
+  "status": "verified-real-chrome-offline-audioworklet-ab",
+  "sampleRate": 48000,
+  "volume": 0.35,
+  "finalGain": 0.245,
+  "fixedPreset": {
+    "id": "ant-surface-stratigraphy-v1",
+    "waveformScale": [
+      -1,
+      1
+    ],
+    "waveformBackgroundLuminance": 255,
+    "waveformLineLuminance": 24,
+    "waveformAxisLuminance": 180,
+    "waveformLineWidth": 1,
+    "fftSize": 1024,
+    "window": "Hann",
+    "hopSize": 256,
+    "frequencyHz": [
+      0,
+      8000
+    ],
+    "spectrogramDbfs": [
+      -100,
+      0
+    ],
+    "spectrogramGamma": 1,
+    "grayscale": true,
+    "normalization": "none"
+  },
+  "contactStreams": {
+    "dense": {
+      "sourceSimulationSeconds": [
+        154,
+        164
+      ],
+      "groups": 648,
+      "individualFeet": 1916,
+      "routedStrikeMessages": 242,
+      "scheduleSha256": "8f56adf6f54ccd52143acc2d6c49c6026872df2fac4486776ae00dfb8ba291eb",
+      "acceptedA": 242,
+      "acceptedB": 242,
+      "parity": true
+    },
+    "sparse": {
+      "sourceSimulationSeconds": [
+        154,
+        164
+      ],
+      "groups": 10,
+      "individualFeet": 30,
+      "routedStrikeMessages": 4,
+      "scheduleSha256": "b6e9dfc182edc2fb9c24bf4e3718c42f7b86c4cd9f295ea383274711fb79a275",
+      "acceptedA": 4,
+      "acceptedB": 4,
+      "parity": true
+    }
+  },
+  "files": {
+    "comparison": "decay-ab-comparison-10s-fixed-scale.png",
+    "baselineOverview": "baseline-isolated-60s-fixed-overview.png",
+    "candidateOverview": "candidate-isolated-60s-fixed-overview.png",
+    "decayPlot": "decay-ab-absolute-envelope.svg",
+    "isolatedBaseline": "baseline-isolated-60s-48khz-f32.wav",
+    "isolatedCandidate": "candidate-isolated-60s-48khz-f32.wav",
+    "denseBaseline": "baseline-dense-154-164s.wav",
+    "denseCandidate": "candidate-dense-154-164s.wav",
+    "sparseBaseline": "baseline-sparse-154-164s.wav",
+    "sparseCandidate": "candidate-sparse-154-164s.wav"
+  }
+}

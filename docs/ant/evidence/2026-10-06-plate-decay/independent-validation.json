@@ -1,0 +1,142 @@
+{
+  "status": "passed",
+  "startingHEAD": "7f8ebf8d50752341383d1bd3d90e568fc2340fdd",
+  "productionDelta": "one fixed multiplier on Plate velocity loss only",
+  "protectedSourceDiffPaths": [
+    "static/worklets/surface-plate.worklet.js"
+  ],
+  "sourceHashes": {
+    "baseline": "a9b25600668ae2d205c28167d375ed94ca901530017aad9ce4aff163bc1236aa",
+    "candidate": "166268f95706db8c5a462dc7cdfb32e981da821b5ad7a42b89414901f752c3a4"
+  },
+  "nonFinite": 0,
+  "clipping": 0,
+  "cases": {
+    "baseline-isolated": {
+      "filename": "baseline-isolated-60s-48khz-f32.wav",
+      "wavSha256": "dd575c2a554fb724960fd4299c1144e7e2b90684f795437e29d6c0f1449aae9c",
+      "processorStrikes": 1,
+      "rms": [
+        0.00016667037420306326,
+        0.00008398935815297102
+      ],
+      "peak": [
+        0.0011457663495093584,
+        0.0007225341396406293
+      ],
+      "crossings": [
+        {
+          "referenceRms": 0.00043068502643853424,
+          "referenceTimeSeconds": 0.435,
+          "T20Seconds": 49.66,
+          "T40Seconds": null,
+          "T60Seconds": null
+        },
+        {
+          "referenceRms": 0.0002496854338929141,
+          "referenceTimeSeconds": 0.965,
+          "T20Seconds": 49.67,
+          "T40Seconds": null,
+          "T60Seconds": null
+        }
+      ],
+      "initialRms": [
+        0.00039881353947978195,
+        0.00017792299805099583
+      ]
+    },
+    "baseline-dense": {
+      "filename": "baseline-dense-154-164s.wav",
+      "wavSha256": "8fd1cf13b21f0c75a99a5e761f9d48b7368601a9020e7fad601e7754719d280a",
+      "processorStrikes": 242,
+      "rms": [
+        0.006508734820590885,
+        0.011335010640539725
+      ],
+      "peak": [
+        0.021176226437091827,
+        0.029359813779592514
+      ],
+      "crossings": [],
+      "initialRms": []
+    },
+    "baseline-sparse": {
+      "filename": "baseline-sparse-154-164s.wav",
+      "wavSha256": "50540258d942b1c53d5645b6aedaf8d4f3045da4691d8f35aa898bb99c4794c4",
+      "processorStrikes": 4,
+      "rms": [
+        0.0007497462334178477,
+        0.0017171212235602524
+      ],
+      "peak": [
+        0.002760817762464285,
+        0.005357726477086544
+      ],
+      "crossings": [],
+      "initialRms": []
+    },
+    "candidate-isolated": {
+      "filename": "candidate-isolated-60s-48khz-f32.wav",
+      "wavSha256": "fe5d88fe3413790dc58301aea712d3d662e6c8cf9bfcc9c23497b60f71e5ce57",
+      "processorStrikes": 1,
+      "rms": [
+        0.000023666796830135783,
+        0.000011859329691144637
+      ],
+      "peak": [
+        0.0007756297709420323,
+        0.0005117320688441396
+      ],
+      "crossings": [
+        {
+          "referenceRms": 0.00037884032162652026,
+          "referenceTimeSeconds": 0.025,
+          "T20Seconds": 1.01,
+          "T40Seconds": 1.99,
+          "T60Seconds": 2.99
+        },
+        {
+          "referenceRms": 0.00018566228061855193,
+          "referenceTimeSeconds": 0.045,
+          "T20Seconds": 0.97,
+          "T40Seconds": 1.98,
+          "T60Seconds": 3
+        }
+      ],
+      "initialRms": [
+        0.00037884032162652026,
+        0.00016509329855622117
+      ]
+    },
+    "candidate-dense": {
+      "filename": "candidate-dense-154-164s.wav",
+      "wavSha256": "0d9cadd9d6a7ad3432318eb9a1eff1542ed3f9a56a02d67a1ad41dedfd6e9c06",
+      "processorStrikes": 242,
+      "rms": [
+        0.0014355238679326229,
+        0.0018681432188418616
+      ],
+      "peak": [
+        0.0055025918409228325,
+        0.011595640331506729
+      ],
+      "crossings": [],
+      "initialRms": []
+    },
+    "candidate-sparse": {
+      "filename": "candidate-sparse-154-164s.wav",
+      "wavSha256": "97010a167d14583ef59f48b57f8ecfdc68d392dce648c9a5182ee785f8288d00",
+      "processorStrikes": 4,
+      "rms": [
+        0.0001424865546540762,
+        0.0003751947737938951
+      ],
+      "peak": [
+        0.001518677338026464,
+        0.0047354684211313725
+      ],
+      "crossings": [],
+      "initialRms": []
+    }
+  }
+}
