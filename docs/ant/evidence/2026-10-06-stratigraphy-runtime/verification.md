@@ -17,3 +17,9 @@ The real Chrome smoke check confirms the ANT environmental worklet receives the 
 ## Verification limits
 
 These automated checks establish browser lifecycle and protocol behavior. They do not establish human listening quality or the visual procession criterion. Chrome was installed at the configured path. Build output included existing non-fatal dependency annotation and bundle-size warnings.
+
+## Retained final-run browser artifacts
+
+The actual Chrome screenshots and paired metrics from `test-results` are preserved here as `browser-dev-ant.png` / `browser-dev-metrics.json` and `browser-production-ant.png` / `browser-production-metrics.json`. Their source screenshots were written at 2026-10-06 14:13:27 and 14:14:17 Asia/Seoul. The development screenshot shows live ANT at 35% Volume. The production browser-check screenshot shows live ANT at 100% Volume; its paired metrics report 30 approximate simulated seconds, one shared context and no processor errors. These are browser lifecycle smoke-check screenshots. They are not the required 35%-Volume synchronized stereo audio capture with waveform and spectrogram.
+
+`build.stdout.txt`, `browser-dev.stdout.txt`, and `browser-production.stdout.txt` preserve the successful command output returned by the terminal tool. The commands were not originally redirected to files, so these are saved copies of the captured stdout, not raw shell transcript files. Build duration reported by Vite was 3.25 s; the production-preview build during the browser check reported 2.46 s. Both builds had the same non-fatal dependency annotation and large-chunk warnings. Browser output reported success in both modes, with no errors.

@@ -1,0 +1,2430 @@
+{
+  "protocol": {
+    "purpose": "Synthetic bounded numerical and scaling checks for the packed SurfacePlate processor.",
+    "notNaturalRun": true,
+    "cpuDisclaimer": "Node VM timings and Chrome main-thread JavaScript proxy timings are not AudioWorklet realtime measurements.",
+    "noRealtimeClaim": true,
+    "sampleRatesHz": [
+      44100,
+      48000,
+      96000
+    ],
+    "layerCounts": [
+      12,
+      24,
+      48
+    ],
+    "masks": [
+      "full 96x96 masks",
+      "deterministic narrow Y-shaped trail corridor masks"
+    ],
+    "simulation": "One bounded grouped strike followed by a short tail; long natural decay is separately checked on the narrow mask.",
+    "energyEstimators": {
+      "discreteDiagnostic": "Plate: 0.5*rho*velocity^2 + 0.5*rho*bending*(Laplacian u)^2 + 0.5*tension*undirectedNeighborGradient^2; adjacent layers: 0.5*compiledLinkCoefficient*(uA-uB)^2; sphere: 0.5*modalMass*velocity^2 + 0.5*modalMass*(2-2*cos(omega))*q^2; foundation: 0.5*weight*springConstant*(plateDisplacement-sum(SH*q))^2.",
+      "limitations": "Leapfrog cross-strain terms, damping, sleep truncation and awake-set changes are not represented as conserved physical energy. Reported totals/ranges are bounded diagnostic estimators only."
+    },
+    "quantumFrames": 128,
+    "solverRateHz": 6000,
+    "solverGrid": 32,
+    "sphereModesPerNodule": 12,
+    "caps": {
+      "historicalLayers": 256,
+      "nodules": 32,
+      "eviction": false
+    }
+  },
+  "source": {
+    "workletSha256": "5531011e634ad6ca3c97e4a4e5669e0100cef5b009af0c2e9b37f26ab222e802"
+  },
+  "cases": [
+    {
+      "shape": "full",
+      "layers": 12,
+      "sampleRateHz": 44100,
+      "topology": {
+        "nodeCount": 12288,
+        "activeMaskCells": 12288,
+        "sourceMaskCellsPerLayer": 9216,
+        "overlapCells96": 9216,
+        "actualAdjacentLinks": 11264,
+        "typedArrayBytes": 733570,
+        "workletStateTypedArrayBytes": 697288,
+        "nodules": [
+          {
+            "id": "synthetic-nodule-full-12-0",
+            "physicalRadiusMeters": 0.024,
+            "material": {
+              "density": 2000,
+              "youngModulus": 800000,
+              "poisson": 0.3,
+              "damping": 0.35
+            },
+            "burial": {
+              "buriedDepthMeters": 0.04
+            },
+            "foundationPlateId": "synthetic-full-0",
+            "foundationNode": 528,
+            "couplingWeight": 0.20000000298023224
+          }
+        ],
+        "maxSphereModesAvailable": 12,
+        "noduleCount": 1
+      },
+      "excitation": {
+        "groupedFootImpulse": 0.035,
+        "frames": 5292,
+        "wallMs": 1128.0224,
+        "initialStateEnergy": 0.001225,
+        "postExcitationStateEnergy": 1.05982033,
+        "peakAbs": 0.02110352,
+        "rms": 0.01021794,
+        "clipSamples": 0
+      },
+      "tail": {
+        "frames": 11025,
+        "postTailStateEnergy": 0.66211476,
+        "energyRatioToPostExcitation": 0.62474246,
+        "physicalEnergyEstimator": {
+          "afterExcitation": {
+            "kinetic": 0.00029046,
+            "bending": 0.00031071,
+            "tension": 0.00000769,
+            "adjacentSpring": 0.00000557,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00061443
+          },
+          "afterTail": {
+            "kinetic": 0.00030157,
+            "bending": 0.00028408,
+            "tension": 0.00000584,
+            "adjacentSpring": 0.00000562,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00059711
+          },
+          "shortTailRange": null,
+          "disclaimer": "Discrete diagnostic estimator; damping, leapfrog cross-strain terms, sleeping cutoffs and coupling proxies mean it is not a full continuum conservation proof."
+        },
+        "peakAbs": 0.01882739,
+        "rms": 0.00873672,
+        "clipSamples": 0
+      },
+      "checks": {
+        "finiteArrays": true,
+        "noNonFiniteTelemetry": true,
+        "noClipping": true,
+        "noDroppedStrikes": true,
+        "outputPeakAbs": 0.02110352,
+        "dcMeanL": 0.00003222,
+        "dcMeanR": 0.00003214
+      },
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 12288,
+        "sleeps": 0,
+        "truncatedTailEnergy": 0,
+        "physicsSteps": 2246,
+        "energyDelta": 0.0013910955636690092,
+        "couplingWorkProxy": 0.0004044687361556714,
+        "deepPlateCouplingTransfers": 35463552,
+        "sphereCouplingTransfers": 26952,
+        "maxOutputAbs": 0.021558477327829496,
+        "activeSphereModes": 0,
+        "layers": 12,
+        "activeNodes": 12288,
+        "awakeLayers": 12,
+        "sleepingLayers": 0,
+        "physicsRate": 6000,
+        "topologyGeneration": 1,
+        "couplingLinks": 11264,
+        "noduleCount": 1,
+        "integratedSphereModes": 12,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000
+      }
+    },
+    {
+      "shape": "full",
+      "layers": 12,
+      "sampleRateHz": 48000,
+      "topology": {
+        "nodeCount": 12288,
+        "activeMaskCells": 12288,
+        "sourceMaskCellsPerLayer": 9216,
+        "overlapCells96": 9216,
+        "actualAdjacentLinks": 11264,
+        "typedArrayBytes": 733570,
+        "workletStateTypedArrayBytes": 697288,
+        "nodules": [
+          {
+            "id": "synthetic-nodule-full-12-0",
+            "physicalRadiusMeters": 0.024,
+            "material": {
+              "density": 2000,
+              "youngModulus": 800000,
+              "poisson": 0.3,
+              "damping": 0.35
+            },
+            "burial": {
+              "buriedDepthMeters": 0.04
+            },
+            "foundationPlateId": "synthetic-full-0",
+            "foundationNode": 528,
+            "couplingWeight": 0.20000000298023224
+          }
+        ],
+        "maxSphereModesAvailable": 12,
+        "noduleCount": 1
+      },
+      "excitation": {
+        "groupedFootImpulse": 0.035,
+        "frames": 5760,
+        "wallMs": 1113.3875,
+        "initialStateEnergy": 0.001225,
+        "postExcitationStateEnergy": 1.05020446,
+        "peakAbs": 0.02110352,
+        "rms": 0.01021866,
+        "clipSamples": 0
+      },
+      "tail": {
+        "frames": 12000,
+        "postTailStateEnergy": 0.64565602,
+        "energyRatioToPostExcitation": 0.61479078,
+        "physicalEnergyEstimator": {
+          "afterExcitation": {
+            "kinetic": 0.00031753,
+            "bending": 0.00027948,
+            "tension": 0.00000673,
+            "adjacentSpring": 0.00000549,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00060922
+          },
+          "afterTail": {
+            "kinetic": 0.00029007,
+            "bending": 0.00029401,
+            "tension": 0.00000549,
+            "adjacentSpring": 0.00000562,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.0005952
+          },
+          "shortTailRange": null,
+          "disclaimer": "Discrete diagnostic estimator; damping, leapfrog cross-strain terms, sleeping cutoffs and coupling proxies mean it is not a full continuum conservation proof."
+        },
+        "peakAbs": 0.01882739,
+        "rms": 0.0087323,
+        "clipSamples": 0
+      },
+      "checks": {
+        "finiteArrays": true,
+        "noNonFiniteTelemetry": true,
+        "noClipping": true,
+        "noDroppedStrikes": true,
+        "outputPeakAbs": 0.02110352,
+        "dcMeanL": 0.00010261,
+        "dcMeanR": 0.00010254
+      },
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 12288,
+        "sleeps": 0,
+        "truncatedTailEnergy": 0,
+        "physicsSteps": 2224,
+        "energyDelta": -0.0007420197395934247,
+        "couplingWorkProxy": 0.00040093572379471903,
+        "deepPlateCouplingTransfers": 34967936,
+        "sphereCouplingTransfers": 26688,
+        "maxOutputAbs": 0.021558477327829496,
+        "activeSphereModes": 0,
+        "layers": 12,
+        "activeNodes": 12288,
+        "awakeLayers": 12,
+        "sleepingLayers": 0,
+        "physicsRate": 6000,
+        "topologyGeneration": 1,
+        "couplingLinks": 11264,
+        "noduleCount": 1,
+        "integratedSphereModes": 12,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000
+      }
+    },
+    {
+      "shape": "full",
+      "layers": 12,
+      "sampleRateHz": 96000,
+      "topology": {
+        "nodeCount": 12288,
+        "activeMaskCells": 12288,
+        "sourceMaskCellsPerLayer": 9216,
+        "overlapCells96": 9216,
+        "actualAdjacentLinks": 11264,
+        "typedArrayBytes": 733570,
+        "workletStateTypedArrayBytes": 697288,
+        "nodules": [
+          {
+            "id": "synthetic-nodule-full-12-0",
+            "physicalRadiusMeters": 0.024,
+            "material": {
+              "density": 2000,
+              "youngModulus": 800000,
+              "poisson": 0.3,
+              "damping": 0.35
+            },
+            "burial": {
+              "buriedDepthMeters": 0.04
+            },
+            "foundationPlateId": "synthetic-full-0",
+            "foundationNode": 528,
+            "couplingWeight": 0.20000000298023224
+          }
+        ],
+        "maxSphereModesAvailable": 12,
+        "noduleCount": 1
+      },
+      "excitation": {
+        "groupedFootImpulse": 0.035,
+        "frames": 11520,
+        "wallMs": 2112.8795,
+        "initialStateEnergy": 0.001225,
+        "postExcitationStateEnergy": 1.05020446,
+        "peakAbs": 0.02110352,
+        "rms": 0.01021829,
+        "clipSamples": 0
+      },
+      "tail": {
+        "frames": 24000,
+        "postTailStateEnergy": 0.64565602,
+        "energyRatioToPostExcitation": 0.61479078,
+        "physicalEnergyEstimator": {
+          "afterExcitation": {
+            "kinetic": 0.00031753,
+            "bending": 0.00027948,
+            "tension": 0.00000673,
+            "adjacentSpring": 0.00000549,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00060922
+          },
+          "afterTail": {
+            "kinetic": 0.00029007,
+            "bending": 0.00029401,
+            "tension": 0.00000549,
+            "adjacentSpring": 0.00000562,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.0005952
+          },
+          "shortTailRange": null,
+          "disclaimer": "Discrete diagnostic estimator; damping, leapfrog cross-strain terms, sleeping cutoffs and coupling proxies mean it is not a full continuum conservation proof."
+        },
+        "peakAbs": 0.01882739,
+        "rms": 0.00873231,
+        "clipSamples": 0
+      },
+      "checks": {
+        "finiteArrays": true,
+        "noNonFiniteTelemetry": true,
+        "noClipping": true,
+        "noDroppedStrikes": true,
+        "outputPeakAbs": 0.02110352,
+        "dcMeanL": 0.00010292,
+        "dcMeanR": 0.00010285
+      },
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 12288,
+        "sleeps": 0,
+        "truncatedTailEnergy": 0,
+        "physicsSteps": 2224,
+        "energyDelta": -0.0007420197395934247,
+        "couplingWorkProxy": 0.00040093572379471903,
+        "deepPlateCouplingTransfers": 34967936,
+        "sphereCouplingTransfers": 26688,
+        "maxOutputAbs": 0.021558477327829496,
+        "activeSphereModes": 0,
+        "layers": 12,
+        "activeNodes": 12288,
+        "awakeLayers": 12,
+        "sleepingLayers": 0,
+        "physicsRate": 6000,
+        "topologyGeneration": 1,
+        "couplingLinks": 11264,
+        "noduleCount": 1,
+        "integratedSphereModes": 12,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000
+      }
+    },
+    {
+      "shape": "full",
+      "layers": 24,
+      "sampleRateHz": 44100,
+      "topology": {
+        "nodeCount": 24576,
+        "activeMaskCells": 24576,
+        "sourceMaskCellsPerLayer": 9216,
+        "overlapCells96": 9216,
+        "actualAdjacentLinks": 23552,
+        "typedArrayBytes": 1397458,
+        "workletStateTypedArrayBytes": 1409992,
+        "nodules": [
+          {
+            "id": "synthetic-nodule-full-24-0",
+            "physicalRadiusMeters": 0.024,
+            "material": {
+              "density": 2000,
+              "youngModulus": 800000,
+              "poisson": 0.3,
+              "damping": 0.35
+            },
+            "burial": {
+              "buriedDepthMeters": 0.04
+            },
+            "foundationPlateId": "synthetic-full-0",
+            "foundationNode": 528,
+            "couplingWeight": 0.20000000298023224
+          }
+        ],
+        "maxSphereModesAvailable": 12,
+        "noduleCount": 1
+      },
+      "excitation": {
+        "groupedFootImpulse": 0.035,
+        "frames": 5292,
+        "wallMs": 2159.2131,
+        "initialStateEnergy": 0.001225,
+        "postExcitationStateEnergy": 1.05982033,
+        "peakAbs": 0.02110352,
+        "rms": 0.01021794,
+        "clipSamples": 0
+      },
+      "tail": {
+        "frames": 11025,
+        "postTailStateEnergy": 0.66053697,
+        "energyRatioToPostExcitation": 0.62325373,
+        "physicalEnergyEstimator": {
+          "afterExcitation": {
+            "kinetic": 0.00029046,
+            "bending": 0.00031071,
+            "tension": 0.00000769,
+            "adjacentSpring": 0.00000557,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00061443
+          },
+          "afterTail": {
+            "kinetic": 0.00030156,
+            "bending": 0.00028407,
+            "tension": 0.00000584,
+            "adjacentSpring": 0.00000564,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00059711
+          },
+          "shortTailRange": null,
+          "disclaimer": "Discrete diagnostic estimator; damping, leapfrog cross-strain terms, sleeping cutoffs and coupling proxies mean it is not a full continuum conservation proof."
+        },
+        "peakAbs": 0.0188402,
+        "rms": 0.00874024,
+        "clipSamples": 0
+      },
+      "checks": {
+        "finiteArrays": true,
+        "noNonFiniteTelemetry": true,
+        "noClipping": true,
+        "noDroppedStrikes": true,
+        "outputPeakAbs": 0.02110352,
+        "dcMeanL": 0.00002965,
+        "dcMeanR": 0.00002965
+      },
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 13900,
+        "sleeps": 0,
+        "truncatedTailEnergy": 0,
+        "physicsSteps": 2246,
+        "energyDelta": 0.0013767788353623578,
+        "couplingWorkProxy": 0.0004044808161622105,
+        "deepPlateCouplingTransfers": 36724196,
+        "sphereCouplingTransfers": 26952,
+        "maxOutputAbs": 0.021558477327829496,
+        "activeSphereModes": 0,
+        "layers": 24,
+        "activeNodes": 13900,
+        "awakeLayers": 15,
+        "sleepingLayers": 9,
+        "physicsRate": 6000,
+        "topologyGeneration": 1,
+        "couplingLinks": 23552,
+        "noduleCount": 1,
+        "integratedSphereModes": 12,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000
+      }
+    },
+    {
+      "shape": "full",
+      "layers": 24,
+      "sampleRateHz": 48000,
+      "topology": {
+        "nodeCount": 24576,
+        "activeMaskCells": 24576,
+        "sourceMaskCellsPerLayer": 9216,
+        "overlapCells96": 9216,
+        "actualAdjacentLinks": 23552,
+        "typedArrayBytes": 1397458,
+        "workletStateTypedArrayBytes": 1409992,
+        "nodules": [
+          {
+            "id": "synthetic-nodule-full-24-0",
+            "physicalRadiusMeters": 0.024,
+            "material": {
+              "density": 2000,
+              "youngModulus": 800000,
+              "poisson": 0.3,
+              "damping": 0.35
+            },
+            "burial": {
+              "buriedDepthMeters": 0.04
+            },
+            "foundationPlateId": "synthetic-full-0",
+            "foundationNode": 528,
+            "couplingWeight": 0.20000000298023224
+          }
+        ],
+        "maxSphereModesAvailable": 12,
+        "noduleCount": 1
+      },
+      "excitation": {
+        "groupedFootImpulse": 0.035,
+        "frames": 5760,
+        "wallMs": 1141.7964,
+        "initialStateEnergy": 0.001225,
+        "postExcitationStateEnergy": 1.05020446,
+        "peakAbs": 0.02110352,
+        "rms": 0.01021866,
+        "clipSamples": 0
+      },
+      "tail": {
+        "frames": 12000,
+        "postTailStateEnergy": 0.64440131,
+        "energyRatioToPostExcitation": 0.61359605,
+        "physicalEnergyEstimator": {
+          "afterExcitation": {
+            "kinetic": 0.00031753,
+            "bending": 0.00027948,
+            "tension": 0.00000673,
+            "adjacentSpring": 0.00000549,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00060922
+          },
+          "afterTail": {
+            "kinetic": 0.00029006,
+            "bending": 0.00029401,
+            "tension": 0.00000549,
+            "adjacentSpring": 0.00000564,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.0005952
+          },
+          "shortTailRange": null,
+          "disclaimer": "Discrete diagnostic estimator; damping, leapfrog cross-strain terms, sleeping cutoffs and coupling proxies mean it is not a full continuum conservation proof."
+        },
+        "peakAbs": 0.0188402,
+        "rms": 0.00873563,
+        "clipSamples": 0
+      },
+      "checks": {
+        "finiteArrays": true,
+        "noNonFiniteTelemetry": true,
+        "noClipping": true,
+        "noDroppedStrikes": true,
+        "outputPeakAbs": 0.02110352,
+        "dcMeanL": 0.00010021,
+        "dcMeanR": 0.00010021
+      },
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 13856,
+        "sleeps": 0,
+        "truncatedTailEnergy": 0,
+        "physicsSteps": 2224,
+        "energyDelta": -0.0007543040871971218,
+        "couplingWorkProxy": 0.00040094788632961405,
+        "deepPlateCouplingTransfers": 36136524,
+        "sphereCouplingTransfers": 26688,
+        "maxOutputAbs": 0.021558477327829496,
+        "activeSphereModes": 0,
+        "layers": 24,
+        "activeNodes": 13856,
+        "awakeLayers": 14,
+        "sleepingLayers": 10,
+        "physicsRate": 6000,
+        "topologyGeneration": 1,
+        "couplingLinks": 23552,
+        "noduleCount": 1,
+        "integratedSphereModes": 12,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000
+      }
+    },
+    {
+      "shape": "full",
+      "layers": 24,
+      "sampleRateHz": 96000,
+      "topology": {
+        "nodeCount": 24576,
+        "activeMaskCells": 24576,
+        "sourceMaskCellsPerLayer": 9216,
+        "overlapCells96": 9216,
+        "actualAdjacentLinks": 23552,
+        "typedArrayBytes": 1397458,
+        "workletStateTypedArrayBytes": 1409992,
+        "nodules": [
+          {
+            "id": "synthetic-nodule-full-24-0",
+            "physicalRadiusMeters": 0.024,
+            "material": {
+              "density": 2000,
+              "youngModulus": 800000,
+              "poisson": 0.3,
+              "damping": 0.35
+            },
+            "burial": {
+              "buriedDepthMeters": 0.04
+            },
+            "foundationPlateId": "synthetic-full-0",
+            "foundationNode": 528,
+            "couplingWeight": 0.20000000298023224
+          }
+        ],
+        "maxSphereModesAvailable": 12,
+        "noduleCount": 1
+      },
+      "excitation": {
+        "groupedFootImpulse": 0.035,
+        "frames": 11520,
+        "wallMs": 1077.8524,
+        "initialStateEnergy": 0.001225,
+        "postExcitationStateEnergy": 1.05020446,
+        "peakAbs": 0.02110352,
+        "rms": 0.01021829,
+        "clipSamples": 0
+      },
+      "tail": {
+        "frames": 24000,
+        "postTailStateEnergy": 0.64440131,
+        "energyRatioToPostExcitation": 0.61359605,
+        "physicalEnergyEstimator": {
+          "afterExcitation": {
+            "kinetic": 0.00031753,
+            "bending": 0.00027948,
+            "tension": 0.00000673,
+            "adjacentSpring": 0.00000549,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00060922
+          },
+          "afterTail": {
+            "kinetic": 0.00029006,
+            "bending": 0.00029401,
+            "tension": 0.00000549,
+            "adjacentSpring": 0.00000564,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.0005952
+          },
+          "shortTailRange": null,
+          "disclaimer": "Discrete diagnostic estimator; damping, leapfrog cross-strain terms, sleeping cutoffs and coupling proxies mean it is not a full continuum conservation proof."
+        },
+        "peakAbs": 0.0188402,
+        "rms": 0.00873563,
+        "clipSamples": 0
+      },
+      "checks": {
+        "finiteArrays": true,
+        "noNonFiniteTelemetry": true,
+        "noClipping": true,
+        "noDroppedStrikes": true,
+        "outputPeakAbs": 0.02110352,
+        "dcMeanL": 0.00010052,
+        "dcMeanR": 0.00010052
+      },
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 13856,
+        "sleeps": 0,
+        "truncatedTailEnergy": 0,
+        "physicsSteps": 2224,
+        "energyDelta": -0.0007543040871971218,
+        "couplingWorkProxy": 0.00040094788632961405,
+        "deepPlateCouplingTransfers": 36136524,
+        "sphereCouplingTransfers": 26688,
+        "maxOutputAbs": 0.021558477327829496,
+        "activeSphereModes": 0,
+        "layers": 24,
+        "activeNodes": 13856,
+        "awakeLayers": 14,
+        "sleepingLayers": 10,
+        "physicsRate": 6000,
+        "topologyGeneration": 1,
+        "couplingLinks": 23552,
+        "noduleCount": 1,
+        "integratedSphereModes": 12,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000
+      }
+    },
+    {
+      "shape": "full",
+      "layers": 48,
+      "sampleRateHz": 44100,
+      "topology": {
+        "nodeCount": 49152,
+        "activeMaskCells": 49152,
+        "sourceMaskCellsPerLayer": 9216,
+        "overlapCells96": 9216,
+        "actualAdjacentLinks": 48128,
+        "typedArrayBytes": 2725234,
+        "workletStateTypedArrayBytes": 2835400,
+        "nodules": [
+          {
+            "id": "synthetic-nodule-full-48-0",
+            "physicalRadiusMeters": 0.024,
+            "material": {
+              "density": 2000,
+              "youngModulus": 800000,
+              "poisson": 0.3,
+              "damping": 0.35
+            },
+            "burial": {
+              "buriedDepthMeters": 0.04
+            },
+            "foundationPlateId": "synthetic-full-0",
+            "foundationNode": 528,
+            "couplingWeight": 0.20000000298023224
+          }
+        ],
+        "maxSphereModesAvailable": 12,
+        "noduleCount": 1
+      },
+      "excitation": {
+        "groupedFootImpulse": 0.035,
+        "frames": 5292,
+        "wallMs": 1119.3937,
+        "initialStateEnergy": 0.001225,
+        "postExcitationStateEnergy": 1.05982033,
+        "peakAbs": 0.02110352,
+        "rms": 0.01021794,
+        "clipSamples": 0
+      },
+      "tail": {
+        "frames": 11025,
+        "postTailStateEnergy": 0.66053697,
+        "energyRatioToPostExcitation": 0.62325373,
+        "physicalEnergyEstimator": {
+          "afterExcitation": {
+            "kinetic": 0.00029046,
+            "bending": 0.00031071,
+            "tension": 0.00000769,
+            "adjacentSpring": 0.00000557,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00061443
+          },
+          "afterTail": {
+            "kinetic": 0.00030156,
+            "bending": 0.00028407,
+            "tension": 0.00000584,
+            "adjacentSpring": 0.00000564,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00059711
+          },
+          "shortTailRange": null,
+          "disclaimer": "Discrete diagnostic estimator; damping, leapfrog cross-strain terms, sleeping cutoffs and coupling proxies mean it is not a full continuum conservation proof."
+        },
+        "peakAbs": 0.0188402,
+        "rms": 0.00874024,
+        "clipSamples": 0
+      },
+      "checks": {
+        "finiteArrays": true,
+        "noNonFiniteTelemetry": true,
+        "noClipping": true,
+        "noDroppedStrikes": true,
+        "outputPeakAbs": 0.02110352,
+        "dcMeanL": 0.00002965,
+        "dcMeanR": 0.00002965
+      },
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 13900,
+        "sleeps": 0,
+        "truncatedTailEnergy": 0,
+        "physicsSteps": 2246,
+        "energyDelta": 0.0013767788353623578,
+        "couplingWorkProxy": 0.0004044808161622105,
+        "deepPlateCouplingTransfers": 36724196,
+        "sphereCouplingTransfers": 26952,
+        "maxOutputAbs": 0.021558477327829496,
+        "activeSphereModes": 0,
+        "layers": 48,
+        "activeNodes": 13900,
+        "awakeLayers": 15,
+        "sleepingLayers": 33,
+        "physicsRate": 6000,
+        "topologyGeneration": 1,
+        "couplingLinks": 48128,
+        "noduleCount": 1,
+        "integratedSphereModes": 12,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000
+      }
+    },
+    {
+      "shape": "full",
+      "layers": 48,
+      "sampleRateHz": 48000,
+      "topology": {
+        "nodeCount": 49152,
+        "activeMaskCells": 49152,
+        "sourceMaskCellsPerLayer": 9216,
+        "overlapCells96": 9216,
+        "actualAdjacentLinks": 48128,
+        "typedArrayBytes": 2725234,
+        "workletStateTypedArrayBytes": 2835400,
+        "nodules": [
+          {
+            "id": "synthetic-nodule-full-48-0",
+            "physicalRadiusMeters": 0.024,
+            "material": {
+              "density": 2000,
+              "youngModulus": 800000,
+              "poisson": 0.3,
+              "damping": 0.35
+            },
+            "burial": {
+              "buriedDepthMeters": 0.04
+            },
+            "foundationPlateId": "synthetic-full-0",
+            "foundationNode": 528,
+            "couplingWeight": 0.20000000298023224
+          }
+        ],
+        "maxSphereModesAvailable": 12,
+        "noduleCount": 1
+      },
+      "excitation": {
+        "groupedFootImpulse": 0.035,
+        "frames": 5760,
+        "wallMs": 1261.3408,
+        "initialStateEnergy": 0.001225,
+        "postExcitationStateEnergy": 1.05020446,
+        "peakAbs": 0.02110352,
+        "rms": 0.01021866,
+        "clipSamples": 0
+      },
+      "tail": {
+        "frames": 12000,
+        "postTailStateEnergy": 0.64440131,
+        "energyRatioToPostExcitation": 0.61359605,
+        "physicalEnergyEstimator": {
+          "afterExcitation": {
+            "kinetic": 0.00031753,
+            "bending": 0.00027948,
+            "tension": 0.00000673,
+            "adjacentSpring": 0.00000549,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00060922
+          },
+          "afterTail": {
+            "kinetic": 0.00029006,
+            "bending": 0.00029401,
+            "tension": 0.00000549,
+            "adjacentSpring": 0.00000564,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.0005952
+          },
+          "shortTailRange": null,
+          "disclaimer": "Discrete diagnostic estimator; damping, leapfrog cross-strain terms, sleeping cutoffs and coupling proxies mean it is not a full continuum conservation proof."
+        },
+        "peakAbs": 0.0188402,
+        "rms": 0.00873563,
+        "clipSamples": 0
+      },
+      "checks": {
+        "finiteArrays": true,
+        "noNonFiniteTelemetry": true,
+        "noClipping": true,
+        "noDroppedStrikes": true,
+        "outputPeakAbs": 0.02110352,
+        "dcMeanL": 0.00010021,
+        "dcMeanR": 0.00010021
+      },
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 13856,
+        "sleeps": 0,
+        "truncatedTailEnergy": 0,
+        "physicsSteps": 2224,
+        "energyDelta": -0.0007543040871971218,
+        "couplingWorkProxy": 0.00040094788632961405,
+        "deepPlateCouplingTransfers": 36136524,
+        "sphereCouplingTransfers": 26688,
+        "maxOutputAbs": 0.021558477327829496,
+        "activeSphereModes": 0,
+        "layers": 48,
+        "activeNodes": 13856,
+        "awakeLayers": 14,
+        "sleepingLayers": 34,
+        "physicsRate": 6000,
+        "topologyGeneration": 1,
+        "couplingLinks": 48128,
+        "noduleCount": 1,
+        "integratedSphereModes": 12,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000
+      }
+    },
+    {
+      "shape": "full",
+      "layers": 48,
+      "sampleRateHz": 96000,
+      "topology": {
+        "nodeCount": 49152,
+        "activeMaskCells": 49152,
+        "sourceMaskCellsPerLayer": 9216,
+        "overlapCells96": 9216,
+        "actualAdjacentLinks": 48128,
+        "typedArrayBytes": 2725234,
+        "workletStateTypedArrayBytes": 2835400,
+        "nodules": [
+          {
+            "id": "synthetic-nodule-full-48-0",
+            "physicalRadiusMeters": 0.024,
+            "material": {
+              "density": 2000,
+              "youngModulus": 800000,
+              "poisson": 0.3,
+              "damping": 0.35
+            },
+            "burial": {
+              "buriedDepthMeters": 0.04
+            },
+            "foundationPlateId": "synthetic-full-0",
+            "foundationNode": 528,
+            "couplingWeight": 0.20000000298023224
+          }
+        ],
+        "maxSphereModesAvailable": 12,
+        "noduleCount": 1
+      },
+      "excitation": {
+        "groupedFootImpulse": 0.035,
+        "frames": 11520,
+        "wallMs": 1085.5942,
+        "initialStateEnergy": 0.001225,
+        "postExcitationStateEnergy": 1.05020446,
+        "peakAbs": 0.02110352,
+        "rms": 0.01021829,
+        "clipSamples": 0
+      },
+      "tail": {
+        "frames": 24000,
+        "postTailStateEnergy": 0.64440131,
+        "energyRatioToPostExcitation": 0.61359605,
+        "physicalEnergyEstimator": {
+          "afterExcitation": {
+            "kinetic": 0.00031753,
+            "bending": 0.00027948,
+            "tension": 0.00000673,
+            "adjacentSpring": 0.00000549,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00060922
+          },
+          "afterTail": {
+            "kinetic": 0.00029006,
+            "bending": 0.00029401,
+            "tension": 0.00000549,
+            "adjacentSpring": 0.00000564,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.0005952
+          },
+          "shortTailRange": null,
+          "disclaimer": "Discrete diagnostic estimator; damping, leapfrog cross-strain terms, sleeping cutoffs and coupling proxies mean it is not a full continuum conservation proof."
+        },
+        "peakAbs": 0.0188402,
+        "rms": 0.00873563,
+        "clipSamples": 0
+      },
+      "checks": {
+        "finiteArrays": true,
+        "noNonFiniteTelemetry": true,
+        "noClipping": true,
+        "noDroppedStrikes": true,
+        "outputPeakAbs": 0.02110352,
+        "dcMeanL": 0.00010052,
+        "dcMeanR": 0.00010052
+      },
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 13856,
+        "sleeps": 0,
+        "truncatedTailEnergy": 0,
+        "physicsSteps": 2224,
+        "energyDelta": -0.0007543040871971218,
+        "couplingWorkProxy": 0.00040094788632961405,
+        "deepPlateCouplingTransfers": 36136524,
+        "sphereCouplingTransfers": 26688,
+        "maxOutputAbs": 0.021558477327829496,
+        "activeSphereModes": 0,
+        "layers": 48,
+        "activeNodes": 13856,
+        "awakeLayers": 14,
+        "sleepingLayers": 34,
+        "physicsRate": 6000,
+        "topologyGeneration": 1,
+        "couplingLinks": 48128,
+        "noduleCount": 1,
+        "integratedSphereModes": 12,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000
+      }
+    },
+    {
+      "shape": "corridor",
+      "layers": 12,
+      "sampleRateHz": 44100,
+      "topology": {
+        "nodeCount": 984,
+        "activeMaskCells": 984,
+        "sourceMaskCellsPerLayer": 520,
+        "overlapCells96": 478,
+        "actualAdjacentLinks": 902,
+        "typedArrayBytes": 128218,
+        "workletStateTypedArrayBytes": 56728,
+        "nodules": [
+          {
+            "id": "synthetic-nodule-corridor-12-0",
+            "physicalRadiusMeters": 0.024,
+            "material": {
+              "density": 2000,
+              "youngModulus": 800000,
+              "poisson": 0.3,
+              "damping": 0.35
+            },
+            "burial": {
+              "buriedDepthMeters": 0.04
+            },
+            "foundationPlateId": "synthetic-corridor-0",
+            "foundationNode": 41,
+            "couplingWeight": 0.20000000298023224
+          }
+        ],
+        "maxSphereModesAvailable": 12,
+        "noduleCount": 1
+      },
+      "excitation": {
+        "groupedFootImpulse": 0.035,
+        "frames": 11025,
+        "wallMs": 196.587,
+        "initialStateEnergy": 0.001225,
+        "postExcitationStateEnergy": 0.03782913,
+        "peakAbs": 0.00527726,
+        "rms": 0.00164533,
+        "clipSamples": 0
+      },
+      "tail": {
+        "frames": 11025,
+        "postTailStateEnergy": 0.06410221,
+        "energyRatioToPostExcitation": 1.69451962,
+        "physicalEnergyEstimator": {
+          "afterExcitation": {
+            "kinetic": 0.00031421,
+            "bending": 0.00028497,
+            "tension": 0.0000022,
+            "adjacentSpring": 5.3e-7,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00060191
+          },
+          "afterTail": {
+            "kinetic": 0.00025091,
+            "bending": 0.00033548,
+            "tension": 0.00000227,
+            "adjacentSpring": 7.5e-7,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00058941
+          },
+          "shortTailRange": null,
+          "disclaimer": "Discrete diagnostic estimator; damping, leapfrog cross-strain terms, sleeping cutoffs and coupling proxies mean it is not a full continuum conservation proof."
+        },
+        "peakAbs": 0.00509561,
+        "rms": 0.00163673,
+        "clipSamples": 0
+      },
+      "checks": {
+        "finiteArrays": true,
+        "noNonFiniteTelemetry": true,
+        "noClipping": true,
+        "noDroppedStrikes": true,
+        "outputPeakAbs": 0.00527726,
+        "dcMeanL": 0.00000366,
+        "dcMeanR": 0.0000088
+      },
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 450,
+        "sleeps": 0,
+        "truncatedTailEnergy": 0,
+        "physicsSteps": 3030,
+        "energyDelta": -0.0023213671965882435,
+        "couplingWorkProxy": 0.0002353612809130018,
+        "deepPlateCouplingTransfers": 1962540,
+        "sphereCouplingTransfers": 36360,
+        "maxOutputAbs": 0.0053052550578288294,
+        "activeSphereModes": 0,
+        "layers": 12,
+        "activeNodes": 450,
+        "awakeLayers": 7,
+        "sleepingLayers": 5,
+        "physicsRate": 6000,
+        "topologyGeneration": 1,
+        "couplingLinks": 902,
+        "noduleCount": 1,
+        "integratedSphereModes": 12,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000
+      }
+    },
+    {
+      "shape": "corridor",
+      "layers": 12,
+      "sampleRateHz": 48000,
+      "topology": {
+        "nodeCount": 984,
+        "activeMaskCells": 984,
+        "sourceMaskCellsPerLayer": 520,
+        "overlapCells96": 478,
+        "actualAdjacentLinks": 902,
+        "typedArrayBytes": 128218,
+        "workletStateTypedArrayBytes": 56728,
+        "nodules": [
+          {
+            "id": "synthetic-nodule-corridor-12-0",
+            "physicalRadiusMeters": 0.024,
+            "material": {
+              "density": 2000,
+              "youngModulus": 800000,
+              "poisson": 0.3,
+              "damping": 0.35
+            },
+            "burial": {
+              "buriedDepthMeters": 0.04
+            },
+            "foundationPlateId": "synthetic-corridor-0",
+            "foundationNode": 41,
+            "couplingWeight": 0.20000000298023224
+          }
+        ],
+        "maxSphereModesAvailable": 12,
+        "noduleCount": 1
+      },
+      "excitation": {
+        "groupedFootImpulse": 0.035,
+        "frames": 12000,
+        "wallMs": 209.9896,
+        "initialStateEnergy": 0.001225,
+        "postExcitationStateEnergy": 0.0516094,
+        "peakAbs": 0.00527726,
+        "rms": 0.00164546,
+        "clipSamples": 0
+      },
+      "tail": {
+        "frames": 12000,
+        "postTailStateEnergy": 0.09579921,
+        "energyRatioToPostExcitation": 1.85623572,
+        "physicalEnergyEstimator": {
+          "afterExcitation": {
+            "kinetic": 0.0002865,
+            "bending": 0.00033553,
+            "tension": 0.00000206,
+            "adjacentSpring": 3.2e-7,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00062441
+          },
+          "afterTail": {
+            "kinetic": 0.00028902,
+            "bending": 0.00027456,
+            "tension": 0.00000195,
+            "adjacentSpring": 6.9e-7,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00056622
+          },
+          "shortTailRange": {
+            "min": 0.00056622,
+            "max": 0.0006392,
+            "samples": 94
+          },
+          "disclaimer": "Discrete diagnostic estimator; damping, leapfrog cross-strain terms, sleeping cutoffs and coupling proxies mean it is not a full continuum conservation proof."
+        },
+        "peakAbs": 0.00509561,
+        "rms": 0.00163759,
+        "clipSamples": 0
+      },
+      "checks": {
+        "finiteArrays": true,
+        "noNonFiniteTelemetry": true,
+        "noClipping": true,
+        "noDroppedStrikes": true,
+        "outputPeakAbs": 0.00527726,
+        "dcMeanL": 0.00000213,
+        "dcMeanR": 0.00000301
+      },
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 450,
+        "sleeps": 0,
+        "truncatedTailEnergy": 0,
+        "physicsSteps": 3008,
+        "energyDelta": -0.0012317619687353398,
+        "couplingWorkProxy": 0.00023406205866463887,
+        "deepPlateCouplingTransfers": 1944544,
+        "sphereCouplingTransfers": 36096,
+        "maxOutputAbs": 0.0053052550578288294,
+        "activeSphereModes": 0,
+        "layers": 12,
+        "activeNodes": 450,
+        "awakeLayers": 7,
+        "sleepingLayers": 5,
+        "physicsRate": 6000,
+        "topologyGeneration": 1,
+        "couplingLinks": 902,
+        "noduleCount": 1,
+        "integratedSphereModes": 12,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000
+      }
+    },
+    {
+      "shape": "corridor",
+      "layers": 12,
+      "sampleRateHz": 96000,
+      "topology": {
+        "nodeCount": 984,
+        "activeMaskCells": 984,
+        "sourceMaskCellsPerLayer": 520,
+        "overlapCells96": 478,
+        "actualAdjacentLinks": 902,
+        "typedArrayBytes": 128218,
+        "workletStateTypedArrayBytes": 56728,
+        "nodules": [
+          {
+            "id": "synthetic-nodule-corridor-12-0",
+            "physicalRadiusMeters": 0.024,
+            "material": {
+              "density": 2000,
+              "youngModulus": 800000,
+              "poisson": 0.3,
+              "damping": 0.35
+            },
+            "burial": {
+              "buriedDepthMeters": 0.04
+            },
+            "foundationPlateId": "synthetic-corridor-0",
+            "foundationNode": 41,
+            "couplingWeight": 0.20000000298023224
+          }
+        ],
+        "maxSphereModesAvailable": 12,
+        "noduleCount": 1
+      },
+      "excitation": {
+        "groupedFootImpulse": 0.035,
+        "frames": 24000,
+        "wallMs": 191.1456,
+        "initialStateEnergy": 0.001225,
+        "postExcitationStateEnergy": 0.0516094,
+        "peakAbs": 0.00527726,
+        "rms": 0.0016453,
+        "clipSamples": 0
+      },
+      "tail": {
+        "frames": 24000,
+        "postTailStateEnergy": 0.09579921,
+        "energyRatioToPostExcitation": 1.85623572,
+        "physicalEnergyEstimator": {
+          "afterExcitation": {
+            "kinetic": 0.0002865,
+            "bending": 0.00033553,
+            "tension": 0.00000206,
+            "adjacentSpring": 3.2e-7,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00062441
+          },
+          "afterTail": {
+            "kinetic": 0.00028902,
+            "bending": 0.00027456,
+            "tension": 0.00000195,
+            "adjacentSpring": 6.9e-7,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00056622
+          },
+          "shortTailRange": null,
+          "disclaimer": "Discrete diagnostic estimator; damping, leapfrog cross-strain terms, sleeping cutoffs and coupling proxies mean it is not a full continuum conservation proof."
+        },
+        "peakAbs": 0.00509561,
+        "rms": 0.00163748,
+        "clipSamples": 0
+      },
+      "checks": {
+        "finiteArrays": true,
+        "noNonFiniteTelemetry": true,
+        "noClipping": true,
+        "noDroppedStrikes": true,
+        "outputPeakAbs": 0.00527726,
+        "dcMeanL": 0.00000205,
+        "dcMeanR": 0.00000284
+      },
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 450,
+        "sleeps": 0,
+        "truncatedTailEnergy": 0,
+        "physicsSteps": 3008,
+        "energyDelta": -0.0012317619687353398,
+        "couplingWorkProxy": 0.00023406205866463887,
+        "deepPlateCouplingTransfers": 1944544,
+        "sphereCouplingTransfers": 36096,
+        "maxOutputAbs": 0.0053052550578288294,
+        "activeSphereModes": 0,
+        "layers": 12,
+        "activeNodes": 450,
+        "awakeLayers": 7,
+        "sleepingLayers": 5,
+        "physicsRate": 6000,
+        "topologyGeneration": 1,
+        "couplingLinks": 902,
+        "noduleCount": 1,
+        "integratedSphereModes": 12,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000
+      }
+    },
+    {
+      "shape": "corridor",
+      "layers": 24,
+      "sampleRateHz": 44100,
+      "topology": {
+        "nodeCount": 1968,
+        "activeMaskCells": 1968,
+        "sourceMaskCellsPerLayer": 520,
+        "overlapCells96": 478,
+        "actualAdjacentLinks": 1886,
+        "typedArrayBytes": 175450,
+        "workletStateTypedArrayBytes": 113800,
+        "nodules": [
+          {
+            "id": "synthetic-nodule-corridor-24-0",
+            "physicalRadiusMeters": 0.024,
+            "material": {
+              "density": 2000,
+              "youngModulus": 800000,
+              "poisson": 0.3,
+              "damping": 0.35
+            },
+            "burial": {
+              "buriedDepthMeters": 0.04
+            },
+            "foundationPlateId": "synthetic-corridor-0",
+            "foundationNode": 41,
+            "couplingWeight": 0.20000000298023224
+          }
+        ],
+        "maxSphereModesAvailable": 12,
+        "noduleCount": 1
+      },
+      "excitation": {
+        "groupedFootImpulse": 0.035,
+        "frames": 11025,
+        "wallMs": 190.8172,
+        "initialStateEnergy": 0.001225,
+        "postExcitationStateEnergy": 0.03782913,
+        "peakAbs": 0.00527726,
+        "rms": 0.00164533,
+        "clipSamples": 0
+      },
+      "tail": {
+        "frames": 11025,
+        "postTailStateEnergy": 0.06410221,
+        "energyRatioToPostExcitation": 1.69451962,
+        "physicalEnergyEstimator": {
+          "afterExcitation": {
+            "kinetic": 0.00031421,
+            "bending": 0.00028497,
+            "tension": 0.0000022,
+            "adjacentSpring": 5.3e-7,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00060191
+          },
+          "afterTail": {
+            "kinetic": 0.00025091,
+            "bending": 0.00033548,
+            "tension": 0.00000227,
+            "adjacentSpring": 7.5e-7,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00058941
+          },
+          "shortTailRange": null,
+          "disclaimer": "Discrete diagnostic estimator; damping, leapfrog cross-strain terms, sleeping cutoffs and coupling proxies mean it is not a full continuum conservation proof."
+        },
+        "peakAbs": 0.00509561,
+        "rms": 0.00163673,
+        "clipSamples": 0
+      },
+      "checks": {
+        "finiteArrays": true,
+        "noNonFiniteTelemetry": true,
+        "noClipping": true,
+        "noDroppedStrikes": true,
+        "outputPeakAbs": 0.00527726,
+        "dcMeanL": 0.00000366,
+        "dcMeanR": 0.0000088
+      },
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 450,
+        "sleeps": 0,
+        "truncatedTailEnergy": 0,
+        "physicsSteps": 3030,
+        "energyDelta": -0.0023213671965882435,
+        "couplingWorkProxy": 0.0002353612809130018,
+        "deepPlateCouplingTransfers": 1962540,
+        "sphereCouplingTransfers": 36360,
+        "maxOutputAbs": 0.0053052550578288294,
+        "activeSphereModes": 0,
+        "layers": 24,
+        "activeNodes": 450,
+        "awakeLayers": 7,
+        "sleepingLayers": 17,
+        "physicsRate": 6000,
+        "topologyGeneration": 1,
+        "couplingLinks": 1886,
+        "noduleCount": 1,
+        "integratedSphereModes": 12,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000
+      }
+    },
+    {
+      "shape": "corridor",
+      "layers": 24,
+      "sampleRateHz": 48000,
+      "topology": {
+        "nodeCount": 1968,
+        "activeMaskCells": 1968,
+        "sourceMaskCellsPerLayer": 520,
+        "overlapCells96": 478,
+        "actualAdjacentLinks": 1886,
+        "typedArrayBytes": 175450,
+        "workletStateTypedArrayBytes": 113800,
+        "nodules": [
+          {
+            "id": "synthetic-nodule-corridor-24-0",
+            "physicalRadiusMeters": 0.024,
+            "material": {
+              "density": 2000,
+              "youngModulus": 800000,
+              "poisson": 0.3,
+              "damping": 0.35
+            },
+            "burial": {
+              "buriedDepthMeters": 0.04
+            },
+            "foundationPlateId": "synthetic-corridor-0",
+            "foundationNode": 41,
+            "couplingWeight": 0.20000000298023224
+          }
+        ],
+        "maxSphereModesAvailable": 12,
+        "noduleCount": 1
+      },
+      "excitation": {
+        "groupedFootImpulse": 0.035,
+        "frames": 12000,
+        "wallMs": 192.4879,
+        "initialStateEnergy": 0.001225,
+        "postExcitationStateEnergy": 0.0516094,
+        "peakAbs": 0.00527726,
+        "rms": 0.00164546,
+        "clipSamples": 0
+      },
+      "tail": {
+        "frames": 12000,
+        "postTailStateEnergy": 0.09579921,
+        "energyRatioToPostExcitation": 1.85623572,
+        "physicalEnergyEstimator": {
+          "afterExcitation": {
+            "kinetic": 0.0002865,
+            "bending": 0.00033553,
+            "tension": 0.00000206,
+            "adjacentSpring": 3.2e-7,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00062441
+          },
+          "afterTail": {
+            "kinetic": 0.00028902,
+            "bending": 0.00027456,
+            "tension": 0.00000195,
+            "adjacentSpring": 6.9e-7,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00056622
+          },
+          "shortTailRange": null,
+          "disclaimer": "Discrete diagnostic estimator; damping, leapfrog cross-strain terms, sleeping cutoffs and coupling proxies mean it is not a full continuum conservation proof."
+        },
+        "peakAbs": 0.00509561,
+        "rms": 0.00163759,
+        "clipSamples": 0
+      },
+      "checks": {
+        "finiteArrays": true,
+        "noNonFiniteTelemetry": true,
+        "noClipping": true,
+        "noDroppedStrikes": true,
+        "outputPeakAbs": 0.00527726,
+        "dcMeanL": 0.00000213,
+        "dcMeanR": 0.00000301
+      },
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 450,
+        "sleeps": 0,
+        "truncatedTailEnergy": 0,
+        "physicsSteps": 3008,
+        "energyDelta": -0.0012317619687353398,
+        "couplingWorkProxy": 0.00023406205866463887,
+        "deepPlateCouplingTransfers": 1944544,
+        "sphereCouplingTransfers": 36096,
+        "maxOutputAbs": 0.0053052550578288294,
+        "activeSphereModes": 0,
+        "layers": 24,
+        "activeNodes": 450,
+        "awakeLayers": 7,
+        "sleepingLayers": 17,
+        "physicsRate": 6000,
+        "topologyGeneration": 1,
+        "couplingLinks": 1886,
+        "noduleCount": 1,
+        "integratedSphereModes": 12,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000
+      }
+    },
+    {
+      "shape": "corridor",
+      "layers": 24,
+      "sampleRateHz": 96000,
+      "topology": {
+        "nodeCount": 1968,
+        "activeMaskCells": 1968,
+        "sourceMaskCellsPerLayer": 520,
+        "overlapCells96": 478,
+        "actualAdjacentLinks": 1886,
+        "typedArrayBytes": 175450,
+        "workletStateTypedArrayBytes": 113800,
+        "nodules": [
+          {
+            "id": "synthetic-nodule-corridor-24-0",
+            "physicalRadiusMeters": 0.024,
+            "material": {
+              "density": 2000,
+              "youngModulus": 800000,
+              "poisson": 0.3,
+              "damping": 0.35
+            },
+            "burial": {
+              "buriedDepthMeters": 0.04
+            },
+            "foundationPlateId": "synthetic-corridor-0",
+            "foundationNode": 41,
+            "couplingWeight": 0.20000000298023224
+          }
+        ],
+        "maxSphereModesAvailable": 12,
+        "noduleCount": 1
+      },
+      "excitation": {
+        "groupedFootImpulse": 0.035,
+        "frames": 24000,
+        "wallMs": 195.2457,
+        "initialStateEnergy": 0.001225,
+        "postExcitationStateEnergy": 0.0516094,
+        "peakAbs": 0.00527726,
+        "rms": 0.0016453,
+        "clipSamples": 0
+      },
+      "tail": {
+        "frames": 24000,
+        "postTailStateEnergy": 0.09579921,
+        "energyRatioToPostExcitation": 1.85623572,
+        "physicalEnergyEstimator": {
+          "afterExcitation": {
+            "kinetic": 0.0002865,
+            "bending": 0.00033553,
+            "tension": 0.00000206,
+            "adjacentSpring": 3.2e-7,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00062441
+          },
+          "afterTail": {
+            "kinetic": 0.00028902,
+            "bending": 0.00027456,
+            "tension": 0.00000195,
+            "adjacentSpring": 6.9e-7,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00056622
+          },
+          "shortTailRange": null,
+          "disclaimer": "Discrete diagnostic estimator; damping, leapfrog cross-strain terms, sleeping cutoffs and coupling proxies mean it is not a full continuum conservation proof."
+        },
+        "peakAbs": 0.00509561,
+        "rms": 0.00163748,
+        "clipSamples": 0
+      },
+      "checks": {
+        "finiteArrays": true,
+        "noNonFiniteTelemetry": true,
+        "noClipping": true,
+        "noDroppedStrikes": true,
+        "outputPeakAbs": 0.00527726,
+        "dcMeanL": 0.00000205,
+        "dcMeanR": 0.00000284
+      },
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 450,
+        "sleeps": 0,
+        "truncatedTailEnergy": 0,
+        "physicsSteps": 3008,
+        "energyDelta": -0.0012317619687353398,
+        "couplingWorkProxy": 0.00023406205866463887,
+        "deepPlateCouplingTransfers": 1944544,
+        "sphereCouplingTransfers": 36096,
+        "maxOutputAbs": 0.0053052550578288294,
+        "activeSphereModes": 0,
+        "layers": 24,
+        "activeNodes": 450,
+        "awakeLayers": 7,
+        "sleepingLayers": 17,
+        "physicsRate": 6000,
+        "topologyGeneration": 1,
+        "couplingLinks": 1886,
+        "noduleCount": 1,
+        "integratedSphereModes": 12,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000
+      }
+    },
+    {
+      "shape": "corridor",
+      "layers": 48,
+      "sampleRateHz": 44100,
+      "topology": {
+        "nodeCount": 3936,
+        "activeMaskCells": 3936,
+        "sourceMaskCellsPerLayer": 520,
+        "overlapCells96": 478,
+        "actualAdjacentLinks": 3854,
+        "typedArrayBytes": 269914,
+        "workletStateTypedArrayBytes": 227944,
+        "nodules": [
+          {
+            "id": "synthetic-nodule-corridor-48-0",
+            "physicalRadiusMeters": 0.024,
+            "material": {
+              "density": 2000,
+              "youngModulus": 800000,
+              "poisson": 0.3,
+              "damping": 0.35
+            },
+            "burial": {
+              "buriedDepthMeters": 0.04
+            },
+            "foundationPlateId": "synthetic-corridor-0",
+            "foundationNode": 41,
+            "couplingWeight": 0.20000000298023224
+          }
+        ],
+        "maxSphereModesAvailable": 12,
+        "noduleCount": 1
+      },
+      "excitation": {
+        "groupedFootImpulse": 0.035,
+        "frames": 11025,
+        "wallMs": 193.3604,
+        "initialStateEnergy": 0.001225,
+        "postExcitationStateEnergy": 0.03782913,
+        "peakAbs": 0.00527726,
+        "rms": 0.00164533,
+        "clipSamples": 0
+      },
+      "tail": {
+        "frames": 11025,
+        "postTailStateEnergy": 0.06410221,
+        "energyRatioToPostExcitation": 1.69451962,
+        "physicalEnergyEstimator": {
+          "afterExcitation": {
+            "kinetic": 0.00031421,
+            "bending": 0.00028497,
+            "tension": 0.0000022,
+            "adjacentSpring": 5.3e-7,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00060191
+          },
+          "afterTail": {
+            "kinetic": 0.00025091,
+            "bending": 0.00033548,
+            "tension": 0.00000227,
+            "adjacentSpring": 7.5e-7,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00058941
+          },
+          "shortTailRange": null,
+          "disclaimer": "Discrete diagnostic estimator; damping, leapfrog cross-strain terms, sleeping cutoffs and coupling proxies mean it is not a full continuum conservation proof."
+        },
+        "peakAbs": 0.00509561,
+        "rms": 0.00163673,
+        "clipSamples": 0
+      },
+      "checks": {
+        "finiteArrays": true,
+        "noNonFiniteTelemetry": true,
+        "noClipping": true,
+        "noDroppedStrikes": true,
+        "outputPeakAbs": 0.00527726,
+        "dcMeanL": 0.00000366,
+        "dcMeanR": 0.0000088
+      },
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 450,
+        "sleeps": 0,
+        "truncatedTailEnergy": 0,
+        "physicsSteps": 3030,
+        "energyDelta": -0.0023213671965882435,
+        "couplingWorkProxy": 0.0002353612809130018,
+        "deepPlateCouplingTransfers": 1962540,
+        "sphereCouplingTransfers": 36360,
+        "maxOutputAbs": 0.0053052550578288294,
+        "activeSphereModes": 0,
+        "layers": 48,
+        "activeNodes": 450,
+        "awakeLayers": 7,
+        "sleepingLayers": 41,
+        "physicsRate": 6000,
+        "topologyGeneration": 1,
+        "couplingLinks": 3854,
+        "noduleCount": 1,
+        "integratedSphereModes": 12,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000
+      }
+    },
+    {
+      "shape": "corridor",
+      "layers": 48,
+      "sampleRateHz": 48000,
+      "topology": {
+        "nodeCount": 3936,
+        "activeMaskCells": 3936,
+        "sourceMaskCellsPerLayer": 520,
+        "overlapCells96": 478,
+        "actualAdjacentLinks": 3854,
+        "typedArrayBytes": 269914,
+        "workletStateTypedArrayBytes": 227944,
+        "nodules": [
+          {
+            "id": "synthetic-nodule-corridor-48-0",
+            "physicalRadiusMeters": 0.024,
+            "material": {
+              "density": 2000,
+              "youngModulus": 800000,
+              "poisson": 0.3,
+              "damping": 0.35
+            },
+            "burial": {
+              "buriedDepthMeters": 0.04
+            },
+            "foundationPlateId": "synthetic-corridor-0",
+            "foundationNode": 41,
+            "couplingWeight": 0.20000000298023224
+          }
+        ],
+        "maxSphereModesAvailable": 12,
+        "noduleCount": 1
+      },
+      "excitation": {
+        "groupedFootImpulse": 0.035,
+        "frames": 12000,
+        "wallMs": 191.7092,
+        "initialStateEnergy": 0.001225,
+        "postExcitationStateEnergy": 0.0516094,
+        "peakAbs": 0.00527726,
+        "rms": 0.00164546,
+        "clipSamples": 0
+      },
+      "tail": {
+        "frames": 12000,
+        "postTailStateEnergy": 0.09579921,
+        "energyRatioToPostExcitation": 1.85623572,
+        "physicalEnergyEstimator": {
+          "afterExcitation": {
+            "kinetic": 0.0002865,
+            "bending": 0.00033553,
+            "tension": 0.00000206,
+            "adjacentSpring": 3.2e-7,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00062441
+          },
+          "afterTail": {
+            "kinetic": 0.00028902,
+            "bending": 0.00027456,
+            "tension": 0.00000195,
+            "adjacentSpring": 6.9e-7,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00056622
+          },
+          "shortTailRange": null,
+          "disclaimer": "Discrete diagnostic estimator; damping, leapfrog cross-strain terms, sleeping cutoffs and coupling proxies mean it is not a full continuum conservation proof."
+        },
+        "peakAbs": 0.00509561,
+        "rms": 0.00163759,
+        "clipSamples": 0
+      },
+      "checks": {
+        "finiteArrays": true,
+        "noNonFiniteTelemetry": true,
+        "noClipping": true,
+        "noDroppedStrikes": true,
+        "outputPeakAbs": 0.00527726,
+        "dcMeanL": 0.00000213,
+        "dcMeanR": 0.00000301
+      },
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 450,
+        "sleeps": 0,
+        "truncatedTailEnergy": 0,
+        "physicsSteps": 3008,
+        "energyDelta": -0.0012317619687353398,
+        "couplingWorkProxy": 0.00023406205866463887,
+        "deepPlateCouplingTransfers": 1944544,
+        "sphereCouplingTransfers": 36096,
+        "maxOutputAbs": 0.0053052550578288294,
+        "activeSphereModes": 0,
+        "layers": 48,
+        "activeNodes": 450,
+        "awakeLayers": 7,
+        "sleepingLayers": 41,
+        "physicsRate": 6000,
+        "topologyGeneration": 1,
+        "couplingLinks": 3854,
+        "noduleCount": 1,
+        "integratedSphereModes": 12,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000
+      }
+    },
+    {
+      "shape": "corridor",
+      "layers": 48,
+      "sampleRateHz": 96000,
+      "topology": {
+        "nodeCount": 3936,
+        "activeMaskCells": 3936,
+        "sourceMaskCellsPerLayer": 520,
+        "overlapCells96": 478,
+        "actualAdjacentLinks": 3854,
+        "typedArrayBytes": 269914,
+        "workletStateTypedArrayBytes": 227944,
+        "nodules": [
+          {
+            "id": "synthetic-nodule-corridor-48-0",
+            "physicalRadiusMeters": 0.024,
+            "material": {
+              "density": 2000,
+              "youngModulus": 800000,
+              "poisson": 0.3,
+              "damping": 0.35
+            },
+            "burial": {
+              "buriedDepthMeters": 0.04
+            },
+            "foundationPlateId": "synthetic-corridor-0",
+            "foundationNode": 41,
+            "couplingWeight": 0.20000000298023224
+          }
+        ],
+        "maxSphereModesAvailable": 12,
+        "noduleCount": 1
+      },
+      "excitation": {
+        "groupedFootImpulse": 0.035,
+        "frames": 24000,
+        "wallMs": 191.1947,
+        "initialStateEnergy": 0.001225,
+        "postExcitationStateEnergy": 0.0516094,
+        "peakAbs": 0.00527726,
+        "rms": 0.0016453,
+        "clipSamples": 0
+      },
+      "tail": {
+        "frames": 24000,
+        "postTailStateEnergy": 0.09579921,
+        "energyRatioToPostExcitation": 1.85623572,
+        "physicalEnergyEstimator": {
+          "afterExcitation": {
+            "kinetic": 0.0002865,
+            "bending": 0.00033553,
+            "tension": 0.00000206,
+            "adjacentSpring": 3.2e-7,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00062441
+          },
+          "afterTail": {
+            "kinetic": 0.00028902,
+            "bending": 0.00027456,
+            "tension": 0.00000195,
+            "adjacentSpring": 6.9e-7,
+            "modalKinetic": 0,
+            "modalPotential": 0,
+            "foundationSpring": 0,
+            "total": 0.00056622
+          },
+          "shortTailRange": null,
+          "disclaimer": "Discrete diagnostic estimator; damping, leapfrog cross-strain terms, sleeping cutoffs and coupling proxies mean it is not a full continuum conservation proof."
+        },
+        "peakAbs": 0.00509561,
+        "rms": 0.00163748,
+        "clipSamples": 0
+      },
+      "checks": {
+        "finiteArrays": true,
+        "noNonFiniteTelemetry": true,
+        "noClipping": true,
+        "noDroppedStrikes": true,
+        "outputPeakAbs": 0.00527726,
+        "dcMeanL": 0.00000205,
+        "dcMeanR": 0.00000284
+      },
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 450,
+        "sleeps": 0,
+        "truncatedTailEnergy": 0,
+        "physicsSteps": 3008,
+        "energyDelta": -0.0012317619687353398,
+        "couplingWorkProxy": 0.00023406205866463887,
+        "deepPlateCouplingTransfers": 1944544,
+        "sphereCouplingTransfers": 36096,
+        "maxOutputAbs": 0.0053052550578288294,
+        "activeSphereModes": 0,
+        "layers": 48,
+        "activeNodes": 450,
+        "awakeLayers": 7,
+        "sleepingLayers": 41,
+        "physicsRate": 6000,
+        "topologyGeneration": 1,
+        "couplingLinks": 3854,
+        "noduleCount": 1,
+        "integratedSphereModes": 12,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000
+      }
+    }
+  ],
+  "cpu": {
+    "nodeVm": [
+      {
+        "shape": "corridor",
+        "layers": 12,
+        "sampleRateHz": 48000,
+        "activeNodes": 332,
+        "sleepingLayers": 7,
+        "quantumBudgetMs": 2.66666667,
+        "p50Ms": 1.7387,
+        "p95Ms": 1.8947,
+        "maxMs": 2.0884,
+        "p95BudgetRatio": 0.7105125,
+        "maxBudgetRatio": 0.78315,
+        "typedArrayBytes": 128218,
+        "disclaimer": "Node VM timing only; not AudioWorklet realtime performance."
+      },
+      {
+        "shape": "corridor",
+        "layers": 24,
+        "sampleRateHz": 48000,
+        "activeNodes": 332,
+        "sleepingLayers": 19,
+        "quantumBudgetMs": 2.66666667,
+        "p50Ms": 1.759,
+        "p95Ms": 2.053,
+        "maxMs": 2.7115,
+        "p95BudgetRatio": 0.769875,
+        "maxBudgetRatio": 1.0168125,
+        "typedArrayBytes": 175450,
+        "disclaimer": "Node VM timing only; not AudioWorklet realtime performance."
+      },
+      {
+        "shape": "corridor",
+        "layers": 48,
+        "sampleRateHz": 48000,
+        "activeNodes": 332,
+        "sleepingLayers": 43,
+        "quantumBudgetMs": 2.66666667,
+        "p50Ms": 1.7352,
+        "p95Ms": 1.8077,
+        "maxMs": 2.1127,
+        "p95BudgetRatio": 0.6778875,
+        "maxBudgetRatio": 0.7922625,
+        "typedArrayBytes": 269914,
+        "disclaimer": "Node VM timing only; not AudioWorklet realtime performance."
+      }
+    ],
+    "chromeMainThreadProxy": {
+      "available": true,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+      "cases": [
+        {
+          "sampleRateHz": 44100,
+          "layers": 12,
+          "activeNodes": 378,
+          "quantumBudgetMs": 2.9024943310657596,
+          "p50Ms": 0.40000000037252903,
+          "p95Ms": 0.6000000014901161,
+          "maxMs": 0.900000000372529,
+          "nonFinite": 0,
+          "clipped": 0,
+          "mode": "Chrome main-thread JS proxy with compiled narrow-trail topology and live solver."
+        },
+        {
+          "sampleRateHz": 44100,
+          "layers": 24,
+          "activeNodes": 378,
+          "quantumBudgetMs": 2.9024943310657596,
+          "p50Ms": 0.40000000037252903,
+          "p95Ms": 0.599999999627471,
+          "maxMs": 0.8000000007450581,
+          "nonFinite": 0,
+          "clipped": 0,
+          "mode": "Chrome main-thread JS proxy with compiled narrow-trail topology and live solver."
+        },
+        {
+          "sampleRateHz": 44100,
+          "layers": 48,
+          "activeNodes": 378,
+          "quantumBudgetMs": 2.9024943310657596,
+          "p50Ms": 0.5,
+          "p95Ms": 0.7999999988824129,
+          "maxMs": 0.900000000372529,
+          "nonFinite": 0,
+          "clipped": 0,
+          "mode": "Chrome main-thread JS proxy with compiled narrow-trail topology and live solver."
+        },
+        {
+          "sampleRateHz": 48000,
+          "layers": 12,
+          "activeNodes": 370,
+          "quantumBudgetMs": 2.6666666666666665,
+          "p50Ms": 0.599999999627471,
+          "p95Ms": 0.7000000011175871,
+          "maxMs": 1.1000000014901161,
+          "nonFinite": 0,
+          "clipped": 0,
+          "mode": "Chrome main-thread JS proxy with compiled narrow-trail topology and live solver."
+        },
+        {
+          "sampleRateHz": 48000,
+          "layers": 24,
+          "activeNodes": 370,
+          "quantumBudgetMs": 2.6666666666666665,
+          "p50Ms": 1.300000000745058,
+          "p95Ms": 1.5,
+          "maxMs": 1.6000000014901161,
+          "nonFinite": 0,
+          "clipped": 0,
+          "mode": "Chrome main-thread JS proxy with compiled narrow-trail topology and live solver."
+        },
+        {
+          "sampleRateHz": 48000,
+          "layers": 48,
+          "activeNodes": 370,
+          "quantumBudgetMs": 2.6666666666666665,
+          "p50Ms": 1.299999998882413,
+          "p95Ms": 1.5,
+          "maxMs": 1.5,
+          "nonFinite": 0,
+          "clipped": 0,
+          "mode": "Chrome main-thread JS proxy with compiled narrow-trail topology and live solver."
+        },
+        {
+          "sampleRateHz": 96000,
+          "layers": 12,
+          "activeNodes": 324,
+          "quantumBudgetMs": 1.3333333333333333,
+          "p50Ms": 0.599999999627471,
+          "p95Ms": 0.7000000011175871,
+          "maxMs": 0.8000000007450581,
+          "nonFinite": 0,
+          "clipped": 0,
+          "mode": "Chrome main-thread JS proxy with compiled narrow-trail topology and live solver."
+        },
+        {
+          "sampleRateHz": 96000,
+          "layers": 24,
+          "activeNodes": 324,
+          "quantumBudgetMs": 1.3333333333333333,
+          "p50Ms": 0.599999999627471,
+          "p95Ms": 0.7000000011175871,
+          "maxMs": 0.7000000011175871,
+          "nonFinite": 0,
+          "clipped": 0,
+          "mode": "Chrome main-thread JS proxy with compiled narrow-trail topology and live solver."
+        },
+        {
+          "sampleRateHz": 96000,
+          "layers": 48,
+          "activeNodes": 324,
+          "quantumBudgetMs": 1.3333333333333333,
+          "p50Ms": 0.599999999627471,
+          "p95Ms": 0.7000000011175871,
+          "maxMs": 0.7999999988824129,
+          "nonFinite": 0,
+          "clipped": 0,
+          "mode": "Chrome main-thread JS proxy with compiled narrow-trail topology and live solver."
+        }
+      ],
+      "disclaimer": "Chrome main-thread JavaScript proxy only; not an AudioWorklet scheduling or realtime guarantee."
+    }
+  },
+  "resourceAccounting": {
+    "byteDefinition": "Sum of byteLength for compiler topology typed arrays and direct worklet typed arrays; excludes JS object/array overhead, audio engine buffers and browser process memory.",
+    "capRationale": "256 is a technical history safety ceiling. Frozen history is retained without eviction; compilation and storage at the ceiling do not assert that all 256 full masks stay awake or meet real-time deadlines.",
+    "cases": [
+      {
+        "shape": "full",
+        "layers": 12,
+        "nodes": 12288,
+        "topologyTypedArrayBytes": 733570,
+        "workletStateTypedArrayBytes": 697288,
+        "awakeNodesAfterTail": 12288,
+        "sleepingLayersAfterTail": 0
+      },
+      {
+        "shape": "full",
+        "layers": 24,
+        "nodes": 24576,
+        "topologyTypedArrayBytes": 1397458,
+        "workletStateTypedArrayBytes": 1409992,
+        "awakeNodesAfterTail": 13856,
+        "sleepingLayersAfterTail": 10
+      },
+      {
+        "shape": "full",
+        "layers": 48,
+        "nodes": 49152,
+        "topologyTypedArrayBytes": 2725234,
+        "workletStateTypedArrayBytes": 2835400,
+        "awakeNodesAfterTail": 13856,
+        "sleepingLayersAfterTail": 34
+      },
+      {
+        "shape": "corridor",
+        "layers": 12,
+        "nodes": 984,
+        "topologyTypedArrayBytes": 128218,
+        "workletStateTypedArrayBytes": 56728,
+        "awakeNodesAfterTail": 450,
+        "sleepingLayersAfterTail": 5
+      },
+      {
+        "shape": "corridor",
+        "layers": 24,
+        "nodes": 1968,
+        "topologyTypedArrayBytes": 175450,
+        "workletStateTypedArrayBytes": 113800,
+        "awakeNodesAfterTail": 450,
+        "sleepingLayersAfterTail": 17
+      },
+      {
+        "shape": "corridor",
+        "layers": 48,
+        "nodes": 3936,
+        "topologyTypedArrayBytes": 269914,
+        "workletStateTypedArrayBytes": 227944,
+        "awakeNodesAfterTail": 450,
+        "sleepingLayersAfterTail": 41
+      },
+      {
+        "shape": "full",
+        "layers": 256,
+        "nodes": 262144,
+        "topologyTypedArrayBytes": 14232626,
+        "workletStateTypedArrayBytes": 15188936,
+        "compiledOnly": true,
+        "note": "No all-awake 256-layer runtime claim; sleep/wake and device-specific workload remain separate."
+      },
+      {
+        "shape": "corridor",
+        "layers": 256,
+        "nodes": 20992,
+        "topologyTypedArrayBytes": 1088602,
+        "workletStateTypedArrayBytes": 1217192,
+        "compiledOnly": true,
+        "note": "No all-awake 256-layer runtime claim; sleep/wake and device-specific workload remain separate."
+      },
+      {
+        "shape": "corridor",
+        "layers": 12,
+        "nodules": 32,
+        "allocatedSphereModes": 384,
+        "integratedSphereModes": 384,
+        "topologyTypedArrayBytes": 129272,
+        "workletStateTypedArrayBytes": 70616,
+        "cap": "32 nodules / 384 modal states"
+      }
+    ]
+  },
+  "subcellContact": {
+    "strength": 0.035,
+    "footprintRadius": 0.009,
+    "responses": [
+      {
+        "offsetSolverCells": -0.5,
+        "position": {
+          "x": 0.4838709677419355,
+          "y": 0.49
+        },
+        "accepted": true,
+        "excitationKineticProxy": 0.0006125,
+        "maxAbsImpulseVelocity": 0.03291354,
+        "finiteAndBounded": true
+      },
+      {
+        "offsetSolverCells": -0.25,
+        "position": {
+          "x": 0.49193548387096775,
+          "y": 0.49
+        },
+        "accepted": true,
+        "excitationKineticProxy": 0.0006125,
+        "maxAbsImpulseVelocity": 0.0321041,
+        "finiteAndBounded": true
+      },
+      {
+        "offsetSolverCells": 0,
+        "position": {
+          "x": 0.5,
+          "y": 0.49
+        },
+        "accepted": true,
+        "excitationKineticProxy": 0.0006125,
+        "maxAbsImpulseVelocity": 0.02330886,
+        "finiteAndBounded": true
+      },
+      {
+        "offsetSolverCells": 0.25,
+        "position": {
+          "x": 0.5080645161290323,
+          "y": 0.49
+        },
+        "accepted": true,
+        "excitationKineticProxy": 0.0006125,
+        "maxAbsImpulseVelocity": 0.0321041,
+        "finiteAndBounded": true
+      },
+      {
+        "offsetSolverCells": 0.5,
+        "position": {
+          "x": 0.5161290322580645,
+          "y": 0.49
+        },
+        "accepted": true,
+        "excitationKineticProxy": 0.0006125,
+        "maxAbsImpulseVelocity": 0.03291354,
+        "finiteAndBounded": true
+      }
+    ],
+    "rangeRatioMaxToMin": 1,
+    "interpretation": "Five within-cell synthetic foot-contact offsets verify finite, bounded quadrature response. This is a contact-energy proxy, not a measured biological force or acoustic-energy conservation proof."
+  }
+}

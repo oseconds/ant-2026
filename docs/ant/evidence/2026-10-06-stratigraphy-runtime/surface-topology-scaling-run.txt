@@ -1,0 +1,18 @@
+Surface topology scaling evidence run
+Result file: docs/ant/evidence/2026-10-06-stratigraphy-runtime/surface-topology-scaling-evidence.json
+Recorded UTC: 2026-10-06T05:27:46.942Z
+Command: $env:CHROME_EXECUTABLE_PATH='C:\Program Files\Google\Chrome\Application\chrome.exe'; node scripts/surface-topology-scaling-evidence.js
+Node: v22.23.2
+Worklet SHA256: 5531011e634ad6ca3c97e4a4e5669e0100cef5b009af0c2e9b37f26ab222e802
+Synthetic stability cases: 18; cases use full and narrow corridor masks at 12/24/48 layers and 44.1/48/96 kHz.
+Finite and unclipped cases: 18/18.
+256-layer compiler/worklet storage (compiled only):
+  full: 262144 nodes; topology 14232626 (13.573 MiB), worklet state 15188936 (14.485 MiB).
+  corridor: 20992 nodes; topology 1088602 (1.038 MiB), worklet state 1217192 (1.161 MiB).
+Nodule cap: 32 nodules, 384 integrated modes (12 per nodule).
+Subcell contact: 5 offsets; all accepted=true, all bounded=true.
+Chrome proxy: true; 9 sample-rate/layer cases.
+Chrome p95 range: 0.600-1.500 ms.
+Chrome process: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36
+Limits: Synthetic VM and Chrome main-thread proxy timings are not AudioWorklet scheduling measurements. Resource counts are typed-array byteLength sums only; ordinary JS object/array, audio-engine, and browser process memory is excluded. The 256-layer case does not claim all 256 layers can remain awake in real time.
+Physical-energy diagnostic includes plate kinetic/bending/tension, adjacent-link, sphere modal and foundation-spring terms. It omits leapfrog cross-strain bookkeeping, damping and sleep-cutoff losses; it is not a full energy-conservation proof.
