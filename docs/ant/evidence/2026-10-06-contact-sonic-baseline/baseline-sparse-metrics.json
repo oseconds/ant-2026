@@ -1,0 +1,150 @@
+{
+  "status": "real-chrome-offline-audioworklet-render",
+  "mode": "baseline",
+  "condition": "sparse",
+  "sampleRate": 48000,
+  "durationSeconds": 10,
+  "volume": 0.35,
+  "finalGain": 0.245,
+  "controlledTopology": {
+    "layerCount": 1,
+    "noduleCount": 0,
+    "adjacentLinkCount": 0,
+    "plateId": "trail-plate-1"
+  },
+  "sourceFootContactWindowSimulationSeconds": [
+    154,
+    164
+  ],
+  "footContactGroups": 10,
+  "individualFootContacts": 30,
+  "routedFeet": 4,
+  "routedStrikeMessages": 4,
+  "expectedValidFootContactGroups": 10,
+  "expectedIndividualFeet": 30,
+  "sourceRun": {
+    "seed": 20261005,
+    "fullSimulationSeconds": 600.216666666734
+  },
+  "audioMetrics": {
+    "sampleRate": 48000,
+    "samplesPerChannel": 480000,
+    "finiteSamples": 960000,
+    "nonFiniteSamples": 0,
+    "clippingSamples": 0,
+    "peakL": 0.003496521385386586,
+    "peakR": 0.006072873715311289,
+    "rmsL": 0.0008437283153413179,
+    "rmsR": 0.0018108902046414924,
+    "firstDifferenceRmsL": 0.000014604912888902886,
+    "firstDifferenceRmsR": 0.000017160699831980786,
+    "windowRmsCvL": 0.4436410170516964,
+    "windowRmsCvR": 0.7133092228849726,
+    "fixedSpectrogramSummary": {
+      "left": {
+        "meanSpectrogramDbfs": -98.27402454247901,
+        "meanAbove4kDbfs": -100
+      },
+      "right": {
+        "meanSpectrogramDbfs": -98.31290567222132,
+        "meanAbove4kDbfs": -100
+      }
+    },
+    "routedEventWindows": [
+      {
+        "eventFrame": 367,
+        "attack10msL": 0.0005222185180247295,
+        "attack10msR": 5.934750038346514e-7,
+        "decay10to50msL": 0.00048732968571183816,
+        "decay10to50msR": 0.0002659095467696852
+      },
+      {
+        "eventFrame": 197159,
+        "attack10msL": 0.00047288395869557844,
+        "attack10msR": 0.002463209499121838,
+        "decay10to50msL": 0.0009249991608231457,
+        "decay10to50msR": 0.002993719470653856
+      },
+      {
+        "eventFrame": 197159,
+        "attack10msL": 0.00047288395869557844,
+        "attack10msR": 0.002463209499121838,
+        "decay10to50msL": 0.0009249991608231457,
+        "decay10to50msR": 0.002993719470653856
+      },
+      {
+        "eventFrame": 440695,
+        "attack10msL": 0.0007981123820751782,
+        "attack10msR": 0.001970410846885659,
+        "decay10to50msL": 0.0009010537482173373,
+        "decay10to50msR": 0.0019413063650726514
+      }
+    ],
+    "routedEventWindowCounts": 4,
+    "clippingChannelSamplesL": 0,
+    "clippingChannelSamplesR": 0
+  },
+  "bridgeDiagnostics": {
+    "births": 1,
+    "routedFootEvents": 3,
+    "routedFeet": 4,
+    "strikeRoutes": 4,
+    "supportedFeet": 4,
+    "unsupportedFeet": 26,
+    "directExposedStrikes": 4,
+    "injectedImpulseEnergy": 0.0015519544323420874,
+    "events": 10,
+    "unroutedContacts": 7,
+    "capacityRejectedLayers": 0,
+    "ignoredWhileDisabled": 0,
+    "dropped": 0,
+    "processorErrors": 0
+  },
+  "sourceEventsSha256": "3e847c42e63e83e48471cc80a7703989b6f70dd0f226ac356bff7db2d5db31dc",
+  "outputFile": "baseline-sparse-10s-48khz-f32.wav",
+  "workletSourceSha256": "5531011e634ad6ca3c97e4a4e5669e0100cef5b009af0c2e9b37f26ab222e802",
+  "routedPayloadAndFrameScheduleSha256": "b6e9dfc182edc2fb9c24bf4e3718c42f7b86c4cd9f295ea383274711fb79a275",
+  "processorTestReport": {
+    "type": "ab-done",
+    "injected": 4,
+    "rejected": 0,
+    "scheduled": 4,
+    "diagnostics": {
+      "topologies": 1,
+      "strikes": 4,
+      "dropped": 0,
+      "droppedRoutes": 0,
+      "nonFinite": 0,
+      "clipped": 0,
+      "wakes": 119,
+      "sleeps": 0,
+      "truncatedTailEnergy": 0,
+      "physicsSteps": 60000,
+      "energyDelta": -0.0005064674155527554,
+      "couplingWorkProxy": 0,
+      "deepPlateCouplingTransfers": 0,
+      "sphereCouplingTransfers": 0,
+      "maxOutputAbs": 0.02541726418296175,
+      "activeSphereModes": 0,
+      "layers": 1,
+      "activeNodes": 119,
+      "awakeLayers": 1,
+      "sleepingLayers": 0,
+      "physicsRate": 6000,
+      "topologyGeneration": 1,
+      "couplingLinks": 0,
+      "noduleCount": 0,
+      "integratedSphereModes": 0,
+      "mix": 0.2886751345948129,
+      "truncatedTailRiskThreshold": 1e-10,
+      "quietStepsThreshold": 12000
+    }
+  },
+  "frameSchedulerAppliedEveryBridgeRoute": true,
+  "sameInputContactAndRoutingCounts": true,
+  "wavSha256": "5fb9ea5ff55edd71d7417e0326d36326d46b2f8b88d25e923a67a42883f55c3b",
+  "validContactGroupsAndFeet": {
+    "groups": 10,
+    "individualFeet": 30
+  }
+}

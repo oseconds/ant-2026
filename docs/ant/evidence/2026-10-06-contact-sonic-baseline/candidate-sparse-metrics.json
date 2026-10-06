@@ -1,0 +1,159 @@
+{
+  "status": "real-chrome-offline-audioworklet-render",
+  "mode": "candidate",
+  "condition": "sparse",
+  "sampleRate": 48000,
+  "durationSeconds": 10,
+  "volume": 0.35,
+  "finalGain": 0.245,
+  "controlledTopology": {
+    "layerCount": 1,
+    "noduleCount": 0,
+    "adjacentLinkCount": 0,
+    "plateId": "trail-plate-1"
+  },
+  "sourceFootContactWindowSimulationSeconds": [
+    154,
+    164
+  ],
+  "footContactGroups": 10,
+  "individualFootContacts": 30,
+  "routedFeet": 4,
+  "routedStrikeMessages": 4,
+  "expectedValidFootContactGroups": 10,
+  "expectedIndividualFeet": 30,
+  "sourceRun": {
+    "seed": 20261005,
+    "fullSimulationSeconds": 600.216666666734
+  },
+  "audioMetrics": {
+    "sampleRate": 48000,
+    "samplesPerChannel": 480000,
+    "finiteSamples": 960000,
+    "nonFiniteSamples": 0,
+    "clippingSamples": 0,
+    "clippingChannelSamplesL": 0,
+    "clippingChannelSamplesR": 0,
+    "peakL": 0.002760817762464285,
+    "peakR": 0.005357726477086544,
+    "rmsL": 0.0007497462334178477,
+    "rmsR": 0.0017171212235602524,
+    "firstDifferenceRmsL": 0.000009218838868317362,
+    "firstDifferenceRmsR": 0.000013624612267250107,
+    "windowRmsCvL": 0.48856159604498706,
+    "windowRmsCvR": 0.7359443082039958,
+    "fixedSpectrogramSummary": {
+      "left": {
+        "meanSpectrogramDbfs": -98.7916936959356,
+        "meanAbove4kDbfs": -100
+      },
+      "right": {
+        "meanSpectrogramDbfs": -98.80036453038385,
+        "meanAbove4kDbfs": -100
+      }
+    },
+    "routedEventWindows": [
+      {
+        "eventFrame": 367,
+        "attack10msL": 0.0003014394953732093,
+        "attack10msR": 1.8152688431772064e-8,
+        "decay10to50msL": 0.0004196936189112227,
+        "decay10to50msR": 0.00019894382432093024
+      },
+      {
+        "eventFrame": 197159,
+        "attack10msL": 0.00045371561312277883,
+        "attack10msR": 0.001854221086754777,
+        "decay10to50msL": 0.0007884303355186191,
+        "decay10to50msR": 0.002896730455415043
+      },
+      {
+        "eventFrame": 197159,
+        "attack10msL": 0.00045371561312277883,
+        "attack10msR": 0.001854221086754777,
+        "decay10to50msL": 0.0007884303355186191,
+        "decay10to50msR": 0.002896730455415043
+      },
+      {
+        "eventFrame": 440695,
+        "attack10msL": 0.0006025395318859659,
+        "attack10msR": 0.0023134336473410954,
+        "decay10to50msL": 0.0008297766406414379,
+        "decay10to50msR": 0.0018583672265026195
+      }
+    ],
+    "routedEventWindowCounts": 4
+  },
+  "bridgeDiagnostics": {
+    "births": 1,
+    "routedFootEvents": 3,
+    "routedFeet": 4,
+    "strikeRoutes": 4,
+    "supportedFeet": 4,
+    "unsupportedFeet": 26,
+    "directExposedStrikes": 4,
+    "injectedImpulseEnergy": 0.0015519544323420874,
+    "events": 10,
+    "unroutedContacts": 7,
+    "capacityRejectedLayers": 0,
+    "ignoredWhileDisabled": 0,
+    "dropped": 0,
+    "processorErrors": 0
+  },
+  "sourceEventsSha256": "3e847c42e63e83e48471cc80a7703989b6f70dd0f226ac356bff7db2d5db31dc",
+  "outputFile": "candidate-sparse-10s-48khz-f32.wav",
+  "workletSourceSha256": "a9b25600668ae2d205c28167d375ed94ca901530017aad9ce4aff163bc1236aa",
+  "routedPayloadAndFrameScheduleSha256": "b6e9dfc182edc2fb9c24bf4e3718c42f7b86c4cd9f295ea383274711fb79a275",
+  "processorTestReport": {
+    "type": "ab-done",
+    "injected": 4,
+    "rejected": 0,
+    "scheduled": 4,
+    "diagnostics": {
+      "topologies": 1,
+      "strikes": 4,
+      "dropped": 0,
+      "droppedRoutes": 0,
+      "nonFinite": 0,
+      "clipped": 0,
+      "wakes": 119,
+      "sleeps": 0,
+      "truncatedTailEnergy": 0,
+      "physicsSteps": 60000,
+      "energyDelta": -0.00021065053666809858,
+      "couplingWorkProxy": 0,
+      "deepPlateCouplingTransfers": 0,
+      "sphereCouplingTransfers": 0,
+      "maxOutputAbs": 0.022357184662857466,
+      "requestedContactImpulseSquared": 0.0012932953085469517,
+      "compliantContactImpulseSquared": 0.0012816420684906454,
+      "contactPulseNodeSteps": 594,
+      "contactAttenuatedNodeContributions": 10,
+      "activeSphereModes": 0,
+      "layers": 1,
+      "activeNodes": 119,
+      "awakeLayers": 1,
+      "sleepingLayers": 0,
+      "physicsRate": 6000,
+      "topologyGeneration": 1,
+      "couplingLinks": 0,
+      "noduleCount": 0,
+      "integratedSphereModes": 0,
+      "mix": 0.2886751345948129,
+      "truncatedTailRiskThreshold": 1e-10,
+      "quietStepsThreshold": 12000,
+      "contactPulseDurationMs": 3,
+      "contactPulseSteps": 18,
+      "contactRecoveryTimeMs": 75,
+      "contactReferenceDeltaV": 0.02,
+      "contactMaximumComplianceLoss": 0.25
+    }
+  },
+  "frameSchedulerAppliedEveryBridgeRoute": true,
+  "sameInputContactAndRoutingCounts": true,
+  "wavSha256": "50540258d942b1c53d5645b6aedaf8d4f3045da4691d8f35aa898bb99c4794c4",
+  "validContactGroupsAndFeet": {
+    "groups": 10,
+    "individualFeet": 30
+  }
+}

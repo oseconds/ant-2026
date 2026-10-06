@@ -1,0 +1,68 @@
+{
+  "status": "verified-real-chrome-worklet-ab",
+  "source": {
+    "run": "seed 20261005 recorded natural ANT run",
+    "simulationWindowSeconds": [
+      154,
+      164
+    ],
+    "sourceEvidenceGzipSha256": "3e847c42e63e83e48471cc80a7703989b6f70dd0f226ac356bff7db2d5db31dc",
+    "volume": 0.35,
+    "finalGain": 0.245,
+    "sampleRate": 48000,
+    "onePlateId": "trail-plate-1",
+    "plateBirthSimulationSeconds": 124.01666666667987,
+    "controlledZAdjacency": 0,
+    "controlledNodules": 0
+  },
+  "inputs": {
+    "dense": {
+      "sourceGroups": 648,
+      "individualFeet": 1916,
+      "bridgeRoutedFeet": 242,
+      "bridgePayloadFrameSha256": "8f56adf6f54ccd52143acc2d6c49c6026872df2fac4486776ae00dfb8ba291eb",
+      "parityPassed": true,
+      "baselineProcessorAccepted": 242,
+      "candidateProcessorAccepted": 242
+    },
+    "sparse": {
+      "sourceGroups": 10,
+      "individualFeet": 30,
+      "bridgeRoutedFeet": 4,
+      "bridgePayloadFrameSha256": "b6e9dfc182edc2fb9c24bf4e3718c42f7b86c4cd9f295ea383274711fb79a275",
+      "parityPassed": true,
+      "baselineProcessorAccepted": 4,
+      "candidateProcessorAccepted": 4
+    }
+  },
+  "renderer": {
+    "presetId": "ant-surface-stratigraphy-v1",
+    "waveformScale": [
+      -1,
+      1
+    ],
+    "spectrogramDbfs": [
+      -100,
+      0
+    ],
+    "grayscale": "fixed global linear dBFS brightness, gamma 1",
+    "fftSize": 1024,
+    "window": "Hann",
+    "hopSize": 256,
+    "frequencyHz": [
+      0,
+      8000
+    ],
+    "image": "aligned-ab-10s-fixed-scale.png"
+  },
+  "workletSourceHashes": {
+    "baseline": "5531011e634ad6ca3c97e4a4e5669e0100cef5b009af0c2e9b37f26ab222e802",
+    "candidate": "a9b25600668ae2d205c28167d375ed94ca901530017aad9ce4aff163bc1236aa"
+  },
+  "audioFiles": [
+    "baseline-dense-10s-48khz-f32.wav",
+    "candidate-dense-10s-48khz-f32.wav",
+    "baseline-sparse-10s-48khz-f32.wav",
+    "candidate-sparse-10s-48khz-f32.wav"
+  ]
+}
