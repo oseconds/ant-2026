@@ -20,8 +20,32 @@ function instantiate(rate=48000, workletSource=source) {
   vm.runInNewContext(workletSource,{AudioWorkletProcessor,sampleRate:rate,Float32Array,Uint8Array,Uint16Array,Uint32Array,Int8Array,Int16Array,Int32Array,Array,Math,Number,Object,performance:globalThis.performance,registerProcessor:(_n,p)=>Processor=p});
   return {processor:new Processor(),messages};
 }
+function instantiateDampingMultiplier(multiplier, rate=48000) {
+  const adjusted = source.replace('const PLATE_DAMPING_MULTIPLIER = 50;',
+    `const PLATE_DAMPING_MULTIPLIER = ${multiplier};`);
+  assert.notEqual(adjusted, source, 'test harness must find the production Plate damping constant');
+  return instantiate(rate, adjusted);
+}
 function install(p,t) { p.handleMessage({type:'topology',payload:t}); }
 function run(p,count=128) { const left=new Float32Array(count),right=new Float32Array(count); p.process([],[[left,right]]); return {left,right}; }
+function renderStrike(p,t,{seconds=3,strikePosition={x:.5,y:.505},strength=.035}={}) {
+  install(p,t);
+  p.handleMessage({type:'strike',payload:{plateId:'route',position:strikePosition,strength,footprintRadius:.012}});
+  const sampleCount=Math.round(48000*seconds),left=new Float32Array(sampleCount),right=new Float32Array(sampleCount);
+  for(let offset=0;offset<sampleCount;offset+=128) {
+    const count=Math.min(128,sampleCount-offset),out=run(p,count);
+    left.set(out.left,offset);right.set(out.right,offset);
+  }
+  return {left,right};
+}
+function rmsWindows(samples,rate=48000,windowMs=50,hopMs=10) {
+  const window=Math.round(rate*windowMs/1000),hop=Math.round(rate*hopMs/1000),values=[];
+  for(let start=0;start+window<=samples.length;start+=hop) {
+    let sum=0;for(let i=start;i<start+window;i++)sum+=samples[i]*samples[i];
+    values.push({time:(start+window/2)/rate,rms:Math.sqrt(sum/window)});
+  }
+  return values;
+}
 function energy(p) { let e=0; for(let i=0;i<p.current.length;i++) e+=p.current[i]**2+p.previous[i]**2; for(let i=0;i<p.sphereCurrent.length;i++)e+=p.sphereCurrent[i]**2+p.spherePrevious[i]**2; return e; }
 function seedNode(p,node,amplitude=.01) { p.current[node]=amplitude; p.previous[node]=amplitude; p.wakeNode(node); }
 function pendingImpulse(p,node) { let value=0;for(let step=0;step<18;step++)value+=p.contactForces[step*p.current.length+node];return value; }
@@ -248,13 +272,117 @@ test('finite contacts remain sample-rate and quantum-split invariant with no non
   }
 });
 
-test('without direct contact, historical Plate/Z/Sphere recurrence matches the committed baseline exactly',()=>{
+test('Plate-only damping shortens measured pickup decay while preserving a resonant tail and frozen-material ordering',()=>{
+  const basePlate=plate('route',24,72,24,72),t=topology(basePlate);
+  const old=instantiateDampingMultiplier(1).processor,short=instantiate().processor;
+  const oldPcm=renderStrike(old,t,{seconds:4,strikePosition:{x:.503,y:.487}});
+  const shortPcm=renderStrike(short,t,{seconds:4,strikePosition:{x:.503,y:.487}});
+  const crossing=(samples,thresholdRatio)=>{
+    const env=rmsWindows(samples),referenceIndex=env.reduce((best,row,index)=>row.rms>env[best].rms?index:best,0);
+    const reference=env[referenceIndex].rms,threshold=reference*thresholdRatio,hold=50;
+    for(let i=referenceIndex;i<=env.length-hold;i++)if(env[i].rms<=threshold&&env.slice(i,i+hold).every(row=>row.rms<=threshold)) {
+      if(env.slice(i+hold).some(row=>row.rms>threshold))return null;
+      return env[i].time-env[referenceIndex].time;
+    }
+    return null;
+  };
+  for(const [label,pcm,p] of [['old',oldPcm,old],['short',shortPcm,short]]) {
+    assert.equal(p.telemetry.strikes,1,label);assert.equal(p.telemetry.droppedRoutes,0,label);
+    assert.equal(p.telemetry.nonFinite,0,label);assert.equal(p.telemetry.clipped,0,label);
+    assert.ok([...pcm.left,...pcm.right].every(Number.isFinite),`${label} PCM finite`);
+  }
+  const measure=(pcm,ratio)=>[crossing(pcm.left,ratio),crossing(pcm.right,ratio)];
+  const oldT20=measure(oldPcm,.1),newT20=measure(shortPcm,.1);
+  const newT40=measure(shortPcm,.01),newT60=measure(shortPcm,.001);
+  assert.ok(oldT20[0]===null||oldT20[0]>3.5,`baseline L T20=${oldT20[0]}`);
+  assert.ok(oldT20[1]===null||oldT20[1]>3.5,`baseline R T20=${oldT20[1]}`);
+  assert.ok(newT20[0]!==null&&newT20[0]<1.5,`damped L T20=${newT20[0]}`);
+  assert.ok(newT20[1]!==null&&newT20[1]<1.5,`damped R T20=${newT20[1]}`);
+  assert.ok(newT40.every(value=>value!==null&&value<2.5),`damped T40=${newT40}`);
+  assert.ok(newT60.every(value=>value!==null&&value<4),`damped T60=${newT60}`);
+  const early=pcm=>{
+    const L=rmsWindows(pcm.left),R=rmsWindows(pcm.right);
+    const a=L.filter(x=>x.time>=.15&&x.time<=.5),b=R.filter(x=>x.time>=.15&&x.time<=.5);
+    return [a.reduce((sum,x)=>sum+x.rms,0)/a.length,b.reduce((sum,x)=>sum+x.rms,0)/b.length,
+      Math.max(...L.map(x=>x.rms)),Math.max(...R.map(x=>x.rms))];
+  };
+  const earlyNew=early(shortPcm);
+  assert.ok(earlyNew[0]>earlyNew[2]*.01&&earlyNew[1]>earlyNew[3]*.01,
+    `the damped strike retains a measurable stereo resonant tail after attack: ${earlyNew}`);
+
+  const lowMaterial={...basePlate,material:{...basePlate.material,damping:.25}};
+  const highMaterial={...basePlate,material:{...basePlate.material,damping:.45}};
+  const low=instantiate().processor,high=instantiate().processor;
+  const lowPcm=renderStrike(low,topology(lowMaterial),{seconds:1.5,strikePosition:{x:.503,y:.487}});
+  const highPcm=renderStrike(high,topology(highMaterial),{seconds:1.5,strikePosition:{x:.503,y:.487}});
+  const tail=pcm=>{
+    const L=rmsWindows(pcm.left),R=rmsWindows(pcm.right);
+    const a=L.filter(x=>x.time>=.35&&x.time<=.85),b=R.filter(x=>x.time>=.35&&x.time<=.85);
+    return [a.reduce((s,x)=>s+x.rms,0)/a.length,b.reduce((s,x)=>s+x.rms,0)/b.length];
+  };
+  const lowTail=tail(lowPcm),highTail=tail(highPcm);
+  assert.ok(lowTail[0]>highTail[0]*1.05&&lowTail[1]>highTail[1]*1.05,
+    `frozen low/high material damping distinction retained: ${lowTail} vs ${highTail}`);
+});
+
+test('Plate damping leaves finite-pulse scheduling, local compliance, and accepted dense event counts unchanged',()=>{
+  const t=topology(plate('route',20,76,20,76)),a=instantiateDampingMultiplier(1).processor,b=instantiate().processor;
+  install(a,t);install(b,t);
+  for(let i=0;i<60;i++) {
+    const position=i%2?{x:.42,y:.42}:{x:.62,y:.62};
+    const message={type:'strike',payload:{plateId:'route',position,strength:.02,footprintRadius:.01}};
+    a.handleMessage(message);b.handleMessage(message);
+    assert.deepEqual(a.contactForces,b.contactForces);
+    assert.deepEqual(a.contactMemory,b.contactMemory);
+    assert.equal(a.telemetry.strikes,b.telemetry.strikes);
+    assert.equal(a.telemetry.droppedRoutes,b.telemetry.droppedRoutes);
+    if(i<59){run(a,2400);run(b,2400);}
+  }
+  assert.equal(a.telemetry.strikes,60);assert.equal(b.telemetry.strikes,60);
+  assert.equal(a.telemetry.droppedRoutes,0);assert.equal(b.telemetry.droppedRoutes,0);
+  assert.deepEqual(a.contactForces,b.contactForces);assert.deepEqual(a.contactMemory,b.contactMemory);
+  assert.ok(a.telemetry.compliantContactImpulseSquared>0&&b.telemetry.compliantContactImpulseSquared>0);
+  for(const p of [a,b]) {
+    for(let i=0;i<48000/128;i++)run(p);
+    assert.equal(p.telemetry.nonFinite,0);assert.equal(p.telemetry.clipped,0);
+  }
+});
+
+test('Plate damping is finite and dissipative at 44.1, 48, and 96 kHz',()=>{
+  const t=topology(plate('route',24,72,24,72));
+  for(const rate of [44100,48000,96000]) {
+    const p=instantiate(rate).processor;install(p,t);
+    p.handleMessage({type:'strike',payload:{plateId:'route',position:{x:.503,y:.487},strength:.035,footprintRadius:.012}});
+    const rms=[];let peak=0,nonFinite=0,clipped=0;
+    for(let second=0;second<3;second++) {
+      let sum=0,count=0;
+      for(let offset=0;offset<rate;offset+=128) {
+        const out=run(p,Math.min(128,rate-offset));
+        for(let i=0;i<out.left.length;i++)for(const value of [out.left[i],out.right[i]]) {
+          if(!Number.isFinite(value)){nonFinite++;continue;}
+          peak=Math.max(peak,Math.abs(value));if(Math.abs(value)>=1)clipped++;sum+=value*value;count++;
+        }
+      }
+      rms.push(Math.sqrt(sum/count));
+    }
+    assert.ok(rms[0]>0&&rms[2]<rms[0],`${rate}: RMS ${rms}`);
+    assert.ok(peak<1,`${rate}: peak ${peak}`);assert.equal(nonFinite,0);assert.equal(clipped,0);
+    assert.equal(p.telemetry.nonFinite,0);
+  }
+});
+
+test('after matching only Plate damping, unforced Plate/Z/Sphere recurrence matches historical baseline',()=>{
   const a=plate('a'),b=plate('b');
   const nodule={id:'sphere',position:{x:.5,y:.5},physicalRadiusMeters:.024,material:{density:2000,youngModulus:800000,poisson:.3,damping:.35},burial:{buriedDepthMeters:.04},coupling:{plateId:'a',weight:.2,position:{x:.5,y:.5}}};
   const t=compileSurfaceTopology({plates:[a,b],nodules:[nodule],stratigraphy:{layerOrder:['a','b']}});
-  const p=instantiate().processor,baseline=instantiate(48000,instantaneousSource).processor;
+  const baselineWithPlateDamping=instantaneousSource.replace(
+    'const bending = mats[mi], tension = mats[mi + 1], density = mats[mi + 2], damping = mats[mi + 3];',
+    'const bending = mats[mi], tension = mats[mi + 1], density = mats[mi + 2], damping = mats[mi + 3] * 50;');
+  assert.notEqual(baselineWithPlateDamping,instantaneousSource,'baseline harness applies only the candidate Plate damping mapping');
+  const p=instantiate().processor,baseline=instantiate(48000,baselineWithPlateDamping).processor;
   for(const model of [p,baseline]) {install(model,t);seedNode(model,t.pickupNodeIndices[0],.02);model.sphereCurrent[0]=.01;model.spherePrevious[0]=.009;}
   assert.deepEqual(run(p,8192),run(baseline,8192));
-  assert.deepEqual(p.current,baseline.current);assert.deepEqual(p.sphereCurrent,baseline.sphereCurrent);
+  assert.deepEqual(p.current,baseline.current);assert.deepEqual(p.previous,baseline.previous);
+  assert.deepEqual(p.sphereCurrent,baseline.sphereCurrent);assert.deepEqual(p.spherePrevious,baseline.spherePrevious);
   assert.equal(p.telemetry.sleeps,baseline.telemetry.sleeps);assert.equal(p.telemetry.wakes,baseline.telemetry.wakes);
 });

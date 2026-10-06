@@ -1,6 +1,8 @@
 const GRID = 32;
 const SOURCE_GRID = 96;
 const RATE = 6000;
+// Shorten vibration, preserving the relative loss of each frozen material.
+const PLATE_DAMPING_MULTIPLIER = 50;
 const MAX_LAYERS = 256;
 const MAX_NODULES = 32;
 const MIX = 1 / Math.sqrt(12);
@@ -310,7 +312,7 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
         }
         linkForce += (this.sphereWeight[ni] || 0) * 0.000025 * (modalContact - value) / mats[mi + 2];
       }
-      const bending = mats[mi], tension = mats[mi + 1], density = mats[mi + 2], damping = mats[mi + 3];
+      const bending = mats[mi], tension = mats[mi + 1], density = mats[mi + 2], damping = mats[mi + 3] * PLATE_DAMPING_MULTIPLIER;
       const next = 2 * value - this.previous[node] - bending * lapOfLap
         + tension * lap[node] / density - damping * vel + linkForce;
       if (!Number.isFinite(next)) { this.telemetry.nonFinite++; this.current[node] = this.previous[node] = 0; this.next[node] = 0; continue; }
