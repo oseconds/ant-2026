@@ -125,6 +125,8 @@ test('overlapping layers couple reciprocally, retain their births, and reset vib
   assert.equal(processor.layers.size, 2);
   processor.handleMessage({ type: 'destroy' });
   assert.equal(processor.layers.size, 0);
+  assert.equal(processor.process([], [[new Float32Array(128), new Float32Array(128)]]), false,
+    'a destroyed processor releases its active processing lifetime');
 });
 
 test('44.1 kHz state and interpolation are invariant across a 128-frame process boundary', () => {

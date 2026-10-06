@@ -113,13 +113,17 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
   }
 
   process(_inputs, outputs) {
+    if (this.destroyed) {
+      for (const channel of outputs[0] || []) channel.fill(0);
+      return false;
+    }
     const started = typeof performance !== 'undefined' ? performance.now() : 0;
     const channels = outputs[0] || [];
     const left = channels[0], right = channels[1];
     if (!left || !right) return true;
     left.fill(0);
     right.fill(0);
-    if (this.destroyed || !this.layers.size) return true;
+    if (!this.layers.size) return true;
 
     const layers = this.layerList;
     for (let frame = 0; frame < left.length; frame += 1) {
