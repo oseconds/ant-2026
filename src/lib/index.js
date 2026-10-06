@@ -2,6 +2,7 @@ export { AudioEngine } from './audio/AudioEngine.js';
 export { AntAudioBridge } from './audio/AntAudioBridge.js';
 export { AntEnvironmentAudioBridge } from './audio/AntEnvironmentAudioBridge.js';
 export { SurfaceAudioBridge } from './audio/SurfaceAudioBridge.js';
+export { compileSurfaceTopology } from './audio/compileSurfaceTopology.js';
 export { StringModel } from './models/string/StringModel.js';
 export { PlateModel } from './models/plate/PlateModel.js';
 export { SphereModel, SPHERE_MATERIALS } from './models/sphere/SphereModel.js';
