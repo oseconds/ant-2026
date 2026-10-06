@@ -7,6 +7,7 @@ import vm from 'node:vm';
 
 const [snapshotArg, resultArg, outputArg] = process.argv.slice(2);
 const benchmark = process.argv.includes('--benchmark');
+const shortAblation = process.argv.includes('--short');
 assert.ok(snapshotArg && resultArg && outputArg,
   'Usage: node scripts/ant-sleep-ablation.js <snapshot.json.gz> <snapshot-following-2s.json> <output.json>');
 
@@ -76,7 +77,7 @@ function makeProcessor(condition, diagnosticsEnabled = true) {
   return processor;
 }
 
-const windowSteps = benchmark ? 2500 : 12000;
+const windowSteps = benchmark || shortAblation ? 2500 : 12000;
 const snapshotStep = snapshot.dynamic.physicsSteps;
 const endStep = snapshotStep + windowSteps;
 function hashFinalState(processor) {
@@ -176,8 +177,9 @@ if (benchmark) {
       oldestSleeps: results.at(-1).oldestPlate.sleeps }));
   }
 
-  const output = { source: 'Exact 30-Plate Chrome worklet snapshot plus its recorded next-12000-step message stream',
-    snapshotStep, endStep, simulatedSeconds: 2, conditionsAreDiagnosticHarnessOnly: true, variants: results };
+  const output = { source: `Exact 30-Plate Chrome worklet snapshot plus its recorded message stream through ${windowSteps} physics steps`,
+    snapshotStep, endStep, simulatedSeconds: windowSteps / 6000,
+    conditionsAreDiagnosticHarnessOnly: true, variants: results };
   await writeFile(resolve(outputArg), JSON.stringify(output, null, 2));
   console.log(JSON.stringify({ output: resolve(outputArg), variants: results.map(result => ({
     id: result.id, oldestMaxQuiet: result.oldestPlate.maxEnergyQuietReached,
