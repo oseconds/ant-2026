@@ -4,6 +4,48 @@ const DEFAULT_MAX_FREQUENCY_HZ = 8000;
 const DEFAULT_MIN_DBFS = -100;
 const DEFAULT_MAX_DBFS = 0;
 
+/** Versioned, immutable display contract for ANT surface-audio evidence. */
+export const STRATIGRAPHY_AUDIO_PRESET = Object.freeze({
+  id: 'ant-surface-stratigraphy-v1',
+  rendererVersion: 'ant-surface-stratigraphy-v1',
+  width: 1200,
+  height: 1000,
+  imageWidth: 1200,
+  imageHeight: 1000,
+  comparisonWidth: 1200,
+  comparisonHeight: 1200,
+  comparisonMaxRows: 6,
+  durationSeconds: 10,
+  fftSize: 1024,
+  window: 'Hann',
+  hopSize: 256,
+  frequencyMinHz: 0,
+  frequencyMaxHz: 8000,
+  maxFrequencyHz: 8000,
+  spectrogramMinDb: -100,
+  spectrogramMaxDb: 0,
+  spectrogramGamma: 1,
+  minDbfs: -100,
+  maxDbfs: 0,
+  amplitudeRange: Object.freeze([-1, 1]),
+  waveformAmplitudeMin: -1,
+  waveformAmplitudeMax: 1,
+  grayscaleGamma: 1,
+  gamma: 1,
+  padding: 'zero-pad both channels at the end to exactly 10 seconds; trim longer input',
+  colors: Object.freeze({ background: 255, waveform: 24, axis: 180 }),
+  waveformBackgroundLuminance: 255,
+  waveformLineLuminance: 24,
+  waveformAxisLuminance: 180,
+  waveformLineWidth: 1,
+  lineLuminance: 24,
+  axisLuminance: 180,
+  lineWidth: 1,
+  channelMode: 'separate L/R',
+  opacity: 1
+});
+
+
 /** Build fixed-scale waveform and Hann-windowed magnitude spectrogram data. */
 export function buildAudioSnapshot(samples, {
   sampleRate,
@@ -62,6 +104,184 @@ export function buildAudioSnapshot(samples, {
       framePeriodSeconds: hopSize / sampleRate, maxFrequencyHz: (frequencyBins - 1) * binHz,
       rangeDbfs: [minDbfs, maxDbfs], scale: 'fixed; no peak normalization' }
   };
+}
+
+/**
+ * Build a locked 20-second stereo evidence snapshot. Short source clips are zero-padded;
+ * long clips are truncated. No preset dimensions, scales or DSP analysis settings are
+ * accepted as overrides.
+ */
+export function buildStratigraphyAudioSnapshot(channels, options = {}) {
+  const { sampleRate, sourceDurationSeconds } = options;
+  const unsupportedOverrides = Object.keys(options).filter(key => !['sampleRate', 'sourceDurationSeconds'].includes(key));
+  if (unsupportedOverrides.length) throw new RangeError(`Frozen preset does not accept overrides: ${unsupportedOverrides.join(', ')}.`);
+  if (!Number.isFinite(sampleRate) || sampleRate <= 0) throw new RangeError('sampleRate must be positive.');
+  const left = channels?.left ?? channels?.[0];
+  const right = channels?.right ?? channels?.[1];
+  if (!left || typeof left.length !== 'number' || !right || typeof right.length !== 'number') {
+    throw new TypeError('Stratigraphy audio snapshots require left and right sample arrays.');
+  }
+  if (left.length !== right.length) throw new RangeError('Left and right source channels must have equal sample counts.');
+  const actualSourceDuration = sourceDurationSeconds ?? Math.max(left.length, right.length) / sampleRate;
+  if (!Number.isFinite(actualSourceDuration) || actualSourceDuration < 0) {
+    throw new RangeError('sourceDurationSeconds must be finite and non-negative.');
+  }
+  if (Math.abs(actualSourceDuration - left.length / sampleRate) > 1 / sampleRate) {
+    throw new RangeError('sourceDurationSeconds must match the supplied stereo sample count.');
+  }
+  const outputCount = Math.round(STRATIGRAPHY_AUDIO_PRESET.durationSeconds * sampleRate);
+  const sourceCount = Math.min(outputCount, Math.round(actualSourceDuration * sampleRate));
+  const createPadded = source => {
+    const output = new Float32Array(outputCount);
+    output.set(source.subarray ? source.subarray(0, Math.min(sourceCount, source.length)) : Array.from(source).slice(0, sourceCount));
+    return output;
+  };
+  const fixedChannels = { left: createPadded(left), right: createPadded(right) };
+  const analyzerOptions = {
+    sampleRate,
+    fftSize: STRATIGRAPHY_AUDIO_PRESET.fftSize,
+    hopSize: STRATIGRAPHY_AUDIO_PRESET.hopSize,
+    maxFrequencyHz: STRATIGRAPHY_AUDIO_PRESET.maxFrequencyHz,
+    minDbfs: STRATIGRAPHY_AUDIO_PRESET.minDbfs,
+    maxDbfs: STRATIGRAPHY_AUDIO_PRESET.maxDbfs,
+    waveformBins: STRATIGRAPHY_AUDIO_PRESET.width
+  };
+  return Object.freeze({
+    presetId: STRATIGRAPHY_AUDIO_PRESET.id,
+    sampleRate,
+    sampleCount: outputCount,
+    durationSeconds: STRATIGRAPHY_AUDIO_PRESET.durationSeconds,
+    sourceDurationSeconds: actualSourceDuration,
+    includedSourceDurationSeconds: Math.min(actualSourceDuration, STRATIGRAPHY_AUDIO_PRESET.durationSeconds),
+    paddingSeconds: Math.max(0, STRATIGRAPHY_AUDIO_PRESET.durationSeconds - actualSourceDuration),
+    trimmedSeconds: Math.max(0, actualSourceDuration - STRATIGRAPHY_AUDIO_PRESET.durationSeconds),
+    channels: Object.freeze({
+      left: buildAudioSnapshot(fixedChannels.left, analyzerOptions),
+      right: buildAudioSnapshot(fixedChannels.right, analyzerOptions)
+    }),
+    rendering: STRATIGRAPHY_AUDIO_PRESET
+  });
+}
+
+/** Linear, fixed dBFS-to-grayscale mapping used by the locked evidence renderer. */
+export function stratigraphyLuminanceForDbfs(value) {
+  const bounded = clamp(finiteSample(value), STRATIGRAPHY_AUDIO_PRESET.minDbfs, STRATIGRAPHY_AUDIO_PRESET.maxDbfs);
+  return Math.round(255 * (bounded - STRATIGRAPHY_AUDIO_PRESET.minDbfs)
+    / (STRATIGRAPHY_AUDIO_PRESET.maxDbfs - STRATIGRAPHY_AUDIO_PRESET.minDbfs));
+}
+
+/** Render stereo waveforms and channel-specific spectrograms with the frozen preset. */
+export function renderStratigraphyAudioSnapshot(canvas, snapshot) {
+  if (!canvas?.getContext) throw new TypeError('A canvas is required.');
+  if (snapshot?.presetId !== STRATIGRAPHY_AUDIO_PRESET.id) throw new TypeError('Snapshot must use the frozen stratigraphy preset.');
+  canvas.width = STRATIGRAPHY_AUDIO_PRESET.width;
+  canvas.height = STRATIGRAPHY_AUDIO_PRESET.height;
+  const context = canvas.getContext('2d');
+  context.globalAlpha = STRATIGRAPHY_AUDIO_PRESET.opacity;
+  context.fillStyle = 'rgb(255,255,255)';
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.fillStyle = 'rgb(24,24,24)';
+  context.font = '16px sans-serif';
+  context.fillText(`${snapshot.label || 'ANT surface audio'} · frozen evidence preset ${STRATIGRAPHY_AUDIO_PRESET.id}`, 88, 25);
+  context.font = '12px sans-serif';
+  context.fillText(`Source ${snapshot.sourceDurationSeconds.toFixed(2)} s · included ${snapshot.includedSourceDurationSeconds.toFixed(2)} s · zero-padded ${snapshot.paddingSeconds.toFixed(2)} s · fixed axis ${STRATIGRAPHY_AUDIO_PRESET.durationSeconds.toFixed(2)} s`, 88, 43);
+  const left = 88, right = canvas.width - 20, plotWidth = right - left;
+  const waveformRows = [
+    { channel: 'left', label: 'Waveform L', top: 58, bottom: 176 },
+    { channel: 'right', label: 'Waveform R', top: 202, bottom: 320 }
+  ];
+  for (const row of waveformRows) {
+    context.fillStyle = 'rgb(24,24,24)';
+    context.fillText(row.label, 20, row.top + 12);
+    drawFrozenWaveform(context, snapshot.channels[row.channel].waveform.bins, left, row.top + 18, plotWidth, row.bottom - row.top - 25);
+    drawFixedTimeAxis(context, left, right, row.bottom, STRATIGRAPHY_AUDIO_PRESET.durationSeconds);
+  }
+  drawFrozenSpectrogramPanel(context, snapshot.channels.left.spectrogram, 'Spectrogram L', left, 366, plotWidth, 254);
+  drawFrozenSpectrogramPanel(context, snapshot.channels.right.spectrogram, 'Spectrogram R', left, 672, plotWidth, 254);
+  context.fillStyle = 'rgb(24,24,24)';
+  context.font = '11px sans-serif';
+  context.fillText('FFT 1024 · Hann · hop 256 · 0–8 kHz · grayscale luminance linear −100 to 0 dBFS · no auto-contrast', 88, 974);
+  return snapshot;
+}
+
+/** Fixed-size timeline comparison with identical 20-second axes and per-channel rows. */
+export function renderStratigraphyAudioComparison(canvas, rows) {
+  if (!canvas?.getContext) throw new TypeError('A canvas is required.');
+  if (!Array.isArray(rows) || rows.length < 1 || rows.length > STRATIGRAPHY_AUDIO_PRESET.comparisonMaxRows) {
+    throw new RangeError(`Comparison needs between 1 and ${STRATIGRAPHY_AUDIO_PRESET.comparisonMaxRows} rows.`);
+  }
+  for (const row of rows) if (row?.snapshot?.presetId !== STRATIGRAPHY_AUDIO_PRESET.id) {
+    throw new TypeError('Every comparison row must use the frozen stratigraphy preset.');
+  }
+  canvas.width = STRATIGRAPHY_AUDIO_PRESET.comparisonWidth;
+  canvas.height = STRATIGRAPHY_AUDIO_PRESET.comparisonHeight;
+  const context = canvas.getContext('2d');
+  context.globalAlpha = STRATIGRAPHY_AUDIO_PRESET.opacity;
+  context.fillStyle = 'rgb(255,255,255)'; context.fillRect(0, 0, canvas.width, canvas.height);
+  context.fillStyle = 'rgb(24,24,24)'; context.font = '16px sans-serif';
+  context.fillText(`ANT surface audio · aligned comparison · fixed ${STRATIGRAPHY_AUDIO_PRESET.durationSeconds.toFixed(2)} s axes · ${STRATIGRAPHY_AUDIO_PRESET.id}`, 20, 24);
+  const top = 38, rowHeight = (canvas.height - top - 18) / STRATIGRAPHY_AUDIO_PRESET.comparisonMaxRows;
+  for (let index = 0; index < rows.length; index += 1) {
+    const row = rows[index], y = top + index * rowHeight;
+    context.fillStyle = 'rgb(24,24,24)'; context.font = '13px sans-serif';
+    context.fillText(row.label || `Stage ${index + 1}`, 20, y + 14);
+    const x = 88, width = canvas.width - 108;
+    drawFrozenWaveform(context, row.snapshot.channels.left.waveform.bins, x, y + 20, width, 18);
+    drawFrozenWaveform(context, row.snapshot.channels.right.waveform.bins, x, y + 42, width, 18);
+    context.font = '10px sans-serif'; context.fillText('L', 66, y + 33); context.fillText('R', 66, y + 55);
+    drawFrozenSpectrogramPanel(context, row.snapshot.channels.left.spectrogram, '', x, y + 64, width, 38, false);
+    drawFrozenSpectrogramPanel(context, row.snapshot.channels.right.spectrogram, '', x, y + 108, width, 38, false);
+    drawFixedTimeAxis(context, x, x + width, y + 151, STRATIGRAPHY_AUDIO_PRESET.durationSeconds, index === rows.length - 1);
+    context.strokeStyle = 'rgb(180,180,180)'; context.lineWidth = 1;
+    context.beginPath(); context.moveTo(20, y + rowHeight - 2); context.lineTo(canvas.width - 20, y + rowHeight - 2); context.stroke();
+  }
+  return rows;
+}
+
+function drawFrozenWaveform(context, bins, left, top, width, height) {
+  const center = top + height / 2;
+  context.strokeStyle = 'rgb(180,180,180)'; context.lineWidth = 1; context.globalAlpha = 1;
+  context.beginPath(); context.moveTo(left, center); context.lineTo(left + width, center); context.stroke();
+  context.strokeStyle = 'rgb(24,24,24)'; context.lineWidth = 1; context.globalAlpha = 1;
+  context.beginPath();
+  for (let index = 0; index < bins.length; index += 1) {
+    const x = left + index / Math.max(1, bins.length - 1) * width;
+    const high = top + (1 - clamp(bins[index].max, -1, 1)) * height / 2;
+    const low = top + (1 - clamp(bins[index].min, -1, 1)) * height / 2;
+    context.moveTo(x, high); context.lineTo(x, low);
+  }
+  context.stroke();
+}
+
+function drawFixedTimeAxis(context, left, right, y, seconds, labels = true) {
+  context.strokeStyle = 'rgb(180,180,180)'; context.lineWidth = 1; context.globalAlpha = 1;
+  context.beginPath(); context.moveTo(left, y); context.lineTo(right, y); context.stroke();
+  if (!labels) return;
+  context.fillStyle = 'rgb(24,24,24)'; context.font = '10px sans-serif';
+  context.fillText('0 s', left, y + 11); context.fillText(`${seconds}.0 s`, right - 32, y + 11);
+}
+
+function drawFrozenSpectrogramPanel(context, spectrogram, label, left, top, width, height, labels = true) {
+  if (label) { context.fillStyle = 'rgb(24,24,24)'; context.font = '13px sans-serif'; context.fillText(label, 20, top + 12); }
+  const imageData = context.createImageData(spectrogram.frameCount, spectrogram.frequencyBins);
+  for (let frame = 0; frame < spectrogram.frameCount; frame += 1) {
+    for (let frequency = 0; frequency < spectrogram.frequencyBins; frequency += 1) {
+      const luminance = stratigraphyLuminanceForDbfs(spectrogram.dbfs[frame * spectrogram.frequencyBins + frequency]);
+      const offset = ((spectrogram.frequencyBins - 1 - frequency) * spectrogram.frameCount + frame) * 4;
+      imageData.data[offset] = luminance; imageData.data[offset + 1] = luminance; imageData.data[offset + 2] = luminance; imageData.data[offset + 3] = 255;
+    }
+  }
+  const source = document.createElement('canvas'); source.width = spectrogram.frameCount; source.height = spectrogram.frequencyBins;
+  source.getContext('2d').putImageData(imageData, 0, 0);
+  context.imageSmoothingEnabled = false; context.globalAlpha = 1;
+  const actualTop = top + (label ? 18 : 0), actualHeight = height - (label ? 18 : 0);
+  context.drawImage(source, left, actualTop, width, actualHeight);
+  context.strokeStyle = 'rgb(180,180,180)'; context.lineWidth = 1; context.strokeRect(left, actualTop, width, actualHeight);
+  if (labels) {
+    context.fillStyle = 'rgb(24,24,24)'; context.font = '10px sans-serif';
+    context.fillText('8 kHz', 20, actualTop + 8); context.fillText('0 Hz', 27, actualTop + actualHeight);
+    drawFixedTimeAxis(context, left, left + width, actualTop + actualHeight, STRATIGRAPHY_AUDIO_PRESET.durationSeconds);
+  }
 }
 
 /** Draw the fixed-scale snapshot to a browser canvas. */
