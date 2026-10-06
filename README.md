@@ -205,13 +205,13 @@ SurfaceField는 96×96의 compaction 한 채널입니다. 유효한 각 발 접�
 
 Plate 분석은 매 1 simulated second 수행합니다. 절대 pheromone 농도 `v`를 `v/(v+0.04)`로 포화하고 20 s time constant로 누적한 chemical memory가 0.30 이상이며, 반경 0.025의 SurfaceField support가 0.015 이상인 cell을 후보로 선택합니다. 프레임 최대값으로 정규화하지 않습니다. 후보를 Zhang–Suen thinning으로 골격화하고 8-neighbor graph의 cardinal/diagonal 길이를 쓰는 deterministic Dijkstra로 연결 경로를 구합니다. Source는 `(0.5,0.72)` 주변 반경 0.055–0.115 고리이며 target은 열린 관측 경계 0.05 이내입니다. Source–target geodesic length가 0.30 이상이고 경로가 20 s 지속되어야 생성할 수 있습니다. Spawn-local blob이나 짧은 transient는 거부합니다.
 
-Birth 시 centerline 주변의 chemical+traffic 지지 영역까지의 transverse distance로 half-width를 0.012–0.030에 제한하고 disk ribbon을 rasterize합니다. Geometry/mask/graph/width/material/birth time/provenance를 깊이 동결합니다. Chemical evidence `q∈[0,1]`와 support의 bounded consolidation `s=clamp(meanSupport/0.08,0,1)`로 stiffness `0.65+0.5q`, density `1+0.2s`, damping baseline `0.25+0.2q`를 정합니다. 두 pickup은 principal path geodesic의 25%와 75%에 가장 가까운 유효한 경로 cell입니다. 이후 페로몬 변화가 기존 Plate를 변형하지 않습니다.
+Birth 시 centerline 주변의 chemical+traffic 지지 영역 경계까지의 distance로 half-width를 0.012–0.030에 제한하고 disk ribbon을 rasterize합니다. Geometry/mask/graph/width/material/birth time/provenance를 깊이 동결합니다. Chemical evidence `q∈[0,1]`와 support의 bounded consolidation `s=clamp(meanSupport/0.08,0,1)`로 stiffness `0.65+0.5q`, density `1+0.2s`, damping baseline `0.25+0.2q`를 정합니다. 두 pickup은 principal path geodesic의 25%와 75%를 넘는 segment의 시작 cell로 snap합니다. 오차는 경로 grid segment 하나 이내이고 둘 다 유효한 material 위에 동결됩니다. 이후 페로몬 변화가 기존 Plate를 변형하지 않습니다.
 
 층은 최대 12개를 보존하며 조용히 제거하지 않습니다. 한도에 도달하면 `surfacePlates.limitReached`로 알립니다. 모든 생성 사이에는 10 s 간격이 있고, 비슷한 경로에는 90 s refractory와 추가 실제 발 접촉 30개가 함께 필요합니다. 새 층을 기존 mask와 union하지 않습니다. Renderer는 동결 mask를 한 번 cache하여 live pheromone 아래에 약한 회색 solid ribbon으로 그립니다. 겹친 층은 시각적으로 누적됩니다.
 
 SurfaceAudioBridge는 Audio On 사용자 동작에서 ANT worklet 하나와 기존 GainNode 하나를 만듭니다. 발 위치가 포함된 각 동결 Plate에만 타격하고, Plate가 없으면 정확한 무음입니다. 최대 group strength 0.05를 유효한 발 수와 그 발 아래의 층 수의 제곱근으로 나누며 전체 squared impulse budget을 제한합니다. Plate가 없는 발의 에너지는 다른 발에 재분배하지 않습니다. Off에서 발생한 접촉을 나중에 재생하거나 queue하지 않습니다. Off/On은 vibration 자원을 재생성하되 같은 run의 동결 환경은 유지하고, ANT를 떠나면 controller와 환경을 함께 파괴합니다.
 
-새 ANT processor는 96-grid 동결 mask를 32-grid sparse finite-difference bending layer로 계산합니다. 각 층에 Dirichlet graph Laplacian과 그 제곱을 적용하고 overlap cell에는 양방향 restoring spring을 연결합니다. DSP 격자는 chemical/SurfaceField 해상도를 바꾸지 않습니다. 상수 재질의 선형 근사이며 실측 ground 모델은 아닙니다. 형상이 모드에 영향을 주고 per-ant voice·panner·musical pitch mapping은 없습니다. 수치식과 sample-rate/energy/CPU 검증 및 실제 출력 비교는 Surface Plate evidence에 기록합니다.
+새 ANT processor는 96-grid 동결 mask를 32-grid sparse finite-difference bending layer로 계산합니다. 각 층에 Dirichlet graph Laplacian과 그 제곱을 적용하고 overlap cell에는 양방향 restoring spring을 연결합니다. 6 kHz physics phase를 audio quantum 사이에도 유지하고 output을 보간합니다. Mixing은 현재 층 수로 나누지 않고 최대 12층 기준의 고정 `1/sqrt(12)` headroom과 bounded output을 사용합니다. DSP 격자는 chemical/SurfaceField 해상도를 바꾸지 않습니다. 상수 재질의 선형 근사이며 실측 ground 모델은 아닙니다. 32-grid에서는 발 footprint 차이가 subcell이어서 실제 impulse 폭의 차이가 제한됩니다. 형상이 모드에 영향을 주고 per-ant voice·panner·musical pitch mapping은 없습니다. 수치식, 3 seeds ×600 s, 44.1/48/96 kHz 검증, 실제 Chrome 출력 9개와 CPU 측정 한계는 [Surface Plate evidence](docs/ant/evidence/2026-10-05-surface-plates/README.md)에 기록합니다.
 
 ## ANT AUDIO: legacy 공유 Plate 비교 기준
 
@@ -345,6 +345,6 @@ Node native 테스트는 SSR import, JSON 복사·부분 병합, delay stepping,
 - String은 기존 방식대로 AudioBuffer를 main thread에서 미리 생성합니다. feedback 변경은 다음 voice에 적용됩니다. String의 strike/pickup 위치는 저장 가능한 API를 제공하지만 아직 음색에 영향을 주지 않습니다. 두 원본 String 페이지의 attack/tail envelope는 하나의 Karplus–Strong 출력 경로로 통합했습니다.
 - Plate는 작은 정규 격자와 단순 고정 경계 모델입니다. resolution 변경은 음색도 바꿀 수 있고 고해상도 실시간 CPU 비용을 따로 측정해야 합니다.
 - Sphere의 주파수는 기존 alpha table과 P/S branch 근사식입니다. 정확한 elastic-sphere 경계조건 해법은 아니며 현재 WebGL 구는 실제 modal displacement를 그리지 않습니다.
-- 기본 Plate와 Sphere output은 mono·pickup 하나입니다. ANT는 기존 Plate processor의 두 물리 pickup을 함께 사용합니다. preset persistence, MIDI, automation, recording, spectrum analyzer는 아직 구현하지 않았습니다. Inspector는 String에 먼저 마련했습니다.
+- 기본 Plate와 Sphere output은 mono·pickup 하나입니다. ANT 기본은 각 동결 층의 두 물리 pickup을 shared surface processor에서 읽고, legacy 비교는 기존 Plate processor의 두 pickup을 사용합니다. preset persistence, MIDI, automation, 사용자용 recording/spectrum analyzer는 아직 구현하지 않았습니다. Chrome recording과 고정 scale 분석은 evidence script에만 있습니다. Inspector는 String에 먼저 마련했습니다.
 - ANT의 이웃 감지와 접촉 검사는 현재 O(N²)이며 기본 28개에 맞추었습니다. 더 큰 개체군에는 spatial index와 CPU profiling이 필요합니다. 페로몬 감도·감쇠·회피 거리의 조정은 여전히 실험 과제이며 특정 분기나 교통 패턴을 보장하지 않습니다.
 - 다음 실험 후보는 장시간 CPU/audio dropout profiling, String의 Worklet 전환과 위치 반영, preset save/load, 공통 analyser·WAV recording, Sphere modal visualization입니다. 다중 pickup·stereo는 ANT Plate에서 이미 검증한 별도 기능입니다.
