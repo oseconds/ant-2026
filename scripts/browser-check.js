@@ -1503,10 +1503,21 @@ async function verifyBornSurfaceAudioLifecycle(page, audioButton) {
   const surfaceWorkletIndices = async () => page.evaluate(() => window.__physicalAudioProbe.worklets
     .map((item, index) => item.name === 'surface-plate-processor' ? index : -1).filter(index => index >= 0));
   const assertQuietBeforeBirth = async (index, label) => {
+    await page.waitForFunction(workletIndex => window.__physicalAudioProbe.workletMessages
+      .some(item => item.index === workletIndex && item.message?.type === 'topology'), index, { timeout: 4000 });
     await page.waitForFunction(workletIndex => window.__physicalAudioProbe.workletRms
       .some(item => item.index === workletIndex), index, { timeout: 3000 });
-    const messages = await page.evaluate(workletIndex => window.__physicalAudioProbe.workletMessages
-      .filter(item => item.index === workletIndex).map(item => item.message?.type), index);
+    const protocol = await page.evaluate(workletIndex => window.__physicalAudioProbe.workletMessages
+      .filter(item => item.index === workletIndex).map(item => item.message), index);
+    const topology = protocol.find(message => message?.type === 'topology')?.payload;
+    assert.ok(topology, `${label} receives a compiled topology message after Audio On`);
+    assert.equal(topology.version, 1, `${label} uses topology protocol v1`);
+    assert.equal(topology.sourceGrid, 96, `${label} preserves the 96-cell material grid`);
+    assert.equal(topology.solverGrid, 32, `${label} uses the packed 32-cell solver grid`);
+    assert.equal(topology.maxLayers, 256, `${label} exposes the explicit 256-layer runtime ceiling`);
+    assert.deepEqual(topology.layerIds, [], `${label} receives an empty topology before natural material births`);
+    assert.equal(topology.nodeGridIndices.length, 0, `${label} does not allocate solver nodes before a plate exists`);
+    const messages = protocol.map(message => message?.type);
     assert.equal(messages.some(type => type === 'birth' || type === 'strike'), false,
       `${label} has no fabricated plate birth or strike before natural route evidence exists`);
     const rms = await page.evaluate(workletIndex => window.__physicalAudioProbe.workletRms
@@ -1561,6 +1572,39 @@ async function verifyBornSurfaceAudioLifecycle(page, audioButton) {
   await waitForSurfaceWorklet(3);
   indices = await surfaceWorkletIndices();
   await assertQuietBeforeBirth(indices[2], 'ANT processor after Plate-to-ANT return');
+
+  const beforeSphereSwitch = await page.evaluate(index => ({
+    contextCount: window.__physicalAudioProbe.audioContexts.length,
+    strikes: window.__physicalAudioProbe.workletMessages.filter(item => item.index === index
+      && item.message?.type === 'strike').length,
+    messages: window.__physicalAudioProbe.workletMessages.filter(item => item.index === index).length
+  }), indices[2]);
+  await waitForModel(page, 'sphere');
+  await page.waitForFunction(index => window.__physicalAudioProbe.worklets[index]?.portCloses > 0,
+    indices[2], { timeout: 8000 });
+  await page.waitForTimeout(180);
+  const afterSphereSwitch = await page.evaluate(index => ({
+    contextCount: window.__physicalAudioProbe.audioContexts.length,
+    portCloses: window.__physicalAudioProbe.worklets[index]?.portCloses,
+    messagesAfterClose: window.__physicalAudioProbe.worklets[index]?.messagesAfterClose,
+    strikes: window.__physicalAudioProbe.workletMessages.filter(item => item.index === index
+      && item.message?.type === 'strike').length
+  }), indices[2]);
+  assert.equal(afterSphereSwitch.contextCount, beforeSphereSwitch.contextCount,
+    'ANT to Sphere keeps the single shared AudioContext');
+  assert.ok(afterSphereSwitch.portCloses > 0, 'ANT to Sphere closes the active surface worklet');
+  assert.equal(afterSphereSwitch.messagesAfterClose, 0, 'ANT sends no material or strike messages after its worklet closes');
+  assert.equal(afterSphereSwitch.strikes, beforeSphereSwitch.strikes, 'ANT sends no new strikes after switching to Sphere');
+
+  await waitForModel(page, 'ant');
+  assert.equal(await audioButton.getAttribute('aria-pressed'), 'false', 'Sphere to ANT requires a fresh Audio On gesture');
+  assert.equal(await page.evaluate(() => window.__physicalAudioProbe.audioContexts.length), 1,
+    'Sphere to ANT reuses the existing Lab AudioContext');
+  await audioButton.click();
+  await page.waitForFunction(() => document.querySelector('[data-action="ant-audio"]')?.getAttribute('aria-pressed') === 'true');
+  await waitForSurfaceWorklet(4);
+  indices = await surfaceWorkletIndices();
+  await assertQuietBeforeBirth(indices[3], 'ANT processor after Sphere round-trip');
 }
 
 async function verifyMobileLayout(page, filename) {
