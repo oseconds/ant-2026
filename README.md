@@ -178,7 +178,7 @@ S0는 60 Hz에서 encounter start/end, duration, minimum distance와 stable ID�
 | **High** | Scheduler 원인 추적·수리, race·clock 문제, 여러 시스템이 얽힌 구현·검증 |
 | **Max** | 어려운 수학·과학·아키텍처 판단, 또는 clock mapping·PCM equality·증거 주장을 독립적으로 반대 검토할 때 실질적 이득이 큰 작업 |
 
-모든 작업을 High로 묶거나 모든 최종 리뷰를 Max로 올리지 않는다. 불확실성·결합도·오류의 영향으로 판단하며, Max는 Medium/High 선행 시도 없이 바로 선택할 수 있다. 테스트 통과 결과만으로 더 깊은 검토가 불필요했다고 판단하지 않는다.
+High/Max가 더 깊은 분석·검증에 실질적 도움이 되면 적극 사용한다. 배정마다 작업의 불확실성·결합도·오류의 영향을 보고 수준을 선택하고, 짧게 선택 근거를 남긴다. 한 수준을 모든 작업에 관성적으로 적용하지 않는다. Max는 Medium/High 선행 시도 없이 바로 선택할 수 있다. 테스트 통과 결과만으로 더 깊은 검토가 불필요했다고 판단하지 않는다.
 
 ## Repository shape
 
