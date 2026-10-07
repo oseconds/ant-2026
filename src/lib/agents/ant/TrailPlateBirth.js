@@ -108,6 +108,18 @@ export class TrailPlateBirth {
   getPlates() { return this.plates.slice(); }
 
   getSnapshot() {
+    const nowMs = this.lastAnalysisTimeMs ?? 0;
+    const priorBirth = this.candidate ? this.findSameCorridorBirth(this.candidate) : null;
+    const newFootContacts = priorBirth
+      ? Math.max(0, this.countFootContacts(priorBirth.corridorMask) - priorBirth.footContactsAtBirth)
+      : null;
+    const refractoryRemainingSeconds = priorBirth
+      ? Math.max(0, TRAIL_PLATE_SAME_CORRIDOR_REFRACTORY_MS
+        - (nowMs - priorBirth.bornAtSimulationTimeMs)) / 1000
+      : 0;
+    const globalGapRemainingSeconds = Number.isFinite(this.lastBirthTimeMs)
+      ? Math.max(0, TRAIL_PLATE_GLOBAL_BIRTH_GAP_MS - (nowMs - this.lastBirthTimeMs)) / 1000
+      : 0;
     const candidate = this.candidate ? {
       source: { ...this.candidate.source },
       target: { ...this.candidate.target },
@@ -115,11 +127,40 @@ export class TrailPlateBirth {
       stableSeconds: this.candidate.stableSeconds,
       similarity: this.candidate.similarity,
       footContacts: this.candidate.footContacts,
-      qualified: this.candidate.stableSeconds + BIRTH_EPSILON >= TRAIL_PLATE_PERSISTENCE_SECONDS
+      meanChemical: this.candidate.meanChemical,
+      meanSupport: this.candidate.meanSupport,
+      pathPoints: this.candidate.path.map((index) => ({ ...gridPoint(index), index })),
+      globalGapRemainingSeconds,
+      repeat: priorBirth ? {
+        plateId: priorBirth.id,
+        newFootContacts,
+        contactsRemaining: Math.max(0, TRAIL_PLATE_REQUIRED_NEW_FOOT_CONTACTS - newFootContacts),
+        refractoryRemainingSeconds
+      } : null,
+      qualified: this.candidate.stableSeconds + BIRTH_EPSILON >= TRAIL_PLATE_PERSISTENCE_SECONDS,
+      birthReady: this.candidate.stableSeconds + BIRTH_EPSILON >= TRAIL_PLATE_PERSISTENCE_SECONDS
+        && globalGapRemainingSeconds <= BIRTH_EPSILON
+        && (!priorBirth || (refractoryRemainingSeconds <= BIRTH_EPSILON
+          && newFootContacts >= TRAIL_PLATE_REQUIRED_NEW_FOOT_CONTACTS))
+        && this.plates.length < this.maxBirths
     } : null;
     return {
       plates: this.getPlates(),
       candidate,
+      requirements: {
+        chemicalThreshold: TRAIL_PLATE_CHEMICAL_THRESHOLD,
+        supportThreshold: TRAIL_PLATE_SUPPORT_THRESHOLD,
+        persistenceSeconds: TRAIL_PLATE_PERSISTENCE_SECONDS,
+        minGeodesicLength: TRAIL_PLATE_MIN_GEODESIC_LENGTH,
+        sameCorridorRefractorySeconds: TRAIL_PLATE_SAME_CORRIDOR_REFRACTORY_MS / 1000,
+        requiredNewFootContacts: TRAIL_PLATE_REQUIRED_NEW_FOOT_CONTACTS,
+        globalBirthGapSeconds: TRAIL_PLATE_GLOBAL_BIRTH_GAP_MS / 1000,
+        sourceAnnulus: {
+          origin: { ...TRAIL_PLATE_SOURCE_ORIGIN },
+          radii: [...TRAIL_PLATE_SOURCE_RADII]
+        }
+      },
+      lastBirthTimeMs: Number.isFinite(this.lastBirthTimeMs) ? this.lastBirthTimeMs : null,
       limitReached: this.plates.length >= this.maxBirths
     };
   }
