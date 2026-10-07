@@ -78,15 +78,26 @@ export class TrailPlateBirth {
       nowCandidate.similarity = similarity;
     }
     nowCandidate.footContacts = this.countFootContacts(nowCandidate.mask);
+    const priorBirth = this.birthRecords.length ? this.findSameCorridorBirth(nowCandidate) : null;
+    if (priorBirth) {
+      const newContacts = this.countFootContacts(priorBirth.corridorMask) - priorBirth.footContactsAtBirth;
+      nowCandidate.repeatDiagnostics = {
+        plateId: priorBirth.id,
+        newFootContacts: Math.max(0, newContacts),
+        refractoryRemainingSeconds: Math.max(0, TRAIL_PLATE_SAME_CORRIDOR_REFRACTORY_MS
+          - (simulationTimeMs - priorBirth.bornAtSimulationTimeMs)) / 1000
+      };
+    } else {
+      nowCandidate.repeatDiagnostics = null;
+    }
     this.candidate = nowCandidate;
 
     if (nowCandidate.stableSeconds + BIRTH_EPSILON < TRAIL_PLATE_PERSISTENCE_SECONDS
       || simulationTimeMs - this.lastBirthTimeMs < TRAIL_PLATE_GLOBAL_BIRTH_GAP_MS - BIRTH_EPSILON) return [];
 
-    const priorBirth = this.findSameCorridorBirth(nowCandidate);
     if (priorBirth) {
       const ageMs = simulationTimeMs - priorBirth.bornAtSimulationTimeMs;
-      const newContacts = this.countFootContacts(priorBirth.corridorMask) - priorBirth.footContactsAtBirth;
+      const newContacts = nowCandidate.repeatDiagnostics.newFootContacts;
       if (ageMs < TRAIL_PLATE_SAME_CORRIDOR_REFRACTORY_MS - BIRTH_EPSILON
         || newContacts < TRAIL_PLATE_REQUIRED_NEW_FOOT_CONTACTS) return [];
     }
@@ -110,14 +121,7 @@ export class TrailPlateBirth {
 
   getSnapshot() {
     const nowMs = this.lastAnalysisTimeMs ?? 0;
-    const priorBirth = this.candidate ? this.findSameCorridorBirth(this.candidate) : null;
-    const newFootContacts = priorBirth
-      ? Math.max(0, this.countFootContacts(priorBirth.corridorMask) - priorBirth.footContactsAtBirth)
-      : null;
-    const refractoryRemainingSeconds = priorBirth
-      ? Math.max(0, TRAIL_PLATE_SAME_CORRIDOR_REFRACTORY_MS
-        - (nowMs - priorBirth.bornAtSimulationTimeMs)) / 1000
-      : 0;
+    const repeatDiagnostics = this.candidate?.repeatDiagnostics || null;
     const globalGapRemainingSeconds = Number.isFinite(this.lastBirthTimeMs)
       ? Math.max(0, TRAIL_PLATE_GLOBAL_BIRTH_GAP_MS - (nowMs - this.lastBirthTimeMs)) / 1000
       : 0;
@@ -132,17 +136,16 @@ export class TrailPlateBirth {
       meanSupport: this.candidate.meanSupport,
       pathPoints: this.candidate.path.map((index) => ({ ...gridPoint(index), index })),
       globalGapRemainingSeconds,
-      repeat: priorBirth ? {
-        plateId: priorBirth.id,
-        newFootContacts,
-        contactsRemaining: Math.max(0, TRAIL_PLATE_REQUIRED_NEW_FOOT_CONTACTS - newFootContacts),
-        refractoryRemainingSeconds
+      repeat: repeatDiagnostics ? {
+        ...repeatDiagnostics,
+        contactsRemaining: Math.max(0, TRAIL_PLATE_REQUIRED_NEW_FOOT_CONTACTS
+          - repeatDiagnostics.newFootContacts)
       } : null,
       qualified: this.candidate.stableSeconds + BIRTH_EPSILON >= TRAIL_PLATE_PERSISTENCE_SECONDS,
       birthReady: this.candidate.stableSeconds + BIRTH_EPSILON >= TRAIL_PLATE_PERSISTENCE_SECONDS
         && globalGapRemainingSeconds <= BIRTH_EPSILON
-        && (!priorBirth || (refractoryRemainingSeconds <= BIRTH_EPSILON
-          && newFootContacts >= TRAIL_PLATE_REQUIRED_NEW_FOOT_CONTACTS))
+        && (!repeatDiagnostics || (repeatDiagnostics.refractoryRemainingSeconds <= BIRTH_EPSILON
+          && repeatDiagnostics.newFootContacts >= TRAIL_PLATE_REQUIRED_NEW_FOOT_CONTACTS))
         && this.plates.length < this.maxBirths
     } : null;
     return {
