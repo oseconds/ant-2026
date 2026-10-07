@@ -1,0 +1,5210 @@
+{
+  "schemaVersion": 1,
+  "parameters": {
+    "family": "exact-spatial-movie identity permutation",
+    "nullSeed": "ANT-S2b-2026-10-08-identity-v1",
+    "seeds": [
+      20261005,
+      20261006,
+      20261007
+    ],
+    "replicatesPerSeed": 8,
+    "identityBlockSeconds": 5,
+    "blockTicks": 300,
+    "seconds": 600,
+    "frameCount": 36001,
+    "trajectoryHz": 60,
+    "topologyHz": 20,
+    "k": 2,
+    "windowsSeconds": [
+      0.25,
+      1,
+      5,
+      20
+    ],
+    "initialAndTerminalPolicy": "Observed identity at t=0; remap ticks 300..35700; no terminal t=600 remap.",
+    "permutation": "Fisher-Yates on lexically sorted active IDs for lexically sorted source body handles; uint32LE SHA256([nullSeed,sourceSeed,replicate,block,index,attempt]) with rejection sampling; fixed points allowed.",
+    "lifecycleRepair": "Remove dead bodies and expired labels, retain all valid bindings, lexically zip vacant bodies and free active labels; repair before shuffle if coincident.",
+    "storage": "Exact per-event body-to-label mapping ledger and virtual archive hash; physical archives never copied to output.",
+    "topologyAverages": "All 12001 analysis samples including t=0; weighted degree pooled over active node-time, isolates included.",
+    "rank": "Within-seed midrank 100*(below+equal/2)/available replicates; descriptive only, no acceptance threshold.",
+    "durationPolicy": "Existing observer semantics; completed intervals only for duration summaries, right censoring separately."
+  },
+  "seeds": [
+    {
+      "seed": 20261005,
+      "comparisons": [
+        {
+          "windowSeconds": 0.25,
+          "metric": "rawEncounterCount",
+          "observed": 511,
+          "null": {
+            "n": 8,
+            "mean": 547.5,
+            "sd": 3.070597894314954,
+            "min": 544,
+            "p10": 544.7,
+            "p50": 547,
+            "p90": 550.9,
+            "max": 553
+          },
+          "differenceFromNullMean": -36.5,
+          "ratioToNullMean": 0.9333333333333333,
+          "standardizedDifference": -11.886935787840466,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "rawCompletedLifetimeMeanSeconds",
+          "observed": 0.36180691454663844,
+          "null": {
+            "n": 8,
+            "mean": 0.337695720284499,
+            "sd": 0.0018883553588782342,
+            "min": 0.3343279083785393,
+            "p10": 0.33560443311962096,
+            "p50": 0.33799625455647153,
+            "p90": 0.3394225523925147,
+            "max": 0.33985906862744897
+          },
+          "differenceFromNullMean": 0.024111194262139424,
+          "ratioToNullMean": 1.0713991703591221,
+          "standardizedDifference": 12.768356415956863,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "rawCompletedLifetimeP90Seconds",
+          "observed": 0.7666666666662252,
+          "null": {
+            "n": 8,
+            "mean": 0.731249999999406,
+            "sd": 0.0058925565092956865,
+            "min": 0.7166666666675383,
+            "p10": 0.7283333333324117,
+            "p50": 0.7333333333326464,
+            "p90": 0.7333333333330314,
+            "max": 0.7333333333333059
+          },
+          "differenceFromNullMean": 0.035416666666819197,
+          "ratioToNullMean": 1.0484330484332964,
+          "standardizedDifference": 6.010407640715592,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "rawPairExposureSeconds",
+          "observed": 184.88333333333225,
+          "null": {
+            "n": 8,
+            "mean": 184.88333333333227,
+            "sd": 3.038408543857536e-14,
+            "min": 184.88333333333225,
+            "p10": 184.88333333333225,
+            "p50": 184.88333333333225,
+            "p90": 184.88333333333225,
+            "max": 184.88333333333225
+          },
+          "differenceFromNullMean": -2.842170943040401e-14,
+          "ratioToNullMean": 0.9999999999999999,
+          "standardizedDifference": -0.9354143466934853,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "rollingEdgeCountMean",
+          "observed": 0.5120406632780602,
+          "null": {
+            "n": 8,
+            "mean": 0.5224877093575535,
+            "sd": 0.0005362149584680638,
+            "min": 0.5217898508457629,
+            "p10": 0.5219648362636448,
+            "p50": 0.5223731355720356,
+            "p90": 0.5230814098825098,
+            "max": 0.5233730522456462
+          },
+          "differenceFromNullMean": -0.010447046079493316,
+          "ratioToNullMean": 0.980005183103084,
+          "standardizedDifference": -19.482944133710745,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "weightedDegreeMeanSeconds",
+          "observed": 0.008344230424074126,
+          "null": {
+            "n": 8,
+            "mean": 0.008311595711146457,
+            "sd": 0.000013310951077348776,
+            "min": 0.008290687625278867,
+            "p10": 0.008299344967957319,
+            "p50": 0.008310747321728923,
+            "p90": 0.008326734748974843,
+            "max": 0.008335180936953788
+          },
+          "differenceFromNullMean": 0.000032634712927668424,
+          "ratioToNullMean": 1.0039264076432282,
+          "standardizedDifference": 2.451719094903959,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "temporalEdgeCount",
+          "observed": 509,
+          "null": {
+            "n": 8,
+            "mean": 544.375,
+            "sd": 1.9955307206712847,
+            "min": 542,
+            "p10": 542.7,
+            "p50": 544,
+            "p90": 546.6,
+            "max": 548
+          },
+          "differenceFromNullMean": -35.375,
+          "ratioToNullMean": 0.9350172215843857,
+          "standardizedDifference": -17.72711371143415,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "temporalCompletedLifetimeMeanSeconds",
+          "observed": 0.6036345776031503,
+          "null": {
+            "n": 8,
+            "mean": 0.5759307793946765,
+            "sd": 0.002127753742491429,
+            "min": 0.5726277372262848,
+            "p10": 0.5739351101587185,
+            "p50": 0.5759667663507275,
+            "p90": 0.5779720596929793,
+            "max": 0.5794280442804505
+          },
+          "differenceFromNullMean": 0.027703798208473795,
+          "ratioToNullMean": 1.048102652609731,
+          "standardizedDifference": 13.02020889693507,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "temporalCompletedLifetimeP90Seconds",
+          "observed": 1.0000000000011482,
+          "null": {
+            "n": 8,
+            "mean": 0.9787499999990975,
+            "sd": 0.02117107190606731,
+            "min": 0.9500000000010687,
+            "p10": 0.9500000000011004,
+            "p50": 0.9849999999986674,
+            "p90": 0.9999999999976126,
+            "max": 0.9999999999976126
+          },
+          "differenceFromNullMean": 0.021250000002050684,
+          "ratioToNullMean": 1.021711366541068,
+          "standardizedDifference": 1.0037281105242835,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "bridgePersistCount",
+          "observed": 233,
+          "null": {
+            "n": 8,
+            "mean": 237.375,
+            "sd": 1.1877349391654208,
+            "min": 235,
+            "p10": 236.39999999999998,
+            "p50": 237.5,
+            "p90": 238.3,
+            "max": 239
+          },
+          "differenceFromNullMean": -4.375,
+          "ratioToNullMean": 0.9815692469720906,
+          "standardizedDifference": -3.6834817733611147,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "bridgePersistenceMeanSeconds",
+          "observed": 0.5907725321888382,
+          "null": {
+            "n": 8,
+            "mean": 0.5640930718221503,
+            "sd": 0.0018428683318424545,
+            "min": 0.5610878661087825,
+            "p10": 0.5620028304208652,
+            "p50": 0.5638655462184802,
+            "p90": 0.5664047939671351,
+            "max": 0.5664556962025261
+          },
+          "differenceFromNullMean": 0.02667946036668789,
+          "ratioToNullMean": 1.0472962028774917,
+          "standardizedDifference": 14.477138657005638,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "articulationPersistCount",
+          "observed": 13,
+          "null": {
+            "n": 8,
+            "mean": 13,
+            "sd": 0,
+            "min": 13,
+            "p10": 13,
+            "p50": 13,
+            "p90": 13,
+            "max": 13
+          },
+          "differenceFromNullMean": 0,
+          "ratioToNullMean": 1,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "articulationPersistenceMeanSeconds",
+          "observed": 0.4576923076924063,
+          "null": {
+            "n": 8,
+            "mean": 0.4576923076924064,
+            "sd": 5.93439168722175e-17,
+            "min": 0.4576923076924063,
+            "p10": 0.4576923076924063,
+            "p50": 0.4576923076924063,
+            "p90": 0.4576923076924063,
+            "max": 0.4576923076924063
+          },
+          "differenceFromNullMean": -5.551115123125783e-17,
+          "ratioToNullMean": 0.9999999999999999,
+          "standardizedDifference": -0.9354143466934853,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "connectorPersistCount",
+          "observed": 3,
+          "null": {
+            "n": 8,
+            "mean": 3,
+            "sd": 0,
+            "min": 3,
+            "p10": 3,
+            "p50": 3,
+            "p90": 3,
+            "max": 3
+          },
+          "differenceFromNullMean": 0,
+          "ratioToNullMean": 1,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "connectorPersistenceMeanSeconds",
+          "observed": 0.4666666666668438,
+          "null": {
+            "n": 8,
+            "mean": 0.46666666666684387,
+            "sd": 5.93439168722175e-17,
+            "min": 0.4666666666668438,
+            "p10": 0.46666666666684375,
+            "p50": 0.4666666666668438,
+            "p90": 0.46666666666684375,
+            "max": 0.4666666666668438
+          },
+          "differenceFromNullMean": -5.551115123125783e-17,
+          "ratioToNullMean": 0.9999999999999999,
+          "standardizedDifference": -0.9354143466934853,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "mergeCount",
+          "observed": 238,
+          "null": {
+            "n": 8,
+            "mean": 272.25,
+            "sd": 2.1213203435596424,
+            "min": 270,
+            "p10": 270,
+            "p50": 272,
+            "p90": 274.6,
+            "max": 276
+          },
+          "differenceFromNullMean": -34.25,
+          "ratioToNullMean": 0.8741965105601469,
+          "standardizedDifference": -16.145604837092836,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "splitCount",
+          "observed": 484,
+          "null": {
+            "n": 8,
+            "mean": 508.75,
+            "sd": 1.7525491637693282,
+            "min": 507,
+            "p10": 507,
+            "p50": 508,
+            "p90": 510.6,
+            "max": 512
+          },
+          "differenceFromNullMean": -24.75,
+          "ratioToNullMean": 0.9513513513513514,
+          "standardizedDifference": -14.122285703397027,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "rawEncounterCount",
+          "observed": 511,
+          "null": {
+            "n": 8,
+            "mean": 547.5,
+            "sd": 3.070597894314954,
+            "min": 544,
+            "p10": 544.7,
+            "p50": 547,
+            "p90": 550.9,
+            "max": 553
+          },
+          "differenceFromNullMean": -36.5,
+          "ratioToNullMean": 0.9333333333333333,
+          "standardizedDifference": -11.886935787840466,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "rawCompletedLifetimeMeanSeconds",
+          "observed": 0.36180691454663844,
+          "null": {
+            "n": 8,
+            "mean": 0.337695720284499,
+            "sd": 0.0018883553588782342,
+            "min": 0.3343279083785393,
+            "p10": 0.33560443311962096,
+            "p50": 0.33799625455647153,
+            "p90": 0.3394225523925147,
+            "max": 0.33985906862744897
+          },
+          "differenceFromNullMean": 0.024111194262139424,
+          "ratioToNullMean": 1.0713991703591221,
+          "standardizedDifference": 12.768356415956863,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "rawCompletedLifetimeP90Seconds",
+          "observed": 0.7666666666662252,
+          "null": {
+            "n": 8,
+            "mean": 0.731249999999406,
+            "sd": 0.0058925565092956865,
+            "min": 0.7166666666675383,
+            "p10": 0.7283333333324117,
+            "p50": 0.7333333333326464,
+            "p90": 0.7333333333330314,
+            "max": 0.7333333333333059
+          },
+          "differenceFromNullMean": 0.035416666666819197,
+          "ratioToNullMean": 1.0484330484332964,
+          "standardizedDifference": 6.010407640715592,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "rawPairExposureSeconds",
+          "observed": 184.88333333333225,
+          "null": {
+            "n": 8,
+            "mean": 184.88333333333227,
+            "sd": 3.038408543857536e-14,
+            "min": 184.88333333333225,
+            "p10": 184.88333333333225,
+            "p50": 184.88333333333225,
+            "p90": 184.88333333333225,
+            "max": 184.88333333333225
+          },
+          "differenceFromNullMean": -2.842170943040401e-14,
+          "ratioToNullMean": 0.9999999999999999,
+          "standardizedDifference": -0.9354143466934853,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "rollingEdgeCountMean",
+          "observed": 1.1345721189900841,
+          "null": {
+            "n": 8,
+            "mean": 1.1731418215148737,
+            "sd": 0.005620396515811215,
+            "min": 1.1626531122406467,
+            "p10": 1.1671444046329473,
+            "p50": 1.1750687442713108,
+            "p90": 1.1778601783184734,
+            "max": 1.1799016748604283
+          },
+          "differenceFromNullMean": -0.03856970252478953,
+          "ratioToNullMean": 0.9671227282009394,
+          "standardizedDifference": -6.8624522160110635,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "weightedDegreeMeanSeconds",
+          "observed": 0.033108151928822695,
+          "null": {
+            "n": 8,
+            "mean": 0.03260249298287678,
+            "sd": 0.00014433289012261532,
+            "min": 0.03234935243378378,
+            "p10": 0.03245767479461461,
+            "p50": 0.03262423060506356,
+            "p90": 0.0327401394525965,
+            "max": 0.0328150993709098
+          },
+          "differenceFromNullMean": 0.0005056589459459179,
+          "ratioToNullMean": 1.015509824546592,
+          "standardizedDifference": 3.503421469052167,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "temporalEdgeCount",
+          "observed": 504,
+          "null": {
+            "n": 8,
+            "mean": 541.375,
+            "sd": 1.9955307206712847,
+            "min": 539,
+            "p10": 539.7,
+            "p50": 541,
+            "p90": 543.6,
+            "max": 545
+          },
+          "differenceFromNullMean": -37.375,
+          "ratioToNullMean": 0.9309628261371508,
+          "standardizedDifference": -18.72935335589686,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "temporalCompletedLifetimeMeanSeconds",
+          "observed": 1.3537848605578464,
+          "null": {
+            "n": 8,
+            "mean": 1.3028948220978334,
+            "sd": 0.006653126076704291,
+            "min": 1.2897222222223075,
+            "p10": 1.295820902394182,
+            "p50": 1.303846723117251,
+            "p90": 1.3089096280451848,
+            "max": 1.3112662942272622
+          },
+          "differenceFromNullMean": 0.050890038460013054,
+          "ratioToNullMean": 1.0390592069266753,
+          "standardizedDifference": 7.649041649489088,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "temporalCompletedLifetimeP90Seconds",
+          "observed": 1.794999999996482,
+          "null": {
+            "n": 8,
+            "mean": 1.723749999999095,
+            "sd": 0.020485186282798364,
+            "min": 1.7000000000019782,
+            "p10": 1.7000000000019782,
+            "p50": 1.7174999999998546,
+            "p90": 1.7499999999959073,
+            "max": 1.7499999999959073
+          },
+          "differenceFromNullMean": 0.07124999999738701,
+          "ratioToNullMean": 1.0413343002160549,
+          "standardizedDifference": 3.4781231185198656,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "bridgePersistCount",
+          "observed": 22,
+          "null": {
+            "n": 8,
+            "mean": 15.625,
+            "sd": 1.0606601717798212,
+            "min": 14,
+            "p10": 14.700000000000001,
+            "p50": 15.5,
+            "p90": 17,
+            "max": 17
+          },
+          "differenceFromNullMean": 6.375,
+          "ratioToNullMean": 1.408,
+          "standardizedDifference": 6.0104076400856545,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "bridgePersistenceMeanSeconds",
+          "observed": 1.2818181818180776,
+          "null": {
+            "n": 8,
+            "mean": 1.2652227766103572,
+            "sd": 0.01074513009182419,
+            "min": 1.2499999999995373,
+            "p10": 1.252499999999654,
+            "p50": 1.2676470588233124,
+            "p90": 1.278124999999726,
+            "max": 1.2781249999998106
+          },
+          "differenceFromNullMean": 0.016595405207720404,
+          "ratioToNullMean": 1.0131165874615227,
+          "standardizedDifference": 1.5444582863028902,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "articulationPersistCount",
+          "observed": 0,
+          "null": {
+            "n": 8,
+            "mean": 0,
+            "sd": 0,
+            "min": 0,
+            "p10": 0,
+            "p50": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "differenceFromNullMean": 0,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "articulationPersistenceMeanSeconds",
+          "observed": null,
+          "null": {
+            "n": 0,
+            "mean": null,
+            "sd": null,
+            "min": null,
+            "p10": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "differenceFromNullMean": null,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": null
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "connectorPersistCount",
+          "observed": 0,
+          "null": {
+            "n": 8,
+            "mean": 0,
+            "sd": 0,
+            "min": 0,
+            "p10": 0,
+            "p50": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "differenceFromNullMean": 0,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "connectorPersistenceMeanSeconds",
+          "observed": null,
+          "null": {
+            "n": 0,
+            "mean": null,
+            "sd": null,
+            "min": null,
+            "p10": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "differenceFromNullMean": null,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": null
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "mergeCount",
+          "observed": 222,
+          "null": {
+            "n": 8,
+            "mean": 261.25,
+            "sd": 2.1213203435596424,
+            "min": 259,
+            "p10": 259,
+            "p50": 261,
+            "p90": 263.6,
+            "max": 265
+          },
+          "differenceFromNullMean": -39.25,
+          "ratioToNullMean": 0.8497607655502393,
+          "standardizedDifference": -18.502627441047995,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "splitCount",
+          "observed": 456,
+          "null": {
+            "n": 8,
+            "mean": 480.75,
+            "sd": 5.725881092523166,
+            "min": 470,
+            "p10": 474.20000000000005,
+            "p50": 484,
+            "p90": 485.30000000000007,
+            "max": 486
+          },
+          "differenceFromNullMean": -24.75,
+          "ratioToNullMean": 0.9485179407176287,
+          "standardizedDifference": -4.322478863963567,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "rawEncounterCount",
+          "observed": 511,
+          "null": {
+            "n": 8,
+            "mean": 547.5,
+            "sd": 3.070597894314954,
+            "min": 544,
+            "p10": 544.7,
+            "p50": 547,
+            "p90": 550.9,
+            "max": 553
+          },
+          "differenceFromNullMean": -36.5,
+          "ratioToNullMean": 0.9333333333333333,
+          "standardizedDifference": -11.886935787840466,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "rawCompletedLifetimeMeanSeconds",
+          "observed": 0.36180691454663844,
+          "null": {
+            "n": 8,
+            "mean": 0.337695720284499,
+            "sd": 0.0018883553588782342,
+            "min": 0.3343279083785393,
+            "p10": 0.33560443311962096,
+            "p50": 0.33799625455647153,
+            "p90": 0.3394225523925147,
+            "max": 0.33985906862744897
+          },
+          "differenceFromNullMean": 0.024111194262139424,
+          "ratioToNullMean": 1.0713991703591221,
+          "standardizedDifference": 12.768356415956863,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "rawCompletedLifetimeP90Seconds",
+          "observed": 0.7666666666662252,
+          "null": {
+            "n": 8,
+            "mean": 0.731249999999406,
+            "sd": 0.0058925565092956865,
+            "min": 0.7166666666675383,
+            "p10": 0.7283333333324117,
+            "p50": 0.7333333333326464,
+            "p90": 0.7333333333330314,
+            "max": 0.7333333333333059
+          },
+          "differenceFromNullMean": 0.035416666666819197,
+          "ratioToNullMean": 1.0484330484332964,
+          "standardizedDifference": 6.010407640715592,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "rawPairExposureSeconds",
+          "observed": 184.88333333333225,
+          "null": {
+            "n": 8,
+            "mean": 184.88333333333227,
+            "sd": 3.038408543857536e-14,
+            "min": 184.88333333333225,
+            "p10": 184.88333333333225,
+            "p50": 184.88333333333225,
+            "p90": 184.88333333333225,
+            "max": 184.88333333333225
+          },
+          "differenceFromNullMean": -2.842170943040401e-14,
+          "ratioToNullMean": 0.9999999999999999,
+          "standardizedDifference": -0.9354143466934853,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "rollingEdgeCountMean",
+          "observed": 4.285392883926339,
+          "null": {
+            "n": 8,
+            "mean": 4.289996666944422,
+            "sd": 0.041900682548578747,
+            "min": 4.228564286309474,
+            "p10": 4.239530039163403,
+            "p50": 4.294475460378301,
+            "p90": 4.337563536371969,
+            "max": 4.33797183568036
+          },
+          "differenceFromNullMean": -0.00460378301808273,
+          "ratioToNullMean": 0.998926856271578,
+          "standardizedDifference": -0.1098736998554905,
+          "rank": {
+            "below": 4,
+            "equal": 0,
+            "above": 4,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "weightedDegreeMeanSeconds",
+          "observed": 0.1578229045535531,
+          "null": {
+            "n": 8,
+            "mean": 0.14651864345172153,
+            "sd": 0.002081853099383448,
+            "min": 0.14390479336251122,
+            "p10": 0.14425826632942748,
+            "p50": 0.14705318534405876,
+            "p90": 0.14834976569370556,
+            "max": 0.14994894581017287
+          },
+          "differenceFromNullMean": 0.01130426110183158,
+          "ratioToNullMean": 1.0771523734831492,
+          "standardizedDifference": 5.429903341969421,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "temporalEdgeCount",
+          "observed": 497,
+          "null": {
+            "n": 8,
+            "mean": 534,
+            "sd": 3.0237157840738176,
+            "min": 530,
+            "p10": 530.7,
+            "p50": 534.5,
+            "p90": 537.3,
+            "max": 538
+          },
+          "differenceFromNullMean": -37,
+          "ratioToNullMean": 0.9307116104868914,
+          "standardizedDifference": -12.236599813673733,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "temporalCompletedLifetimeMeanSeconds",
+          "observed": 5.212142857143284,
+          "null": {
+            "n": 8,
+            "mean": 4.851367628349461,
+            "sd": 0.05236474028137222,
+            "min": 4.754237288136025,
+            "p10": 4.785208567845278,
+            "p50": 4.860471698113672,
+            "p90": 4.90098742476123,
+            "max": 4.912810707457393
+          },
+          "differenceFromNullMean": 0.3607752287938233,
+          "ratioToNullMean": 1.07436567509038,
+          "standardizedDifference": 6.889659470385311,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "temporalCompletedLifetimeP90Seconds",
+          "observed": 5.750000000006651,
+          "null": {
+            "n": 8,
+            "mean": 5.662499999999621,
+            "sd": 0.035355339056010765,
+            "min": 5.600000000006503,
+            "p10": 5.634999999999647,
+            "p50": 5.650000000003859,
+            "p90": 5.699999999996766,
+            "max": 5.6999999999969395
+          },
+          "differenceFromNullMean": 0.0875000000070294,
+          "ratioToNullMean": 1.015452538632589,
+          "standardizedDifference": 2.4748737345839005,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "bridgePersistCount",
+          "observed": 0,
+          "null": {
+            "n": 8,
+            "mean": 0,
+            "sd": 0,
+            "min": 0,
+            "p10": 0,
+            "p50": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "differenceFromNullMean": 0,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "bridgePersistenceMeanSeconds",
+          "observed": null,
+          "null": {
+            "n": 0,
+            "mean": null,
+            "sd": null,
+            "min": null,
+            "p10": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "differenceFromNullMean": null,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": null
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "articulationPersistCount",
+          "observed": 0,
+          "null": {
+            "n": 8,
+            "mean": 0,
+            "sd": 0,
+            "min": 0,
+            "p10": 0,
+            "p50": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "differenceFromNullMean": 0,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "articulationPersistenceMeanSeconds",
+          "observed": null,
+          "null": {
+            "n": 0,
+            "mean": null,
+            "sd": null,
+            "min": null,
+            "p10": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "differenceFromNullMean": null,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": null
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "connectorPersistCount",
+          "observed": 0,
+          "null": {
+            "n": 8,
+            "mean": 0,
+            "sd": 0,
+            "min": 0,
+            "p10": 0,
+            "p50": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "differenceFromNullMean": 0,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "connectorPersistenceMeanSeconds",
+          "observed": null,
+          "null": {
+            "n": 0,
+            "mean": null,
+            "sd": null,
+            "min": null,
+            "p10": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "differenceFromNullMean": null,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": null
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "mergeCount",
+          "observed": 213,
+          "null": {
+            "n": 8,
+            "mean": 250.875,
+            "sd": 3.3567628964311944,
+            "min": 247,
+            "p10": 247.7,
+            "p50": 250.5,
+            "p90": 254.2,
+            "max": 257
+          },
+          "differenceFromNullMean": -37.875,
+          "ratioToNullMean": 0.8490284005979073,
+          "standardizedDifference": -11.283191922869356,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "splitCount",
+          "observed": 421,
+          "null": {
+            "n": 8,
+            "mean": 401,
+            "sd": 4.44007721940573,
+            "min": 393,
+            "p10": 396.5,
+            "p50": 401,
+            "p90": 405.59999999999997,
+            "max": 407
+          },
+          "differenceFromNullMean": 20,
+          "ratioToNullMean": 1.0498753117206983,
+          "standardizedDifference": 4.504426164614508,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "rawEncounterCount",
+          "observed": 511,
+          "null": {
+            "n": 8,
+            "mean": 547.5,
+            "sd": 3.070597894314954,
+            "min": 544,
+            "p10": 544.7,
+            "p50": 547,
+            "p90": 550.9,
+            "max": 553
+          },
+          "differenceFromNullMean": -36.5,
+          "ratioToNullMean": 0.9333333333333333,
+          "standardizedDifference": -11.886935787840466,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "rawCompletedLifetimeMeanSeconds",
+          "observed": 0.36180691454663844,
+          "null": {
+            "n": 8,
+            "mean": 0.337695720284499,
+            "sd": 0.0018883553588782342,
+            "min": 0.3343279083785393,
+            "p10": 0.33560443311962096,
+            "p50": 0.33799625455647153,
+            "p90": 0.3394225523925147,
+            "max": 0.33985906862744897
+          },
+          "differenceFromNullMean": 0.024111194262139424,
+          "ratioToNullMean": 1.0713991703591221,
+          "standardizedDifference": 12.768356415956863,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "rawCompletedLifetimeP90Seconds",
+          "observed": 0.7666666666662252,
+          "null": {
+            "n": 8,
+            "mean": 0.731249999999406,
+            "sd": 0.0058925565092956865,
+            "min": 0.7166666666675383,
+            "p10": 0.7283333333324117,
+            "p50": 0.7333333333326464,
+            "p90": 0.7333333333330314,
+            "max": 0.7333333333333059
+          },
+          "differenceFromNullMean": 0.035416666666819197,
+          "ratioToNullMean": 1.0484330484332964,
+          "standardizedDifference": 6.010407640715592,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "rawPairExposureSeconds",
+          "observed": 184.88333333333225,
+          "null": {
+            "n": 8,
+            "mean": 184.88333333333227,
+            "sd": 3.038408543857536e-14,
+            "min": 184.88333333333225,
+            "p10": 184.88333333333225,
+            "p50": 184.88333333333225,
+            "p90": 184.88333333333225,
+            "max": 184.88333333333225
+          },
+          "differenceFromNullMean": -2.842170943040401e-14,
+          "ratioToNullMean": 0.9999999999999999,
+          "standardizedDifference": -0.9354143466934853,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "rollingEdgeCountMean",
+          "observed": 8.544871260728273,
+          "null": {
+            "n": 8,
+            "mean": 8.117396466961086,
+            "sd": 0.11364431711667308,
+            "min": 7.955587034413798,
+            "p10": 7.974310474127156,
+            "p50": 8.123281393217233,
+            "p90": 8.240529955837015,
+            "max": 8.274477126906092
+          },
+          "differenceFromNullMean": 0.4274747937671872,
+          "ratioToNullMean": 1.05266156402574,
+          "standardizedDifference": 3.761514914364963,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "weightedDegreeMeanSeconds",
+          "observed": 0.3274019978251373,
+          "null": {
+            "n": 8,
+            "mean": 0.2811560078791001,
+            "sd": 0.0071034947708857555,
+            "min": 0.26934802970045013,
+            "p10": 0.2743591530283496,
+            "p50": 0.2814941759009386,
+            "p90": 0.2894244677016352,
+            "max": 0.291903423873437
+          },
+          "differenceFromNullMean": 0.04624598994603718,
+          "ratioToNullMean": 1.1644851564613317,
+          "standardizedDifference": 6.510315195216316,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "temporalEdgeCount",
+          "observed": 493,
+          "null": {
+            "n": 8,
+            "mean": 532.375,
+            "sd": 2.065879266282796,
+            "min": 530,
+            "p10": 530,
+            "p50": 532,
+            "p90": 535,
+            "max": 535
+          },
+          "differenceFromNullMean": -39.375,
+          "ratioToNullMean": 0.926038976285513,
+          "standardizedDifference": -19.059681096876837,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "temporalCompletedLifetimeMeanSeconds",
+          "observed": 10.510248447205486,
+          "null": {
+            "n": 8,
+            "mean": 9.228865644733927,
+            "sd": 0.14567660169774255,
+            "min": 8.987642585552011,
+            "p10": 9.043116192172828,
+            "p50": 9.23147937463359,
+            "p90": 9.382314856934318,
+            "max": 9.422648752399947
+          },
+          "differenceFromNullMean": 1.2813828024715583,
+          "ratioToNullMean": 1.1388451031576916,
+          "standardizedDifference": 8.796078351211396,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "temporalCompletedLifetimeP90Seconds",
+          "observed": 14.739999999998897,
+          "null": {
+            "n": 8,
+            "mean": 13.886874999998419,
+            "sd": 0.10271101972046909,
+            "min": 13.799999999967895,
+            "p10": 13.799999999986229,
+            "p50": 13.84250000000278,
+            "p90": 14.022000000005539,
+            "max": 14.049999999991826
+          },
+          "differenceFromNullMean": 0.8531250000004782,
+          "ratioToNullMean": 1.0614339079166892,
+          "standardizedDifference": 8.30607078307938,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "bridgePersistCount",
+          "observed": 0,
+          "null": {
+            "n": 8,
+            "mean": 0,
+            "sd": 0,
+            "min": 0,
+            "p10": 0,
+            "p50": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "differenceFromNullMean": 0,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "bridgePersistenceMeanSeconds",
+          "observed": null,
+          "null": {
+            "n": 0,
+            "mean": null,
+            "sd": null,
+            "min": null,
+            "p10": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "differenceFromNullMean": null,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": null
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "articulationPersistCount",
+          "observed": 0,
+          "null": {
+            "n": 8,
+            "mean": 0,
+            "sd": 0,
+            "min": 0,
+            "p10": 0,
+            "p50": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "differenceFromNullMean": 0,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "articulationPersistenceMeanSeconds",
+          "observed": null,
+          "null": {
+            "n": 0,
+            "mean": null,
+            "sd": null,
+            "min": null,
+            "p10": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "differenceFromNullMean": null,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": null
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "connectorPersistCount",
+          "observed": 0,
+          "null": {
+            "n": 8,
+            "mean": 0,
+            "sd": 0,
+            "min": 0,
+            "p10": 0,
+            "p50": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "differenceFromNullMean": 0,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "connectorPersistenceMeanSeconds",
+          "observed": null,
+          "null": {
+            "n": 0,
+            "mean": null,
+            "sd": null,
+            "min": null,
+            "p10": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "differenceFromNullMean": null,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": null
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "mergeCount",
+          "observed": 208,
+          "null": {
+            "n": 8,
+            "mean": 244.625,
+            "sd": 3.113908889391045,
+            "min": 242,
+            "p10": 242,
+            "p50": 244,
+            "p90": 248.2,
+            "max": 251
+          },
+          "differenceFromNullMean": -36.625,
+          "ratioToNullMean": 0.8502810424118549,
+          "standardizedDifference": -11.761744258086617,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "splitCount",
+          "observed": 86,
+          "null": {
+            "n": 8,
+            "mean": 107.5,
+            "sd": 5.31843156256751,
+            "min": 99,
+            "p10": 101.8,
+            "p50": 108,
+            "p90": 113.6,
+            "max": 115
+          },
+          "differenceFromNullMean": -21.5,
+          "ratioToNullMean": 0.8,
+          "standardizedDifference": -4.042545202860658,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        }
+      ],
+      "identityChanges": {
+        "BLOCK_REMAP": {
+          "eventCount": {
+            "n": 8,
+            "mean": 119,
+            "sd": 0,
+            "min": 119,
+            "p10": 119,
+            "p50": 119,
+            "p90": 119,
+            "max": 119
+          },
+          "changedSurvivingLabels": {
+            "n": 8,
+            "mean": 2067,
+            "sd": 14.050927778213488,
+            "min": 2041,
+            "p10": 2048,
+            "p50": 2074,
+            "p90": 2077.5,
+            "max": 2081
+          },
+          "jumpDistance": {
+            "n": 16536,
+            "mean": 0.40228415720756194,
+            "sd": 0.20610111102703826,
+            "min": 0.011999999034839169,
+            "p10": 0.13479868508204132,
+            "p50": 0.3906317887138597,
+            "p90": 0.679024526641608,
+            "max": 1.2401205317238035
+          }
+        },
+        "LIFECYCLE_REPAIR": {
+          "eventCount": {
+            "n": 8,
+            "mean": 1477,
+            "sd": 0,
+            "min": 1477,
+            "p10": 1477,
+            "p50": 1477,
+            "p90": 1477,
+            "max": 1477
+          },
+          "changedSurvivingLabels": {
+            "n": 8,
+            "mean": 692.875,
+            "sd": 5.693040864574423,
+            "min": 685,
+            "p10": 685,
+            "p50": 693.5,
+            "p90": 699.3,
+            "max": 700
+          },
+          "jumpDistance": {
+            "n": 5543,
+            "mean": 0.5733454570250509,
+            "sd": 0.23203882583247787,
+            "min": 0.022888112269951622,
+            "p10": 0.2588316360431203,
+            "p50": 0.5784035457166788,
+            "p90": 0.8830060709232778,
+            "max": 1.1859562897581402
+          }
+        }
+      }
+    },
+    {
+      "seed": 20261006,
+      "comparisons": [
+        {
+          "windowSeconds": 0.25,
+          "metric": "rawEncounterCount",
+          "observed": 483,
+          "null": {
+            "n": 8,
+            "mean": 522,
+            "sd": 2.9760952365713798,
+            "min": 518,
+            "p10": 518,
+            "p50": 523,
+            "p90": 524.5999999999999,
+            "max": 526
+          },
+          "differenceFromNullMean": -39,
+          "ratioToNullMean": 0.9252873563218391,
+          "standardizedDifference": -13.104419348128818,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "rawCompletedLifetimeMeanSeconds",
+          "observed": 0.3510027662517963,
+          "null": {
+            "n": 8,
+            "mean": 0.3247373743800738,
+            "sd": 0.0018581433764332128,
+            "min": 0.32225396825403024,
+            "p10": 0.32311659837937556,
+            "p50": 0.32410600255434063,
+            "p90": 0.3272404900065103,
+            "max": 0.3272404900065103
+          },
+          "differenceFromNullMean": 0.026265391871722554,
+          "ratioToNullMean": 1.0808819493655863,
+          "standardizedDifference": 14.135288054111367,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "rawCompletedLifetimeP90Seconds",
+          "observed": 0.7833333333342694,
+          "null": {
+            "n": 8,
+            "mean": 0.7281250000003358,
+            "sd": 0.01059490368629197,
+            "min": 0.7100000000008326,
+            "p10": 0.7123333333341637,
+            "p50": 0.732499999999624,
+            "p90": 0.735333333334046,
+            "max": 0.7400000000003507
+          },
+          "differenceFromNullMean": 0.0552083333339336,
+          "ratioToNullMean": 1.0758226037203888,
+          "standardizedDifference": 5.210838622852601,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "rawPairExposureSeconds",
+          "observed": 169.21666666669915,
+          "null": {
+            "n": 8,
+            "mean": 169.21666666669918,
+            "sd": 3.038408543857536e-14,
+            "min": 169.21666666669915,
+            "p10": 169.21666666669915,
+            "p50": 169.21666666669915,
+            "p90": 169.21666666669915,
+            "max": 169.21666666669915
+          },
+          "differenceFromNullMean": -2.842170943040401e-14,
+          "ratioToNullMean": 0.9999999999999998,
+          "standardizedDifference": -0.9354143466934853,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "rollingEdgeCountMean",
+          "observed": 0.47412715607032746,
+          "null": {
+            "n": 8,
+            "mean": 0.4844387967669361,
+            "sd": 0.000511238855607089,
+            "min": 0.4837930172485626,
+            "p10": 0.48385134572118993,
+            "p50": 0.4844179651695692,
+            "p90": 0.48509290892425627,
+            "max": 0.48520956586951086
+          },
+          "differenceFromNullMean": -0.010311640696608615,
+          "ratioToNullMean": 0.978714254998925,
+          "standardizedDifference": -20.169908025405633,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "weightedDegreeMeanSeconds",
+          "observed": 0.007664476168895061,
+          "null": {
+            "n": 8,
+            "mean": 0.007614831180602897,
+            "sd": 0.000014936712206597451,
+            "min": 0.007598005891683808,
+            "p10": 0.007599169121535002,
+            "p50": 0.007609638190195748,
+            "p90": 0.007632464687665359,
+            "max": 0.007634262406526302
+          },
+          "differenceFromNullMean": 0.00004964498829216398,
+          "ratioToNullMean": 1.0065195126608484,
+          "standardizedDifference": 3.3236891496266563,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "temporalEdgeCount",
+          "observed": 482,
+          "null": {
+            "n": 8,
+            "mean": 520.75,
+            "sd": 2.712405363721075,
+            "min": 517,
+            "p10": 517,
+            "p50": 522,
+            "p90": 523.3,
+            "max": 524
+          },
+          "differenceFromNullMean": -38.75,
+          "ratioToNullMean": 0.9255880940950552,
+          "standardizedDifference": -14.286212716686245,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "temporalCompletedLifetimeMeanSeconds",
+          "observed": 0.5913721413722358,
+          "null": {
+            "n": 8,
+            "mean": 0.5592005460891449,
+            "sd": 0.0030010605251389903,
+            "min": 0.5560344827587096,
+            "p10": 0.5562940924376183,
+            "p50": 0.5579174664108392,
+            "p90": 0.5630038759690826,
+            "max": 0.5632751937985394
+          },
+          "differenceFromNullMean": 0.03217159528309088,
+          "ratioToNullMean": 1.0575314089159746,
+          "standardizedDifference": 10.72007545785865,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "temporalCompletedLifetimeP90Seconds",
+          "observed": 1.049999999999386,
+          "null": {
+            "n": 8,
+            "mean": 0.9687500000004861,
+            "sd": 0.02587745847445571,
+            "min": 0.9500000000011255,
+            "p10": 0.9500000000011255,
+            "p50": 0.9500000000011255,
+            "p90": 0.9999999999994216,
+            "max": 0.9999999999994316
+          },
+          "differenceFromNullMean": 0.08124999999890004,
+          "ratioToNullMean": 1.0838709677407579,
+          "standardizedDifference": 3.1397982950722905,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "bridgePersistCount",
+          "observed": 192,
+          "null": {
+            "n": 8,
+            "mean": 194.625,
+            "sd": 1.407885953173359,
+            "min": 193,
+            "p10": 193,
+            "p50": 194.5,
+            "p90": 196.3,
+            "max": 197
+          },
+          "differenceFromNullMean": -2.625,
+          "ratioToNullMean": 0.9865125240847784,
+          "standardizedDifference": -1.8644976136620155,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "bridgePersistenceMeanSeconds",
+          "observed": 0.6132812500001362,
+          "null": {
+            "n": 8,
+            "mean": 0.5785417486413509,
+            "sd": 0.00449725419359683,
+            "min": 0.5736040609138315,
+            "p10": 0.574045503988527,
+            "p50": 0.5782817869417063,
+            "p90": 0.5832519630362956,
+            "max": 0.5862694300519486
+          },
+          "differenceFromNullMean": 0.03473950135878534,
+          "ratioToNullMean": 1.06004666290785,
+          "standardizedDifference": 7.7246025826708395,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "articulationPersistCount",
+          "observed": 10,
+          "null": {
+            "n": 8,
+            "mean": 9,
+            "sd": 0,
+            "min": 9,
+            "p10": 9,
+            "p50": 9,
+            "p90": 9,
+            "max": 9
+          },
+          "differenceFromNullMean": 1,
+          "ratioToNullMean": 1.1111111111111112,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "articulationPersistenceMeanSeconds",
+          "observed": 0.44000000000011996,
+          "null": {
+            "n": 8,
+            "mean": 0.4111111111112299,
+            "sd": 5.93439168722175e-17,
+            "min": 0.41111111111122983,
+            "p10": 0.41111111111122983,
+            "p50": 0.41111111111122983,
+            "p90": 0.41111111111122983,
+            "max": 0.41111111111122983
+          },
+          "differenceFromNullMean": 0.028888888888890074,
+          "ratioToNullMean": 1.070270270270253,
+          "standardizedDifference": 486804552370467.56,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "connectorPersistCount",
+          "observed": 3,
+          "null": {
+            "n": 8,
+            "mean": 3.875,
+            "sd": 0.3535533905932738,
+            "min": 3,
+            "p10": 3.7,
+            "p50": 4,
+            "p90": 4,
+            "max": 4
+          },
+          "differenceFromNullMean": -0.875,
+          "ratioToNullMean": 0.7741935483870968,
+          "standardizedDifference": -2.4748737341529163,
+          "rank": {
+            "below": 0,
+            "equal": 1,
+            "above": 7,
+            "total": 8,
+            "midPercentile": 6.25
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "connectorPersistenceMeanSeconds",
+          "observed": 0.3500000000004017,
+          "null": {
+            "n": 8,
+            "mean": 0.3609375000004208,
+            "sd": 0.004419417382423621,
+            "min": 0.3500000000004017,
+            "p10": 0.35875000000041696,
+            "p50": 0.3625000000004235,
+            "p90": 0.3625000000004235,
+            "max": 0.3625000000004235
+          },
+          "differenceFromNullMean": -0.010937500000019085,
+          "ratioToNullMean": 0.9696969696969522,
+          "standardizedDifference": -2.4748737341529234,
+          "rank": {
+            "below": 0,
+            "equal": 1,
+            "above": 7,
+            "total": 8,
+            "midPercentile": 6.25
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "mergeCount",
+          "observed": 233,
+          "null": {
+            "n": 8,
+            "mean": 269.875,
+            "sd": 2.5319388392523003,
+            "min": 266,
+            "p10": 266.7,
+            "p50": 271,
+            "p90": 272.29999999999995,
+            "max": 273
+          },
+          "differenceFromNullMean": -36.875,
+          "ratioToNullMean": 0.8633626679018064,
+          "standardizedDifference": -14.563937891520892,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "splitCount",
+          "observed": 454,
+          "null": {
+            "n": 8,
+            "mean": 478.75,
+            "sd": 2.052872551885702,
+            "min": 475,
+            "p10": 476.4,
+            "p50": 479,
+            "p90": 481,
+            "max": 481
+          },
+          "differenceFromNullMean": -24.75,
+          "ratioToNullMean": 0.9483028720626632,
+          "standardizedDifference": -12.056276936074505,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "rawEncounterCount",
+          "observed": 483,
+          "null": {
+            "n": 8,
+            "mean": 522,
+            "sd": 2.9760952365713798,
+            "min": 518,
+            "p10": 518,
+            "p50": 523,
+            "p90": 524.5999999999999,
+            "max": 526
+          },
+          "differenceFromNullMean": -39,
+          "ratioToNullMean": 0.9252873563218391,
+          "standardizedDifference": -13.104419348128818,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "rawCompletedLifetimeMeanSeconds",
+          "observed": 0.3510027662517963,
+          "null": {
+            "n": 8,
+            "mean": 0.3247373743800738,
+            "sd": 0.0018581433764332128,
+            "min": 0.32225396825403024,
+            "p10": 0.32311659837937556,
+            "p50": 0.32410600255434063,
+            "p90": 0.3272404900065103,
+            "max": 0.3272404900065103
+          },
+          "differenceFromNullMean": 0.026265391871722554,
+          "ratioToNullMean": 1.0808819493655863,
+          "standardizedDifference": 14.135288054111367,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "rawCompletedLifetimeP90Seconds",
+          "observed": 0.7833333333342694,
+          "null": {
+            "n": 8,
+            "mean": 0.7281250000003358,
+            "sd": 0.01059490368629197,
+            "min": 0.7100000000008326,
+            "p10": 0.7123333333341637,
+            "p50": 0.732499999999624,
+            "p90": 0.735333333334046,
+            "max": 0.7400000000003507
+          },
+          "differenceFromNullMean": 0.0552083333339336,
+          "ratioToNullMean": 1.0758226037203888,
+          "standardizedDifference": 5.210838622852601,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "rawPairExposureSeconds",
+          "observed": 169.21666666669915,
+          "null": {
+            "n": 8,
+            "mean": 169.21666666669918,
+            "sd": 3.038408543857536e-14,
+            "min": 169.21666666669915,
+            "p10": 169.21666666669915,
+            "p50": 169.21666666669915,
+            "p90": 169.21666666669915,
+            "max": 169.21666666669915
+          },
+          "differenceFromNullMean": -2.842170943040401e-14,
+          "ratioToNullMean": 0.9999999999999998,
+          "standardizedDifference": -0.9354143466934853,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "rollingEdgeCountMean",
+          "observed": 1.0703274727106074,
+          "null": {
+            "n": 8,
+            "mean": 1.107220231647363,
+            "sd": 0.0037277335468079644,
+            "min": 1.1019915007082743,
+            "p10": 1.1033913840513292,
+            "p50": 1.1071994000499958,
+            "p90": 1.1114823764686277,
+            "max": 1.1134072160653279
+          },
+          "differenceFromNullMean": -0.03689275893675559,
+          "ratioToNullMean": 0.9666798366916894,
+          "standardizedDifference": -9.896833685537056,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "weightedDegreeMeanSeconds",
+          "observed": 0.03056484628748438,
+          "null": {
+            "n": 8,
+            "mean": 0.0299299040713046,
+            "sd": 0.00016944790035591187,
+            "min": 0.029672633884734824,
+            "p10": 0.02970456983155847,
+            "p50": 0.02995399954679348,
+            "p90": 0.030093707983986855,
+            "max": 0.0301699524133243
+          },
+          "differenceFromNullMean": 0.0006349422161797784,
+          "ratioToNullMean": 1.0212143084276883,
+          "standardizedDifference": 3.747123539720071,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "temporalEdgeCount",
+          "observed": 477,
+          "null": {
+            "n": 8,
+            "mean": 517.375,
+            "sd": 3.0676887530703447,
+            "min": 513,
+            "p10": 513,
+            "p50": 518.5,
+            "p90": 520.3,
+            "max": 521
+          },
+          "differenceFromNullMean": -40.375,
+          "ratioToNullMean": 0.9219618265281468,
+          "standardizedDifference": -13.161374327688897,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "temporalCompletedLifetimeMeanSeconds",
+          "observed": 1.349159663865771,
+          "null": {
+            "n": 8,
+            "mean": 1.2865792425013072,
+            "sd": 0.008561986447195942,
+            "min": 1.2763005780348988,
+            "p10": 1.2764036869241355,
+            "p50": 1.286703621097049,
+            "p90": 1.2956445312502247,
+            "max": 1.2982421875002268
+          },
+          "differenceFromNullMean": 0.06258042136446385,
+          "ratioToNullMean": 1.048640938153796,
+          "standardizedDifference": 7.309100726848147,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "temporalCompletedLifetimeP90Seconds",
+          "observed": 1.7999999999997414,
+          "null": {
+            "n": 8,
+            "mean": 1.7243750000005087,
+            "sd": 0.023518609651368077,
+            "min": 1.7000000000019782,
+            "p10": 1.7000000000019782,
+            "p50": 1.7225000000006154,
+            "p90": 1.7499999999989737,
+            "max": 1.749999999998974
+          },
+          "differenceFromNullMean": 0.07562499999923267,
+          "ratioToNullMean": 1.0438564697349535,
+          "standardizedDifference": 3.215538721049931,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "bridgePersistCount",
+          "observed": 14,
+          "null": {
+            "n": 8,
+            "mean": 10.75,
+            "sd": 0.7071067811865476,
+            "min": 10,
+            "p10": 10,
+            "p50": 11,
+            "p90": 11.3,
+            "max": 12
+          },
+          "differenceFromNullMean": 3.25,
+          "ratioToNullMean": 1.302325581395349,
+          "standardizedDifference": 4.596194077712559,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "bridgePersistenceMeanSeconds",
+          "observed": 1.5214285714290139,
+          "null": {
+            "n": 8,
+            "mean": 1.53346590909152,
+            "sd": 0.07062001411182893,
+            "min": 1.4227272727277964,
+            "p10": 1.4243181818187638,
+            "p50": 1.5545454545461168,
+            "p90": 1.5910000000005848,
+            "max": 1.605000000000608
+          },
+          "differenceFromNullMean": -0.012037337662506031,
+          "ratioToNullMean": 0.9921502411034117,
+          "standardizedDifference": -0.17045221264675114,
+          "rank": {
+            "below": 2,
+            "equal": 0,
+            "above": 6,
+            "total": 8,
+            "midPercentile": 25
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "articulationPersistCount",
+          "observed": 0,
+          "null": {
+            "n": 8,
+            "mean": 0,
+            "sd": 0,
+            "min": 0,
+            "p10": 0,
+            "p50": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "differenceFromNullMean": 0,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "articulationPersistenceMeanSeconds",
+          "observed": null,
+          "null": {
+            "n": 0,
+            "mean": null,
+            "sd": null,
+            "min": null,
+            "p10": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "differenceFromNullMean": null,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": null
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "connectorPersistCount",
+          "observed": 0,
+          "null": {
+            "n": 8,
+            "mean": 0,
+            "sd": 0,
+            "min": 0,
+            "p10": 0,
+            "p50": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "differenceFromNullMean": 0,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "connectorPersistenceMeanSeconds",
+          "observed": null,
+          "null": {
+            "n": 0,
+            "mean": null,
+            "sd": null,
+            "min": null,
+            "p10": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "differenceFromNullMean": null,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": null
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "mergeCount",
+          "observed": 223,
+          "null": {
+            "n": 8,
+            "mean": 262.25,
+            "sd": 2.815771906346718,
+            "min": 258,
+            "p10": 258.7,
+            "p50": 262.5,
+            "p90": 265.3,
+            "max": 266
+          },
+          "differenceFromNullMean": -39.25,
+          "ratioToNullMean": 0.8503336510962822,
+          "standardizedDifference": -13.93933930213983,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "splitCount",
+          "observed": 437,
+          "null": {
+            "n": 8,
+            "mean": 453.5,
+            "sd": 3.070597894314954,
+            "min": 449,
+            "p10": 450.4,
+            "p50": 453.5,
+            "p90": 456.90000000000003,
+            "max": 459
+          },
+          "differenceFromNullMean": -16.5,
+          "ratioToNullMean": 0.9636163175303197,
+          "standardizedDifference": -5.373546315051169,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "rawEncounterCount",
+          "observed": 483,
+          "null": {
+            "n": 8,
+            "mean": 522,
+            "sd": 2.9760952365713798,
+            "min": 518,
+            "p10": 518,
+            "p50": 523,
+            "p90": 524.5999999999999,
+            "max": 526
+          },
+          "differenceFromNullMean": -39,
+          "ratioToNullMean": 0.9252873563218391,
+          "standardizedDifference": -13.104419348128818,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "rawCompletedLifetimeMeanSeconds",
+          "observed": 0.3510027662517963,
+          "null": {
+            "n": 8,
+            "mean": 0.3247373743800738,
+            "sd": 0.0018581433764332128,
+            "min": 0.32225396825403024,
+            "p10": 0.32311659837937556,
+            "p50": 0.32410600255434063,
+            "p90": 0.3272404900065103,
+            "max": 0.3272404900065103
+          },
+          "differenceFromNullMean": 0.026265391871722554,
+          "ratioToNullMean": 1.0808819493655863,
+          "standardizedDifference": 14.135288054111367,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "rawCompletedLifetimeP90Seconds",
+          "observed": 0.7833333333342694,
+          "null": {
+            "n": 8,
+            "mean": 0.7281250000003358,
+            "sd": 0.01059490368629197,
+            "min": 0.7100000000008326,
+            "p10": 0.7123333333341637,
+            "p50": 0.732499999999624,
+            "p90": 0.735333333334046,
+            "max": 0.7400000000003507
+          },
+          "differenceFromNullMean": 0.0552083333339336,
+          "ratioToNullMean": 1.0758226037203888,
+          "standardizedDifference": 5.210838622852601,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "rawPairExposureSeconds",
+          "observed": 169.21666666669915,
+          "null": {
+            "n": 8,
+            "mean": 169.21666666669918,
+            "sd": 3.038408543857536e-14,
+            "min": 169.21666666669915,
+            "p10": 169.21666666669915,
+            "p50": 169.21666666669915,
+            "p90": 169.21666666669915,
+            "max": 169.21666666669915
+          },
+          "differenceFromNullMean": -2.842170943040401e-14,
+          "ratioToNullMean": 0.9999999999999998,
+          "standardizedDifference": -0.9354143466934853,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "rollingEdgeCountMean",
+          "observed": 4.072910590784101,
+          "null": {
+            "n": 8,
+            "mean": 4.107293142238147,
+            "sd": 0.032651155863810594,
+            "min": 4.071577368552621,
+            "p10": 4.072802266477794,
+            "p50": 4.112323973002249,
+            "p90": 4.141304891259061,
+            "max": 4.162653112240647
+          },
+          "differenceFromNullMean": -0.034382551454045895,
+          "ratioToNullMean": 0.9916289024758261,
+          "standardizedDifference": -1.0530270841699152,
+          "rank": {
+            "below": 1,
+            "equal": 0,
+            "above": 7,
+            "total": 8,
+            "midPercentile": 12.5
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "weightedDegreeMeanSeconds",
+          "observed": 0.14507183322002493,
+          "null": {
+            "n": 8,
+            "mean": 0.13575643930810352,
+            "sd": 0.0012126181365202827,
+            "min": 0.13402039428960338,
+            "p10": 0.13432177656922706,
+            "p50": 0.13582309842132995,
+            "p90": 0.13712091547700028,
+            "max": 0.13715401465367055
+          },
+          "differenceFromNullMean": 0.009315393911921405,
+          "ratioToNullMean": 1.0686184313569085,
+          "standardizedDifference": 7.682050623663579,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "temporalEdgeCount",
+          "observed": 472,
+          "null": {
+            "n": 8,
+            "mean": 514,
+            "sd": 3.0237157840738176,
+            "min": 508,
+            "p10": 510.8,
+            "p50": 514.5,
+            "p90": 517,
+            "max": 517
+          },
+          "differenceFromNullMean": -42,
+          "ratioToNullMean": 0.9182879377431906,
+          "standardizedDifference": -13.890194383089101,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "temporalCompletedLifetimeMeanSeconds",
+          "observed": 5.195726495727396,
+          "null": {
+            "n": 8,
+            "mean": 4.807984467333121,
+            "sd": 0.039438270624251544,
+            "min": 4.740758754864659,
+            "p10": 4.752090640158658,
+            "p50": 4.823648320715329,
+            "p90": 4.844962217058862,
+            "max": 4.847053045187489
+          },
+          "differenceFromNullMean": 0.38774202839427474,
+          "ratioToNullMean": 1.0806454411466404,
+          "standardizedDifference": 9.831618431966508,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "temporalCompletedLifetimeP90Seconds",
+          "observed": 5.79999999999661,
+          "null": {
+            "n": 8,
+            "mean": 5.65124999999983,
+            "sd": 0.003535533908657984,
+            "min": 5.649999999994517,
+            "p10": 5.649999999995028,
+            "p50": 5.649999999996709,
+            "p90": 5.653000000006572,
+            "max": 5.6600000000065736
+          },
+          "differenceFromNullMean": 0.14874999999678007,
+          "ratioToNullMean": 1.0263216102626471,
+          "standardizedDifference": 42.07285344725841,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "bridgePersistCount",
+          "observed": 0,
+          "null": {
+            "n": 8,
+            "mean": 0,
+            "sd": 0,
+            "min": 0,
+            "p10": 0,
+            "p50": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "differenceFromNullMean": 0,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "bridgePersistenceMeanSeconds",
+          "observed": null,
+          "null": {
+            "n": 0,
+            "mean": null,
+            "sd": null,
+            "min": null,
+            "p10": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "differenceFromNullMean": null,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": null
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "articulationPersistCount",
+          "observed": 0,
+          "null": {
+            "n": 8,
+            "mean": 0,
+            "sd": 0,
+            "min": 0,
+            "p10": 0,
+            "p50": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "differenceFromNullMean": 0,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "articulationPersistenceMeanSeconds",
+          "observed": null,
+          "null": {
+            "n": 0,
+            "mean": null,
+            "sd": null,
+            "min": null,
+            "p10": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "differenceFromNullMean": null,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": null
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "connectorPersistCount",
+          "observed": 0,
+          "null": {
+            "n": 8,
+            "mean": 0,
+            "sd": 0,
+            "min": 0,
+            "p10": 0,
+            "p50": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "differenceFromNullMean": 0,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "connectorPersistenceMeanSeconds",
+          "observed": null,
+          "null": {
+            "n": 0,
+            "mean": null,
+            "sd": null,
+            "min": null,
+            "p10": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "differenceFromNullMean": null,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": null
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "mergeCount",
+          "observed": 216,
+          "null": {
+            "n": 8,
+            "mean": 256.125,
+            "sd": 2.850438562747845,
+            "min": 252,
+            "p10": 252.7,
+            "p50": 256,
+            "p90": 259.3,
+            "max": 260
+          },
+          "differenceFromNullMean": -40.125,
+          "ratioToNullMean": 0.8433382137628112,
+          "standardizedDifference": -14.07678120987782,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "splitCount",
+          "observed": 394,
+          "null": {
+            "n": 8,
+            "mean": 387.875,
+            "sd": 6.311836952447814,
+            "min": 378,
+            "p10": 381.5,
+            "p50": 389,
+            "p90": 393.4,
+            "max": 399
+          },
+          "differenceFromNullMean": 6.125,
+          "ratioToNullMean": 1.015791169835643,
+          "standardizedDifference": 0.9703989577272973,
+          "rank": {
+            "below": 7,
+            "equal": 0,
+            "above": 1,
+            "total": 8,
+            "midPercentile": 87.5
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "rawEncounterCount",
+          "observed": 483,
+          "null": {
+            "n": 8,
+            "mean": 522,
+            "sd": 2.9760952365713798,
+            "min": 518,
+            "p10": 518,
+            "p50": 523,
+            "p90": 524.5999999999999,
+            "max": 526
+          },
+          "differenceFromNullMean": -39,
+          "ratioToNullMean": 0.9252873563218391,
+          "standardizedDifference": -13.104419348128818,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "rawCompletedLifetimeMeanSeconds",
+          "observed": 0.3510027662517963,
+          "null": {
+            "n": 8,
+            "mean": 0.3247373743800738,
+            "sd": 0.0018581433764332128,
+            "min": 0.32225396825403024,
+            "p10": 0.32311659837937556,
+            "p50": 0.32410600255434063,
+            "p90": 0.3272404900065103,
+            "max": 0.3272404900065103
+          },
+          "differenceFromNullMean": 0.026265391871722554,
+          "ratioToNullMean": 1.0808819493655863,
+          "standardizedDifference": 14.135288054111367,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "rawCompletedLifetimeP90Seconds",
+          "observed": 0.7833333333342694,
+          "null": {
+            "n": 8,
+            "mean": 0.7281250000003358,
+            "sd": 0.01059490368629197,
+            "min": 0.7100000000008326,
+            "p10": 0.7123333333341637,
+            "p50": 0.732499999999624,
+            "p90": 0.735333333334046,
+            "max": 0.7400000000003507
+          },
+          "differenceFromNullMean": 0.0552083333339336,
+          "ratioToNullMean": 1.0758226037203888,
+          "standardizedDifference": 5.210838622852601,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "rawPairExposureSeconds",
+          "observed": 169.21666666669915,
+          "null": {
+            "n": 8,
+            "mean": 169.21666666669918,
+            "sd": 3.038408543857536e-14,
+            "min": 169.21666666669915,
+            "p10": 169.21666666669915,
+            "p50": 169.21666666669915,
+            "p90": 169.21666666669915,
+            "max": 169.21666666669915
+          },
+          "differenceFromNullMean": -2.842170943040401e-14,
+          "ratioToNullMean": 0.9999999999999998,
+          "standardizedDifference": -0.9354143466934853,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "rollingEdgeCountMean",
+          "observed": 8.346054495458711,
+          "null": {
+            "n": 8,
+            "mean": 7.976324889592533,
+            "sd": 0.09232259303324293,
+            "min": 7.874927089409216,
+            "p10": 7.883793017248562,
+            "p50": 7.97062744771269,
+            "p90": 8.093975502041497,
+            "max": 8.101324889592535
+          },
+          "differenceFromNullMean": 0.3697296058661781,
+          "ratioToNullMean": 1.0463533784022012,
+          "standardizedDifference": 4.004757597450152,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "weightedDegreeMeanSeconds",
+          "observed": 0.31245879598160103,
+          "null": {
+            "n": 8,
+            "mean": 0.2728018921369407,
+            "sd": 0.004546171444271361,
+            "min": 0.2660773472317363,
+            "p10": 0.2666509252965417,
+            "p50": 0.27411964649906073,
+            "p90": 0.2769470805952865,
+            "max": 0.27890701714635424
+          },
+          "differenceFromNullMean": 0.03965690384466031,
+          "ratioToNullMean": 1.1453688738520678,
+          "standardizedDifference": 8.723143051420124,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "temporalEdgeCount",
+          "observed": 470,
+          "null": {
+            "n": 8,
+            "mean": 509.75,
+            "sd": 3.4121631178560534,
+            "min": 503,
+            "p10": 505.8,
+            "p50": 510.5,
+            "p90": 513,
+            "max": 513
+          },
+          "differenceFromNullMean": -39.75,
+          "ratioToNullMean": 0.9220205983325159,
+          "standardizedDifference": -11.649501687649654,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "temporalCompletedLifetimeMeanSeconds",
+          "observed": 10.755760869567347,
+          "null": {
+            "n": 8,
+            "mean": 9.451231858468594,
+            "sd": 0.08683467631593622,
+            "min": 9.327380952382912,
+            "p10": 9.344264285716314,
+            "p50": 9.467868606547498,
+            "p90": 9.541757414787387,
+            "max": 9.559561752990149
+          },
+          "differenceFromNullMean": 1.3045290110987526,
+          "ratioToNullMean": 1.1380274053831252,
+          "standardizedDifference": 15.023134379546718,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "temporalCompletedLifetimeP90Seconds",
+          "observed": 15.405000000016594,
+          "null": {
+            "n": 8,
+            "mean": 14.74937500000896,
+            "sd": 0.17317285955743988,
+            "min": 14.534999999999142,
+            "p10": 14.5595000000116,
+            "p50": 14.777500000009182,
+            "p90": 14.889000000016612,
+            "max": 15.085000000017573
+          },
+          "differenceFromNullMean": 0.6556250000076336,
+          "ratioToNullMean": 1.0444510360613406,
+          "standardizedDifference": 3.7859570009015684,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "bridgePersistCount",
+          "observed": 0,
+          "null": {
+            "n": 8,
+            "mean": 0,
+            "sd": 0,
+            "min": 0,
+            "p10": 0,
+            "p50": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "differenceFromNullMean": 0,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "bridgePersistenceMeanSeconds",
+          "observed": null,
+          "null": {
+            "n": 0,
+            "mean": null,
+            "sd": null,
+            "min": null,
+            "p10": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "differenceFromNullMean": null,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": null
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "articulationPersistCount",
+          "observed": 0,
+          "null": {
+            "n": 8,
+            "mean": 0,
+            "sd": 0,
+            "min": 0,
+            "p10": 0,
+            "p50": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "differenceFromNullMean": 0,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "articulationPersistenceMeanSeconds",
+          "observed": null,
+          "null": {
+            "n": 0,
+            "mean": null,
+            "sd": null,
+            "min": null,
+            "p10": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "differenceFromNullMean": null,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": null
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "connectorPersistCount",
+          "observed": 0,
+          "null": {
+            "n": 8,
+            "mean": 0,
+            "sd": 0,
+            "min": 0,
+            "p10": 0,
+            "p50": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "differenceFromNullMean": 0,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "connectorPersistenceMeanSeconds",
+          "observed": null,
+          "null": {
+            "n": 0,
+            "mean": null,
+            "sd": null,
+            "min": null,
+            "p10": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "differenceFromNullMean": null,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": null
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "mergeCount",
+          "observed": 212,
+          "null": {
+            "n": 8,
+            "mean": 245.25,
+            "sd": 3.058944729337694,
+            "min": 242,
+            "p10": 242,
+            "p50": 244,
+            "p90": 249.3,
+            "max": 250
+          },
+          "differenceFromNullMean": -33.25,
+          "ratioToNullMean": 0.8644240570846076,
+          "standardizedDifference": -10.869761614554934,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "splitCount",
+          "observed": 91,
+          "null": {
+            "n": 8,
+            "mean": 101.625,
+            "sd": 4.596194077712559,
+            "min": 94,
+            "p10": 96.1,
+            "p50": 102,
+            "p90": 106.19999999999999,
+            "max": 109
+          },
+          "differenceFromNullMean": -10.625,
+          "ratioToNullMean": 0.8954489544895449,
+          "standardizedDifference": -2.31169524618679,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        }
+      ],
+      "identityChanges": {
+        "BLOCK_REMAP": {
+          "eventCount": {
+            "n": 8,
+            "mean": 119,
+            "sd": 0,
+            "min": 119,
+            "p10": 119,
+            "p50": 119,
+            "p90": 119,
+            "max": 119
+          },
+          "changedSurvivingLabels": {
+            "n": 8,
+            "mean": 2064.125,
+            "sd": 15.53279939813996,
+            "min": 2036,
+            "p10": 2047.9,
+            "p50": 2067,
+            "p90": 2082,
+            "max": 2082
+          },
+          "jumpDistance": {
+            "n": 16513,
+            "mean": 0.40028598796153847,
+            "sd": 0.20663576021801372,
+            "min": 0.014539558313300555,
+            "p10": 0.13407033382667835,
+            "p50": 0.38661682130041775,
+            "p90": 0.6802359235087756,
+            "max": 1.2231540008820918
+          }
+        },
+        "LIFECYCLE_REPAIR": {
+          "eventCount": {
+            "n": 8,
+            "mean": 1374,
+            "sd": 0,
+            "min": 1374,
+            "p10": 1374,
+            "p50": 1374,
+            "p90": 1374,
+            "max": 1374
+          },
+          "changedSurvivingLabels": {
+            "n": 8,
+            "mean": 640.125,
+            "sd": 5.914570386523678,
+            "min": 634,
+            "p10": 634.7,
+            "p50": 637.5,
+            "p90": 647.5999999999999,
+            "max": 649
+          },
+          "jumpDistance": {
+            "n": 5121,
+            "mean": 0.5794432916553618,
+            "sd": 0.23688179140019727,
+            "min": 0.025903120026778175,
+            "p10": 0.25269865895896193,
+            "p50": 0.5829214263938898,
+            "p90": 0.8915970549096296,
+            "max": 1.3741791929872818
+          }
+        }
+      }
+    },
+    {
+      "seed": 20261007,
+      "comparisons": [
+        {
+          "windowSeconds": 0.25,
+          "metric": "rawEncounterCount",
+          "observed": 518,
+          "null": {
+            "n": 8,
+            "mean": 573.75,
+            "sd": 3.011881234615431,
+            "min": 571,
+            "p10": 571,
+            "p50": 574,
+            "p90": 576.5,
+            "max": 580
+          },
+          "differenceFromNullMean": -55.75,
+          "ratioToNullMean": 0.9028322440087146,
+          "standardizedDifference": -18.51002601273499,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "rawCompletedLifetimeMeanSeconds",
+          "observed": 0.4643822393823207,
+          "null": {
+            "n": 8,
+            "mean": 0.4192693183858853,
+            "sd": 0.0021899991504262155,
+            "min": 0.4147413793104175,
+            "p10": 0.4172658920540461,
+            "p50": 0.4190766550523382,
+            "p90": 0.4212784588442069,
+            "max": 0.4212784588442069
+          },
+          "differenceFromNullMean": 0.04511292099643538,
+          "ratioToNullMean": 1.1075989084298188,
+          "standardizedDifference": 20.599515295545,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "rawCompletedLifetimeP90Seconds",
+          "observed": 0.8666666666676974,
+          "null": {
+            "n": 8,
+            "mean": 0.8333333333342576,
+            "sd": 1.6789629582652813e-13,
+            "min": 0.8333333333338458,
+            "p10": 0.8333333333341504,
+            "p50": 0.8333333333343177,
+            "p90": 0.8333333333343376,
+            "max": 0.8333333333343376
+          },
+          "differenceFromNullMean": 0.033333333333439796,
+          "ratioToNullMean": 1.0400000000000833,
+          "standardizedDifference": 198535251592.92422,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "rawPairExposureSeconds",
+          "observed": 240.55000000004213,
+          "null": {
+            "n": 8,
+            "mean": 240.55000000004208,
+            "sd": 6.076817087715071e-14,
+            "min": 240.55000000004213,
+            "p10": 240.55000000004213,
+            "p50": 240.55000000004213,
+            "p90": 240.55000000004213,
+            "max": 240.55000000004213
+          },
+          "differenceFromNullMean": 5.684341886080802e-14,
+          "ratioToNullMean": 1.0000000000000002,
+          "standardizedDifference": 0.9354143466934853,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "rollingEdgeCountMean",
+          "observed": 0.6050329139238397,
+          "null": {
+            "n": 8,
+            "mean": 0.6207607699358386,
+            "sd": 0.0007698435918199819,
+            "min": 0.6191150737438547,
+            "p10": 0.6200483293058912,
+            "p50": 0.6209899175068745,
+            "p90": 0.6213898841763186,
+            "max": 0.6214482126489459
+          },
+          "differenceFromNullMean": -0.015727856011998886,
+          "ratioToNullMean": 0.9746635793147422,
+          "standardizedDifference": -20.429936910712957,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "weightedDegreeMeanSeconds",
+          "observed": 0.010878915381019268,
+          "null": {
+            "n": 8,
+            "mean": 0.010827055904930046,
+            "sd": 0.000014864439062180058,
+            "min": 0.010803058408360947,
+            "p10": 0.010812770513806653,
+            "p50": 0.010824473299250556,
+            "p90": 0.010845179387413589,
+            "max": 0.01084845194468335
+          },
+          "differenceFromNullMean": 0.00005185947608922145,
+          "ratioToNullMean": 1.004789804037643,
+          "standardizedDifference": 3.488828328622823,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "temporalEdgeCount",
+          "observed": 511,
+          "null": {
+            "n": 8,
+            "mean": 566,
+            "sd": 2.9277002188455996,
+            "min": 562,
+            "p10": 562.7,
+            "p50": 566.5,
+            "p90": 568.9,
+            "max": 571
+          },
+          "differenceFromNullMean": -55,
+          "ratioToNullMean": 0.9028268551236749,
+          "standardizedDifference": -18.786076404259262,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "temporalCompletedLifetimeMeanSeconds",
+          "observed": 0.7104696673190989,
+          "null": {
+            "n": 8,
+            "mean": 0.6581188150588609,
+            "sd": 0.003110342172180609,
+            "min": 0.6529772329248,
+            "p10": 0.6547135924127282,
+            "p50": 0.6579437526876761,
+            "p90": 0.6613192227708524,
+            "max": 0.6619893428065022
+          },
+          "differenceFromNullMean": 0.052350852260237946,
+          "ratioToNullMean": 1.0795462020874693,
+          "standardizedDifference": 16.831219641514757,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "temporalCompletedLifetimeP90Seconds",
+          "observed": 1.1000000000013301,
+          "null": {
+            "n": 8,
+            "mean": 1.0999999999998125,
+            "sd": 4.1475463926545074e-13,
+            "min": 1.099999999999369,
+            "p10": 1.099999999999369,
+            "p50": 1.0999999999998125,
+            "p90": 1.1000000000002892,
+            "max": 1.1000000000003667
+          },
+          "differenceFromNullMean": 1.517674874662589e-12,
+          "ratioToNullMean": 1.0000000000013798,
+          "standardizedDifference": 3.659211328776117,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "bridgePersistCount",
+          "observed": 224,
+          "null": {
+            "n": 8,
+            "mean": 234.375,
+            "sd": 1.0606601717798212,
+            "min": 233,
+            "p10": 233,
+            "p50": 234.5,
+            "p90": 235.29999999999998,
+            "max": 236
+          },
+          "differenceFromNullMean": -10.375,
+          "ratioToNullMean": 0.9557333333333333,
+          "standardizedDifference": -9.781643806413909,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "bridgePersistenceMeanSeconds",
+          "observed": 0.6988839285715331,
+          "null": {
+            "n": 8,
+            "mean": 0.6451015658910112,
+            "sd": 0.0031943098129412384,
+            "min": 0.6416666666667563,
+            "p10": 0.6425851063830681,
+            "p50": 0.6441489361703007,
+            "p90": 0.6486557719820414,
+            "max": 0.6515021459228363
+          },
+          "differenceFromNullMean": 0.053782362680521945,
+          "ratioToNullMean": 1.0833703799900687,
+          "standardizedDifference": 16.836927483561944,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "articulationPersistCount",
+          "observed": 19,
+          "null": {
+            "n": 8,
+            "mean": 20.875,
+            "sd": 0.3535533905932738,
+            "min": 20,
+            "p10": 20.7,
+            "p50": 21,
+            "p90": 21,
+            "max": 21
+          },
+          "differenceFromNullMean": -1.875,
+          "ratioToNullMean": 0.9101796407185628,
+          "standardizedDifference": -5.303300858899106,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "articulationPersistenceMeanSeconds",
+          "observed": 0.7973684210527602,
+          "null": {
+            "n": 8,
+            "mean": 0.7004315476191456,
+            "sd": 0.010762916374550591,
+            "min": 0.6880952380953378,
+            "p10": 0.6897619047620046,
+            "p50": 0.7023809523810518,
+            "p90": 0.7084166666667623,
+            "max": 0.7225000000000869
+          },
+          "differenceFromNullMean": 0.09693687343361457,
+          "ratioToNullMean": 1.1383959271439374,
+          "standardizedDifference": 9.006561981920276,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "connectorPersistCount",
+          "observed": 5,
+          "null": {
+            "n": 8,
+            "mean": 5.875,
+            "sd": 1.3562026818605375,
+            "min": 4,
+            "p10": 4,
+            "p50": 6.5,
+            "p90": 7,
+            "max": 7
+          },
+          "differenceFromNullMean": -0.875,
+          "ratioToNullMean": 0.851063829787234,
+          "standardizedDifference": -0.645183800108411,
+          "rank": {
+            "below": 2,
+            "equal": 1,
+            "above": 5,
+            "total": 8,
+            "midPercentile": 31.25
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "connectorPersistenceMeanSeconds",
+          "observed": 0.42000000000044224,
+          "null": {
+            "n": 8,
+            "mean": 0.5212202380955244,
+            "sd": 0.1311434251156862,
+            "min": 0.3500000000003425,
+            "p10": 0.3500000000003425,
+            "p50": 0.5928571428574124,
+            "p90": 0.6220000000002514,
+            "max": 0.6900000000002091
+          },
+          "differenceFromNullMean": -0.10122023809508218,
+          "ratioToNullMean": 0.8058014046712217,
+          "standardizedDifference": -0.7718285381504432,
+          "rank": {
+            "below": 3,
+            "equal": 0,
+            "above": 5,
+            "total": 8,
+            "midPercentile": 37.5
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "mergeCount",
+          "observed": 234,
+          "null": {
+            "n": 8,
+            "mean": 279.125,
+            "sd": 2.100170061141308,
+            "min": 276,
+            "p10": 276.7,
+            "p50": 279,
+            "p90": 281.3,
+            "max": 282
+          },
+          "differenceFromNullMean": -45.125,
+          "ratioToNullMean": 0.83833407971339,
+          "standardizedDifference": -21.48635524090723,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 0.25,
+          "metric": "splitCount",
+          "observed": 471,
+          "null": {
+            "n": 8,
+            "mean": 504.625,
+            "sd": 1.8468119248354136,
+            "min": 502,
+            "p10": 502.7,
+            "p50": 504,
+            "p90": 507,
+            "max": 507
+          },
+          "differenceFromNullMean": -33.625,
+          "ratioToNullMean": 0.9333663611592767,
+          "standardizedDifference": -18.207051594058033,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "rawEncounterCount",
+          "observed": 518,
+          "null": {
+            "n": 8,
+            "mean": 573.75,
+            "sd": 3.011881234615431,
+            "min": 571,
+            "p10": 571,
+            "p50": 574,
+            "p90": 576.5,
+            "max": 580
+          },
+          "differenceFromNullMean": -55.75,
+          "ratioToNullMean": 0.9028322440087146,
+          "standardizedDifference": -18.51002601273499,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "rawCompletedLifetimeMeanSeconds",
+          "observed": 0.4643822393823207,
+          "null": {
+            "n": 8,
+            "mean": 0.4192693183858853,
+            "sd": 0.0021899991504262155,
+            "min": 0.4147413793104175,
+            "p10": 0.4172658920540461,
+            "p50": 0.4190766550523382,
+            "p90": 0.4212784588442069,
+            "max": 0.4212784588442069
+          },
+          "differenceFromNullMean": 0.04511292099643538,
+          "ratioToNullMean": 1.1075989084298188,
+          "standardizedDifference": 20.599515295545,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "rawCompletedLifetimeP90Seconds",
+          "observed": 0.8666666666676974,
+          "null": {
+            "n": 8,
+            "mean": 0.8333333333342576,
+            "sd": 1.6789629582652813e-13,
+            "min": 0.8333333333338458,
+            "p10": 0.8333333333341504,
+            "p50": 0.8333333333343177,
+            "p90": 0.8333333333343376,
+            "max": 0.8333333333343376
+          },
+          "differenceFromNullMean": 0.033333333333439796,
+          "ratioToNullMean": 1.0400000000000833,
+          "standardizedDifference": 198535251592.92422,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "rawPairExposureSeconds",
+          "observed": 240.55000000004213,
+          "null": {
+            "n": 8,
+            "mean": 240.55000000004208,
+            "sd": 6.076817087715071e-14,
+            "min": 240.55000000004213,
+            "p10": 240.55000000004213,
+            "p50": 240.55000000004213,
+            "p90": 240.55000000004213,
+            "max": 240.55000000004213
+          },
+          "differenceFromNullMean": 5.684341886080802e-14,
+          "ratioToNullMean": 1.0000000000000002,
+          "standardizedDifference": 0.9354143466934853,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "rollingEdgeCountMean",
+          "observed": 1.2395633697191901,
+          "null": {
+            "n": 8,
+            "mean": 1.2957670194150488,
+            "sd": 0.0037373667218024774,
+            "min": 1.29147571035747,
+            "p10": 1.2915340388300975,
+            "p50": 1.2948920923256395,
+            "p90": 1.2996416965252895,
+            "max": 1.3025581201566536
+          },
+          "differenceFromNullMean": -0.05620364969585867,
+          "ratioToNullMean": 0.9566251889006785,
+          "standardizedDifference": -15.038302066528937,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "weightedDegreeMeanSeconds",
+          "observed": 0.043482031096835246,
+          "null": {
+            "n": 8,
+            "mean": 0.04248874587160215,
+            "sd": 0.0002543907401093369,
+            "min": 0.04209624636173193,
+            "p10": 0.042232110271608184,
+            "p50": 0.04252446877497899,
+            "p90": 0.04273447043387864,
+            "max": 0.04275030538841023
+          },
+          "differenceFromNullMean": 0.0009932852252330926,
+          "ratioToNullMean": 1.0233776075254075,
+          "standardizedDifference": 3.904565177200159,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "temporalEdgeCount",
+          "observed": 505,
+          "null": {
+            "n": 8,
+            "mean": 560.125,
+            "sd": 2.850438562747845,
+            "min": 556,
+            "p10": 557.4,
+            "p50": 560,
+            "p90": 562.9,
+            "max": 565
+          },
+          "differenceFromNullMean": -55.125,
+          "ratioToNullMean": 0.9015844677527338,
+          "standardizedDifference": -19.339129325719995,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "temporalCompletedLifetimeMeanSeconds",
+          "observed": 1.472871287128957,
+          "null": {
+            "n": 8,
+            "mean": 1.3881686540634643,
+            "sd": 0.009799620908814734,
+            "min": 1.3715929203542068,
+            "p10": 1.3767803672096284,
+            "p50": 1.3913392857145226,
+            "p90": 1.3967450878009608,
+            "max": 1.3979316546765024
+          },
+          "differenceFromNullMean": 0.08470263306549275,
+          "ratioToNullMean": 1.0610175376151523,
+          "standardizedDifference": 8.64346017602609,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "temporalCompletedLifetimeP90Seconds",
+          "observed": 1.8999999999976012,
+          "null": {
+            "n": 8,
+            "mean": 1.8518750000016895,
+            "sd": 0.005303300858293891,
+            "min": 1.8500000000008527,
+            "p10": 1.850000000001521,
+            "p50": 1.850000000002126,
+            "p90": 1.8545000000015655,
+            "max": 1.8650000000001916
+          },
+          "differenceFromNullMean": 0.04812499999591169,
+          "ratioToNullMean": 1.0259871751580791,
+          "standardizedDifference": 9.07453702549205,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "bridgePersistCount",
+          "observed": 24,
+          "null": {
+            "n": 8,
+            "mean": 21.5,
+            "sd": 1.3093073414159542,
+            "min": 19,
+            "p10": 20.4,
+            "p50": 21.5,
+            "p90": 23,
+            "max": 23
+          },
+          "differenceFromNullMean": 2.5,
+          "ratioToNullMean": 1.1162790697674418,
+          "standardizedDifference": 1.9094065395649336,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "bridgePersistenceMeanSeconds",
+          "observed": 1.9083333333335928,
+          "null": {
+            "n": 8,
+            "mean": 1.720407955412464,
+            "sd": 0.05702755436800975,
+            "min": 1.6428571428573804,
+            "p10": 1.6511904761906748,
+            "p50": 1.7157114624508036,
+            "p90": 1.792368421052836,
+            "max": 1.8078947368423384
+          },
+          "differenceFromNullMean": 0.18792537792112873,
+          "ratioToNullMean": 1.1092330323920607,
+          "standardizedDifference": 3.295343452893144,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "articulationPersistCount",
+          "observed": 2,
+          "null": {
+            "n": 8,
+            "mean": 2.75,
+            "sd": 0.4629100498862757,
+            "min": 2,
+            "p10": 2,
+            "p50": 3,
+            "p90": 3,
+            "max": 3
+          },
+          "differenceFromNullMean": -0.75,
+          "ratioToNullMean": 0.7272727272727273,
+          "standardizedDifference": -1.620185174601965,
+          "rank": {
+            "below": 0,
+            "equal": 2,
+            "above": 6,
+            "total": 8,
+            "midPercentile": 12.5
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "articulationPersistenceMeanSeconds",
+          "observed": 3.825000000000129,
+          "null": {
+            "n": 8,
+            "mean": 2.375000000000081,
+            "sd": 0.1388730149659034,
+            "min": 2.3000000000000695,
+            "p10": 2.3000000000000695,
+            "p50": 2.3000000000000695,
+            "p90": 2.600000000000114,
+            "max": 2.600000000000114
+          },
+          "differenceFromNullMean": 1.4500000000000481,
+          "ratioToNullMean": 1.6105263157894731,
+          "standardizedDifference": 10.441193347433677,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "connectorPersistCount",
+          "observed": 0,
+          "null": {
+            "n": 8,
+            "mean": 0.625,
+            "sd": 0.5175491695067657,
+            "min": 0,
+            "p10": 0,
+            "p50": 1,
+            "p90": 1,
+            "max": 1
+          },
+          "differenceFromNullMean": -0.625,
+          "ratioToNullMean": 0,
+          "standardizedDifference": -1.20761472884912,
+          "rank": {
+            "below": 0,
+            "equal": 3,
+            "above": 5,
+            "total": 8,
+            "midPercentile": 18.75
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "connectorPersistenceMeanSeconds",
+          "observed": null,
+          "null": {
+            "n": 5,
+            "mean": 1.6999999999999797,
+            "sd": 0,
+            "min": 1.6999999999999797,
+            "p10": 1.6999999999999797,
+            "p50": 1.6999999999999797,
+            "p90": 1.6999999999999797,
+            "max": 1.6999999999999797
+          },
+          "differenceFromNullMean": null,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": null
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "mergeCount",
+          "observed": 222,
+          "null": {
+            "n": 8,
+            "mean": 267.5,
+            "sd": 2.390457218668787,
+            "min": 264,
+            "p10": 264.70000000000005,
+            "p50": 268,
+            "p90": 270.3,
+            "max": 271
+          },
+          "differenceFromNullMean": -45.5,
+          "ratioToNullMean": 0.8299065420560747,
+          "standardizedDifference": -19.03401560365022,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "metric": "splitCount",
+          "observed": 456,
+          "null": {
+            "n": 8,
+            "mean": 477.875,
+            "sd": 3.6030740843261686,
+            "min": 474,
+            "p10": 474,
+            "p50": 477.5,
+            "p90": 481.5,
+            "max": 485
+          },
+          "differenceFromNullMean": -21.875,
+          "ratioToNullMean": 0.9542244310750719,
+          "standardizedDifference": -6.071204612516583,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "rawEncounterCount",
+          "observed": 518,
+          "null": {
+            "n": 8,
+            "mean": 573.75,
+            "sd": 3.011881234615431,
+            "min": 571,
+            "p10": 571,
+            "p50": 574,
+            "p90": 576.5,
+            "max": 580
+          },
+          "differenceFromNullMean": -55.75,
+          "ratioToNullMean": 0.9028322440087146,
+          "standardizedDifference": -18.51002601273499,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "rawCompletedLifetimeMeanSeconds",
+          "observed": 0.4643822393823207,
+          "null": {
+            "n": 8,
+            "mean": 0.4192693183858853,
+            "sd": 0.0021899991504262155,
+            "min": 0.4147413793104175,
+            "p10": 0.4172658920540461,
+            "p50": 0.4190766550523382,
+            "p90": 0.4212784588442069,
+            "max": 0.4212784588442069
+          },
+          "differenceFromNullMean": 0.04511292099643538,
+          "ratioToNullMean": 1.1075989084298188,
+          "standardizedDifference": 20.599515295545,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "rawCompletedLifetimeP90Seconds",
+          "observed": 0.8666666666676974,
+          "null": {
+            "n": 8,
+            "mean": 0.8333333333342576,
+            "sd": 1.6789629582652813e-13,
+            "min": 0.8333333333338458,
+            "p10": 0.8333333333341504,
+            "p50": 0.8333333333343177,
+            "p90": 0.8333333333343376,
+            "max": 0.8333333333343376
+          },
+          "differenceFromNullMean": 0.033333333333439796,
+          "ratioToNullMean": 1.0400000000000833,
+          "standardizedDifference": 198535251592.92422,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "rawPairExposureSeconds",
+          "observed": 240.55000000004213,
+          "null": {
+            "n": 8,
+            "mean": 240.55000000004208,
+            "sd": 6.076817087715071e-14,
+            "min": 240.55000000004213,
+            "p10": 240.55000000004213,
+            "p50": 240.55000000004213,
+            "p90": 240.55000000004213,
+            "max": 240.55000000004213
+          },
+          "differenceFromNullMean": 5.684341886080802e-14,
+          "ratioToNullMean": 1.0000000000000002,
+          "standardizedDifference": 0.9354143466934853,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "rollingEdgeCountMean",
+          "observed": 4.468210982418132,
+          "null": {
+            "n": 8,
+            "mean": 4.525695775352054,
+            "sd": 0.02838090455726982,
+            "min": 4.485209565869511,
+            "p10": 4.498508457628532,
+            "p50": 4.5192483959670025,
+            "p90": 4.564844596283644,
+            "max": 4.570619115073744
+          },
+          "differenceFromNullMean": -0.05748479293392261,
+          "ratioToNullMean": 0.9872981314283215,
+          "standardizedDifference": -2.025474305018153,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "weightedDegreeMeanSeconds",
+          "observed": 0.21255003091586994,
+          "null": {
+            "n": 8,
+            "mean": 0.1923501711683275,
+            "sd": 0.0038170849118862736,
+            "min": 0.18733656064788337,
+            "p10": 0.1880227420109024,
+            "p50": 0.19170994887572773,
+            "p90": 0.196585923479473,
+            "max": 0.19665897540303884
+          },
+          "differenceFromNullMean": 0.02019985974754243,
+          "ratioToNullMean": 1.1050160736787977,
+          "standardizedDifference": 5.29195975825446,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "temporalEdgeCount",
+          "observed": 499,
+          "null": {
+            "n": 8,
+            "mean": 554,
+            "sd": 3.854496446637726,
+            "min": 548,
+            "p10": 549.4000000000001,
+            "p50": 553.5,
+            "p90": 558.3,
+            "max": 559
+          },
+          "differenceFromNullMean": -55,
+          "ratioToNullMean": 0.9007220216606499,
+          "standardizedDifference": -14.269049345726199,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "temporalCompletedLifetimeMeanSeconds",
+          "observed": 5.388911290323597,
+          "null": {
+            "n": 8,
+            "mean": 4.913915409154019,
+            "sd": 0.05760704967924212,
+            "min": 4.843140794224781,
+            "p10": 4.851410706736592,
+            "p50": 4.910038607491439,
+            "p90": 4.982503836531387,
+            "max": 5.008073394496365
+          },
+          "differenceFromNullMean": 0.474995881169578,
+          "ratioToNullMean": 1.0966634224685103,
+          "standardizedDifference": 8.245447107851733,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "temporalCompletedLifetimeP90Seconds",
+          "observed": 5.8999999999979025,
+          "null": {
+            "n": 8,
+            "mean": 5.828124999999831,
+            "sd": 0.024775780221908326,
+            "min": 5.799999999994523,
+            "p10": 5.8000000000030845,
+            "p50": 5.83749999999735,
+            "p90": 5.849999999998432,
+            "max": 5.8500000000027175
+          },
+          "differenceFromNullMean": 0.07187499999807123,
+          "ratioToNullMean": 1.0123324396779536,
+          "standardizedDifference": 2.9010186300617393,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "bridgePersistCount",
+          "observed": 0,
+          "null": {
+            "n": 8,
+            "mean": 0,
+            "sd": 0,
+            "min": 0,
+            "p10": 0,
+            "p50": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "differenceFromNullMean": 0,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "bridgePersistenceMeanSeconds",
+          "observed": null,
+          "null": {
+            "n": 0,
+            "mean": null,
+            "sd": null,
+            "min": null,
+            "p10": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "differenceFromNullMean": null,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": null
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "articulationPersistCount",
+          "observed": 0,
+          "null": {
+            "n": 8,
+            "mean": 0,
+            "sd": 0,
+            "min": 0,
+            "p10": 0,
+            "p50": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "differenceFromNullMean": 0,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "articulationPersistenceMeanSeconds",
+          "observed": null,
+          "null": {
+            "n": 0,
+            "mean": null,
+            "sd": null,
+            "min": null,
+            "p10": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "differenceFromNullMean": null,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": null
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "connectorPersistCount",
+          "observed": 0,
+          "null": {
+            "n": 8,
+            "mean": 0,
+            "sd": 0,
+            "min": 0,
+            "p10": 0,
+            "p50": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "differenceFromNullMean": 0,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "connectorPersistenceMeanSeconds",
+          "observed": null,
+          "null": {
+            "n": 0,
+            "mean": null,
+            "sd": null,
+            "min": null,
+            "p10": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "differenceFromNullMean": null,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": null
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "mergeCount",
+          "observed": 215,
+          "null": {
+            "n": 8,
+            "mean": 258.125,
+            "sd": 3.6425069859723185,
+            "min": 251,
+            "p10": 253.8,
+            "p50": 259,
+            "p90": 260.9,
+            "max": 263
+          },
+          "differenceFromNullMean": -43.125,
+          "ratioToNullMean": 0.8329297820823245,
+          "standardizedDifference": -11.83937331241339,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "metric": "splitCount",
+          "observed": 419,
+          "null": {
+            "n": 8,
+            "mean": 407.375,
+            "sd": 7.5769858311675815,
+            "min": 397,
+            "p10": 401.2,
+            "p50": 405.5,
+            "p90": 417.90000000000003,
+            "max": 420
+          },
+          "differenceFromNullMean": 11.625,
+          "ratioToNullMean": 1.0285363608468856,
+          "standardizedDifference": 1.534251252283078,
+          "rank": {
+            "below": 7,
+            "equal": 0,
+            "above": 1,
+            "total": 8,
+            "midPercentile": 87.5
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "rawEncounterCount",
+          "observed": 518,
+          "null": {
+            "n": 8,
+            "mean": 573.75,
+            "sd": 3.011881234615431,
+            "min": 571,
+            "p10": 571,
+            "p50": 574,
+            "p90": 576.5,
+            "max": 580
+          },
+          "differenceFromNullMean": -55.75,
+          "ratioToNullMean": 0.9028322440087146,
+          "standardizedDifference": -18.51002601273499,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "rawCompletedLifetimeMeanSeconds",
+          "observed": 0.4643822393823207,
+          "null": {
+            "n": 8,
+            "mean": 0.4192693183858853,
+            "sd": 0.0021899991504262155,
+            "min": 0.4147413793104175,
+            "p10": 0.4172658920540461,
+            "p50": 0.4190766550523382,
+            "p90": 0.4212784588442069,
+            "max": 0.4212784588442069
+          },
+          "differenceFromNullMean": 0.04511292099643538,
+          "ratioToNullMean": 1.1075989084298188,
+          "standardizedDifference": 20.599515295545,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "rawCompletedLifetimeP90Seconds",
+          "observed": 0.8666666666676974,
+          "null": {
+            "n": 8,
+            "mean": 0.8333333333342576,
+            "sd": 1.6789629582652813e-13,
+            "min": 0.8333333333338458,
+            "p10": 0.8333333333341504,
+            "p50": 0.8333333333343177,
+            "p90": 0.8333333333343376,
+            "max": 0.8333333333343376
+          },
+          "differenceFromNullMean": 0.033333333333439796,
+          "ratioToNullMean": 1.0400000000000833,
+          "standardizedDifference": 198535251592.92422,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "rawPairExposureSeconds",
+          "observed": 240.55000000004213,
+          "null": {
+            "n": 8,
+            "mean": 240.55000000004208,
+            "sd": 6.076817087715071e-14,
+            "min": 240.55000000004213,
+            "p10": 240.55000000004213,
+            "p50": 240.55000000004213,
+            "p90": 240.55000000004213,
+            "max": 240.55000000004213
+          },
+          "differenceFromNullMean": 5.684341886080802e-14,
+          "ratioToNullMean": 1.0000000000000002,
+          "standardizedDifference": 0.9354143466934853,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "rollingEdgeCountMean",
+          "observed": 8.792517290225815,
+          "null": {
+            "n": 8,
+            "mean": 8.474897925172904,
+            "sd": 0.059029082915864894,
+            "min": 8.399966669444213,
+            "p10": 8.414607116073661,
+            "p50": 8.484626281143239,
+            "p90": 8.52372302308141,
+            "max": 8.588117656861929
+          },
+          "differenceFromNullMean": 0.3176193650529111,
+          "ratioToNullMean": 1.037477662605173,
+          "standardizedDifference": 5.38072674287722,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "weightedDegreeMeanSeconds",
+          "observed": 0.4809451205720023,
+          "null": {
+            "n": 8,
+            "mean": 0.3900257506523643,
+            "sd": 0.014196281734916397,
+            "min": 0.37063671598134135,
+            "p10": 0.37306421451095195,
+            "p50": 0.39611591186728395,
+            "p90": 0.40464410562680386,
+            "max": 0.4068696557029889
+          },
+          "differenceFromNullMean": 0.090919369919638,
+          "ratioToNullMean": 1.2331111978313345,
+          "standardizedDifference": 6.404449532444661,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "temporalEdgeCount",
+          "observed": 499,
+          "null": {
+            "n": 8,
+            "mean": 549,
+            "sd": 3.251373336211726,
+            "min": 546,
+            "p10": 546,
+            "p50": 548.5,
+            "p90": 551.8,
+            "max": 556
+          },
+          "differenceFromNullMean": -50,
+          "ratioToNullMean": 0.9089253187613844,
+          "standardizedDifference": -15.37811713073114,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "temporalCompletedLifetimeMeanSeconds",
+          "observed": 10.64016393442851,
+          "null": {
+            "n": 8,
+            "mean": 9.300163946224558,
+            "sd": 0.09662798529200894,
+            "min": 9.18564899451752,
+            "p10": 9.196405030459871,
+            "p50": 9.307242051586393,
+            "p90": 9.395231910947986,
+            "max": 9.479128014844262
+          },
+          "differenceFromNullMean": 1.339999988203953,
+          "ratioToNullMean": 1.1440834802431554,
+          "standardizedDifference": 13.867618000670143,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "temporalCompletedLifetimeP90Seconds",
+          "observed": 15.230000000013746,
+          "null": {
+            "n": 8,
+            "mean": 14.462500000001297,
+            "sd": 0.21135616520220868,
+            "min": 14.20500000001405,
+            "p10": 14.264500000015875,
+            "p50": 14.402499999999154,
+            "p90": 14.70899999999662,
+            "max": 14.86999999999657
+          },
+          "differenceFromNullMean": 0.7675000000124488,
+          "ratioToNullMean": 1.053068280035428,
+          "standardizedDifference": 3.6313111532761115,
+          "rank": {
+            "below": 8,
+            "equal": 0,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 100
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "bridgePersistCount",
+          "observed": 0,
+          "null": {
+            "n": 8,
+            "mean": 0,
+            "sd": 0,
+            "min": 0,
+            "p10": 0,
+            "p50": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "differenceFromNullMean": 0,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "bridgePersistenceMeanSeconds",
+          "observed": null,
+          "null": {
+            "n": 0,
+            "mean": null,
+            "sd": null,
+            "min": null,
+            "p10": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "differenceFromNullMean": null,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": null
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "articulationPersistCount",
+          "observed": 0,
+          "null": {
+            "n": 8,
+            "mean": 0,
+            "sd": 0,
+            "min": 0,
+            "p10": 0,
+            "p50": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "differenceFromNullMean": 0,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "articulationPersistenceMeanSeconds",
+          "observed": null,
+          "null": {
+            "n": 0,
+            "mean": null,
+            "sd": null,
+            "min": null,
+            "p10": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "differenceFromNullMean": null,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": null
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "connectorPersistCount",
+          "observed": 0,
+          "null": {
+            "n": 8,
+            "mean": 0,
+            "sd": 0,
+            "min": 0,
+            "p10": 0,
+            "p50": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "differenceFromNullMean": 0,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": {
+            "below": 0,
+            "equal": 8,
+            "above": 0,
+            "total": 8,
+            "midPercentile": 50
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "connectorPersistenceMeanSeconds",
+          "observed": null,
+          "null": {
+            "n": 0,
+            "mean": null,
+            "sd": null,
+            "min": null,
+            "p10": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "differenceFromNullMean": null,
+          "ratioToNullMean": null,
+          "standardizedDifference": null,
+          "rank": null
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "mergeCount",
+          "observed": 214,
+          "null": {
+            "n": 8,
+            "mean": 247.375,
+            "sd": 3.7008686239082538,
+            "min": 242,
+            "p10": 244.10000000000002,
+            "p50": 246.5,
+            "p90": 251.9,
+            "max": 254
+          },
+          "differenceFromNullMean": -33.375,
+          "ratioToNullMean": 0.8650833754421425,
+          "standardizedDifference": -9.018153139614766,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "metric": "splitCount",
+          "observed": 85,
+          "null": {
+            "n": 8,
+            "mean": 101.625,
+            "sd": 2.559994419636775,
+            "min": 97,
+            "p10": 99.1,
+            "p50": 102,
+            "p90": 104.3,
+            "max": 105
+          },
+          "differenceFromNullMean": -16.625,
+          "ratioToNullMean": 0.8364083640836408,
+          "standardizedDifference": -6.494154781149421,
+          "rank": {
+            "below": 0,
+            "equal": 0,
+            "above": 8,
+            "total": 8,
+            "midPercentile": 0
+          }
+        }
+      ],
+      "identityChanges": {
+        "BLOCK_REMAP": {
+          "eventCount": {
+            "n": 8,
+            "mean": 119,
+            "sd": 0,
+            "min": 119,
+            "p10": 119,
+            "p50": 119,
+            "p90": 119,
+            "max": 119
+          },
+          "changedSurvivingLabels": {
+            "n": 8,
+            "mean": 2095,
+            "sd": 12.282391577259816,
+            "min": 2074,
+            "p10": 2078.8999999999996,
+            "p50": 2098,
+            "p90": 2105.7,
+            "max": 2112
+          },
+          "jumpDistance": {
+            "n": 16760,
+            "mean": 0.40014718925202,
+            "sd": 0.20569582760009877,
+            "min": 0.011999964999143574,
+            "p10": 0.13675088215804554,
+            "p50": 0.38812791820985026,
+            "p90": 0.6810336043003159,
+            "max": 1.1658761027792346
+          }
+        },
+        "LIFECYCLE_REPAIR": {
+          "eventCount": {
+            "n": 8,
+            "mean": 1441,
+            "sd": 0,
+            "min": 1441,
+            "p10": 1441,
+            "p50": 1441,
+            "p90": 1441,
+            "max": 1441
+          },
+          "changedSurvivingLabels": {
+            "n": 8,
+            "mean": 674.125,
+            "sd": 8.854982455415385,
+            "min": 665,
+            "p10": 665.7,
+            "p50": 673.5,
+            "p90": 684.8,
+            "max": 689
+          },
+          "jumpDistance": {
+            "n": 5393,
+            "mean": 0.5760235283524154,
+            "sd": 0.22851718683456437,
+            "min": 0.030823392768026904,
+            "p10": 0.26111341755664386,
+            "p50": 0.5752799976041697,
+            "p90": 0.8786200104471809,
+            "max": 1.2705666656944279
+          }
+        }
+      }
+    }
+  ]
+}

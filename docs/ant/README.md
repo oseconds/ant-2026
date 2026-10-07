@@ -262,6 +262,7 @@ current metallic / resonant / long-tail substrate
 ```text
 S0/S1  dynamic graph + temporal observables        COMPLETE
 S2a    first trajectory synchrony null             COMPLETE
+S2b    exact-spatial-movie identity null            COMPLETE (boundary-sensitive)
 S2     stronger movement-constrained validation    PENDING DECISION
 S3     spectral diagnostics if they add value      CONDITIONAL
 S4     social ↔ material comparison                LATER
@@ -292,6 +293,7 @@ S6+    memory / sensing / closed loop               ONLY IF JUSTIFIED
 
 - [S0/S1 DynamicSocialGraph evidence](evidence/2026-10-07-social-graph/README.md)
 - [S2a trajectory synchrony null](evidence/2026-10-08-s2a-null/README.md)
+- [S2b exact-spatial-movie identity null](evidence/2026-10-08-s2b-null/README.md)
 
 ## Daily chronology
 

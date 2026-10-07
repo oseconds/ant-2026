@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-08",
+  "branch": "ant-s2b-identity-null",
+  "baseCommit": "0f49ba03c0e791cd8ad21368ab6b3273f731d927",
+  "toolingCommit": "5d0493c52b7fbff581305791ee4502a5c8d0e71b",
+  "node": "v22.23.2",
+  "platform": "win32",
+  "plottingRuntime": {
+    "python": "3.12.14",
+    "matplotlib": "3.11.2",
+    "numpy": "2.3.5",
+    "temporaryUvEnvironment": true
+  },
+  "parameters": {
+    "family": "exact-spatial-movie identity permutation",
+    "nullSeed": "ANT-S2b-2026-10-08-identity-v1",
+    "seeds": [
+      20261005,
+      20261006,
+      20261007
+    ],
+    "replicatesPerSeed": 8,
+    "identityBlockSeconds": 5,
+    "blockTicks": 300,
+    "seconds": 600,
+    "frameCount": 36001,
+    "trajectoryHz": 60,
+    "topologyHz": 20,
+    "k": 2,
+    "windowsSeconds": [
+      0.25,
+      1,
+      5,
+      20
+    ],
+    "initialAndTerminalPolicy": "Observed identity at t=0; remap ticks 300..35700; no terminal t=600 remap.",
+    "permutation": "Fisher-Yates on lexically sorted active IDs for lexically sorted source body handles; uint32LE SHA256([nullSeed,sourceSeed,replicate,block,index,attempt]) with rejection sampling; fixed points allowed.",
+    "lifecycleRepair": "Remove dead bodies and expired labels, retain all valid bindings, lexically zip vacant bodies and free active labels; repair before shuffle if coincident.",
+    "storage": "Exact per-event body-to-label mapping ledger and virtual archive hash; physical archives never copied to output.",
+    "topologyAverages": "All 12001 analysis samples including t=0; weighted degree pooled over active node-time, isolates included.",
+    "rank": "Within-seed midrank 100*(below+equal/2)/available replicates; descriptive only, no acceptance threshold.",
+    "durationPolicy": "Existing observer semantics; completed intervals only for duration summaries, right censoring separately."
+  },
+  "sourceCode": {
+    "scripts/ant-social-evidence.js": {
+      "gitBlobSha256": "3b75621490299f59ddb2a7c94544ffbee926ce48d62d2516f8491b44cd736979",
+      "workingTreeSha256": "3b75621490299f59ddb2a7c94544ffbee926ce48d62d2516f8491b44cd736979"
+    },
+    "scripts/ant-social-null.js": {
+      "gitBlobSha256": "b6e5bc46686e47cc12f8d55c4b1c1f6818a0d8f32a652f389017bce2350a3b6e",
+      "workingTreeSha256": "b6e5bc46686e47cc12f8d55c4b1c1f6818a0d8f32a652f389017bce2350a3b6e"
+    },
+    "scripts/ant-social-null-plots.py": {
+      "gitBlobSha256": "f9483f172ae0e9f8ad32395724e5a690a54a36ed8e9b35855a94b3d5f04bea71",
+      "workingTreeSha256": "f9483f172ae0e9f8ad32395724e5a690a54a36ed8e9b35855a94b3d5f04bea71"
+    },
+    "scripts/ant-social-identity-null.js": {
+      "gitBlobSha256": "30ea921443e1851a93e6a3db4923ccbffda1031d8ccd057626377b5b43d5f35b",
+      "workingTreeSha256": "30ea921443e1851a93e6a3db4923ccbffda1031d8ccd057626377b5b43d5f35b"
+    },
+    "scripts/ant-social-identity-boundaries.js": {
+      "gitBlobSha256": "82a0fc2e4168ab4666828886e0bf0f19d95c15a30e80af918c0de7243d42fba4",
+      "workingTreeSha256": "82a0fc2e4168ab4666828886e0bf0f19d95c15a30e80af918c0de7243d42fba4"
+    },
+    "scripts/ant-social-identity-null-plots.py": {
+      "gitBlobSha256": "7a55fb9e1fcb95f95c0abff64b3f3011775818013645e13e5175b1cbd4a4788a",
+      "workingTreeSha256": "7a55fb9e1fcb95f95c0abff64b3f3011775818013645e13e5175b1cbd4a4788a"
+    },
+    "tests/ant-social-identity-null.test.js": {
+      "gitBlobSha256": "c3b86f3fc9ba0d85ce1420d297781620ea6ac34edbdf3b0bf586ba061c2cf6cd",
+      "workingTreeSha256": "c3b86f3fc9ba0d85ce1420d297781620ea6ac34edbdf3b0bf586ba061c2cf6cd"
+    },
+    "src/lib/agents/ant/DynamicSocialGraph.js": {
+      "gitBlobSha256": "631f3750c8d72b474861716116d6c81dde0fad918afd7e0f2846baa00626a4f4",
+      "workingTreeSha256": "631f3750c8d72b474861716116d6c81dde0fad918afd7e0f2846baa00626a4f4",
+      "recordedArchiveSourceSha256": "631f3750c8d72b474861716116d6c81dde0fad918afd7e0f2846baa00626a4f4"
+    },
+    "src/lib/agents/ant/TemporalSocialTopology.js": {
+      "gitBlobSha256": "00aed74ae84559dee889b9125e068ee7509d48ad2525b7822f5483dc8bf5e87c",
+      "workingTreeSha256": "00aed74ae84559dee889b9125e068ee7509d48ad2525b7822f5483dc8bf5e87c",
+      "recordedArchiveSourceSha256": "00aed74ae84559dee889b9125e068ee7509d48ad2525b7822f5483dc8bf5e87c"
+    }
+  },
+  "noProductionSourceChanges": true,
+  "noHistoricalEvidenceChanges": true,
+  "analysisChecks": "All 24 null bytes/ledgers generated twice; all 24 independently regenerated and fully reanalyzed, including boundary persistence duration cohorts. All observed S0/S1 replay and S2a observed output checks passed.",
+  "sourcePolicy": "Source archives never written; working bytes match Git blobs before generation, after generation and after independent verification.",
+  "review": "Luna Medium reuse/plots, Luna High scientific method/code/boundary/evidence review; figures inspected; numeric README audit passed.",
+  "verificationLogs": [
+    "full-tests.txt",
+    "focused-tests.txt",
+    "build.txt",
+    "codec-selfcheck.txt",
+    "boundary-selfcheck.txt",
+    "replay-verification.txt",
+    "plot-runtime.txt",
+    "generation-20261005.txt",
+    "generation-20261006.txt",
+    "generation-20261007.txt"
+  ],
+  "checks": [
+    {
+      "seed": 20261005,
+      "replicates": 8,
+      "frameCount": 36001,
+      "allSourceBytesMatchGit": true,
+      "packetCopiedByteIdentically": true,
+      "observedExactArchiveReplay": true,
+      "s2aObservedOutputUnchanged": true
+    },
+    {
+      "seed": 20261006,
+      "replicates": 8,
+      "frameCount": 36001,
+      "allSourceBytesMatchGit": true,
+      "packetCopiedByteIdentically": true,
+      "observedExactArchiveReplay": true,
+      "s2aObservedOutputUnchanged": true
+    },
+    {
+      "seed": 20261007,
+      "replicates": 8,
+      "frameCount": 36001,
+      "allSourceBytesMatchGit": true,
+      "packetCopiedByteIdentically": true,
+      "observedExactArchiveReplay": true,
+      "s2aObservedOutputUnchanged": true
+    }
+  ]
+}
