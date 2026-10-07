@@ -28,6 +28,7 @@ export function mountLab(root) {
   const events = new AbortController();
   let renderer = null, interaction = null, inspectorRenderer = null, resizeObserver = null;
   let frameId = null, selectionVersion = 0, disposed = false, errorMessage = null;
+  let lastAntAudioDiagnosticsRequest = -Infinity;
   let definition = null;
 
   for (const name of ['ant', 'string', 'plate', 'sphere']) {
@@ -112,6 +113,11 @@ export function mountLab(root) {
     const draw = (time) => {
       if (disposed || version !== selectionVersion || renderer !== mountedRenderer) return;
       item.update?.(lab.model, time);
+      if (name === 'ant' && query('#ant-plate-debug')?.open
+        && time - lastAntAudioDiagnosticsRequest >= 500) {
+        lab.model?.requestAudioDiagnostics?.();
+        lastAntAudioDiagnosticsRequest = time;
+      }
       const snapshot = lab.getSnapshot();
       if (snapshot) mountedRenderer.render(snapshot, { time, view: interaction?.getView() });
       frameId = requestAnimationFrame(draw);
@@ -191,6 +197,11 @@ export function mountLab(root) {
       const volume = Math.round(snapshot.audio.volume * 100);
       query('#ant-volume').value = volume;
       query('#ant-volume-value').value = `${volume}%`;
+      const substrate = query('[data-action="ant-substrate"]');
+      if (substrate) {
+        substrate.setAttribute('aria-pressed', String(snapshot.audio.baseSubstrateEnabled));
+        substrate.textContent = snapshot.audio.baseSubstrateEnabled ? 'Base Substrate On' : 'Base Substrate Off';
+      }
     }
     query('#audio-info').hidden = definition.audio === false;
     query('#audio-info').textContent = definition.audio === false ? '' : lab.audio.context ? `${lab.audio.context.sampleRate.toLocaleString()} Hz / ${lab.audio.context.state}` : '첫 타격에서 오디오 시작';
@@ -247,6 +258,53 @@ export function mountLab(root) {
     } else if (state.model === 'ant') {
       const diagnostics = query('#ant-diagnostics');
       if (diagnostics) diagnostics.textContent = `${formatSimulationTime(analysis.simulationTimeMs)} · ${analysis.population} ants / mean speed ${analysis.meanSpeed.toFixed(3)} / pheromone ${analysis.pheromoneMass.toFixed(1)}`;
+      const setDebug = (name, value) => {
+        const node = query(`[data-ant-debug="${name}"]`);
+        if (node) node.textContent = value;
+      };
+      const material = snapshot.stratigraphy;
+      const history = material?.stratigraphy?.plateHistory || [];
+      const exposedPlates = history.filter((plate) => (plate.exposedCellCount || 0) > 0).length;
+      const fullyBuriedPlates = history.length - exposedPlates;
+      setDebug('plate-count', String(material?.layers?.plateCount ?? history.length));
+      setDebug('plate-exposure', `${exposedPlates} / ${fullyBuriedPlates}`);
+      setDebug('nodule-count', String(material?.layers?.noduleCount ?? material?.nodules?.length ?? 0));
+      const firstBirth = history[0]?.bornAtSimulationTimeMs;
+      const latestBirth = history.at(-1)?.bornAtSimulationTimeMs;
+      setDebug('birth-times', Number.isFinite(firstBirth)
+        ? `${formatSimulationTime(firstBirth)} / ${formatSimulationTime(latestBirth)}` : '—');
+
+      const audioDiagnostics = snapshot.audio.diagnostics;
+      const substrate = audioDiagnostics?.baseSubstrate;
+      setDebug('substrate-events', substrate
+        ? `${substrate.inputGroups} / ${substrate.deliveredGroups}` : '—');
+      const processor = audioDiagnostics?.surface?.processor;
+      setDebug('audio-layers', processor
+        ? `${processor.awakeLayers} / ${processor.sleepingLayers}` : '—');
+      const audioWallRatio = audioDiagnostics?.surface?.audioWallRatio;
+      setDebug('audio-wall', Number.isFinite(audioWallRatio)
+        ? `${(audioWallRatio * 100).toFixed(1)}%` : '—');
+
+      const birth = snapshot.surfacePlates;
+      const candidate = birth?.candidate;
+      const requirements = birth?.requirements;
+      if (candidate && requirements) {
+        setDebug('candidate-chemical', `${candidate.meanChemical.toFixed(3)} / ${requirements.chemicalThreshold.toFixed(2)}`);
+        setDebug('candidate-support', `${candidate.meanSupport.toFixed(3)} / ${requirements.supportThreshold.toFixed(3)}`);
+        setDebug('candidate-persistence', `${candidate.stableSeconds.toFixed(1)} / ${requirements.persistenceSeconds.toFixed(0)} s`);
+        setDebug('candidate-length', `${candidate.geodesicLength.toFixed(3)} / ${requirements.minGeodesicLength.toFixed(2)}`);
+        setDebug('candidate-contacts', candidate.repeat
+          ? `${candidate.repeat.newFootContacts} / ${requirements.requiredNewFootContacts}`
+          : 'first corridor');
+        setDebug('candidate-refractory', candidate.repeat
+          ? `${candidate.repeat.refractoryRemainingSeconds.toFixed(1)} s remaining` : 'first corridor');
+        setDebug('candidate-gap', `${candidate.globalGapRemainingSeconds.toFixed(1)} s remaining`);
+        setDebug('candidate-ready', candidate.birthReady ? 'yes' : 'no');
+      } else {
+        for (const key of ['candidate-chemical', 'candidate-support', 'candidate-persistence',
+          'candidate-length', 'candidate-contacts', 'candidate-refractory', 'candidate-gap',
+          'candidate-ready']) setDebug(key, '—');
+      }
     }
     query('#analysis tbody')?.replaceChildren(...items);
   }
@@ -291,6 +349,12 @@ export function mountLab(root) {
       if (lab.model && !lab.switching) run(() => lab.model.setAudioVolume(Number(event.target.value) / 100));
       return;
     }
+    if (event.target.dataset.antOverlay && renderer?.setDebugOptions) {
+      renderer.setDebugOptions({ [event.target.dataset.antOverlay]: event.target.checked });
+      const snapshot = lab.getSnapshot();
+      if (snapshot) renderer.render(snapshot);
+      return;
+    }
     const path = event.target.dataset.path;
     if (event.target.type === 'number' && (!event.target.value || !event.target.validity.valid)) return;
     if (path && lab.model && !lab.switching) run(() => lab.configure(patchPath(path, event.target.tagName === 'SELECT' ? event.target.value : Number(event.target.value))));
@@ -303,6 +367,7 @@ export function mountLab(root) {
     run(() => {
       switch (target.dataset.action) {
         case 'ant-audio': return lab.model.setAudioEnabled(!lab.getSnapshot().audio.enabled);
+        case 'ant-substrate': return lab.model.setBaseSubstrateEnabled(!lab.getSnapshot().audio.baseSubstrateEnabled);
         case 'strike': return lab.strike({ position: interaction?.center() });
         case 'stop': return lab.stop();
         case 'pickup': {
