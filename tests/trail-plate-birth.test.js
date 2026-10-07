@@ -220,6 +220,12 @@ test('real FOOT_CONTACT accumulation, corridor refractory, global spacing, and b
   assert.equal(snapshot.plates.length, 2);
   assert.equal(snapshot.limitReached, false);
   assert.ok(snapshot.candidate.footContacts >= 40);
+  assert.ok(snapshot.candidate.meanChemical >= snapshot.requirements.chemicalThreshold);
+  assert.ok(snapshot.candidate.meanSupport >= snapshot.requirements.supportThreshold);
+  assert.ok(snapshot.candidate.pathPoints.length > 1);
+  assert.equal(snapshot.requirements.persistenceSeconds, 20);
+  assert.equal(snapshot.requirements.requiredNewFootContacts, 30);
+  assert.equal(snapshot.requirements.globalBirthGapSeconds, 10);
   assert.equal(system.observeFootContact({ type: 'STEP', contacts: [
     { position: { x: 0.35, y: TRAIL_PLATE_SOURCE_ORIGIN.y } }
   ] }), 0, 'synthetic non-FOOT_CONTACT events do not count as physical evidence');
@@ -227,7 +233,12 @@ test('real FOOT_CONTACT accumulation, corridor refractory, global spacing, and b
 
   const stableDescriptor = system.getPlates()[0];
   system.reset();
-  assert.deepEqual(system.getSnapshot(), { plates: [], candidate: null, limitReached: false });
+  const resetSnapshot = system.getSnapshot();
+  assert.deepEqual(resetSnapshot.plates, []);
+  assert.equal(resetSnapshot.candidate, null);
+  assert.equal(resetSnapshot.lastBirthTimeMs, null);
+  assert.equal(resetSnapshot.limitReached, false);
+  assert.equal(resetSnapshot.requirements.chemicalThreshold, 0.30);
   assert.ok(stableDescriptor.mask.length > 0, 'reset does not mutate descriptors already handed to consumers');
 });
 

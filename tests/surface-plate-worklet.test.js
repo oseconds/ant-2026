@@ -149,8 +149,30 @@ test('limits topology to packed capacity and reports active/sleep/coupling telem
   const t=topology(...plates);install(processor,t);
   assert.equal(processor.topology.layerIds.length,256);
   assert.equal(processor.getDiagnostics().mix,1/Math.sqrt(12));
+  assert.equal(processor.getDiagnostics().platePickupMix,1);
+  assert.equal(processor.getDiagnostics().sphereModeMix,1/Math.sqrt(12));
   assert.equal(processor.getDiagnostics().layers,256);
   assert.equal(processor.getDiagnostics().activeNodes,0);
+});
+
+test('Plate pickup bypasses Sphere modal normalization before the existing limiter',()=>{
+  const frozenPlate=plate('readout');
+  const sphere={id:'readout-sphere',position:{x:.5,y:.5},physicalRadiusMeters:.024,
+    material:{density:2000,youngModulus:800000,poisson:.3,damping:.35},
+    burial:{buriedDepthMeters:.04},coupling:{plateId:'readout',weight:.2,position:{x:.5,y:.5}}};
+  const t=compileSurfaceTopology({plates:[frozenPlate],nodules:[sphere],stratigraphy:{layerOrder:['readout']}});
+  const {processor:p}=instantiate();install(p,t);
+  const leftNode=t.pickupNodeIndices[0],rightNode=t.pickupNodeIndices[1];
+  seedNode(p,leftNode,.02);seedNode(p,rightNode,-.015);
+  for(let i=0;i<12;i++){p.sphereCurrent[i]=.01/(i+1);p.spherePrevious[i]=.009/(i+1);}
+  run(p,8);
+  let sphereL=0,sphereR=0;
+  for(let i=0;i<12;i++){sphereL+=p.sphereCurrent[i]*p.spherePickupL[i];sphereR+=p.sphereCurrent[i]*p.spherePickupR[i];}
+  const mixedL=p.current[leftNode]+sphereL/Math.sqrt(12),mixedR=p.current[rightNode]+sphereR/Math.sqrt(12);
+  const limited=value=>value/(1+Math.abs(value));
+  assert.ok(Math.abs(p.outputL-limited(mixedL))<1e-8);
+  assert.ok(Math.abs(p.outputR-limited(mixedR))<1e-8);
+  assert.ok(Math.abs(sphereL)>0&&Math.abs(sphereR)>0,'both Sphere modal readouts contribute');
 });
 
 test('rejects malformed packed topology without replacing active solver state',()=>{
@@ -381,7 +403,7 @@ test('after matching only Plate damping, unforced Plate/Z/Sphere recurrence matc
   assert.notEqual(baselineWithPlateDamping,instantaneousSource,'baseline harness applies only the candidate Plate damping mapping');
   const p=instantiate().processor,baseline=instantiate(48000,baselineWithPlateDamping).processor;
   for(const model of [p,baseline]) {install(model,t);seedNode(model,t.pickupNodeIndices[0],.02);model.sphereCurrent[0]=.01;model.spherePrevious[0]=.009;}
-  assert.deepEqual(run(p,8192),run(baseline,8192));
+  assert.notDeepEqual(run(p,8192),run(baseline,8192), 'only the intentional output readout mix differs');
   assert.deepEqual(p.current,baseline.current);assert.deepEqual(p.previous,baseline.previous);
   assert.deepEqual(p.sphereCurrent,baseline.sphereCurrent);assert.deepEqual(p.spherePrevious,baseline.spherePrevious);
   assert.equal(p.telemetry.sleeps,baseline.telemetry.sleeps);assert.equal(p.telemetry.wakes,baseline.telemetry.wakes);

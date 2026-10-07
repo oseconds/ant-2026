@@ -1,0 +1,76 @@
+TAP version 13
+# Subtest: AntRenderer paints equal agent marks and a cached pheromone field without changing the snapshot
+ok 1 - AntRenderer paints equal agent marks and a cached pheromone field without changing the snapshot
+  ---
+  duration_ms: 2.4399
+  type: 'test'
+  ...
+# Subtest: Plate debug overlays are opt-in and do not mutate detached snapshots
+ok 2 - Plate debug overlays are opt-in and do not mutate detached snapshots
+  ---
+  duration_ms: 1.527
+  type: 'test'
+  ...
+# Subtest: Plate geometry debug draws joined outlines, exposed graph lines, and compiled audio pickup nodes
+ok 3 - Plate geometry debug draws joined outlines, exposed graph lines, and compiled audio pickup nodes
+  ---
+  duration_ms: 1.4016
+  type: 'test'
+  ...
+# Subtest: pheromone display uses two fixed scales with monotonic weak trace and strong route contrast
+ok 4 - pheromone display uses two fixed scales with monotonic weak trace and strong route contrast
+  ---
+  duration_ms: 0.1371
+  type: 'test'
+  ...
+# Subtest: historical plate masks draw beneath live pheromone and cache frozen geometry
+ok 5 - historical plate masks draw beneath live pheromone and cache frozen geometry
+  ---
+  duration_ms: 0.3861
+  type: 'test'
+  ...
+# Subtest: articulated ants draw snapshot gait legs and a four-part body without mutating the snapshot
+ok 6 - articulated ants draw snapshot gait legs and a four-part body without mutating the snapshot
+  ---
+  duration_ms: 0.9393
+  type: 'test'
+  ...
+# Subtest: renderer uses the detached smoothed body pose instead of raw angular velocity
+ok 7 - renderer uses the detached smoothed body pose instead of raw angular velocity
+  ---
+  duration_ms: 2.1897
+  type: 'test'
+  ...
+# Subtest: antenna engagement changes only its own antenna and remains in the articulated head frame
+ok 8 - antenna engagement changes only its own antenna and remains in the articulated head frame
+  ---
+  duration_ms: 0.528
+  type: 'test'
+  ...
+# Subtest: destroy cancels initialization while the p5 module is still loading
+ok 9 - destroy cancels initialization while the p5 module is still loading
+  ---
+  duration_ms: 0.2863
+  type: 'test'
+  ...
+# Subtest: destroy racing p5 setup removes a canvas created immediately before setup
+ok 10 - destroy racing p5 setup removes a canvas created immediately before setup
+  ---
+  duration_ms: 0.3772
+  type: 'test'
+  ...
+# Subtest: p5 setup failures reject init and remove the failed instance
+ok 11 - p5 setup failures reject init and remove the failed instance
+  ---
+  duration_ms: 0.4563
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 27.9017

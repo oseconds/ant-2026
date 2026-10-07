@@ -1,0 +1,4296 @@
+{
+  "status": "frozen-P1-pickup-distance-readout-diagnostic",
+  "decisionScope": "Measure frozen pickup distances/readout only. No production DSP, strike, material, routing, substrate or simulation changes.",
+  "source": {
+    "seed": 20261005,
+    "inputFile": "fresh-seed-20261005-through-first-birth-plus-10s.json.gz",
+    "inputGzipSha256": "25bf05aab8bbbb142be11b79f37a5988898d6069e24cae31bf721348b0bf7ff3",
+    "inputDeepEqualToFrozen": true,
+    "firstPlateId": "trail-plate-1",
+    "firstPlateBirthSeconds": 103.01666666667376,
+    "firstPlateDescriptorSha256": "fd079682ed0663f9bffdae36b1102958ef219f7d0bb6b35fcf2b1d09bc647b16",
+    "acceptedP1Strikes": 63,
+    "frozenScheduleSha256": "d3a0468479ec1dc79751b9cbcd5b4fda83712d36e41d293d518cefde429a4933",
+    "baselinePcm": {
+      "file": "mix-audibility/A-baseline-born-only-10s-48khz-f32.wav",
+      "sha256": "7616551f36bf2dcc3f770ed7d07c3da7f7c55d559d58dddbf9409af254e46c48",
+      "exactPriorFrozenCapture": true,
+      "workletSha256": "0d5289950a000ee9aa3264b9b6bdffedd13bca2d28a0bab281be03ca6a45efd5",
+      "surfaceGain": 0.24499999999999997
+    }
+  },
+  "topology": {
+    "grid": {
+      "source": 96,
+      "solver": 32
+    },
+    "layerIds": [
+      "trail-plate-1"
+    ],
+    "p1NodeCount": 48,
+    "compiledPickups": [
+      {
+        "label": "L",
+        "node": 34,
+        "cell": 496,
+        "x": 0.5161290322580645,
+        "y": 0.4838709677419355
+      },
+      {
+        "label": "R",
+        "node": 15,
+        "cell": 217,
+        "x": 0.8064516129032258,
+        "y": 0.1935483870967742
+      }
+    ],
+    "controlStrike": {
+      "strength": 0.019241860433975615,
+      "footprintRadius": 0.012560297689219844,
+      "hardness": 0.2879404621560313,
+      "referenceStrikeSimulationTimeMs": 103110.93467720706,
+      "allSixEqualStrengthFootprintAndHardness": true
+    }
+  },
+  "natural63StrikeReadout": {
+    "pcm": "unchanged frozen A baseline PCM; 48 kHz / 10 s",
+    "windows": "[strike frame, strike frame + duration), incomplete tail windows excluded",
+    "note": "These windows are output measurements of the original overlapping 63-strike run; they are not isolated single-strike responses.",
+    "strikes": [
+      {
+        "index": 1,
+        "frame": 4525,
+        "simulationTimeMs": 103110.93467720706,
+        "position": {
+          "x": 0.4604478148183748,
+          "y": 0.6298791679411511
+        },
+        "strength": 0.019241860433975615,
+        "distanceToPickupL": {
+          "normalized": 0.1562651352700922,
+          "solverGridCells": 4.844219193372858
+        },
+        "distanceToPickupR": {
+          "normalized": 0.5568690856937616,
+          "solverGridCells": 17.26294165650661
+        },
+        "windows": {
+          "100": {
+            "startFrame": 4525,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.000503968003226209,
+            "rightRms": 0.00029246924769522594,
+            "pooledRms": 0.00041202063608709194,
+            "leftPeak": 0.0015246013645082712,
+            "rightPeak": 0.000851245189551264,
+            "peakMax": 0.0015246013645082712,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 4525,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.000500414715405153,
+            "rightRms": 0.0006744408563792193,
+            "pooledRms": 0.0005938372488096191,
+            "leftPeak": 0.0015680452343076468,
+            "rightPeak": 0.002530110999941826,
+            "peakMax": 0.002530110999941826,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 4525,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0005650254238065037,
+            "rightRms": 0.0007990606833543595,
+            "pooledRms": 0.0006920085639753512,
+            "leftPeak": 0.0018930773949250579,
+            "rightPeak": 0.002530110999941826,
+            "peakMax": 0.002530110999941826,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 2,
+        "frame": 4525,
+        "simulationTimeMs": 103110.93467720706,
+        "position": {
+          "x": 0.47737131336327343,
+          "y": 0.6465142272136879
+        },
+        "strength": 0.019316546991653628,
+        "distanceToPickupL": {
+          "normalized": 0.16719745998526242,
+          "solverGridCells": 5.183121259543135
+        },
+        "distanceToPickupR": {
+          "normalized": 0.5598856096187205,
+          "solverGridCells": 17.356453898180334
+        },
+        "windows": {
+          "100": {
+            "startFrame": 4525,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.000503968003226209,
+            "rightRms": 0.00029246924769522594,
+            "pooledRms": 0.00041202063608709194,
+            "leftPeak": 0.0015246013645082712,
+            "rightPeak": 0.000851245189551264,
+            "peakMax": 0.0015246013645082712,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 4525,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.000500414715405153,
+            "rightRms": 0.0006744408563792193,
+            "pooledRms": 0.0005938372488096191,
+            "leftPeak": 0.0015680452343076468,
+            "rightPeak": 0.002530110999941826,
+            "peakMax": 0.002530110999941826,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 4525,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0005650254238065037,
+            "rightRms": 0.0007990606833543595,
+            "pooledRms": 0.0006920085639753512,
+            "leftPeak": 0.0018930773949250579,
+            "rightPeak": 0.002530110999941826,
+            "peakMax": 0.002530110999941826,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 3,
+        "frame": 11763,
+        "simulationTimeMs": 103261.73853206664,
+        "position": {
+          "x": 0.7776456587230051,
+          "y": 0.21174880844608976
+        },
+        "strength": 0.019144807098538143,
+        "distanceToPickupL": {
+          "normalized": 0.3774141167172167,
+          "solverGridCells": 11.699837618233717
+        },
+        "distanceToPickupR": {
+          "normalized": 0.03407401258328106,
+          "solverGridCells": 1.056294390081713
+        },
+        "windows": {
+          "100": {
+            "startFrame": 11763,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0005328420687227626,
+            "rightRms": 0.0010118787016162047,
+            "pooledRms": 0.000808646763731003,
+            "leftPeak": 0.0015680452343076468,
+            "rightPeak": 0.002530110999941826,
+            "peakMax": 0.002530110999941826,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 11763,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0005563899304640385,
+            "rightRms": 0.0008735920481996925,
+            "pooledRms": 0.0007323704053959005,
+            "leftPeak": 0.0018930773949250579,
+            "rightPeak": 0.002530110999941826,
+            "peakMax": 0.002530110999941826,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 11763,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0005831856010032001,
+            "rightRms": 0.0009039293462146836,
+            "pooledRms": 0.0007606555423335746,
+            "leftPeak": 0.0018930773949250579,
+            "rightPeak": 0.002530110999941826,
+            "peakMax": 0.002530110999941826,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 4,
+        "frame": 11763,
+        "simulationTimeMs": 103261.73853206664,
+        "position": {
+          "x": 0.7711589800360279,
+          "y": 0.23457539381517017
+        },
+        "strength": 0.019344567240639637,
+        "distanceToPickupL": {
+          "normalized": 0.35663504797356366,
+          "solverGridCells": 11.055686487180473
+        },
+        "distanceToPickupR": {
+          "normalized": 0.054118252142600874,
+          "solverGridCells": 1.677665816420627
+        },
+        "windows": {
+          "100": {
+            "startFrame": 11763,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0005328420687227626,
+            "rightRms": 0.0010118787016162047,
+            "pooledRms": 0.000808646763731003,
+            "leftPeak": 0.0015680452343076468,
+            "rightPeak": 0.002530110999941826,
+            "peakMax": 0.002530110999941826,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 11763,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0005563899304640385,
+            "rightRms": 0.0008735920481996925,
+            "pooledRms": 0.0007323704053959005,
+            "leftPeak": 0.0018930773949250579,
+            "rightPeak": 0.002530110999941826,
+            "peakMax": 0.002530110999941826,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 11763,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0005831856010032001,
+            "rightRms": 0.0009039293462146836,
+            "pooledRms": 0.0007606555423335746,
+            "leftPeak": 0.0018930773949250579,
+            "rightPeak": 0.002530110999941826,
+            "peakMax": 0.002530110999941826,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 5,
+        "frame": 14274,
+        "simulationTimeMs": 103314.03562295363,
+        "position": {
+          "x": 0.4564070009364829,
+          "y": 0.6240055852261194
+        },
+        "strength": 0.01914409975444427,
+        "distanceToPickupL": {
+          "normalized": 0.15233001031515261,
+          "solverGridCells": 4.722230319769731
+        },
+        "distanceToPickupR": {
+          "normalized": 0.5548194569301927,
+          "solverGridCells": 17.199403164835974
+        },
+        "windows": {
+          "100": {
+            "startFrame": 14274,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0005698841829817978,
+            "rightRms": 0.0008858644581328064,
+            "pooledRms": 0.0007448234086666994,
+            "leftPeak": 0.0015680452343076468,
+            "rightPeak": 0.0023072324693202972,
+            "peakMax": 0.0023072324693202972,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 14274,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0005963673035253805,
+            "rightRms": 0.0008935956894214384,
+            "pooledRms": 0.0007596601927397239,
+            "leftPeak": 0.0018930773949250579,
+            "rightPeak": 0.0023072324693202972,
+            "peakMax": 0.0023072324693202972,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 14274,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0005766427853666088,
+            "rightRms": 0.0008602420773671692,
+            "pooledRms": 0.000732302305604845,
+            "leftPeak": 0.0018930773949250579,
+            "rightPeak": 0.0023072324693202972,
+            "peakMax": 0.0023072324693202972,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 6,
+        "frame": 23059,
+        "simulationTimeMs": 103497.06257038385,
+        "position": {
+          "x": 0.437834353589117,
+          "y": 0.6016256408623182
+        },
+        "strength": 0.019109576464980217,
+        "distanceToPickupL": {
+          "normalized": 0.14140799040210536,
+          "solverGridCells": 4.383647702465266
+        },
+        "distanceToPickupR": {
+          "normalized": 0.5499142923266072,
+          "solverGridCells": 17.04734306212482
+        },
+        "windows": {
+          "100": {
+            "startFrame": 23059,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0007307123727841991,
+            "rightRms": 0.0010606426834618157,
+            "pooledRms": 0.0009107424097188501,
+            "leftPeak": 0.0018930773949250579,
+            "rightPeak": 0.002110670553520322,
+            "peakMax": 0.002110670553520322,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 23059,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0006356305273898297,
+            "rightRms": 0.0009330218671951449,
+            "pooledRms": 0.0007982969284715393,
+            "leftPeak": 0.0018930773949250579,
+            "rightPeak": 0.002110670553520322,
+            "peakMax": 0.002110670553520322,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 23059,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0005175856304156152,
+            "rightRms": 0.0007639535277591523,
+            "pooledRms": 0.0006525028265794654,
+            "leftPeak": 0.0018930773949250579,
+            "rightPeak": 0.002110670553520322,
+            "peakMax": 0.002110670553520322,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 7,
+        "frame": 23059,
+        "simulationTimeMs": 103497.06257038385,
+        "position": {
+          "x": 0.45346381697967214,
+          "y": 0.6194820087495256
+        },
+        "strength": 0.01914213349196507,
+        "distanceToPickupL": {
+          "normalized": 0.14938970395930756,
+          "solverGridCells": 4.631080822738534
+        },
+        "distanceToPickupR": {
+          "normalized": 0.5531905947548255,
+          "solverGridCells": 17.14890843739959
+        },
+        "windows": {
+          "100": {
+            "startFrame": 23059,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0007307123727841991,
+            "rightRms": 0.0010606426834618157,
+            "pooledRms": 0.0009107424097188501,
+            "leftPeak": 0.0018930773949250579,
+            "rightPeak": 0.002110670553520322,
+            "peakMax": 0.002110670553520322,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 23059,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0006356305273898297,
+            "rightRms": 0.0009330218671951449,
+            "pooledRms": 0.0007982969284715393,
+            "leftPeak": 0.0018930773949250579,
+            "rightPeak": 0.002110670553520322,
+            "peakMax": 0.002110670553520322,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 23059,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0005175856304156152,
+            "rightRms": 0.0007639535277591523,
+            "pooledRms": 0.0006525028265794654,
+            "leftPeak": 0.0018930773949250579,
+            "rightPeak": 0.002110670553520322,
+            "peakMax": 0.002110670553520322,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 8,
+        "frame": 23757,
+        "simulationTimeMs": 103511.61078126125,
+        "position": {
+          "x": 0.7803289295427316,
+          "y": 0.2074561033091609
+        },
+        "strength": 0.01916749117037452,
+        "distanceToPickupL": {
+          "normalized": 0.38236992952456106,
+          "solverGridCells": 11.853467815261393
+        },
+        "distanceToPickupR": {
+          "normalized": 0.029594241943272055,
+          "solverGridCells": 0.9174215002414337
+        },
+        "windows": {
+          "100": {
+            "startFrame": 23757,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0006939785652901183,
+            "rightRms": 0.0010830424118050018,
+            "pooledRms": 0.0009095567917536886,
+            "leftPeak": 0.0018670252757146955,
+            "rightPeak": 0.002110670553520322,
+            "peakMax": 0.002110670553520322,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 23757,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.000608786729893415,
+            "rightRms": 0.0009332276836659828,
+            "pooledRms": 0.0007878880605945535,
+            "leftPeak": 0.0018670252757146955,
+            "rightPeak": 0.002110670553520322,
+            "peakMax": 0.002110670553520322,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 23757,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0004954235105356856,
+            "rightRms": 0.0007580120317316342,
+            "pooledRms": 0.0006403228463210659,
+            "leftPeak": 0.0018670252757146955,
+            "rightPeak": 0.002110670553520322,
+            "peakMax": 0.002110670553520322,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 9,
+        "frame": 59000,
+        "simulationTimeMs": 104245.8298509607,
+        "position": {
+          "x": 0.5562990938027531,
+          "y": 0.4783812895717125
+        },
+        "strength": 0.019823586844004218,
+        "distanceToPickupL": {
+          "normalized": 0.04054343856799388,
+          "solverGridCells": 1.2568465956078103
+        },
+        "distanceToPickupR": {
+          "normalized": 0.37908582820333714,
+          "solverGridCells": 11.751660674303452
+        },
+        "windows": {
+          "100": {
+            "startFrame": 59000,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0006838210500441541,
+            "rightRms": 0.00020735616521545643,
+            "pooledRms": 0.0005052760669853408,
+            "leftPeak": 0.001446042093448341,
+            "rightPeak": 0.0004935740143992007,
+            "peakMax": 0.001446042093448341,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 59000,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0005843150134906571,
+            "rightRms": 0.0001822009110834911,
+            "pooledRms": 0.0004327939503910845,
+            "leftPeak": 0.001446042093448341,
+            "rightPeak": 0.0004935740143992007,
+            "peakMax": 0.001446042093448341,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 59000,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0006415922428491576,
+            "rightRms": 0.00019731623212427442,
+            "pooledRms": 0.00047464423600415337,
+            "leftPeak": 0.0019036495359614491,
+            "rightPeak": 0.0006648267153650522,
+            "peakMax": 0.0019036495359614491,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 10,
+        "frame": 72419,
+        "simulationTimeMs": 104525.40093894658,
+        "position": {
+          "x": 0.462419543906853,
+          "y": 0.6551689224922681
+        },
+        "strength": 0.018957145271174966,
+        "distanceToPickupL": {
+          "normalized": 0.17952074654645325,
+          "solverGridCells": 5.565143142940051
+        },
+        "distanceToPickupR": {
+          "normalized": 0.5757183193166145,
+          "solverGridCells": 17.84726789881505
+        },
+        "windows": {
+          "100": {
+            "startFrame": 72419,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0007528513714050296,
+            "rightRms": 0.00024115078200215176,
+            "pooledRms": 0.0005589896631811196,
+            "leftPeak": 0.0019036495359614491,
+            "rightPeak": 0.0006648267153650522,
+            "peakMax": 0.0019036495359614491,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 72419,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0007029432334320877,
+            "rightRms": 0.00027641067893254646,
+            "pooledRms": 0.000534103011064303,
+            "leftPeak": 0.0019036495359614491,
+            "rightPeak": 0.0019451293628662825,
+            "peakMax": 0.0019451293628662825,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 72419,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0006031642765227146,
+            "rightRms": 0.00046759968358189673,
+            "pooledRms": 0.0005396557275518623,
+            "leftPeak": 0.0019036495359614491,
+            "rightPeak": 0.0019451293628662825,
+            "peakMax": 0.0019451293628662825,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 11,
+        "frame": 73748,
+        "simulationTimeMs": 104553.0729589854,
+        "position": {
+          "x": 0.5542599671574235,
+          "y": 0.4730404389369887
+        },
+        "strength": 0.01988774922134881,
+        "distanceToPickupL": {
+          "normalized": 0.039639229943251156,
+          "solverGridCells": 1.228816128240786
+        },
+        "distanceToPickupR": {
+          "normalized": 0.37645243155786545,
+          "solverGridCells": 11.670025378293829
+        },
+        "windows": {
+          "100": {
+            "startFrame": 73748,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0008374491759063926,
+            "rightRms": 0.0002522196837411542,
+            "pooledRms": 0.0006184399288098983,
+            "leftPeak": 0.0019036495359614491,
+            "rightPeak": 0.0006648267153650522,
+            "peakMax": 0.0019036495359614491,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 73748,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0007201410010644219,
+            "rightRms": 0.0003681693902880825,
+            "pooledRms": 0.0005719054822954428,
+            "leftPeak": 0.0019036495359614491,
+            "rightPeak": 0.0019451293628662825,
+            "peakMax": 0.0019451293628662825,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 73748,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0006045802383775916,
+            "rightRms": 0.00047802026346150175,
+            "pooledRms": 0.0005449865305291999,
+            "leftPeak": 0.0019036495359614491,
+            "rightPeak": 0.0019451293628662825,
+            "peakMax": 0.0019451293628662825,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 12,
+        "frame": 83695,
+        "simulationTimeMs": 104760.31838956749,
+        "position": {
+          "x": 0.7840024900157,
+          "y": 0.20085291329622518
+        },
+        "strength": 0.019154358321923953,
+        "distanceToPickupL": {
+          "normalized": 0.3896862950031304,
+          "solverGridCells": 12.080275145097042
+        },
+        "distanceToPickupR": {
+          "normalized": 0.02360760939649966,
+          "solverGridCells": 0.7318358912914895
+        },
+        "windows": {
+          "100": {
+            "startFrame": 83695,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0005488878532804207,
+            "rightRms": 0.0007187595028116778,
+            "pooledRms": 0.0006394892877761437,
+            "leftPeak": 0.0014702276093885303,
+            "rightPeak": 0.0019451293628662825,
+            "peakMax": 0.0019451293628662825,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 83695,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0004958587850675387,
+            "rightRms": 0.000615520792453057,
+            "pooledRms": 0.0005589015032502127,
+            "leftPeak": 0.0014702276093885303,
+            "rightPeak": 0.0019451293628662825,
+            "peakMax": 0.0019451293628662825,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 83695,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0004176754888266893,
+            "rightRms": 0.0005177057222663379,
+            "pooledRms": 0.0004703573263136891,
+            "leftPeak": 0.0014702276093885303,
+            "rightPeak": 0.0019451293628662825,
+            "peakMax": 0.0019451293628662825,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 13,
+        "frame": 84749,
+        "simulationTimeMs": 104782.27015293553,
+        "position": {
+          "x": 0.4591922379988253,
+          "y": 0.651552940163594
+        },
+        "strength": 0.018987149858825454,
+        "distanceToPickupL": {
+          "normalized": 0.17708484524582213,
+          "solverGridCells": 5.489630202620486
+        },
+        "distanceToPickupR": {
+          "normalized": 0.5747671216144259,
+          "solverGridCells": 17.817780770047204
+        },
+        "windows": {
+          "100": {
+            "startFrame": 84749,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0005255078931712436,
+            "rightRms": 0.0006649344757021753,
+            "pooledRms": 0.000599289747435498,
+            "leftPeak": 0.001446479232981801,
+            "rightPeak": 0.001597125781700015,
+            "peakMax": 0.001597125781700015,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 84749,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.00047756899672180675,
+            "rightRms": 0.0005849003839124241,
+            "pooledRms": 0.000533938482285541,
+            "leftPeak": 0.001446479232981801,
+            "rightPeak": 0.001597125781700015,
+            "peakMax": 0.001597125781700015,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 84749,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.00046141448527721083,
+            "rightRms": 0.0005796108112002783,
+            "pooledRms": 0.0005238568600695604,
+            "leftPeak": 0.002315209247171879,
+            "rightPeak": 0.004412050824612379,
+            "peakMax": 0.004412050824612379,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 14,
+        "frame": 86394,
+        "simulationTimeMs": 104816.54808859361,
+        "position": {
+          "x": 0.5515953587666891,
+          "y": 0.46526237296311457
+        },
+        "strength": 0.019923223225522414,
+        "distanceToPickupL": {
+          "normalized": 0.040051718011325406,
+          "solverGridCells": 1.2416032583510876
+        },
+        "distanceToPickupR": {
+          "normalized": 0.3725321467845168,
+          "solverGridCells": 11.54849655032002
+        },
+        "windows": {
+          "100": {
+            "startFrame": 86394,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0005193335222720732,
+            "rightRms": 0.0006499079742482256,
+            "pooledRms": 0.0005882549117291544,
+            "leftPeak": 0.0010853225830942392,
+            "rightPeak": 0.001597125781700015,
+            "peakMax": 0.001597125781700015,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 86394,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0004612327174141008,
+            "rightRms": 0.0005649621551044301,
+            "pooledRms": 0.000515712059347771,
+            "leftPeak": 0.0012368641328066587,
+            "rightPeak": 0.001597125781700015,
+            "peakMax": 0.001597125781700015,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 86394,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0005205874779310427,
+            "rightRms": 0.000679002690458635,
+            "pooledRms": 0.0006050024693456502,
+            "leftPeak": 0.0023161685094237328,
+            "rightPeak": 0.004412050824612379,
+            "peakMax": 0.004412050824612379,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 15,
+        "frame": 96231,
+        "simulationTimeMs": 105021.47624248479,
+        "position": {
+          "x": 0.44453293427727864,
+          "y": 0.6243368411143887
+        },
+        "strength": 0.01897417366661321,
+        "distanceToPickupL": {
+          "normalized": 0.15765995949625367,
+          "solverGridCells": 4.8874587443838635
+        },
+        "distanceToPickupR": {
+          "normalized": 0.5626400466134969,
+          "solverGridCells": 17.441841445018404
+        },
+        "windows": {
+          "100": {
+            "startFrame": 96231,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.00038652635488612997,
+            "rightRms": 0.00044712378929246473,
+            "pooledRms": 0.00041792481738514337,
+            "leftPeak": 0.0012368641328066587,
+            "rightPeak": 0.0011981336865574121,
+            "peakMax": 0.0012368641328066587,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 96231,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.00043398294579734454,
+            "rightRms": 0.00039072072626932896,
+            "pooledRms": 0.00041291880750298404,
+            "leftPeak": 0.002315209247171879,
+            "rightPeak": 0.0011981336865574121,
+            "peakMax": 0.002315209247171879,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 96231,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0007158881294920392,
+            "rightRms": 0.0010260513610281666,
+            "pooledRms": 0.0008846686411915378,
+            "leftPeak": 0.0029375809244811535,
+            "rightPeak": 0.004412050824612379,
+            "peakMax": 0.004412050824612379,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 16,
+        "frame": 96231,
+        "simulationTimeMs": 105021.47624248479,
+        "position": {
+          "x": 0.4545875384991427,
+          "y": 0.6458318389962605
+        },
+        "strength": 0.019043070619745778,
+        "distanceToPickupL": {
+          "normalized": 0.17325899477816284,
+          "solverGridCells": 5.371028838123048
+        },
+        "distanceToPickupR": {
+          "normalized": 0.5730345955685023,
+          "solverGridCells": 17.764072462623574
+        },
+        "windows": {
+          "100": {
+            "startFrame": 96231,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.00038652635488612997,
+            "rightRms": 0.00044712378929246473,
+            "pooledRms": 0.00041792481738514337,
+            "leftPeak": 0.0012368641328066587,
+            "rightPeak": 0.0011981336865574121,
+            "peakMax": 0.0012368641328066587,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 96231,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.00043398294579734454,
+            "rightRms": 0.00039072072626932896,
+            "pooledRms": 0.00041291880750298404,
+            "leftPeak": 0.002315209247171879,
+            "rightPeak": 0.0011981336865574121,
+            "peakMax": 0.002315209247171879,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 96231,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0007158881294920392,
+            "rightRms": 0.0010260513610281666,
+            "pooledRms": 0.0008846686411915378,
+            "leftPeak": 0.0029375809244811535,
+            "rightPeak": 0.004412050824612379,
+            "peakMax": 0.004412050824612379,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 17,
+        "frame": 96848,
+        "simulationTimeMs": 105034.3336495877,
+        "position": {
+          "x": 0.5864898317594172,
+          "y": 0.4408148740859162
+        },
+        "strength": 0.019870581157520554,
+        "distanceToPickupL": {
+          "normalized": 0.08248920721758365,
+          "solverGridCells": 2.557165423745093
+        },
+        "distanceToPickupR": {
+          "normalized": 0.33094395409481087,
+          "solverGridCells": 10.259262576939136
+        },
+        "windows": {
+          "100": {
+            "startFrame": 96848,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0003275167024315452,
+            "rightRms": 0.00045769653951822583,
+            "pooledRms": 0.0003979656471723358,
+            "leftPeak": 0.0008126965258270502,
+            "rightPeak": 0.0011981336865574121,
+            "peakMax": 0.0011981336865574121,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 96848,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0004706358422859066,
+            "rightRms": 0.0005776433558799499,
+            "pooledRms": 0.0005268633326757591,
+            "leftPeak": 0.0023161685094237328,
+            "rightPeak": 0.004412050824612379,
+            "peakMax": 0.004412050824612379,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 96848,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0007530480258987273,
+            "rightRms": 0.0010376203783172386,
+            "pooledRms": 0.0009065697377502681,
+            "leftPeak": 0.0029375809244811535,
+            "rightPeak": 0.004412050824612379,
+            "peakMax": 0.004412050824612379,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 18,
+        "frame": 107473,
+        "simulationTimeMs": 105255.69472669472,
+        "position": {
+          "x": 0.4679194943105969,
+          "y": 0.5917544277189507
+        },
+        "strength": 0.018862948867208237,
+        "distanceToPickupL": {
+          "normalized": 0.1181651407383775,
+          "solverGridCells": 3.6631193628897023
+        },
+        "distanceToPickupR": {
+          "normalized": 0.5226586324808998,
+          "solverGridCells": 16.202417606907893
+        },
+        "windows": {
+          "100": {
+            "startFrame": 107473,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0010145187786671942,
+            "rightRms": 0.0015535484750316953,
+            "pooledRms": 0.0013120139512485531,
+            "leftPeak": 0.0023161685094237328,
+            "rightPeak": 0.004412050824612379,
+            "peakMax": 0.004412050824612379,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 107473,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0008977461552818488,
+            "rightRms": 0.001364048732953362,
+            "pooledRms": 0.0011546811475890246,
+            "leftPeak": 0.0023161685094237328,
+            "rightPeak": 0.004412050824612379,
+            "peakMax": 0.004412050824612379,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 107473,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0009982546942232605,
+            "rightRms": 0.0013577149641527198,
+            "pooledRms": 0.0011916170438574208,
+            "leftPeak": 0.0029375809244811535,
+            "rightPeak": 0.004412050824612379,
+            "peakMax": 0.004412050824612379,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 19,
+        "frame": 107473,
+        "simulationTimeMs": 105255.69472669472,
+        "position": {
+          "x": 0.4408156787657901,
+          "y": 0.6193928644134002
+        },
+        "strength": 0.018988496872971387,
+        "distanceToPickupL": {
+          "normalized": 0.1550428511466538,
+          "solverGridCells": 4.806328385546268
+        },
+        "distanceToPickupR": {
+          "normalized": 0.5612781442329869,
+          "solverGridCells": 17.399622471222596
+        },
+        "windows": {
+          "100": {
+            "startFrame": 107473,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0010145187786671942,
+            "rightRms": 0.0015535484750316953,
+            "pooledRms": 0.0013120139512485531,
+            "leftPeak": 0.0023161685094237328,
+            "rightPeak": 0.004412050824612379,
+            "peakMax": 0.004412050824612379,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 107473,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0008977461552818488,
+            "rightRms": 0.001364048732953362,
+            "pooledRms": 0.0011546811475890246,
+            "leftPeak": 0.0023161685094237328,
+            "rightPeak": 0.004412050824612379,
+            "peakMax": 0.004412050824612379,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 107473,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0009982546942232605,
+            "rightRms": 0.0013577149641527198,
+            "pooledRms": 0.0011916170438574208,
+            "leftPeak": 0.0029375809244811535,
+            "rightPeak": 0.004412050824612379,
+            "peakMax": 0.004412050824612379,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 20,
+        "frame": 108226,
+        "simulationTimeMs": 105271.38128254801,
+        "position": {
+          "x": 0.8147650101315984,
+          "y": 0.16746904082698177
+        },
+        "strength": 0.019232895345092815,
+        "distanceToPickupL": {
+          "normalized": 0.4350788740400728,
+          "solverGridCells": 13.487445095242256
+        },
+        "distanceToPickupR": {
+          "normalized": 0.027372337776237706,
+          "solverGridCells": 0.8485424710633689
+        },
+        "windows": {
+          "100": {
+            "startFrame": 108226,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0009711625222120703,
+            "rightRms": 0.0016368826249539474,
+            "pooledRms": 0.0013458345686646327,
+            "leftPeak": 0.0023161685094237328,
+            "rightPeak": 0.004412050824612379,
+            "peakMax": 0.004412050824612379,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 108226,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0009147711418515049,
+            "rightRms": 0.0013974469060226851,
+            "pooledRms": 0.0011810300794468957,
+            "leftPeak": 0.0029375809244811535,
+            "rightPeak": 0.004412050824612379,
+            "peakMax": 0.004412050824612379,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 108226,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0009967124573133034,
+            "rightRms": 0.0013630053417735253,
+            "pooledRms": 0.0011939889623163794,
+            "leftPeak": 0.0029375809244811535,
+            "rightPeak": 0.004412050824612379,
+            "peakMax": 0.004412050824612379,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 21,
+        "frame": 108226,
+        "simulationTimeMs": 105271.38128254801,
+        "position": {
+          "x": 0.7956274521098592,
+          "y": 0.18150057221042537
+        },
+        "strength": 0.019165333316279745,
+        "distanceToPickupL": {
+          "normalized": 0.41176112346059573,
+          "solverGridCells": 12.764594827278469
+        },
+        "distanceToPickupR": {
+          "normalized": 0.016196058175259254,
+          "solverGridCells": 0.5020778034330369
+        },
+        "windows": {
+          "100": {
+            "startFrame": 108226,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0009711625222120703,
+            "rightRms": 0.0016368826249539474,
+            "pooledRms": 0.0013458345686646327,
+            "leftPeak": 0.0023161685094237328,
+            "rightPeak": 0.004412050824612379,
+            "peakMax": 0.004412050824612379,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 108226,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0009147711418515049,
+            "rightRms": 0.0013974469060226851,
+            "pooledRms": 0.0011810300794468957,
+            "leftPeak": 0.0029375809244811535,
+            "rightPeak": 0.004412050824612379,
+            "peakMax": 0.004412050824612379,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 108226,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0009967124573133034,
+            "rightRms": 0.0013630053417735253,
+            "pooledRms": 0.0011939889623163794,
+            "leftPeak": 0.0029375809244811535,
+            "rightPeak": 0.004412050824612379,
+            "peakMax": 0.004412050824612379,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 22,
+        "frame": 119043,
+        "simulationTimeMs": 105496.73777658795,
+        "position": {
+          "x": 0.4647346777279054,
+          "y": 0.5865277660960814
+        },
+        "strength": 0.018875643513937123,
+        "distanceToPickupL": {
+          "normalized": 0.1148033010235135,
+          "solverGridCells": 3.5589023317289183
+        },
+        "distanceToPickupR": {
+          "normalized": 0.5207717888905804,
+          "solverGridCells": 16.14392545560799
+        },
+        "windows": {
+          "100": {
+            "startFrame": 119043,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0012443455334825793,
+            "rightRms": 0.0013115777545436621,
+            "pooledRms": 0.001278403694634805,
+            "leftPeak": 0.0029375809244811535,
+            "rightPeak": 0.004190464504063129,
+            "peakMax": 0.004190464504063129,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 119043,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0010912039407204458,
+            "rightRms": 0.0013388057589013064,
+            "pooledRms": 0.0012212958078023385,
+            "leftPeak": 0.0029375809244811535,
+            "rightPeak": 0.004190464504063129,
+            "peakMax": 0.004190464504063129,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 119043,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0010313722909447464,
+            "rightRms": 0.0012168217128189262,
+            "pooledRms": 0.0011279148645434636,
+            "leftPeak": 0.0029375809244811535,
+            "rightPeak": 0.004190464504063129,
+            "peakMax": 0.004190464504063129,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 23,
+        "frame": 122656,
+        "simulationTimeMs": 105571.99731646408,
+        "position": {
+          "x": 0.8101401310046,
+          "y": 0.17052798557231705
+        },
+        "strength": 0.019272658817427627,
+        "distanceToPickupL": {
+          "normalized": 0.42968168527538486,
+          "solverGridCells": 13.32013224353693
+        },
+        "distanceToPickupR": {
+          "normalized": 0.02331403122866988,
+          "solverGridCells": 0.7227349680887662
+        },
+        "windows": {
+          "100": {
+            "startFrame": 122656,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0010536861272976777,
+            "rightRms": 0.0016172486116097012,
+            "pooledRms": 0.0013648713358066181,
+            "leftPeak": 0.0024777210783213377,
+            "rightPeak": 0.004190464504063129,
+            "peakMax": 0.004190464504063129,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 122656,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0010114920442875692,
+            "rightRms": 0.001362381054812252,
+            "pooledRms": 0.0011998329663266446,
+            "leftPeak": 0.0024777210783213377,
+            "rightPeak": 0.004190464504063129,
+            "peakMax": 0.004190464504063129,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 122656,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0009407316665861492,
+            "rightRms": 0.001274125987056992,
+            "pooledRms": 0.0011199047056361332,
+            "leftPeak": 0.0024777210783213377,
+            "rightPeak": 0.004190464504063129,
+            "peakMax": 0.004190464504063129,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 24,
+        "frame": 131561,
+        "simulationTimeMs": 105757.51948300909,
+        "position": {
+          "x": 0.46221093606802566,
+          "y": 0.5812902152957092
+        },
+        "strength": 0.01897792774354312,
+        "distanceToPickupL": {
+          "normalized": 0.11134482875599447,
+          "solverGridCells": 3.4516896914358286
+        },
+        "distanceToPickupR": {
+          "normalized": 0.5185030076315943,
+          "solverGridCells": 16.073593236579423
+        },
+        "windows": {
+          "100": {
+            "startFrame": 131561,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0010745594877259004,
+            "rightRms": 0.000995349126511662,
+            "pooledRms": 0.0010357118267909462,
+            "leftPeak": 0.0021910539362579584,
+            "rightPeak": 0.0024122281465679407,
+            "peakMax": 0.0024122281465679407,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 131561,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0009611493503618873,
+            "rightRms": 0.001066234742898357,
+            "pooledRms": 0.0010150528559303212,
+            "leftPeak": 0.0021910539362579584,
+            "rightPeak": 0.0037693227641284466,
+            "peakMax": 0.0037693227641284466,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 131561,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0007839331755530261,
+            "rightRms": 0.0011230634495669903,
+            "pooledRms": 0.0009684582426429029,
+            "leftPeak": 0.0021910539362579584,
+            "rightPeak": 0.0037693227641284466,
+            "peakMax": 0.0037693227641284466,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 25,
+        "frame": 134220,
+        "simulationTimeMs": 105812.92318275226,
+        "position": {
+          "x": 0.7524792741273985,
+          "y": 0.2781543002325042
+        },
+        "strength": 0.01881390377161241,
+        "distanceToPickupL": {
+          "normalized": 0.31333813065581173,
+          "solverGridCells": 9.713482050330164
+        },
+        "distanceToPickupR": {
+          "normalized": 0.10035523848042693,
+          "solverGridCells": 3.111012392893235
+        },
+        "windows": {
+          "100": {
+            "startFrame": 134220,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0010014299070695285,
+            "rightRms": 0.0009330848019213843,
+            "pooledRms": 0.0009678608129142209,
+            "leftPeak": 0.0021336267236620188,
+            "rightPeak": 0.002611930249258876,
+            "peakMax": 0.002611930249258876,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 134220,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0008675107952065222,
+            "rightRms": 0.0011878555057391578,
+            "pooledRms": 0.0010400903043281105,
+            "leftPeak": 0.0021336267236620188,
+            "rightPeak": 0.0037693227641284466,
+            "peakMax": 0.0037693227641284466,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 134220,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0007032410934641003,
+            "rightRms": 0.001092160380689367,
+            "pooledRms": 0.0009185211844819168,
+            "leftPeak": 0.0021336267236620188,
+            "rightPeak": 0.0037693227641284466,
+            "peakMax": 0.0037693227641284466,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 26,
+        "frame": 134220,
+        "simulationTimeMs": 105812.92318275226,
+        "position": {
+          "x": 0.7304269818783192,
+          "y": 0.3099693345175903
+        },
+        "strength": 0.018954307347322525,
+        "distanceToPickupL": {
+          "normalized": 0.27598077695654805,
+          "solverGridCells": 8.55540408565299
+        },
+        "distanceToPickupR": {
+          "normalized": 0.1390452499038842,
+          "solverGridCells": 4.31040274702041
+        },
+        "windows": {
+          "100": {
+            "startFrame": 134220,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0010014299070695285,
+            "rightRms": 0.0009330848019213843,
+            "pooledRms": 0.0009678608129142209,
+            "leftPeak": 0.0021336267236620188,
+            "rightPeak": 0.002611930249258876,
+            "peakMax": 0.002611930249258876,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 134220,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0008675107952065222,
+            "rightRms": 0.0011878555057391578,
+            "pooledRms": 0.0010400903043281105,
+            "leftPeak": 0.0021336267236620188,
+            "rightPeak": 0.0037693227641284466,
+            "peakMax": 0.0037693227641284466,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 134220,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0007032410934641003,
+            "rightRms": 0.001092160380689367,
+            "pooledRms": 0.0009185211844819168,
+            "leftPeak": 0.0021336267236620188,
+            "rightPeak": 0.0037693227641284466,
+            "peakMax": 0.0037693227641284466,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 27,
+        "frame": 140791,
+        "simulationTimeMs": 105949.81078404529,
+        "position": {
+          "x": 0.8299567113508538,
+          "y": 0.1704014559671094
+        },
+        "strength": 0.01920285405039442,
+        "distanceToPickupL": {
+          "normalized": 0.4435661697843001,
+          "solverGridCells": 13.750551263313302
+        },
+        "distanceToPickupR": {
+          "normalized": 0.03298893865758841,
+          "solverGridCells": 1.0226570983852408
+        },
+        "windows": {
+          "100": {
+            "startFrame": 140791,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0007381461728540888,
+            "rightRms": 0.0014980556666695228,
+            "pooledRms": 0.001180895963440431,
+            "leftPeak": 0.001579809351824224,
+            "rightPeak": 0.0037693227641284466,
+            "peakMax": 0.0037693227641284466,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 140791,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0006283243050049589,
+            "rightRms": 0.001299497911837565,
+            "pooledRms": 0.0010206581835095813,
+            "leftPeak": 0.001579809351824224,
+            "rightPeak": 0.0037693227641284466,
+            "peakMax": 0.0037693227641284466,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 140791,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0005139713608590883,
+            "rightRms": 0.0010576229129532573,
+            "pooledRms": 0.0008314844513841123,
+            "leftPeak": 0.001579809351824224,
+            "rightPeak": 0.0037693227641284466,
+            "peakMax": 0.0037693227641284466,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 28,
+        "frame": 143837,
+        "simulationTimeMs": 106013.27390498531,
+        "position": {
+          "x": 0.7118942359734388,
+          "y": 0.283035728442801
+        },
+        "strength": 0.01879715705031706,
+        "distanceToPickupL": {
+          "normalized": 0.28046177695019797,
+          "solverGridCells": 8.694315085456138
+        },
+        "distanceToPickupR": {
+          "normalized": 0.13018863926250296,
+          "solverGridCells": 4.035847817137592
+        },
+        "windows": {
+          "100": {
+            "startFrame": 143837,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0006461902448414563,
+            "rightRms": 0.001379558966845951,
+            "pooledRms": 0.0010772058242353986,
+            "leftPeak": 0.001579809351824224,
+            "rightPeak": 0.003298444440588355,
+            "peakMax": 0.003298444440588355,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 143837,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0005477940269563053,
+            "rightRms": 0.0011667949211221222,
+            "pooledRms": 0.0009114517770911923,
+            "leftPeak": 0.001579809351824224,
+            "rightPeak": 0.003298444440588355,
+            "peakMax": 0.003298444440588355,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 143837,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.00045288088585024457,
+            "rightRms": 0.0009481802067422513,
+            "pooledRms": 0.0007430164201504166,
+            "leftPeak": 0.001579809351824224,
+            "rightPeak": 0.003298444440588355,
+            "peakMax": 0.003298444440588355,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 29,
+        "frame": 143837,
+        "simulationTimeMs": 106013.27390498531,
+        "position": {
+          "x": 0.7496206766444038,
+          "y": 0.27436303138247636
+        },
+        "strength": 0.01883204417190476,
+        "distanceToPickupL": {
+          "normalized": 0.31370674745028343,
+          "solverGridCells": 9.724909170958787
+        },
+        "distanceToPickupR": {
+          "normalized": 0.09879656900459075,
+          "solverGridCells": 3.062693639142313
+        },
+        "windows": {
+          "100": {
+            "startFrame": 143837,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0006461902448414563,
+            "rightRms": 0.001379558966845951,
+            "pooledRms": 0.0010772058242353986,
+            "leftPeak": 0.001579809351824224,
+            "rightPeak": 0.003298444440588355,
+            "peakMax": 0.003298444440588355,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 143837,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0005477940269563053,
+            "rightRms": 0.0011667949211221222,
+            "pooledRms": 0.0009114517770911923,
+            "leftPeak": 0.001579809351824224,
+            "rightPeak": 0.003298444440588355,
+            "peakMax": 0.003298444440588355,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 143837,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.00045288088585024457,
+            "rightRms": 0.0009481802067422513,
+            "pooledRms": 0.0007430164201504166,
+            "leftPeak": 0.001579809351824224,
+            "rightPeak": 0.003298444440588355,
+            "peakMax": 0.003298444440588355,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 30,
+        "frame": 143837,
+        "simulationTimeMs": 106013.27390498531,
+        "position": {
+          "x": 0.7229032025184066,
+          "y": 0.30405792280047406
+        },
+        "strength": 0.01887722054121272,
+        "distanceToPickupL": {
+          "normalized": 0.27402242356780393,
+          "solverGridCells": 8.494695130601922
+        },
+        "distanceToPickupR": {
+          "normalized": 0.1385377001371016,
+          "solverGridCells": 4.2946687042501495
+        },
+        "windows": {
+          "100": {
+            "startFrame": 143837,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0006461902448414563,
+            "rightRms": 0.001379558966845951,
+            "pooledRms": 0.0010772058242353986,
+            "leftPeak": 0.001579809351824224,
+            "rightPeak": 0.003298444440588355,
+            "peakMax": 0.003298444440588355,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 143837,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0005477940269563053,
+            "rightRms": 0.0011667949211221222,
+            "pooledRms": 0.0009114517770911923,
+            "leftPeak": 0.001579809351824224,
+            "rightPeak": 0.003298444440588355,
+            "peakMax": 0.003298444440588355,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 143837,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.00045288088585024457,
+            "rightRms": 0.0009481802067422513,
+            "pooledRms": 0.0007430164201504166,
+            "leftPeak": 0.001579809351824224,
+            "rightPeak": 0.003298444440588355,
+            "peakMax": 0.003298444440588355,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 31,
+        "frame": 154388,
+        "simulationTimeMs": 106233.07505265226,
+        "position": {
+          "x": 0.7481890678590983,
+          "y": 0.26878996996972226
+        },
+        "strength": 0.01882584236097079,
+        "distanceToPickupL": {
+          "normalized": 0.3164043231781827,
+          "solverGridCells": 9.808534018523662
+        },
+        "distanceToPickupR": {
+          "normalized": 0.09516207200479448,
+          "solverGridCells": 2.950024232148629
+        },
+        "windows": {
+          "100": {
+            "startFrame": 154388,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0004111498728533924,
+            "rightRms": 0.000868489397022634,
+            "pooledRms": 0.0006794549472511401,
+            "leftPeak": 0.001016210182569921,
+            "rightPeak": 0.0023312363773584366,
+            "peakMax": 0.0023312363773584366,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 154388,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.00034666341148720855,
+            "rightRms": 0.0007287063963991622,
+            "pooledRms": 0.0005706086807160414,
+            "leftPeak": 0.001016210182569921,
+            "rightPeak": 0.0023312363773584366,
+            "peakMax": 0.0023312363773584366,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 154388,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0002873010383962719,
+            "rightRms": 0.0008844659802197818,
+            "pooledRms": 0.0006575796365573206,
+            "leftPeak": 0.001016210182569921,
+            "rightPeak": 0.004229422193020582,
+            "peakMax": 0.004229422193020582,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 32,
+        "frame": 174168,
+        "simulationTimeMs": 106645.17168302894,
+        "position": {
+          "x": 0.7956633006237015,
+          "y": 0.1817014517197984
+        },
+        "strength": 0.01921782068674304,
+        "distanceToPickupL": {
+          "normalized": 0.411637976386733,
+          "solverGridCells": 12.760777267988724
+        },
+        "distanceToPickupR": {
+          "normalized": 0.016023032162071394,
+          "solverGridCells": 0.4967139970242132
+        },
+        "windows": {
+          "100": {
+            "startFrame": 174168,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.00020028856487793638,
+            "rightRms": 0.0015480751631190717,
+            "pooledRms": 0.0011037781072042974,
+            "leftPeak": 0.0005287665990181267,
+            "rightPeak": 0.004229422193020582,
+            "peakMax": 0.004229422193020582,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 174168,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.00021246184873411852,
+            "rightRms": 0.0013386179823869175,
+            "pooledRms": 0.0009583940055992476,
+            "leftPeak": 0.0006804984877817333,
+            "rightPeak": 0.004229422193020582,
+            "peakMax": 0.004229422193020582,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 174168,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0004396417376669518,
+            "rightRms": 0.001244841884583453,
+            "pooledRms": 0.0009335191950656664,
+            "leftPeak": 0.001590933883562684,
+            "rightPeak": 0.004229422193020582,
+            "peakMax": 0.004229422193020582,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 33,
+        "frame": 174168,
+        "simulationTimeMs": 106645.17168302894,
+        "position": {
+          "x": 0.7730668682867382,
+          "y": 0.2131323480741985
+        },
+        "strength": 0.019249680013959894,
+        "distanceToPickupL": {
+          "normalized": 0.3732511912408173,
+          "solverGridCells": 11.570786928465337
+        },
+        "distanceToPickupR": {
+          "normalized": 0.03870494413732402,
+          "solverGridCells": 1.1998532682570446
+        },
+        "windows": {
+          "100": {
+            "startFrame": 174168,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.00020028856487793638,
+            "rightRms": 0.0015480751631190717,
+            "pooledRms": 0.0011037781072042974,
+            "leftPeak": 0.0005287665990181267,
+            "rightPeak": 0.004229422193020582,
+            "peakMax": 0.004229422193020582,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 174168,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.00021246184873411852,
+            "rightRms": 0.0013386179823869175,
+            "pooledRms": 0.0009583940055992476,
+            "leftPeak": 0.0006804984877817333,
+            "rightPeak": 0.004229422193020582,
+            "peakMax": 0.004229422193020582,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 174168,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0004396417376669518,
+            "rightRms": 0.001244841884583453,
+            "pooledRms": 0.0009335191950656664,
+            "leftPeak": 0.001590933883562684,
+            "rightPeak": 0.004229422193020582,
+            "peakMax": 0.004229422193020582,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 34,
+        "frame": 183227,
+        "simulationTimeMs": 106833.90372486517,
+        "position": {
+          "x": 0.47818429501488013,
+          "y": 0.6382890564370722
+        },
+        "strength": 0.019751037879057187,
+        "distanceToPickupL": {
+          "normalized": 0.15901178950226746,
+          "solverGridCells": 4.929365474570291
+        },
+        "distanceToPickupR": {
+          "normalized": 0.5527691154169745,
+          "solverGridCells": 17.13584257792621
+        },
+        "windows": {
+          "100": {
+            "startFrame": 183227,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0003238134191988045,
+            "rightRms": 0.0011960731946711893,
+            "pooledRms": 0.0008761980990233217,
+            "leftPeak": 0.0009962939657270908,
+            "rightPeak": 0.003194552380591631,
+            "peakMax": 0.003194552380591631,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 183227,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0004997482437853803,
+            "rightRms": 0.0011710201503053498,
+            "pooledRms": 0.0009002878705135753,
+            "leftPeak": 0.001590933883562684,
+            "rightPeak": 0.003201568266376853,
+            "peakMax": 0.003201568266376853,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 183227,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0007445265659728867,
+            "rightRms": 0.001218010614160051,
+            "pooledRms": 0.0010094230192654423,
+            "leftPeak": 0.003055284032598138,
+            "rightPeak": 0.00382304098457098,
+            "peakMax": 0.00382304098457098,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 35,
+        "frame": 185568,
+        "simulationTimeMs": 106882.66362840158,
+        "position": {
+          "x": 0.8012627087559248,
+          "y": 0.18334537213019603
+        },
+        "strength": 0.019212699172687944,
+        "distanceToPickupL": {
+          "normalized": 0.4142666376755159,
+          "solverGridCells": 12.842265767940994
+        },
+        "distanceToPickupR": {
+          "normalized": 0.011446669413331348,
+          "solverGridCells": 0.3548467518132718
+        },
+        "windows": {
+          "100": {
+            "startFrame": 185568,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0003131035916221524,
+            "rightRms": 0.0013518136352215291,
+            "pooledRms": 0.000981181421414393,
+            "leftPeak": 0.0009962939657270908,
+            "rightPeak": 0.003201568266376853,
+            "peakMax": 0.003201568266376853,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 185568,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0005691940261948466,
+            "rightRms": 0.001170914977176833,
+            "pooledRms": 0.0009206040742992949,
+            "leftPeak": 0.001590933883562684,
+            "rightPeak": 0.003201568266376853,
+            "peakMax": 0.003201568266376853,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 185568,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0008820436847392561,
+            "rightRms": 0.0012168021582529384,
+            "pooledRms": 0.0010626872903440159,
+            "leftPeak": 0.003055284032598138,
+            "rightPeak": 0.00382304098457098,
+            "peakMax": 0.00382304098457098,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 36,
+        "frame": 185568,
+        "simulationTimeMs": 106882.66362840158,
+        "position": {
+          "x": 0.7796557821326223,
+          "y": 0.2169422577283466
+        },
+        "strength": 0.019282913204532872,
+        "distanceToPickupL": {
+          "normalized": 0.3750963664566299,
+          "solverGridCells": 11.627987360155528
+        },
+        "distanceToPickupR": {
+          "normalized": 0.03557091128736463,
+          "solverGridCells": 1.1026982499083036
+        },
+        "windows": {
+          "100": {
+            "startFrame": 185568,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0003131035916221524,
+            "rightRms": 0.0013518136352215291,
+            "pooledRms": 0.000981181421414393,
+            "leftPeak": 0.0009962939657270908,
+            "rightPeak": 0.003201568266376853,
+            "peakMax": 0.003201568266376853,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 185568,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0005691940261948466,
+            "rightRms": 0.001170914977176833,
+            "pooledRms": 0.0009206040742992949,
+            "leftPeak": 0.001590933883562684,
+            "rightPeak": 0.003201568266376853,
+            "peakMax": 0.003201568266376853,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 185568,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0008820436847392561,
+            "rightRms": 0.0012168021582529384,
+            "pooledRms": 0.0010626872903440159,
+            "leftPeak": 0.003055284032598138,
+            "rightPeak": 0.00382304098457098,
+            "peakMax": 0.00382304098457098,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 37,
+        "frame": 190525,
+        "simulationTimeMs": 106985.94491583033,
+        "position": {
+          "x": 0.5225365722409538,
+          "y": 0.5457832015586732
+        },
+        "strength": 0.019077467930113813,
+        "distanceToPickupL": {
+          "normalized": 0.06224292140324654,
+          "solverGridCells": 1.9295305635006428
+        },
+        "distanceToPickupR": {
+          "normalized": 0.4524125493764159,
+          "solverGridCells": 14.024789030668893
+        },
+        "windows": {
+          "100": {
+            "startFrame": 190525,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0007034908007661015,
+            "rightRms": 0.0010235760605209257,
+            "pooledRms": 0.000878238936290708,
+            "leftPeak": 0.001590933883562684,
+            "rightPeak": 0.002584337256848812,
+            "peakMax": 0.002584337256848812,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 190525,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0006402275678433768,
+            "rightRms": 0.0011658472081577098,
+            "pooledRms": 0.0009405028047262199,
+            "leftPeak": 0.001590933883562684,
+            "rightPeak": 0.00382304098457098,
+            "peakMax": 0.00382304098457098,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 190525,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0013365048295992561,
+            "rightRms": 0.0011354745996633388,
+            "pooledRms": 0.0012400701040712891,
+            "leftPeak": 0.00542202265933156,
+            "rightPeak": 0.00382304098457098,
+            "peakMax": 0.00542202265933156,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 38,
+        "frame": 193082,
+        "simulationTimeMs": 107039.20908768653,
+        "position": {
+          "x": 0.4763971902270004,
+          "y": 0.6314537770490897
+        },
+        "strength": 0.019678526686002264,
+        "distanceToPickupL": {
+          "normalized": 0.15283751134513168,
+          "solverGridCells": 4.737962851699082
+        },
+        "distanceToPickupR": {
+          "normalized": 0.5483585072536269,
+          "solverGridCells": 16.999113724862433
+        },
+        "windows": {
+          "100": {
+            "startFrame": 193082,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0006927425836249475,
+            "rightRms": 0.000985970293355473,
+            "pooledRms": 0.0008520650522544758,
+            "leftPeak": 0.001590933883562684,
+            "rightPeak": 0.0026113674975931644,
+            "peakMax": 0.0026113674975931644,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 193082,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0006740144082736574,
+            "rightRms": 0.001230936800599022,
+            "pooledRms": 0.0009923459148979867,
+            "leftPeak": 0.0030479261185973883,
+            "rightPeak": 0.00382304098457098,
+            "peakMax": 0.00382304098457098,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 193082,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0015157059459712846,
+            "rightRms": 0.0011029533157932126,
+            "pooledRms": 0.001325494347681639,
+            "leftPeak": 0.00542202265933156,
+            "rightPeak": 0.00382304098457098,
+            "peakMax": 0.00542202265933156,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 39,
+        "frame": 198941,
+        "simulationTimeMs": 107161.27775406795,
+        "position": {
+          "x": 0.8145018684005474,
+          "y": 0.1856284457523097
+        },
+        "strength": 0.019229324746995083,
+        "distanceToPickupL": {
+          "normalized": 0.42187077555863167,
+          "solverGridCells": 13.077994042317583
+        },
+        "distanceToPickupR": {
+          "normalized": 0.011293010425564801,
+          "solverGridCells": 0.35008332319250884
+        },
+        "windows": {
+          "100": {
+            "startFrame": 198941,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0005282283888348381,
+            "rightRms": 0.0015205996548798841,
+            "pooledRms": 0.0011382549233787376,
+            "leftPeak": 0.0011889116140082479,
+            "rightPeak": 0.00382304098457098,
+            "peakMax": 0.00382304098457098,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 198941,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0011838168967157924,
+            "rightRms": 0.0012941765903895191,
+            "pooledRms": 0.0012402248772021248,
+            "leftPeak": 0.003055284032598138,
+            "rightPeak": 0.00382304098457098,
+            "peakMax": 0.00382304098457098,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 198941,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.002007901169535816,
+            "rightRms": 0.0010504658082101236,
+            "pooledRms": 0.001602364740132821,
+            "leftPeak": 0.006492561660706997,
+            "rightPeak": 0.00382304098457098,
+            "peakMax": 0.006492561660706997,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 40,
+        "frame": 204596,
+        "simulationTimeMs": 107279.07615217108,
+        "position": {
+          "x": 0.5234696217627602,
+          "y": 0.5161695333150202
+        },
+        "strength": 0.01898940430111179,
+        "distanceToPickupL": {
+          "normalized": 0.03312222203227472,
+          "solverGridCells": 1.0267888830005163
+        },
+        "distanceToPickupR": {
+          "normalized": 0.42914241377076373,
+          "solverGridCells": 13.303414826893675
+        },
+        "windows": {
+          "100": {
+            "startFrame": 204596,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.001611471840571982,
+            "rightRms": 0.001113888698281679,
+            "pooledRms": 0.0013852056751825891,
+            "leftPeak": 0.003055284032598138,
+            "rightPeak": 0.0025654826313257217,
+            "peakMax": 0.003055284032598138,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 204596,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0020359783991933766,
+            "rightRms": 0.0009869823658388904,
+            "pooledRms": 0.0015998972205205806,
+            "leftPeak": 0.00542202265933156,
+            "rightPeak": 0.0025654826313257217,
+            "peakMax": 0.00542202265933156,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 204596,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0024377822942697803,
+            "rightRms": 0.0008057267674296009,
+            "pooledRms": 0.001815485904380393,
+            "leftPeak": 0.006492561660706997,
+            "rightPeak": 0.0025654826313257217,
+            "peakMax": 0.006492561660706997,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 41,
+        "frame": 204596,
+        "simulationTimeMs": 107279.07615217108,
+        "position": {
+          "x": 0.5221151127423896,
+          "y": 0.539861204959582
+        },
+        "strength": 0.019082249940631055,
+        "distanceToPickupL": {
+          "normalized": 0.056309322702845103,
+          "solverGridCells": 1.7455890037881983
+        },
+        "distanceToPickupR": {
+          "normalized": 0.44808460489040625,
+          "solverGridCells": 13.890622751602594
+        },
+        "windows": {
+          "100": {
+            "startFrame": 204596,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.001611471840571982,
+            "rightRms": 0.001113888698281679,
+            "pooledRms": 0.0013852056751825891,
+            "leftPeak": 0.003055284032598138,
+            "rightPeak": 0.0025654826313257217,
+            "peakMax": 0.003055284032598138,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 204596,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0020359783991933766,
+            "rightRms": 0.0009869823658388904,
+            "pooledRms": 0.0015998972205205806,
+            "leftPeak": 0.00542202265933156,
+            "rightPeak": 0.0025654826313257217,
+            "peakMax": 0.00542202265933156,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 204596,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0024377822942697803,
+            "rightRms": 0.0008057267674296009,
+            "pooledRms": 0.001815485904380393,
+            "leftPeak": 0.006492561660706997,
+            "rightPeak": 0.0025654826313257217,
+            "peakMax": 0.006492561660706997,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 42,
+        "frame": 211288,
+        "simulationTimeMs": 107418.49459885673,
+        "position": {
+          "x": 0.4657234847481815,
+          "y": 0.5690936266447002
+        },
+        "strength": 0.019546388914922563,
+        "distanceToPickupL": {
+          "normalized": 0.09901323553054943,
+          "solverGridCells": 3.069410301447032
+        },
+        "distanceToPickupR": {
+          "normalized": 0.5070797612438791,
+          "solverGridCells": 15.719472598560252
+        },
+        "windows": {
+          "100": {
+            "startFrame": 211288,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0024943541207428244,
+            "rightRms": 0.0008413195205060115,
+            "pooledRms": 0.0018614001471004527,
+            "leftPeak": 0.00542202265933156,
+            "rightPeak": 0.0019057386089116335,
+            "peakMax": 0.00542202265933156,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 211288,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0026106958608854026,
+            "rightRms": 0.00073212175668407,
+            "pooledRms": 0.001917255218359614,
+            "leftPeak": 0.006492561660706997,
+            "rightPeak": 0.0019057386089116335,
+            "peakMax": 0.006492561660706997,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 211288,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0027703686692450687,
+            "rightRms": 0.0005954308412542748,
+            "pooledRms": 0.0020036816676123315,
+            "leftPeak": 0.006492561660706997,
+            "rightPeak": 0.0019057386089116335,
+            "peakMax": 0.006492561660706997,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 43,
+        "frame": 211288,
+        "simulationTimeMs": 107418.49459885673,
+        "position": {
+          "x": 0.4681711565579009,
+          "y": 0.5926974166520678
+        },
+        "strength": 0.01947626842897508,
+        "distanceToPickupL": {
+          "normalized": 0.11892499242826113,
+          "solverGridCells": 3.686674765276095
+        },
+        "distanceToPickupR": {
+          "normalized": 0.5232146929704229,
+          "solverGridCells": 16.21965548208311
+        },
+        "windows": {
+          "100": {
+            "startFrame": 211288,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0024943541207428244,
+            "rightRms": 0.0008413195205060115,
+            "pooledRms": 0.0018614001471004527,
+            "leftPeak": 0.00542202265933156,
+            "rightPeak": 0.0019057386089116335,
+            "peakMax": 0.00542202265933156,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 211288,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0026106958608854026,
+            "rightRms": 0.00073212175668407,
+            "pooledRms": 0.001917255218359614,
+            "leftPeak": 0.006492561660706997,
+            "rightPeak": 0.0019057386089116335,
+            "peakMax": 0.006492561660706997,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 211288,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0027703686692450687,
+            "rightRms": 0.0005954308412542748,
+            "pooledRms": 0.0020036816676123315,
+            "leftPeak": 0.006492561660706997,
+            "rightPeak": 0.0019057386089116335,
+            "peakMax": 0.006492561660706997,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 44,
+        "frame": 220612,
+        "simulationTimeMs": 107612.7463106804,
+        "position": {
+          "x": 0.49691273856568435,
+          "y": 0.543619026919429
+        },
+        "strength": 0.019460050821816007,
+        "distanceToPickupL": {
+          "normalized": 0.06276222206669449,
+          "solverGridCells": 1.945628884067529
+        },
+        "distanceToPickupR": {
+          "normalized": 0.4672940911160713,
+          "solverGridCells": 14.48611682459821
+        },
+        "windows": {
+          "100": {
+            "startFrame": 220612,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0033174473598926633,
+            "rightRms": 0.0005680398949033396,
+            "pooledRms": 0.002379929232966875,
+            "leftPeak": 0.006492561660706997,
+            "rightPeak": 0.0015640746569260955,
+            "peakMax": 0.006492561660706997,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 220612,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0030274514430231646,
+            "rightRms": 0.00048353263676839605,
+            "pooledRms": 0.002167863700821991,
+            "leftPeak": 0.006492561660706997,
+            "rightPeak": 0.0015640746569260955,
+            "peakMax": 0.006492561660706997,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 220612,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0027121366264717234,
+            "rightRms": 0.0004006561589902252,
+            "pooledRms": 0.001938583302103139,
+            "leftPeak": 0.006492561660706997,
+            "rightPeak": 0.0015640746569260955,
+            "peakMax": 0.006492561660706997,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 45,
+        "frame": 220612,
+        "simulationTimeMs": 107612.7463106804,
+        "position": {
+          "x": 0.46363038956690433,
+          "y": 0.5633873157964009
+        },
+        "strength": 0.019475074557458703,
+        "distanceToPickupL": {
+          "normalized": 0.09528356150109517,
+          "solverGridCells": 2.95379040653395
+        },
+        "distanceToPickupR": {
+          "normalized": 0.5042888302862751,
+          "solverGridCells": 15.63295373887453
+        },
+        "windows": {
+          "100": {
+            "startFrame": 220612,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0033174473598926633,
+            "rightRms": 0.0005680398949033396,
+            "pooledRms": 0.002379929232966875,
+            "leftPeak": 0.006492561660706997,
+            "rightPeak": 0.0015640746569260955,
+            "peakMax": 0.006492561660706997,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 220612,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0030274514430231646,
+            "rightRms": 0.00048353263676839605,
+            "pooledRms": 0.002167863700821991,
+            "leftPeak": 0.006492561660706997,
+            "rightPeak": 0.0015640746569260955,
+            "peakMax": 0.006492561660706997,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 220612,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0027121366264717234,
+            "rightRms": 0.0004006561589902252,
+            "pooledRms": 0.001938583302103139,
+            "leftPeak": 0.006492561660706997,
+            "rightPeak": 0.0015640746569260955,
+            "peakMax": 0.006492561660706997,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 46,
+        "frame": 220612,
+        "simulationTimeMs": 107612.7463106804,
+        "position": {
+          "x": 0.5034595442428316,
+          "y": 0.5664284402267825
+        },
+        "strength": 0.01958963605116801,
+        "distanceToPickupL": {
+          "normalized": 0.08352396176938928,
+          "solverGridCells": 2.5892428148510676
+        },
+        "distanceToPickupR": {
+          "normalized": 0.4804619940154922,
+          "solverGridCells": 14.894321814480259
+        },
+        "windows": {
+          "100": {
+            "startFrame": 220612,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0033174473598926633,
+            "rightRms": 0.0005680398949033396,
+            "pooledRms": 0.002379929232966875,
+            "leftPeak": 0.006492561660706997,
+            "rightPeak": 0.0015640746569260955,
+            "peakMax": 0.006492561660706997,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 220612,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0030274514430231646,
+            "rightRms": 0.00048353263676839605,
+            "pooledRms": 0.002167863700821991,
+            "leftPeak": 0.006492561660706997,
+            "rightPeak": 0.0015640746569260955,
+            "peakMax": 0.006492561660706997,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 220612,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0027121366264717234,
+            "rightRms": 0.0004006561589902252,
+            "pooledRms": 0.001938583302103139,
+            "leftPeak": 0.006492561660706997,
+            "rightPeak": 0.0015640746569260955,
+            "peakMax": 0.006492561660706997,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 47,
+        "frame": 220673,
+        "simulationTimeMs": 107614.01578993062,
+        "position": {
+          "x": 0.5239426761098599,
+          "y": 0.508568329844821
+        },
+        "strength": 0.019013389653662123,
+        "distanceToPickupL": {
+          "normalized": 0.025903913316017456,
+          "solverGridCells": 0.8030213127965411
+        },
+        "distanceToPickupR": {
+          "normalized": 0.4231416591368672,
+          "solverGridCells": 13.117391433242883
+        },
+        "windows": {
+          "100": {
+            "startFrame": 220673,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.003359511234032962,
+            "rightRms": 0.0005688682975168921,
+            "pooledRms": 0.0024093491726515526,
+            "leftPeak": 0.006492561660706997,
+            "rightPeak": 0.0015640746569260955,
+            "peakMax": 0.006492561660706997,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 220673,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.003035114006578676,
+            "rightRms": 0.00048577793761433395,
+            "pooledRms": 0.0021734646578220333,
+            "leftPeak": 0.006492561660706997,
+            "rightPeak": 0.0015640746569260955,
+            "peakMax": 0.006492561660706997,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 220673,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.00271200993782911,
+            "rightRms": 0.00040071033679818405,
+            "pooledRms": 0.0019385002807455,
+            "leftPeak": 0.006492561660706997,
+            "rightPeak": 0.0015640746569260955,
+            "peakMax": 0.006492561660706997,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 48,
+        "frame": 230788,
+        "simulationTimeMs": 107824.75160933779,
+        "position": {
+          "x": 0.49673132869040926,
+          "y": 0.5375422357499715
+        },
+        "strength": 0.0194024810319257,
+        "distanceToPickupL": {
+          "normalized": 0.05706904514085596,
+          "solverGridCells": 1.7691403993665347
+        },
+        "distanceToPickupR": {
+          "normalized": 0.4628805703030823,
+          "solverGridCells": 14.349297679395551
+        },
+        "windows": {
+          "100": {
+            "startFrame": 230788,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0031803967506542716,
+            "rightRms": 0.0003377450070771826,
+            "pooledRms": 0.002261525500782361,
+            "leftPeak": 0.005108152981847525,
+            "rightPeak": 0.000974836468230933,
+            "peakMax": 0.005108152981847525,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 230788,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0026280105913647355,
+            "rightRms": 0.00030906655807626314,
+            "pooledRms": 0.0018710908323283418,
+            "leftPeak": 0.005108152981847525,
+            "rightPeak": 0.000974836468230933,
+            "peakMax": 0.005108152981847525,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 230788,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.002137739404409213,
+            "rightRms": 0.00026601835015833383,
+            "pooledRms": 0.0015232687753290325,
+            "leftPeak": 0.005108152981847525,
+            "rightPeak": 0.000974836468230933,
+            "peakMax": 0.005108152981847525,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 49,
+        "frame": 230788,
+        "simulationTimeMs": 107824.75160933779,
+        "position": {
+          "x": 0.460921490342209,
+          "y": 0.555241543009742
+        },
+        "strength": 0.01941240348384761,
+        "distanceToPickupL": {
+          "normalized": 0.09023099078724883,
+          "solverGridCells": 2.797160714404714
+        },
+        "distanceToPickupR": {
+          "normalized": 0.500212959279659,
+          "solverGridCells": 15.50660173766943
+        },
+        "windows": {
+          "100": {
+            "startFrame": 230788,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0031803967506542716,
+            "rightRms": 0.0003377450070771826,
+            "pooledRms": 0.002261525500782361,
+            "leftPeak": 0.005108152981847525,
+            "rightPeak": 0.000974836468230933,
+            "peakMax": 0.005108152981847525,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 230788,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0026280105913647355,
+            "rightRms": 0.00030906655807626314,
+            "pooledRms": 0.0018710908323283418,
+            "leftPeak": 0.005108152981847525,
+            "rightPeak": 0.000974836468230933,
+            "peakMax": 0.005108152981847525,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 230788,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.002137739404409213,
+            "rightRms": 0.00026601835015833383,
+            "pooledRms": 0.0015232687753290325,
+            "leftPeak": 0.005108152981847525,
+            "rightPeak": 0.000974836468230933,
+            "peakMax": 0.005108152981847525,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 50,
+        "frame": 237182,
+        "simulationTimeMs": 107957.96166009529,
+        "position": {
+          "x": 0.5263455184440944,
+          "y": 0.476249656882471
+        },
+        "strength": 0.019082328188331596,
+        "distanceToPickupL": {
+          "normalized": 0.012746017778346727,
+          "solverGridCells": 0.39512655112874856
+        },
+        "distanceToPickupR": {
+          "normalized": 0.3979691345966332,
+          "solverGridCells": 12.33704317249563
+        },
+        "windows": {
+          "100": {
+            "startFrame": 237182,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.002008996622852777,
+            "rightRms": 0.0002768186162215266,
+            "pooledRms": 0.0014339972065734064,
+            "leftPeak": 0.004456448834389448,
+            "rightPeak": 0.0007961347000673413,
+            "peakMax": 0.004456448834389448,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 237182,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0016878567963254764,
+            "rightRms": 0.00025235898814505504,
+            "pooledRms": 0.0012067612903552418,
+            "leftPeak": 0.004456448834389448,
+            "rightPeak": 0.0007961347000673413,
+            "peakMax": 0.004456448834389448,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 237182,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0016785904758968842,
+            "rightRms": 0.00022425125327931326,
+            "pooledRms": 0.0011974879144210748,
+            "leftPeak": 0.004456448834389448,
+            "rightPeak": 0.0007961347000673413,
+            "peakMax": 0.004456448834389448,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 51,
+        "frame": 237182,
+        "simulationTimeMs": 107957.96166009529,
+        "position": {
+          "x": 0.5232196071738197,
+          "y": 0.49977323396441947
+        },
+        "strength": 0.018955126703310322,
+        "distanceToPickupL": {
+          "normalized": 0.017411442319540647,
+          "solverGridCells": 0.5397547119057601
+        },
+        "distanceToPickupR": {
+          "normalized": 0.41712591133687094,
+          "solverGridCells": 12.930903251442999
+        },
+        "windows": {
+          "100": {
+            "startFrame": 237182,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.002008996622852777,
+            "rightRms": 0.0002768186162215266,
+            "pooledRms": 0.0014339972065734064,
+            "leftPeak": 0.004456448834389448,
+            "rightPeak": 0.0007961347000673413,
+            "peakMax": 0.004456448834389448,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 237182,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0016878567963254764,
+            "rightRms": 0.00025235898814505504,
+            "pooledRms": 0.0012067612903552418,
+            "leftPeak": 0.004456448834389448,
+            "rightPeak": 0.0007961347000673413,
+            "peakMax": 0.004456448834389448,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 237182,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0016785904758968842,
+            "rightRms": 0.00022425125327931326,
+            "pooledRms": 0.0011974879144210748,
+            "leftPeak": 0.004456448834389448,
+            "rightPeak": 0.0007961347000673413,
+            "peakMax": 0.004456448834389448,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 52,
+        "frame": 242498,
+        "simulationTimeMs": 108068.71814157451,
+        "position": {
+          "x": 0.4962130343947673,
+          "y": 0.5289719361459223
+        },
+        "strength": 0.019424310661874448,
+        "distanceToPickupL": {
+          "normalized": 0.049302579261822334,
+          "solverGridCells": 1.5283799571164924
+        },
+        "distanceToPickupR": {
+          "normalized": 0.4568992589747495,
+          "solverGridCells": 14.163877028217234
+        },
+        "windows": {
+          "100": {
+            "startFrame": 242498,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.001425343830328951,
+            "rightRms": 0.00023324561843855957,
+            "pooledRms": 0.0010212758082853014,
+            "leftPeak": 0.0030157689470797777,
+            "rightPeak": 0.000662231061141938,
+            "peakMax": 0.0030157689470797777,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 242498,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0014942328872301794,
+            "rightRms": 0.00021417403282278458,
+            "pooledRms": 0.0010673805407669312,
+            "leftPeak": 0.004157400690019131,
+            "rightPeak": 0.000662231061141938,
+            "peakMax": 0.004157400690019131,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 242498,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0015224109336627438,
+            "rightRms": 0.000197082488273408,
+            "pooledRms": 0.0010854898797593429,
+            "leftPeak": 0.004157400690019131,
+            "rightPeak": 0.000662231061141938,
+            "peakMax": 0.004157400690019131,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 53,
+        "frame": 252000,
+        "simulationTimeMs": 108266.66537591601,
+        "position": {
+          "x": 0.5636798810958606,
+          "y": 0.45993104637842086
+        },
+        "strength": 0.018948792304145548,
+        "distanceToPickupL": {
+          "normalized": 0.05323723377567812,
+          "solverGridCells": 1.6503542470460217
+        },
+        "distanceToPickupR": {
+          "normalized": 0.36041342223994527,
+          "solverGridCells": 11.172816089438303
+        },
+        "windows": {
+          "100": {
+            "startFrame": 252000,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0020093360806251034,
+            "rightRms": 0.0002209762509686185,
+            "pooledRms": 0.0014293813326740346,
+            "leftPeak": 0.004157400690019131,
+            "rightPeak": 0.0006441559526138008,
+            "peakMax": 0.004157400690019131,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 252000,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0017165967162113323,
+            "rightRms": 0.00018656488538560577,
+            "pooledRms": 0.0012209649345019033,
+            "leftPeak": 0.004157400690019131,
+            "rightPeak": 0.0006441559526138008,
+            "peakMax": 0.004157400690019131,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 252000,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0014743358239581222,
+            "rightRms": 0.00019295985687597754,
+            "pooledRms": 0.0010514037350542068,
+            "leftPeak": 0.004157400690019131,
+            "rightPeak": 0.0006441559526138008,
+            "peakMax": 0.004157400690019131,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 54,
+        "frame": 252000,
+        "simulationTimeMs": 108266.66537591601,
+        "position": {
+          "x": 0.5259496906772574,
+          "y": 0.4685874157660993
+        },
+        "strength": 0.01901892740418845,
+        "distanceToPickupL": {
+          "normalized": 0.01816679093248311,
+          "solverGridCells": 0.5631705189069764
+        },
+        "distanceToPickupR": {
+          "normalized": 0.39284576574506824,
+          "solverGridCells": 12.178218738097115
+        },
+        "windows": {
+          "100": {
+            "startFrame": 252000,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0020093360806251034,
+            "rightRms": 0.0002209762509686185,
+            "pooledRms": 0.0014293813326740346,
+            "leftPeak": 0.004157400690019131,
+            "rightPeak": 0.0006441559526138008,
+            "peakMax": 0.004157400690019131,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 252000,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0017165967162113323,
+            "rightRms": 0.00018656488538560577,
+            "pooledRms": 0.0012209649345019033,
+            "leftPeak": 0.004157400690019131,
+            "rightPeak": 0.0006441559526138008,
+            "peakMax": 0.004157400690019131,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 252000,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0014743358239581222,
+            "rightRms": 0.00019295985687597754,
+            "pooledRms": 0.0010514037350542068,
+            "leftPeak": 0.004157400690019131,
+            "rightPeak": 0.0006441559526138008,
+            "peakMax": 0.004157400690019131,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 55,
+        "frame": 264831,
+        "simulationTimeMs": 108533.97975922786,
+        "position": {
+          "x": 0.563704207053102,
+          "y": 0.45091380506531986
+        },
+        "strength": 0.01887367283285741,
+        "distanceToPickupL": {
+          "normalized": 0.057875485557110244,
+          "solverGridCells": 1.7941400522704176
+        },
+        "distanceToPickupR": {
+          "normalized": 0.3537842017573551,
+          "solverGridCells": 10.967310254478008
+        },
+        "windows": {
+          "100": {
+            "startFrame": 264831,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.001345759786292372,
+            "rightRms": 0.00023435915654124344,
+            "pooledRms": 0.0009659175991399095,
+            "leftPeak": 0.0027370131574571133,
+            "rightPeak": 0.0005790403811261058,
+            "peakMax": 0.0027370131574571133,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 264831,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.001172136542039709,
+            "rightRms": 0.00019958161999260025,
+            "pooledRms": 0.0008407546896163223,
+            "leftPeak": 0.0027370131574571133,
+            "rightPeak": 0.0005790403811261058,
+            "peakMax": 0.0027370131574571133,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 264831,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.001024579768997331,
+            "rightRms": 0.00022324089859819822,
+            "pooledRms": 0.0007414850645311593,
+            "leftPeak": 0.0027370131574571133,
+            "rightPeak": 0.000886831316165626,
+            "peakMax": 0.0027370131574571133,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 56,
+        "frame": 276318,
+        "simulationTimeMs": 108773.28772266465,
+        "position": {
+          "x": 0.5653716119754495,
+          "y": 0.4436200045281287
+        },
+        "strength": 0.018906132011189188,
+        "distanceToPickupL": {
+          "normalized": 0.0636000919563977,
+          "solverGridCells": 1.9716028506483285
+        },
+        "distanceToPickupR": {
+          "normalized": 0.3473548339840261,
+          "solverGridCells": 10.76799985350481
+        },
+        "windows": {
+          "100": {
+            "startFrame": 276318,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0010298112151622177,
+            "rightRms": 0.0002913834190393891,
+            "pooledRms": 0.0007567745489130061,
+            "leftPeak": 0.0022371001541614532,
+            "rightPeak": 0.000886831316165626,
+            "peakMax": 0.0022371001541614532,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 276318,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0008802563968679467,
+            "rightRms": 0.00024251392278836888,
+            "pooledRms": 0.0006456254049265498,
+            "leftPeak": 0.0022371001541614532,
+            "rightPeak": 0.000886831316165626,
+            "peakMax": 0.0022371001541614532,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 276318,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0007156097641905531,
+            "rightRms": 0.0001984741189509111,
+            "pooledRms": 0.0005251139450148889,
+            "leftPeak": 0.0022371001541614532,
+            "rightPeak": 0.000886831316165626,
+            "peakMax": 0.0022371001541614532,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 57,
+        "frame": 351573,
+        "simulationTimeMs": 110341.11081864897,
+        "position": {
+          "x": 0.4549145456198542,
+          "y": 0.6285941766835359
+        },
+        "strength": 0.019727279070249872,
+        "distanceToPickupL": {
+          "normalized": 0.15713694848995174,
+          "solverGridCells": 4.871245403188504
+        },
+        "distanceToPickupR": {
+          "normalized": 0.5593238317033904,
+          "solverGridCells": 17.3390387828051
+        },
+        "windows": {
+          "100": {
+            "startFrame": 351573,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0005756998717976796,
+            "rightRms": 0.0003082806195135967,
+            "pooledRms": 0.00046177228303328886,
+            "leftPeak": 0.0016985021065920591,
+            "rightPeak": 0.0008926028967835009,
+            "peakMax": 0.0016985021065920591,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 351573,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0004973405320197804,
+            "rightRms": 0.00028843198357721947,
+            "pooledRms": 0.0004065345089534267,
+            "leftPeak": 0.0016985021065920591,
+            "rightPeak": 0.0008926028967835009,
+            "peakMax": 0.0016985021065920591,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 351573,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.000423402204937507,
+            "rightRms": 0.0002538091745331686,
+            "pooledRms": 0.00034906197459989185,
+            "leftPeak": 0.0016985021065920591,
+            "rightPeak": 0.0008926028967835009,
+            "peakMax": 0.0016985021065920591,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 58,
+        "frame": 351573,
+        "simulationTimeMs": 110341.11081864897,
+        "position": {
+          "x": 0.4705702414153991,
+          "y": 0.6464275495882155
+        },
+        "strength": 0.019812579301057214,
+        "distanceToPickupL": {
+          "normalized": 0.16882015793320432,
+          "solverGridCells": 5.233424895929334
+        },
+        "distanceToPickupR": {
+          "normalized": 0.56384025355724,
+          "solverGridCells": 17.47904786027444
+        },
+        "windows": {
+          "100": {
+            "startFrame": 351573,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0005756998717976796,
+            "rightRms": 0.0003082806195135967,
+            "pooledRms": 0.00046177228303328886,
+            "leftPeak": 0.0016985021065920591,
+            "rightPeak": 0.0008926028967835009,
+            "peakMax": 0.0016985021065920591,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 351573,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0004973405320197804,
+            "rightRms": 0.00028843198357721947,
+            "pooledRms": 0.0004065345089534267,
+            "leftPeak": 0.0016985021065920591,
+            "rightPeak": 0.0008926028967835009,
+            "peakMax": 0.0016985021065920591,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 351573,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.000423402204937507,
+            "rightRms": 0.0002538091745331686,
+            "pooledRms": 0.00034906197459989185,
+            "leftPeak": 0.0016985021065920591,
+            "rightPeak": 0.0008926028967835009,
+            "peakMax": 0.0016985021065920591,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 59,
+        "frame": 360003,
+        "simulationTimeMs": 110516.72959105059,
+        "position": {
+          "x": 0.4525237070768656,
+          "y": 0.623701983627609
+        },
+        "strength": 0.01972838384503169,
+        "distanceToPickupL": {
+          "normalized": 0.1536175458566681,
+          "solverGridCells": 4.762143921556711
+        },
+        "distanceToPickupR": {
+          "normalized": 0.5570431573325759,
+          "solverGridCells": 17.268337877309854
+        },
+        "windows": {
+          "100": {
+            "startFrame": 360003,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.00040788295471649475,
+            "rightRms": 0.00028438025004089726,
+            "pooledRms": 0.00035159680840529634,
+            "leftPeak": 0.0011155263055115938,
+            "rightPeak": 0.0007510953000746667,
+            "peakMax": 0.0011155263055115938,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 360003,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0003685456478791315,
+            "rightRms": 0.00025046423784486554,
+            "pooledRms": 0.0003150858843314455,
+            "leftPeak": 0.0011155263055115938,
+            "rightPeak": 0.0007510953000746667,
+            "peakMax": 0.0011155263055115938,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 360003,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.00031599966588300625,
+            "rightRms": 0.00020582222498277905,
+            "pooledRms": 0.00026666324937553107,
+            "leftPeak": 0.0011155263055115938,
+            "rightPeak": 0.0007510953000746667,
+            "peakMax": 0.0011155263055115938,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 60,
+        "frame": 368127,
+        "simulationTimeMs": 110685.98582786207,
+        "position": {
+          "x": 0.4490964209778143,
+          "y": 0.618267767981238
+        },
+        "strength": 0.019739226517039403,
+        "distanceToPickupL": {
+          "normalized": 0.15018612082883057,
+          "solverGridCells": 4.655769745693748
+        },
+        "distanceToPickupR": {
+          "normalized": 0.5550579120190342,
+          "solverGridCells": 17.20679527259006
+        },
+        "windows": {
+          "100": {
+            "startFrame": 368127,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0003482410370272219,
+            "rightRms": 0.0002089072372711132,
+            "pooledRms": 0.00028715331589069637,
+            "leftPeak": 0.0007499905186705291,
+            "rightPeak": 0.0005030713509768248,
+            "peakMax": 0.0007499905186705291,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 368127,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0002993317332880932,
+            "rightRms": 0.0001754581628714509,
+            "pooledRms": 0.0002453416530794137,
+            "leftPeak": 0.0007499905186705291,
+            "rightPeak": 0.0005030713509768248,
+            "peakMax": 0.0007499905186705291,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 368127,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.00024383244510083944,
+            "rightRms": 0.00014292313963368863,
+            "pooledRms": 0.00019985155131572627,
+            "leftPeak": 0.0007499905186705291,
+            "rightPeak": 0.0005030713509768248,
+            "peakMax": 0.0007499905186705291,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 61,
+        "frame": 441275,
+        "simulationTimeMs": 112209.88660557546,
+        "position": {
+          "x": 0.5884600350707297,
+          "y": 0.4387993400961693
+        },
+        "strength": 0.01951884605731894,
+        "distanceToPickupL": {
+          "normalized": 0.08522455976139968,
+          "solverGridCells": 2.6419613526033903
+        },
+        "distanceToPickupR": {
+          "normalized": 0.32812856924232103,
+          "solverGridCells": 10.171985646511953
+        },
+        "windows": {
+          "100": {
+            "startFrame": 441275,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0002867535247998897,
+            "rightRms": 0.00018565893993735611,
+            "pooledRms": 0.00024155416159096055,
+            "leftPeak": 0.000646528322249651,
+            "rightPeak": 0.0005396531196311116,
+            "peakMax": 0.000646528322249651,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 441275,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.000247938776191986,
+            "rightRms": 0.00015996239956056704,
+            "pooledRms": 0.0002086403676338237,
+            "leftPeak": 0.000646528322249651,
+            "rightPeak": 0.0005396531196311116,
+            "peakMax": 0.000646528322249651,
+            "nonFiniteSamples": 0
+          },
+          "500": {
+            "startFrame": 441275,
+            "samplesPerChannel": 24000,
+            "leftRms": 0.0002417764688231465,
+            "rightRms": 0.00014664323278335017,
+            "pooledRms": 0.00019995011702639957,
+            "leftPeak": 0.0008496603113599122,
+            "rightPeak": 0.0005396531196311116,
+            "peakMax": 0.0008496603113599122,
+            "nonFiniteSamples": 0
+          }
+        }
+      },
+      {
+        "index": 62,
+        "frame": 461718,
+        "simulationTimeMs": 112635.78785940901,
+        "position": {
+          "x": 0.5858516764212378,
+          "y": 0.4362400329748607
+        },
+        "strength": 0.019514070393688226,
+        "distanceToPickupL": {
+          "normalized": 0.08443904935448895,
+          "solverGridCells": 2.6176105299891574
+        },
+        "distanceToPickupR": {
+          "normalized": 0.3279688505862587,
+          "solverGridCells": 10.167034368174019
+        },
+        "windows": {
+          "100": {
+            "startFrame": 461718,
+            "samplesPerChannel": 4800,
+            "leftRms": 0.0003521311023425128,
+            "rightRms": 0.00017906454625725543,
+            "pooledRms": 0.00027933888465739065,
+            "leftPeak": 0.0008496603113599122,
+            "rightPeak": 0.00048651776160113513,
+            "peakMax": 0.0008496603113599122,
+            "nonFiniteSamples": 0
+          },
+          "250": {
+            "startFrame": 461718,
+            "samplesPerChannel": 12000,
+            "leftRms": 0.0003018847677645135,
+            "rightRms": 0.00016162690192688135,
+            "pooledRms": 0.00024213391794079158,
+            "leftPeak": 0.0008496603113599122,
+            "rightPeak": 0.00048651776160113513,
+            "peakMax": 0.0008496603113599122,
+            "nonFiniteSamples": 0
+          },
+          "500": null
+        }
+      },
+      {
+        "index": 63,
+        "frame": 477358,
+        "simulationTimeMs": 112961.61552028875,
+        "position": {
+          "x": 0.5846619619521238,
+          "y": 0.427778836806969
+        },
+        "strength": 0.019427807220988552,
+        "distanceToPickupL": {
+          "normalized": 0.08856121953358764,
+          "solverGridCells": 2.745397805541217
+        },
+        "distanceToPickupR": {
+          "normalized": 0.32257487943181773,
+          "solverGridCells": 9.99982126238635
+        },
+        "windows": {
+          "100": null,
+          "250": null,
+          "500": null
+        }
+      }
+    ],
+    "correlations": [
+      {
+        "windowMs": 100,
+        "eligibleStrikes": 62,
+        "pickupL": {
+          "distanceVsLeftRms": {
+            "pearsonR": -0.4698205607573488,
+            "spearmanRho": -0.5095026599490438
+          },
+          "distanceVsLeftPeak": {
+            "pearsonR": -0.45745842678632403,
+            "spearmanRho": -0.4642502627757922
+          },
+          "distanceVsPooledRms": {
+            "pearsonR": -0.15410175582035754,
+            "spearmanRho": -0.18184108875128033
+          },
+          "distanceVsPeakMax": {
+            "pearsonR": -0.027435873046267812,
+            "spearmanRho": -0.06288817864217376
+          }
+        },
+        "pickupR": {
+          "distanceVsRightRms": {
+            "pearsonR": -0.543785702079482,
+            "spearmanRho": -0.38630211069256615
+          },
+          "distanceVsRightPeak": {
+            "pearsonR": -0.5214942051805014,
+            "spearmanRho": -0.3858849670359808
+          },
+          "distanceVsPooledRms": {
+            "pearsonR": 0.00792998114867292,
+            "spearmanRho": -0.21194222478920524
+          },
+          "distanceVsPeakMax": {
+            "pearsonR": -0.08663903025501707,
+            "spearmanRho": -0.23923207380105765
+          }
+        },
+        "nearest": {
+          "distanceVsPooledRms": {
+            "pearsonR": -0.3474630478259087,
+            "spearmanRho": -0.4490988739917685
+          },
+          "distanceVsPeakMax": {
+            "pearsonR": -0.3727458257508039,
+            "spearmanRho": -0.41381227805250875
+          }
+        }
+      },
+      {
+        "windowMs": 250,
+        "eligibleStrikes": 62,
+        "pickupL": {
+          "distanceVsLeftRms": {
+            "pearsonR": -0.4386597144317782,
+            "spearmanRho": -0.43554706546590777
+          },
+          "distanceVsLeftPeak": {
+            "pearsonR": -0.4394288117398659,
+            "spearmanRho": -0.4219048547539294
+          },
+          "distanceVsPooledRms": {
+            "pearsonR": -0.17766863575198244,
+            "spearmanRho": -0.20294966783059504
+          },
+          "distanceVsPeakMax": {
+            "pearsonR": -0.13534804901815847,
+            "spearmanRho": -0.2089392306630202
+          }
+        },
+        "pickupR": {
+          "distanceVsRightRms": {
+            "pearsonR": -0.4732421730592023,
+            "spearmanRho": -0.3287698975456034
+          },
+          "distanceVsRightPeak": {
+            "pearsonR": -0.4394125028291575,
+            "spearmanRho": -0.31781418187086974
+          },
+          "distanceVsPooledRms": {
+            "pearsonR": 0.050676114152180284,
+            "spearmanRho": -0.1595989940889475
+          },
+          "distanceVsPeakMax": {
+            "pearsonR": 0.006811567737020785,
+            "spearmanRho": -0.12693701269100213
+          }
+        },
+        "nearest": {
+          "distanceVsPooledRms": {
+            "pearsonR": -0.30990115659101597,
+            "spearmanRho": -0.39856926822433975
+          },
+          "distanceVsPeakMax": {
+            "pearsonR": -0.31317308605678906,
+            "spearmanRho": -0.3480555395657335
+          }
+        }
+      },
+      {
+        "windowMs": 500,
+        "eligibleStrikes": 61,
+        "pickupL": {
+          "distanceVsLeftRms": {
+            "pearsonR": -0.4178247655079942,
+            "spearmanRho": -0.47812002158789174
+          },
+          "distanceVsLeftPeak": {
+            "pearsonR": -0.4047571929464934,
+            "spearmanRho": -0.4685775811553419
+          },
+          "distanceVsPooledRms": {
+            "pearsonR": -0.19800694702140229,
+            "spearmanRho": -0.2146342852899121
+          },
+          "distanceVsPeakMax": {
+            "pearsonR": -0.15581066702065058,
+            "spearmanRho": -0.24849222595740048
+          }
+        },
+        "pickupR": {
+          "distanceVsRightRms": {
+            "pearsonR": -0.40522329063510915,
+            "spearmanRho": -0.280333800343534
+          },
+          "distanceVsRightPeak": {
+            "pearsonR": -0.3426224284710825,
+            "spearmanRho": -0.1681543223337911
+          },
+          "distanceVsPooledRms": {
+            "pearsonR": 0.08300518322143535,
+            "spearmanRho": -0.10106193519319213
+          },
+          "distanceVsPeakMax": {
+            "pearsonR": 0.03631121047963762,
+            "spearmanRho": -0.022720502608367315
+          }
+        },
+        "nearest": {
+          "distanceVsPooledRms": {
+            "pearsonR": -0.2957111436078464,
+            "spearmanRho": -0.3412195828127118
+          },
+          "distanceVsPeakMax": {
+            "pearsonR": -0.27688264864048995,
+            "spearmanRho": -0.26072838448830854
+          }
+        }
+      }
+    ]
+  },
+  "controlledEqualStrengthStrikes": [
+    {
+      "key": "pickup-L",
+      "label": "Directly on compiled pickup L",
+      "position": {
+        "x": 0.5161290322580645,
+        "y": 0.4838709677419355
+      },
+      "payload": {
+        "plateId": "trail-plate-1",
+        "layerId": "trail-plate-1",
+        "strength": 0.019241860433975615,
+        "footprintRadius": 0.012560297689219844,
+        "hardness": 0.2879404621560313
+      },
+      "distanceToPickupL": {
+        "normalized": 0,
+        "solverGridCells": 0
+      },
+      "distanceToPickupR": {
+        "normalized": 0.4105781310115437,
+        "solverGridCells": 12.727922061357855
+      },
+      "requestedFrame": 480,
+      "requestedSimulationTimeMs": 103026.66666667376,
+      "acceptedStrikeCount": 1,
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 48,
+        "sleeps": 48,
+        "truncatedTailEnergy": 4.8976825581448285e-17,
+        "physicsSteps": 60000,
+        "energyDelta": -1.065127650650095e-19,
+        "couplingWorkProxy": 0,
+        "deepPlateCouplingTransfers": 0,
+        "sphereCouplingTransfers": 0,
+        "maxOutputAbs": 0.007041495201072664,
+        "requestedContactImpulseSquared": 0.00030854098187351316,
+        "compliantContactImpulseSquared": 0.00030854098187351316,
+        "contactPulseNodeSteps": 162,
+        "contactAttenuatedNodeContributions": 0,
+        "activeSphereModes": 0,
+        "layers": 1,
+        "activeNodes": 0,
+        "awakeLayers": 0,
+        "sleepingLayers": 1,
+        "physicsRate": 6000,
+        "topologyGeneration": 2,
+        "couplingLinks": 0,
+        "noduleCount": 0,
+        "integratedSphereModes": 0,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000,
+        "contactPulseDurationMs": 3,
+        "contactPulseSteps": 18,
+        "contactRecoveryTimeMs": 75,
+        "contactReferenceDeltaV": 0.02,
+        "contactMaximumComplianceLoss": 0.25
+      },
+      "windows": {
+        "100": {
+          "startFrame": 480,
+          "samplesPerChannel": 4800,
+          "leftRms": 0.0007158269366027481,
+          "rightRms": 0.00005934849612549123,
+          "pooledRms": 0.0005079027698085688,
+          "leftPeak": 0.0017131034983322024,
+          "rightPeak": 0.00018856367387343198,
+          "peakMax": 0.0017131034983322024,
+          "nonFiniteSamples": 0
+        },
+        "250": {
+          "startFrame": 480,
+          "samplesPerChannel": 12000,
+          "leftRms": 0.0006069370444532813,
+          "rightRms": 0.000052373066335209096,
+          "pooledRms": 0.00043076415473379206,
+          "leftPeak": 0.0017131034983322024,
+          "rightPeak": 0.00018856367387343198,
+          "peakMax": 0.0017131034983322024,
+          "nonFiniteSamples": 0
+        },
+        "500": {
+          "startFrame": 480,
+          "samplesPerChannel": 24000,
+          "leftRms": 0.0004920086399042508,
+          "rightRms": 0.00004265569667614779,
+          "pooledRms": 0.0003492076819024449,
+          "leftPeak": 0.0017131034983322024,
+          "rightPeak": 0.00018856367387343198,
+          "peakMax": 0.0017131034983322024,
+          "nonFiniteSamples": 0
+        }
+      },
+      "fullWindow": {
+        "startFrame": 0,
+        "samplesPerChannel": 480000,
+        "leftRms": 0.00011592341668972798,
+        "rightRms": 0.000010057851797890928,
+        "pooledRms": 0.00008227818337751704,
+        "leftPeak": 0.0017131034983322024,
+        "rightPeak": 0.00018856367387343198,
+        "peakMax": 0.0017131034983322024,
+        "nonFiniteSamples": 0
+      },
+      "pcm": {
+        "file": "pickup-L-10s-48khz-f32.wav",
+        "sha256": "c251638313eb55378e5cdc62898e20f9d8b852d61ed86757b48cb68c350f01a4",
+        "bytes": 3840044
+      }
+    },
+    {
+      "key": "pickup-R",
+      "label": "Directly on compiled pickup R",
+      "position": {
+        "x": 0.8064516129032258,
+        "y": 0.1935483870967742
+      },
+      "payload": {
+        "plateId": "trail-plate-1",
+        "layerId": "trail-plate-1",
+        "strength": 0.019241860433975615,
+        "footprintRadius": 0.012560297689219844,
+        "hardness": 0.2879404621560313
+      },
+      "distanceToPickupL": {
+        "normalized": 0.4105781310115437,
+        "solverGridCells": 12.727922061357855
+      },
+      "distanceToPickupR": {
+        "normalized": 0,
+        "solverGridCells": 0
+      },
+      "requestedFrame": 480,
+      "requestedSimulationTimeMs": 103026.66666667376,
+      "acceptedStrikeCount": 1,
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 48,
+        "sleeps": 48,
+        "truncatedTailEnergy": 5.715927747288373e-17,
+        "physicsSteps": 60000,
+        "energyDelta": -1.568323798995962e-18,
+        "couplingWorkProxy": 0,
+        "deepPlateCouplingTransfers": 0,
+        "sphereCouplingTransfers": 0,
+        "maxOutputAbs": 0.009139121105277787,
+        "requestedContactImpulseSquared": 0.00030854098187351316,
+        "compliantContactImpulseSquared": 0.00030854098187351316,
+        "contactPulseNodeSteps": 162,
+        "contactAttenuatedNodeContributions": 0,
+        "activeSphereModes": 0,
+        "layers": 1,
+        "activeNodes": 0,
+        "awakeLayers": 0,
+        "sleepingLayers": 1,
+        "physicsRate": 6000,
+        "topologyGeneration": 2,
+        "couplingLinks": 0,
+        "noduleCount": 0,
+        "integratedSphereModes": 0,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000,
+        "contactPulseDurationMs": 3,
+        "contactPulseSteps": 18,
+        "contactRecoveryTimeMs": 75,
+        "contactReferenceDeltaV": 0.02,
+        "contactMaximumComplianceLoss": 0.25
+      },
+      "windows": {
+        "100": {
+          "startFrame": 480,
+          "samplesPerChannel": 4800,
+          "leftRms": 0.00005932637091390749,
+          "rightRms": 0.0007632979010443625,
+          "pooledRms": 0.000541360925827005,
+          "leftPeak": 0.00018889688362833112,
+          "rightPeak": 0.0022188066504895687,
+          "peakMax": 0.0022188066504895687,
+          "nonFiniteSamples": 0
+        },
+        "250": {
+          "startFrame": 480,
+          "samplesPerChannel": 12000,
+          "leftRms": 0.0000523750969318036,
+          "rightRms": 0.0006468647660350738,
+          "pooledRms": 0.00045889932246421253,
+          "leftPeak": 0.00018889688362833112,
+          "rightPeak": 0.0022188066504895687,
+          "peakMax": 0.0022188066504895687,
+          "nonFiniteSamples": 0
+        },
+        "500": {
+          "startFrame": 480,
+          "samplesPerChannel": 24000,
+          "leftRms": 0.00004266663304665445,
+          "rightRms": 0.0005224005123827967,
+          "pooledRms": 0.0003706229464788617,
+          "leftPeak": 0.00018889688362833112,
+          "rightPeak": 0.0022188066504895687,
+          "peakMax": 0.0022188066504895687,
+          "nonFiniteSamples": 0
+        }
+      },
+      "fullWindow": {
+        "startFrame": 0,
+        "samplesPerChannel": 480000,
+        "leftRms": 0.00001006070372290408,
+        "rightRms": 0.00012315047309317142,
+        "pooledRms": 0.00008737063803839363,
+        "leftPeak": 0.00018889688362833112,
+        "rightPeak": 0.0022188066504895687,
+        "peakMax": 0.0022188066504895687,
+        "nonFiniteSamples": 0
+      },
+      "pcm": {
+        "file": "pickup-R-10s-48khz-f32.wav",
+        "sha256": "bbc73579d75ae596095493b7132e7f2ee6e6ef594f162317d28bfa4384f42b0f",
+        "bytes": 3840044
+      }
+    },
+    {
+      "key": "pickup-midpoint",
+      "label": "Midpoint between compiled pickups",
+      "position": {
+        "x": 0.6612903225806451,
+        "y": 0.33870967741935487
+      },
+      "payload": {
+        "plateId": "trail-plate-1",
+        "layerId": "trail-plate-1",
+        "strength": 0.019241860433975615,
+        "footprintRadius": 0.012560297689219844,
+        "hardness": 0.2879404621560313
+      },
+      "distanceToPickupL": {
+        "normalized": 0.20528906550577186,
+        "solverGridCells": 6.363961030678928
+      },
+      "distanceToPickupR": {
+        "normalized": 0.2052890655057719,
+        "solverGridCells": 6.3639610306789285
+      },
+      "requestedFrame": 480,
+      "requestedSimulationTimeMs": 103026.66666667376,
+      "acceptedStrikeCount": 1,
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 48,
+        "sleeps": 48,
+        "truncatedTailEnergy": 7.128275064822544e-17,
+        "physicsSteps": 60000,
+        "energyDelta": 2.7357563482423705e-18,
+        "couplingWorkProxy": 0,
+        "deepPlateCouplingTransfers": 0,
+        "sphereCouplingTransfers": 0,
+        "maxOutputAbs": 0.0012798757637037268,
+        "requestedContactImpulseSquared": 0.0003085409818735132,
+        "compliantContactImpulseSquared": 0.0003085409818735132,
+        "contactPulseNodeSteps": 144,
+        "contactAttenuatedNodeContributions": 0,
+        "activeSphereModes": 0,
+        "layers": 1,
+        "activeNodes": 0,
+        "awakeLayers": 0,
+        "sleepingLayers": 1,
+        "physicsRate": 6000,
+        "topologyGeneration": 2,
+        "couplingLinks": 0,
+        "noduleCount": 0,
+        "integratedSphereModes": 0,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000,
+        "contactPulseDurationMs": 3,
+        "contactPulseSteps": 18,
+        "contactRecoveryTimeMs": 75,
+        "contactReferenceDeltaV": 0.02,
+        "contactMaximumComplianceLoss": 0.25
+      },
+      "windows": {
+        "100": {
+          "startFrame": 480,
+          "samplesPerChannel": 4800,
+          "leftRms": 0.00014169677808042756,
+          "rightRms": 0.00010047875186250702,
+          "pooledRms": 0.00012282906108535796,
+          "leftPeak": 0.0002893164928536862,
+          "rightPeak": 0.0003131687408313155,
+          "peakMax": 0.0003131687408313155,
+          "nonFiniteSamples": 0
+        },
+        "250": {
+          "startFrame": 480,
+          "samplesPerChannel": 12000,
+          "leftRms": 0.0001177048138230397,
+          "rightRms": 0.00008564558022330137,
+          "pooledRms": 0.00010293101721274881,
+          "leftPeak": 0.0002893164928536862,
+          "rightPeak": 0.0003131687408313155,
+          "peakMax": 0.0003131687408313155,
+          "nonFiniteSamples": 0
+        },
+        "500": {
+          "startFrame": 480,
+          "samplesPerChannel": 24000,
+          "leftRms": 0.00009406347857600269,
+          "rightRms": 0.00006975837418472661,
+          "pooledRms": 0.0000828075140633821,
+          "leftPeak": 0.0002893164928536862,
+          "rightPeak": 0.0003131687408313155,
+          "peakMax": 0.0003131687408313155,
+          "nonFiniteSamples": 0
+        }
+      },
+      "fullWindow": {
+        "startFrame": 0,
+        "samplesPerChannel": 480000,
+        "leftRms": 0.000022192324278329677,
+        "rightRms": 0.00001645564015337128,
+        "pooledRms": 0.00001953570256903736,
+        "leftPeak": 0.0002893164928536862,
+        "rightPeak": 0.0003131687408313155,
+        "peakMax": 0.0003131687408313155,
+        "nonFiniteSamples": 0
+      },
+      "pcm": {
+        "file": "pickup-midpoint-10s-48khz-f32.wav",
+        "sha256": "314542e8673ae78f4dd6fbeef28249f27c90951ad4ffce135aaedb084592a6ad",
+        "bytes": 3840044
+      }
+    },
+    {
+      "key": "near-source",
+      "label": "Near P1 source (descriptor source)",
+      "position": {
+        "x": 0.4631578947368421,
+        "y": 0.6421052631578947
+      },
+      "payload": {
+        "plateId": "trail-plate-1",
+        "layerId": "trail-plate-1",
+        "strength": 0.019241860433975615,
+        "footprintRadius": 0.012560297689219844,
+        "hardness": 0.2879404621560313
+      },
+      "distanceToPickupL": {
+        "normalized": 0.16686531591699133,
+        "solverGridCells": 5.172824793426731
+      },
+      "distanceToPickupR": {
+        "normalized": 0.5648485177410063,
+        "solverGridCells": 17.510304049971197
+      },
+      "requestedFrame": 480,
+      "requestedSimulationTimeMs": 103026.66666667376,
+      "acceptedStrikeCount": 1,
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 48,
+        "sleeps": 48,
+        "truncatedTailEnergy": 2.290790283589746e-17,
+        "physicsSteps": 60000,
+        "energyDelta": -1.029540917032757e-19,
+        "couplingWorkProxy": 0,
+        "deepPlateCouplingTransfers": 0,
+        "sphereCouplingTransfers": 0,
+        "maxOutputAbs": 0.0033944190804459876,
+        "requestedContactImpulseSquared": 0.0003085409818734599,
+        "compliantContactImpulseSquared": 0.0003085409818734599,
+        "contactPulseNodeSteps": 90,
+        "contactAttenuatedNodeContributions": 0,
+        "activeSphereModes": 0,
+        "layers": 1,
+        "activeNodes": 0,
+        "awakeLayers": 0,
+        "sleepingLayers": 1,
+        "physicsRate": 6000,
+        "topologyGeneration": 2,
+        "couplingLinks": 0,
+        "noduleCount": 0,
+        "integratedSphereModes": 0,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000,
+        "contactPulseDurationMs": 3,
+        "contactPulseSteps": 18,
+        "contactRecoveryTimeMs": 75,
+        "contactReferenceDeltaV": 0.02,
+        "contactMaximumComplianceLoss": 0.25
+      },
+      "windows": {
+        "100": {
+          "startFrame": 480,
+          "samplesPerChannel": 4800,
+          "leftRms": 0.00026851135341534373,
+          "rightRms": 0.00017464253697415744,
+          "pooledRms": 0.00022649322576371854,
+          "leftPeak": 0.0008288192912004888,
+          "rightPeak": 0.0005115223466418684,
+          "peakMax": 0.0008288192912004888,
+          "nonFiniteSamples": 0
+        },
+        "250": {
+          "startFrame": 480,
+          "samplesPerChannel": 12000,
+          "leftRms": 0.00022970926700206982,
+          "rightRms": 0.00015094648083459371,
+          "pooledRms": 0.0001943594446161243,
+          "leftPeak": 0.0008288192912004888,
+          "rightPeak": 0.0005115223466418684,
+          "peakMax": 0.0008288192912004888,
+          "nonFiniteSamples": 0
+        },
+        "500": {
+          "startFrame": 480,
+          "samplesPerChannel": 24000,
+          "leftRms": 0.0001871634199846074,
+          "rightRms": 0.0001228937384416451,
+          "pooledRms": 0.000158324061229647,
+          "leftPeak": 0.0008288192912004888,
+          "rightPeak": 0.0005115223466418684,
+          "peakMax": 0.0008288192912004888,
+          "nonFiniteSamples": 0
+        }
+      },
+      "fullWindow": {
+        "startFrame": 0,
+        "samplesPerChannel": 480000,
+        "leftRms": 0.000044191585807446494,
+        "rightRms": 0.000029113737336599936,
+        "pooledRms": 0.000037419954288330176,
+        "leftPeak": 0.0008288192912004888,
+        "rightPeak": 0.0005115223466418684,
+        "peakMax": 0.0008288192912004888,
+        "nonFiniteSamples": 0
+      },
+      "pcm": {
+        "file": "near-source-10s-48khz-f32.wav",
+        "sha256": "824cdf244c0eb5bb865a1d61d67d7ba31eb7da485d8b7c6841482b3c8a4b703b",
+        "bytes": 3840044
+      }
+    },
+    {
+      "key": "near-target",
+      "label": "Near P1 target (descriptor target)",
+      "position": {
+        "x": 0.9578947368421052,
+        "y": 0.14736842105263157
+      },
+      "payload": {
+        "plateId": "trail-plate-1",
+        "layerId": "trail-plate-1",
+        "strength": 0.019241860433975615,
+        "footprintRadius": 0.012560297689219844,
+        "hardness": 0.2879404621560313
+      },
+      "distanceToPickupL": {
+        "normalized": 0.555329543311916,
+        "solverGridCells": 17.215215842669394
+      },
+      "distanceToPickupR": {
+        "normalized": 0.1583275372517522,
+        "solverGridCells": 4.908153654804318
+      },
+      "requestedFrame": 480,
+      "requestedSimulationTimeMs": 103026.66666667376,
+      "acceptedStrikeCount": 1,
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 48,
+        "sleeps": 48,
+        "truncatedTailEnergy": 7.874982186355572e-17,
+        "physicsSteps": 60000,
+        "energyDelta": 9.775976515088412e-20,
+        "couplingWorkProxy": 0,
+        "deepPlateCouplingTransfers": 0,
+        "sphereCouplingTransfers": 0,
+        "maxOutputAbs": 0.005624170273829511,
+        "requestedContactImpulseSquared": 0.0003085409818735131,
+        "compliantContactImpulseSquared": 0.0003085409818735131,
+        "contactPulseNodeSteps": 162,
+        "contactAttenuatedNodeContributions": 0,
+        "activeSphereModes": 0,
+        "layers": 1,
+        "activeNodes": 0,
+        "awakeLayers": 0,
+        "sleepingLayers": 1,
+        "physicsRate": 6000,
+        "topologyGeneration": 2,
+        "couplingLinks": 0,
+        "noduleCount": 0,
+        "integratedSphereModes": 0,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000,
+        "contactPulseDurationMs": 3,
+        "contactPulseSteps": 18,
+        "contactRecoveryTimeMs": 75,
+        "contactReferenceDeltaV": 0.02,
+        "contactMaximumComplianceLoss": 0.25
+      },
+      "windows": {
+        "100": {
+          "startFrame": 480,
+          "samplesPerChannel": 4800,
+          "leftRms": 0.00006422874702802526,
+          "rightRms": 0.0006097122575237332,
+          "pooledRms": 0.00043351722510153926,
+          "leftPeak": 0.00019238129607401788,
+          "rightPeak": 0.0013702154392376542,
+          "peakMax": 0.0013702154392376542,
+          "nonFiniteSamples": 0
+        },
+        "250": {
+          "startFrame": 480,
+          "samplesPerChannel": 12000,
+          "leftRms": 0.00005575133144942958,
+          "rightRms": 0.0005435661303124799,
+          "pooledRms": 0.0003863756908640009,
+          "leftPeak": 0.00019238129607401788,
+          "rightPeak": 0.0013702154392376542,
+          "peakMax": 0.0013702154392376542,
+          "nonFiniteSamples": 0
+        },
+        "500": {
+          "startFrame": 480,
+          "samplesPerChannel": 24000,
+          "leftRms": 0.000045452400791828854,
+          "rightRms": 0.00044776617918531854,
+          "pooledRms": 0.00031824555924628376,
+          "leftPeak": 0.00019238129607401788,
+          "rightPeak": 0.0013702154392376542,
+          "peakMax": 0.0013702154392376542,
+          "nonFiniteSamples": 0
+        }
+      },
+      "fullWindow": {
+        "startFrame": 0,
+        "samplesPerChannel": 480000,
+        "leftRms": 0.000010774193394206374,
+        "rightRms": 0.00010564626666407447,
+        "pooledRms": 0.0000750906682063507,
+        "leftPeak": 0.00019238129607401788,
+        "rightPeak": 0.0013702154392376542,
+        "peakMax": 0.0013702154392376542,
+        "nonFiniteSamples": 0
+      },
+      "pcm": {
+        "file": "near-target-10s-48khz-f32.wav",
+        "sha256": "7cc995548b59922b10829c0297e2b4042dfafe0244b1dd3817fde76e3bc6290a",
+        "bytes": 3840044
+      }
+    },
+    {
+      "key": "farthest-branch",
+      "label": "Valid P1 branch farthest from both pickups",
+      "position": {
+        "x": 0.9789473684210527,
+        "y": 0.10526315789473684
+      },
+      "branchIndex": 1053,
+      "branchDegree": 3,
+      "payload": {
+        "plateId": "trail-plate-1",
+        "layerId": "trail-plate-1",
+        "strength": 0.019241860433975615,
+        "footprintRadius": 0.012560297689219844,
+        "hardness": 0.2879404621560313
+      },
+      "distanceToPickupL": {
+        "normalized": 0.5979504042694254,
+        "solverGridCells": 18.536462532352186
+      },
+      "distanceToPickupR": {
+        "normalized": 0.19377581729132815,
+        "solverGridCells": 6.007050336031172
+      },
+      "requestedFrame": 480,
+      "requestedSimulationTimeMs": 103026.66666667376,
+      "acceptedStrikeCount": 1,
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 48,
+        "sleeps": 48,
+        "truncatedTailEnergy": 7.433611619924715e-17,
+        "physicsSteps": 60000,
+        "energyDelta": -4.962027625085967e-19,
+        "couplingWorkProxy": 0,
+        "deepPlateCouplingTransfers": 0,
+        "sphereCouplingTransfers": 0,
+        "maxOutputAbs": 0.008232933466039762,
+        "requestedContactImpulseSquared": 0.00030854098187345174,
+        "compliantContactImpulseSquared": 0.00030854098187345174,
+        "contactPulseNodeSteps": 144,
+        "contactAttenuatedNodeContributions": 0,
+        "activeSphereModes": 0,
+        "layers": 1,
+        "activeNodes": 0,
+        "awakeLayers": 0,
+        "sleepingLayers": 1,
+        "physicsRate": 6000,
+        "topologyGeneration": 2,
+        "couplingLinks": 0,
+        "noduleCount": 0,
+        "integratedSphereModes": 0,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000,
+        "contactPulseDurationMs": 3,
+        "contactPulseSteps": 18,
+        "contactRecoveryTimeMs": 75,
+        "contactReferenceDeltaV": 0.02,
+        "contactMaximumComplianceLoss": 0.25
+      },
+      "windows": {
+        "100": {
+          "startFrame": 480,
+          "samplesPerChannel": 4800,
+          "leftRms": 0.00004450426135012568,
+          "rightRms": 0.0008543033291799724,
+          "pooledRms": 0.000604902805220105,
+          "leftPeak": 0.00014499295502901077,
+          "rightPeak": 0.0020005980040878057,
+          "peakMax": 0.0020005980040878057,
+          "nonFiniteSamples": 0
+        },
+        "250": {
+          "startFrame": 480,
+          "samplesPerChannel": 12000,
+          "leftRms": 0.00003883817225174255,
+          "rightRms": 0.0007560440810633578,
+          "pooledRms": 0.0005353088156077729,
+          "leftPeak": 0.00014499295502901077,
+          "rightPeak": 0.0020005980040878057,
+          "peakMax": 0.0020005980040878057,
+          "nonFiniteSamples": 0
+        },
+        "500": {
+          "startFrame": 480,
+          "samplesPerChannel": 24000,
+          "leftRms": 0.000031747612243004456,
+          "rightRms": 0.0006218837536130667,
+          "pooledRms": 0.00044031086398759774,
+          "leftPeak": 0.00014499295502901077,
+          "rightPeak": 0.0020005980040878057,
+          "peakMax": 0.0020005980040878057,
+          "nonFiniteSamples": 0
+        }
+      },
+      "fullWindow": {
+        "startFrame": 0,
+        "samplesPerChannel": 480000,
+        "leftRms": 0.0000074912484244290195,
+        "rightRms": 0.00014673170839537457,
+        "pooledRms": 0.00010389011755595847,
+        "leftPeak": 0.00014499295502901077,
+        "rightPeak": 0.0020005980040878057,
+        "peakMax": 0.0020005980040878057,
+        "nonFiniteSamples": 0
+      },
+      "pcm": {
+        "file": "farthest-branch-10s-48khz-f32.wav",
+        "sha256": "86b49d583b825444bdee38385b0a6bb0aeb474c4129a27dd0c013f099a1ab07a",
+        "bytes": 3840044
+      }
+    }
+  ],
+  "clockMapping": {
+    "naturalAudioStartSimulationMs": 103016.66666667376,
+    "naturalAudioEndSimulationMs": 113016.66666667376,
+    "naturalRequestedFrame": "round((strikeSimulationTimeMs - firstPlateBirthMs) * 48)",
+    "controlBirthMarkerSimulationMs": 103016.66666667376,
+    "controlStrikeSimulationMs": 103026.66666667376,
+    "controlStrikeAudioFrame": 480,
+    "sampleRate": 48000,
+    "samplesPerChannel": 480000
+  },
+  "capture": {
+    "browser": "155.0.8059.40",
+    "engine": "OfflineAudioContext with the unchanged production-A AudioWorklet source"
+  },
+  "renderer": {
+    "source": "existing ANT fixed-scale stratigraphy overview and audio snapshot renderers",
+    "waveformAmplitude": [
+      -1,
+      1
+    ],
+    "channelMode": "separate L/R",
+    "fftSize": 1024,
+    "window": "Hann",
+    "hopSize": 256,
+    "frequencyHz": [
+      0,
+      8000
+    ],
+    "dbfs": [
+      -100,
+      0
+    ],
+    "grayscaleGamma": 1,
+    "normalization": "none; fixed-scale",
+    "birthMarker": "P1 at simulation start",
+    "contactMarker": "one synthetic control-strike FOOT_CONTACT marker at +10 ms",
+    "images": [
+      {
+        "file": "pickup-L-fixed-overview.png",
+        "sha256": "0b27e7d4b921ddb7fbe81fe6ee1b8dce05051bbbbc4d5015220d118e77be0631",
+        "bytes": 78100
+      },
+      {
+        "file": "pickup-R-fixed-overview.png",
+        "sha256": "5383b93f699626fd686b5e95c2150d14d4ea09922c239be347978723f39e1689",
+        "bytes": 77139
+      },
+      {
+        "file": "pickup-midpoint-fixed-overview.png",
+        "sha256": "94275bfbc59f5370ed5efc597deee2b94fd263c83057041d2ab92d6ab01d6559",
+        "bytes": 74108
+      },
+      {
+        "file": "near-source-fixed-overview.png",
+        "sha256": "d6c4be58621e2075d4e153202370f83c5d331b1901ed481f55ad88b71b05c695",
+        "bytes": 76362
+      },
+      {
+        "file": "near-target-fixed-overview.png",
+        "sha256": "29d1674fdd766de5c52ab46e1f1a11c445f6b78153c59114778ec09b0102961d",
+        "bytes": 75888
+      },
+      {
+        "file": "farthest-branch-fixed-overview.png",
+        "sha256": "f791cbe95f3778d693e7ae4ae0868b00b95e3f462965541027d50f6722422054",
+        "bytes": 77018
+      },
+      {
+        "file": "six-control-strikes-fixed-comparison.png",
+        "sha256": "cc71cba65b79e222404cfa791b6f7b6089158f03c37ee30c85fd9d9ac975aa3c",
+        "bytes": 68968
+      }
+    ]
+  },
+  "productionState": {
+    "unchanged": true,
+    "workletSha256": "0d5289950a000ee9aa3264b9b6bdffedd13bca2d28a0bab281be03ca6a45efd5",
+    "sourceDiff": false,
+    "contactPulseMs": 3,
+    "recoveryMs": 75,
+    "plateDampingMultiplier": 50,
+    "substrateSettingsChanged": false
+  }
+}

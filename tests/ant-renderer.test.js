@@ -55,6 +55,105 @@ test('AntRenderer paints equal agent marks and a cached pheromone field without 
   assert.equal(calls.filter(([name]) => name === 'remove').length, 1);
 });
 
+test('Plate debug overlays are opt-in and do not mutate detached snapshots', async () => {
+  const calls = [];
+  const canvas = makeCanvas(makeParent());
+  const renderer = new AntRenderer(canvas, { loadP5: async () => ({ default: makeP5(calls) }) });
+  await renderer.init({ width: 120, height: 120 });
+  const snapshot = {
+    agents: [],
+    pheromone: { width: 2, height: 2, values: new Float32Array([0, 0.1, 0, 0]) },
+    surface: { width: 2, height: 2, values: new Float32Array([0, 0.2, 0, 0]) },
+    surfacePlates: {
+      requirements: { sourceAnnulus: { origin: { x: 0.5, y: 0.72 }, radii: [0.055, 0.115] } },
+      candidate: { source: { x: 0.45, y: 0.72 }, target: { x: 0.05, y: 0.72 },
+        pathPoints: [{ x: 0.45, y: 0.72 }, { x: 0.3, y: 0.72 }, { x: 0.05, y: 0.72 }] }
+    },
+    stratigraphy: { width: 2, height: 2, revision: 1, plates: [],
+      stratigraphy: { topLayerByCell: new Int32Array([-1, -1, -1, -1]),
+        layerCountByCell: new Uint16Array([0, 2, 0, 0]) } }
+  };
+  snapshot.stratigraphy.plates = [{ id: 'trail-plate-1', source: { x: 0.4, y: 0.4 } }];
+  const before = structuredClone(snapshot);
+  renderer.render(snapshot);
+  const baselineLines = calls.filter(([name]) => name === 'line').length;
+  const baselineCircles = calls.filter(([name]) => name === 'circle').length;
+  renderer.setDebugOptions({ surface: true, candidate: true, source: true, exposure: true, plateIds: true });
+  renderer.render(snapshot);
+  assert.ok(calls.filter(([name]) => name === 'line').length > baselineLines,
+    'candidate path is drawn only after opt-in');
+  assert.ok(calls.filter(([name]) => name === 'circle').length > baselineCircles,
+    'surface/exposure diagnostics add debug marks only after opt-in');
+  assert.ok(calls.some(([name, label]) => name === 'text' && label === 'P1'),
+    'Plate IDs are labeled only after opt-in');
+  assert.deepEqual(snapshot, before, 'debug rendering leaves the detached model snapshot unchanged');
+  await renderer.destroy();
+});
+
+test('Plate geometry debug draws joined outlines, exposed graph lines, and compiled audio pickup nodes', async () => {
+  const calls = [];
+  const renderer = new AntRenderer(makeCanvas(makeParent()), { loadP5: async () => ({ default: makeP5(calls) }) });
+  await renderer.init({ width: 120, height: 120 });
+  const plate = {
+    id: 'trail-plate-1', grid: { width: 4, height: 4 },
+    mask: [1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+    centerline: [4, 5, 6, 7].map(index => ({ index, x: index % 4 / 3, y: 1 / 3 })),
+    edges: [[4, 5], [5, 6], [6, 7]],
+    pickups: [{ x: 0.1, y: 0.1 }, { x: 0.9, y: 0.1 }]
+  };
+  const topLayerByCell = new Int32Array(16).fill(0);
+  topLayerByCell[6] = 1;
+  topLayerByCell[7] = 1;
+  const snapshot = {
+    agents: [],
+    stratigraphy: { width: 4, height: 4, plates: [plate],
+      stratigraphy: { topLayerByCell } },
+    debugAudioTopology: { solverGrid: 4, layerIds: [plate.id],
+      pickupNodeIndices: new Uint32Array([0, 1]), nodeGridIndices: new Uint16Array([6, 9]) }
+  };
+  const before = structuredClone(snapshot);
+  renderer.render(snapshot);
+  assert.equal(calls.filter(([name]) => name === 'line').length, 0,
+    'new Plate geometry stays hidden by default');
+  assert.equal(calls.filter(([name]) => name === 'circle').length, 0);
+
+  renderer.setDebugOptions({ plateOutlines: true, plateCenterlines: true, platePickups: true, plateIds: true });
+  const lines = calls.filter(([name]) => name === 'line');
+  assert.equal(lines.length, 17, '12 rectangle boundary segments, 3 centerline edges, and 2 legend samples draw');
+  const contourVertices = new Map();
+  for (const [, x1, y1, x2, y2] of lines.slice(0, 12)) {
+    for (const key of [`${x1},${y1}`, `${x2},${y2}`]) contourVertices.set(key, (contourVertices.get(key) || 0) + 1);
+  }
+  assert.equal(contourVertices.size, 12);
+  assert.ok([...contourVertices.values()].every(degree => degree === 2),
+    'boundary edges join into a closed connected contour');
+  const plateStrokes = calls.filter(([name, red, green, blue]) => name === 'stroke'
+    && red === 65 && green === 95 && blue === 145);
+  assert.ok(plateStrokes.some(([, , , , alpha]) => alpha === 225), 'exposed Plate lines use full debug opacity');
+  assert.ok(plateStrokes.some(([, , , , alpha]) => alpha === 65), 'covered Plate lines use subdued opacity');
+  const pickupMarkers = calls.filter(([name]) => name === 'circle');
+  assert.deepEqual(pickupMarkers.map(([, x, y]) => [x, y]), [[80, 40], [40, 80]],
+    'filled pickup markers follow compiled solver nodes, not the descriptor target points');
+  const labelIndex = calls.findIndex(([name, label]) => name === 'text' && label === 'P1');
+  assert.ok(labelIndex > 0);
+  assert.equal(calls.filter(([name, label]) => name === 'text' && label === 'P1').length, 2,
+    'Plate ID labels follow both source and route end');
+  const labelColor = calls.slice(0, labelIndex).filter(([name]) => name === 'fill').at(-1).slice(1, 4);
+  assert.deepEqual(labelColor, [65, 95, 145], 'Plate ID uses the same restrained color as its geometry');
+  assert.ok(calls.some(([name, label]) => name === 'text' && label === 'solid = exposed · faint = buried'),
+    'legend explains exposed and covered geometry styles');
+  assert.ok(calls.some(([name, label]) => name === 'text' && label === 'filled = audio pickup node'),
+    'pickup legend identifies compiled audio nodes');
+  renderer.render({ ...snapshot, debugAudioTopology: null });
+  assert.deepEqual(calls.filter(([name]) => name === 'circle').slice(-2).map(([, x, y]) => [x, y]),
+    [[12, 12], [108, 12]], 'missing topology falls back to the frozen descriptor target markers');
+  assert.ok(calls.some(([name, label]) => name === 'text'
+    && label === 'hollow = Plate pickup target (audio topology unavailable)'),
+  'fallback targets have a distinct hollow-marker legend');
+  assert.deepEqual(snapshot, before, 'Plate overlays leave frozen descriptors and topology unchanged');
+  await renderer.destroy();
+});
+
 test('pheromone display uses two fixed scales with monotonic weak trace and strong route contrast', () => {
   const values = [0, 0.004, 0.01, 0.02, 0.04, 0.05, 0.1, 0.18, 0.4];
   const alpha = values.map(pheromoneValueToAlpha);
@@ -271,7 +370,8 @@ function makeP5(calls, { deferSetup = false, manualSetup = false, failSetup = fa
         rotate: (...args) => calls.push(['rotate', ...args]),
         ellipse: (...args) => calls.push(['ellipse', ...args]),
         noFill: () => calls.push(['noFill']),
-        fill: (...args) => calls.push(['fill', ...args]), circle: (...args) => calls.push(['circle', ...args])
+        fill: (...args) => calls.push(['fill', ...args]), circle: (...args) => calls.push(['circle', ...args]),
+        textSize: (...args) => calls.push(['textSize', ...args]), text: (...args) => calls.push(['text', ...args])
       };
       sketch(p);
       const setup = () => {

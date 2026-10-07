@@ -1,0 +1,4353 @@
+{
+  "status": "frozen-input-production-mapped-event-subset-captured",
+  "note": "63 accepted P1 foot strikes originate from 44 unique FOOT_CONTACT groups. Production sends one generic substrate excitation per group, so this report preserves those 44 mapped payloads rather than duplicating group events to force 63.",
+  "source": {
+    "seed": 20261005,
+    "inputFile": "fresh-seed-20261005-through-first-birth-plus-10s.json.gz",
+    "inputGzipSha256": "25bf05aab8bbbb142be11b79f37a5988898d6069e24cae31bf721348b0bf7ff3",
+    "deepEqualToFreshDeterministicRun": true,
+    "firstPlateId": "trail-plate-1",
+    "firstPlateBirthSeconds": 103.01666666667376,
+    "firstPlateDescriptorSha256": "fd079682ed0663f9bffdae36b1102958ef219f7d0bb6b35fcf2b1d09bc647b16",
+    "postbirthWindowSimulationSeconds": [
+      103.01666666667376,
+      113.01666666667376
+    ],
+    "clockMapping": {
+      "sampleRate": 48000,
+      "durationSeconds": 10,
+      "samplesPerChannel": 480000,
+      "requestedFrame": "round((simulationTimeMs - firstPlateBirthMs) * 48)",
+      "bornDispatch": "sample-exact before requested frame",
+      "genericSubstrateDispatch": "next 128-frame quantum; actualFrame = ceil(requestedFrame / 128) * 128"
+    }
+  },
+  "eventMapping": {
+    "rule": "Match each accepted P1 born strike to exactly one same-timestamp FOOT_CONTACT leg and its SurfaceField response by exact position; deduplicate parent contact-group index; select that group’s original legacy-strike payload once.",
+    "acceptedBornP1Strikes": 63,
+    "uniqueMatchedContactGroups": 44,
+    "substrateMatchedGroupEvents": 44,
+    "allPostbirthContactGroups": 624,
+    "allPostbirthLegacyEvents": 624,
+    "sourceGroupMultiplicity": {
+      "groupsByAcceptedP1StrikeCount": {
+        "1": 27,
+        "2": 15,
+        "3": 2
+      },
+      "uniqueGroups": 44,
+      "extraP1StrikesFromSharedGroups": 19
+    },
+    "originalGroupScheduleEmissionOrder": "retained for equal-frame rows using original recording index",
+    "matchedContactGroupRows": [
+      {
+        "contactIndex": 4295,
+        "simulationTimeMs": 103110.93467720706,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-78",
+          "contactGroup": "B",
+          "contacts": [
+            {
+              "legId": "FR",
+              "position": {
+                "x": 0.4604478148183748,
+                "y": 0.6298791679411511
+              }
+            },
+            {
+              "legId": "ML",
+              "position": {
+                "x": 0.4412016900836754,
+                "y": 0.6634661696337164
+              }
+            },
+            {
+              "legId": "RR",
+              "position": {
+                "x": 0.47737131336327343,
+                "y": 0.6465142272136879
+              }
+            }
+          ],
+          "position": {
+            "x": 0.4596736060884412,
+            "y": 0.6466198549295185
+          },
+          "strength": 0.03404994138721377,
+          "simulationTimeMs": 103110.93467720706
+        }
+      },
+      {
+        "contactIndex": 4302,
+        "simulationTimeMs": 103261.73853206664,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-67",
+          "contactGroup": "B",
+          "contacts": [
+            {
+              "legId": "FR",
+              "position": {
+                "x": 0.7776456587230051,
+                "y": 0.21174880844608976
+              }
+            },
+            {
+              "legId": "ML",
+              "position": {
+                "x": 0.7389432632508116,
+                "y": 0.2109585017246616
+              }
+            },
+            {
+              "legId": "RR",
+              "position": {
+                "x": 0.7711589800360279,
+                "y": 0.23457539381517017
+              }
+            }
+          ],
+          "position": {
+            "x": 0.7625826340032815,
+            "y": 0.2190942346619738
+          },
+          "strength": 0.03482884871959687,
+          "simulationTimeMs": 103261.73853206664
+        }
+      },
+      {
+        "contactIndex": 4309,
+        "simulationTimeMs": 103314.03562295363,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-78",
+          "contactGroup": "A",
+          "contacts": [
+            {
+              "legId": "FL",
+              "position": {
+                "x": 0.4213238201780287,
+                "y": 0.6403662217623189
+              }
+            },
+            {
+              "legId": "MR",
+              "position": {
+                "x": 0.4564070009364829,
+                "y": 0.6240055852261194
+              }
+            },
+            {
+              "legId": "RL",
+              "position": {
+                "x": 0.4364805120402231,
+                "y": 0.6586255944731898
+              }
+            }
+          ],
+          "position": {
+            "x": 0.4380704443849115,
+            "y": 0.6409991338205427
+          },
+          "strength": 0.03404994138721377,
+          "simulationTimeMs": 103314.03562295363
+        }
+      },
+      {
+        "contactIndex": 4317,
+        "simulationTimeMs": 103497.06257038385,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-78",
+          "contactGroup": "B",
+          "contacts": [
+            {
+              "legId": "FR",
+              "position": {
+                "x": 0.437834353589117,
+                "y": 0.6016256408623182
+              }
+            },
+            {
+              "legId": "ML",
+              "position": {
+                "x": 0.4161256690066889,
+                "y": 0.6336761168915543
+              }
+            },
+            {
+              "legId": "RR",
+              "position": {
+                "x": 0.45346381697967214,
+                "y": 0.6194820087495256
+              }
+            }
+          ],
+          "position": {
+            "x": 0.4358079465251593,
+            "y": 0.6182612555011326
+          },
+          "strength": 0.03404994138721377,
+          "simulationTimeMs": 103497.06257038385
+        }
+      },
+      {
+        "contactIndex": 4318,
+        "simulationTimeMs": 103511.61078126125,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-67",
+          "contactGroup": "A",
+          "contacts": [
+            {
+              "legId": "FL",
+              "position": {
+                "x": 0.7509599969704442,
+                "y": 0.1822377409601812
+              }
+            },
+            {
+              "legId": "MR",
+              "position": {
+                "x": 0.7803289295427316,
+                "y": 0.2074561033091609
+              }
+            },
+            {
+              "legId": "RL",
+              "position": {
+                "x": 0.7405729263973617,
+                "y": 0.20357406596965277
+              }
+            }
+          ],
+          "position": {
+            "x": 0.7572872843035124,
+            "y": 0.19775597007966494
+          },
+          "strength": 0.03482884871959687,
+          "simulationTimeMs": 103511.61078126125
+        }
+      },
+      {
+        "contactIndex": 4363,
+        "simulationTimeMs": 104245.8298509607,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-77",
+          "contactGroup": "A",
+          "contacts": [
+            {
+              "legId": "FL",
+              "position": {
+                "x": 0.5562990938027531,
+                "y": 0.4783812895717125
+              }
+            },
+            {
+              "legId": "MR",
+              "position": {
+                "x": 0.5945738724093852,
+                "y": 0.48417277665305025
+              }
+            },
+            {
+              "legId": "RL",
+              "position": {
+                "x": 0.5588164541546163,
+                "y": 0.5019777489853379
+              }
+            }
+          ],
+          "position": {
+            "x": 0.5698964734555848,
+            "y": 0.4881772717367002
+          },
+          "strength": 0.035548613287787884,
+          "simulationTimeMs": 104245.8298509607
+        }
+      },
+      {
+        "contactIndex": 4377,
+        "simulationTimeMs": 104525.40093894658,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-80",
+          "contactGroup": "A",
+          "contacts": [
+            {
+              "legId": "FL",
+              "position": {
+                "x": 0.462419543906853,
+                "y": 0.6551689224922681
+              }
+            },
+            {
+              "legId": "MR",
+              "position": {
+                "x": 0.5004971345122752,
+                "y": 0.6481977609186229
+              }
+            },
+            {
+              "legId": "RL",
+              "position": {
+                "x": 0.47247414812871713,
+                "y": 0.6766639203741399
+              }
+            }
+          ],
+          "position": {
+            "x": 0.47846360884928174,
+            "y": 0.660010201261677
+          },
+          "strength": 0.03370849617272616,
+          "simulationTimeMs": 104525.40093894658
+        }
+      },
+      {
+        "contactIndex": 4380,
+        "simulationTimeMs": 104553.0729589854,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-77",
+          "contactGroup": "B",
+          "contacts": [
+            {
+              "legId": "FR",
+              "position": {
+                "x": 0.5874837976228654,
+                "y": 0.4531739573863072
+              }
+            },
+            {
+              "legId": "ML",
+              "position": {
+                "x": 0.5542599671574235,
+                "y": 0.4730404389369887
+              }
+            },
+            {
+              "legId": "RR",
+              "position": {
+                "x": 0.5940979282700035,
+                "y": 0.4759639393034257
+              }
+            }
+          ],
+          "position": {
+            "x": 0.5786138976834309,
+            "y": 0.4673927785422406
+          },
+          "strength": 0.035548613287787884,
+          "simulationTimeMs": 104553.0729589854
+        }
+      },
+      {
+        "contactIndex": 4388,
+        "simulationTimeMs": 104760.31838956749,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-67",
+          "contactGroup": "B",
+          "contacts": [
+            {
+              "legId": "FR",
+              "position": {
+                "x": 0.7904891687026772,
+                "y": 0.17802632792714476
+              }
+            },
+            {
+              "legId": "ML",
+              "position": {
+                "x": 0.7517867732304837,
+                "y": 0.1772360212057166
+              }
+            },
+            {
+              "legId": "RR",
+              "position": {
+                "x": 0.7840024900157,
+                "y": 0.20085291329622518
+              }
+            }
+          ],
+          "position": {
+            "x": 0.7754261439829535,
+            "y": 0.18537175414302887
+          },
+          "strength": 0.03482884871959687,
+          "simulationTimeMs": 104760.31838956749
+        }
+      },
+      {
+        "contactIndex": 4391,
+        "simulationTimeMs": 104782.27015293553,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-80",
+          "contactGroup": "B",
+          "contacts": [
+            {
+              "legId": "FR",
+              "position": {
+                "x": 0.484148919817291,
+                "y": 0.62196131917704
+              }
+            },
+            {
+              "legId": "ML",
+              "position": {
+                "x": 0.4591922379988253,
+                "y": 0.651552940163594
+              }
+            },
+            {
+              "legId": "RR",
+              "position": {
+                "x": 0.4978152996834916,
+                "y": 0.6413613207582953
+              }
+            }
+          ],
+          "position": {
+            "x": 0.4803854858332026,
+            "y": 0.6382918600329764
+          },
+          "strength": 0.03370849617272616,
+          "simulationTimeMs": 104782.27015293553
+        }
+      },
+      {
+        "contactIndex": 4392,
+        "simulationTimeMs": 104816.54808859361,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-77",
+          "contactGroup": "A",
+          "contacts": [
+            {
+              "legId": "FL",
+              "position": {
+                "x": 0.5490779984148259,
+                "y": 0.44166591354948925
+              }
+            },
+            {
+              "legId": "MR",
+              "position": {
+                "x": 0.5873527770214579,
+                "y": 0.447457400630827
+              }
+            },
+            {
+              "legId": "RL",
+              "position": {
+                "x": 0.5515953587666891,
+                "y": 0.46526237296311457
+              }
+            }
+          ],
+          "position": {
+            "x": 0.5626753780676577,
+            "y": 0.4514618957144769
+          },
+          "strength": 0.035548613287787884,
+          "simulationTimeMs": 104816.54808859361
+        }
+      },
+      {
+        "contactIndex": 4401,
+        "simulationTimeMs": 105021.47624248479,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-80",
+          "contactGroup": "A",
+          "contacts": [
+            {
+              "legId": "FL",
+              "position": {
+                "x": 0.44453293427727864,
+                "y": 0.6243368411143887
+              }
+            },
+            {
+              "legId": "MR",
+              "position": {
+                "x": 0.4826105248827008,
+                "y": 0.6173656795407435
+              }
+            },
+            {
+              "legId": "RL",
+              "position": {
+                "x": 0.4545875384991427,
+                "y": 0.6458318389962605
+              }
+            }
+          ],
+          "position": {
+            "x": 0.46057699921970735,
+            "y": 0.6291781198837976
+          },
+          "strength": 0.03370849617272616,
+          "simulationTimeMs": 105021.47624248479
+        }
+      },
+      {
+        "contactIndex": 4403,
+        "simulationTimeMs": 105034.3336495877,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-77",
+          "contactGroup": "B",
+          "contacts": [
+            {
+              "legId": "FR",
+              "position": {
+                "x": 0.5816019413103586,
+                "y": 0.41759336407993247
+              }
+            },
+            {
+              "legId": "ML",
+              "position": {
+                "x": 0.5469829194282322,
+                "y": 0.43491454544624975
+              }
+            },
+            {
+              "legId": "RR",
+              "position": {
+                "x": 0.5864898317594172,
+                "y": 0.4408148740859162
+              }
+            }
+          ],
+          "position": {
+            "x": 0.5716915641660026,
+            "y": 0.43110759453736613
+          },
+          "strength": 0.035548613287787884,
+          "simulationTimeMs": 105034.3336495877
+        }
+      },
+      {
+        "contactIndex": 4415,
+        "simulationTimeMs": 105255.69472669472,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-80",
+          "contactGroup": "B",
+          "contacts": [
+            {
+              "legId": "FR",
+              "position": {
+                "x": 0.4679194943105969,
+                "y": 0.5917544277189507
+              }
+            },
+            {
+              "legId": "ML",
+              "position": {
+                "x": 0.4408156787657901,
+                "y": 0.6193928644134002
+              }
+            },
+            {
+              "legId": "RR",
+              "position": {
+                "x": 0.48009381905767157,
+                "y": 0.6121239102099902
+              }
+            }
+          ],
+          "position": {
+            "x": 0.46294299737801947,
+            "y": 0.6077570674474471
+          },
+          "strength": 0.03370849617272616,
+          "simulationTimeMs": 105255.69472669472
+        }
+      },
+      {
+        "contactIndex": 4416,
+        "simulationTimeMs": 105271.38128254801,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-67",
+          "contactGroup": "B",
+          "contacts": [
+            {
+              "legId": "FR",
+              "position": {
+                "x": 0.8147650101315984,
+                "y": 0.16746904082698177
+              }
+            },
+            {
+              "legId": "ML",
+              "position": {
+                "x": 0.7847058049107224,
+                "y": 0.14307756318643577
+              }
+            },
+            {
+              "legId": "RR",
+              "position": {
+                "x": 0.7956274521098592,
+                "y": 0.18150057221042537
+              }
+            }
+          ],
+          "position": {
+            "x": 0.7983660890507267,
+            "y": 0.16401572540794762
+          },
+          "strength": 0.03482884871959687,
+          "simulationTimeMs": 105271.38128254801
+        }
+      },
+      {
+        "contactIndex": 4426,
+        "simulationTimeMs": 105496.73777658795,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-80",
+          "contactGroup": "A",
+          "contacts": [
+            {
+              "legId": "FL",
+              "position": {
+                "x": 0.42665708712248324,
+                "y": 0.5934989276697266
+              }
+            },
+            {
+              "legId": "MR",
+              "position": {
+                "x": 0.4647346777279054,
+                "y": 0.5865277660960814
+              }
+            },
+            {
+              "legId": "RL",
+              "position": {
+                "x": 0.4367116913443473,
+                "y": 0.6149939255515984
+              }
+            }
+          ],
+          "position": {
+            "x": 0.442701152064912,
+            "y": 0.5983402064391354
+          },
+          "strength": 0.03370849617272616,
+          "simulationTimeMs": 105496.73777658795
+        }
+      },
+      {
+        "contactIndex": 4432,
+        "simulationTimeMs": 105571.99731646408,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-67",
+          "contactGroup": "A",
+          "contacts": [
+            {
+              "legId": "FL",
+              "position": {
+                "x": 0.8236557884538518,
+                "y": 0.13425365575473824
+              }
+            },
+            {
+              "legId": "MR",
+              "position": {
+                "x": 0.8101401310046,
+                "y": 0.17052798557231705
+              }
+            },
+            {
+              "legId": "RL",
+              "position": {
+                "x": 0.8000444674073011,
+                "y": 0.1318797310641226
+              }
+            }
+          ],
+          "position": {
+            "x": 0.8112801289552509,
+            "y": 0.1455537907970593
+          },
+          "strength": 0.03482884871959687,
+          "simulationTimeMs": 105571.99731646408
+        }
+      },
+      {
+        "contactIndex": 4444,
+        "simulationTimeMs": 105757.51948300909,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-80",
+          "contactGroup": "B",
+          "contacts": [
+            {
+              "legId": "FR",
+              "position": {
+                "x": 0.45003661132095096,
+                "y": 0.5609207328046697
+              }
+            },
+            {
+              "legId": "ML",
+              "position": {
+                "x": 0.4229327957761442,
+                "y": 0.5885591694991192
+              }
+            },
+            {
+              "legId": "RR",
+              "position": {
+                "x": 0.46221093606802566,
+                "y": 0.5812902152957092
+              }
+            }
+          ],
+          "position": {
+            "x": 0.44506011438837356,
+            "y": 0.5769233725331661
+          },
+          "strength": 0.03370849617272616,
+          "simulationTimeMs": 105757.51948300909
+        }
+      },
+      {
+        "contactIndex": 4446,
+        "simulationTimeMs": 105812.92318275226,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-74",
+          "contactGroup": "B",
+          "contacts": [
+            {
+              "legId": "FR",
+              "position": {
+                "x": 0.7524792741273985,
+                "y": 0.2781543002325042
+              }
+            },
+            {
+              "legId": "ML",
+              "position": {
+                "x": 0.7304269818783192,
+                "y": 0.3099693345175903
+              }
+            },
+            {
+              "legId": "RR",
+              "position": {
+                "x": 0.7679156974825809,
+                "y": 0.2961778080486752
+              }
+            }
+          ],
+          "position": {
+            "x": 0.7502739844960995,
+            "y": 0.29476714759958994
+          },
+          "strength": 0.03373209806289524,
+          "simulationTimeMs": 105812.92318275226
+        }
+      },
+      {
+        "contactIndex": 4455,
+        "simulationTimeMs": 105949.81078404529,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-67",
+          "contactGroup": "B",
+          "contacts": [
+            {
+              "legId": "FR",
+              "position": {
+                "x": 0.8480675360655009,
+                "y": 0.15506757100095278
+              }
+            },
+            {
+              "legId": "ML",
+              "position": {
+                "x": 0.81637816872379,
+                "y": 0.13283507232261937
+              }
+            },
+            {
+              "legId": "RR",
+              "position": {
+                "x": 0.8299567113508538,
+                "y": 0.1704014559671094
+              }
+            }
+          ],
+          "position": {
+            "x": 0.831467472046715,
+            "y": 0.15276803309689385
+          },
+          "strength": 0.03482884871959687,
+          "simulationTimeMs": 105949.81078404529
+        }
+      },
+      {
+        "contactIndex": 4459,
+        "simulationTimeMs": 106013.27390498531,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-74",
+          "contactGroup": "A",
+          "contacts": [
+            {
+              "legId": "FL",
+              "position": {
+                "x": 0.7118942359734388,
+                "y": 0.283035728442801
+              }
+            },
+            {
+              "legId": "MR",
+              "position": {
+                "x": 0.7496206766444038,
+                "y": 0.27436303138247636
+              }
+            },
+            {
+              "legId": "RL",
+              "position": {
+                "x": 0.7229032025184066,
+                "y": 0.30405792280047406
+              }
+            }
+          ],
+          "position": {
+            "x": 0.728139371712083,
+            "y": 0.2871522275419171
+          },
+          "strength": 0.03373209806289524,
+          "simulationTimeMs": 106013.27390498531
+        }
+      },
+      {
+        "contactIndex": 4475,
+        "simulationTimeMs": 106233.07505265226,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-74",
+          "contactGroup": "B",
+          "contacts": [
+            {
+              "legId": "FR",
+              "position": {
+                "x": 0.736387836174077,
+                "y": 0.24820208686541914
+              }
+            },
+            {
+              "legId": "ML",
+              "position": {
+                "x": 0.7087850263520754,
+                "y": 0.2753421843215892
+              }
+            },
+            {
+              "legId": "RR",
+              "position": {
+                "x": 0.7481890678590983,
+                "y": 0.26878996996972226
+              }
+            }
+          ],
+          "position": {
+            "x": 0.7311206434617502,
+            "y": 0.26411141371891017
+          },
+          "strength": 0.03373209806289524,
+          "simulationTimeMs": 106233.07505265226
+        }
+      },
+      {
+        "contactIndex": 4505,
+        "simulationTimeMs": 106645.17168302894,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-72",
+          "contactGroup": "A",
+          "contacts": [
+            {
+              "legId": "FL",
+              "position": {
+                "x": 0.7956633006237015,
+                "y": 0.1817014517197984
+              }
+            },
+            {
+              "legId": "MR",
+              "position": {
+                "x": 0.7730668682867382,
+                "y": 0.2131323480741985
+              }
+            },
+            {
+              "legId": "RL",
+              "position": {
+                "x": 0.7735119851265609,
+                "y": 0.17318974086086167
+              }
+            }
+          ],
+          "position": {
+            "x": 0.7807473846790002,
+            "y": 0.1893411802182862
+          },
+          "strength": 0.03487817638292909,
+          "simulationTimeMs": 106645.17168302894
+        }
+      },
+      {
+        "contactIndex": 4521,
+        "simulationTimeMs": 106833.90372486517,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-85",
+          "contactGroup": "B",
+          "contacts": [
+            {
+              "legId": "FR",
+              "position": {
+                "x": 0.5114666440136602,
+                "y": 0.6185207675601003
+              }
+            },
+            {
+              "legId": "ML",
+              "position": {
+                "x": 0.47818429501488013,
+                "y": 0.6382890564370722
+              }
+            },
+            {
+              "legId": "RR",
+              "position": {
+                "x": 0.5180134496908074,
+                "y": 0.6413301808674539
+              }
+            }
+          ],
+          "position": {
+            "x": 0.5025547962397826,
+            "y": 0.6327133349548755
+          },
+          "strength": 0.034681160266418015,
+          "simulationTimeMs": 106833.90372486517
+        }
+      },
+      {
+        "contactIndex": 4522,
+        "simulationTimeMs": 106882.66362840158,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-72",
+          "contactGroup": "B",
+          "contacts": [
+            {
+              "legId": "FR",
+              "position": {
+                "x": 0.8028356714870593,
+                "y": 0.22202386471000662
+              }
+            },
+            {
+              "legId": "ML",
+              "position": {
+                "x": 0.8012627087559248,
+                "y": 0.18334537213019603
+              }
+            },
+            {
+              "legId": "RR",
+              "position": {
+                "x": 0.7796557821326223,
+                "y": 0.2169422577283466
+              }
+            }
+          ],
+          "position": {
+            "x": 0.7945847207918688,
+            "y": 0.20743716485618308
+          },
+          "strength": 0.03487817638292909,
+          "simulationTimeMs": 106882.66362840158
+        }
+      },
+      {
+        "contactIndex": 4532,
+        "simulationTimeMs": 106985.94491583033,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-82",
+          "contactGroup": "B",
+          "contacts": [
+            {
+              "legId": "FR",
+              "position": {
+                "x": 0.5602667626595571,
+                "y": 0.5371268321709948
+              }
+            },
+            {
+              "legId": "ML",
+              "position": {
+                "x": 0.5225365722409538,
+                "y": 0.5457832015586732
+              }
+            },
+            {
+              "legId": "RR",
+              "position": {
+                "x": 0.559532881096241,
+                "y": 0.5608458418014794
+              }
+            }
+          ],
+          "position": {
+            "x": 0.5474454053322506,
+            "y": 0.5479186251770491
+          },
+          "strength": 0.03385938168112189,
+          "simulationTimeMs": 106985.94491583033
+        }
+      },
+      {
+        "contactIndex": 4535,
+        "simulationTimeMs": 107039.20908768653,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-85",
+          "contactGroup": "A",
+          "contacts": [
+            {
+              "legId": "FL",
+              "position": {
+                "x": 0.4721877741921603,
+                "y": 0.6080997449208762
+              }
+            },
+            {
+              "legId": "MR",
+              "position": {
+                "x": 0.5107801566943264,
+                "y": 0.6111210050563994
+              }
+            },
+            {
+              "legId": "RL",
+              "position": {
+                "x": 0.4763971902270004,
+                "y": 0.6314537770490897
+              }
+            }
+          ],
+          "position": {
+            "x": 0.48645504037116233,
+            "y": 0.6168915090087884
+          },
+          "strength": 0.034681160266418015,
+          "simulationTimeMs": 107039.20908768653
+        }
+      },
+      {
+        "contactIndex": 4541,
+        "simulationTimeMs": 107161.27775406795,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-72",
+          "contactGroup": "A",
+          "contacts": [
+            {
+              "legId": "FL",
+              "position": {
+                "x": 0.8332785804387273,
+                "y": 0.20013930668594387
+              }
+            },
+            {
+              "legId": "MR",
+              "position": {
+                "x": 0.8026123446284958,
+                "y": 0.22376306551537828
+              }
+            },
+            {
+              "legId": "RL",
+              "position": {
+                "x": 0.8145018684005474,
+                "y": 0.1856284457523097
+              }
+            }
+          ],
+          "position": {
+            "x": 0.8167975978225901,
+            "y": 0.20317693931787728
+          },
+          "strength": 0.03487817638292909,
+          "simulationTimeMs": 107161.27775406795
+        }
+      },
+      {
+        "contactIndex": 4552,
+        "simulationTimeMs": 107279.07615217108,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-82",
+          "contactGroup": "A",
+          "contacts": [
+            {
+              "legId": "FL",
+              "position": {
+                "x": 0.5234696217627602,
+                "y": 0.5161695333150202
+              }
+            },
+            {
+              "legId": "MR",
+              "position": {
+                "x": 0.5602925481321097,
+                "y": 0.528109888988009
+              }
+            },
+            {
+              "legId": "RL",
+              "position": {
+                "x": 0.5221151127423896,
+                "y": 0.539861204959582
+              }
+            }
+          ],
+          "position": {
+            "x": 0.5352924275457532,
+            "y": 0.5280468757542037
+          },
+          "strength": 0.03385938168112189,
+          "simulationTimeMs": 107279.07615217108
+        }
+      },
+      {
+        "contactIndex": 4560,
+        "simulationTimeMs": 107418.49459885673,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-85",
+          "contactGroup": "A",
+          "contacts": [
+            {
+              "legId": "FL",
+              "position": {
+                "x": 0.4657234847481815,
+                "y": 0.5690936266447002
+              }
+            },
+            {
+              "legId": "MR",
+              "position": {
+                "x": 0.5039809949061013,
+                "y": 0.5749981093922972
+              }
+            },
+            {
+              "legId": "RL",
+              "position": {
+                "x": 0.4681711565579009,
+                "y": 0.5926974166520678
+              }
+            }
+          ],
+          "position": {
+            "x": 0.47929187873739454,
+            "y": 0.5789297175630217
+          },
+          "strength": 0.034681160266418015,
+          "simulationTimeMs": 107418.49459885673
+        }
+      },
+      {
+        "contactIndex": 4573,
+        "simulationTimeMs": 107614.01578993062,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-82",
+          "contactGroup": "B",
+          "contacts": [
+            {
+              "legId": "FR",
+              "position": {
+                "x": 0.560918180876272,
+                "y": 0.4971091829625684
+              }
+            },
+            {
+              "legId": "ML",
+              "position": {
+                "x": 0.5239426761098599,
+                "y": 0.508568329844821
+              }
+            },
+            {
+              "legId": "RR",
+              "position": {
+                "x": 0.561963620835926,
+                "y": 0.5208165036734956
+              }
+            }
+          ],
+          "position": {
+            "x": 0.5489414926073526,
+            "y": 0.5088313388269617
+          },
+          "strength": 0.03385938168112189,
+          "simulationTimeMs": 107614.01578993062
+        }
+      },
+      {
+        "contactIndex": 4574,
+        "simulationTimeMs": 107612.7463106804,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-85",
+          "contactGroup": "B",
+          "contacts": [
+            {
+              "legId": "FR",
+              "position": {
+                "x": 0.49691273856568435,
+                "y": 0.543619026919429
+              }
+            },
+            {
+              "legId": "ML",
+              "position": {
+                "x": 0.46363038956690433,
+                "y": 0.5633873157964009
+              }
+            },
+            {
+              "legId": "RR",
+              "position": {
+                "x": 0.5034595442428316,
+                "y": 0.5664284402267825
+              }
+            }
+          ],
+          "position": {
+            "x": 0.48800089079180675,
+            "y": 0.5578115943142041
+          },
+          "strength": 0.034681160266418015,
+          "simulationTimeMs": 107612.7463106804
+        }
+      },
+      {
+        "contactIndex": 4590,
+        "simulationTimeMs": 107824.75160933779,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-85",
+          "contactGroup": "A",
+          "contacts": [
+            {
+              "legId": "FL",
+              "position": {
+                "x": 0.45847381853248953,
+                "y": 0.5316377530023745
+              }
+            },
+            {
+              "legId": "MR",
+              "position": {
+                "x": 0.49673132869040926,
+                "y": 0.5375422357499715
+              }
+            },
+            {
+              "legId": "RL",
+              "position": {
+                "x": 0.460921490342209,
+                "y": 0.555241543009742
+              }
+            }
+          ],
+          "position": {
+            "x": 0.4720422125217026,
+            "y": 0.541473843920696
+          },
+          "strength": 0.034681160266418015,
+          "simulationTimeMs": 107824.75160933779
+        }
+      },
+      {
+        "contactIndex": 4596,
+        "simulationTimeMs": 107957.96166009529,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-82",
+          "contactGroup": "A",
+          "contacts": [
+            {
+              "legId": "FL",
+              "position": {
+                "x": 0.5263455184440944,
+                "y": 0.476249656882471
+              }
+            },
+            {
+              "legId": "MR",
+              "position": {
+                "x": 0.5621702415144693,
+                "y": 0.4909155771376392
+              }
+            },
+            {
+              "legId": "RL",
+              "position": {
+                "x": 0.5232196071738197,
+                "y": 0.49977323396441947
+              }
+            }
+          ],
+          "position": {
+            "x": 0.537245122377461,
+            "y": 0.4889794893281766
+          },
+          "strength": 0.03385938168112189,
+          "simulationTimeMs": 107957.96166009529
+        }
+      },
+      {
+        "contactIndex": 4607,
+        "simulationTimeMs": 108068.71814157451,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-85",
+          "contactGroup": "B",
+          "contacts": [
+            {
+              "legId": "FR",
+              "position": {
+                "x": 0.4896662287176201,
+                "y": 0.5061625228385688
+              }
+            },
+            {
+              "legId": "ML",
+              "position": {
+                "x": 0.4563838797188401,
+                "y": 0.5259308117155407
+              }
+            },
+            {
+              "legId": "RR",
+              "position": {
+                "x": 0.4962130343947673,
+                "y": 0.5289719361459223
+              }
+            }
+          ],
+          "position": {
+            "x": 0.4807543809437425,
+            "y": 0.5203550902333439
+          },
+          "strength": 0.034681160266418015,
+          "simulationTimeMs": 108068.71814157451
+        }
+      },
+      {
+        "contactIndex": 4616,
+        "simulationTimeMs": 108266.66537591601,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-82",
+          "contactGroup": "B",
+          "contacts": [
+            {
+              "legId": "FR",
+              "position": {
+                "x": 0.5636798810958606,
+                "y": 0.45993104637842086
+              }
+            },
+            {
+              "legId": "ML",
+              "position": {
+                "x": 0.5259496906772574,
+                "y": 0.4685874157660993
+              }
+            },
+            {
+              "legId": "RR",
+              "position": {
+                "x": 0.5629459995325445,
+                "y": 0.4836500560089055
+              }
+            }
+          ],
+          "position": {
+            "x": 0.5508585237685542,
+            "y": 0.47072283938447523
+          },
+          "strength": 0.03385938168112189,
+          "simulationTimeMs": 108266.66537591601
+        }
+      },
+      {
+        "contactIndex": 4639,
+        "simulationTimeMs": 108533.97975922786,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-82",
+          "contactGroup": "A",
+          "contacts": [
+            {
+              "legId": "FL",
+              "position": {
+                "x": 0.5268812806837525,
+                "y": 0.438973449392331
+              }
+            },
+            {
+              "legId": "MR",
+              "position": {
+                "x": 0.563704207053102,
+                "y": 0.45091380506531986
+              }
+            },
+            {
+              "legId": "RL",
+              "position": {
+                "x": 0.5255267716633819,
+                "y": 0.46266512103689283
+              }
+            }
+          ],
+          "position": {
+            "x": 0.5387040864667455,
+            "y": 0.45085079183151455
+          },
+          "strength": 0.03385938168112189,
+          "simulationTimeMs": 108533.97975922786
+        }
+      },
+      {
+        "contactIndex": 4652,
+        "simulationTimeMs": 108773.28772266465,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-82",
+          "contactGroup": "B",
+          "contacts": [
+            {
+              "legId": "FR",
+              "position": {
+                "x": 0.5643261720157955,
+                "y": 0.4199126838172015
+              }
+            },
+            {
+              "legId": "ML",
+              "position": {
+                "x": 0.5273506672493834,
+                "y": 0.4313718306994541
+              }
+            },
+            {
+              "legId": "RR",
+              "position": {
+                "x": 0.5653716119754495,
+                "y": 0.4436200045281287
+              }
+            }
+          ],
+          "position": {
+            "x": 0.5523494837468761,
+            "y": 0.4316348396815948
+          },
+          "strength": 0.03385938168112189,
+          "simulationTimeMs": 108773.28772266465
+        }
+      },
+      {
+        "contactIndex": 4745,
+        "simulationTimeMs": 110341.11081864897,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-87",
+          "contactGroup": "B",
+          "contacts": [
+            {
+              "legId": "FR",
+              "position": {
+                "x": 0.4549145456198542,
+                "y": 0.6285941766835359
+              }
+            },
+            {
+              "legId": "ML",
+              "position": {
+                "x": 0.4332529994678268,
+                "y": 0.6606765303737437
+              }
+            },
+            {
+              "legId": "RR",
+              "position": {
+                "x": 0.4705702414153991,
+                "y": 0.6464275495882155
+              }
+            }
+          ],
+          "position": {
+            "x": 0.4529125955010267,
+            "y": 0.6452327522151651
+          },
+          "strength": 0.03494377935761586,
+          "simulationTimeMs": 110341.11081864897
+        }
+      },
+      {
+        "contactIndex": 4756,
+        "simulationTimeMs": 110516.72959105059,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-87",
+          "contactGroup": "A",
+          "contacts": [
+            {
+              "legId": "FL",
+              "position": {
+                "x": 0.41540568325210736,
+                "y": 0.6346907191028436
+              }
+            },
+            {
+              "legId": "MR",
+              "position": {
+                "x": 0.4525237070768656,
+                "y": 0.623701983627609
+              }
+            },
+            {
+              "legId": "RL",
+              "position": {
+                "x": 0.42769339190251515,
+                "y": 0.6549920051735016
+              }
+            }
+          ],
+          "position": {
+            "x": 0.4318742607438294,
+            "y": 0.6377949026346514
+          },
+          "strength": 0.03494377935761586,
+          "simulationTimeMs": 110516.72959105059
+        }
+      },
+      {
+        "contactIndex": 4769,
+        "simulationTimeMs": 110685.98582786207,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-87",
+          "contactGroup": "B",
+          "contacts": [
+            {
+              "legId": "FR",
+              "position": {
+                "x": 0.4348209856021639,
+                "y": 0.599311451228355
+              }
+            },
+            {
+              "legId": "ML",
+              "position": {
+                "x": 0.41081641262571283,
+                "y": 0.6296805222747046
+              }
+            },
+            {
+              "legId": "RR",
+              "position": {
+                "x": 0.4490964209778143,
+                "y": 0.618267767981238
+              }
+            }
+          ],
+          "position": {
+            "x": 0.4315779397352303,
+            "y": 0.6157532471614325
+          },
+          "strength": 0.03494377935761586,
+          "simulationTimeMs": 110685.98582786207
+        }
+      },
+      {
+        "contactIndex": 4866,
+        "simulationTimeMs": 112209.88660557546,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-84",
+          "contactGroup": "A",
+          "contacts": [
+            {
+              "legId": "FL",
+              "position": {
+                "x": 0.5884600350707297,
+                "y": 0.4387993400961693
+              }
+            },
+            {
+              "legId": "MR",
+              "position": {
+                "x": 0.6216579727802747,
+                "y": 0.4587090596279252
+              }
+            },
+            {
+              "legId": "RL",
+              "position": {
+                "x": 0.5818162392625008,
+                "y": 0.46158069162013643
+              }
+            }
+          ],
+          "position": {
+            "x": 0.5973114157045017,
+            "y": 0.4530296971147436
+          },
+          "strength": 0.03487657954739407,
+          "simulationTimeMs": 112209.88660557546
+        }
+      },
+      {
+        "contactIndex": 4890,
+        "simulationTimeMs": 112635.78785940901,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-84",
+          "contactGroup": "B",
+          "contacts": [
+            {
+              "legId": "FR",
+              "position": {
+                "x": 0.6222021605464066,
+                "y": 0.4229305512469402
+              }
+            },
+            {
+              "legId": "ML",
+              "position": {
+                "x": 0.5858516764212378,
+                "y": 0.4362400329748607
+              }
+            },
+            {
+              "legId": "RR",
+              "position": {
+                "x": 0.6244419869547969,
+                "y": 0.4465549703437197
+              }
+            }
+          ],
+          "position": {
+            "x": 0.6108319413074804,
+            "y": 0.4352418515218402
+          },
+          "strength": 0.03487657954739407,
+          "simulationTimeMs": 112635.78785940901
+        }
+      },
+      {
+        "contactIndex": 4910,
+        "simulationTimeMs": 112961.61552028875,
+        "payload": {
+          "type": "FOOT_CONTACT",
+          "antId": "ant-84",
+          "contactGroup": "A",
+          "contacts": [
+            {
+              "legId": "FL",
+              "position": {
+                "x": 0.5865387083954278,
+                "y": 0.40412280538182194
+              }
+            },
+            {
+              "legId": "MR",
+              "position": {
+                "x": 0.623089307998874,
+                "y": 0.4168724590488261
+              }
+            },
+            {
+              "legId": "RL",
+              "position": {
+                "x": 0.5846619619521238,
+                "y": 0.427778836806969
+              }
+            }
+          ],
+          "position": {
+            "x": 0.5980966594488085,
+            "y": 0.41625803374587234
+          },
+          "strength": 0.03487657954739407,
+          "simulationTimeMs": 112961.61552028875
+        }
+      }
+    ],
+    "acceptedP1ToParentGroup": [
+      {
+        "bornRecordingIndex": 0,
+        "contactIndex": 4295,
+        "contactLegId": "FR",
+        "simulationTimeMs": 103110.93467720706,
+        "requestedFrame": 4525
+      },
+      {
+        "bornRecordingIndex": 1,
+        "contactIndex": 4295,
+        "contactLegId": "RR",
+        "simulationTimeMs": 103110.93467720706,
+        "requestedFrame": 4525
+      },
+      {
+        "bornRecordingIndex": 2,
+        "contactIndex": 4302,
+        "contactLegId": "FR",
+        "simulationTimeMs": 103261.73853206664,
+        "requestedFrame": 11763
+      },
+      {
+        "bornRecordingIndex": 3,
+        "contactIndex": 4302,
+        "contactLegId": "RR",
+        "simulationTimeMs": 103261.73853206664,
+        "requestedFrame": 11763
+      },
+      {
+        "bornRecordingIndex": 4,
+        "contactIndex": 4309,
+        "contactLegId": "MR",
+        "simulationTimeMs": 103314.03562295363,
+        "requestedFrame": 14274
+      },
+      {
+        "bornRecordingIndex": 5,
+        "contactIndex": 4317,
+        "contactLegId": "FR",
+        "simulationTimeMs": 103497.06257038385,
+        "requestedFrame": 23059
+      },
+      {
+        "bornRecordingIndex": 6,
+        "contactIndex": 4317,
+        "contactLegId": "RR",
+        "simulationTimeMs": 103497.06257038385,
+        "requestedFrame": 23059
+      },
+      {
+        "bornRecordingIndex": 7,
+        "contactIndex": 4318,
+        "contactLegId": "MR",
+        "simulationTimeMs": 103511.61078126125,
+        "requestedFrame": 23757
+      },
+      {
+        "bornRecordingIndex": 8,
+        "contactIndex": 4363,
+        "contactLegId": "FL",
+        "simulationTimeMs": 104245.8298509607,
+        "requestedFrame": 59000
+      },
+      {
+        "bornRecordingIndex": 9,
+        "contactIndex": 4377,
+        "contactLegId": "FL",
+        "simulationTimeMs": 104525.40093894658,
+        "requestedFrame": 72419
+      },
+      {
+        "bornRecordingIndex": 10,
+        "contactIndex": 4380,
+        "contactLegId": "ML",
+        "simulationTimeMs": 104553.0729589854,
+        "requestedFrame": 73748
+      },
+      {
+        "bornRecordingIndex": 11,
+        "contactIndex": 4388,
+        "contactLegId": "RR",
+        "simulationTimeMs": 104760.31838956749,
+        "requestedFrame": 83695
+      },
+      {
+        "bornRecordingIndex": 12,
+        "contactIndex": 4391,
+        "contactLegId": "ML",
+        "simulationTimeMs": 104782.27015293553,
+        "requestedFrame": 84749
+      },
+      {
+        "bornRecordingIndex": 13,
+        "contactIndex": 4392,
+        "contactLegId": "RL",
+        "simulationTimeMs": 104816.54808859361,
+        "requestedFrame": 86394
+      },
+      {
+        "bornRecordingIndex": 14,
+        "contactIndex": 4401,
+        "contactLegId": "FL",
+        "simulationTimeMs": 105021.47624248479,
+        "requestedFrame": 96231
+      },
+      {
+        "bornRecordingIndex": 15,
+        "contactIndex": 4401,
+        "contactLegId": "RL",
+        "simulationTimeMs": 105021.47624248479,
+        "requestedFrame": 96231
+      },
+      {
+        "bornRecordingIndex": 16,
+        "contactIndex": 4403,
+        "contactLegId": "RR",
+        "simulationTimeMs": 105034.3336495877,
+        "requestedFrame": 96848
+      },
+      {
+        "bornRecordingIndex": 17,
+        "contactIndex": 4415,
+        "contactLegId": "FR",
+        "simulationTimeMs": 105255.69472669472,
+        "requestedFrame": 107473
+      },
+      {
+        "bornRecordingIndex": 18,
+        "contactIndex": 4415,
+        "contactLegId": "ML",
+        "simulationTimeMs": 105255.69472669472,
+        "requestedFrame": 107473
+      },
+      {
+        "bornRecordingIndex": 19,
+        "contactIndex": 4416,
+        "contactLegId": "FR",
+        "simulationTimeMs": 105271.38128254801,
+        "requestedFrame": 108226
+      },
+      {
+        "bornRecordingIndex": 20,
+        "contactIndex": 4416,
+        "contactLegId": "RR",
+        "simulationTimeMs": 105271.38128254801,
+        "requestedFrame": 108226
+      },
+      {
+        "bornRecordingIndex": 21,
+        "contactIndex": 4426,
+        "contactLegId": "MR",
+        "simulationTimeMs": 105496.73777658795,
+        "requestedFrame": 119043
+      },
+      {
+        "bornRecordingIndex": 22,
+        "contactIndex": 4432,
+        "contactLegId": "MR",
+        "simulationTimeMs": 105571.99731646408,
+        "requestedFrame": 122656
+      },
+      {
+        "bornRecordingIndex": 23,
+        "contactIndex": 4444,
+        "contactLegId": "RR",
+        "simulationTimeMs": 105757.51948300909,
+        "requestedFrame": 131561
+      },
+      {
+        "bornRecordingIndex": 24,
+        "contactIndex": 4446,
+        "contactLegId": "FR",
+        "simulationTimeMs": 105812.92318275226,
+        "requestedFrame": 134220
+      },
+      {
+        "bornRecordingIndex": 25,
+        "contactIndex": 4446,
+        "contactLegId": "ML",
+        "simulationTimeMs": 105812.92318275226,
+        "requestedFrame": 134220
+      },
+      {
+        "bornRecordingIndex": 26,
+        "contactIndex": 4455,
+        "contactLegId": "RR",
+        "simulationTimeMs": 105949.81078404529,
+        "requestedFrame": 140791
+      },
+      {
+        "bornRecordingIndex": 27,
+        "contactIndex": 4459,
+        "contactLegId": "FL",
+        "simulationTimeMs": 106013.27390498531,
+        "requestedFrame": 143837
+      },
+      {
+        "bornRecordingIndex": 28,
+        "contactIndex": 4459,
+        "contactLegId": "MR",
+        "simulationTimeMs": 106013.27390498531,
+        "requestedFrame": 143837
+      },
+      {
+        "bornRecordingIndex": 29,
+        "contactIndex": 4459,
+        "contactLegId": "RL",
+        "simulationTimeMs": 106013.27390498531,
+        "requestedFrame": 143837
+      },
+      {
+        "bornRecordingIndex": 30,
+        "contactIndex": 4475,
+        "contactLegId": "RR",
+        "simulationTimeMs": 106233.07505265226,
+        "requestedFrame": 154388
+      },
+      {
+        "bornRecordingIndex": 31,
+        "contactIndex": 4505,
+        "contactLegId": "FL",
+        "simulationTimeMs": 106645.17168302894,
+        "requestedFrame": 174168
+      },
+      {
+        "bornRecordingIndex": 32,
+        "contactIndex": 4505,
+        "contactLegId": "MR",
+        "simulationTimeMs": 106645.17168302894,
+        "requestedFrame": 174168
+      },
+      {
+        "bornRecordingIndex": 33,
+        "contactIndex": 4521,
+        "contactLegId": "ML",
+        "simulationTimeMs": 106833.90372486517,
+        "requestedFrame": 183227
+      },
+      {
+        "bornRecordingIndex": 34,
+        "contactIndex": 4522,
+        "contactLegId": "ML",
+        "simulationTimeMs": 106882.66362840158,
+        "requestedFrame": 185568
+      },
+      {
+        "bornRecordingIndex": 35,
+        "contactIndex": 4522,
+        "contactLegId": "RR",
+        "simulationTimeMs": 106882.66362840158,
+        "requestedFrame": 185568
+      },
+      {
+        "bornRecordingIndex": 36,
+        "contactIndex": 4532,
+        "contactLegId": "ML",
+        "simulationTimeMs": 106985.94491583033,
+        "requestedFrame": 190525
+      },
+      {
+        "bornRecordingIndex": 37,
+        "contactIndex": 4535,
+        "contactLegId": "RL",
+        "simulationTimeMs": 107039.20908768653,
+        "requestedFrame": 193082
+      },
+      {
+        "bornRecordingIndex": 38,
+        "contactIndex": 4541,
+        "contactLegId": "RL",
+        "simulationTimeMs": 107161.27775406795,
+        "requestedFrame": 198941
+      },
+      {
+        "bornRecordingIndex": 39,
+        "contactIndex": 4552,
+        "contactLegId": "FL",
+        "simulationTimeMs": 107279.07615217108,
+        "requestedFrame": 204596
+      },
+      {
+        "bornRecordingIndex": 40,
+        "contactIndex": 4552,
+        "contactLegId": "RL",
+        "simulationTimeMs": 107279.07615217108,
+        "requestedFrame": 204596
+      },
+      {
+        "bornRecordingIndex": 41,
+        "contactIndex": 4560,
+        "contactLegId": "FL",
+        "simulationTimeMs": 107418.49459885673,
+        "requestedFrame": 211288
+      },
+      {
+        "bornRecordingIndex": 42,
+        "contactIndex": 4560,
+        "contactLegId": "RL",
+        "simulationTimeMs": 107418.49459885673,
+        "requestedFrame": 211288
+      },
+      {
+        "bornRecordingIndex": 43,
+        "contactIndex": 4573,
+        "contactLegId": "ML",
+        "simulationTimeMs": 107614.01578993062,
+        "requestedFrame": 220673
+      },
+      {
+        "bornRecordingIndex": 44,
+        "contactIndex": 4574,
+        "contactLegId": "FR",
+        "simulationTimeMs": 107612.7463106804,
+        "requestedFrame": 220612
+      },
+      {
+        "bornRecordingIndex": 45,
+        "contactIndex": 4574,
+        "contactLegId": "ML",
+        "simulationTimeMs": 107612.7463106804,
+        "requestedFrame": 220612
+      },
+      {
+        "bornRecordingIndex": 46,
+        "contactIndex": 4574,
+        "contactLegId": "RR",
+        "simulationTimeMs": 107612.7463106804,
+        "requestedFrame": 220612
+      },
+      {
+        "bornRecordingIndex": 47,
+        "contactIndex": 4590,
+        "contactLegId": "MR",
+        "simulationTimeMs": 107824.75160933779,
+        "requestedFrame": 230788
+      },
+      {
+        "bornRecordingIndex": 48,
+        "contactIndex": 4590,
+        "contactLegId": "RL",
+        "simulationTimeMs": 107824.75160933779,
+        "requestedFrame": 230788
+      },
+      {
+        "bornRecordingIndex": 49,
+        "contactIndex": 4596,
+        "contactLegId": "FL",
+        "simulationTimeMs": 107957.96166009529,
+        "requestedFrame": 237182
+      },
+      {
+        "bornRecordingIndex": 50,
+        "contactIndex": 4596,
+        "contactLegId": "RL",
+        "simulationTimeMs": 107957.96166009529,
+        "requestedFrame": 237182
+      },
+      {
+        "bornRecordingIndex": 51,
+        "contactIndex": 4607,
+        "contactLegId": "RR",
+        "simulationTimeMs": 108068.71814157451,
+        "requestedFrame": 242498
+      },
+      {
+        "bornRecordingIndex": 52,
+        "contactIndex": 4616,
+        "contactLegId": "FR",
+        "simulationTimeMs": 108266.66537591601,
+        "requestedFrame": 252000
+      },
+      {
+        "bornRecordingIndex": 53,
+        "contactIndex": 4616,
+        "contactLegId": "ML",
+        "simulationTimeMs": 108266.66537591601,
+        "requestedFrame": 252000
+      },
+      {
+        "bornRecordingIndex": 54,
+        "contactIndex": 4639,
+        "contactLegId": "MR",
+        "simulationTimeMs": 108533.97975922786,
+        "requestedFrame": 264831
+      },
+      {
+        "bornRecordingIndex": 55,
+        "contactIndex": 4652,
+        "contactLegId": "RR",
+        "simulationTimeMs": 108773.28772266465,
+        "requestedFrame": 276318
+      },
+      {
+        "bornRecordingIndex": 56,
+        "contactIndex": 4745,
+        "contactLegId": "FR",
+        "simulationTimeMs": 110341.11081864897,
+        "requestedFrame": 351573
+      },
+      {
+        "bornRecordingIndex": 57,
+        "contactIndex": 4745,
+        "contactLegId": "RR",
+        "simulationTimeMs": 110341.11081864897,
+        "requestedFrame": 351573
+      },
+      {
+        "bornRecordingIndex": 58,
+        "contactIndex": 4756,
+        "contactLegId": "MR",
+        "simulationTimeMs": 110516.72959105059,
+        "requestedFrame": 360003
+      },
+      {
+        "bornRecordingIndex": 59,
+        "contactIndex": 4769,
+        "contactLegId": "RR",
+        "simulationTimeMs": 110685.98582786207,
+        "requestedFrame": 368127
+      },
+      {
+        "bornRecordingIndex": 60,
+        "contactIndex": 4866,
+        "contactLegId": "FL",
+        "simulationTimeMs": 112209.88660557546,
+        "requestedFrame": 441275
+      },
+      {
+        "bornRecordingIndex": 61,
+        "contactIndex": 4890,
+        "contactLegId": "ML",
+        "simulationTimeMs": 112635.78785940901,
+        "requestedFrame": 461718
+      },
+      {
+        "bornRecordingIndex": 62,
+        "contactIndex": 4910,
+        "contactLegId": "RL",
+        "simulationTimeMs": 112961.61552028875,
+        "requestedFrame": 477358
+      }
+    ]
+  },
+  "scheduleHashes": {
+    "p1AcceptedScheduleSha256": "d3a0468479ec1dc79751b9cbcd5b4fda83712d36e41d293d518cefde429a4933",
+    "matchedSourceContactGroupsSha256": "cf79576510c37832f572aa380ae2ab7bf14afd4cb6fb0ced581ca631decfb41a",
+    "p1ToParentMappingSha256": "351cc4e47110cec3f795bbd4c4129dddb26e48086a0d950f67557e0db1b94b83",
+    "matchedSubstrateScheduleSha256": "337dd257f15a19acf6869ce7870ed6be85bf69cb3e670f43f642d2bc07f69d35",
+    "allEventsSubstrateScheduleSha256": "3e08b89656ee324d6572deff23c3bb27e3be410910bc333fc47a4b8062168e88",
+    "priorP1ScheduleSha256": "d3a0468479ec1dc79751b9cbcd5b4fda83712d36e41d293d518cefde429a4933",
+    "schedules": {
+      "bornP1": [
+        {
+          "frame": 4525,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4604478148183748,
+              "y": 0.6298791679411511
+            },
+            "strength": 0.019241860433975615,
+            "footprintRadius": 0.012560297689219844,
+            "hardness": 0.2879404621560313
+          }
+        },
+        {
+          "frame": 4525,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.47737131336327343,
+              "y": 0.6465142272136879
+            },
+            "strength": 0.019316546991653628,
+            "footprintRadius": 0.012370340075094084,
+            "hardness": 0.32593198498118303
+          }
+        },
+        {
+          "frame": 11763,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7776456587230051,
+              "y": 0.21174880844608976
+            },
+            "strength": 0.019144807098538143,
+            "footprintRadius": 0.01389610292212212,
+            "hardness": 0.020779415575576013
+          }
+        },
+        {
+          "frame": 11763,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7711589800360279,
+              "y": 0.23457539381517017
+            },
+            "strength": 0.019344567240639637,
+            "footprintRadius": 0.013399395841402153,
+            "hardness": 0.12012083171956946
+          }
+        },
+        {
+          "frame": 14274,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4564070009364829,
+              "y": 0.6240055852261194
+            },
+            "strength": 0.01914409975444427,
+            "footprintRadius": 0.012808941970285093,
+            "hardness": 0.2382116059429813
+          }
+        },
+        {
+          "frame": 23059,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.437834353589117,
+              "y": 0.6016256408623182
+            },
+            "strength": 0.019109576464980217,
+            "footprintRadius": 0.012896748423042448,
+            "hardness": 0.2206503153915104
+          }
+        },
+        {
+          "frame": 23059,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.45346381697967214,
+              "y": 0.6194820087495256
+            },
+            "strength": 0.01914213349196507,
+            "footprintRadius": 0.012813942957623448,
+            "hardness": 0.2372114084753103
+          }
+        },
+        {
+          "frame": 23757,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7803289295427316,
+              "y": 0.2074561033091609
+            },
+            "strength": 0.01916749117037452,
+            "footprintRadius": 0.013839698581485625,
+            "hardness": 0.0320602837028751
+          }
+        },
+        {
+          "frame": 59000,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5562990938027531,
+              "y": 0.4783812895717125
+            },
+            "strength": 0.019823586844004218,
+            "footprintRadius": 0.01320633053376426,
+            "hardness": 0.15873389324714793
+          }
+        },
+        {
+          "frame": 72419,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.462419543906853,
+              "y": 0.6551689224922681
+            },
+            "strength": 0.018957145271174966,
+            "footprintRadius": 0.012796049209833932,
+            "hardness": 0.2407901580332136
+          }
+        },
+        {
+          "frame": 73748,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5542599671574235,
+              "y": 0.4730404389369887
+            },
+            "strength": 0.01988774922134881,
+            "footprintRadius": 0.013050019939317783,
+            "hardness": 0.18999601213644352
+          }
+        },
+        {
+          "frame": 83695,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7840024900157,
+              "y": 0.20085291329622518
+            },
+            "strength": 0.019154358321923953,
+            "footprintRadius": 0.013872353638429386,
+            "hardness": 0.02552927231412267
+          }
+        },
+        {
+          "frame": 84749,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4591922379988253,
+              "y": 0.651552940163594
+            },
+            "strength": 0.018987149858825454,
+            "footprintRadius": 0.012718962605310698,
+            "hardness": 0.2562074789378605
+          }
+        },
+        {
+          "frame": 86394,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5515953587666891,
+              "y": 0.46526237296311457
+            },
+            "strength": 0.019923223225522414,
+            "footprintRadius": 0.012963599159582758,
+            "hardness": 0.20728016808344837
+          }
+        },
+        {
+          "frame": 96231,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.44453293427727864,
+              "y": 0.6243368411143887
+            },
+            "strength": 0.01897417366661321,
+            "footprintRadius": 0.012752300527129013,
+            "hardness": 0.2495398945741973
+          }
+        },
+        {
+          "frame": 96231,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4545875384991427,
+              "y": 0.6458318389962605
+            },
+            "strength": 0.019043070619745778,
+            "footprintRadius": 0.012575293189422777,
+            "hardness": 0.2849413621154446
+          }
+        },
+        {
+          "frame": 96848,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5864898317594172,
+              "y": 0.4408148740859162
+            },
+            "strength": 0.019870581157520554,
+            "footprintRadius": 0.013091844297665323,
+            "hardness": 0.1816311404669355
+          }
+        },
+        {
+          "frame": 107473,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4679194943105969,
+              "y": 0.5917544277189507
+            },
+            "strength": 0.018862948867208237,
+            "footprintRadius": 0.013038054899919656,
+            "hardness": 0.19238902001606867
+          }
+        },
+        {
+          "frame": 107473,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4408156787657901,
+              "y": 0.6193928644134002
+            },
+            "strength": 0.018988496872971387,
+            "footprintRadius": 0.012715501909634275,
+            "hardness": 0.25689961807314515
+          }
+        },
+        {
+          "frame": 108226,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.8147650101315984,
+              "y": 0.16746904082698177
+            },
+            "strength": 0.019232895345092815,
+            "footprintRadius": 0.013677069959231647,
+            "hardness": 0.0645860081536705
+          }
+        },
+        {
+          "frame": 108226,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7956274521098592,
+              "y": 0.18150057221042537
+            },
+            "strength": 0.019165333316279745,
+            "footprintRadius": 0.013845064123363785,
+            "hardness": 0.03098717532724314
+          }
+        },
+        {
+          "frame": 119043,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4647346777279054,
+              "y": 0.5865277660960814
+            },
+            "strength": 0.018875643513937123,
+            "footprintRadius": 0.013005440313665356,
+            "hardness": 0.19891193726692893
+          }
+        },
+        {
+          "frame": 122656,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.8101401310046,
+              "y": 0.17052798557231705
+            },
+            "strength": 0.019272658817427627,
+            "footprintRadius": 0.013578197391086002,
+            "hardness": 0.0843605217827996
+          }
+        },
+        {
+          "frame": 131561,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.46221093606802566,
+              "y": 0.5812902152957092
+            },
+            "strength": 0.01897792774354312,
+            "footprintRadius": 0.012742655700577251,
+            "hardness": 0.25146885988454964
+          }
+        },
+        {
+          "frame": 134220,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7524792741273985,
+              "y": 0.2781543002325042
+            },
+            "strength": 0.01881390377161241,
+            "footprintRadius": 0.013197879627313794,
+            "hardness": 0.16042407453724125
+          }
+        },
+        {
+          "frame": 134220,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7304269818783192,
+              "y": 0.3099693345175903
+            },
+            "strength": 0.018954307347322525,
+            "footprintRadius": 0.012837412682386699,
+            "hardness": 0.2325174635226604
+          }
+        },
+        {
+          "frame": 140791,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.8299567113508538,
+              "y": 0.1704014559671094
+            },
+            "strength": 0.01920285405039442,
+            "footprintRadius": 0.013751768162955924,
+            "hardness": 0.0496463674088152
+          }
+        },
+        {
+          "frame": 143837,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7118942359734388,
+              "y": 0.283035728442801
+            },
+            "strength": 0.01879715705031706,
+            "footprintRadius": 0.013240874539888838,
+            "hardness": 0.15182509202223243
+          }
+        },
+        {
+          "frame": 143837,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7496206766444038,
+              "y": 0.27436303138247636
+            },
+            "strength": 0.01883204417190476,
+            "footprintRadius": 0.01315130663485213,
+            "hardness": 0.16973867302957377
+          }
+        },
+        {
+          "frame": 143837,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7229032025184066,
+              "y": 0.30405792280047406
+            },
+            "strength": 0.01887722054121272,
+            "footprintRadius": 0.013035322495951277,
+            "hardness": 0.1929355008097446
+          }
+        },
+        {
+          "frame": 154388,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7481890678590983,
+              "y": 0.26878996996972226
+            },
+            "strength": 0.01882584236097079,
+            "footprintRadius": 0.013167228934758508,
+            "hardness": 0.16655421304829848
+          }
+        },
+        {
+          "frame": 174168,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7956633006237015,
+              "y": 0.1817014517197984
+            },
+            "strength": 0.01921782068674304,
+            "footprintRadius": 0.013782135575644793,
+            "hardness": 0.043572884871041336
+          }
+        },
+        {
+          "frame": 174168,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7730668682867382,
+              "y": 0.2131323480741985
+            },
+            "strength": 0.019249680013959894,
+            "footprintRadius": 0.013703028840205552,
+            "hardness": 0.05939423195888975
+          }
+        },
+        {
+          "frame": 183227,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.47818429501488013,
+              "y": 0.6382890564370722
+            },
+            "strength": 0.019751037879057187,
+            "footprintRadius": 0.012179560825030921,
+            "hardness": 0.36408783499381575
+          }
+        },
+        {
+          "frame": 185568,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.8012627087559248,
+              "y": 0.18334537213019603
+            },
+            "strength": 0.019212699172687944,
+            "footprintRadius": 0.013794852299216738,
+            "hardness": 0.0410295401566526
+          }
+        },
+        {
+          "frame": 185568,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7796557821326223,
+              "y": 0.2169422577283466
+            },
+            "strength": 0.019282913204532872,
+            "footprintRadius": 0.01362051080093359,
+            "hardness": 0.07589783981328224
+          }
+        },
+        {
+          "frame": 190525,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5225365722409538,
+              "y": 0.5457832015586732
+            },
+            "strength": 0.019077467930113813,
+            "footprintRadius": 0.012705334985272328,
+            "hardness": 0.2589330029455343
+          }
+        },
+        {
+          "frame": 193082,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4763971902270004,
+              "y": 0.6314537770490897
+            },
+            "strength": 0.019678526686002264,
+            "footprintRadius": 0.012360628974890616,
+            "hardness": 0.32787420502187686
+          }
+        },
+        {
+          "frame": 198941,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.8145018684005474,
+              "y": 0.1856284457523097
+            },
+            "strength": 0.019229324746995083,
+            "footprintRadius": 0.013753570984665163,
+            "hardness": 0.049285803066967546
+          }
+        },
+        {
+          "frame": 204596,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5234696217627602,
+              "y": 0.5161695333150202
+            },
+            "strength": 0.01898940430111179,
+            "footprintRadius": 0.012930576369132921,
+            "hardness": 0.21388472617341558
+          }
+        },
+        {
+          "frame": 204596,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5221151127423896,
+              "y": 0.539861204959582
+            },
+            "strength": 0.019082249940631055,
+            "footprintRadius": 0.012693103980500598,
+            "hardness": 0.2613792038998805
+          }
+        },
+        {
+          "frame": 211288,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4657234847481815,
+              "y": 0.5690936266447002
+            },
+            "strength": 0.019546388914922563,
+            "footprintRadius": 0.012690591022513586,
+            "hardness": 0.2618817954972828
+          }
+        },
+        {
+          "frame": 211288,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4681711565579009,
+              "y": 0.5926974166520678
+            },
+            "strength": 0.01947626842897508,
+            "footprintRadius": 0.01286568932282919,
+            "hardness": 0.22686213543416187
+          }
+        },
+        {
+          "frame": 220612,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.49691273856568435,
+              "y": 0.543619026919429
+            },
+            "strength": 0.019460050821816007,
+            "footprintRadius": 0.012906186410240519,
+            "hardness": 0.21876271795189617
+          }
+        },
+        {
+          "frame": 220612,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.46363038956690433,
+              "y": 0.5633873157964009
+            },
+            "strength": 0.019475074557458703,
+            "footprintRadius": 0.012868670546796593,
+            "hardness": 0.22626589064068128
+          }
+        },
+        {
+          "frame": 220612,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5034595442428316,
+              "y": 0.5664284402267825
+            },
+            "strength": 0.01958963605116801,
+            "footprintRadius": 0.012582598330395517,
+            "hardness": 0.2834803339208966
+          }
+        },
+        {
+          "frame": 220673,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5239426761098599,
+              "y": 0.508568329844821
+            },
+            "strength": 0.019013389653662123,
+            "footprintRadius": 0.01286922874966681,
+            "hardness": 0.226154250066638
+          }
+        },
+        {
+          "frame": 230788,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.49673132869040926,
+              "y": 0.5375422357499715
+            },
+            "strength": 0.0194024810319257,
+            "footprintRadius": 0.013049944289597902,
+            "hardness": 0.19001114208041972
+          }
+        },
+        {
+          "frame": 230788,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.460921490342209,
+              "y": 0.555241543009742
+            },
+            "strength": 0.01941240348384761,
+            "footprintRadius": 0.013025166873369055,
+            "hardness": 0.194966625326189
+          }
+        },
+        {
+          "frame": 237182,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5263455184440944,
+              "y": 0.476249656882471
+            },
+            "strength": 0.019082328188331596,
+            "footprintRadius": 0.012692903845432878,
+            "hardness": 0.26141923091342417
+          }
+        },
+        {
+          "frame": 237182,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5232196071738197,
+              "y": 0.49977323396441947
+            },
+            "strength": 0.018955126703310322,
+            "footprintRadius": 0.013018248585821178,
+            "hardness": 0.19635028283576458
+          }
+        },
+        {
+          "frame": 242498,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4962130343947673,
+              "y": 0.5289719361459223
+            },
+            "strength": 0.019424310661874448,
+            "footprintRadius": 0.012995433385275205,
+            "hardness": 0.20091332294495898
+          }
+        },
+        {
+          "frame": 252000,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5636798810958606,
+              "y": 0.45993104637842086
+            },
+            "strength": 0.018948792304145548,
+            "footprintRadius": 0.013034450153369192,
+            "hardness": 0.1931099693261616
+          }
+        },
+        {
+          "frame": 252000,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5259496906772574,
+              "y": 0.4685874157660993
+            },
+            "strength": 0.01901892740418845,
+            "footprintRadius": 0.012855064779749148,
+            "hardness": 0.22898704405017026
+          }
+        },
+        {
+          "frame": 264831,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.563704207053102,
+              "y": 0.45091380506531986
+            },
+            "strength": 0.01887367283285741,
+            "footprintRadius": 0.013226584112184669,
+            "hardness": 0.15468317756306607
+          }
+        },
+        {
+          "frame": 276318,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5653716119754495,
+              "y": 0.4436200045281287
+            },
+            "strength": 0.018906132011189188,
+            "footprintRadius": 0.013143562888448144,
+            "hardness": 0.17128742231037108
+          }
+        },
+        {
+          "frame": 351573,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4549145456198542,
+              "y": 0.6285941766835359
+            },
+            "strength": 0.019727279070249872,
+            "footprintRadius": 0.012609109728687694,
+            "hardness": 0.2781780542624611
+          }
+        },
+        {
+          "frame": 351573,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4705702414153991,
+              "y": 0.6464275495882155
+            },
+            "strength": 0.019812579301057214,
+            "footprintRadius": 0.01239770681753769,
+            "hardness": 0.3204586364924621
+          }
+        },
+        {
+          "frame": 360003,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4525237070768656,
+              "y": 0.623701983627609
+            },
+            "strength": 0.01972838384503169,
+            "footprintRadius": 0.012606371721969182,
+            "hardness": 0.27872565560616347
+          }
+        },
+        {
+          "frame": 368127,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4490964209778143,
+              "y": 0.618267767981238
+            },
+            "strength": 0.019739226517039403,
+            "footprintRadius": 0.012579499902216993,
+            "hardness": 0.28410001955660147
+          }
+        },
+        {
+          "frame": 441275,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5884600350707297,
+              "y": 0.4387993400961693
+            },
+            "strength": 0.01951884605731894,
+            "footprintRadius": 0.013032470335213923,
+            "hardness": 0.19350593295721535
+          }
+        },
+        {
+          "frame": 461718,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5858516764212378,
+              "y": 0.4362400329748607
+            },
+            "strength": 0.019514070393688226,
+            "footprintRadius": 0.013044328854821647,
+            "hardness": 0.19113422903567082
+          }
+        },
+        {
+          "frame": 477358,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5846619619521238,
+              "y": 0.427778836806969
+            },
+            "strength": 0.019427807220988552,
+            "footprintRadius": 0.013258530189753133,
+            "hardness": 0.14829396204937342
+          }
+        }
+      ],
+      "matchedSubstrate": [
+        {
+          "frame": 4525,
+          "payload": {
+            "position": {
+              "x": -0.052467722536020146,
+              "y": 0.19076364436614066
+            },
+            "strength": 0.03404994138721377
+          },
+          "sourceContactIndex": 4295,
+          "simulationTimeMs": 103110.93467720706
+        },
+        {
+          "frame": 11763,
+          "payload": {
+            "position": {
+              "x": 0.3416400884710041,
+              "y": -0.3654798836426443
+            },
+            "strength": 0.03482884871959687
+          },
+          "sourceContactIndex": 4302,
+          "simulationTimeMs": 103261.73853206664
+        },
+        {
+          "frame": 14274,
+          "payload": {
+            "position": {
+              "x": -0.08057508806558927,
+              "y": 0.18345065634532087
+            },
+            "strength": 0.03404994138721377
+          },
+          "sourceContactIndex": 4309,
+          "simulationTimeMs": 103314.03562295363
+        },
+        {
+          "frame": 23059,
+          "payload": {
+            "position": {
+              "x": -0.08351877081104278,
+              "y": 0.15386693771833387
+            },
+            "strength": 0.03404994138721377
+          },
+          "sourceContactIndex": 4317,
+          "simulationTimeMs": 103497.06257038385
+        },
+        {
+          "frame": 23757,
+          "payload": {
+            "position": {
+              "x": 0.3347504335371161,
+              "y": -0.3932425977588664
+            },
+            "strength": 0.03482884871959687
+          },
+          "sourceContactIndex": 4318,
+          "simulationTimeMs": 103511.61078126125
+        },
+        {
+          "frame": 59000,
+          "payload": {
+            "position": {
+              "x": 0.09094065746510395,
+              "y": -0.015382273641873431
+            },
+            "strength": 0.035548613287787884
+          },
+          "sourceContactIndex": 4363,
+          "simulationTimeMs": 104245.8298509607
+        },
+        {
+          "frame": 72419,
+          "payload": {
+            "position": {
+              "x": -0.028020491933924255,
+              "y": 0.20818550900292715
+            },
+            "strength": 0.03370849617272616
+          },
+          "sourceContactIndex": 4377,
+          "simulationTimeMs": 104525.40093894658
+        },
+        {
+          "frame": 73748,
+          "payload": {
+            "position": {
+              "x": 0.10228269307132526,
+              "y": -0.042424488831517046
+            },
+            "strength": 0.035548613287787884
+          },
+          "sourceContactIndex": 4380,
+          "simulationTimeMs": 104553.0729589854
+        },
+        {
+          "frame": 83695,
+          "payload": {
+            "position": {
+              "x": 0.3583504771925923,
+              "y": -0.40935540980485835
+            },
+            "strength": 0.03482884871959687
+          },
+          "sourceContactIndex": 4388,
+          "simulationTimeMs": 104760.31838956749
+        },
+        {
+          "frame": 84749,
+          "payload": {
+            "position": {
+              "x": -0.02551998299772054,
+              "y": 0.1799282861024821
+            },
+            "strength": 0.03370849617272616
+          },
+          "sourceContactIndex": 4391,
+          "simulationTimeMs": 104782.27015293553
+        },
+        {
+          "frame": 86394,
+          "payload": {
+            "position": {
+              "x": 0.08154546011493127,
+              "y": -0.06315178574266907
+            },
+            "strength": 0.035548613287787884
+          },
+          "sourceContactIndex": 4392,
+          "simulationTimeMs": 104816.54808859361
+        },
+        {
+          "frame": 96231,
+          "payload": {
+            "position": {
+              "x": -0.05129233898310018,
+              "y": 0.1680706131734022
+            },
+            "strength": 0.03370849617272616
+          },
+          "sourceContactIndex": 4401,
+          "simulationTimeMs": 105021.47624248479
+        },
+        {
+          "frame": 96848,
+          "payload": {
+            "position": {
+              "x": 0.09327620776319777,
+              "y": -0.08963428821778206
+            },
+            "strength": 0.035548613287787884
+          },
+          "sourceContactIndex": 4403,
+          "simulationTimeMs": 105034.3336495877
+        },
+        {
+          "frame": 107473,
+          "payload": {
+            "position": {
+              "x": -0.04821399443378819,
+              "y": 0.14020018572767343
+            },
+            "strength": 0.03370849617272616
+          },
+          "sourceContactIndex": 4415,
+          "simulationTimeMs": 105255.69472669472
+        },
+        {
+          "frame": 108226,
+          "payload": {
+            "position": {
+              "x": 0.38819710011273584,
+              "y": -0.4371412364423933
+            },
+            "strength": 0.03482884871959687
+          },
+          "sourceContactIndex": 4416,
+          "simulationTimeMs": 105271.38128254801
+        },
+        {
+          "frame": 119043,
+          "payload": {
+            "position": {
+              "x": -0.07455018322950265,
+              "y": 0.12794812937897168
+            },
+            "strength": 0.03370849617272616
+          },
+          "sourceContactIndex": 4426,
+          "simulationTimeMs": 105496.73777658795
+        },
+        {
+          "frame": 122656,
+          "payload": {
+            "position": {
+              "x": 0.4049992536605009,
+              "y": -0.46116162529160765
+            },
+            "strength": 0.03482884871959687
+          },
+          "sourceContactIndex": 4432,
+          "simulationTimeMs": 105571.99731646408
+        },
+        {
+          "frame": 131561,
+          "payload": {
+            "position": {
+              "x": -0.07148099283941349,
+              "y": 0.10008319056389095
+            },
+            "strength": 0.03370849617272616
+          },
+          "sourceContactIndex": 4444,
+          "simulationTimeMs": 105757.51948300909
+        },
+        {
+          "frame": 134220,
+          "payload": {
+            "position": {
+              "x": 0.3256255941288546,
+              "y": -0.2670236366444415
+            },
+            "strength": 0.03373209806289524
+          },
+          "sourceContactIndex": 4446,
+          "simulationTimeMs": 105812.92318275226
+        },
+        {
+          "frame": 140791,
+          "payload": {
+            "position": {
+              "x": 0.43126453089767003,
+              "y": -0.45177534433314975
+            },
+            "strength": 0.03482884871959687
+          },
+          "sourceContactIndex": 4455,
+          "simulationTimeMs": 105949.81078404529
+        },
+        {
+          "frame": 143837,
+          "payload": {
+            "position": {
+              "x": 0.29682677009958425,
+              "y": -0.2769312300086335
+            },
+            "strength": 0.03373209806289524
+          },
+          "sourceContactIndex": 4459,
+          "simulationTimeMs": 106013.27390498531
+        },
+        {
+          "frame": 154388,
+          "payload": {
+            "position": {
+              "x": 0.30070563264576344,
+              "y": -0.3069090908935146
+            },
+            "strength": 0.03373209806289524
+          },
+          "sourceContactIndex": 4475,
+          "simulationTimeMs": 106233.07505265226
+        },
+        {
+          "frame": 174168,
+          "payload": {
+            "position": {
+              "x": 0.36527381829271305,
+              "y": -0.40419088290962935
+            },
+            "strength": 0.03487817638292909
+          },
+          "sourceContactIndex": 4505,
+          "simulationTimeMs": 106645.17168302894
+        },
+        {
+          "frame": 183227,
+          "payload": {
+            "position": {
+              "x": 0.003323985292088323,
+              "y": 0.17267019834487238
+            },
+            "strength": 0.034681160266418015
+          },
+          "sourceContactIndex": 4521,
+          "simulationTimeMs": 106833.90372486517
+        },
+        {
+          "frame": 185568,
+          "payload": {
+            "position": {
+              "x": 0.3832772508188122,
+              "y": -0.3806466229621731
+            },
+            "strength": 0.03487817638292909
+          },
+          "sourceContactIndex": 4522,
+          "simulationTimeMs": 106882.66362840158
+        },
+        {
+          "frame": 190525,
+          "payload": {
+            "position": {
+              "x": 0.06173010083770497,
+              "y": 0.0623457960464033
+            },
+            "strength": 0.03385938168112189
+          },
+          "sourceContactIndex": 4532,
+          "simulationTimeMs": 106985.94491583033
+        },
+        {
+          "frame": 193082,
+          "payload": {
+            "position": {
+              "x": -0.017623028360186418,
+              "y": 0.15208479277716658
+            },
+            "strength": 0.034681160266418015
+          },
+          "sourceContactIndex": 4535,
+          "simulationTimeMs": 107039.20908768653
+        },
+        {
+          "frame": 198941,
+          "payload": {
+            "position": {
+              "x": 0.4121779026184903,
+              "y": -0.38618950219841014
+            },
+            "strength": 0.03487817638292909
+          },
+          "sourceContactIndex": 4541,
+          "simulationTimeMs": 107161.27775406795
+        },
+        {
+          "frame": 204596,
+          "payload": {
+            "position": {
+              "x": 0.04591814730953211,
+              "y": 0.036491130307885
+            },
+            "strength": 0.03385938168112189
+          },
+          "sourceContactIndex": 4552,
+          "simulationTimeMs": 107279.07615217108
+        },
+        {
+          "frame": 211288,
+          "payload": {
+            "position": {
+              "x": -0.02694284946557584,
+              "y": 0.10269359888775091
+            },
+            "strength": 0.034681160266418015
+          },
+          "sourceContactIndex": 4560,
+          "simulationTimeMs": 107418.49459885673
+        },
+        {
+          "frame": 220612,
+          "payload": {
+            "position": {
+              "x": -0.01561175874033296,
+              "y": 0.07521730548223408
+            },
+            "strength": 0.034681160266418015
+          },
+          "sourceContactIndex": 4574,
+          "simulationTimeMs": 107612.7463106804
+        },
+        {
+          "frame": 220673,
+          "payload": {
+            "position": {
+              "x": 0.06367662479945256,
+              "y": 0.011490247211561286
+            },
+            "strength": 0.03385938168112189
+          },
+          "sourceContactIndex": 4573,
+          "simulationTimeMs": 107614.01578993062
+        },
+        {
+          "frame": 230788,
+          "payload": {
+            "position": {
+              "x": -0.036375219647692664,
+              "y": 0.053960642751881734
+            },
+            "strength": 0.034681160266418015
+          },
+          "sourceContactIndex": 4590,
+          "simulationTimeMs": 107824.75160933779
+        },
+        {
+          "frame": 237182,
+          "payload": {
+            "position": {
+              "x": 0.04845875262257496,
+              "y": -0.014338527203860493
+            },
+            "strength": 0.03385938168112189
+          },
+          "sourceContactIndex": 4596,
+          "simulationTimeMs": 107957.96166009529
+        },
+        {
+          "frame": 242498,
+          "payload": {
+            "position": {
+              "x": -0.025040022246775397,
+              "y": 0.026483529097617253
+            },
+            "strength": 0.034681160266418015
+          },
+          "sourceContactIndex": 4607,
+          "simulationTimeMs": 108068.71814157451
+        },
+        {
+          "frame": 252000,
+          "payload": {
+            "position": {
+              "x": 0.06617082894970261,
+              "y": -0.03809182500143051
+            },
+            "strength": 0.03385938168112189
+          },
+          "sourceContactIndex": 4616,
+          "simulationTimeMs": 108266.66537591601
+        },
+        {
+          "frame": 264831,
+          "payload": {
+            "position": {
+              "x": 0.05035697648048986,
+              "y": -0.06394687863002899
+            },
+            "strength": 0.03385938168112189
+          },
+          "sourceContactIndex": 4639,
+          "simulationTimeMs": 108533.97975922786
+        },
+        {
+          "frame": 276318,
+          "payload": {
+            "position": {
+              "x": 0.06811068190621711,
+              "y": -0.08894830196281164
+            },
+            "strength": 0.03385938168112189
+          },
+          "sourceContactIndex": 4652,
+          "simulationTimeMs": 108773.28772266465
+        },
+        {
+          "frame": 351573,
+          "payload": {
+            "position": {
+              "x": -0.06126431437464427,
+              "y": 0.188958917652781
+            },
+            "strength": 0.03494377935761586
+          },
+          "sourceContactIndex": 4745,
+          "simulationTimeMs": 110341.11081864897
+        },
+        {
+          "frame": 360003,
+          "payload": {
+            "position": {
+              "x": -0.08863679685054807,
+              "y": 0.17928170652125985
+            },
+            "strength": 0.03494377935761586
+          },
+          "sourceContactIndex": 4756,
+          "simulationTimeMs": 110516.72959105059
+        },
+        {
+          "frame": 368127,
+          "payload": {
+            "position": {
+              "x": -0.08902233314459085,
+              "y": 0.15060382706246903
+            },
+            "strength": 0.03494377935761586
+          },
+          "sourceContactIndex": 4769,
+          "simulationTimeMs": 110685.98582786207
+        },
+        {
+          "frame": 441275,
+          "payload": {
+            "position": {
+              "x": 0.12660959395398996,
+              "y": -0.06111195621957357
+            },
+            "strength": 0.03487657954739407
+          },
+          "sourceContactIndex": 4866,
+          "simulationTimeMs": 112209.88660557546
+        },
+        {
+          "frame": 461718,
+          "payload": {
+            "position": {
+              "x": 0.14420083177788345,
+              "y": -0.08425530370382547
+            },
+            "strength": 0.03487657954739407
+          },
+          "sourceContactIndex": 4890,
+          "simulationTimeMs": 112635.78785940901
+        },
+        {
+          "frame": 477358,
+          "payload": {
+            "position": {
+              "x": 0.12763125611871984,
+              "y": -0.10895470246306721
+            },
+            "strength": 0.03487657954739407
+          },
+          "sourceContactIndex": 4910,
+          "simulationTimeMs": 112961.61552028875
+        }
+      ]
+    }
+  },
+  "measurements": {
+    "units": "linear float32 full-scale; dBFS uses 20*log10(rms or peak)",
+    "stems": {
+      "bornP1": {
+        "configured": {
+          "sampleRate": 48000,
+          "samplesPerChannel": 480000,
+          "durationSeconds": 10,
+          "peak": 0.006492561660706997,
+          "peakDbfs": -43.751678342551905,
+          "rms": 0.0007797571804017139,
+          "rmsDbfs": -62.160812346947395,
+          "left": {
+            "peak": 0.006492561660706997,
+            "peakDbfs": -43.751678342551905,
+            "rms": 0.0009114349662096913,
+            "rmsDbfs": -60.80548628398454
+          },
+          "right": {
+            "peak": 0.004412050824612379,
+            "peakDbfs": -47.10718986696891,
+            "rms": 0.0006207485989886735,
+            "rmsDbfs": -64.14168503924323
+          },
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0,
+          "clippingThreshold": "|sample| >= 1"
+        },
+        "rawWorklet": {
+          "sampleRate": 48000,
+          "samplesPerChannel": 480000,
+          "durationSeconds": 10,
+          "peak": 0.02650025114417076,
+          "peakDbfs": -31.535000204274645,
+          "rms": 0.0031826823075989494,
+          "rmsDbfs": -49.94413420177165,
+          "left": {
+            "peak": 0.02650025114417076,
+            "peakDbfs": -31.535000204274645,
+            "rms": 0.0037201426473986005,
+            "rmsDbfs": -48.58880813897328
+          },
+          "right": {
+            "peak": 0.018008369952440262,
+            "peakDbfs": -34.89051192095368,
+            "rms": 0.0025336677022081804,
+            "rmsDbfs": -51.92500689371289
+          },
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0,
+          "clippingThreshold": "|sample| >= 1"
+        }
+      },
+      "matchedSubstrate": {
+        "configured": {
+          "sampleRate": 48000,
+          "samplesPerChannel": 480000,
+          "durationSeconds": 10,
+          "peak": 0.031568944454193115,
+          "peakDbfs": -30.014798780516827,
+          "rms": 0.0092061153180637,
+          "rmsDbfs": -40.71847178657051,
+          "left": {
+            "peak": 0.02965659834444523,
+            "peakDbfs": -30.557573293367124,
+            "rms": 0.009084894157274483,
+            "rmsDbfs": -40.83360256068946
+          },
+          "right": {
+            "peak": 0.031568944454193115,
+            "peakDbfs": -30.014798780516827,
+            "rms": 0.009325760915340592,
+            "rmsDbfs": -40.60631445504693
+          },
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0,
+          "clippingThreshold": "|sample| >= 1"
+        },
+        "rawWorklet": {
+          "sampleRate": 48000,
+          "samplesPerChannel": 480000,
+          "durationSeconds": 10,
+          "peak": 0.5856947302818298,
+          "peakDbfs": -4.646573669340687,
+          "rms": 0.17079991407024062,
+          "rmsDbfs": -15.350247042826659,
+          "left": {
+            "peak": 0.5502151846885681,
+            "peakDbfs": -5.189348564806191,
+            "rms": 0.16855091292727697,
+            "rmsDbfs": -15.465377817092754
+          },
+          "right": {
+            "peak": 0.5856947302818298,
+            "peakDbfs": -4.646573669340687,
+            "rms": 0.1730196839789758,
+            "rmsDbfs": -15.238089711163434
+          },
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0,
+          "clippingThreshold": "|sample| >= 1"
+        }
+      },
+      "allEventSubstrate": {
+        "configured": {
+          "sampleRate": 48000,
+          "samplesPerChannel": 480000,
+          "durationSeconds": 10,
+          "peak": 0.04426044225692749,
+          "peakDbfs": -27.079685017039385,
+          "rms": 0.022467520429916524,
+          "rmsDbfs": -32.968897094586005,
+          "left": {
+            "peak": 0.04373243823647499,
+            "peakDbfs": -27.183926170858605,
+            "rms": 0.022559938631896363,
+            "rmsDbfs": -32.93324172131382
+          },
+          "right": {
+            "peak": 0.04426044225692749,
+            "peakDbfs": -27.079685017039385,
+            "rms": 0.022374720500209666,
+            "rmsDbfs": -33.00484762167099
+          },
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0,
+          "clippingThreshold": "|sample| >= 1"
+        },
+        "rawWorklet": {
+          "sampleRate": 48000,
+          "samplesPerChannel": 480000,
+          "durationSeconds": 10,
+          "peak": 0.8211584687232971,
+          "peakDbfs": -1.7114604763457555,
+          "rms": 0.41683711319678046,
+          "rmsDbfs": -7.600672409381357,
+          "left": {
+            "peak": 0.8113625049591064,
+            "peakDbfs": -1.8157013195111542,
+            "rms": 0.4185517366038484,
+            "rmsDbfs": -7.565017036194337
+          },
+          "right": {
+            "peak": 0.8211584687232971,
+            "peakDbfs": -1.7114604763457555,
+            "rms": 0.41511540764268656,
+            "rmsDbfs": -7.636622936379763
+          },
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0,
+          "clippingThreshold": "|sample| >= 1"
+        }
+      }
+    },
+    "eventAlignedMedianRms": [
+      {
+        "durationMs": 100,
+        "samplesPerChannel": 4800,
+        "start": "P1 requested strike sample",
+        "end": "exclusive; start + duration",
+        "alignmentSchedule": "all 63 accepted P1 strike frames; duplicate frames retain P1 route multiplicity",
+        "windowStats": {
+          "bornP1.configured": {
+            "eligibleWindows": 62,
+            "medianRms": 0.0009745211171643057,
+            "medianRmsDbfs": -60.22417491197254,
+            "excludedIncompleteTailWindows": 1
+          },
+          "bornP1.raw": {
+            "eligibleWindows": 62,
+            "medianRms": 0.00397763713773325,
+            "medianRmsDbfs": -48.00749676343729,
+            "excludedIncompleteTailWindows": 1
+          },
+          "matchedSubstrate.configured": {
+            "eligibleWindows": 62,
+            "medianRms": 0.012735197084125587,
+            "medianRmsDbfs": -37.89988659408441,
+            "excludedIncompleteTailWindows": 1
+          },
+          "matchedSubstrate.raw": {
+            "eligibleWindows": 62,
+            "medianRms": 0.23627452980488015,
+            "medianRmsDbfs": -12.531661848468644,
+            "excludedIncompleteTailWindows": 1
+          },
+          "allEventSubstrate.configured": {
+            "eligibleWindows": 62,
+            "medianRms": 0.021722911078729958,
+            "medianRmsDbfs": -33.261639511025535,
+            "excludedIncompleteTailWindows": 1
+          },
+          "allEventSubstrate.raw": {
+            "eligibleWindows": 62,
+            "medianRms": 0.4030224689382418,
+            "medianRmsDbfs": -7.8934148159433555,
+            "excludedIncompleteTailWindows": 1
+          }
+        }
+      },
+      {
+        "durationMs": 250,
+        "samplesPerChannel": 12000,
+        "start": "P1 requested strike sample",
+        "end": "exclusive; start + duration",
+        "alignmentSchedule": "all 63 accepted P1 strike frames; duplicate frames retain P1 route multiplicity",
+        "windowStats": {
+          "bornP1.configured": {
+            "eligibleWindows": 62,
+            "medianRms": 0.0009206040742992925,
+            "medianRmsDbfs": -60.71854214778539,
+            "excludedIncompleteTailWindows": 1
+          },
+          "bornP1.raw": {
+            "eligibleWindows": 62,
+            "medianRms": 0.003757567579692286,
+            "medianRmsDbfs": -48.50186399806248,
+            "excludedIncompleteTailWindows": 1
+          },
+          "matchedSubstrate.configured": {
+            "eligibleWindows": 62,
+            "medianRms": 0.011807298055802086,
+            "medianRmsDbfs": -38.556989471452624,
+            "excludedIncompleteTailWindows": 1
+          },
+          "matchedSubstrate.raw": {
+            "eligibleWindows": 62,
+            "medianRms": 0.21905933430307784,
+            "medianRmsDbfs": -13.18876472874381,
+            "excludedIncompleteTailWindows": 1
+          },
+          "allEventSubstrate.configured": {
+            "eligibleWindows": 62,
+            "medianRms": 0.02136164621900396,
+            "medianRmsDbfs": -33.40730563560332,
+            "excludedIncompleteTailWindows": 1
+          },
+          "allEventSubstrate.raw": {
+            "eligibleWindows": 62,
+            "medianRms": 0.3963199663688769,
+            "medianRmsDbfs": -8.039080952236414,
+            "excludedIncompleteTailWindows": 1
+          }
+        }
+      },
+      {
+        "durationMs": 500,
+        "samplesPerChannel": 24000,
+        "start": "P1 requested strike sample",
+        "end": "exclusive; start + duration",
+        "alignmentSchedule": "all 63 accepted P1 strike frames; duplicate frames retain P1 route multiplicity",
+        "windowStats": {
+          "bornP1.configured": {
+            "eligibleWindows": 61,
+            "medianRms": 0.0009185211844819055,
+            "medianRmsDbfs": -60.73821645624356,
+            "excludedIncompleteTailWindows": 2
+          },
+          "bornP1.raw": {
+            "eligibleWindows": 61,
+            "medianRms": 0.0037490659868033797,
+            "medianRmsDbfs": -48.5215383110548,
+            "excludedIncompleteTailWindows": 2
+          },
+          "matchedSubstrate.configured": {
+            "eligibleWindows": 61,
+            "medianRms": 0.011214376988321954,
+            "medianRmsDbfs": -39.004496970464736,
+            "excludedIncompleteTailWindows": 2
+          },
+          "matchedSubstrate.raw": {
+            "eligibleWindows": 61,
+            "medianRms": 0.20805894343261663,
+            "medianRmsDbfs": -13.63627222563941,
+            "excludedIncompleteTailWindows": 2
+          },
+          "allEventSubstrate.configured": {
+            "eligibleWindows": 61,
+            "medianRms": 0.022023717667561137,
+            "medianRmsDbfs": -33.14218738010254,
+            "excludedIncompleteTailWindows": 2
+          },
+          "allEventSubstrate.raw": {
+            "eligibleWindows": 61,
+            "medianRms": 0.4086032957121188,
+            "medianRmsDbfs": -7.7739626951475485,
+            "excludedIncompleteTailWindows": 2
+          }
+        }
+      }
+    ],
+    "decomposition": {
+      "matchedVsAllEventSubstrateLevelDeltaDb": -7.749574633445302,
+      "matchedSubstrateVsBornRawWorkletLevelDeltaDb": 34.593887158944995,
+      "configuredGainSubstrateRelativeToBornDb": -13.151546383555875,
+      "matchedSubstrateVsBornFinalConfiguredLevelDeltaDb": 21.442340560376888,
+      "allEventSubstrateVsBornFinalConfiguredLevelDeltaDb": 29.191915252361397,
+      "closureCheckDbError": -1.5647302831212073e-7,
+      "interpretation": "The first term reflects both lower event count and selection of P1-supporting groups; the raw comparison also includes production-mapped group-centroid/strength versus per-foot excitation payloads and different worklet/resonator/readout paths; the third is the fixed external bridge/output gain difference. These are level decompositions, not psychoacoustic masking measurements."
+    }
+  },
+  "settings": {
+    "masterVolume": 0.35,
+    "substrateOutputRatio": 0.22,
+    "substrateBridgeOutputGain": 0.053899999999999997,
+    "bornPlateBridgeOutputGain": 0.24499999999999997,
+    "substrateBridgeDampingControl": 1,
+    "genericPlateWorkletProcessorOptions": {
+      "resolution": "normal",
+      "stiffness": 0.92,
+      "damping": 100,
+      "stereoPickups": [
+        {
+          "x": -0.32,
+          "y": -0.18
+        },
+        {
+          "x": 0.32,
+          "y": -0.18
+        }
+      ]
+    },
+    "bornPlatePulseMs": 3,
+    "bornPlateRecoveryMs": 75,
+    "bornPlateDampingMultiplier": 50
+  },
+  "capture": {
+    "browser": "155.0.8059.40",
+    "sampleRate": 48000,
+    "processorErrors": 0,
+    "schedulerReady": [
+      {
+        "type": "evidence-ready",
+        "frame": 0,
+        "endFrame": 480000,
+        "scheduled": 44
+      },
+      {
+        "type": "evidence-ready",
+        "frame": 0,
+        "endFrame": 480000,
+        "scheduled": 63
+      }
+    ],
+    "workletReports": [
+      {
+        "type": "evidence-done",
+        "injected": 44,
+        "scheduled": 44,
+        "renderedFrames": 480000,
+        "receipts": [
+          {
+            "requestedFrame": 4525,
+            "actualFrame": 4608
+          },
+          {
+            "requestedFrame": 11763,
+            "actualFrame": 11776
+          },
+          {
+            "requestedFrame": 14274,
+            "actualFrame": 14336
+          },
+          {
+            "requestedFrame": 23059,
+            "actualFrame": 23168
+          },
+          {
+            "requestedFrame": 23757,
+            "actualFrame": 23808
+          },
+          {
+            "requestedFrame": 59000,
+            "actualFrame": 59008
+          },
+          {
+            "requestedFrame": 72419,
+            "actualFrame": 72448
+          },
+          {
+            "requestedFrame": 73748,
+            "actualFrame": 73856
+          },
+          {
+            "requestedFrame": 83695,
+            "actualFrame": 83712
+          },
+          {
+            "requestedFrame": 84749,
+            "actualFrame": 84864
+          },
+          {
+            "requestedFrame": 86394,
+            "actualFrame": 86400
+          },
+          {
+            "requestedFrame": 96231,
+            "actualFrame": 96256
+          },
+          {
+            "requestedFrame": 96848,
+            "actualFrame": 96896
+          },
+          {
+            "requestedFrame": 107473,
+            "actualFrame": 107520
+          },
+          {
+            "requestedFrame": 108226,
+            "actualFrame": 108288
+          },
+          {
+            "requestedFrame": 119043,
+            "actualFrame": 119168
+          },
+          {
+            "requestedFrame": 122656,
+            "actualFrame": 122752
+          },
+          {
+            "requestedFrame": 131561,
+            "actualFrame": 131584
+          },
+          {
+            "requestedFrame": 134220,
+            "actualFrame": 134272
+          },
+          {
+            "requestedFrame": 140791,
+            "actualFrame": 140800
+          },
+          {
+            "requestedFrame": 143837,
+            "actualFrame": 143872
+          },
+          {
+            "requestedFrame": 154388,
+            "actualFrame": 154496
+          },
+          {
+            "requestedFrame": 174168,
+            "actualFrame": 174208
+          },
+          {
+            "requestedFrame": 183227,
+            "actualFrame": 183296
+          },
+          {
+            "requestedFrame": 185568,
+            "actualFrame": 185600
+          },
+          {
+            "requestedFrame": 190525,
+            "actualFrame": 190592
+          },
+          {
+            "requestedFrame": 193082,
+            "actualFrame": 193152
+          },
+          {
+            "requestedFrame": 198941,
+            "actualFrame": 199040
+          },
+          {
+            "requestedFrame": 204596,
+            "actualFrame": 204672
+          },
+          {
+            "requestedFrame": 211288,
+            "actualFrame": 211328
+          },
+          {
+            "requestedFrame": 220612,
+            "actualFrame": 220672
+          },
+          {
+            "requestedFrame": 220673,
+            "actualFrame": 220800
+          },
+          {
+            "requestedFrame": 230788,
+            "actualFrame": 230912
+          },
+          {
+            "requestedFrame": 237182,
+            "actualFrame": 237184
+          },
+          {
+            "requestedFrame": 242498,
+            "actualFrame": 242560
+          },
+          {
+            "requestedFrame": 252000,
+            "actualFrame": 252032
+          },
+          {
+            "requestedFrame": 264831,
+            "actualFrame": 264832
+          },
+          {
+            "requestedFrame": 276318,
+            "actualFrame": 276352
+          },
+          {
+            "requestedFrame": 351573,
+            "actualFrame": 351616
+          },
+          {
+            "requestedFrame": 360003,
+            "actualFrame": 360064
+          },
+          {
+            "requestedFrame": 368127,
+            "actualFrame": 368128
+          },
+          {
+            "requestedFrame": 441275,
+            "actualFrame": 441344
+          },
+          {
+            "requestedFrame": 461718,
+            "actualFrame": 461824
+          },
+          {
+            "requestedFrame": 477358,
+            "actualFrame": 477440
+          }
+        ]
+      },
+      {
+        "type": "evidence-done",
+        "strikes": 63,
+        "scheduled": 63,
+        "renderedFrames": 480000,
+        "diagnostics": {
+          "topologies": 1,
+          "strikes": 63,
+          "dropped": 0,
+          "droppedRoutes": 0,
+          "nonFinite": 0,
+          "clipped": 0,
+          "wakes": 48,
+          "sleeps": 0,
+          "truncatedTailEnergy": 0,
+          "physicsSteps": 60000,
+          "energyDelta": -0.00009774570925200423,
+          "couplingWorkProxy": 0,
+          "deepPlateCouplingTransfers": 0,
+          "sphereCouplingTransfers": 0,
+          "maxOutputAbs": 0.027221631832179346,
+          "requestedContactImpulseSquared": 0.019459157243224032,
+          "compliantContactImpulseSquared": 0.0184714547367863,
+          "contactPulseNodeSteps": 6248,
+          "contactAttenuatedNodeContributions": 416,
+          "activeSphereModes": 0,
+          "layers": 1,
+          "activeNodes": 48,
+          "awakeLayers": 1,
+          "sleepingLayers": 0,
+          "physicsRate": 6000,
+          "topologyGeneration": 2,
+          "couplingLinks": 0,
+          "noduleCount": 0,
+          "integratedSphereModes": 0,
+          "mix": 0.2886751345948129,
+          "truncatedTailRiskThreshold": 1e-10,
+          "quietStepsThreshold": 12000,
+          "contactPulseDurationMs": 3,
+          "contactPulseSteps": 18,
+          "contactRecoveryTimeMs": 75,
+          "contactReferenceDeltaV": 0.02,
+          "contactMaximumComplianceLoss": 0.25
+        }
+      }
+    ],
+    "bornConfiguredExactPcmMatchToFrozenStem": true,
+    "configuredBranchConsistencyMaxAbsError": {
+      "born": 3.5390257911716017e-10,
+      "matchedSubstrate": 2.02059745324501e-9
+    },
+    "rawOutputDefinition": "Direct AudioWorklet output branch before the external bridge/output GainNode; includes each worklet’s internal processing and limiter.",
+    "allEventsRawDerivation": "Existing all-events configured float32 PCM divided sample-by-sample by its fixed static 0.0539 bridge/output gain; original configured WAV kept unchanged.",
+    "genericPlateRandomness": "The unchanged generic worklet uses production Math.random strike jitter; the frozen event schedule is exact, but a fresh PCM replay may have a different noise realization."
+  },
+  "immutableReferences": {
+    "priorBornPcmSha256": "7616551f36bf2dcc3f770ed7d07c3da7f7c55d559d58dddbf9409af254e46c48",
+    "priorAllEventsSubstratePcmSha256": "8379449a3be339737a5d0fde7c0f9805a1898096e2513b2310c4cfa816684e37",
+    "allEventsSubstratePcmPath": "../postbirth-substrate-only-10s-48khz-f32.wav",
+    "allEventsSubstratePcmRemainsByteIdentical": true,
+    "priorBaseScheduleCount": 624
+  },
+  "outputs": {
+    "born-p1-63-configured-10s-48khz-f32.wav": {
+      "sha256": "7616551f36bf2dcc3f770ed7d07c3da7f7c55d559d58dddbf9409af254e46c48",
+      "sampleRate": 48000,
+      "samplesPerChannel": 480000,
+      "durationSeconds": 10,
+      "peak": 0.006492561660706997,
+      "peakDbfs": -43.751678342551905,
+      "rms": 0.0007797571804017139,
+      "rmsDbfs": -62.160812346947395,
+      "left": {
+        "peak": 0.006492561660706997,
+        "peakDbfs": -43.751678342551905,
+        "rms": 0.0009114349662096913,
+        "rmsDbfs": -60.80548628398454
+      },
+      "right": {
+        "peak": 0.004412050824612379,
+        "peakDbfs": -47.10718986696891,
+        "rms": 0.0006207485989886735,
+        "rmsDbfs": -64.14168503924323
+      },
+      "nonFiniteSamples": 0,
+      "clippingSamples": 0,
+      "clippingThreshold": "|sample| >= 1"
+    },
+    "born-p1-63-raw-worklet-10s-48khz-f32.wav": {
+      "sha256": "19a02ff15c625d1bfc6d9a59244ce6d041d3d9944888300dcaf74d5d823c88b9",
+      "sampleRate": 48000,
+      "samplesPerChannel": 480000,
+      "durationSeconds": 10,
+      "peak": 0.02650025114417076,
+      "peakDbfs": -31.535000204274645,
+      "rms": 0.0031826823075989494,
+      "rmsDbfs": -49.94413420177165,
+      "left": {
+        "peak": 0.02650025114417076,
+        "peakDbfs": -31.535000204274645,
+        "rms": 0.0037201426473986005,
+        "rmsDbfs": -48.58880813897328
+      },
+      "right": {
+        "peak": 0.018008369952440262,
+        "peakDbfs": -34.89051192095368,
+        "rms": 0.0025336677022081804,
+        "rmsDbfs": -51.92500689371289
+      },
+      "nonFiniteSamples": 0,
+      "clippingSamples": 0,
+      "clippingThreshold": "|sample| >= 1"
+    },
+    "substrate-matched-parent-groups-configured-10s-48khz-f32.wav": {
+      "sha256": "7d60ca5e11b3b28aedac8e6d5095bb74a7a2b78676f691cd473b702f3c91784e",
+      "sampleRate": 48000,
+      "samplesPerChannel": 480000,
+      "durationSeconds": 10,
+      "peak": 0.031568944454193115,
+      "peakDbfs": -30.014798780516827,
+      "rms": 0.0092061153180637,
+      "rmsDbfs": -40.71847178657051,
+      "left": {
+        "peak": 0.02965659834444523,
+        "peakDbfs": -30.557573293367124,
+        "rms": 0.009084894157274483,
+        "rmsDbfs": -40.83360256068946
+      },
+      "right": {
+        "peak": 0.031568944454193115,
+        "peakDbfs": -30.014798780516827,
+        "rms": 0.009325760915340592,
+        "rmsDbfs": -40.60631445504693
+      },
+      "nonFiniteSamples": 0,
+      "clippingSamples": 0,
+      "clippingThreshold": "|sample| >= 1"
+    },
+    "substrate-matched-parent-groups-raw-worklet-10s-48khz-f32.wav": {
+      "sha256": "5b79c9b8514cf022f8c6d9ea62b8d296e730a5f3a5ea8af88d80348196f49784",
+      "sampleRate": 48000,
+      "samplesPerChannel": 480000,
+      "durationSeconds": 10,
+      "peak": 0.5856947302818298,
+      "peakDbfs": -4.646573669340687,
+      "rms": 0.17079991407024062,
+      "rmsDbfs": -15.350247042826659,
+      "left": {
+        "peak": 0.5502151846885681,
+        "peakDbfs": -5.189348564806191,
+        "rms": 0.16855091292727697,
+        "rmsDbfs": -15.465377817092754
+      },
+      "right": {
+        "peak": 0.5856947302818298,
+        "peakDbfs": -4.646573669340687,
+        "rms": 0.1730196839789758,
+        "rmsDbfs": -15.238089711163434
+      },
+      "nonFiniteSamples": 0,
+      "clippingSamples": 0,
+      "clippingThreshold": "|sample| >= 1"
+    },
+    "substrate-all-events-raw-worklet-derived-10s-48khz-f32.wav": {
+      "sha256": "443aedf20beb0fcc20f947b1ee1bd6636b99fe2a2fa2d3fb8c14375b7e23b82f",
+      "sampleRate": 48000,
+      "samplesPerChannel": 480000,
+      "durationSeconds": 10,
+      "peak": 0.8211584687232971,
+      "peakDbfs": -1.7114604763457555,
+      "rms": 0.41683711319678046,
+      "rmsDbfs": -7.600672409381357,
+      "left": {
+        "peak": 0.8113625049591064,
+        "peakDbfs": -1.8157013195111542,
+        "rms": 0.4185517366038484,
+        "rmsDbfs": -7.565017036194337
+      },
+      "right": {
+        "peak": 0.8211584687232971,
+        "peakDbfs": -1.7114604763457555,
+        "rms": 0.41511540764268656,
+        "rmsDbfs": -7.636622936379763
+      },
+      "nonFiniteSamples": 0,
+      "clippingSamples": 0,
+      "clippingThreshold": "|sample| >= 1"
+    }
+  },
+  "visuals": {
+    "renderer": {
+      "detailPreset": "ant-surface-stratigraphy-v1",
+      "comparisonPreset": "ant-surface-stratigraphy-v1",
+      "waveformAmplitude": [
+        -1,
+        1
+      ],
+      "fftSize": 1024,
+      "window": "Hann",
+      "hopSize": 256,
+      "frequencyHz": [
+        0,
+        8000
+      ],
+      "dbfs": [
+        -100,
+        0
+      ],
+      "grayscaleGamma": 1,
+      "normalization": "none; fixed-scale",
+      "eventMarkers": "44 unique matched FOOT_CONTACT groups plus P1 birth at audio 0 s"
+    },
+    "images": [
+      {
+        "file": "born-p1-configured-fixed-scale-events.png",
+        "bytes": 103532,
+        "sha256": "61a8dee61a741ef63e1d13e701f3b920591e51329c9e2b47c5f8c7b9927a485f"
+      },
+      {
+        "file": "substrate-matched-configured-fixed-scale-events.png",
+        "bytes": 486108,
+        "sha256": "732e8bfc1ea27ce74643dc9d2a9bf2c046b21cdfd8218c5075ccaf17a3ae6ba9"
+      },
+      {
+        "file": "substrate-all-events-configured-fixed-scale-events.png",
+        "bytes": 842076,
+        "sha256": "1f77eaad4df0b8a6902fab0ff074616557cc8a938e464bd38b0f823130ff777f"
+      },
+      {
+        "file": "configured-fixed-scale-comparison.png",
+        "bytes": 232476,
+        "sha256": "94e95d3fbd6c5ba41b34ad411953cb717e8cbc976cf42a1c954c3258032f5104"
+      },
+      {
+        "file": "raw-worklet-fixed-scale-comparison.png",
+        "bytes": 314339,
+        "sha256": "32dc74b066b9f2c4a268d115e2111890f9700a866a7104c2c82a9fbea291006c"
+      }
+    ]
+  }
+}

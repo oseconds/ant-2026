@@ -28,6 +28,8 @@ export class SurfaceAudioBridge {
     this.generation = 0;
     this.enablePromise = null;
     this.cleanupPromise = null;
+    this.processorDiagnostics = null;
+    this.diagnosticsWallStartMs = null;
     this.diagnostics = {
       births: 0, routedFootEvents: 0, routedFeet: 0, strikeRoutes: 0,
       supportedFeet: 0, unsupportedFeet: 0, directExposedStrikes: 0,
@@ -146,6 +148,8 @@ export class SurfaceAudioBridge {
       }
       this.worklet = handle;
       this._loading = false;
+      this.processorDiagnostics = null;
+      this.diagnosticsWallStartMs = monotonicNowMs();
       this.post('topology', { ...this.topology, maxLayers: MAX_LAYERS });
       return true;
     }).catch((error) => {
@@ -242,6 +246,29 @@ export class SurfaceAudioBridge {
     return null;
   }
 
+  requestDiagnostics() {
+    if (!this._enabled || this._loading || !this.worklet || this.destroyed) return false;
+    this.post('diagnostics');
+    return true;
+  }
+
+  getDiagnostics() {
+    const processor = this.processorDiagnostics ? structuredClone(this.processorDiagnostics) : null;
+    const wallSeconds = this.diagnosticsWallStartMs === null
+      ? null : Math.max(0, (monotonicNowMs() - this.diagnosticsWallStartMs) / 1000);
+    const renderedSeconds = processor?.physicsRate > 0
+      ? processor.physicsSteps / processor.physicsRate : null;
+    const audioWallRatio = renderedSeconds !== null && wallSeconds > 0
+      ? renderedSeconds / wallSeconds : null;
+    return {
+      bridge: { ...this.diagnostics },
+      processor,
+      wallSeconds,
+      renderedSeconds,
+      audioWallRatio
+    };
+  }
+
   handleWorkletMessage(message, generation) {
     if (generation !== this.generation || !this._enabled || this.destroyed) return;
     if (message?.type === 'diagnostics' && message.payload) this.processorDiagnostics = message.payload;
@@ -263,6 +290,8 @@ export class SurfaceAudioBridge {
     this._loading = false;
     const worklet = this.worklet;
     this.worklet = null;
+    this.processorDiagnostics = null;
+    this.diagnosticsWallStartMs = null;
     if (!worklet) return;
     try { worklet.node?.port?.postMessage({ type: 'stop', payload: {} }); } catch { /* already closed */ }
     worklet.disconnect?.();
@@ -339,4 +368,8 @@ function cloneFreeze(value) {
   const copy = {};
   for (const [key, child] of Object.entries(value)) copy[key] = cloneFreeze(child);
   return Object.freeze(copy);
+}
+
+function monotonicNowMs() {
+  return globalThis.performance?.now?.() ?? Date.now();
 }

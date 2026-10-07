@@ -48,7 +48,7 @@ const SPAWN_PLACEMENT_ATTEMPTS = 12;
 const SPAWN_CLEARANCE = 0.004;
 const DEFAULT_STATE = Object.freeze({
     model: 'ant',
-    audioExperiment: { mode: 'bornSurface' },
+    audioExperiment: { mode: 'bornSurface', baseSubstrate: false },
     population: { count: 28, activationFeedback: true },
     pheromone: {
         halfLifeSeconds: 15, amountPerUnitDistance: 4.5, radius: 0.0045, reinforcementGain: 5,
@@ -90,6 +90,7 @@ export class AntController {
         this.materialStratigraphy = materialStratigraphy;
         this.audioBridge = audioBridge;
         this.audioBridge?.setMode?.(this.state.audioExperiment.mode);
+        this.audioBridge?.setBaseSubstrateEnabled?.(this.state.audioExperiment.baseSubstrate);
     }
 
     async init() {
@@ -127,7 +128,9 @@ export class AntController {
                 enabled: this.audioBridge?.enabled ?? false,
                 loading: this.audioBridge?.loading ?? false,
                 error: this.audioBridge?.error ?? null,
-                volume: this.audioBridge?.volume ?? 1
+                volume: this.audioBridge?.volume ?? 1,
+                baseSubstrateEnabled: this.state.audioExperiment.baseSubstrate,
+                diagnostics: this.audioBridge?.getDiagnostics?.() ?? null
             },
             analysis: {
                 population: agents.length,
@@ -178,6 +181,7 @@ export class AntController {
         this.assertAlive();
         this.state = normalizeState(mergeState(this.state, patch));
         this.audioBridge?.setMode?.(this.state.audioExperiment.mode);
+        this.audioBridge?.setBaseSubstrateEnabled?.(this.state.audioExperiment.baseSubstrate);
         if (this.gasterDeposition.mode !== this.state.pheromone.depositionMode) {
             for (const agent of this.agents) this.applyDeposits(this.gasterDeposition.retire(agent.id,
                 this.bodyPoseController.getSnapshot(agent)?.gasterRear || gasterRearPoint(agent)));
@@ -233,6 +237,25 @@ export class AntController {
         const result = this.audioBridge.setVolume(volume);
         this.emit('update');
         return result;
+    }
+
+    async setBaseSubstrateEnabled(enabled) {
+        this.assertAlive();
+        const next = Boolean(enabled);
+        this.state = normalizeState(mergeState(this.state, {
+            audioExperiment: { baseSubstrate: next }
+        }));
+        const pending = this.audioBridge?.setBaseSubstrateEnabled?.(next);
+        this.emit('update');
+        try {
+            return pending === undefined ? next : await pending;
+        } finally {
+            this.emit('update');
+        }
+    }
+
+    requestAudioDiagnostics() {
+        return this.audioBridge?.requestDiagnostics?.() ?? false;
     }
 
     syncEnvironmentAudio() {
@@ -602,6 +625,7 @@ function normalizeState(input) {
     const state = mergeState(DEFAULT_STATE, input);
     state.model = 'ant';
     state.audioExperiment.mode = state.audioExperiment.mode === 'legacy' ? 'legacy' : 'bornSurface';
+    state.audioExperiment.baseSubstrate = state.audioExperiment.baseSubstrate === true;
     state.population.count = Math.round(clampFinite(state.population.count, 8, 100, DEFAULT_STATE.population.count));
     state.population.activationFeedback = state.population.activationFeedback !== false;
     state.pheromone.halfLifeSeconds = clampFinite(state.pheromone.halfLifeSeconds, 0.5, 120, DEFAULT_STATE.pheromone.halfLifeSeconds);

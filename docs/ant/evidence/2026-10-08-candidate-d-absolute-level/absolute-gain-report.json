@@ -1,0 +1,686 @@
+{
+  "status": "completed-frozen-candidate-d-shared-absolute-level-gain",
+  "purpose": "Absolute-level listening and fixed-scale readability only; no relative calibration or production behavior change.",
+  "candidateD": {
+    "reportPath": "docs/ant/evidence/2026-10-07-base-substrate-debug/audio/calibration-0.015/calibration-report.json",
+    "substrateOutputRatio": 0.015,
+    "plateReadoutMix": 1,
+    "sphereReadoutMix": "1/sqrt(12)",
+    "substrateInternalReadout": 8,
+    "substrateDamping": 1,
+    "masterVolume": 0.35,
+    "limiter": "unchanged",
+    "contactPulseMs": 3,
+    "recoveryMs": 75,
+    "plateDampingMultiplier": 50
+  },
+  "frozenInput": {
+    "seed": 20261005,
+    "firstPlateId": "trail-plate-1",
+    "firstPlateBirthSeconds": 103.01666666667376,
+    "descriptorSha256": "fd079682ed0663f9bffdae36b1102958ef219f7d0bb6b35fcf2b1d09bc647b16",
+    "inputFile": "fresh-seed-20261005-through-first-birth-plus-10s.json.gz",
+    "inputGzipSha256": "25bf05aab8bbbb142be11b79f37a5988898d6069e24cae31bf721348b0bf7ff3",
+    "acceptedP1Strikes": 63,
+    "p1ScheduleSha256": "d3a0468479ec1dc79751b9cbcd5b4fda83712d36e41d293d518cefde429a4933",
+    "matchedParentGroups": 44,
+    "matchedParentGroupScheduleSha256": "337dd257f15a19acf6869ce7870ed6be85bf69cb3e670f43f642d2bc07f69d35"
+  },
+  "window": {
+    "sampleRateHz": 48000,
+    "samplesPerChannel": 480000,
+    "durationSeconds": 10,
+    "simulationStartMs": 103016.66666667376,
+    "simulationEndMs": 113016.66666667376,
+    "halfOpen": true,
+    "clockAnchors": [
+      {
+        "simulationTimeMs": 103016.66666667376,
+        "audioSampleIndex": 0
+      },
+      {
+        "simulationTimeMs": 113016.66666667376,
+        "audioSampleIndex": 480000
+      }
+    ],
+    "footContactMarkers": 624,
+    "firstPlateBirthMarker": {
+      "type": "PLATE_BIRTH",
+      "simulationTimeMs": 103016.66666667376,
+      "audioSampleIndex": 0
+    }
+  },
+  "sourceStems": {
+    "p1": {
+      "path": "D-first-birth-born-only-10s-48khz-f32.wav",
+      "sha256": "d9d4c8909ef4c840df1fc496db66949ae9265dc7d98ce95391e92f80c2327097"
+    },
+    "substrate": {
+      "path": "D-first-birth-substrate-only-ratio-0.015-10s-48khz-f32.wav",
+      "sha256": "7dccf3d472ced89832851352d9f55e5f88fc616ea7eed1bd57794da5545fb1eb"
+    },
+    "sum": {
+      "path": "D-first-birth-on-summed-10s-48khz-f32.wav",
+      "sha256": "65427a20199bab6413c7a62ffcfbdc7efbb5692be848ea5a53b50401a9b7630e"
+    }
+  },
+  "gainPolicy": {
+    "appliedAfterFrozenCandidateDStem": true,
+    "appliedEquallyToP1SubstrateAndSum": true,
+    "independentlyNormalized": false,
+    "extraLimiterOrMastering": false,
+    "sourceSumMismatchSamples": 0,
+    "thresholds": {
+      "clipping": "|sample| >= 1"
+    },
+    "gains": [
+      {
+        "decibels": 18,
+        "linear": 7.943282347242816,
+        "tag": "plus18"
+      },
+      {
+        "decibels": 20,
+        "linear": 10,
+        "tag": "plus20"
+      }
+    ]
+  },
+  "outputs": {
+    "plus18": {
+      "p1": {
+        "path": "candidate-d_gain-plus18_p1.wav",
+        "sha256": "3fc0c6365aa463144a4da305c6198d24378314e90805a68fc2957914782c4e4c",
+        "gainDb": 18,
+        "linearGain": 7.943282347242816,
+        "sourcePath": "D-first-birth-born-only-10s-48khz-f32.wav",
+        "sourceSha256": "d9d4c8909ef4c840df1fc496db66949ae9265dc7d98ce95391e92f80c2327097",
+        "metrics": {
+          "sampleRate": 48000,
+          "sampleFormat": "WAV IEEE float32 stereo",
+          "samplesPerChannel": 480000,
+          "durationSeconds": 10,
+          "left": {
+            "peak": 0.16770078241825104,
+            "peakDbfs": -15.509298223234719,
+            "rms": 0.024418170265969166,
+            "rmsDbfs": -32.24573764579556,
+            "nonFiniteSamples": 0,
+            "clippingSamples": 0
+          },
+          "right": {
+            "peak": 0.11624515801668167,
+            "peakDbfs": -18.69250255636123,
+            "rms": 0.016799116948843278,
+            "rmsDbfs": -35.4942709301541,
+            "nonFiniteSamples": 0,
+            "clippingSamples": 0
+          },
+          "peak": 0.16770078241825104,
+          "peakDbfs": -15.509298223234719,
+          "pooledRms": 0.020957783391842448,
+          "pooledRmsDbfs": -33.57309305170292,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        }
+      },
+      "substrate": {
+        "path": "candidate-d_gain-plus18_substrate.wav",
+        "sha256": "a2bd666cf733171a9649e4a2ff32e4511a268c35ba4f6d7e3e27e330245d2d58",
+        "gainDb": 18,
+        "linearGain": 7.943282347242816,
+        "sourcePath": "D-first-birth-substrate-only-ratio-0.015-10s-48khz-f32.wav",
+        "sourceSha256": "7dccf3d472ced89832851352d9f55e5f88fc616ea7eed1bd57794da5545fb1eb",
+        "metrics": {
+          "sampleRate": 48000,
+          "sampleFormat": "WAV IEEE float32 stereo",
+          "samplesPerChannel": 480000,
+          "durationSeconds": 10,
+          "left": {
+            "peak": 0.02368493750691414,
+            "peakDbfs": -32.510555136548774,
+            "rms": 0.012218179245601783,
+            "rmsDbfs": -38.25987015765238,
+            "nonFiniteSamples": 0,
+            "clippingSamples": 0
+          },
+          "right": {
+            "peak": 0.023970898240804672,
+            "peakDbfs": -32.4063138343742,
+            "rms": 0.012117867433766154,
+            "rmsDbfs": -38.331476057583245,
+            "nonFiniteSamples": 0,
+            "clippingSamples": 0
+          },
+          "peak": 0.023970898240804672,
+          "peakDbfs": -32.4063138343742,
+          "pooledRms": 0.012168126709152575,
+          "pooledRmsDbfs": -38.29552553071317,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        }
+      },
+      "sum": {
+        "path": "candidate-d_gain-plus18_sum.wav",
+        "sha256": "bc3996c79f01cbadb52cd3d53b7836e5f5c235e8a8257e04101df2d6b9d334f7",
+        "gainDb": 18,
+        "linearGain": 7.943282347242816,
+        "sourcePath": "D-first-birth-on-summed-10s-48khz-f32.wav",
+        "sourceSha256": "65427a20199bab6413c7a62ffcfbdc7efbb5692be848ea5a53b50401a9b7630e",
+        "metrics": {
+          "sampleRate": 48000,
+          "sampleFormat": "WAV IEEE float32 stereo",
+          "samplesPerChannel": 480000,
+          "durationSeconds": 10,
+          "left": {
+            "peak": 0.18521063029766083,
+            "peakDbfs": -14.646681805876103,
+            "rms": 0.027805255279140847,
+            "rmsDbfs": -31.117462266506383,
+            "nonFiniteSamples": 0,
+            "clippingSamples": 0
+          },
+          "right": {
+            "peak": 0.13066425919532776,
+            "peakDbfs": -17.67686378885398,
+            "rms": 0.020764814577017076,
+            "rmsDbfs": -33.653438852881095,
+            "nonFiniteSamples": 0,
+            "clippingSamples": 0
+          },
+          "peak": 0.18521063029766083,
+          "peakDbfs": -14.646681805876103,
+          "pooledRms": 0.024538844161411624,
+          "pooledRmsDbfs": -32.202917948841105,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        }
+      }
+    },
+    "plus20": {
+      "p1": {
+        "path": "candidate-d_gain-plus20_p1.wav",
+        "sha256": "966e3c23423baadbde9134d40bd935e497a8d1bfa0e989c583b308715f54370b",
+        "gainDb": 20,
+        "linearGain": 10,
+        "sourcePath": "D-first-birth-born-only-10s-48khz-f32.wav",
+        "sourceSha256": "d9d4c8909ef4c840df1fc496db66949ae9265dc7d98ce95391e92f80c2327097",
+        "metrics": {
+          "sampleRate": 48000,
+          "sampleFormat": "WAV IEEE float32 stereo",
+          "samplesPerChannel": 480000,
+          "durationSeconds": 10,
+          "left": {
+            "peak": 0.2111227810382843,
+            "peakDbfs": -13.509298039160482,
+            "rms": 0.030740655063185497,
+            "rmsDbfs": -30.24573764414539,
+            "nonFiniteSamples": 0,
+            "clippingSamples": 0
+          },
+          "right": {
+            "peak": 0.14634399116039276,
+            "peakDbfs": -16.692502097259492,
+            "rms": 0.021148835223161817,
+            "rmsDbfs": -33.49427092992373,
+            "nonFiniteSamples": 0,
+            "clippingSamples": 0
+          },
+          "peak": 0.2111227810382843,
+          "peakDbfs": -13.509298039160482,
+          "pooledRms": 0.026384286090495247,
+          "pooledRmsDbfs": -31.573093050508877,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        }
+      },
+      "substrate": {
+        "path": "candidate-d_gain-plus20_substrate.wav",
+        "sha256": "71cdcc52f98bb526a3bd91fc1d279d70d8f107607f43cc4f224ef4db5840d897",
+        "gainDb": 20,
+        "linearGain": 10,
+        "sourcePath": "D-first-birth-substrate-only-ratio-0.015-10s-48khz-f32.wav",
+        "sourceSha256": "7dccf3d472ced89832851352d9f55e5f88fc616ea7eed1bd57794da5545fb1eb",
+        "metrics": {
+          "sampleRate": 48000,
+          "sampleFormat": "WAV IEEE float32 stereo",
+          "samplesPerChannel": 480000,
+          "durationSeconds": 10,
+          "left": {
+            "peak": 0.029817570000886917,
+            "peakDbfs": -30.510555050126772,
+            "rms": 0.015381776340853994,
+            "rmsDbfs": -36.25987015612218,
+            "nonFiniteSamples": 0,
+            "clippingSamples": 0
+          },
+          "right": {
+            "peak": 0.03017757274210453,
+            "peakDbfs": -30.40631389101161,
+            "rms": 0.015255491249401096,
+            "rmsDbfs": -36.33147605742388,
+            "nonFiniteSamples": 0,
+            "clippingSamples": 0
+          },
+          "peak": 0.03017757274210453,
+          "peakDbfs": -30.40631389101161,
+          "pooledRms": 0.015318763929583371,
+          "pooledRmsDbfs": -36.29552552986273,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        }
+      },
+      "sum": {
+        "path": "candidate-d_gain-plus20_sum.wav",
+        "sha256": "5cea7ed19c4756ca6c25fb2863845e33ea7a0443bc23761d9590efc152b44a53",
+        "gainDb": 20,
+        "linearGain": 10,
+        "sourcePath": "D-first-birth-on-summed-10s-48khz-f32.wav",
+        "sourceSha256": "65427a20199bab6413c7a62ffcfbdc7efbb5692be848ea5a53b50401a9b7630e",
+        "metrics": {
+          "sampleRate": 48000,
+          "sampleFormat": "WAV IEEE float32 stereo",
+          "samplesPerChannel": 480000,
+          "durationSeconds": 10,
+          "left": {
+            "peak": 0.23316636681556702,
+            "peakDbfs": -12.64668188785162,
+            "rms": 0.03500474245850247,
+            "rmsDbfs": -29.117462264975856,
+            "nonFiniteSamples": 0,
+            "clippingSamples": 0
+          },
+          "right": {
+            "peak": 0.16449657082557678,
+            "peakDbfs": -15.676863022614778,
+            "rms": 0.026141352739316722,
+            "rmsDbfs": -31.65343885383936,
+            "nonFiniteSamples": 0,
+            "clippingSamples": 0
+          },
+          "peak": 0.23316636681556702,
+          "peakDbfs": -12.64668188785162,
+          "pooledRms": 0.030892574493132388,
+          "pooledRmsDbfs": -30.202917948201634,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        }
+      }
+    }
+  },
+  "sourceMetrics": {
+    "p1": {
+      "sampleRate": 48000,
+      "sampleFormat": "WAV IEEE float32 stereo",
+      "samplesPerChannel": 480000,
+      "durationSeconds": 10,
+      "left": {
+        "peak": 0.02111227810382843,
+        "peakDbfs": -33.509298039160484,
+        "rms": 0.0030740655064726745,
+        "rmsDbfs": -50.24573764370991,
+        "nonFiniteSamples": 0,
+        "clippingSamples": 0
+      },
+      "right": {
+        "peak": 0.014634398743510246,
+        "peakDbfs": -36.69250231836499,
+        "rms": 0.0021148835224950972,
+        "rmsDbfs": -53.494270929188914,
+        "nonFiniteSamples": 0,
+        "clippingSamples": 0
+      },
+      "peak": 0.02111227810382843,
+      "peakDbfs": -33.509298039160484,
+      "pooledRms": 0.002638428609211018,
+      "pooledRmsDbfs": -51.57309304997723,
+      "nonFiniteSamples": 0,
+      "clippingSamples": 0
+    },
+    "substrate": {
+      "sampleRate": 48000,
+      "sampleFormat": "WAV IEEE float32 stereo",
+      "samplesPerChannel": 480000,
+      "durationSeconds": 10,
+      "left": {
+        "peak": 0.0029817570466548204,
+        "peakDbfs": -50.51055491447915,
+        "rms": 0.0015381776339903842,
+        "rmsDbfs": -56.259870156658714,
+        "nonFiniteSamples": 0,
+        "clippingSamples": 0
+      },
+      "right": {
+        "peak": 0.0030177573207765818,
+        "peakDbfs": -50.40631375698219,
+        "rms": 0.0015255491249121557,
+        "rmsDbfs": -56.33147605758303,
+        "nonFiniteSamples": 0,
+        "clippingSamples": 0
+      },
+      "peak": 0.0030177573207765818,
+      "peakDbfs": -50.40631375698219,
+      "pooledRms": 0.0015318763928967149,
+      "pooledRmsDbfs": -56.29552553021213,
+      "nonFiniteSamples": 0,
+      "clippingSamples": 0
+    },
+    "sum": {
+      "sampleRate": 48000,
+      "sampleFormat": "WAV IEEE float32 stereo",
+      "samplesPerChannel": 480000,
+      "durationSeconds": 10,
+      "left": {
+        "peak": 0.0233166366815567,
+        "peakDbfs": -32.64668188785162,
+        "rms": 0.0035004742456640034,
+        "rmsDbfs": -49.117462265437986,
+        "nonFiniteSamples": 0,
+        "clippingSamples": 0
+      },
+      "right": {
+        "peak": 0.01644965633749962,
+        "peakDbfs": -35.67686341602676,
+        "rms": 0.002614135274082362,
+        "rmsDbfs": -51.65343885333867,
+        "nonFiniteSamples": 0,
+        "clippingSamples": 0
+      },
+      "peak": 0.0233166366815567,
+      "peakDbfs": -32.64668188785162,
+      "pooledRms": 0.0030892574492714783,
+      "pooledRmsDbfs": -50.20291794831905,
+      "nonFiniteSamples": 0,
+      "clippingSamples": 0
+    }
+  },
+  "eventAlignedRms": {
+    "plus18": {
+      "100": {
+        "p1": {
+          "eligibleWindows": 62,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.026373836171174243,
+          "pooledMedianRmsDbfs": -31.576533917743905,
+          "leftMedianRms": 0.01951681648322283,
+          "rightMedianRms": 0.02286615432553814
+        },
+        "substrate": {
+          "eligibleWindows": 62,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.011764855641191185,
+          "pooledMedianRmsDbfs": -38.58826794794657,
+          "leftMedianRms": 0.011671263667808882,
+          "rightMedianRms": 0.011811342189984458
+        },
+        "sum": {
+          "eligibleWindows": 62,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.029547738529568525,
+          "pooledMedianRmsDbfs": -30.58951505485126,
+          "leftMedianRms": 0.02518675973273079,
+          "rightMedianRms": 0.023937309106776983
+        }
+      },
+      "250": {
+        "p1": {
+          "eligibleWindows": 62,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.024923613896266527,
+          "pooledMedianRmsDbfs": -32.067779704612335,
+          "leftMedianRms": 0.01738095247803633,
+          "rightMedianRms": 0.019871332318184075
+        },
+        "substrate": {
+          "eligibleWindows": 62,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.011569199134185918,
+          "pooledMedianRmsDbfs": -38.73393407185865,
+          "leftMedianRms": 0.011631157125369114,
+          "rightMedianRms": 0.011489115108406875
+        },
+        "sum": {
+          "eligibleWindows": 62,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.02770817847417738,
+          "pooledMedianRmsDbfs": -31.147840472890515,
+          "leftMedianRms": 0.023468768809776164,
+          "rightMedianRms": 0.022671784703701327
+        }
+      },
+      "500": {
+        "p1": {
+          "eligibleWindows": 61,
+          "excludedIncompleteTailWindows": 2,
+          "pooledMedianRms": 0.02487804693737886,
+          "pooledMedianRmsDbfs": -32.08367434265705,
+          "leftMedianRms": 0.019486115474423308,
+          "rightMedianRms": 0.021701801420752346
+        },
+        "substrate": {
+          "eligibleWindows": 61,
+          "excludedIncompleteTailWindows": 2,
+          "pooledMedianRms": 0.011927768708866929,
+          "pooledMedianRmsDbfs": -38.468815817386776,
+          "leftMedianRms": 0.011972206512957552,
+          "rightMedianRms": 0.011983159598665227
+        },
+        "sum": {
+          "eligibleWindows": 61,
+          "excludedIncompleteTailWindows": 2,
+          "pooledMedianRms": 0.027275346166207682,
+          "pooledMedianRmsDbfs": -31.284594576757723,
+          "leftMedianRms": 0.02333857801914395,
+          "rightMedianRms": 0.024952506478380213
+        }
+      }
+    },
+    "plus20": {
+      "100": {
+        "p1": {
+          "eligibleWindows": 62,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.033202692561220534,
+          "pooledMedianRmsDbfs": -29.576533918049172,
+          "leftMedianRms": 0.024570216216208883,
+          "rightMedianRms": 0.028786782767466136
+        },
+        "substrate": {
+          "eligibleWindows": 62,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.014811075728718884,
+          "pooledMedianRmsDbfs": -36.58826795033144,
+          "leftMedianRms": 0.014693250419493714,
+          "rightMedianRms": 0.014869598826270713
+        },
+        "sum": {
+          "eligibleWindows": 62,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.0371983988948881,
+          "pooledMedianRmsDbfs": -28.589515055093013,
+          "leftMedianRms": 0.03170825185008661,
+          "rightMedianRms": 0.030135286684244433
+        }
+      },
+      "250": {
+        "p1": {
+          "eligibleWindows": 62,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.03137697088705178,
+          "pooledMedianRmsDbfs": -30.067779704807332,
+          "leftMedianRms": 0.02188132275399004,
+          "rightMedianRms": 0.025016525213082286
+        },
+        "substrate": {
+          "eligibleWindows": 62,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.01456475879099929,
+          "pooledMedianRmsDbfs": -36.73393406776428,
+          "leftMedianRms": 0.014642759279366362,
+          "rightMedianRms": 0.01446393897066562
+        },
+        "sum": {
+          "eligibleWindows": 62,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.03488253000737932,
+          "pooledMedianRmsDbfs": -29.14784046997486,
+          "leftMedianRms": 0.02954542944086254,
+          "rightMedianRms": 0.028542085866787525
+        }
+      },
+      "500": {
+        "p1": {
+          "eligibleWindows": 61,
+          "excludedIncompleteTailWindows": 2,
+          "pooledMedianRms": 0.03131960548774587,
+          "pooledMedianRmsDbfs": -30.0836743419716,
+          "leftMedianRms": 0.02453156594954312,
+          "rightMedianRms": 0.02732094928692113
+        },
+        "substrate": {
+          "eligibleWindows": 61,
+          "excludedIncompleteTailWindows": 2,
+          "pooledMedianRms": 0.01501617113472867,
+          "pooledMedianRmsDbfs": -36.468815816731535,
+          "leftMedianRms": 0.015072115017621837,
+          "rightMedianRms": 0.015085904135027466
+        },
+        "sum": {
+          "eligibleWindows": 61,
+          "excludedIncompleteTailWindows": 2,
+          "pooledMedianRms": 0.03433762641004573,
+          "pooledMedianRmsDbfs": -29.28459457525915,
+          "leftMedianRms": 0.02938152894295562,
+          "rightMedianRms": 0.03141334448649282
+        }
+      }
+    }
+  },
+  "relativeLevelCheck": {
+    "plus18": {
+      "sourceSubstrateVsP1Db": -4.7224324802349065,
+      "outputSubstrateVsP1Db": -4.722432479010246,
+      "substrateRelativeLevelDeltaDb": 1.2246603731114192e-9,
+      "sourceSumVsP1Db": 1.3701751016581818,
+      "outputSumVsP1Db": 1.370175102861819,
+      "sumRelativeLevelDeltaDb": 1.2036371899171172e-9
+    },
+    "plus20": {
+      "sourceSubstrateVsP1Db": -4.7224324802349065,
+      "outputSubstrateVsP1Db": -4.722432479353855,
+      "substrateRelativeLevelDeltaDb": 8.810516760604514e-10,
+      "sourceSumVsP1Db": 1.3701751016581818,
+      "outputSumVsP1Db": 1.3701751023072433,
+      "sumRelativeLevelDeltaDb": 6.49061471236223e-10
+    }
+  },
+  "images": [
+    {
+      "file": "plus18-p1-fixed-scale-waveform-spectrogram.png",
+      "sha256": "ae5e5cc5badbd2039d2f9f16c4fedb9e8e89761542fd39e0f07040ed2e14deae",
+      "bytes": 255263
+    },
+    {
+      "file": "plus18-substrate-fixed-scale-waveform-spectrogram.png",
+      "sha256": "91007398706c393a047b21c42323ad9249f967ed645f1a29af6716f15efd4bfb",
+      "bytes": 1021925
+    },
+    {
+      "file": "plus18-sum-fixed-scale-waveform-spectrogram.png",
+      "sha256": "68e7035de56c1ebf1e53280ad78966e0084af351374860a31b016979e6b6b382",
+      "bytes": 1061997
+    },
+    {
+      "file": "plus20-p1-fixed-scale-waveform-spectrogram.png",
+      "sha256": "7e16fd3a024292dee5fe20c56ab15f74d1d978d5e471109699b2d08f5f1f5248",
+      "bytes": 270967
+    },
+    {
+      "file": "plus20-substrate-fixed-scale-waveform-spectrogram.png",
+      "sha256": "b8aae1a1c531c899f26121d64f9c35fccd9bff06a2d82a45e6f904856cdd1f33",
+      "bytes": 1083566
+    },
+    {
+      "file": "plus20-sum-fixed-scale-waveform-spectrogram.png",
+      "sha256": "511e49896c9321796b4ba61012cb7103acf6a659826235d63dc658d09c7d654a",
+      "bytes": 1115943
+    }
+  ],
+  "browserCheck": {
+    "loaded": [
+      {
+        "id": "plus18-p1",
+        "durationSeconds": 10,
+        "readyState": 4,
+        "source": "/docs/ant/evidence/2026-10-08-candidate-d-absolute-level/candidate-d_gain-plus18_p1.wav"
+      },
+      {
+        "id": "plus18-substrate",
+        "durationSeconds": 10,
+        "readyState": 4,
+        "source": "/docs/ant/evidence/2026-10-08-candidate-d-absolute-level/candidate-d_gain-plus18_substrate.wav"
+      },
+      {
+        "id": "plus18-sum",
+        "durationSeconds": 10,
+        "readyState": 4,
+        "source": "/docs/ant/evidence/2026-10-08-candidate-d-absolute-level/candidate-d_gain-plus18_sum.wav"
+      },
+      {
+        "id": "plus20-p1",
+        "durationSeconds": 10,
+        "readyState": 4,
+        "source": "/docs/ant/evidence/2026-10-08-candidate-d-absolute-level/candidate-d_gain-plus20_p1.wav"
+      },
+      {
+        "id": "plus20-substrate",
+        "durationSeconds": 10,
+        "readyState": 4,
+        "source": "/docs/ant/evidence/2026-10-08-candidate-d-absolute-level/candidate-d_gain-plus20_substrate.wav"
+      },
+      {
+        "id": "plus20-sum",
+        "durationSeconds": 10,
+        "readyState": 4,
+        "source": "/docs/ant/evidence/2026-10-08-candidate-d-absolute-level/candidate-d_gain-plus20_sum.wav"
+      }
+    ],
+    "playbackStarted": [
+      "plus18-p1",
+      "plus18-substrate",
+      "plus18-sum",
+      "plus20-p1",
+      "plus20-substrate",
+      "plus20-sum"
+    ],
+    "pageErrors": [],
+    "screenshot": "browser-listening-check.png",
+    "listeningPage": "listening.html",
+    "interpretation": "Playback path checked; human listening judgment is external."
+  },
+  "renderer": {
+    "source": "stratigraphy-audio-overview.js / ANT existing audio snapshot renderer",
+    "waveformAmplitude": [
+      -1,
+      1
+    ],
+    "channelMode": "separate L/R",
+    "fftSize": 1024,
+    "window": "Hann",
+    "hopSize": 256,
+    "frequencyHz": [
+      0,
+      8000
+    ],
+    "dbfs": [
+      -100,
+      0
+    ],
+    "grayscaleGamma": 1,
+    "normalization": "none; fixed scale",
+    "overlayMarkers": [
+      "FOOT_CONTACT",
+      "PLATE_BIRTH"
+    ]
+  }
+}

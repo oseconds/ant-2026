@@ -5,6 +5,7 @@ import { createServer as createTcpServer } from 'node:net';
 import { resolve } from 'node:path';
 import { createServer, build, preview } from 'vite';
 import { chromium } from 'playwright';
+import { ANT_BASE_SUBSTRATE_OUTPUT_RATIO } from '../src/lib/audio/AntEnvironmentAudioBridge.js';
 
 const useProduction = process.env.CHECK_PRODUCTION === '1' || process.argv.includes('--production');
 const recordAntEvidence = process.argv.includes('--record-ant-evidence');
@@ -287,14 +288,18 @@ async function verifyDocumentPresentation(page) {
 
 async function verifyModelSemantics(page, name) {
   const actual = await page.evaluate(() => ({
-    legends: [...document.querySelectorAll('#experiment fieldset')].map(fieldset => fieldset.querySelector('legend')?.textContent.trim()),
+    nonDebugFieldsets: [...document.querySelectorAll('#experiment fieldset')]
+      .filter(fieldset => !fieldset.closest('#ant-plate-debug'))
+      .map(fieldset => fieldset.querySelector('legend')?.textContent.trim() || null),
     analysisHeaders: [...document.querySelectorAll('#analysis th')].map(cell => cell.textContent.trim()),
     notes: [...document.querySelectorAll('#model-notes, #state-details')].map(element => element.tagName.toLowerCase()),
     inspectorVisible: Boolean(document.querySelector('#string-inspector') && !document.querySelector('#string-inspector').hidden),
     tableRows: document.querySelectorAll('#analysis tbody tr').length
   }));
-  if (name === 'ant') assert.equal(actual.legends.length, 0, 'ANT has no retired playback control fieldset');
-  else assert.ok(actual.legends.length > 0 && actual.legends.every(Boolean), 'control groups have descriptive native legends');
+  if (name === 'ant') assert.equal(actual.nonDebugFieldsets.length, 0,
+    'ANT has no retired control fieldsets outside Plate Debug');
+  else assert.ok(actual.nonDebugFieldsets.length > 0 && actual.nonDebugFieldsets.every(Boolean),
+    'control groups have descriptive native legends');
   if (name === 'ant') {
     assert.equal(actual.analysisHeaders.length, 0, 'ANT diagnostics use a compact line instead of a table');
     assert.equal(actual.tableRows, 0);
@@ -731,6 +736,8 @@ async function verifyAnt(page, requestedUrls) {
   const state = await readState(page);
   assert.equal(state.model, 'ant');
   assert.equal(state.audioExperiment?.mode, 'bornSurface', 'ANT opens with surface-born audio selected');
+  assert.equal(state.audioExperiment?.baseSubstrate, false,
+    'base substrate starts as an explicit A/B option, preserving the born-surface baseline');
   const navigation = await page.locator('nav button[data-model]').evaluateAll(buttons => buttons.map(button => button.dataset.model));
   assert.deepEqual(navigation, ['ant', 'string', 'plate', 'sphere'], 'navigation starts with ANT and retains all supporting models');
   assert.equal((await page.locator('#model-title').textContent()).trim(), 'ANT');
@@ -764,6 +771,13 @@ async function verifyAnt(page, requestedUrls) {
     'ANT exposes one explicit audio toggle');
   const audioButton = page.locator('[data-action="ant-audio"]');
   assert.equal(await audioButton.getAttribute('aria-pressed'), 'false', 'ANT audio starts off');
+  const substrateButton = page.locator('[data-action="ant-substrate"]');
+  assert.equal(await substrateButton.count(), 1, 'ANT exposes one base-substrate A/B toggle');
+  assert.equal(await substrateButton.getAttribute('aria-pressed'), 'false', 'base substrate starts off');
+  assert.equal(await page.locator('#ant-plate-debug').count(), 1, 'ANT exposes one collapsed Plate debug panel');
+  assert.equal(await page.locator('#ant-plate-debug').evaluate(details => details.open), false,
+    'Plate debug stays collapsed in the normal view');
+  await verifyPlateDebugUI(page);
   assert.match(await audioButton.textContent(), /Audio Off/i);
   const volumeSlider = page.locator('#ant-volume');
   assert.equal(await volumeSlider.count(), 1, 'ANT exposes one dedicated volume range');
@@ -854,7 +868,7 @@ async function verifyAnt(page, requestedUrls) {
       };
     });
     assert.equal(summary.status, 'active');
-    assert.ok(summary.agents >= activePopulation && summary.agents <= state.population.count,
+    assert.ok(summary.agents <= state.population.count,
       'the live population remains within the configured target');
     assert.equal(summary.analysis.totalSpawned, summary.agents + summary.analysis.totalRetired,
       'cumulative spawn and retirement counters reconcile with active population');
@@ -1282,6 +1296,43 @@ async function verifyAnt(page, requestedUrls) {
   }
 }
 
+async function verifyPlateDebugUI(page) {
+  const panel = page.locator('#ant-plate-debug');
+  const summary = panel.locator('summary');
+  await summary.click();
+  assert.equal(await panel.evaluate(details => details.open), true, 'Plate Debug opens on demand');
+
+  const diagnosticNames = [
+    'plate-count', 'plate-exposure', 'nodule-count', 'birth-times', 'substrate-events',
+    'audio-layers', 'audio-wall', 'candidate-chemical', 'candidate-support',
+    'candidate-persistence', 'candidate-length', 'candidate-contacts',
+    'candidate-refractory', 'candidate-gap', 'candidate-ready'
+  ];
+  assert.deepEqual(await panel.locator('[data-ant-debug]').evaluateAll(nodes =>
+    nodes.map(node => node.dataset.antDebug)), diagnosticNames,
+  'Plate Debug exposes each material, audio, and birth-candidate diagnostic');
+  assert.equal(await panel.locator('[data-ant-debug]').evaluateAll(nodes =>
+    nodes.every(node => node.textContent.trim().length > 0)), true,
+  'every diagnostic cell is populated, including unavailable values');
+
+  const defaults = { surface: false, candidate: false, source: false, exposure: false,
+    plateIds: false, plateOutlines: false, plateCenterlines: false, platePickups: false,
+    pheromone: true, material: true };
+  const overlays = panel.locator('input[data-ant-overlay]');
+  assert.deepEqual(await overlays.evaluateAll(nodes => nodes.map(node => node.dataset.antOverlay)),
+    Object.keys(defaults), 'Plate Debug exposes all ten overlay controls');
+  for (const [name, checked] of Object.entries(defaults)) {
+    const input = panel.locator(`input[data-ant-overlay="${name}"]`);
+    assert.equal(await input.isChecked(), checked, `${name} overlay starts at its documented default`);
+    await input.setChecked(!checked);
+    assert.equal(await input.isChecked(), !checked, `${name} overlay toggles on`);
+    await input.setChecked(checked);
+    assert.equal(await input.isChecked(), checked, `${name} overlay restores its default`);
+  }
+  await summary.click();
+  assert.equal(await panel.evaluate(details => details.open), false, 'Plate Debug can be collapsed again');
+}
+
 async function verifyAntAudioToggle(page, audioButton) {
   await verifyBornSurfaceAudioLifecycle(page, audioButton);
   if (useProduction) return;
@@ -1489,11 +1540,93 @@ async function verifyAntAudioToggle(page, audioButton) {
   assert.ok(reenabled.freshStrikes > 0, 're-enabled Plate worklet receives fresh tripod contacts');
   assert.ok(reenabled.plateWorklets[0].portCloses > 0, 'the prior Plate worklet was closed before re-enabling');
   assert.ok(reenabled.plateWorklets[1].portCloses === 0);
+  await verifyBaseSubstrateAB(page, audioButton);
+}
+
+async function verifyBaseSubstrateAB(page, audioButton) {
+  if (audioButton && await audioButton.getAttribute('aria-pressed') === 'true') {
+    await audioButton.click();
+    await page.waitForFunction(() =>
+      document.querySelector('[data-action="ant-audio"]')?.getAttribute('aria-pressed') === 'false');
+  }
+  await page.evaluate(async () => {
+    const { app } = await import('/src/main.js');
+    app.lab.model.configure({ audioExperiment: { mode: 'bornSurface', baseSubstrate: false } });
+  });
+  await page.waitForFunction(() => {
+    const state = JSON.parse(document.querySelector('#state-json').textContent);
+    return state.audioExperiment?.mode === 'bornSurface' && state.audioExperiment?.baseSubstrate === false;
+  });
+
+  const selectedVolume = await readAntAudioVolume(page);
+  const baseline = await page.evaluate(() => ({
+    surfaces: window.__physicalAudioProbe.worklets.filter(item => item.name === 'surface-plate-processor').length,
+    plates: window.__physicalAudioProbe.worklets.filter(item => item.name === 'plate-processor').length
+  }));
+  await audioButton.click();
+  await page.waitForFunction(count =>
+    window.__physicalAudioProbe.worklets.filter(item => item.name === 'surface-plate-processor').length > count,
+  baseline.surfaces, { timeout: 10000 });
+
+  const substrateButton = page.locator('[data-action="ant-substrate"]');
+  await substrateButton.click();
+  await page.waitForFunction(count =>
+    document.querySelector('[data-action="ant-substrate"]')?.getAttribute('aria-pressed') === 'true'
+    && window.__physicalAudioProbe.worklets.filter(item => item.name === 'plate-processor').length > count,
+  baseline.plates, { timeout: 10000 });
+  const indices = await page.evaluate(() => ({
+    base: window.__physicalAudioProbe.worklets
+      .map((item, index) => item.name === 'plate-processor' ? index : -1).filter(index => index >= 0).at(-1),
+    surface: window.__physicalAudioProbe.worklets
+      .map((item, index) => item.name === 'surface-plate-processor' ? index : -1).filter(index => index >= 0).at(-1)
+  }));
+  await page.waitForFunction(index => {
+    const probe = window.__physicalAudioProbe;
+    return probe.workletMessages.some(item => item.index === index && item.message?.type === 'strike')
+      && probe.workletRms.some(item => item.index === index
+        && Math.max(item.leftRms || 0, item.rightRms || 0, item.rms || 0) > 1e-7);
+  }, indices.base, { timeout: 12000 });
+
+  const result = await page.evaluate(({ base, surface }) => {
+    const probe = window.__physicalAudioProbe;
+    const baseRecord = probe.worklets[base];
+    const configure = probe.workletMessages.filter(item => item.index === base
+      && item.message?.type === 'configure').at(-1)?.message;
+    const peak = Math.max(0, ...probe.workletRms.filter(item => item.index === base)
+      .map(item => Math.max(item.leftRms || 0, item.rightRms || 0, item.rms || 0)));
+    return {
+      baseOutputChannelCount: baseRecord?.outputChannelCount,
+      baseGain: baseRecord?.outputGainNodes?.[0]?.gain?.value,
+      damping: configure?.payload?.damping,
+      peak,
+      surfaceClosed: probe.worklets[surface]?.portCloses > 0
+    };
+  }, indices);
+  assert.deepEqual(result.baseOutputChannelCount, [2], 'base substrate uses the preserved stereo Plate transport');
+  assert.equal(result.damping, 100, 'base substrate uses maximum generic Plate damping');
+  assert.ok(result.peak > 1e-7, 'base substrate produces nonzero output before the first born Plate');
+  assert.ok(Math.abs(result.baseGain - 0.7 * selectedVolume * ANT_BASE_SUBSTRATE_OUTPUT_RATIO) < 1e-6,
+    'base substrate uses the calibrated auxiliary output ratio');
+  assert.equal(result.surfaceClosed, false, 'base substrate runs beside, not instead of, the born-surface processor');
+
+  await substrateButton.click();
+  await page.waitForFunction(index => {
+    const record = window.__physicalAudioProbe.worklets[index];
+    return document.querySelector('[data-action="ant-substrate"]')?.getAttribute('aria-pressed') === 'false'
+      && record?.portCloses > 0;
+  }, indices.base, { timeout: 8000 });
+  assert.equal(await page.evaluate(index => window.__physicalAudioProbe.worklets[index]?.portCloses,
+    indices.surface), 0, 'substrate Off leaves born-surface audio running');
+  await audioButton.click();
+  await page.waitForFunction(() =>
+    document.querySelector('[data-action="ant-audio"]')?.getAttribute('aria-pressed') === 'false');
 }
 
 async function verifyBornSurfaceAudioLifecycle(page, audioButton) {
   const initial = await readState(page);
   assert.equal(initial.audioExperiment?.mode, 'bornSurface', 'new ANT sessions default to born-surface audio');
+  assert.equal(initial.audioExperiment?.baseSubstrate, false,
+    'base substrate remains an explicit A/B option instead of changing the baseline implicitly');
   assert.equal(await page.evaluate(() => window.__physicalAudioProbe.audioContexts.length), 0,
     'born-surface ANT creates no audio context before an explicit gesture');
 

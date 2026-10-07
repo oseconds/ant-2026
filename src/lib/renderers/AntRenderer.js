@@ -24,6 +24,18 @@ export class AntRenderer {
         this.plateImages = new WeakMap();
         this.materialImage = null;
         this.materialRevision = null;
+        this.debugOptions = {
+            pheromone: true,
+            material: true,
+            surface: false,
+            candidate: false,
+            source: false,
+            exposure: false,
+            plateIds: false,
+            plateOutlines: false,
+            plateCenterlines: false,
+            platePickups: false
+        };
         this.width = 1;
         this.height = 1;
         this.pixelRatio = 1;
@@ -81,6 +93,16 @@ export class AntRenderer {
         if (this.destroyed) return;
         this.snapshot = snapshot || null;
         this.instance?.redraw?.();
+    }
+
+    /** Change diagnostic overlays without writing to simulation state. */
+    setDebugOptions(patch = {}) {
+        if (this.destroyed || !patch || typeof patch !== 'object') return { ...this.debugOptions };
+        for (const key of Object.keys(this.debugOptions)) {
+            if (key in patch) this.debugOptions[key] = Boolean(patch[key]);
+        }
+        this.instance?.redraw?.();
+        return { ...this.debugOptions };
     }
 
     /** Resize the p5 canvas without changing simulation coordinates. */
@@ -188,12 +210,17 @@ function drawSnapshot(p, snapshot, renderer) {
     const width = p.width, height = p.height;
     p.background(255);
 
+    if (renderer.debugOptions.surface) drawScalarDebugGrid(p, snapshot?.surface, width, height, {
+        threshold: 0.002, maxAlpha: 42, tone: [40, 115, 155]
+    });
+
     // Frozen material is a solid, restrained layer beneath current chemical memory.
     // Compile one restrained material image per topology revision; live pheromone
     // never changes the frozen historical masks or their physical Z columns.
     const material = snapshot?.stratigraphy;
     const topology = material?.stratigraphy || material;
-    if (topology?.topLayerByCell?.length && material.width > 0 && material.height > 0) {
+    if (renderer.debugOptions.material
+        && topology?.topLayerByCell?.length && material.width > 0 && material.height > 0) {
         if (!renderer.materialImage || renderer.materialRevision !== material.revision) {
             const image = p.createImage(material.width, material.height);
             image.loadPixels();
@@ -211,7 +238,8 @@ function drawSnapshot(p, snapshot, renderer) {
         }
         p.image(renderer.materialImage, 0, 0, width, height);
     }
-    for (const plate of material ? [] : snapshot?.surfacePlates?.plates || []) {
+    for (const plate of renderer.debugOptions.material && !material
+        ? snapshot?.surfacePlates?.plates || [] : []) {
         if (!plate?.grid || !plate.mask?.length) continue;
         let image = renderer.plateImages.get(plate);
         if (!image) {
@@ -230,7 +258,8 @@ function drawSnapshot(p, snapshot, renderer) {
     }
 
     const field = snapshot?.pheromone;
-    if (field?.values?.length && field.width > 0 && field.height > 0) {
+    if (renderer.debugOptions.pheromone
+        && field?.values?.length && field.width > 0 && field.height > 0) {
         const image = updateFieldImage(p, renderer, field);
         // The field remains at its native grid resolution and fixed alpha values;
         // only the display interpolation is softened when it is scaled to canvas.
@@ -243,11 +272,237 @@ function drawSnapshot(p, snapshot, renderer) {
         p.image(image, 0, 0, width, height);
     }
 
+    if (renderer.debugOptions.exposure) drawExposureDebug(p, material, width, height);
+    if (renderer.debugOptions.source) drawSourceAnnulusDebug(p, snapshot?.surfacePlates?.requirements, width, height);
+    if (renderer.debugOptions.candidate) drawCandidateDebug(p, snapshot?.surfacePlates?.candidate, width, height);
+    const plates = material?.plates?.length ? material.plates : snapshot?.surfacePlates?.plates;
+    if (renderer.debugOptions.plateOutlines || renderer.debugOptions.plateCenterlines
+        || renderer.debugOptions.platePickups) {
+        drawPlateGeometryDebug(p, plates, material, snapshot?.debugAudioTopology,
+            renderer.debugOptions, width, height);
+    }
+    if (renderer.debugOptions.plateIds) drawPlateIdsDebug(p, plates, width, height);
+
     const diameterScale = Math.min(width, height) * BODY_GEOMETRY.radiusScale;
     for (const agent of snapshot?.agents || []) {
         if (!isPoint(agent)) continue;
         drawAnt(p, agent, width, height, diameterScale);
     }
+}
+
+function drawScalarDebugGrid(p, field, width, height, { threshold = 0, maxAlpha = 40, tone = [0, 0, 0] } = {}) {
+    if (!field?.values?.length || !(field.width > 0) || !(field.height > 0)) return;
+    const cellW = width / field.width, cellH = height / field.height;
+    p.noStroke();
+    for (let index = 0; index < field.values.length; index += 1) {
+        const value = field.values[index];
+        if (!Number.isFinite(value) || value <= threshold) continue;
+        const alpha = Math.min(maxAlpha, Math.max(4, value * maxAlpha * 3));
+        p.fill(tone[0], tone[1], tone[2], alpha);
+        const x = (index % field.width + 0.5) * cellW;
+        const y = (Math.floor(index / field.width) + 0.5) * cellH;
+        p.circle(x, y, Math.max(1, Math.min(cellW, cellH) * 0.85));
+    }
+}
+
+function drawExposureDebug(p, material, width, height) {
+    const layers = material?.stratigraphy?.layerCountByCell;
+    if (!layers?.length || !(material.width > 0) || !(material.height > 0)) return;
+    const cellW = width / material.width, cellH = height / material.height;
+    p.noStroke();
+    for (let index = 0; index < layers.length; index += 1) {
+        const depth = layers[index];
+        if (depth <= 1) continue;
+        p.fill(80, 55, 130, Math.min(75, 18 + depth * 7));
+        p.circle((index % material.width + 0.5) * cellW,
+            (Math.floor(index / material.width) + 0.5) * cellH,
+            Math.max(1, Math.min(cellW, cellH) * 0.9));
+    }
+}
+
+function drawSourceAnnulusDebug(p, requirements, width, height) {
+    const annulus = requirements?.sourceAnnulus;
+    const origin = annulus?.origin;
+    const radii = annulus?.radii;
+    if (!isPoint(origin) || !Array.isArray(radii) || radii.length !== 2) return;
+    p.noFill();
+    p.stroke(125, 95, 35, 145);
+    p.strokeWeight(1);
+    for (const radius of radii) {
+        if (!(radius > 0)) continue;
+        p.ellipse(origin.x * width, origin.y * height, radius * 2 * width, radius * 2 * height);
+    }
+}
+
+function drawCandidateDebug(p, candidate, width, height) {
+    const points = candidate?.pathPoints;
+    if (!Array.isArray(points) || points.length < 2) return;
+    p.noFill();
+    p.stroke(0, 115, 120, 190);
+    p.strokeWeight(1.4);
+    for (let index = 1; index < points.length; index += 1) {
+        const a = points[index - 1], b = points[index];
+        if (!isPoint(a) || !isPoint(b)) continue;
+        p.line(a.x * width, a.y * height, b.x * width, b.y * height);
+    }
+    if (isPoint(candidate.source)) {
+        p.noStroke(); p.fill(0, 115, 120, 190);
+        p.circle(candidate.source.x * width, candidate.source.y * height, 5);
+    }
+    if (isPoint(candidate.target)) {
+        p.noStroke(); p.fill(120, 65, 145, 190);
+        p.circle(candidate.target.x * width, candidate.target.y * height, 5);
+    }
+}
+
+function drawPlateIdsDebug(p, plates, width, height) {
+    if (!Array.isArray(plates) || typeof p.text !== 'function') return;
+    p.noStroke();
+    if (typeof p.textSize === 'function') p.textSize(9);
+    for (const plate of plates) {
+        if (typeof plate?.id !== 'string') continue;
+        const points = [plate.source || plate.centerline?.[0], plate.target || plate.centerline?.at(-1)]
+            .filter((point, index, all) => isPoint(point) && all.findIndex(other =>
+                other?.x === point.x && other?.y === point.y) === index);
+        p.fill(...plateDebugColor(plate.id), 190);
+        for (const point of points) {
+            p.text(plate.id.replace('trail-plate-', 'P'), point.x * width + 3, point.y * height - 3);
+        }
+    }
+}
+
+function drawPlateGeometryDebug(p, plates, material, audioTopology, options, width, height) {
+    if (!Array.isArray(plates)) return;
+    const topLayer = material?.stratigraphy?.topLayerByCell;
+    let audioPickupNodesDrawn = false;
+    for (let plateIndex = 0; plateIndex < plates.length; plateIndex += 1) {
+        const plate = plates[plateIndex];
+        const grid = plate?.grid;
+        if (!plate?.id || !grid?.width || !grid?.height || !plate.mask?.length) continue;
+        const color = plateDebugColor(plate.id);
+        if (options.plateOutlines) drawPlateOutline(p, plate, plateIndex, topLayer, color, width, height);
+        if (options.plateCenterlines) drawPlateCenterline(p, plate, plateIndex, topLayer, color, width, height);
+        if (options.platePickups) audioPickupNodesDrawn = drawPlatePickups(p, plate, plateIndex,
+            topLayer, audioTopology, color, width, height) || audioPickupNodesDrawn;
+    }
+    const exposureLegend = plates.length && (options.plateOutlines || options.plateCenterlines);
+    if (options.platePickups && plates.length) drawPickupLegend(p, audioPickupNodesDrawn, height - 6);
+    if (exposureLegend) {
+        drawPlateExposureLegend(p, height);
+    }
+}
+
+function drawPlateOutline(p, plate, plateIndex, topLayer, color, width, height) {
+    const { width: columns, height: rows } = plate.grid;
+    const mask = plate.mask;
+    p.noFill();
+    p.strokeWeight(1.5);
+    for (let row = 0; row < rows; row += 1) {
+        for (let column = 0; column < columns; column += 1) {
+            const cell = row * columns + column;
+            if (!mask[cell]) continue;
+            const x0 = column / columns * width, x1 = (column + 1) / columns * width;
+            const y0 = row / rows * height, y1 = (row + 1) / rows * height;
+            const alpha = plateCellAlpha(topLayer, cell, plateIndex);
+            p.stroke(...color, alpha);
+            // Neighbor checks emit only the connected outer contour edges; shared
+            // endpoints join adjacent segments without painting filled cells.
+            if (row === 0 || !mask[cell - columns]) p.line(x0, y0, x1, y0);
+            if (column === columns - 1 || !mask[cell + 1]) p.line(x1, y0, x1, y1);
+            if (row === rows - 1 || !mask[cell + columns]) p.line(x1, y1, x0, y1);
+            if (column === 0 || !mask[cell - 1]) p.line(x0, y1, x0, y0);
+        }
+    }
+}
+
+function drawPlateCenterline(p, plate, plateIndex, topLayer, color, width, height) {
+    const nodes = new Map((plate.centerline || []).filter(node => Number.isInteger(node?.index)
+      && isPoint(node)).map(node => [node.index, node]));
+    p.noFill();
+    p.strokeWeight(1.7);
+    for (const edge of plate.edges || []) {
+        const [from, to] = edge || [];
+        const a = nodes.get(from), b = nodes.get(to);
+        if (!a || !b) continue;
+        const exposed = plateCellIsExposed(topLayer, from, plateIndex)
+          && plateCellIsExposed(topLayer, to, plateIndex);
+        p.stroke(...color, exposed ? 225 : 65);
+        p.line(a.x * width, a.y * height, b.x * width, b.y * height);
+    }
+}
+
+function drawPlatePickups(p, plate, plateIndex, topLayer, audioTopology, color, width, height) {
+    if (typeof p.circle !== 'function') return;
+    const layer = audioTopology?.layerIds?.indexOf(plate.id) ?? -1;
+    const pickupNodes = audioTopology?.pickupNodeIndices;
+    const nodeGridIndices = audioTopology?.nodeGridIndices;
+    const solverGrid = audioTopology?.solverGrid;
+    const hasAudioNodes = layer >= 0 && Number.isInteger(solverGrid) && solverGrid > 1
+        && pickupNodes?.length >= layer * 2 + 2 && nodeGridIndices?.length;
+    if (hasAudioNodes) {
+        for (let index = 0; index < 2; index += 1) {
+            const node = pickupNodes[layer * 2 + index];
+            if (!Number.isInteger(node) || node < 0 || node >= nodeGridIndices.length) continue;
+            const cell = nodeGridIndices[node];
+            if (!Number.isInteger(cell) || cell < 0 || cell >= solverGrid ** 2) continue;
+            const point = { x: (cell % solverGrid) / (solverGrid - 1),
+                y: Math.floor(cell / solverGrid) / (solverGrid - 1) };
+            const sourceCell = Math.round(point.y * (plate.grid.height - 1)) * plate.grid.width
+                + Math.round(point.x * (plate.grid.width - 1));
+            p.noStroke();
+            p.fill(...color, plateCellAlpha(topLayer, sourceCell, plateIndex));
+            p.circle(point.x * width, point.y * height, 7);
+        }
+        return true;
+    }
+    for (const point of plate.pickups || []) {
+        if (!isPoint(point)) continue;
+        const sourceCell = Math.round(point.y * (plate.grid.height - 1)) * plate.grid.width
+            + Math.round(point.x * (plate.grid.width - 1));
+        p.noFill();
+        p.stroke(...color, plateCellAlpha(topLayer, sourceCell, plateIndex));
+        p.strokeWeight(1.5);
+        p.circle(point.x * width, point.y * height, 9);
+    }
+    return false;
+}
+
+function drawPickupLegend(p, audioNodes, y) {
+    if (typeof p.text !== 'function') return;
+    p.noStroke();
+    p.fill(55, 55, 55, 220);
+    if (typeof p.textSize === 'function') p.textSize(9);
+    p.text(audioNodes ? 'filled = audio pickup node' : 'hollow = Plate pickup target (audio topology unavailable)',
+        6, y);
+}
+
+function drawPlateExposureLegend(p, height) {
+    if (typeof p.text !== 'function') return;
+    const y = height - 26;
+    p.stroke(70, 70, 70, 225);
+    p.strokeWeight(1.5);
+    p.line(6, y, 20, y);
+    p.stroke(70, 70, 70, 65);
+    p.line(6, y + 11, 20, y + 11);
+    p.noStroke();
+    p.fill(55, 55, 55, 220);
+    if (typeof p.textSize === 'function') p.textSize(9);
+    p.text('solid = exposed · faint = buried', 24, y + 3);
+}
+
+function plateCellAlpha(topLayer, cell, plateIndex) {
+    return plateCellIsExposed(topLayer, cell, plateIndex) ? 225 : 65;
+}
+
+function plateCellIsExposed(topLayer, cell, plateIndex) {
+    return !topLayer?.length || topLayer[cell] === plateIndex;
+}
+
+function plateDebugColor(id) {
+    const colors = [[65, 95, 145], [145, 80, 35], [105, 80, 145], [55, 105, 65], [150, 65, 90], [0, 105, 110]];
+    const number = Number(id.match(/(\d+)$/)?.[1]);
+    const index = Number.isFinite(number) ? Math.max(0, number - 1) : [...id].reduce((sum, char) => sum + char.charCodeAt(0), 0);
+    return colors[index % colors.length];
 }
 
 function drawAnt(p, agent, width, height, diameterScale) {

@@ -1,0 +1,909 @@
+{
+  "status": "frozen-P1-one-hop-pickup-aperture-A-B",
+  "decisionScope": "One predetermined graph-local finite-aperture candidate. No production DSP, Plate/material/birth/routing/substrate/simulation change.",
+  "candidate": {
+    "rule": "pickup node plus direct same-layer compiled neighborIndices only",
+    "kernel": "Gaussian exp(-d^2 / (2 sigma^2))",
+    "sigmaSolverCells": 1,
+    "rawCenterWeight": 1,
+    "rawOneHopWeight": 0.6065306597126334,
+    "normalization": "divide each pickup neighborhood by its own positive weight sum",
+    "audioPath": "signed next-displacement weighted sum; no abs, RMS or rectification; existing MIX then existing limiter",
+    "uniformDisplacementResponse": {
+      "left": 1,
+      "right": 1,
+      "asserted": true
+    },
+    "pickups": [
+      {
+        "side": "left",
+        "centerNode": 34,
+        "centerCell": 496,
+        "neighborhood": [
+          {
+            "node": 34,
+            "distanceCells": 0,
+            "rawWeight": 1,
+            "normalizedWeight": 0.45186276187760605
+          },
+          {
+            "node": 35,
+            "distanceCells": 1,
+            "rawWeight": 0.6065306597126334,
+            "normalizedWeight": 0.274068619061197
+          },
+          {
+            "node": 37,
+            "distanceCells": 1,
+            "rawWeight": 0.6065306597126334,
+            "normalizedWeight": 0.274068619061197
+          }
+        ],
+        "weightSum": 1,
+        "uniformDisplacementResponse": 1
+      },
+      {
+        "side": "right",
+        "centerNode": 15,
+        "centerCell": 217,
+        "neighborhood": [
+          {
+            "node": 15,
+            "distanceCells": 0,
+            "rawWeight": 1,
+            "normalizedWeight": 0.35466124439244334
+          },
+          {
+            "node": 14,
+            "distanceCells": 1,
+            "rawWeight": 0.6065306597126334,
+            "normalizedWeight": 0.21511291853585218
+          },
+          {
+            "node": 16,
+            "distanceCells": 1,
+            "rawWeight": 0.6065306597126334,
+            "normalizedWeight": 0.21511291853585218
+          },
+          {
+            "node": 9,
+            "distanceCells": 1,
+            "rawWeight": 0.6065306597126334,
+            "normalizedWeight": 0.21511291853585218
+          }
+        ],
+        "weightSum": 1,
+        "uniformDisplacementResponse": 1
+      }
+    ],
+    "noCrossLayerOrDisconnectedEdges": true,
+    "targetPositionsChanged": false
+  },
+  "source": {
+    "seed": 20261005,
+    "inputFile": "fresh-seed-20261005-through-first-birth-plus-10s.json.gz",
+    "inputGzipSha256": "25bf05aab8bbbb142be11b79f37a5988898d6069e24cae31bf721348b0bf7ff3",
+    "firstPlateId": "trail-plate-1",
+    "firstPlateBirthSeconds": 103.01666666667376,
+    "firstPlateDescriptorSha256": "fd079682ed0663f9bffdae36b1102958ef219f7d0bb6b35fcf2b1d09bc647b16",
+    "descriptorMatchesFrozen": true,
+    "acceptedNaturalP1Strikes": 63,
+    "scheduleSha256": "d3a0468479ec1dc79751b9cbcd5b4fda83712d36e41d293d518cefde429a4933",
+    "scheduleExactlyMatchesFrozenA": true,
+    "aWorkletSha256": "0d5289950a000ee9aa3264b9b6bdffedd13bca2d28a0bab281be03ca6a45efd5",
+    "aPcm": {
+      "file": "../mix-audibility/A-baseline-born-only-10s-48khz-f32.wav",
+      "sha256": "7616551f36bf2dcc3f770ed7d07c3da7f7c55d559d58dddbf9409af254e46c48",
+      "exactFrozenProductionA": true
+    },
+    "baseSubstrateStemTouched": false
+  },
+  "capture": {
+    "browser": "155.0.8059.40",
+    "engine": "Chrome OfflineAudioContext + production worklet with in-memory scheduler/readout instrumentation",
+    "sampleRateHz": 48000,
+    "surfaceGain": 0.24499999999999997,
+    "sweepNodeCount": 48,
+    "controlStrikeFrame": 480,
+    "preStrikeMs": 10,
+    "sweepCaptureFrames": 24480,
+    "sweepWindowMs": [
+      100,
+      250,
+      500
+    ],
+    "naturalCaptureFrames": 480000,
+    "naturalCaptureSeconds": 10,
+    "naturalClockMapping": "requestedFrame = round((strikeSimulationTimeMs - firstPlateBirthMs) * 48)",
+    "scheduleReady": {
+      "nodeSweep": "frame 0, one event per run",
+      "natural": {
+        "type": "evidence-ready",
+        "frame": 0,
+        "endFrame": 480000,
+        "scheduled": 63
+      }
+    },
+    "naturalWorklet": {
+      "type": "evidence-done",
+      "strikes": 63,
+      "scheduled": 63,
+      "renderedFrames": 480000,
+      "diagnostics": {
+        "topologies": 1,
+        "strikes": 63,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 48,
+        "sleeps": 0,
+        "truncatedTailEnergy": 0,
+        "physicsSteps": 60000,
+        "energyDelta": -0.00009774570925200423,
+        "couplingWorkProxy": 0,
+        "deepPlateCouplingTransfers": 0,
+        "sphereCouplingTransfers": 0,
+        "maxOutputAbs": 0.032118717932879036,
+        "requestedContactImpulseSquared": 0.019459157243224032,
+        "compliantContactImpulseSquared": 0.0184714547367863,
+        "contactPulseNodeSteps": 6248,
+        "contactAttenuatedNodeContributions": 416,
+        "activeSphereModes": 0,
+        "layers": 1,
+        "activeNodes": 48,
+        "awakeLayers": 1,
+        "sleepingLayers": 0,
+        "physicsRate": 6000,
+        "topologyGeneration": 2,
+        "couplingLinks": 0,
+        "noduleCount": 0,
+        "integratedSphereModes": 0,
+        "mix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000,
+        "contactPulseDurationMs": 3,
+        "contactPulseSteps": 18,
+        "contactRecoveryTimeMs": 75,
+        "contactReferenceDeltaV": 0.02,
+        "contactMaximumComplianceLoss": 0.25
+      }
+    }
+  },
+  "sweepComparison": {
+    "aNodeCount": 48,
+    "bNodeCount": 48,
+    "windows": [
+      {
+        "windowMs": 100,
+        "channels": {
+          "left": {
+            "A": {
+              "minimum": 0.000034412506853441035,
+              "p10": 0.00004841650150061648,
+              "median": 0.00010376036927606488,
+              "maximum": 0.0008725316597457406,
+              "maxMinRatio": 25.355074056701362,
+              "maxMinDb": 28.081297667324677
+            },
+            "B": {
+              "minimum": 0.000027743767103912945,
+              "p10": 0.00003683005870036096,
+              "median": 0.00009500453750265123,
+              "maximum": 0.001021693804729234,
+              "maxMinRatio": 36.82606622606544,
+              "maxMinDb": 31.323106596725513
+            },
+            "bToA": {
+              "minimumRatio": 0.8062117422038012,
+              "p10Ratio": 0.7606922755435358,
+              "medianRatio": 0.9156148745951561,
+              "medianChangeDb": -0.7657432124329859
+            }
+          },
+          "right": {
+            "A": {
+              "minimum": 0.000059685946080863243,
+              "p10": 0.00007668128589487382,
+              "median": 0.00017435368551138204,
+              "maximum": 0.0009022500300153935,
+              "maxMinRatio": 15.116624419306586,
+              "maxMinDb": 23.589096458572918
+            },
+            "B": {
+              "minimum": 0.00003579254147214534,
+              "p10": 0.00004787758445250396,
+              "median": 0.00011402936240527184,
+              "maximum": 0.0007965912686607565,
+              "maxMinRatio": 22.25578949962757,
+              "maxMinDb": 26.948860100207344
+            },
+            "bToA": {
+              "minimumRatio": 0.599681228536667,
+              "p10Ratio": 0.6243711734065299,
+              "medianRatio": 0.6540117696441115,
+              "medianChangeDb": -3.6882887201966756
+            }
+          },
+          "pooled": {
+            "A": {
+              "minimum": 0.00008092839996424675,
+              "p10": 0.00013391890713594203,
+              "median": 0.0004493979900748518,
+              "maximum": 0.000638450991576768,
+              "maxMinRatio": 7.889084571779851,
+              "maxMinDb": 17.940532235316645
+            },
+            "B": {
+              "minimum": 0.00007358014133299312,
+              "p10": 0.00010290179466888435,
+              "median": 0.0004070802553356208,
+              "maximum": 0.0007231813018403796,
+              "maxMinRatio": 9.828484815863042,
+              "maxMinDb": 19.849731421079337
+            },
+            "bToA": {
+              "minimumRatio": 0.9092004953205548,
+              "p10Ratio": 0.7683888471732225,
+              "medianRatio": 0.9058346150320287,
+              "medianChangeDb": -0.8590217492333684
+            }
+          }
+        },
+        "spatialRank": {
+          "left": {
+            "spearmanRho": 0.9940295267042988,
+            "concordantPairs": 1099,
+            "discordantPairs": 29,
+            "tiesA": 0,
+            "tiesB": 0,
+            "pairwiseOrderPreservation": 0.974290780141844
+          },
+          "right": {
+            "spearmanRho": 0.9948979591836735,
+            "concordantPairs": 1102,
+            "discordantPairs": 26,
+            "tiesA": 0,
+            "tiesB": 0,
+            "pairwiseOrderPreservation": 0.9769503546099291
+          },
+          "pooled": {
+            "spearmanRho": 0.9483282674772037,
+            "concordantPairs": 1034,
+            "discordantPairs": 94,
+            "tiesA": 0,
+            "tiesB": 0,
+            "pairwiseOrderPreservation": 0.9166666666666666
+          }
+        }
+      },
+      {
+        "windowMs": 250,
+        "channels": {
+          "left": {
+            "A": {
+              "minimum": 0.00002921231291274526,
+              "p10": 0.00004202436909514173,
+              "median": 0.00008967811588014007,
+              "maximum": 0.0007629888762392096,
+              "maxMinRatio": 26.118742412427036,
+              "maxMinDb": 28.33904524647741
+            },
+            "B": {
+              "minimum": 0.000023470028693451986,
+              "p10": 0.00003227612435919595,
+              "median": 0.00008252236376110828,
+              "maximum": 0.0008933425813037386,
+              "maxMinRatio": 38.063122673257595,
+              "maxMinDb": 31.610088292858087
+            },
+            "bToA": {
+              "minimumRatio": 0.8034293198061723,
+              "p10Ratio": 0.7680335256461296,
+              "medianRatio": 0.9202062615967995,
+              "medianChangeDb": -0.7222963175842911
+            }
+          },
+          "right": {
+            "A": {
+              "minimum": 0.000052621695622148774,
+              "p10": 0.00006622935125432641,
+              "median": 0.00014875996935182796,
+              "maximum": 0.0007716301487431771,
+              "maxMinRatio": 14.663726427287408,
+              "maxMinDb": 23.324886992946045
+            },
+            "B": {
+              "minimum": 0.00003169130024997746,
+              "p10": 0.00004104500984051337,
+              "median": 0.00009784311725801096,
+              "maximum": 0.0006797050400552038,
+              "maxMinRatio": 21.447685474996792,
+              "maxMinDb": 26.62760864400701
+            },
+            "bToA": {
+              "minimumRatio": 0.6022477967554966,
+              "p10Ratio": 0.6197404785515261,
+              "medianRatio": 0.6577247742408779,
+              "medianChangeDb": -3.639115988921891
+            }
+          },
+          "pooled": {
+            "A": {
+              "minimum": 0.00006810189597641188,
+              "p10": 0.00011772833979756325,
+              "median": 0.0003912092726507337,
+              "maximum": 0.0005460157716014848,
+              "maxMinRatio": 8.017629520778769,
+              "maxMinDb": 18.080919689328333
+            },
+            "B": {
+              "minimum": 0.00006142032234034791,
+              "p10": 0.00008811926031983401,
+              "median": 0.0003633671666831448,
+              "maximum": 0.0006322962946263306,
+              "maxMinRatio": 10.294577926872353,
+              "maxMinDb": 20.25217090875961
+            },
+            "bToA": {
+              "minimumRatio": 0.9018885812169131,
+              "p10Ratio": 0.748496585200787,
+              "medianRatio": 0.9288306594091241,
+              "medianChangeDb": -0.641269151512815
+            }
+          }
+        },
+        "spatialRank": {
+          "left": {
+            "spearmanRho": 0.9955492835432045,
+            "concordantPairs": 1103,
+            "discordantPairs": 25,
+            "tiesA": 0,
+            "tiesB": 0,
+            "pairwiseOrderPreservation": 0.9778368794326241
+          },
+          "right": {
+            "spearmanRho": 0.9953321754233608,
+            "concordantPairs": 1104,
+            "discordantPairs": 24,
+            "tiesA": 0,
+            "tiesB": 0,
+            "pairwiseOrderPreservation": 0.9787234042553191
+          },
+          "pooled": {
+            "spearmanRho": 0.9433347807207989,
+            "concordantPairs": 1036,
+            "discordantPairs": 92,
+            "tiesA": 0,
+            "tiesB": 0,
+            "pairwiseOrderPreservation": 0.9184397163120568
+          }
+        }
+      },
+      {
+        "windowMs": 500,
+        "channels": {
+          "left": {
+            "A": {
+              "minimum": 0.000023905632595333147,
+              "p10": 0.00003431792710568829,
+              "median": 0.00007221712245150406,
+              "maximum": 0.0006210305364229925,
+              "maxMinRatio": 25.978418849465207,
+              "maxMinDb": 28.292254292824023
+            },
+            "B": {
+              "minimum": 0.000019212635709516554,
+              "p10": 0.000026349420539448535,
+              "median": 0.00006638171282279542,
+              "maximum": 0.0007271326801486361,
+              "maxMinRatio": 37.84658654556527,
+              "maxMinDb": 31.560534315413804
+            },
+            "bToA": {
+              "minimumRatio": 0.8036865635284314,
+              "p10Ratio": 0.7678033832958706,
+              "medianRatio": 0.919196314798789,
+              "medianChangeDb": -0.7318345094101955
+            }
+          },
+          "right": {
+            "A": {
+              "minimum": 0.00004286247093832423,
+              "p10": 0.00005407342717511398,
+              "median": 0.00012193444222499339,
+              "maximum": 0.0006225594714128052,
+              "maxMinRatio": 14.524581942758736,
+              "maxMinDb": 23.24207282115666
+            },
+            "B": {
+              "minimum": 0.000025818841047733508,
+              "p10": 0.000033513980929098795,
+              "median": 0.00008029631015912103,
+              "maximum": 0.000547868987722322,
+              "maxMinRatio": 21.21973587851715,
+              "maxMinDb": 26.534799478944112
+            },
+            "bToA": {
+              "minimumRatio": 0.6023647373219527,
+              "p10Ratio": 0.6197865140037363,
+              "medianRatio": 0.6585203384205286,
+              "medianChangeDb": -3.628616145937549
+            }
+          },
+          "pooled": {
+            "A": {
+              "minimum": 0.000054879619892329526,
+              "p10": 0.0000959218732111043,
+              "median": 0.00031749153649748423,
+              "maximum": 0.0004406367349269759,
+              "maxMinRatio": 8.029150635362969,
+              "maxMinDb": 18.093392116320796
+            },
+            "B": {
+              "minimum": 0.00004926529891509019,
+              "p10": 0.00007154425639767129,
+              "median": 0.00029786430295094326,
+              "maximum": 0.0005146614280234459,
+              "maxMinRatio": 10.446733083066764,
+              "maxMinDb": 20.379609970053416
+            },
+            "bToA": {
+              "minimumRatio": 0.8976975243586911,
+              "p10Ratio": 0.745859666858435,
+              "medianRatio": 0.9381802936762804,
+              "medianChangeDb": -0.5542738715532209
+            }
+          }
+        },
+        "spatialRank": {
+          "left": {
+            "spearmanRho": 0.9951150673035172,
+            "concordantPairs": 1102,
+            "discordantPairs": 26,
+            "tiesA": 0,
+            "tiesB": 0,
+            "pairwiseOrderPreservation": 0.9769503546099291
+          },
+          "right": {
+            "spearmanRho": 0.9942466348241424,
+            "concordantPairs": 1100,
+            "discordantPairs": 28,
+            "tiesA": 0,
+            "tiesB": 0,
+            "pairwiseOrderPreservation": 0.975177304964539
+          },
+          "pooled": {
+            "spearmanRho": 0.9423577941815023,
+            "concordantPairs": 1033,
+            "discordantPairs": 95,
+            "tiesA": 0,
+            "tiesB": 0,
+            "pairwiseOrderPreservation": 0.9157801418439716
+          }
+        }
+      },
+      {
+        "windowMs": "peak500",
+        "channels": {
+          "left": {
+            "A": {
+              "minimum": 0.00009018243872560561,
+              "p10": 0.00014301587798399852,
+              "median": 0.00029306780197657645,
+              "maximum": 0.0020658522844314575,
+              "maxMinRatio": 22.907478591448843,
+              "maxMinDb": 27.199545787207462
+            },
+            "B": {
+              "minimum": 0.00006808199395891279,
+              "p10": 0.00010395600038464181,
+              "median": 0.000259758293395862,
+              "maximum": 0.0021581242326647043,
+              "maxMinRatio": 31.69889874211269,
+              "maxMinDb": 30.020883491338402
+            },
+            "bToA": {
+              "minimumRatio": 0.7549362705311515,
+              "p10Ratio": 0.7268843281602134,
+              "medianRatio": 0.8863419715299303,
+              "medianChangeDb": -1.0479736955730854
+            }
+          },
+          "right": {
+            "A": {
+              "minimum": 0.00018922438903246075,
+              "p10": 0.000231729653023649,
+              "median": 0.0005405500705819577,
+              "maximum": 0.00233882456086576,
+              "maxMinRatio": 12.36005872617479,
+              "maxMinDb": 21.84041068430038
+            },
+            "B": {
+              "minimum": 0.00011266655928920954,
+              "p10": 0.00014534445508616046,
+              "median": 0.0003473302349448204,
+              "maximum": 0.0019019052851945162,
+              "maxMinRatio": 16.88083222913037,
+              "maxMinDb": 24.547877072818196
+            },
+            "bToA": {
+              "minimumRatio": 0.5954124617090559,
+              "p10Ratio": 0.6272156074532569,
+              "medianRatio": 0.6425496061278536,
+              "medianChangeDb": -3.8418667658176626
+            }
+          },
+          "pooled": {
+            "A": {
+              "minimum": 0.00023850216530263424,
+              "p10": 0.0004667228262405843,
+              "median": 0.0014901406248100102,
+              "maximum": 0.00233882456086576,
+              "maxMinRatio": 9.806303258916063,
+              "maxMinDb": 19.830106392597134
+            },
+            "B": {
+              "minimum": 0.00018712958262767643,
+              "p10": 0.0003167125047184527,
+              "median": 0.0013149101287126541,
+              "maximum": 0.0021581242326647043,
+              "maxMinRatio": 11.532779597754088,
+              "maxMinDb": 21.238679846641958
+            },
+            "bToA": {
+              "minimumRatio": 0.7846032860549866,
+              "p10Ratio": 0.6785879903701026,
+              "medianRatio": 0.8824067385454325,
+              "medianChangeDb": -1.0866236808513523
+            }
+          }
+        },
+        "spatialRank": {
+          "left": {
+            "spearmanRho": 0.9947894051237516,
+            "concordantPairs": 1106,
+            "discordantPairs": 22,
+            "tiesA": 0,
+            "tiesB": 0,
+            "pairwiseOrderPreservation": 0.9804964539007093
+          },
+          "right": {
+            "spearmanRho": 0.9951150673035172,
+            "concordantPairs": 1102,
+            "discordantPairs": 26,
+            "tiesA": 0,
+            "tiesB": 0,
+            "pairwiseOrderPreservation": 0.9769503546099291
+          },
+          "pooled": {
+            "spearmanRho": 0.9350846721667391,
+            "concordantPairs": 1021,
+            "discordantPairs": 107,
+            "tiesA": 0,
+            "tiesB": 0,
+            "pairwiseOrderPreservation": 0.9051418439716312
+          }
+        }
+      }
+    ],
+    "candidateVsPointPoolNodeMetric": "same 48 source-mask strike positions and frozen strike strength/footprint/hardness"
+  },
+  "natural63Strikes": {
+    "A": {
+      "sampleRateHz": 48000,
+      "samplesPerChannel": 480000,
+      "rms": {
+        "left": 0.0009114349662096913,
+        "right": 0.0006207485989886735,
+        "pooled": 0.0007797571804017139
+      },
+      "peak": {
+        "left": 0.006492561660706997,
+        "right": 0.004412050824612379,
+        "maximum": 0.006492561660706997
+      },
+      "clippingSamples": 0,
+      "nonFiniteSamples": 0,
+      "stereoCorrelation": -0.0043029663353529694
+    },
+    "B": {
+      "sampleRateHz": 48000,
+      "samplesPerChannel": 480000,
+      "rms": {
+        "left": 0.0010417979406106383,
+        "right": 0.0005176121356356477,
+        "pooled": 0.0008225768268125061
+      },
+      "peak": {
+        "left": 0.007624206133186817,
+        "right": 0.0037000395823270082,
+        "maximum": 0.007624206133186817
+      },
+      "clippingSamples": 0,
+      "nonFiniteSamples": 0,
+      "stereoCorrelation": -0.0029700448899041172,
+      "pcm": {
+        "file": "B-1hop-gaussian-born-only-10s-48khz-f32.wav",
+        "sha256": "8beee33b971543a43a54f1f5ca6bc3785116059586795d3ec10a627ed72cc336"
+      }
+    },
+    "pooledRmsChangeDbAtoB": 0.4643417596929441,
+    "leftRmsChangeDbAtoB": 1.161156175975321,
+    "rightRmsChangeDbAtoB": -1.5782259607969134,
+    "channelBalanceDbA": 3.336198755258686,
+    "channelBalanceDbB": 6.07558089203092,
+    "stereoCorrelationA": -0.0043029663353529694,
+    "stereoCorrelationB": -0.0029700448899041172,
+    "eventAlignedWindows": [
+      {
+        "windowMs": 100,
+        "A": {
+          "eligibleEvents": 62,
+          "excludedIncompleteTailEvents": 1,
+          "interval": "[strike frame, strike frame + duration)",
+          "meanRms": {
+            "left": 0.001092667017821802,
+            "right": 0.0008076714753712255,
+            "pooled": 0.001059953499531462
+          },
+          "medianRms": {
+            "left": 0.0007171015867751503,
+            "right": 0.0008413195205060115,
+            "pooled": 0.000974521117164307
+          },
+          "peakMaximum": {
+            "left": 0.006492561660706997,
+            "right": 0.004412050824612379
+          }
+        },
+        "B": {
+          "eligibleEvents": 62,
+          "excludedIncompleteTailEvents": 1,
+          "interval": "[strike frame, strike frame + duration)",
+          "meanRms": {
+            "left": 0.0012247216463074305,
+            "right": 0.0006635690180896179,
+            "pooled": 0.00107705760628914
+          },
+          "medianRms": {
+            "left": 0.0007846918339574174,
+            "right": 0.0006945532817566935,
+            "pooled": 0.000930543679421983
+          },
+          "peakMaximum": {
+            "left": 0.007624206133186817,
+            "right": 0.0037000395823270082
+          }
+        },
+        "medianPooledChangeDbAtoB": -0.4010898162475534
+      },
+      {
+        "windowMs": 250,
+        "A": {
+          "eligibleEvents": 62,
+          "excludedIncompleteTailEvents": 1,
+          "interval": "[strike frame, strike frame + duration)",
+          "meanRms": {
+            "left": 0.0010356262729645947,
+            "right": 0.0007526959971644183,
+            "pooled": 0.00098916779998467
+          },
+          "medianRms": {
+            "left": 0.0006379290476166032,
+            "right": 0.0007304140765416161,
+            "pooled": 0.0009206040742992949
+          },
+          "peakMaximum": {
+            "left": 0.006492561660706997,
+            "right": 0.004412050824612379
+          }
+        },
+        "B": {
+          "eligibleEvents": 62,
+          "excludedIncompleteTailEvents": 1,
+          "interval": "[strike frame, strike frame + duration)",
+          "meanRms": {
+            "left": 0.0011638757254002396,
+            "right": 0.0006202117629908992,
+            "pooled": 0.0010081509402771185
+          },
+          "medianRms": {
+            "left": 0.0007095054549470922,
+            "right": 0.0006057048770381528,
+            "pooled": 0.000825702820624912
+          },
+          "peakMaximum": {
+            "left": 0.007624206133186817,
+            "right": 0.0037000395823270082
+          }
+        },
+        "medianPooledChangeDbAtoB": -0.9449824889934397
+      },
+      {
+        "windowMs": 500,
+        "A": {
+          "eligibleEvents": 61,
+          "excludedIncompleteTailEvents": 2,
+          "interval": "[strike frame, strike frame + duration)",
+          "meanRms": {
+            "left": 0.0010681138155104624,
+            "right": 0.0007444421572270107,
+            "pooled": 0.0009964485876888386
+          },
+          "medianRms": {
+            "left": 0.0007158881294920392,
+            "right": 0.0007990606833543595,
+            "pooled": 0.0009185211844819168
+          },
+          "peakMaximum": {
+            "left": 0.006492561660706997,
+            "right": 0.004412050824612379
+          }
+        },
+        "B": {
+          "eligibleEvents": 61,
+          "excludedIncompleteTailEvents": 2,
+          "interval": "[strike frame, strike frame + duration)",
+          "meanRms": {
+            "left": 0.001205094510358651,
+            "right": 0.0006152631251322715,
+            "pooled": 0.0010233428017280958
+          },
+          "medianRms": {
+            "left": 0.0007804936518459737,
+            "right": 0.0006265399355776392,
+            "pooled": 0.0008468162702897074
+          },
+          "peakMaximum": {
+            "left": 0.007624206133186817,
+            "right": 0.0037000395823270082
+          }
+        },
+        "medianPooledChangeDbAtoB": -0.705999669016043
+      }
+    ],
+    "note": "Full-run RMS includes all overlapping natural strike responses. Event windows can overlap/coincide and describe the shared runtime output, not isolated impulses."
+  },
+  "pcmChecks": {
+    "clippingThreshold": "|sample| >= 1",
+    "A": {
+      "clippingSamples": 0,
+      "nonFiniteSamples": 0
+    },
+    "B": {
+      "clippingSamples": 0,
+      "nonFiniteSamples": 0
+    },
+    "sweepB": {
+      "clippingSamples": 0,
+      "nonFiniteSamples": 0
+    },
+    "internalSolverDiagnosticsMatchA": true,
+    "comparedDiagnosticFields": [
+      "topologies",
+      "strikes",
+      "dropped",
+      "droppedRoutes",
+      "nonFinite",
+      "wakes",
+      "sleeps",
+      "truncatedTailEnergy",
+      "physicsSteps",
+      "energyDelta",
+      "couplingWorkProxy",
+      "deepPlateCouplingTransfers",
+      "sphereCouplingTransfers",
+      "requestedContactImpulseSquared",
+      "compliantContactImpulseSquared",
+      "contactPulseNodeSteps",
+      "contactAttenuatedNodeContributions",
+      "activeSphereModes",
+      "layers",
+      "activeNodes",
+      "awakeLayers",
+      "sleepingLayers",
+      "physicsRate",
+      "topologyGeneration",
+      "couplingLinks",
+      "noduleCount",
+      "integratedSphereModes",
+      "truncatedTailRiskThreshold",
+      "quietStepsThreshold",
+      "contactPulseDurationMs",
+      "contactPulseSteps",
+      "contactRecoveryTimeMs",
+      "contactReferenceDeltaV",
+      "contactMaximumComplianceLoss"
+    ],
+    "productionFilesChanged": false
+  },
+  "settings": {
+    "unchanged": true,
+    "substrateOutputRatio": 0.22,
+    "substrateDamping": 1,
+    "contactPulseMs": 3,
+    "recoveryMs": 75,
+    "plateDampingMultiplier": 50,
+    "mix": "1/sqrt(12)",
+    "softLimiter": "unchanged",
+    "masterGain": 0.35
+  },
+  "renderer": {
+    "source": "existing ANT stratigraphy overview/audio snapshot renderer and existing luminance transfer",
+    "waveformAmplitude": [
+      -1,
+      1
+    ],
+    "channelMode": "separate L/R",
+    "fftSize": 1024,
+    "window": "Hann",
+    "hopSize": 256,
+    "frequencyHz": [
+      0,
+      8000
+    ],
+    "dbfs": [
+      -100,
+      0
+    ],
+    "grayscaleGamma": 1,
+    "normalization": "none; fixed-scale",
+    "markers": "frozen FOOT_CONTACT groups and P1 birth at audio sample 0"
+  },
+  "images": [
+    {
+      "file": "A-point-pickup-fixed-overview.png",
+      "sha256": "0e097883b5ae3fab871db4a06ae79d02fa46b114570672eb30fbaee49f6ef897",
+      "bytes": 147227
+    },
+    {
+      "file": "B-1hop-gaussian-fixed-overview.png",
+      "sha256": "bf97234ae5649a4624c57817ea310bcc5093b184ac05fdb588e8719e786339e6",
+      "bytes": 141343
+    },
+    {
+      "file": "A-B-fixed-waveform-comparison.png",
+      "sha256": "ba1514c18ee41f71d8684654c83e3c656cb3fa27dfb27431e27a0716e9e24859",
+      "bytes": 70814
+    },
+    {
+      "file": "A-B-node-rms100-fixed-dbfs.png",
+      "sha256": "49169fabe672fb68c56ee41dcc3059d3cd6bda54cf0b8fb9d37fa30b6b7be8a0",
+      "bytes": 37202
+    }
+  ],
+  "conclusion": {
+    "decision": "reject",
+    "retainAsCandidate": false,
+    "productionApplied": false,
+    "weakTail": [
+      {
+        "windowMs": 100,
+        "p10Ratio": 0.7683888471732225,
+        "minRatio": 0.9092004953205548,
+        "maxMinRatioA": 7.889084571779851,
+        "maxMinRatioB": 9.828484815863042,
+        "order": 0.9166666666666666
+      },
+      {
+        "windowMs": 250,
+        "p10Ratio": 0.748496585200787,
+        "minRatio": 0.9018885812169131,
+        "maxMinRatioA": 8.017629520778769,
+        "maxMinRatioB": 10.294577926872353,
+        "order": 0.9184397163120568
+      },
+      {
+        "windowMs": 500,
+        "p10Ratio": 0.745859666858435,
+        "minRatio": 0.8976975243586911,
+        "maxMinRatioA": 8.029150635362969,
+        "maxMinRatioB": 10.446733083066764,
+        "order": 0.9157801418439716
+      }
+    ],
+    "naturalPooledRmsRatio": 1.0549140777244685,
+    "basis": "Pooled P10 and minimum are both lower than A in all three windows; weak-tail observability did not improve. Stop without testing alternate aperture size or weights."
+  }
+}

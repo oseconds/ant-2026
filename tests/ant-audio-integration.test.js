@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { AntController } from '../src/lib/agents/ant/AntController.js';
 import { GaitController } from '../src/lib/agents/ant/GaitController.js';
 import { Lab } from '../src/lib/lab/Lab.js';
+import { AntEnvironmentAudioBridge } from '../src/lib/audio/AntEnvironmentAudioBridge.js';
 
 function countedRandom(seed) {
   let value = seed >>> 0;
@@ -53,6 +54,57 @@ test('FOOT_CONTACT observation and Audio On/Off preserve movement, field, spawni
     assert.equal(bridge.destroyed, true);
     assert.equal(audible.gaitController.ants.size, 0);
   }
+});
+
+test('base substrate A/B changes only audio state, not ANT trajectories or environmental memory', async () => {
+  const baselineRandom = countedRandom(20261007), substrateRandom = countedRandom(20261007);
+  const handles = [];
+  const audioEngine = {
+    context: { currentTime: 0 },
+    init: async () => {},
+    async createWorklet(...args) {
+      const handle = {
+        node: { port: { postMessage() {} } },
+        gainNode: { gain: { value: args[5]?.gain ?? 1, cancelScheduledValues() {},
+          setValueAtTime(value) { this.value = value; },
+          linearRampToValueAtTime(value) { this.value = value; } } },
+        disconnect() {}
+      };
+      handles.push(handle);
+      return handle;
+    }
+  };
+  const baseline = new AntController({ random: baselineRandom });
+  const bridge = new AntEnvironmentAudioBridge({ audioEngine });
+  const withSubstrate = new AntController({
+    random: substrateRandom,
+    state: { audioExperiment: { baseSubstrate: true } },
+    audioBridge: bridge
+  });
+  await Promise.all([baseline.init(), withSubstrate.init()]);
+  await withSubstrate.setAudioEnabled(true);
+
+  for (let tick = 0; tick < 600; tick += 1) {
+    if (tick === 240) await withSubstrate.setBaseSubstrateEnabled(false);
+    if (tick === 420) await withSubstrate.setBaseSubstrateEnabled(true);
+    baseline.tick(1 / 60);
+    withSubstrate.tick(1 / 60);
+    if (tick % 60 === 0) {
+      const a = baseline.getSnapshot(), b = withSubstrate.getSnapshot();
+      assert.deepEqual(b.agents, a.agents);
+      assert.deepEqual(b.pheromone.values, a.pheromone.values);
+      assert.deepEqual(b.surface.values, a.surface.values);
+      assert.deepEqual(b.surfacePlates.plates, a.surfacePlates.plates);
+      assert.equal(b.surfacePlates.candidate?.geodesicLength ?? null,
+        a.surfacePlates.candidate?.geodesicLength ?? null);
+      assert.deepEqual(b.stratigraphy.stratigraphy.topLayerByCell,
+        a.stratigraphy.stratigraphy.topLayerByCell);
+      assert.equal(substrateRandom.calls, baselineRandom.calls);
+    }
+  }
+
+  assert.ok(handles.length >= 2, 'born surface and optional base substrate use audio transports only');
+  await Promise.all([baseline.destroy(), withSubstrate.destroy()]);
 });
 
 test('adding the deterministic gait leaves the behavior random stream and ant trajectories unchanged', async () => {

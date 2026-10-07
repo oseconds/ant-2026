@@ -57,7 +57,8 @@ export class TrailPlateBirth {
       ? 1 : (simulationTimeMs - this.lastAnalysisTimeMs) / 1000;
     this.lastAnalysisTimeMs = simulationTimeMs;
     this.updateChemicalMemory(pheromone, elapsedSeconds);
-    const { mask, supports } = this.buildSupportedMask(surface);
+    const { mask, supports, diagnostics } = this.buildSupportedMask(surface);
+    this.lastInputDiagnostics = diagnostics;
     const candidate = selectCandidate(mask, supports, this.chemicalMemory);
     if (!candidate) {
       this.candidate = null;
@@ -77,15 +78,26 @@ export class TrailPlateBirth {
       nowCandidate.similarity = similarity;
     }
     nowCandidate.footContacts = this.countFootContacts(nowCandidate.mask);
+    const priorBirth = this.birthRecords.length ? this.findSameCorridorBirth(nowCandidate) : null;
+    if (priorBirth) {
+      const newContacts = this.countFootContacts(priorBirth.corridorMask) - priorBirth.footContactsAtBirth;
+      nowCandidate.repeatDiagnostics = {
+        plateId: priorBirth.id,
+        newFootContacts: Math.max(0, newContacts),
+        refractoryRemainingSeconds: Math.max(0, TRAIL_PLATE_SAME_CORRIDOR_REFRACTORY_MS
+          - (simulationTimeMs - priorBirth.bornAtSimulationTimeMs)) / 1000
+      };
+    } else {
+      nowCandidate.repeatDiagnostics = null;
+    }
     this.candidate = nowCandidate;
 
     if (nowCandidate.stableSeconds + BIRTH_EPSILON < TRAIL_PLATE_PERSISTENCE_SECONDS
       || simulationTimeMs - this.lastBirthTimeMs < TRAIL_PLATE_GLOBAL_BIRTH_GAP_MS - BIRTH_EPSILON) return [];
 
-    const priorBirth = this.findSameCorridorBirth(nowCandidate);
     if (priorBirth) {
       const ageMs = simulationTimeMs - priorBirth.bornAtSimulationTimeMs;
-      const newContacts = this.countFootContacts(priorBirth.corridorMask) - priorBirth.footContactsAtBirth;
+      const newContacts = nowCandidate.repeatDiagnostics.newFootContacts;
       if (ageMs < TRAIL_PLATE_SAME_CORRIDOR_REFRACTORY_MS - BIRTH_EPSILON
         || newContacts < TRAIL_PLATE_REQUIRED_NEW_FOOT_CONTACTS) return [];
     }
@@ -108,6 +120,11 @@ export class TrailPlateBirth {
   getPlates() { return this.plates.slice(); }
 
   getSnapshot() {
+    const nowMs = this.lastAnalysisTimeMs ?? 0;
+    const repeatDiagnostics = this.candidate?.repeatDiagnostics || null;
+    const globalGapRemainingSeconds = Number.isFinite(this.lastBirthTimeMs)
+      ? Math.max(0, TRAIL_PLATE_GLOBAL_BIRTH_GAP_MS - (nowMs - this.lastBirthTimeMs)) / 1000
+      : 0;
     const candidate = this.candidate ? {
       source: { ...this.candidate.source },
       target: { ...this.candidate.target },
@@ -115,11 +132,40 @@ export class TrailPlateBirth {
       stableSeconds: this.candidate.stableSeconds,
       similarity: this.candidate.similarity,
       footContacts: this.candidate.footContacts,
-      qualified: this.candidate.stableSeconds + BIRTH_EPSILON >= TRAIL_PLATE_PERSISTENCE_SECONDS
+      meanChemical: this.candidate.meanChemical,
+      meanSupport: this.candidate.meanSupport,
+      pathPoints: this.candidate.path.map((index) => ({ ...gridPoint(index), index })),
+      globalGapRemainingSeconds,
+      repeat: repeatDiagnostics ? {
+        ...repeatDiagnostics,
+        contactsRemaining: Math.max(0, TRAIL_PLATE_REQUIRED_NEW_FOOT_CONTACTS
+          - repeatDiagnostics.newFootContacts)
+      } : null,
+      qualified: this.candidate.stableSeconds + BIRTH_EPSILON >= TRAIL_PLATE_PERSISTENCE_SECONDS,
+      birthReady: this.candidate.stableSeconds + BIRTH_EPSILON >= TRAIL_PLATE_PERSISTENCE_SECONDS
+        && globalGapRemainingSeconds <= BIRTH_EPSILON
+        && (!repeatDiagnostics || (repeatDiagnostics.refractoryRemainingSeconds <= BIRTH_EPSILON
+          && repeatDiagnostics.newFootContacts >= TRAIL_PLATE_REQUIRED_NEW_FOOT_CONTACTS))
+        && this.plates.length < this.maxBirths
     } : null;
     return {
       plates: this.getPlates(),
       candidate,
+      requirements: {
+        chemicalThreshold: TRAIL_PLATE_CHEMICAL_THRESHOLD,
+        supportThreshold: TRAIL_PLATE_SUPPORT_THRESHOLD,
+        persistenceSeconds: TRAIL_PLATE_PERSISTENCE_SECONDS,
+        minGeodesicLength: TRAIL_PLATE_MIN_GEODESIC_LENGTH,
+        sameCorridorRefractorySeconds: TRAIL_PLATE_SAME_CORRIDOR_REFRACTORY_MS / 1000,
+        requiredNewFootContacts: TRAIL_PLATE_REQUIRED_NEW_FOOT_CONTACTS,
+        globalBirthGapSeconds: TRAIL_PLATE_GLOBAL_BIRTH_GAP_MS / 1000,
+        sourceAnnulus: {
+          origin: { ...TRAIL_PLATE_SOURCE_ORIGIN },
+          radii: [...TRAIL_PLATE_SOURCE_RADII]
+        }
+      },
+      lastBirthTimeMs: Number.isFinite(this.lastBirthTimeMs) ? this.lastBirthTimeMs : null,
+      inputDiagnostics: { ...this.lastInputDiagnostics },
       limitReached: this.plates.length >= this.maxBirths
     };
   }
@@ -129,6 +175,12 @@ export class TrailPlateBirth {
     this.footContactCounts = new Uint32Array(CELL_COUNT);
     this.lastAnalysisTimeMs = null;
     this.lastBirthTimeMs = -Infinity;
+    this.lastInputDiagnostics = {
+      maxChemical: 0,
+      maxSupport: 0,
+      chemicalQualifiedCells: 0,
+      supportedCells: 0
+    };
     this.candidate = null;
     this.plates = [];
     this.birthRecords = [];
@@ -155,21 +207,36 @@ export class TrailPlateBirth {
   buildSupportedMask(surface) {
     const mask = new Uint8Array(CELL_COUNT);
     const supports = new Float32Array(CELL_COUNT);
-    if (typeof surface?.sampleSupport !== 'function') return { mask, supports };
+    let maxChemical = 0, maxSupport = 0, chemicalQualifiedCells = 0, supportedCells = 0;
+    if (typeof surface?.sampleSupport !== 'function') {
+      for (const value of this.chemicalMemory) maxChemical = Math.max(maxChemical, value);
+      return { mask, supports, diagnostics: {
+        maxChemical, maxSupport, chemicalQualifiedCells, supportedCells
+      } };
+    }
     for (let row = 0; row < TRAIL_PLATE_GRID_SIZE; row += 1) {
       const y = row / (TRAIL_PLATE_GRID_SIZE - 1);
       for (let column = 0; column < TRAIL_PLATE_GRID_SIZE; column += 1) {
         const index = row * TRAIL_PLATE_GRID_SIZE + column;
-        if (this.chemicalMemory[index] < TRAIL_PLATE_CHEMICAL_THRESHOLD) continue;
+        const chemical = this.chemicalMemory[index];
+        maxChemical = Math.max(maxChemical, chemical);
+        if (chemical < TRAIL_PLATE_CHEMICAL_THRESHOLD) continue;
+        chemicalQualifiedCells += 1;
         const x = column / (TRAIL_PLATE_GRID_SIZE - 1);
         const support = surface.sampleSupport(x, y, SUPPORT_SAMPLE_RADIUS);
         if (finite(support)) {
           supports[index] = Math.max(0, support);
-          if (support >= TRAIL_PLATE_SUPPORT_THRESHOLD) mask[index] = 1;
+          maxSupport = Math.max(maxSupport, supports[index]);
+          if (support >= TRAIL_PLATE_SUPPORT_THRESHOLD) {
+            mask[index] = 1;
+            supportedCells += 1;
+          }
         }
       }
     }
-    return { mask, supports };
+    return { mask, supports, diagnostics: {
+      maxChemical, maxSupport, chemicalQualifiedCells, supportedCells
+    } };
   }
 
   findSameCorridorBirth(candidate) {
