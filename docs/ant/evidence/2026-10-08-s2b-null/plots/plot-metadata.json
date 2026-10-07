@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "identity": "ANT-S2b-2026-10-08-identity-v1",
+  "inputs": [
+    "summary.json",
+    "seed20261005.json.gz",
+    "seed20261006.json.gz",
+    "seed20261007.json.gz"
+  ],
+  "outputs": [
+    "run-summaries.png",
+    "one-second-timelines.png",
+    "scheduled-boundary-phase-deltas.png",
+    "completed-lifetimes.png"
+  ],
+  "interpretation": "Descriptive observed-versus-null plots only. Null runs are individual packet runs; bands are descriptive, with no p-values or thresholds.",
+  "checks": {
+    "allPlottedValuesFinite": true,
+    "timelineCadenceSeconds": 1,
+    "timelineCadenceChecked": true,
+    "maximumNullRunsPerSeed": 8,
+    "phaseBinWidthSeconds": 0.25,
+    "phaseBins": 20
+  },
+  "scales": {
+    "runSummaries": {
+      "description": "Per-metric shared linear scale across seeds, all four windows, observed values and null runs; zero floor.",
+      "yLimits": {
+        "rollingEdges": [
+          0.0,
+          9.232143154737106
+        ],
+        "weightedDegree": [
+          0.0,
+          1.0
+        ],
+        "rawCount": [
+          0.0,
+          609.0
+        ],
+        "rawCompletedMean": [
+          0.0,
+          1.0
+        ],
+        "temporalCompletedMean": [
+          0.0,
+          11.293548913045715
+        ],
+        "bridgePersist": [
+          0.0,
+          250.95000000000002
+        ],
+        "articulationPersist": [
+          0.0,
+          22.05
+        ],
+        "connectorPersist": [
+          0.0,
+          7.3500000000000005
+        ],
+        "merge": [
+          0.0,
+          296.1
+        ],
+        "split": [
+          0.0,
+          537.6
+        ]
+      }
+    },
+    "timelines": {
+      "description": "Per-metric shared linear scale across seeds; 1 s window only.",
+      "yLimits": {
+        "edgeCount": [
+          0.0,
+          6.3
+        ],
+        "weightedDegreeMean": [
+          0.0,
+          0.8499999999999964
+        ]
+      }
+    },
+    "boundaryPhase": {
+      "description": "Per-metric symmetric linear scale shared across seeds and 0.25/1 s windows.",
+      "yLimits": {
+        "edgeCountDelta": [
+          -0.4023529411764708,
+          0.4023529411764708
+        ],
+        "weightedDegreePooledDelta": [
+          -0.004149632052329175,
+          0.004149632052329175
+        ]
+      }
+    },
+    "lifetimes": {
+      "description": "Shared normalized-frequency scale; generator bins are equally spaced categories.",
+      "yLimits": [
+        0.0,
+        0.988608870967742
+      ]
+    }
+  },
+  "seedColors": {
+    "20261005": "#2878b5",
+    "20261006": "#e07a24",
+    "20261007": "#3a9d5d"
+  },
+  "windowLabels": {
+    "0.25": "transient",
+    "1": "primary",
+    "5": "sensitivity",
+    "20": "sensitivity"
+  }
+}

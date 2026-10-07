@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: identity blocks preserve the entire spatial movie and reconstruct every frame from the ledger
+ok 1 - identity blocks preserve the entire spatial movie and reconstruct every frame from the ledger
+  ---
+  duration_ms: 35.4844
+  type: 'test'
+  ...
+# Subtest: lifecycle repairs retain every still-valid binding and fill only required vacancies
+ok 2 - lifecycle repairs retain every still-valid binding and fill only required vacancies
+  ---
+  duration_ms: 3.243
+  type: 'test'
+  ...
+# Subtest: dedicated deterministic null stream avoids behavior RNG and rejects corrupted tuples/IDs/ledger
+ok 3 - dedicated deterministic null stream avoids behavior RNG and rejects corrupted tuples/IDs/ledger
+  ---
+  duration_ms: 50.8013
+  type: 'test'
+  ...
+# Subtest: independent whole-tuple phase rotations preserve windows and invert byte-exactly
+ok 4 - independent whole-tuple phase rotations preserve windows and invert byte-exactly
+  ---
+  duration_ms: 2.4785
+  type: 'test'
+  ...
+# Subtest: dedicated replay seed yields repeatable nonzero offsets without Math.random
+ok 5 - dedicated replay seed yields repeatable nonzero offsets without Math.random
+  ---
+  duration_ms: 0.5349
+  type: 'test'
+  ...
+# Subtest: archive validation rejects non-finite values, invalid IDs/radii and re-entry
+ok 6 - archive validation rejects non-finite values, invalid IDs/radii and re-entry
+  ---
+  duration_ms: 0.477
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 158.4857

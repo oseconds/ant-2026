@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-08 — S2b exact-spatial-movie identity null
+
+[Chronology](./2026-10-08-s2b-identity-null.md) · [Evidence](../evidence/2026-10-08-s2b-null/README.md)
+
+- Exact recorded spatial movie; eight deterministic five-second identity nulls per seed
+- All frame-level geometry/active-ID invariants and full observer replay pass
+- Recent graph differences concentrate around remaps and lifecycle identity repairs
+- No social-organization claim; stop after verification, separate commits and branch push
+
 ### 2026-10-03 — Runtime / natural sleep diagnosis
 
 [`2026-10-03-runtime-sleep-diagnosis.md`](./2026-10-03-runtime-sleep-diagnosis.md)
