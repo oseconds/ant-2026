@@ -134,7 +134,9 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 - Applied the same fixed +18 dB or +20 dB gain to frozen Candidate D P1-only, substrate-only and sum stems
 - Candidate D settings and P1/substrate relative level stayed unchanged; six 10 s lossless WAVs and fixed-scale plots produced
 - Both gains had zero clipping/non-finite samples; browser playback checks loaded and started all six files
-- Stopped after the requested comparison; no threshold decision, commit, merge or push
+- At the pass stop there was no threshold decision, commit, merge or push
+- Subsequent direct listening judged D too dominant and the substrate timbre too metallic / long-tailed; next audio side-pass shifts timbre toward dull, sand-like and granular before re-calibrating level
+- Calibration tooling/evidence was later committed and merged via PR #1; base substrate remains default Off
 
 ## Logging rule
 
