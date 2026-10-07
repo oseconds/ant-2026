@@ -142,6 +142,9 @@ export const documentViews = {
         <label><input type="checkbox" data-ant-overlay="source"> Source annulus</label>
         <label><input type="checkbox" data-ant-overlay="exposure"> Exposure depth</label>
         <label><input type="checkbox" data-ant-overlay="plateIds"> Plate IDs</label>
+        <label><input type="checkbox" data-ant-overlay="plateOutlines"> Plate outlines</label>
+        <label><input type="checkbox" data-ant-overlay="plateCenterlines"> Plate centerlines</label>
+        <label><input type="checkbox" data-ant-overlay="platePickups"> Plate pickups</label>
         <label><input type="checkbox" data-ant-overlay="pheromone" checked> Pheromone</label>
         <label><input type="checkbox" data-ant-overlay="material" checked> Material</label>
       </fieldset>

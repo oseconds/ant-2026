@@ -72,6 +72,12 @@ export function mountLab(root) {
     inspectorRenderer?.destroy(); inspectorRenderer = null;
     query('#scene')?.replaceChildren();
   }
+  function renderSnapshot() {
+    const snapshot = lab.getSnapshot();
+    return snapshot && lab.modelName === 'ant' && renderer?.debugOptions?.platePickups
+      ? { ...snapshot, debugAudioTopology: lab.model?.audioBridge?.surface?.topology }
+      : snapshot;
+  }
   async function mountScene(name, version) {
     const item = demoDefinitions[name];
     const canvas = document.createElement('canvas');
@@ -118,7 +124,7 @@ export function mountLab(root) {
         lab.model?.requestAudioDiagnostics?.();
         lastAntAudioDiagnosticsRequest = time;
       }
-      const snapshot = lab.getSnapshot();
+      const snapshot = renderSnapshot();
       if (snapshot) mountedRenderer.render(snapshot, { time, view: interaction?.getView() });
       frameId = requestAnimationFrame(draw);
     };
@@ -360,7 +366,7 @@ export function mountLab(root) {
     }
     if (event.target.dataset.antOverlay && renderer?.setDebugOptions) {
       renderer.setDebugOptions({ [event.target.dataset.antOverlay]: event.target.checked });
-      const snapshot = lab.getSnapshot();
+      const snapshot = renderSnapshot();
       if (snapshot) renderer.render(snapshot);
       return;
     }

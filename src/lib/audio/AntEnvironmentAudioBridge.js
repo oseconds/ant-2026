@@ -49,7 +49,7 @@ export class AntEnvironmentAudioBridge {
     this.baseSubstrateEnabled = next;
     this.applyVolume();
     if (this.mode !== 'bornSurface' || !this.surface.enabled) {
-      if (!next) this.legacy.stop();
+      if (this.mode === 'bornSurface' && !next) this.legacy.stop();
       return Promise.resolve(next);
     }
     if (!next) {

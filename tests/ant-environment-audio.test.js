@@ -82,3 +82,27 @@ test('optional base substrate adds a quiet legacy Plate before born material wit
     'surface-only A/B remains silent when no born Plate supports the feet');
   await bridge.destroy();
 });
+
+test('disabling base substrate does not stop the selected legacy experiment', async () => {
+  const handles = [];
+  const audioEngine = { context: { currentTime: 0 }, init: async () => {},
+    async createWorklet(...args) {
+      const handle = { node: { port: { postMessage() {} } },
+        gainNode: { gain: { value: args[5].gain, cancelScheduledValues() {}, setValueAtTime() {},
+          linearRampToValueAtTime() {} } },
+        disconnected: 0, disconnect() { this.disconnected++; } };
+      handles.push(handle);
+      return handle;
+    } };
+  const bridge = new AntEnvironmentAudioBridge({ audioEngine });
+  await bridge.setBaseSubstrateEnabled(true);
+  bridge.setMode('legacy');
+  await bridge.setEnabled(true);
+
+  await bridge.setBaseSubstrateEnabled(false);
+
+  assert.equal(bridge.enabled, true);
+  assert.equal(bridge.legacy.enabled, true);
+  assert.equal(handles[0].disconnected, 0);
+  await bridge.destroy();
+});

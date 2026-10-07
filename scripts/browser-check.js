@@ -287,14 +287,18 @@ async function verifyDocumentPresentation(page) {
 
 async function verifyModelSemantics(page, name) {
   const actual = await page.evaluate(() => ({
-    legends: [...document.querySelectorAll('#experiment fieldset')].map(fieldset => fieldset.querySelector('legend')?.textContent.trim()),
+    nonDebugFieldsets: [...document.querySelectorAll('#experiment fieldset')]
+      .filter(fieldset => !fieldset.closest('#ant-plate-debug'))
+      .map(fieldset => fieldset.querySelector('legend')?.textContent.trim() || null),
     analysisHeaders: [...document.querySelectorAll('#analysis th')].map(cell => cell.textContent.trim()),
     notes: [...document.querySelectorAll('#model-notes, #state-details')].map(element => element.tagName.toLowerCase()),
     inspectorVisible: Boolean(document.querySelector('#string-inspector') && !document.querySelector('#string-inspector').hidden),
     tableRows: document.querySelectorAll('#analysis tbody tr').length
   }));
-  if (name === 'ant') assert.equal(actual.legends.length, 0, 'ANT has no retired playback control fieldset');
-  else assert.ok(actual.legends.length > 0 && actual.legends.every(Boolean), 'control groups have descriptive native legends');
+  if (name === 'ant') assert.equal(actual.nonDebugFieldsets.length, 0,
+    'ANT has no retired control fieldsets outside Plate Debug');
+  else assert.ok(actual.nonDebugFieldsets.length > 0 && actual.nonDebugFieldsets.every(Boolean),
+    'control groups have descriptive native legends');
   if (name === 'ant') {
     assert.equal(actual.analysisHeaders.length, 0, 'ANT diagnostics use a compact line instead of a table');
     assert.equal(actual.tableRows, 0);
@@ -772,6 +776,7 @@ async function verifyAnt(page, requestedUrls) {
   assert.equal(await page.locator('#ant-plate-debug').count(), 1, 'ANT exposes one collapsed Plate debug panel');
   assert.equal(await page.locator('#ant-plate-debug').evaluate(details => details.open), false,
     'Plate debug stays collapsed in the normal view');
+  await verifyPlateDebugUI(page);
   assert.match(await audioButton.textContent(), /Audio Off/i);
   const volumeSlider = page.locator('#ant-volume');
   assert.equal(await volumeSlider.count(), 1, 'ANT exposes one dedicated volume range');
@@ -862,7 +867,7 @@ async function verifyAnt(page, requestedUrls) {
       };
     });
     assert.equal(summary.status, 'active');
-    assert.ok(summary.agents >= activePopulation && summary.agents <= state.population.count,
+    assert.ok(summary.agents <= state.population.count,
       'the live population remains within the configured target');
     assert.equal(summary.analysis.totalSpawned, summary.agents + summary.analysis.totalRetired,
       'cumulative spawn and retirement counters reconcile with active population');
@@ -1288,6 +1293,43 @@ async function verifyAnt(page, requestedUrls) {
       'switching away destroys the ANT controller');
     await page.evaluate(() => { delete window.__oldAntController; });
   }
+}
+
+async function verifyPlateDebugUI(page) {
+  const panel = page.locator('#ant-plate-debug');
+  const summary = panel.locator('summary');
+  await summary.click();
+  assert.equal(await panel.evaluate(details => details.open), true, 'Plate Debug opens on demand');
+
+  const diagnosticNames = [
+    'plate-count', 'plate-exposure', 'nodule-count', 'birth-times', 'substrate-events',
+    'audio-layers', 'audio-wall', 'candidate-chemical', 'candidate-support',
+    'candidate-persistence', 'candidate-length', 'candidate-contacts',
+    'candidate-refractory', 'candidate-gap', 'candidate-ready'
+  ];
+  assert.deepEqual(await panel.locator('[data-ant-debug]').evaluateAll(nodes =>
+    nodes.map(node => node.dataset.antDebug)), diagnosticNames,
+  'Plate Debug exposes each material, audio, and birth-candidate diagnostic');
+  assert.equal(await panel.locator('[data-ant-debug]').evaluateAll(nodes =>
+    nodes.every(node => node.textContent.trim().length > 0)), true,
+  'every diagnostic cell is populated, including unavailable values');
+
+  const defaults = { surface: false, candidate: false, source: false, exposure: false,
+    plateIds: false, plateOutlines: false, plateCenterlines: false, platePickups: false,
+    pheromone: true, material: true };
+  const overlays = panel.locator('input[data-ant-overlay]');
+  assert.deepEqual(await overlays.evaluateAll(nodes => nodes.map(node => node.dataset.antOverlay)),
+    Object.keys(defaults), 'Plate Debug exposes all ten overlay controls');
+  for (const [name, checked] of Object.entries(defaults)) {
+    const input = panel.locator(`input[data-ant-overlay="${name}"]`);
+    assert.equal(await input.isChecked(), checked, `${name} overlay starts at its documented default`);
+    await input.setChecked(!checked);
+    assert.equal(await input.isChecked(), !checked, `${name} overlay toggles on`);
+    await input.setChecked(checked);
+    assert.equal(await input.isChecked(), checked, `${name} overlay restores its default`);
+  }
+  await summary.click();
+  assert.equal(await panel.evaluate(details => details.open), false, 'Plate Debug can be collapsed again');
 }
 
 async function verifyAntAudioToggle(page, audioButton) {

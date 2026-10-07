@@ -1,0 +1,220 @@
+TAP version 13
+# Subtest: FOOT_CONTACT observation and Audio On/Off preserve movement, field, spawning, and the simulation random stream
+ok 1 - FOOT_CONTACT observation and Audio On/Off preserve movement, field, spawning, and the simulation random stream
+  ---
+  duration_ms: 375.5454
+  type: 'test'
+  ...
+# Subtest: base substrate A/B changes only audio state, not ANT trajectories or environmental memory
+ok 2 - base substrate A/B changes only audio state, not ANT trajectories or environmental memory
+  ---
+  duration_ms: 81.1504
+  type: 'test'
+  ...
+# Subtest: adding the deterministic gait leaves the behavior random stream and ant trajectories unchanged
+ok 3 - adding the deterministic gait leaves the behavior random stream and ant trajectories unchanged
+  ---
+  duration_ms: 275.855
+  type: 'test'
+  ...
+# Subtest: controller measures final post-contact displacement rather than intended velocity for gait contacts
+ok 4 - controller measures final post-contact displacement rather than intended velocity for gait contacts
+  ---
+  duration_ms: 9.6498
+  type: 'test'
+  ...
+# Subtest: actual hesitation produces fewer gait contacts than the same freely moving ant
+ok 5 - actual hesitation produces fewer gait contacts than the same freely moving ant
+  ---
+  duration_ms: 32.2293
+  type: 'test'
+  ...
+# Subtest: Lab switching from audible ANT destroys its Plate and reuses the existing engine
+ok 6 - Lab switching from audible ANT destroys its Plate and reuses the existing engine
+  ---
+  duration_ms: 3.1692
+  type: 'test'
+  ...
+# Subtest: ANT experiment selection retains volume and historical descriptors while releasing the old transport
+ok 7 - ANT experiment selection retains volume and historical descriptors while releasing the old transport
+  ---
+  duration_ms: 2.7493
+  type: 'test'
+  ...
+# Subtest: optional base substrate adds a quiet legacy Plate before born material without changing the surface transport
+ok 8 - optional base substrate adds a quiet legacy Plate before born material without changing the surface transport
+  ---
+  duration_ms: 1.4248
+  type: 'test'
+  ...
+# Subtest: disabling base substrate does not stop the selected legacy experiment
+ok 9 - disabling base substrate does not stop the selected legacy experiment
+  ---
+  duration_ms: 0.4179
+  type: 'test'
+  ...
+# Subtest: AntRenderer paints equal agent marks and a cached pheromone field without changing the snapshot
+ok 10 - AntRenderer paints equal agent marks and a cached pheromone field without changing the snapshot
+  ---
+  duration_ms: 2.2736
+  type: 'test'
+  ...
+# Subtest: Plate debug overlays are opt-in and do not mutate detached snapshots
+ok 11 - Plate debug overlays are opt-in and do not mutate detached snapshots
+  ---
+  duration_ms: 1.0795
+  type: 'test'
+  ...
+# Subtest: Plate geometry debug draws joined outlines, exposed graph lines, and compiled audio pickup nodes
+ok 12 - Plate geometry debug draws joined outlines, exposed graph lines, and compiled audio pickup nodes
+  ---
+  duration_ms: 1.3683
+  type: 'test'
+  ...
+# Subtest: pheromone display uses two fixed scales with monotonic weak trace and strong route contrast
+ok 13 - pheromone display uses two fixed scales with monotonic weak trace and strong route contrast
+  ---
+  duration_ms: 0.1177
+  type: 'test'
+  ...
+# Subtest: historical plate masks draw beneath live pheromone and cache frozen geometry
+ok 14 - historical plate masks draw beneath live pheromone and cache frozen geometry
+  ---
+  duration_ms: 0.3762
+  type: 'test'
+  ...
+# Subtest: articulated ants draw snapshot gait legs and a four-part body without mutating the snapshot
+ok 15 - articulated ants draw snapshot gait legs and a four-part body without mutating the snapshot
+  ---
+  duration_ms: 0.6693
+  type: 'test'
+  ...
+# Subtest: renderer uses the detached smoothed body pose instead of raw angular velocity
+ok 16 - renderer uses the detached smoothed body pose instead of raw angular velocity
+  ---
+  duration_ms: 1.4382
+  type: 'test'
+  ...
+# Subtest: antenna engagement changes only its own antenna and remains in the articulated head frame
+ok 17 - antenna engagement changes only its own antenna and remains in the articulated head frame
+  ---
+  duration_ms: 0.4689
+  type: 'test'
+  ...
+# Subtest: destroy cancels initialization while the p5 module is still loading
+ok 18 - destroy cancels initialization while the p5 module is still loading
+  ---
+  duration_ms: 0.1407
+  type: 'test'
+  ...
+# Subtest: destroy racing p5 setup removes a canvas created immediately before setup
+ok 19 - destroy racing p5 setup removes a canvas created immediately before setup
+  ---
+  duration_ms: 0.1516
+  type: 'test'
+  ...
+# Subtest: p5 setup failures reject init and remove the failed instance
+ok 20 - p5 setup failures reject init and remove the failed instance
+  ---
+  duration_ms: 0.392
+  type: 'test'
+  ...
+# Subtest: plate descriptors create immutable bottom-to-top cell columns and age never creates depth
+ok 21 - plate descriptors create immutable bottom-to-top cell columns and age never creates depth
+  ---
+  duration_ms: 0.7239
+  type: 'test'
+  ...
+# Subtest: cached topology lookup and stable plate index mapping expose only the uppermost material
+ok 22 - cached topology lookup and stable plate index mapping expose only the uppermost material
+  ---
+  duration_ms: 0.165
+  type: 'test'
+  ...
+# Subtest: FOOT_CONTACT counts each in-domain foot and ignores centroid, strength, malformed and out-of-domain data
+ok 23 - FOOT_CONTACT counts each in-domain foot and ignores centroid, strength, malformed and out-of-domain data
+  ---
+  duration_ms: 0.1747
+  type: 'test'
+  ...
+# Subtest: a nodule requires four overlapping plates, three buried layers, compaction, actual foot load and persistence
+ok 24 - a nodule requires four overlapping plates, three buried layers, compaction, actual foot load and persistence
+  ---
+  duration_ms: 1.3877
+  type: 'test'
+  ...
+# Subtest: elapsed simulation time alone cannot create a nodule without contact load or enough material history
+ok 25 - elapsed simulation time alone cannot create a nodule without contact load or enough material history
+  ---
+  duration_ms: 3.7905
+  type: 'test'
+  ...
+# Subtest: loss of a qualification condition resets persistence instead of banking old elapsed time
+ok 26 - loss of a qualification condition resets persistence instead of banking old elapsed time
+  ---
+  duration_ms: 1.405
+  type: 'test'
+  ...
+# Subtest: metadata cap, read-only topology reuse and reset retain deterministic bounded state
+ok 27 - metadata cap, read-only topology reuse and reset retain deterministic bounded state
+  ---
+  duration_ms: 0.2172
+  type: 'test'
+  ...
+# Subtest: default metadata ceiling preserves more than the previous twelve plate limit without eviction
+ok 28 - default metadata ceiling preserves more than the previous twelve plate limit without eviction
+  ---
+  duration_ms: 0.3912
+  type: 'test'
+  ...
+# Subtest: local annular chemical plus mechanical ridge births a frozen network after stable persistence
+ok 29 - local annular chemical plus mechanical ridge births a frozen network after stable persistence
+  ---
+  duration_ms: 96.174
+  type: 'test'
+  ...
+# Subtest: short-lived trail signal cannot become a persistent plate and real fields are read without sensing calls
+ok 30 - short-lived trail signal cannot become a persistent plate and real fields are read without sensing calls
+  ---
+  duration_ms: 16.9684
+  type: 'test'
+  ...
+# Subtest: transverse route support changes ribbon width while retaining bounded physical geometry
+ok 31 - transverse route support changes ribbon width while retaining bounded physical geometry
+  ---
+  duration_ms: 64.0515
+  type: 'test'
+  ...
+# Subtest: distant qualifying branches survive skeleton pruning while short dead-end growth stays out of the plate
+ok 32 - distant qualifying branches survive skeleton pruning while short dead-end growth stays out of the plate
+  ---
+  duration_ms: 85.1643
+  type: 'test'
+  ...
+# Subtest: spawn-center pixels, remote trails, chemical-only ridges, and short paths cannot qualify
+ok 33 - spawn-center pixels, remote trails, chemical-only ridges, and short paths cannot qualify
+  ---
+  duration_ms: 29.5454
+  type: 'test'
+  ...
+# Subtest: real FOOT_CONTACT accumulation, corridor refractory, global spacing, and birth limit are explicit
+ok 34 - real FOOT_CONTACT accumulation, corridor refractory, global spacing, and birth limit are explicit
+  ---
+  duration_ms: 42.0121
+  type: 'test'
+  ...
+# Subtest: birth limit reports full and preserves existing descriptors without eviction
+ok 35 - birth limit reports full and preserves existing descriptors without eviction
+  ---
+  duration_ms: 42.7046
+  type: 'test'
+  ...
+1..35
+# tests 35
+# suites 0
+# pass 35
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1212.6909
