@@ -1,56 +1,72 @@
-# ANT_2026 — Daily Experiment / Process Log Index
+# ANT_2026 — Daily Experiment / Process Logs
 
-**기준일:** 2026-10-07
+**Canonical chronology: `docs/ant/daily/`**
 
-이 디렉터리는 ANT 저장소에서 관리하는 날짜별 실험 로그다. 상태 요약이 아니라 **실험이 어떤 순서로 진행됐고, 무엇을 관찰한 뒤 다음 판단으로 넘어갔는지**를 날짜별로 남긴다.
+이 디렉터리는 상태 요약이 아니라 **실험이 어떤 질문에서 출발했고, 무엇을 관찰한 뒤 어떤 판단으로 넘어갔는지**를 날짜별로 남긴다.
 
-## 기록 원칙
+## Source roles
 
-- 확정된 production state는 `01_CURRENT_STATE.md`가 우선.
-- 실험의 최종 판정은 `02_EXPERIMENTS_AND_DECISIONS.md`가 우선.
-- 다음 작업 순서는 `03_NEXT_PASSES.md`가 우선.
-- 이 daily log는 **과정과 맥락을 복구하는 용도**다.
-- 날짜가 확실한 대화/실험만 날짜별로 배치한다.
-- commit의 정확한 wall-clock timestamp를 이 문서에서 별도 검증하지 않은 경우 `관련 commit`으로 표기하며, “그날 커밋됨”이라고 단정하지 않는다.
-- 연구 근거와 프로젝트 해석/예술적 확장은 구분한다.
+- 현재 verified architecture / research boundary: [`docs/ant/README.md`](../README.md)
+- 실험별 수치·원본·재현 명령: [`docs/ant/evidence/`](../evidence/)
+- 날짜별 과정/negative result/방향 전환: 이 디렉터리
 
-## 로그
+Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 “NEXT”는 당시 판단일 수 있으므로 현재 작업을 시작할 때는 먼저 [ANT hub](../README.md)를 확인한다.
 
-### 2026-10-03
-[`./2026-10-03_runtime-sleep-diagnosis.md`](./2026-10-03_runtime-sleep-diagnosis.md)
+## Logs
 
-핵심:
-- natural Plate sleep failure 원인 추적
-- old buried Plate가 왜 계속 active인지 확인
-- no-new-strike replay로 sleep mechanism 자체는 살아 있음을 확인
-- runtime optimization이 단순 wake-rule 문제보다 coupled material problem임을 인식
+### 2026-10-03 — Runtime / natural sleep diagnosis
 
-### 2026-10-05
-[`./2026-10-05_audio-evidence-and-plate.md`](./2026-10-05_audio-evidence-and-plate.md)
+[`2026-10-03-runtime-sleep-diagnosis.md`](./2026-10-03-runtime-sleep-diagnosis.md)
 
-핵심:
-- waveform / grayscale spectrogram evidence 형식 점검
-- FOOT_CONTACT / RMS / Peak marker 계획
-- 10 s보다 긴 시간창 필요성 확인
-- direct-contact excitation과 Plate decay를 분리해서 해석
-- sonic baseline을 `3 ms pulse / 75 ms recovery / ×50 damping`으로 정리
+- old buried Plate가 왜 natural run에서 계속 active인지 추적
+- no-new-strike replay에서 sleep mechanism 자체는 작동함을 확인
+- 단순 wake-rule bug보다 coupled-material ongoing excitation 문제로 재정의
+- runtime optimization을 별도 known issue로 분리
 
-### 2026-10-06
-[`./2026-10-06_social-material-direction.md`](./2026-10-06_social-material-direction.md)
+### 2026-10-05 — Audio evidence / Plate sonic baseline
 
-핵심:
-- “ant 개체 자체”보다 연결 / 군체 / 환경 구조에 초점 이동
-- social graph와 material graph의 두 축 정리
-- pioneer를 role이 아닌 retrospective topology event로 보기 시작
-- 다음 연구 질문을 social topology / temporal graph / null model 방향으로 좁힘
+[`2026-10-05-audio-evidence-and-plate.md`](./2026-10-05-audio-evidence-and-plate.md)
 
-### 2026-10-07
-[`./2026-10-07_founder-refinement-and-handoff.md`](./2026-10-07_founder-refinement-and-handoff.md)
+- waveform / grayscale spectrogram evidence 형식 정리
+- direct-contact input과 resonator decay를 분리
+- 3 ms finite pulse / 75 ms local recovery 채택
+- Plate damping ×50로 vibration lifetime 단축
+- sonic fix와 runtime fix를 분리
 
-핵심:
-- founder-effect / low-evidence pass 완료
-- matched-seed evidence로 early lock-in 감소 + mature trail 보존 확인
-- behavior 동결 결정
-- Deep Review 반영해 roadmap을 `graph → temporal → null → spectral`로 수정
-- S0/S1 read-only DynamicSocialGraph를 다음 본선으로 확정
-- source / handoff / workflow policy 정리
+### 2026-10-06 — Social / material two-axis direction
+
+[`2026-10-06-social-material-direction.md`](./2026-10-06-social-material-direction.md)
+
+- 개별 ant보다 연결 / 군체 / 환경 구조로 초점 이동
+- fast social graph vs slow material graph 개념 정리
+- pioneer를 role이 아니라 retrospective topology event로 정의
+- temporal graph / density confound / null-model 질문 구체화
+
+### 2026-10-07 — Founder refinement → S0/S1 completion
+
+[`2026-10-07-founder-refinement-and-handoff.md`](./2026-10-07-founder-refinement-and-handoff.md)
+
+- low-evidence founder-lock-in refinement 채택, behavior 동결
+- matched-seed natural evidence와 visual review
+- roadmap을 graph → temporal → null → spectral(if useful)로 수정
+- S0/S1 `DynamicSocialGraph` / `TemporalSocialTopology` 구현 완료
+- graph OFF/ON behavior invariance 확인
+- 250 ms connector는 짧고 recruitment-center-local, 1 s+ persistent connector는 0
+- 현재 persistent pioneer/social organization은 미입증
+- 다음 gate는 movement-constrained null validation
+
+## Logging rule
+
+새 과정 로그는 `YYYY-MM-DD-topic.md` 형식으로 추가한다.
+
+가능하면 다음을 남긴다:
+
+- 출발 질문 / hypothesis
+- baseline
+- 실제 변경
+- evidence / negative result
+- 판정
+- 남은 한계
+- 다음 pass로 넘어간 이유
+
+commit timestamp와 실험 날짜가 다를 수 있으므로, 별도 검증하지 않은 wall-clock chronology를 추정해서 쓰지 않는다.

@@ -7,8 +7,9 @@
 3. behavior를 동결
 4. visual evidence에서 cumulative coverage의 한계 확인
 5. Deep Review 결과를 반영해 social-graph roadmap 수정
-6. 다음 본선을 S0/S1 read-only `DynamicSocialGraph`로 확정
-7. project source / handoff / workflow policy 정리
+6. S0/S1 read-only `DynamicSocialGraph`를 다음 본선으로 확정
+7. 같은 날짜 후반에 S0/S1 구현·검증까지 완료
+8. project source / handoff / workflow policy 정리
 
 ---
 
@@ -495,9 +496,95 @@ FOUNDER PASS
 AUDIO RUNTIME
 = known issue / deferred
 
-NEXT
+NEXT AT THIS POINT IN THE DAY
 = S0/S1 read-only DynamicSocialGraph
 
 ROADMAP
 = graph → temporal → null → spectral(if useful)
+```
+
+---
+
+# G. Later the same day — S0/S1 completed
+
+위 D/E 절의 S0/S1 설계는 이후 같은 날짜에 실제 구현·검증까지 완료됐다. 따라서 이 문서 앞부분의 “NEXT = S0/S1”은 **당시 시점의 chronology**이며 현재 상태가 아니다.
+
+구현/evidence commits:
+
+```text
+8076de6  Add read-only ANT dynamic social graph
+a6801d6  Add temporal social topology analysis
+f4365b1  Add ANT social graph evidence harness
+af9c417  Record ANT social graph baseline evidence
+```
+
+## Read-only invariance
+
+세 matched seeds × 600 s에서 graph OFF/ON을 비교했다.
+
+- 108,000 matched simulation ticks
+- t=0 포함 trajectory frames 모두 OFF/ON 동일
+- agent / RNG state+call count / pheromone / SurfaceField / FOOT_CONTACT / lifecycle / birth digest 일치
+- focused 120 s test는 gait / body pose / gaster / activation / stratigraphy / ordered audio bridge command까지 매 tick deep-compare
+- final full tests 261/261
+- Chrome development + production preview smoke pass
+
+기존 production files 43개 중 42개는 byte-identical이고, 기존 파일의 production change는 barrel export 2개뿐이다. Social observer는 AntController/AntAgent/renderer에 자동 연결되지 않는다.
+
+## Encounter / topology result
+
+```text
+q(A,B) = distance(A,B) / (radiusA + radiusB)
+encounter iff q ≤ k
+k = 1, 1.25, 1.5, 2
+```
+
+Windows:
+
+```text
+0.25 s
+1 s
+5 s
+20 s
+```
+
+자연 결과:
+
+- k=2 / 250 ms connector PERSIST: 3 / 3 / 5 = 총 11건
+- connector duration: 0.30–0.65 s
+- 모두 recruitment origin에서 약 0.019 이내
+- 1 s, 5 s, 20 s connector PERSIST: 0 / 0 / 0
+- 1 s component count와 population correlation: 0.953–0.959
+- 1 s edge count와 instantaneous proximity pair count correlation: 0.497–0.565
+
+따라서 현재 connector는 persistent pioneer-like organization으로 해석하지 않는다.
+
+> proximity + recruitment density + movement geometry + temporal-window retention으로 설명 가능한지 먼저 검증한다.
+
+1 s를 primary recent-proximity window로 두고 250 ms를 transient 확인에 병행한다. 5 s는 accumulated context, 20 s는 memory/turnover sensitivity case다. 어느 것도 biological timescale로 확정하지 않는다.
+
+전체 수치/정의/raw trajectory/replay/reproduction은 [S0/S1 evidence](../evidence/2026-10-07-social-graph/README.md)에 보존.
+
+---
+
+# H. Current handoff after S0/S1
+
+```text
+FOUNDER PASS
+= complete / adopted / behavior frozen
+
+S0/S1 SOCIAL OBSERVATION
+= complete / read-only invariance verified
+
+PERSISTENT PIONEER-LIKE STRUCTURE
+= not demonstrated
+
+AUDIO RUNTIME
+= known issue / deferred
+
+NEXT
+= movement-constrained / trajectory-preserving null validation
+
+ROADMAP
+= graph → temporal → null → spectral(if useful) → social/material comparison
 ```
