@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { AntEnvironmentAudioBridge } from '../src/lib/audio/AntEnvironmentAudioBridge.js';
+import { AntEnvironmentAudioBridge, ANT_BASE_SUBSTRATE_OUTPUT_RATIO } from '../src/lib/audio/AntEnvironmentAudioBridge.js';
 
 test('ANT experiment selection retains volume and historical descriptors while releasing the old transport', async () => {
   const handles = [], calls = [];
@@ -53,11 +53,12 @@ test('optional base substrate adds a quiet legacy Plate before born material wit
   bridge.setVolume(0.5);
   assert.equal(bridge.baseSubstrateEnabled, false,
     'bridge construction preserves the historical born-surface-only baseline');
+  assert.equal(ANT_BASE_SUBSTRATE_OUTPUT_RATIO, 0.015);
   await bridge.setBaseSubstrateEnabled(true);
   await bridge.setEnabled(true);
   assert.deepEqual(calls.map(call => call.name), ['surface-plate-processor', 'plate-processor']);
   const baseIndex = calls.findIndex(call => call.name === 'plate-processor');
-  assert.ok(Math.abs(calls[baseIndex].output.gain - 0.7 * 0.5 * 0.22) < 1e-12,
+  assert.ok(Math.abs(calls[baseIndex].output.gain - 0.7 * 0.5 * ANT_BASE_SUBSTRATE_OUTPUT_RATIO) < 1e-12,
     'base substrate is a fixed quiet fraction of the ANT master volume');
 
   const event = { type: 'FOOT_CONTACT', contactGroup: 'A', strength: 0.04,

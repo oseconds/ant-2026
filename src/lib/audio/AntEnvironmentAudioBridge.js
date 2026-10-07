@@ -1,7 +1,7 @@
 import { AntAudioBridge } from './AntAudioBridge.js';
 import { SurfaceAudioBridge } from './SurfaceAudioBridge.js';
 
-export const ANT_BASE_SUBSTRATE_OUTPUT_RATIO = 0.22;
+export const ANT_BASE_SUBSTRATE_OUTPUT_RATIO = 0.015;
 export const ANT_BASE_SUBSTRATE_DAMPING = 1;
 
 /** Select an isolated ANT acoustic experiment while sharing the application's engine. */

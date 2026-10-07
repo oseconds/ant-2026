@@ -6,6 +6,7 @@ const PLATE_DAMPING_MULTIPLIER = 50;
 const MAX_LAYERS = 256;
 const MAX_NODULES = 32;
 const MIX = 1 / Math.sqrt(12);
+const PLATE_PICKUP_MIX = 1;
 const NO_NODE = 0xffffffff;
 const SLEEP_ENERGY = 1e-10;
 const SLEEP_STEPS = RATE * 2;
@@ -574,7 +575,7 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
       const node = this.active[a]; this.computeLap(node);
       for (let d = 0; d < 4; d++) { const v = neigh[node * 4 + d]; if (v >= 0) this.computeLap(v); }
     }
-    let energyBefore = 0, energyAfter = 0, outL = 0, outR = 0;
+    let energyBefore = 0, energyAfter = 0, outL = 0, outR = 0, sphereOutL = 0, sphereOutR = 0;
     const nodeOffsets = t.nodeOffsets, mats = t.materialCoefficients;
     const couplings = t.adjacentLinkNodes, coeffs = t.adjacentLinkCoefficients;
     for (let a = 0; a < steppingCount; a++) {
@@ -650,8 +651,8 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
     // Update sphere oscillators and reciprocal foundation springs.
     this.advanceNodules();
     for (let n = 0; n < this.noduleIds.length; n++) for (let m = 0; m < 12; m++) {
-      const i = n * 12 + m; outL += this.sphereCurrent[i] * this.spherePickupL[i];
-      outR += this.sphereCurrent[i] * this.spherePickupR[i];
+      const i = n * 12 + m; sphereOutL += this.sphereCurrent[i] * this.spherePickupL[i];
+      sphereOutR += this.sphereCurrent[i] * this.spherePickupR[i];
     }
     for (let a = 0; a < steppingCount; ) {
       const node = this.active[a], value = this.next[node], vel = value - this.current[node];
@@ -721,7 +722,8 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
       }
     }
     this.pendingCount = 0;
-    const mixL = outL * MIX, mixR = outR * MIX;
+    const mixL = outL * PLATE_PICKUP_MIX + sphereOutL * MIX;
+    const mixR = outR * PLATE_PICKUP_MIX + sphereOutR * MIX;
     this.telemetry.maxOutputAbs = Math.max(this.telemetry.maxOutputAbs, Math.abs(mixL), Math.abs(mixR));
     if (Math.abs(mixL) > 1 || Math.abs(mixR) > 1) this.telemetry.clipped++;
     this.outputL = mixL / (1 + Math.abs(mixL)); this.outputR = mixR / (1 + Math.abs(mixR));
@@ -843,7 +845,8 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
       activeNodes: this.activeCount, awakeLayers, sleepingLayers: (this.topology?.layerIds.length || 0) - awakeLayers,
       physicsRate: RATE, topologyGeneration: this.topology?.generation ?? null,
       couplingLinks: this.topology?.adjacentLinkCoefficients.length || 0,
-      noduleCount: this.noduleIds?.length || 0, activeSphereModes, integratedSphereModes, mix: MIX,
+      noduleCount: this.noduleIds?.length || 0, activeSphereModes, integratedSphereModes,
+      mix: MIX, platePickupMix: PLATE_PICKUP_MIX, sphereModeMix: MIX,
       truncatedTailRiskThreshold: SLEEP_ENERGY, quietStepsThreshold: SLEEP_STEPS,
       contactPulseDurationMs: 1000 * CONTACT_PULSE_STEPS / RATE, contactPulseSteps: CONTACT_PULSE_STEPS,
       contactRecoveryTimeMs: 1000 * CONTACT_RECOVERY_STEPS / RATE,

@@ -5,6 +5,7 @@ import { createServer as createTcpServer } from 'node:net';
 import { resolve } from 'node:path';
 import { createServer, build, preview } from 'vite';
 import { chromium } from 'playwright';
+import { ANT_BASE_SUBSTRATE_OUTPUT_RATIO } from '../src/lib/audio/AntEnvironmentAudioBridge.js';
 
 const useProduction = process.env.CHECK_PRODUCTION === '1' || process.argv.includes('--production');
 const recordAntEvidence = process.argv.includes('--record-ant-evidence');
@@ -1604,8 +1605,8 @@ async function verifyBaseSubstrateAB(page, audioButton) {
   assert.deepEqual(result.baseOutputChannelCount, [2], 'base substrate uses the preserved stereo Plate transport');
   assert.equal(result.damping, 100, 'base substrate uses maximum generic Plate damping');
   assert.ok(result.peak > 1e-7, 'base substrate produces nonzero output before the first born Plate');
-  assert.ok(result.baseGain <= 0.7 * selectedVolume * 0.22 + 1e-6,
-    'base substrate stays below the current ANT master output');
+  assert.ok(Math.abs(result.baseGain - 0.7 * selectedVolume * ANT_BASE_SUBSTRATE_OUTPUT_RATIO) < 1e-6,
+    'base substrate uses the calibrated auxiliary output ratio');
   assert.equal(result.surfaceClosed, false, 'base substrate runs beside, not instead of, the born-surface processor');
 
   await substrateButton.click();
