@@ -154,6 +154,8 @@ ANT의 기본 모집 상한은 28입니다. 시작할 때는 하단 중앙 부�
 - `BodyPoseController`: 기존 turn rate와 이미 계산한 L/C/R 농도에서 평활화한 head/gaster/antenna pose를 만듭니다. 같은 gaster pose가 renderer와 침적 후단 위치의 기준입니다.
 - `GasterDeposition`: 실제 thorax 이동 거리에 해당하는 강화량을 gaster 후단 경로에 전달합니다. 기본 `depositionMode: 'dab'`은 거리 `0.006`마다 누적 dose를 방출하며, `'continuous'`로 동일 후단 경로의 연속 침적을 비교할 수 있습니다.
 - `AntController`: 위 시스템들을 연결하고 명시적인 시간에 따라 개체군을 진행합니다. `getState()`는 JSON 설정, `getSnapshot()`은 개체와 gait geometry, 격자 복사본입니다. 접촉 제약 뒤의 관측 가능한 실제 이동 구간을 `GaitController`에 전달하고, 이벤트를 선택적으로 주입된 오디오 브리지에 넘깁니다. Web Audio·DOM·p5 코드는 포함하지 않습니다.
+- `DynamicSocialGraph`: 호출자가 fixed tick 뒤 복사한 `id/x/y/radius`만 읽습니다. collision radius 합에 대한 거리 sweep으로 undirected encounter 구간을 기록하고, rolling window 안의 누적 근접 초를 edge weight로 제공합니다. AntController에 되먹임이나 자동 연결은 없습니다.
+- `TemporalSocialTopology`: window별 component·merge/split·edge lifetime과 지속적인 bridge/articulation/retrospective connector를 관측합니다. 20 Hz 관측 계약이며, 과거 edge 잔상만으로 지속 사건을 만들지 않습니다. [S0/S1 자연 실행 증거](docs/ant/evidence/2026-10-07-social-graph/README.md)에 threshold/window sweep, 밀도 비교, 60 Hz 원시 궤적과 ON/OFF 불변성 검증을 보존합니다.
 - `AntRenderer`: p5 instance-mode로 articulated head/thorax/petiole/gaster, 안테나, 6개의 2-segment leg를 snapshot에서 그립니다. 공유 pheromone field는 고정된 two-scale grayscale transfer로 표시합니다. p5는 `init()`에서만 동적으로 불러오고 `noLoop()`와 `redraw()`를 사용하며 main.js의 RAF가 update와 render를 호출합니다. sketch는 gait나 model을 갱신하지 않고 p5.sound도 포함하지 않습니다.
 
 물리 collision body는 하나의 `AntAgent`와 기존 radius `0.006`으로 유지합니다. 화면에서는 heading을 기준으로 gaster `−1.35r`·`1.60r × 1.02r`, petiole `−0.90r`·`0.28r × 0.22r`, thorax `0`·`1.05r × 0.70r`, head `+1.09r`·`1.08r × 0.86r`를 그립니다. 여섯 leg의 root 앞뒤 위치는 `+0.45r / 0 / −0.45r`, lateral attachment는 `[0.30r, 0.34r, 0.32r]`입니다. Foot 앞뒤 오프셋 `+1.95r / 0 / −2.00r`, lateral reach `3.05r / 3.10r / 3.25r`, gait 왕복폭 `0.52r`은 유지합니다. Knee along은 `[0.32, 0.44, 0.54]`, outward는 `[0.50r, 0.56r, 0.52r]`, 앞뒤 편향은 `[+0.14r, 0, −0.14r]`입니다. 회색 65의 얇은 다리를 먼저 그리고 body를 위에 그려 root가 thorax 안으로 가려집니다.
@@ -288,7 +290,7 @@ await ants.destroy(); // 주입한 engine은 소유자가 별도로 정리.
 
 이 단계에서는 페로몬 반감기·침적량, 개체 수, 격자 해상도, `trailAdherence`, 생성, 오디오, encounter rate, quorum, raid, UI를 바꾸지 않습니다. 성공 기준은 여러 개미가 같은 경로 위에 간격을 두고 이어서 이동하는 장면이 실제 화면에서 보이고, 접촉/통과가 발생하지 않는 것입니다. 자동 검증 결과만으로 이 시각 기준이 충족됐다고 판단하지 않습니다.
 
-현재 ANT는 방향 인지형 교통·adherence 강화·tripod FOOT_CONTACT 위에 body pose, 기존 L/R 감각의 antenna 시각화, gaster 후단 dab, 표시 보간과 elapsed time, 느린 local colony activation을 유지합니다. 환경 실험은 개별 `FOOT_CONTACT → SurfaceField → frozen Plate births → local Z exposure → adjacent coupling → shared sparse audio`이며, 묻힌 nodule은 같은 환경 processor 안의 작은 modal core입니다. 기존 circular Plate는 legacy 오디오 비교 기준으로 보존합니다. Encounter/social pressure는 후속 실험입니다. `StepEventGenerator`는 거리 STEP 비교 기준으로, `TrajectoryBuffer`는 일반 유틸리티로 남깁니다.
+현재 ANT는 방향 인지형 교통·adherence 강화·tripod FOOT_CONTACT 위에 body pose, 기존 L/R 감각의 antenna 시각화, gaster 후단 dab, 표시 보간과 elapsed time, 느린 local colony activation을 유지합니다. 환경 실험은 개별 `FOOT_CONTACT → SurfaceField → frozen Plate births → local Z exposure → adjacent coupling → shared sparse audio`이며, 묻힌 nodule은 같은 환경 processor 안의 작은 modal core입니다. 기존 circular Plate는 legacy 오디오 비교 기준으로 보존합니다. Encounter는 별도 S0/S1 읽기 전용 관찰층으로 구현했습니다. Social feedback과 null-model/spectral 분석은 후속 실험입니다. `StepEventGenerator`는 거리 STEP 비교 기준으로, `TrajectoryBuffer`는 일반 유틸리티로 남깁니다.
 
 [Head/gaster articulation 실험 기록과 straight·turning 자연 상태 스크린샷](docs/ant/evidence/2026-10-05-articulation/README.md)을 보존했습니다.
 

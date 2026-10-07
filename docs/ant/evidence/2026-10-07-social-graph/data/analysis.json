@@ -1,0 +1,4408 @@
+{
+  "schemaVersion": 1,
+  "provenance": {
+    "sourceDirectory": "test-results/social-evidence",
+    "seeds": [
+      20261005,
+      20261006,
+      20261007
+    ],
+    "runSeconds": 600,
+    "analysis": "descriptive only; no causal, null-model, centrality, or spectral inference",
+    "populationBand": "population >=10, top five most-observed exact population counts per seed"
+  },
+  "notes": [
+    "Raw encounter episodes and rolling-window edge lifetimes are distinct quantities.",
+    "Threshold episode counts are non-monotone because wider thresholds can join/fragment observations differently; report cumulative exposure alongside counts.",
+    "Rolling windows describe retained contact memory; they do not define encounter-duration cutoffs.",
+    "Trajectory has 2D x,y,vx,vy,heading,radius; it does not contain z.",
+    "Connector local counts and colony mean neighbor counts are recomputed from all positions at the same exact 60 Hz trajectory frame; thresholds are center distance <=0.022 and <=0.085.",
+    "Reported quantiles use linear interpolation at position (n - 1) * p (Type 7 / common R default); values are descriptive.",
+    "Population start is the t=0 trajectory frame, not the first 1 Hz timeline sample."
+  ],
+  "seeds": [
+    {
+      "seed": 20261005,
+      "condition": "graph-on",
+      "parity": {
+        "offStateSha256": "c0f8ab71195fe8640dabf5a9ad9cfbfdfc1214eee2c82b983144ceadc88b1483",
+        "onStateSha256": "c0f8ab71195fe8640dabf5a9ad9cfbfdfc1214eee2c82b983144ceadc88b1483",
+        "offControllerSha256": "7b1649b4e206f9e7c2bc07e982ceb7c11fab9e072b24b7cd2a16f3306c230ed0",
+        "onControllerSha256": "7b1649b4e206f9e7c2bc07e982ceb7c11fab9e072b24b7cd2a16f3306c230ed0",
+        "trajectorySha256Equal": true,
+        "frameCount": 36001,
+        "tickCount": 36000,
+        "trajectoryEnabledSha256": "209dc3cdce01d51b583dda1c629a3559f19b39585983010e7f694452217bb5b9",
+        "trajectoryDisabledSha256": "209dc3cdce01d51b583dda1c629a3559f19b39585983010e7f694452217bb5b9",
+        "trajectoryFrameCount": 36001
+      },
+      "population": {
+        "start": 1,
+        "end": 21,
+        "oneHz": {
+          "n": 600,
+          "mean": 18.453333333333333,
+          "p50": 19,
+          "p90": 22,
+          "min": 2,
+          "max": 23
+        },
+        "startTimeSeconds": 0
+      },
+      "thresholdSweep": [
+        {
+          "k": 1,
+          "rawEncounterEpisodes": 4,
+          "episodeDurationSeconds": {
+            "n": 4,
+            "mean": 0.3124999999997904,
+            "p50": 0.30833333333324475,
+            "p90": 0.4283333333330859,
+            "min": 0.19999999999959073,
+            "max": 0.4333333333330813
+          },
+          "rightCensoredEpisodes": 0,
+          "completedEpisodes": 4,
+          "cumulativePairExposureSeconds": 1.2499999999991616,
+          "minNormalizedDistance": {
+            "n": 4,
+            "mean": 0.9999998508554614,
+            "p50": 0.9999998550423082,
+            "p90": 0.9999999047270062,
+            "min": 0.99999978760812,
+            "max": 0.9999999057291091
+          }
+        },
+        {
+          "k": 1.25,
+          "rawEncounterEpisodes": 33,
+          "episodeDurationSeconds": {
+            "n": 33,
+            "mean": 0.2570707070706748,
+            "p50": 0.2333333333336327,
+            "p90": 0.5200000000002319,
+            "min": 0.03333333333335986,
+            "max": 0.7666666666662252
+          },
+          "rightCensoredEpisodes": 0,
+          "completedEpisodes": 33,
+          "cumulativePairExposureSeconds": 8.483333333332268,
+          "minNormalizedDistance": {
+            "n": 33,
+            "mean": 1.1190263260703988,
+            "p50": 1.1199690110766374,
+            "p90": 1.2262550857073073,
+            "min": 0.99999978760812,
+            "max": 1.2459260024773178
+          }
+        },
+        {
+          "k": 1.5,
+          "rawEncounterEpisodes": 174,
+          "episodeDurationSeconds": {
+            "n": 174,
+            "mean": 0.24664750957856038,
+            "p50": 0.18333333333327761,
+            "p90": 0.5166666666670039,
+            "min": 0.01666666666653782,
+            "max": 1.3666666666664682
+          },
+          "rightCensoredEpisodes": 0,
+          "completedEpisodes": 174,
+          "cumulativePairExposureSeconds": 42.91666666666951,
+          "minNormalizedDistance": {
+            "n": 174,
+            "mean": 1.3476164939199602,
+            "p50": 1.3766550262156623,
+            "p90": 1.4824065030892069,
+            "min": 0.99999978760812,
+            "max": 1.4999280514665763
+          }
+        },
+        {
+          "k": 2,
+          "rawEncounterEpisodes": 511,
+          "episodeDurationSeconds": {
+            "n": 511,
+            "mean": 0.36180691454663844,
+            "p50": 0.26666666666699257,
+            "p90": 0.7666666666662252,
+            "min": 0.01666666666665151,
+            "max": 2.466666666666306
+          },
+          "rightCensoredEpisodes": 0,
+          "completedEpisodes": 511,
+          "cumulativePairExposureSeconds": 184.88333333333225,
+          "minNormalizedDistance": {
+            "n": 511,
+            "mean": 1.6170071793527256,
+            "p50": 1.6305416242794957,
+            "p90": 1.9275298514709518,
+            "min": 0.99999978760812,
+            "max": 1.999127426602403
+          }
+        }
+      ],
+      "k2InstantEventCounts": {
+        "NODE_ENTER": 765,
+        "ENCOUNTER_START": 511,
+        "ENCOUNTER_END": 511,
+        "NODE_EXIT": 744
+      },
+      "k2Windows": [
+        {
+          "windowSeconds": 0.25,
+          "oneHzTopology": {
+            "edgeCount": {
+              "n": 600,
+              "mean": 0.515,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 4
+            },
+            "componentCount": {
+              "n": 600,
+              "mean": 17.951666666666668,
+              "p50": 19,
+              "p90": 21,
+              "min": 2,
+              "max": 23
+            },
+            "largestComponentRatio": {
+              "n": 600,
+              "mean": 0.08359416533727561,
+              "p50": 0.06666666666666667,
+              "p90": 0.125,
+              "min": 0.043478260869565216,
+              "max": 0.5
+            },
+            "bridgeFraction": {
+              "n": 600,
+              "mean": 0.39,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 1
+            },
+            "articulationFraction": {
+              "n": 600,
+              "mean": 0.002954237476489799,
+              "p50": 0,
+              "p90": 0,
+              "min": 0,
+              "max": 0.1111111111111111
+            },
+            "weightedDegreeSecondsPerNodeObservation": {
+              "n": 11072,
+              "mean": 0.008098506743738233,
+              "p50": 0,
+              "p90": 0,
+              "min": 0,
+              "max": 0.5
+            }
+          },
+          "adjacent20HzStability": {
+            "meanEdgeJaccard": {
+              "n": 598,
+              "mean": 0.8491110888279759,
+              "p50": 0.84655990610807,
+              "p90": 0.8590856481481481,
+              "min": 0.8,
+              "max": 0.92
+            },
+            "emptyGraphFraction": {
+              "n": 600,
+              "mean": 0.6877345360261354,
+              "p50": 0.6415778453891028,
+              "p90": 0.8356289711573679,
+              "min": 0.6057828514290475,
+              "max": 1
+            },
+            "componentCountRangeOverRun": {
+              "min": 1,
+              "max": 23
+            }
+          },
+          "eventCounts": {
+            "EDGE_FORM": 509,
+            "COMPONENT_MERGE": 238,
+            "BRIDGE_FORM": 354,
+            "BRIDGE_PERSIST": 233,
+            "BRIDGE_BREAK": 354,
+            "EDGE_END": 509,
+            "COMPONENT_SPLIT": 484,
+            "ARTICULATION_FORM": 34,
+            "ARTICULATION_BREAK": 34,
+            "ARTICULATION_PERSIST": 13,
+            "CONNECTOR_PERSIST": 3,
+            "CONNECTOR_END": 3
+          },
+          "edgeLifetimes": {
+            "total": 509,
+            "closedCount": 509,
+            "rightCensoredCount": 0,
+            "closedDurationSeconds": {
+              "n": 509,
+              "mean": 0.6036345776031503,
+              "p50": 0.5000000000005684,
+              "p90": 1.0000000000011482,
+              "min": 0.04999999999998295,
+              "max": 2.749999999999602
+            },
+            "rightCensoredObservedDurationSeconds": {
+              "n": 0,
+              "mean": null,
+              "p50": null,
+              "p90": null,
+              "min": null,
+              "max": null
+            }
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "oneHzTopology": {
+            "edgeCount": {
+              "n": 600,
+              "mean": 1.1366666666666667,
+              "p50": 1,
+              "p90": 3,
+              "min": 0,
+              "max": 6
+            },
+            "componentCount": {
+              "n": 600,
+              "mean": 17.36,
+              "p50": 18,
+              "p90": 21,
+              "min": 2,
+              "max": 23
+            },
+            "largestComponentRatio": {
+              "n": 600,
+              "mean": 0.10944818402247103,
+              "p50": 0.1,
+              "p90": 0.17647058823529413,
+              "min": 0.043478260869565216,
+              "max": 0.5
+            },
+            "bridgeFraction": {
+              "n": 600,
+              "mean": 0.6008611111111111,
+              "p50": 1,
+              "p90": 1,
+              "min": 0,
+              "max": 1
+            },
+            "articulationFraction": {
+              "n": 600,
+              "mean": 0.013745710756765393,
+              "p50": 0,
+              "p90": 0.05263157894736842,
+              "min": 0,
+              "max": 0.2222222222222222
+            },
+            "weightedDegreeSecondsPerNodeObservation": {
+              "n": 11072,
+              "mean": 0.03317678227360109,
+              "p50": 0,
+              "p90": 0.01666666666551464,
+              "min": 0,
+              "max": 1.949999999998937
+            }
+          },
+          "adjacent20HzStability": {
+            "meanEdgeJaccard": {
+              "n": 598,
+              "mean": 0.9301499537715198,
+              "p50": 0.9304134165713449,
+              "p90": 0.9333599582113103,
+              "min": 0.8,
+              "max": 0.94
+            },
+            "emptyGraphFraction": {
+              "n": 600,
+              "mean": 0.4901070738357749,
+              "p50": 0.4254770940311816,
+              "p90": 0.7179271113884826,
+              "min": 0.3607199400049996,
+              "max": 1
+            },
+            "componentCountRangeOverRun": {
+              "min": 1,
+              "max": 23
+            }
+          },
+          "eventCounts": {
+            "EDGE_FORM": 504,
+            "COMPONENT_MERGE": 222,
+            "BRIDGE_FORM": 333,
+            "BRIDGE_BREAK": 333,
+            "EDGE_END": 504,
+            "COMPONENT_SPLIT": 456,
+            "BRIDGE_PERSIST": 22,
+            "ARTICULATION_FORM": 30,
+            "ARTICULATION_BREAK": 30
+          },
+          "edgeLifetimes": {
+            "total": 504,
+            "closedCount": 502,
+            "rightCensoredCount": 2,
+            "closedDurationSeconds": {
+              "n": 502,
+              "mean": 1.3537848605578464,
+              "p50": 1.250000000001421,
+              "p90": 1.7949999999964819,
+              "min": 0.04999999999998295,
+              "max": 3.899999999997732
+            },
+            "rightCensoredObservedDurationSeconds": {
+              "n": 2,
+              "mean": 0.549999999998704,
+              "p50": 0.549999999998704,
+              "p90": 0.549999999998704,
+              "min": 0.549999999998704,
+              "max": 0.549999999998704
+            }
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "oneHzTopology": {
+            "edgeCount": {
+              "n": 600,
+              "mean": 4.288333333333333,
+              "p50": 4,
+              "p90": 7,
+              "min": 0,
+              "max": 12
+            },
+            "componentCount": {
+              "n": 600,
+              "mean": 14.448333333333334,
+              "p50": 15,
+              "p90": 18,
+              "min": 2,
+              "max": 21
+            },
+            "largestComponentRatio": {
+              "n": 600,
+              "mean": 0.2059008881944429,
+              "p50": 0.2,
+              "p90": 0.3333333333333333,
+              "min": 0.047619047619047616,
+              "max": 0.5555555555555556
+            },
+            "bridgeFraction": {
+              "n": 600,
+              "mean": 0.8170044492544485,
+              "p50": 1,
+              "p90": 1,
+              "min": 0,
+              "max": 1
+            },
+            "articulationFraction": {
+              "n": 600,
+              "mean": 0.0792305350320899,
+              "p50": 0.058823529411764705,
+              "p90": 0.17647058823529413,
+              "min": 0,
+              "max": 0.35294117647058826
+            },
+            "weightedDegreeSecondsPerNodeObservation": {
+              "n": 11072,
+              "mean": 0.1574512283236943,
+              "p50": 0,
+              "p90": 0.5666666666663502,
+              "min": 0,
+              "max": 3.399999999998016
+            }
+          },
+          "adjacent20HzStability": {
+            "meanEdgeJaccard": {
+              "n": 598,
+              "mean": 0.978869827693731,
+              "p50": 0.9799422417464252,
+              "p90": 0.9802608180575442,
+              "min": 0.8,
+              "max": 0.9857142857142858
+            },
+            "emptyGraphFraction": {
+              "n": 600,
+              "mean": 0.13353884806179817,
+              "p50": 0.0838465138720029,
+              "p90": 0.2797443571798277,
+              "min": 0.045829514207149404,
+              "max": 1
+            },
+            "componentCountRangeOverRun": {
+              "min": 1,
+              "max": 22
+            }
+          },
+          "eventCounts": {
+            "EDGE_FORM": 497,
+            "COMPONENT_MERGE": 213,
+            "BRIDGE_FORM": 319,
+            "BRIDGE_BREAK": 319,
+            "EDGE_END": 497,
+            "COMPONENT_SPLIT": 421,
+            "ARTICULATION_FORM": 27,
+            "ARTICULATION_BREAK": 27
+          },
+          "edgeLifetimes": {
+            "total": 497,
+            "closedCount": 490,
+            "rightCensoredCount": 7,
+            "closedDurationSeconds": {
+              "n": 490,
+              "mean": 5.212142857143282,
+              "p50": 5.200000000006071,
+              "p90": 5.750000000006651,
+              "min": 0.1499999999996362,
+              "max": 8.250000000009607
+            },
+            "rightCensoredObservedDurationSeconds": {
+              "n": 7,
+              "mean": 2.4499999999943123,
+              "p50": 2.3999999999944066,
+              "p90": 4.119999999990455,
+              "min": 0.549999999998704,
+              "max": 4.599999999989336
+            }
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "oneHzTopology": {
+            "edgeCount": {
+              "n": 600,
+              "mean": 8.548333333333334,
+              "p50": 9,
+              "p90": 13,
+              "min": 0,
+              "max": 19
+            },
+            "componentCount": {
+              "n": 600,
+              "mean": 10.523333333333333,
+              "p50": 10,
+              "p90": 14,
+              "min": 2,
+              "max": 17
+            },
+            "largestComponentRatio": {
+              "n": 600,
+              "mean": 0.2718696161606132,
+              "p50": 0.2608695652173913,
+              "p90": 0.3888888888888889,
+              "min": 0.1,
+              "max": 0.5714285714285714
+            },
+            "bridgeFraction": {
+              "n": 600,
+              "mean": 0.818771185986357,
+              "p50": 1,
+              "p90": 1,
+              "min": 0,
+              "max": 1
+            },
+            "articulationFraction": {
+              "n": 600,
+              "mean": 0.1724876208280439,
+              "p50": 0.15789473684210525,
+              "p90": 0.3157894736842105,
+              "min": 0,
+              "max": 0.4782608695652174
+            },
+            "weightedDegreeSecondsPerNodeObservation": {
+              "n": 11072,
+              "mean": 0.32647519267823,
+              "p50": 0.13333333333349628,
+              "p90": 0.866666666665995,
+              "min": 0,
+              "max": 3.8666666666644005
+            }
+          },
+          "adjacent20HzStability": {
+            "meanEdgeJaccard": {
+              "n": 598,
+              "mean": 0.9900186999083443,
+              "p50": 0.990572402518902,
+              "p90": 0.9909172218927647,
+              "min": 0.8,
+              "max": 0.9933333333333333
+            },
+            "emptyGraphFraction": {
+              "n": 600,
+              "mean": 0.029412367227385595,
+              "p50": 0.00964900358050827,
+              "p90": 0.047581151661085064,
+              "min": 0.004832930589117573,
+              "max": 1
+            },
+            "componentCountRangeOverRun": {
+              "min": 1,
+              "max": 17
+            }
+          },
+          "eventCounts": {
+            "EDGE_FORM": 493,
+            "COMPONENT_MERGE": 208,
+            "BRIDGE_FORM": 318,
+            "BRIDGE_BREAK": 318,
+            "EDGE_END": 493,
+            "COMPONENT_SPLIT": 86,
+            "ARTICULATION_FORM": 27,
+            "ARTICULATION_BREAK": 27
+          },
+          "edgeLifetimes": {
+            "total": 493,
+            "closedCount": 483,
+            "rightCensoredCount": 10,
+            "closedDurationSeconds": {
+              "n": 483,
+              "mean": 10.510248447205477,
+              "p50": 10.449999999975603,
+              "p90": 14.739999999998895,
+              "min": 0.1499999999996362,
+              "max": 20.349999999952615
+            },
+            "rightCensoredObservedDurationSeconds": {
+              "n": 10,
+              "mean": 5.039999999988277,
+              "p50": 3.549999999991769,
+              "p90": 10.81499999997486,
+              "min": 0.549999999998704,
+              "max": 14.099999999967167
+            }
+          }
+        }
+      ],
+      "connectorsK2W025": [
+        {
+          "antId": "ant-73",
+          "timeSeconds": 96.80000000000528,
+          "onsetSeconds": 96.55000000000521,
+          "confirmedSeconds": 96.80000000000528,
+          "durationSeconds": 0.25000000000007105,
+          "externalComponents": [
+            "ant-40",
+            "ant-54"
+          ],
+          "mergedSize": 5,
+          "position": {
+            "x": 0.48835362999559323,
+            "y": 0.7246257122851657
+          },
+          "frameTimeSeconds": 96.80000000000528,
+          "localNeighborsCenterDistanceLe022": 2,
+          "localNeighborsCenterDistanceLe085": 5,
+          "colonyPopulation": 18,
+          "nearestNeighborsWithin085": [
+            {
+              "id": "ant-54",
+              "distance": 0.01695978027165458
+            },
+            {
+              "id": "ant-71",
+              "distance": 0.02187626610645452
+            },
+            {
+              "id": "ant-40",
+              "distance": 0.03072566632546592
+            },
+            {
+              "id": "ant-72",
+              "distance": 0.04914257219641515
+            },
+            {
+              "id": "ant-70",
+              "distance": 0.08083333032956773
+            }
+          ],
+          "laterRecruitmentsWithin085And10s": [
+            {
+              "antId": "ant-74",
+              "timeSeconds": 97.53333333333883,
+              "secondsAfter": 0.7333333333335474,
+              "distance": 0.027264875197672577
+            },
+            {
+              "antId": "ant-75",
+              "timeSeconds": 98.10000000000566,
+              "secondsAfter": 1.3000000000003809,
+              "distance": 0.02190036170514444
+            },
+            {
+              "antId": "ant-76",
+              "timeSeconds": 98.51666666667245,
+              "secondsAfter": 1.716666666667166,
+              "distance": 0.0046705051323223746
+            },
+            {
+              "antId": "ant-77",
+              "timeSeconds": 99.31666666667269,
+              "secondsAfter": 2.5166666666674047,
+              "distance": 0.014324155730844263
+            },
+            {
+              "antId": "ant-78",
+              "timeSeconds": 101.4166666666733,
+              "secondsAfter": 4.61666666666801,
+              "distance": 0.025446668041673358
+            },
+            {
+              "antId": "ant-79",
+              "timeSeconds": 102.18333333334019,
+              "secondsAfter": 5.383333333334903,
+              "distance": 0.012253159480043197
+            },
+            {
+              "antId": "ant-80",
+              "timeSeconds": 102.88333333334039,
+              "secondsAfter": 6.083333333335105,
+              "distance": 0.030131700919648046
+            },
+            {
+              "antId": "ant-81",
+              "timeSeconds": 103.48333333334057,
+              "secondsAfter": 6.683333333335284,
+              "distance": 0.013055768717614736
+            },
+            {
+              "antId": "ant-82",
+              "timeSeconds": 104.03333333334072,
+              "secondsAfter": 7.2333333333354375,
+              "distance": 0.020615771323491815
+            },
+            {
+              "antId": "ant-83",
+              "timeSeconds": 104.86666666667429,
+              "secondsAfter": 8.066666666669008,
+              "distance": 0.013914789125872414
+            },
+            {
+              "antId": "ant-84",
+              "timeSeconds": 105.38333333334111,
+              "secondsAfter": 8.58333333333583,
+              "distance": 0.02414018931801042
+            },
+            {
+              "antId": "ant-85",
+              "timeSeconds": 105.8000000000079,
+              "secondsAfter": 9.000000000002615,
+              "distance": 0.023250137683093485
+            }
+          ],
+          "colonyMeanNeighborsCenterDistanceLe022SameFrame": 0.3333333333333333,
+          "colonyMeanNeighborsCenterDistanceLe085SameFrame": 2.111111111111111,
+          "populationSameFrame": 18,
+          "trajectoryFrameIndex": 5808,
+          "trajectoryFrameTimeSeconds": 96.80000000000528
+        },
+        {
+          "antId": "ant-114",
+          "timeSeconds": 134.50000000001327,
+          "onsetSeconds": 134.25000000001342,
+          "confirmedSeconds": 134.50000000001327,
+          "durationSeconds": 0.2499999999998579,
+          "externalComponents": [
+            "ant-111",
+            "ant-112"
+          ],
+          "mergedSize": 4,
+          "position": {
+            "x": 0.49911273071009316,
+            "y": 0.7066064584102528
+          },
+          "frameTimeSeconds": 134.50000000001327,
+          "localNeighborsCenterDistanceLe022": 3,
+          "localNeighborsCenterDistanceLe085": 5,
+          "colonyPopulation": 18,
+          "nearestNeighborsWithin085": [
+            {
+              "id": "ant-113",
+              "distance": 0.015042160707140886
+            },
+            {
+              "id": "ant-111",
+              "distance": 0.018217286476801275
+            },
+            {
+              "id": "ant-112",
+              "distance": 0.02099544331194337
+            },
+            {
+              "id": "ant-66",
+              "distance": 0.04358719274578914
+            },
+            {
+              "id": "ant-110",
+              "distance": 0.06254888765814959
+            }
+          ],
+          "laterRecruitmentsWithin085And10s": [
+            {
+              "antId": "ant-115",
+              "timeSeconds": 134.80000000001309,
+              "secondsAfter": 0.2999999999998124,
+              "distance": 0.017293139379226195
+            },
+            {
+              "antId": "ant-116",
+              "timeSeconds": 135.533333333346,
+              "secondsAfter": 1.0333333333327346,
+              "distance": 0.0037566423496943873
+            },
+            {
+              "antId": "ant-117",
+              "timeSeconds": 136.03333333334572,
+              "secondsAfter": 1.5333333333324504,
+              "distance": 0.021039907584499383
+            },
+            {
+              "antId": "ant-118",
+              "timeSeconds": 139.00000000001066,
+              "secondsAfter": 4.499999999997385,
+              "distance": 0.02458363198927844
+            },
+            {
+              "antId": "ant-119",
+              "timeSeconds": 142.2000000000088,
+              "secondsAfter": 7.699999999995526,
+              "distance": 0.024590170918631485
+            },
+            {
+              "antId": "ant-120",
+              "timeSeconds": 143.38333333334143,
+              "secondsAfter": 8.883333333328153,
+              "distance": 0.021863688726671552
+            },
+            {
+              "antId": "ant-121",
+              "timeSeconds": 143.98333333334108,
+              "secondsAfter": 9.483333333327806,
+              "distance": 0.007275521772709982
+            }
+          ],
+          "colonyMeanNeighborsCenterDistanceLe022SameFrame": 0.3333333333333333,
+          "colonyMeanNeighborsCenterDistanceLe085SameFrame": 2,
+          "populationSameFrame": 18,
+          "trajectoryFrameIndex": 8070,
+          "trajectoryFrameTimeSeconds": 134.50000000001327
+        },
+        {
+          "antId": "ant-655",
+          "timeSeconds": 522.7500000002424,
+          "onsetSeconds": 522.500000000242,
+          "confirmedSeconds": 522.7500000002424,
+          "durationSeconds": 0.25000000000034106,
+          "externalComponents": [
+            "ant-651",
+            "ant-653"
+          ],
+          "mergedSize": 4,
+          "position": {
+            "x": 0.4817462489128437,
+            "y": 0.7152037709501783
+          },
+          "frameTimeSeconds": 522.7500000002424,
+          "localNeighborsCenterDistanceLe022": 2,
+          "localNeighborsCenterDistanceLe085": 4,
+          "colonyPopulation": 22,
+          "nearestNeighborsWithin085": [
+            {
+              "id": "ant-651",
+              "distance": 0.017412293868544523
+            },
+            {
+              "id": "ant-653",
+              "distance": 0.020051392859882288
+            },
+            {
+              "id": "ant-654",
+              "distance": 0.024408605094965268
+            },
+            {
+              "id": "ant-650",
+              "distance": 0.08373187537008925
+            }
+          ],
+          "laterRecruitmentsWithin085And10s": [
+            {
+              "antId": "ant-656",
+              "timeSeconds": 523.2333333335763,
+              "secondsAfter": 0.4833333333339169,
+              "distance": 0.015756780099861912
+            },
+            {
+              "antId": "ant-657",
+              "timeSeconds": 524.5666666669101,
+              "secondsAfter": 1.816666666667743,
+              "distance": 0.01871852443814992
+            },
+            {
+              "antId": "ant-658",
+              "timeSeconds": 525.650000000241,
+              "secondsAfter": 2.899999999998613,
+              "distance": 0.01705420898070332
+            },
+            {
+              "antId": "ant-659",
+              "timeSeconds": 526.4166666669058,
+              "secondsAfter": 3.6666666666634455,
+              "distance": 0.0097047218396116
+            },
+            {
+              "antId": "ant-660",
+              "timeSeconds": 527.216666666904,
+              "secondsAfter": 4.466666666661581,
+              "distance": 0.032155683950038816
+            },
+            {
+              "antId": "ant-661",
+              "timeSeconds": 527.8166666669026,
+              "secondsAfter": 5.06666666666024,
+              "distance": 0.023341358570435296
+            },
+            {
+              "antId": "ant-662",
+              "timeSeconds": 528.6333333335674,
+              "secondsAfter": 5.883333333325027,
+              "distance": 0.029499490352644906
+            },
+            {
+              "antId": "ant-663",
+              "timeSeconds": 529.100000000233,
+              "secondsAfter": 6.349999999990587,
+              "distance": 0.02386107930547588
+            },
+            {
+              "antId": "ant-664",
+              "timeSeconds": 529.6666666668983,
+              "secondsAfter": 6.916666666655942,
+              "distance": 0.022018854181129123
+            },
+            {
+              "antId": "ant-665",
+              "timeSeconds": 530.5166666668963,
+              "secondsAfter": 7.766666666653919,
+              "distance": 0.03354296103962772
+            },
+            {
+              "antId": "ant-666",
+              "timeSeconds": 530.9500000002287,
+              "secondsAfter": 8.19999999998629,
+              "distance": 0.02290810495035613
+            },
+            {
+              "antId": "ant-667",
+              "timeSeconds": 531.8000000002266,
+              "secondsAfter": 9.049999999984266,
+              "distance": 0.012483151967372551
+            },
+            {
+              "antId": "ant-668",
+              "timeSeconds": 532.500000000225,
+              "secondsAfter": 9.749999999982606,
+              "distance": 0.03337171013282908
+            }
+          ],
+          "colonyMeanNeighborsCenterDistanceLe022SameFrame": 0.18181818181818182,
+          "colonyMeanNeighborsCenterDistanceLe085SameFrame": 1.0909090909090908,
+          "populationSameFrame": 22,
+          "trajectoryFrameIndex": 31365,
+          "trajectoryFrameTimeSeconds": 522.7500000002424
+        }
+      ],
+      "densityRelationships": {
+        "pearsonBySecond": {
+          "W0.25.componentCount": {
+            "population": 0.979669973957421,
+            "instantK2Edges": -0.04811704525437957,
+            "meanNeighborsCloseRange": -0.11342211300400787,
+            "meanNeighborsSenseRadius": 0.09560275048420447,
+            "occupancyEntropy8x8": 0.840100155997355,
+            "top10PercentAntShare8x8": -0.7604353417699177
+          },
+          "W0.25.largestComponentRatio": {
+            "population": -0.4624105478133005,
+            "instantK2Edges": 0.5064534360228073,
+            "meanNeighborsCloseRange": 0.499099193571974,
+            "meanNeighborsSenseRadius": 0.24889737751944288,
+            "occupancyEntropy8x8": -0.5898898474827595,
+            "top10PercentAntShare8x8": 0.48416182644296873
+          },
+          "W0.25.edgeCount": {
+            "population": 0.12285414589303499,
+            "instantK2Edges": 0.7636888148828332,
+            "meanNeighborsCloseRange": 0.635675750348338,
+            "meanNeighborsSenseRadius": 0.35519732823075306,
+            "occupancyEntropy8x8": -0.009544401000325881,
+            "top10PercentAntShare8x8": 0.04127109331840236
+          },
+          "W1.componentCount": {
+            "population": 0.9533409814420903,
+            "instantK2Edges": -0.06273704756776624,
+            "meanNeighborsCloseRange": -0.12758081578023475,
+            "meanNeighborsSenseRadius": 0.019563547786006368,
+            "occupancyEntropy8x8": 0.8401541638387564,
+            "top10PercentAntShare8x8": -0.7642586385667701
+          },
+          "W1.largestComponentRatio": {
+            "population": -0.3256257719916701,
+            "instantK2Edges": 0.38359633450898944,
+            "meanNeighborsCloseRange": 0.37038720812440606,
+            "meanNeighborsSenseRadius": 0.4037996410188114,
+            "occupancyEntropy8x8": -0.48228575336885005,
+            "top10PercentAntShare8x8": 0.4062295868177042
+          },
+          "W1.edgeCount": {
+            "population": 0.1895946792550796,
+            "instantK2Edges": 0.5650828913147978,
+            "meanNeighborsCloseRange": 0.4802280110791472,
+            "meanNeighborsSenseRadius": 0.48081329118722044,
+            "occupancyEntropy8x8": 0.01786166406298896,
+            "top10PercentAntShare8x8": 0.01658195525266579
+          },
+          "W5.componentCount": {
+            "population": 0.7986755913892062,
+            "instantK2Edges": -0.06223081618762848,
+            "meanNeighborsCloseRange": -0.0953539298362917,
+            "meanNeighborsSenseRadius": -0.09759704138810067,
+            "occupancyEntropy8x8": 0.7431305419176542,
+            "top10PercentAntShare8x8": -0.6852023662340186
+          },
+          "W5.largestComponentRatio": {
+            "population": -0.17779016365486539,
+            "instantK2Edges": 0.1207552288411475,
+            "meanNeighborsCloseRange": 0.09561727581676609,
+            "meanNeighborsSenseRadius": 0.35226116583872996,
+            "occupancyEntropy8x8": -0.2918040521203485,
+            "top10PercentAntShare8x8": 0.26582596668783365
+          },
+          "W5.edgeCount": {
+            "population": 0.41893050768040196,
+            "instantK2Edges": 0.268670461918688,
+            "meanNeighborsCloseRange": 0.1685044480917558,
+            "meanNeighborsSenseRadius": 0.4274333648870318,
+            "occupancyEntropy8x8": 0.2372171800527631,
+            "top10PercentAntShare8x8": -0.1859870880366113
+          },
+          "W20.componentCount": {
+            "population": 0.4812561911691279,
+            "instantK2Edges": -0.06485791440310322,
+            "meanNeighborsCloseRange": -0.08542808935058815,
+            "meanNeighborsSenseRadius": -0.05393834217681942,
+            "occupancyEntropy8x8": 0.4627679741306053,
+            "top10PercentAntShare8x8": -0.4233149235634776
+          },
+          "W20.largestComponentRatio": {
+            "population": -0.15878981786511204,
+            "instantK2Edges": 0.015304028274636094,
+            "meanNeighborsCloseRange": 0.011796008873167608,
+            "meanNeighborsSenseRadius": 0.1248549249564724,
+            "occupancyEntropy8x8": -0.19637355695256675,
+            "top10PercentAntShare8x8": 0.18667296384579765
+          },
+          "W20.edgeCount": {
+            "population": 0.6515640812924338,
+            "instantK2Edges": 0.1717579219996758,
+            "meanNeighborsCloseRange": 0.08835474141141546,
+            "meanNeighborsSenseRadius": 0.21403669505334083,
+            "occupancyEntropy8x8": 0.5044474135677264,
+            "top10PercentAntShare8x8": -0.4516770718556351
+          }
+        },
+        "fixedPopulationBandsMostObserved": [
+          {
+            "population": 20,
+            "nSeconds": 108,
+            "k2InstantProximityPairs": {
+              "n": 108,
+              "mean": 0.35185185185185186,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 3
+            },
+            "W025Edges": {
+              "n": 108,
+              "mean": 0.5648148148148148,
+              "p50": 0,
+              "p90": 2,
+              "min": 0,
+              "max": 3
+            },
+            "W025LCC": {
+              "n": 108,
+              "mean": 0.0759259259259258,
+              "p50": 0.05,
+              "p90": 0.11499999999999985,
+              "min": 0.05,
+              "max": 0.2
+            },
+            "W1Edges": {
+              "n": 108,
+              "mean": 1.1481481481481481,
+              "p50": 1,
+              "p90": 3,
+              "min": 0,
+              "max": 5
+            },
+            "W1LCC": {
+              "n": 108,
+              "mean": 0.09999999999999998,
+              "p50": 0.1,
+              "p90": 0.15,
+              "min": 0.05,
+              "max": 0.25
+            },
+            "meanNeighborsCloseRange": {
+              "n": 108,
+              "mean": 0.025000000000000005,
+              "p50": 0,
+              "p90": 0.1,
+              "min": 0,
+              "max": 0.3
+            },
+            "occupancyEntropy8x8": {
+              "n": 108,
+              "mean": 0.639837731274389,
+              "p50": 0.6369880158145604,
+              "p90": 0.6869880158145604,
+              "min": 0.5640306199631981,
+              "max": 0.7036546824812271
+            }
+          },
+          {
+            "population": 21,
+            "nSeconds": 108,
+            "k2InstantProximityPairs": {
+              "n": 108,
+              "mean": 0.3425925925925926,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 2
+            },
+            "W025Edges": {
+              "n": 108,
+              "mean": 0.6574074074074074,
+              "p50": 1,
+              "p90": 1.2999999999999972,
+              "min": 0,
+              "max": 3
+            },
+            "W025LCC": {
+              "n": 108,
+              "mean": 0.07671957671957659,
+              "p50": 0.09523809523809523,
+              "p90": 0.09523809523809523,
+              "min": 0.047619047619047616,
+              "max": 0.19047619047619047
+            },
+            "W1Edges": {
+              "n": 108,
+              "mean": 1.2777777777777777,
+              "p50": 1,
+              "p90": 3,
+              "min": 0,
+              "max": 4
+            },
+            "W1LCC": {
+              "n": 108,
+              "mean": 0.09876543209876532,
+              "p50": 0.09523809523809523,
+              "p90": 0.14285714285714285,
+              "min": 0.047619047619047616,
+              "max": 0.19047619047619047
+            },
+            "meanNeighborsCloseRange": {
+              "n": 108,
+              "mean": 0.024691358024691374,
+              "p50": 0,
+              "p90": 0.09523809523809523,
+              "min": 0,
+              "max": 0.19047619047619047
+            },
+            "occupancyEntropy8x8": {
+              "n": 108,
+              "mean": 0.6556495470854281,
+              "p50": 0.6625696696523055,
+              "p90": 0.6844338561774124,
+              "min": 0.5891957609393174,
+              "max": 0.7003068720504282
+            }
+          },
+          {
+            "population": 19,
+            "nSeconds": 90,
+            "k2InstantProximityPairs": {
+              "n": 90,
+              "mean": 0.34444444444444444,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 4
+            },
+            "W025Edges": {
+              "n": 90,
+              "mean": 0.5111111111111111,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 4
+            },
+            "W025LCC": {
+              "n": 90,
+              "mean": 0.0766081871345029,
+              "p50": 0.05263157894736842,
+              "p90": 0.10526315789473684,
+              "min": 0.05263157894736842,
+              "max": 0.21052631578947367
+            },
+            "W1Edges": {
+              "n": 90,
+              "mean": 1.3,
+              "p50": 1,
+              "p90": 3,
+              "min": 0,
+              "max": 6
+            },
+            "W1LCC": {
+              "n": 90,
+              "mean": 0.10818713450292393,
+              "p50": 0.10526315789473684,
+              "p90": 0.15789473684210525,
+              "min": 0.05263157894736842,
+              "max": 0.2631578947368421
+            },
+            "meanNeighborsCloseRange": {
+              "n": 90,
+              "mean": 0.02339181286549707,
+              "p50": 0,
+              "p90": 0.10526315789473684,
+              "min": 0,
+              "max": 0.21052631578947367
+            },
+            "occupancyEntropy8x8": {
+              "n": 90,
+              "mean": 0.629630793561417,
+              "p50": 0.6311906601163568,
+              "p90": 0.6729001996090186,
+              "min": 0.5610152215198654,
+              "max": 0.6904440592581416
+            }
+          },
+          {
+            "population": 18,
+            "nSeconds": 79,
+            "k2InstantProximityPairs": {
+              "n": 79,
+              "mean": 0.31645569620253167,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 2
+            },
+            "W025Edges": {
+              "n": 79,
+              "mean": 0.5569620253164557,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 3
+            },
+            "W025LCC": {
+              "n": 79,
+              "mean": 0.08509142053445837,
+              "p50": 0.05555555555555555,
+              "p90": 0.1111111111111111,
+              "min": 0.05555555555555555,
+              "max": 0.2222222222222222
+            },
+            "W1Edges": {
+              "n": 79,
+              "mean": 1.3037974683544304,
+              "p50": 1,
+              "p90": 3,
+              "min": 0,
+              "max": 5
+            },
+            "W1LCC": {
+              "n": 79,
+              "mean": 0.11954992967651185,
+              "p50": 0.1111111111111111,
+              "p90": 0.16666666666666666,
+              "min": 0.05555555555555555,
+              "max": 0.3333333333333333
+            },
+            "meanNeighborsCloseRange": {
+              "n": 79,
+              "mean": 0.0239099859353024,
+              "p50": 0,
+              "p90": 0.1111111111111111,
+              "min": 0,
+              "max": 0.2222222222222222
+            },
+            "occupancyEntropy8x8": {
+              "n": 79,
+              "mean": 0.6162861743377033,
+              "p50": 0.6139237270722051,
+              "p90": 0.6579504632033484,
+              "min": 0.5468393520922374,
+              "max": 0.6764689817218671
+            }
+          },
+          {
+            "population": 22,
+            "nSeconds": 47,
+            "k2InstantProximityPairs": {
+              "n": 47,
+              "mean": 0.2978723404255319,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 1
+            },
+            "W025Edges": {
+              "n": 47,
+              "mean": 0.44680851063829785,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 2
+            },
+            "W025LCC": {
+              "n": 47,
+              "mean": 0.06382978723404252,
+              "p50": 0.045454545454545456,
+              "p90": 0.09090909090909091,
+              "min": 0.045454545454545456,
+              "max": 0.13636363636363635
+            },
+            "W1Edges": {
+              "n": 47,
+              "mean": 1.297872340425532,
+              "p50": 1,
+              "p90": 3,
+              "min": 0,
+              "max": 4
+            },
+            "W1LCC": {
+              "n": 47,
+              "mean": 0.09671179883945837,
+              "p50": 0.09090909090909091,
+              "p90": 0.13636363636363635,
+              "min": 0.045454545454545456,
+              "max": 0.18181818181818182
+            },
+            "meanNeighborsCloseRange": {
+              "n": 47,
+              "mean": 0.019342359767891688,
+              "p50": 0,
+              "p90": 0.09090909090909091,
+              "min": 0,
+              "max": 0.09090909090909091
+            },
+            "occupancyEntropy8x8": {
+              "n": 47,
+              "mean": 0.663343990747487,
+              "p50": 0.6617621826352811,
+              "p90": 0.697784057651671,
+              "min": 0.6163076371807354,
+              "max": 0.7280870879547011
+            }
+          }
+        ],
+        "measures": {
+          "instantaneousPairs": "edgeCount from proximity graph at k=2; not causal",
+          "closeRange": "mean neighbors within existing 0.022 range",
+          "senseRadius": "mean neighbors within existing 0.085 radius",
+          "occupancy": "instantaneous 8x8 grid normalized entropy and top-10%-cell ant share"
+        }
+      },
+      "plateAndNoduleBirths": {
+        "firstPlate": {
+          "timeSeconds": 103.01666666667376,
+          "id": "trail-plate-1",
+          "source": {
+            "x": 0.4631578947368421,
+            "y": 0.6421052631578947,
+            "index": 5900
+          },
+          "target": {
+            "x": 0.9578947368421052,
+            "y": 0.14736842105263157,
+            "index": 1435
+          }
+        },
+        "countsByHorizon": [
+          {
+            "seconds": 30,
+            "platesBornBy": 0,
+            "nodulesBornBy": 0,
+            "sphereBirthEventsBy": 0
+          },
+          {
+            "seconds": 60,
+            "platesBornBy": 0,
+            "nodulesBornBy": 0,
+            "sphereBirthEventsBy": 0
+          },
+          {
+            "seconds": 120,
+            "platesBornBy": 1,
+            "nodulesBornBy": 0,
+            "sphereBirthEventsBy": 0
+          },
+          {
+            "seconds": 300,
+            "platesBornBy": 9,
+            "nodulesBornBy": 2,
+            "sphereBirthEventsBy": 2
+          },
+          {
+            "seconds": 600,
+            "platesBornBy": 32,
+            "nodulesBornBy": 32,
+            "sphereBirthEventsBy": 32
+          }
+        ],
+        "totalPlateBirthEvents": 32,
+        "totalNoduleBirthEvents": 32,
+        "contactEvents": 35751,
+        "contactGroupsAndTypes": {
+          "FOOT_CONTACT:A": 17881,
+          "FOOT_CONTACT:B": 17870
+        },
+        "sphereBirthEvents": 32,
+        "totalContactPoints": 105759,
+        "contactGroupPointCounts": {
+          "A:3 points": 17291,
+          "B:3 points": 17301,
+          "B:2 points": 414,
+          "A:2 points": 410,
+          "B:1 points": 155,
+          "A:1 points": 180
+        }
+      }
+    },
+    {
+      "seed": 20261006,
+      "condition": "graph-on",
+      "parity": {
+        "offStateSha256": "c0f8ab71195fe8640dabf5a9ad9cfbfdfc1214eee2c82b983144ceadc88b1483",
+        "onStateSha256": "c0f8ab71195fe8640dabf5a9ad9cfbfdfc1214eee2c82b983144ceadc88b1483",
+        "offControllerSha256": "7b1649b4e206f9e7c2bc07e982ceb7c11fab9e072b24b7cd2a16f3306c230ed0",
+        "onControllerSha256": "7b1649b4e206f9e7c2bc07e982ceb7c11fab9e072b24b7cd2a16f3306c230ed0",
+        "trajectorySha256Equal": true,
+        "frameCount": 36001,
+        "tickCount": 36000,
+        "trajectoryEnabledSha256": "ca85ff243a45cc956e35e2d7b8e0ec253762c902038eb933ab575d30f29f8379",
+        "trajectoryDisabledSha256": "ca85ff243a45cc956e35e2d7b8e0ec253762c902038eb933ab575d30f29f8379",
+        "trajectoryFrameCount": 36001
+      },
+      "population": {
+        "start": 1,
+        "end": 21,
+        "oneHz": {
+          "n": 600,
+          "mean": 18.395,
+          "p50": 19,
+          "p90": 22,
+          "min": 2,
+          "max": 23
+        },
+        "startTimeSeconds": 0
+      },
+      "thresholdSweep": [
+        {
+          "k": 1,
+          "rawEncounterEpisodes": 9,
+          "episodeDurationSeconds": {
+            "n": 9,
+            "mean": 0.46851851851852033,
+            "p50": 0.4833333333334764,
+            "p90": 0.9233333333328005,
+            "min": 0.01666666666665151,
+            "max": 1.149999999999352
+          },
+          "rightCensoredEpisodes": 0,
+          "completedEpisodes": 9,
+          "cumulativePairExposureSeconds": 4.216666666666683,
+          "minNormalizedDistance": {
+            "n": 9,
+            "mean": 0.9999997725476893,
+            "p50": 0.9999997663797062,
+            "p90": 0.9999999917885194,
+            "min": 0.9999994457570582,
+            "max": 0.9999999918423299
+          }
+        },
+        {
+          "k": 1.25,
+          "rawEncounterEpisodes": 35,
+          "episodeDurationSeconds": {
+            "n": 35,
+            "mean": 0.33190476190482304,
+            "p50": 0.18333333333322344,
+            "p90": 0.9233333333334571,
+            "min": 0.03333333333333144,
+            "max": 1.7833333333323083
+          },
+          "rightCensoredEpisodes": 0,
+          "completedEpisodes": 35,
+          "cumulativePairExposureSeconds": 11.616666666668806,
+          "minNormalizedDistance": {
+            "n": 35,
+            "mean": 1.1392156135680018,
+            "p50": 1.1617973944070457,
+            "p90": 1.2381362888470235,
+            "min": 0.9999994457570582,
+            "max": 1.2480837728917098
+          }
+        },
+        {
+          "k": 1.5,
+          "rawEncounterEpisodes": 162,
+          "episodeDurationSeconds": {
+            "n": 162,
+            "mean": 0.26985596707823606,
+            "p50": 0.1833333333335645,
+            "p90": 0.5950000000006045,
+            "min": 0.01666666666653782,
+            "max": 2.733333333331757
+          },
+          "rightCensoredEpisodes": 1,
+          "completedEpisodes": 161,
+          "cumulativePairExposureSeconds": 43.71666666667424,
+          "minNormalizedDistance": {
+            "n": 162,
+            "mean": 1.347462841664803,
+            "p50": 1.3819697918843592,
+            "p90": 1.475730756686217,
+            "min": 0.9999994457570582,
+            "max": 1.4981171042372214
+          }
+        },
+        {
+          "k": 2,
+          "rawEncounterEpisodes": 483,
+          "episodeDurationSeconds": {
+            "n": 483,
+            "mean": 0.35034506556252415,
+            "p50": 0.2333333333336327,
+            "p90": 0.7833333333342694,
+            "min": 0.01666666666665151,
+            "max": 3.599999999997891
+          },
+          "rightCensoredEpisodes": 1,
+          "completedEpisodes": 482,
+          "cumulativePairExposureSeconds": 169.21666666669915,
+          "minNormalizedDistance": {
+            "n": 483,
+            "mean": 1.6174598541447434,
+            "p50": 1.6210042017418826,
+            "p90": 1.9417898706745091,
+            "min": 0.9999994457570582,
+            "max": 1.9996156893158858
+          }
+        }
+      ],
+      "k2InstantEventCounts": {
+        "NODE_ENTER": 705,
+        "ENCOUNTER_START": 483,
+        "ENCOUNTER_END": 483,
+        "NODE_EXIT": 684
+      },
+      "k2Windows": [
+        {
+          "windowSeconds": 0.25,
+          "oneHzTopology": {
+            "edgeCount": {
+              "n": 600,
+              "mean": 0.44,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 3
+            },
+            "componentCount": {
+              "n": 600,
+              "mean": 17.958333333333332,
+              "p50": 19,
+              "p90": 22,
+              "min": 2,
+              "max": 23
+            },
+            "largestComponentRatio": {
+              "n": 600,
+              "mean": 0.07995387018612768,
+              "p50": 0.0625,
+              "p90": 0.125,
+              "min": 0.043478260869565216,
+              "max": 0.5
+            },
+            "bridgeFraction": {
+              "n": 600,
+              "mean": 0.365,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 1
+            },
+            "articulationFraction": {
+              "n": 600,
+              "mean": 0.001741799351319475,
+              "p50": 0,
+              "p90": 0,
+              "min": 0,
+              "max": 0.1
+            },
+            "weightedDegreeSecondsPerNodeObservation": {
+              "n": 11037,
+              "mean": 0.007314789646945415,
+              "p50": 0,
+              "p90": 0,
+              "min": 0,
+              "max": 0.5
+            }
+          },
+          "adjacent20HzStability": {
+            "meanEdgeJaccard": {
+              "n": 596,
+              "mean": 0.8385544939410536,
+              "p50": 0.8488299553230901,
+              "p90": 0.8525986740562386,
+              "min": 0.7272727272727273,
+              "max": 0.8561621746141443
+            },
+            "emptyGraphFraction": {
+              "n": 600,
+              "mean": 0.7373955277300286,
+              "p50": 0.6921711769048946,
+              "p90": 0.9505288118026711,
+              "min": 0.6291767858638305,
+              "max": 1
+            },
+            "componentCountRangeOverRun": {
+              "min": 1,
+              "max": 23
+            }
+          },
+          "eventCounts": {
+            "EDGE_FORM": 482,
+            "EDGE_END": 482,
+            "COMPONENT_SPLIT": 454,
+            "COMPONENT_MERGE": 233,
+            "BRIDGE_FORM": 307,
+            "BRIDGE_PERSIST": 192,
+            "BRIDGE_BREAK": 307,
+            "ARTICULATION_FORM": 22,
+            "ARTICULATION_PERSIST": 10,
+            "ARTICULATION_BREAK": 22,
+            "CONNECTOR_PERSIST": 3,
+            "CONNECTOR_END": 3
+          },
+          "edgeLifetimes": {
+            "total": 482,
+            "closedCount": 481,
+            "rightCensoredCount": 1,
+            "closedDurationSeconds": {
+              "n": 481,
+              "mean": 0.5913721413722358,
+              "p50": 0.49999999999886313,
+              "p90": 1.049999999999386,
+              "min": 0.24999999999931788,
+              "max": 3.8499999999977774
+            },
+            "rightCensoredObservedDurationSeconds": {
+              "n": 1,
+              "mean": 0,
+              "p50": 0,
+              "p90": 0,
+              "min": 0,
+              "max": 0
+            }
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "oneHzTopology": {
+            "edgeCount": {
+              "n": 600,
+              "mean": 1.0516666666666667,
+              "p50": 1,
+              "p90": 2,
+              "min": 0,
+              "max": 6
+            },
+            "componentCount": {
+              "n": 600,
+              "mean": 17.383333333333333,
+              "p50": 18,
+              "p90": 21,
+              "min": 2,
+              "max": 23
+            },
+            "largestComponentRatio": {
+              "n": 600,
+              "mean": 0.10449665011736828,
+              "p50": 0.1,
+              "p90": 0.16666666666666666,
+              "min": 0.043478260869565216,
+              "max": 0.5
+            },
+            "bridgeFraction": {
+              "n": 600,
+              "mean": 0.5913333333333333,
+              "p50": 1,
+              "p90": 1,
+              "min": 0,
+              "max": 1
+            },
+            "articulationFraction": {
+              "n": 600,
+              "mean": 0.01031459174752349,
+              "p50": 0,
+              "p90": 0.05263157894736842,
+              "min": 0,
+              "max": 0.14285714285714285
+            },
+            "weightedDegreeSecondsPerNodeObservation": {
+              "n": 11037,
+              "mean": 0.030551780375100708,
+              "p50": 0,
+              "p90": 0,
+              "min": 0,
+              "max": 2
+            }
+          },
+          "adjacent20HzStability": {
+            "meanEdgeJaccard": {
+              "n": 596,
+              "mean": 0.9276716227294529,
+              "p50": 0.9290313816509366,
+              "p90": 0.9299762598881613,
+              "min": 0.8,
+              "max": 0.9354043392504929
+            },
+            "emptyGraphFraction": {
+              "n": 600,
+              "mean": 0.5492034938817222,
+              "p50": 0.4796220228035404,
+              "p90": 0.8779325362226769,
+              "min": 0.38132263188696597,
+              "max": 1
+            },
+            "componentCountRangeOverRun": {
+              "min": 1,
+              "max": 23
+            }
+          },
+          "eventCounts": {
+            "EDGE_FORM": 477,
+            "EDGE_END": 477,
+            "COMPONENT_SPLIT": 437,
+            "COMPONENT_MERGE": 223,
+            "BRIDGE_FORM": 288,
+            "BRIDGE_BREAK": 288,
+            "BRIDGE_PERSIST": 14,
+            "ARTICULATION_FORM": 17,
+            "ARTICULATION_BREAK": 17
+          },
+          "edgeLifetimes": {
+            "total": 477,
+            "closedCount": 476,
+            "rightCensoredCount": 1,
+            "closedDurationSeconds": {
+              "n": 476,
+              "mean": 1.3491596638657695,
+              "p50": 1.2499999999982094,
+              "p90": 1.7999999999997414,
+              "min": 0.7000000000008413,
+              "max": 4.599999999997323
+            },
+            "rightCensoredObservedDurationSeconds": {
+              "n": 1,
+              "mean": 0,
+              "p50": 0,
+              "p90": 0,
+              "min": 0,
+              "max": 0
+            }
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "oneHzTopology": {
+            "edgeCount": {
+              "n": 600,
+              "mean": 4.053333333333334,
+              "p50": 4,
+              "p90": 7,
+              "min": 0,
+              "max": 12
+            },
+            "componentCount": {
+              "n": 600,
+              "mean": 14.583333333333334,
+              "p50": 15,
+              "p90": 18,
+              "min": 2,
+              "max": 22
+            },
+            "largestComponentRatio": {
+              "n": 600,
+              "mean": 0.19146131150075202,
+              "p50": 0.16666666666666666,
+              "p90": 0.3333333333333333,
+              "min": 0.047619047619047616,
+              "max": 0.6
+            },
+            "bridgeFraction": {
+              "n": 600,
+              "mean": 0.8325625901875903,
+              "p50": 1,
+              "p90": 1,
+              "min": 0,
+              "max": 1
+            },
+            "articulationFraction": {
+              "n": 600,
+              "mean": 0.06794710974328023,
+              "p50": 0.05,
+              "p90": 0.17647058823529413,
+              "min": 0,
+              "max": 0.3333333333333333
+            },
+            "weightedDegreeSecondsPerNodeObservation": {
+              "n": 11037,
+              "mean": 0.14474343873636625,
+              "p50": 0,
+              "p90": 0.5333333333330188,
+              "min": 0,
+              "max": 3.599999999997891
+            }
+          },
+          "adjacent20HzStability": {
+            "meanEdgeJaccard": {
+              "n": 596,
+              "mean": 0.9792949991117292,
+              "p50": 0.9796013849207121,
+              "p90": 0.9802460585087232,
+              "min": 0.8,
+              "max": 0.9882352941176471
+            },
+            "emptyGraphFraction": {
+              "n": 600,
+              "mean": 0.22782041753821541,
+              "p50": 0.14174053535505252,
+              "p90": 0.5957533860718702,
+              "min": 0.07382718106824432,
+              "max": 1
+            },
+            "componentCountRangeOverRun": {
+              "min": 1,
+              "max": 22
+            }
+          },
+          "eventCounts": {
+            "EDGE_FORM": 472,
+            "EDGE_END": 472,
+            "COMPONENT_SPLIT": 394,
+            "COMPONENT_MERGE": 216,
+            "BRIDGE_FORM": 284,
+            "BRIDGE_BREAK": 284,
+            "ARTICULATION_FORM": 17,
+            "ARTICULATION_BREAK": 17
+          },
+          "edgeLifetimes": {
+            "total": 472,
+            "closedCount": 468,
+            "rightCensoredCount": 4,
+            "closedDurationSeconds": {
+              "n": 468,
+              "mean": 5.1957264957273885,
+              "p50": 5.2000000000060425,
+              "p90": 5.79999999999661,
+              "min": 0.7000000000008413,
+              "max": 8.750000000010175
+            },
+            "rightCensoredObservedDurationSeconds": {
+              "n": 4,
+              "mean": 3.0374999999929173,
+              "p50": 3.8999999999908823,
+              "p90": 4.214999999990198,
+              "min": 0,
+              "max": 4.349999999989905
+            }
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "oneHzTopology": {
+            "edgeCount": {
+              "n": 600,
+              "mean": 8.323333333333334,
+              "p50": 8,
+              "p90": 13,
+              "min": 0,
+              "max": 20
+            },
+            "componentCount": {
+              "n": 600,
+              "mean": 10.588333333333333,
+              "p50": 10,
+              "p90": 14,
+              "min": 2,
+              "max": 17
+            },
+            "largestComponentRatio": {
+              "n": 600,
+              "mean": 0.2709064923960948,
+              "p50": 0.25,
+              "p90": 0.4090909090909091,
+              "min": 0.09090909090909091,
+              "max": 0.8666666666666667
+            },
+            "bridgeFraction": {
+              "n": 600,
+              "mean": 0.8554090820528518,
+              "p50": 1,
+              "p90": 1,
+              "min": 0,
+              "max": 1
+            },
+            "articulationFraction": {
+              "n": 600,
+              "mean": 0.16405291310127984,
+              "p50": 0.15789473684210525,
+              "p90": 0.29411764705882354,
+              "min": 0,
+              "max": 0.4782608695652174
+            },
+            "weightedDegreeSecondsPerNodeObservation": {
+              "n": 11037,
+              "mean": 0.31225272568034607,
+              "p50": 0.11666666666644687,
+              "p90": 0.8999999999998707,
+              "min": 0,
+              "max": 3.633333333331194
+            }
+          },
+          "adjacent20HzStability": {
+            "meanEdgeJaccard": {
+              "n": 596,
+              "mean": 0.9912497153296439,
+              "p50": 0.9914698276884948,
+              "p90": 0.9922527500410512,
+              "min": 0.8,
+              "max": 0.9972602739726028
+            },
+            "emptyGraphFraction": {
+              "n": 600,
+              "mean": 0.06933427421617547,
+              "p50": 0.03127608057130267,
+              "p90": 0.15422856055662057,
+              "min": 0.015665361219898342,
+              "max": 1
+            },
+            "componentCountRangeOverRun": {
+              "min": 1,
+              "max": 18
+            }
+          },
+          "eventCounts": {
+            "EDGE_FORM": 470,
+            "EDGE_END": 470,
+            "COMPONENT_MERGE": 212,
+            "COMPONENT_SPLIT": 91,
+            "BRIDGE_FORM": 282,
+            "BRIDGE_BREAK": 282,
+            "ARTICULATION_FORM": 17,
+            "ARTICULATION_BREAK": 17
+          },
+          "edgeLifetimes": {
+            "total": 470,
+            "closedCount": 460,
+            "rightCensoredCount": 10,
+            "closedDurationSeconds": {
+              "n": 460,
+              "mean": 10.755760869567345,
+              "p50": 10.55000000001229,
+              "p90": 15.405000000016594,
+              "min": 0.7000000000008413,
+              "max": 20.75000000002416
+            },
+            "rightCensoredObservedDurationSeconds": {
+              "n": 10,
+              "mean": 5.989999999986037,
+              "p50": 6.649999999984516,
+              "p90": 9.054999999978884,
+              "min": 0,
+              "max": 9.999999999976694
+            }
+          }
+        }
+      ],
+      "connectorsK2W025": [
+        {
+          "antId": "ant-250",
+          "timeSeconds": 274.14999999995297,
+          "onsetSeconds": 273.8999999999527,
+          "confirmedSeconds": 274.14999999995297,
+          "durationSeconds": 0.2500000000002842,
+          "externalComponents": [
+            "ant-248",
+            "ant-249"
+          ],
+          "mergedSize": 3,
+          "position": {
+            "x": 0.5047458416687247,
+            "y": 0.7079293568667717
+          },
+          "frameTimeSeconds": 274.14999999995297,
+          "localNeighborsCenterDistanceLe022": 2,
+          "localNeighborsCenterDistanceLe085": 2,
+          "colonyPopulation": 16,
+          "nearestNeighborsWithin085": [
+            {
+              "id": "ant-249",
+              "distance": 0.018240886823635477
+            },
+            {
+              "id": "ant-248",
+              "distance": 0.021895575177450187
+            }
+          ],
+          "laterRecruitmentsWithin085And10s": [
+            {
+              "antId": "ant-251",
+              "timeSeconds": 274.6833333332869,
+              "secondsAfter": 0.5333333333339283,
+              "distance": 0.024951167132267728
+            },
+            {
+              "antId": "ant-252",
+              "timeSeconds": 275.11666666662074,
+              "secondsAfter": 0.966666666667777,
+              "distance": 0.021572357608694814
+            },
+            {
+              "antId": "ant-253",
+              "timeSeconds": 275.58333333328795,
+              "secondsAfter": 1.4333333333349856,
+              "distance": 0.004863524153850353
+            },
+            {
+              "antId": "ant-254",
+              "timeSeconds": 276.166666666622,
+              "secondsAfter": 2.016666666669039,
+              "distance": 0.023736162646361733
+            },
+            {
+              "antId": "ant-255",
+              "timeSeconds": 276.84999999995614,
+              "secondsAfter": 2.700000000003172,
+              "distance": 0.01718942708927903
+            },
+            {
+              "antId": "ant-256",
+              "timeSeconds": 277.4666666666235,
+              "secondsAfter": 3.3166666666705282,
+              "distance": 0.025519293993025403
+            },
+            {
+              "antId": "ant-257",
+              "timeSeconds": 278.36666666662455,
+              "secondsAfter": 4.2166666666715855,
+              "distance": 0.0027957553330814192
+            },
+            {
+              "antId": "ant-258",
+              "timeSeconds": 279.0166666666253,
+              "secondsAfter": 4.866666666672359,
+              "distance": 0.02359601748121012
+            },
+            {
+              "antId": "ant-259",
+              "timeSeconds": 279.5999999999593,
+              "secondsAfter": 5.450000000006355,
+              "distance": 0.01891059290264138
+            },
+            {
+              "antId": "ant-260",
+              "timeSeconds": 280.06666666662653,
+              "secondsAfter": 5.916666666673564,
+              "distance": 0.010295861526045186
+            },
+            {
+              "antId": "ant-261",
+              "timeSeconds": 280.6499999999605,
+              "secondsAfter": 6.50000000000756,
+              "distance": 0.023962369151892187
+            },
+            {
+              "antId": "ant-262",
+              "timeSeconds": 281.4166666666281,
+              "secondsAfter": 7.266666666675121,
+              "distance": 0.012588199812130238
+            },
+            {
+              "antId": "ant-263",
+              "timeSeconds": 282.1333333332956,
+              "secondsAfter": 7.983333333342614,
+              "distance": 0.027443731962422037
+            },
+            {
+              "antId": "ant-264",
+              "timeSeconds": 282.9999999999633,
+              "secondsAfter": 8.850000000010311,
+              "distance": 0.02697523605026196
+            },
+            {
+              "antId": "ant-265",
+              "timeSeconds": 283.76666666663084,
+              "secondsAfter": 9.616666666677872,
+              "distance": 0.019322637516587415
+            }
+          ],
+          "colonyMeanNeighborsCenterDistanceLe022SameFrame": 0.25,
+          "colonyMeanNeighborsCenterDistanceLe085SameFrame": 0.375,
+          "populationSameFrame": 16,
+          "trajectoryFrameIndex": 16449,
+          "trajectoryFrameTimeSeconds": 274.14999999995297
+        },
+        {
+          "antId": "ant-533",
+          "timeSeconds": 479.9500000001926,
+          "onsetSeconds": 479.70000000019223,
+          "confirmedSeconds": 479.9500000001926,
+          "durationSeconds": 0.25000000000034106,
+          "externalComponents": [
+            "ant-528",
+            "ant-532"
+          ],
+          "mergedSize": 3,
+          "position": {
+            "x": 0.4906228455050161,
+            "y": 0.7338170933311797
+          },
+          "frameTimeSeconds": 479.9500000001926,
+          "localNeighborsCenterDistanceLe022": 1,
+          "localNeighborsCenterDistanceLe085": 2,
+          "colonyPopulation": 17,
+          "nearestNeighborsWithin085": [
+            {
+              "id": "ant-532",
+              "distance": 0.018126380320976774
+            },
+            {
+              "id": "ant-528",
+              "distance": 0.02366354168628449
+            }
+          ],
+          "laterRecruitmentsWithin085And10s": [
+            {
+              "antId": "ant-534",
+              "timeSeconds": 480.31666666685965,
+              "secondsAfter": 0.36666666666707215,
+              "distance": 0.034295834483225554
+            },
+            {
+              "antId": "ant-535",
+              "timeSeconds": 481.03333333352714,
+              "secondsAfter": 1.083333333334565,
+              "distance": 0.02110759244705943
+            },
+            {
+              "antId": "ant-536",
+              "timeSeconds": 481.733333333528,
+              "secondsAfter": 1.7833333333354062,
+              "distance": 0.0209267703788426
+            },
+            {
+              "antId": "ant-537",
+              "timeSeconds": 482.36666666686205,
+              "secondsAfter": 2.416666666669471,
+              "distance": 0.010775104348431933
+            },
+            {
+              "antId": "ant-538",
+              "timeSeconds": 482.95000000019604,
+              "secondsAfter": 3.0000000000034674,
+              "distance": 0.002671404349826989
+            },
+            {
+              "antId": "ant-539",
+              "timeSeconds": 483.5166666668634,
+              "secondsAfter": 3.5666666666708124,
+              "distance": 0.02773422491794472
+            },
+            {
+              "antId": "ant-540",
+              "timeSeconds": 484.03333333353066,
+              "secondsAfter": 4.083333333338089,
+              "distance": 0.009836790992876649
+            },
+            {
+              "antId": "ant-541",
+              "timeSeconds": 484.93333333353166,
+              "secondsAfter": 4.98333333333909,
+              "distance": 0.016238959830631002
+            },
+            {
+              "antId": "ant-542",
+              "timeSeconds": 485.81666666686607,
+              "secondsAfter": 5.8666666666734955,
+              "distance": 0.028615251939985882
+            },
+            {
+              "antId": "ant-543",
+              "timeSeconds": 486.3333333335333,
+              "secondsAfter": 6.383333333340715,
+              "distance": 0.012636837861479422
+            },
+            {
+              "antId": "ant-544",
+              "timeSeconds": 487.05000000020084,
+              "secondsAfter": 7.100000000008265,
+              "distance": 0.031739124442028935
+            },
+            {
+              "antId": "ant-545",
+              "timeSeconds": 487.9000000002018,
+              "secondsAfter": 7.950000000009254,
+              "distance": 0.02137734613720226
+            },
+            {
+              "antId": "ant-546",
+              "timeSeconds": 488.6666666668694,
+              "secondsAfter": 8.716666666676815,
+              "distance": 0.026869183153702337
+            },
+            {
+              "antId": "ant-547",
+              "timeSeconds": 489.43333333353695,
+              "secondsAfter": 9.483333333344376,
+              "distance": 0.015858062033454155
+            }
+          ],
+          "colonyMeanNeighborsCenterDistanceLe022SameFrame": 0.11764705882352941,
+          "colonyMeanNeighborsCenterDistanceLe085SameFrame": 0.9411764705882353,
+          "populationSameFrame": 17,
+          "trajectoryFrameIndex": 28797,
+          "trajectoryFrameTimeSeconds": 479.9500000001926
+        },
+        {
+          "antId": "ant-569",
+          "timeSeconds": 504.40000000022104,
+          "onsetSeconds": 504.1500000002207,
+          "confirmedSeconds": 504.40000000022104,
+          "durationSeconds": 0.25000000000034106,
+          "externalComponents": [
+            "ant-491",
+            "ant-567"
+          ],
+          "mergedSize": 4,
+          "position": {
+            "x": 0.4992458170563684,
+            "y": 0.7221426519057178
+          },
+          "frameTimeSeconds": 504.40000000022104,
+          "localNeighborsCenterDistanceLe022": 1,
+          "localNeighborsCenterDistanceLe085": 4,
+          "colonyPopulation": 19,
+          "nearestNeighborsWithin085": [
+            {
+              "id": "ant-568",
+              "distance": 0.01824358937298334
+            },
+            {
+              "id": "ant-491",
+              "distance": 0.02232818010332873
+            },
+            {
+              "id": "ant-567",
+              "distance": 0.07475315474033264
+            },
+            {
+              "id": "ant-566",
+              "distance": 0.07800659853729235
+            }
+          ],
+          "laterRecruitmentsWithin085And10s": [
+            {
+              "antId": "ant-570",
+              "timeSeconds": 505.11666666688853,
+              "secondsAfter": 0.7166666666674928,
+              "distance": 0.014357173156768223
+            },
+            {
+              "antId": "ant-571",
+              "timeSeconds": 505.9666666668895,
+              "secondsAfter": 1.5666666666684819,
+              "distance": 0.013464887247729804
+            },
+            {
+              "antId": "ant-572",
+              "timeSeconds": 506.683333333557,
+              "secondsAfter": 2.2833333333359747,
+              "distance": 0.004892581793636833
+            },
+            {
+              "antId": "ant-573",
+              "timeSeconds": 507.1333333335575,
+              "secondsAfter": 2.733333333336475,
+              "distance": 0.013961493623789512
+            },
+            {
+              "antId": "ant-574",
+              "timeSeconds": 507.6666666668915,
+              "secondsAfter": 3.26666666667046,
+              "distance": 0.011277245475020894
+            },
+            {
+              "antId": "ant-575",
+              "timeSeconds": 508.41666666689235,
+              "secondsAfter": 4.016666666671313,
+              "distance": 0.015172026659680279
+            },
+            {
+              "antId": "ant-576",
+              "timeSeconds": 509.15000000022656,
+              "secondsAfter": 4.750000000005514,
+              "distance": 0.012349687082002741
+            },
+            {
+              "antId": "ant-577",
+              "timeSeconds": 509.75000000022726,
+              "secondsAfter": 5.350000000006219,
+              "distance": 0.01356484442547789
+            },
+            {
+              "antId": "ant-578",
+              "timeSeconds": 510.6333333335616,
+              "secondsAfter": 6.233333333340568,
+              "distance": 0.015028708147362211
+            },
+            {
+              "antId": "ant-579",
+              "timeSeconds": 511.1000000002288,
+              "secondsAfter": 6.700000000007776,
+              "distance": 0.01361509184356588
+            },
+            {
+              "antId": "ant-580",
+              "timeSeconds": 513.6333333335651,
+              "secondsAfter": 9.233333333344092,
+              "distance": 0.013271257243079445
+            },
+            {
+              "antId": "ant-581",
+              "timeSeconds": 514.066666666899,
+              "secondsAfter": 9.66666666667794,
+              "distance": 0.008500610313611325
+            }
+          ],
+          "colonyMeanNeighborsCenterDistanceLe022SameFrame": 0.10526315789473684,
+          "colonyMeanNeighborsCenterDistanceLe085SameFrame": 1.368421052631579,
+          "populationSameFrame": 19,
+          "trajectoryFrameIndex": 30264,
+          "trajectoryFrameTimeSeconds": 504.40000000022104
+        }
+      ],
+      "densityRelationships": {
+        "pearsonBySecond": {
+          "W0.25.componentCount": {
+            "population": 0.984219614146085,
+            "instantK2Edges": 0.013343651831909026,
+            "meanNeighborsCloseRange": -0.04093768844841491,
+            "meanNeighborsSenseRadius": 0.27358694543062545,
+            "occupancyEntropy8x8": 0.8159548314044958,
+            "top10PercentAntShare8x8": -0.6967527391603383
+          },
+          "W0.25.largestComponentRatio": {
+            "population": -0.47239754809598655,
+            "instantK2Edges": 0.4373994117153841,
+            "meanNeighborsCloseRange": 0.41330881727774527,
+            "meanNeighborsSenseRadius": 0.055824483400881995,
+            "occupancyEntropy8x8": -0.5748966418351978,
+            "top10PercentAntShare8x8": 0.4319613850844715
+          },
+          "W0.25.edgeCount": {
+            "population": 0.18658661873922042,
+            "instantK2Edges": 0.7539681464960752,
+            "meanNeighborsCloseRange": 0.6446864850748975,
+            "meanNeighborsSenseRadius": 0.2850232979453782,
+            "occupancyEntropy8x8": 0.07352439688848203,
+            "top10PercentAntShare8x8": -0.0419460884835781
+          },
+          "W1.componentCount": {
+            "population": 0.9588362572225785,
+            "instantK2Edges": 0.008197277996274436,
+            "meanNeighborsCloseRange": -0.03546914768467928,
+            "meanNeighborsSenseRadius": 0.20375604857867863,
+            "occupancyEntropy8x8": 0.8147275603102134,
+            "top10PercentAntShare8x8": -0.7032757422778939
+          },
+          "W1.largestComponentRatio": {
+            "population": -0.2967384870716913,
+            "instantK2Edges": 0.32712124600205605,
+            "meanNeighborsCloseRange": 0.28888016920017084,
+            "meanNeighborsSenseRadius": 0.23776963283893673,
+            "occupancyEntropy8x8": -0.43168834790858185,
+            "top10PercentAntShare8x8": 0.3354431814053022
+          },
+          "W1.edgeCount": {
+            "population": 0.25116659554686455,
+            "instantK2Edges": 0.4969881643585885,
+            "meanNeighborsCloseRange": 0.38634002967831893,
+            "meanNeighborsSenseRadius": 0.4313876213527537,
+            "occupancyEntropy8x8": 0.09387031474574106,
+            "top10PercentAntShare8x8": -0.04376613335452127
+          },
+          "W5.componentCount": {
+            "population": 0.7805094266363316,
+            "instantK2Edges": -0.04659211431535127,
+            "meanNeighborsCloseRange": -0.057712820494009505,
+            "meanNeighborsSenseRadius": 0.07227733149890232,
+            "occupancyEntropy8x8": 0.7234114099854247,
+            "top10PercentAntShare8x8": -0.6409205355148002
+          },
+          "W5.largestComponentRatio": {
+            "population": -0.015686181967670586,
+            "instantK2Edges": 0.15073362603160098,
+            "meanNeighborsCloseRange": 0.09751783747494636,
+            "meanNeighborsSenseRadius": 0.2366863037851642,
+            "occupancyEntropy8x8": -0.14985078212883274,
+            "top10PercentAntShare8x8": 0.12865125446879977
+          },
+          "W5.edgeCount": {
+            "population": 0.47665557292107413,
+            "instantK2Edges": 0.2918409843082741,
+            "meanNeighborsCloseRange": 0.19089254811346343,
+            "meanNeighborsSenseRadius": 0.41502080779853917,
+            "occupancyEntropy8x8": 0.2627216075106486,
+            "top10PercentAntShare8x8": -0.1855701127489426
+          },
+          "W20.componentCount": {
+            "population": 0.4081359719186596,
+            "instantK2Edges": -0.06609158348635102,
+            "meanNeighborsCloseRange": -0.05085296290749571,
+            "meanNeighborsSenseRadius": 0.05189827896036369,
+            "occupancyEntropy8x8": 0.419335745561561,
+            "top10PercentAntShare8x8": -0.36028998014396874
+          },
+          "W20.largestComponentRatio": {
+            "population": 0.05180195846520556,
+            "instantK2Edges": 0.06323164734008062,
+            "meanNeighborsCloseRange": 0.02257470404991611,
+            "meanNeighborsSenseRadius": 0.03964914717291484,
+            "occupancyEntropy8x8": 0.023377253955970626,
+            "top10PercentAntShare8x8": -0.051869541365387545
+          },
+          "W20.edgeCount": {
+            "population": 0.7472956515447242,
+            "instantK2Edges": 0.19093670529064777,
+            "meanNeighborsCloseRange": 0.10901910222235559,
+            "meanNeighborsSenseRadius": 0.3047720051427315,
+            "occupancyEntropy8x8": 0.5418725854105473,
+            "top10PercentAntShare8x8": -0.453310887508493
+          }
+        },
+        "fixedPopulationBandsMostObserved": [
+          {
+            "population": 19,
+            "nSeconds": 93,
+            "k2InstantProximityPairs": {
+              "n": 93,
+              "mean": 0.3118279569892473,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 3
+            },
+            "W025Edges": {
+              "n": 93,
+              "mean": 0.4731182795698925,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 3
+            },
+            "W025LCC": {
+              "n": 93,
+              "mean": 0.07526881720430106,
+              "p50": 0.05263157894736842,
+              "p90": 0.10526315789473684,
+              "min": 0.05263157894736842,
+              "max": 0.15789473684210525
+            },
+            "W1Edges": {
+              "n": 93,
+              "mean": 1.2473118279569892,
+              "p50": 1,
+              "p90": 3,
+              "min": 0,
+              "max": 4
+            },
+            "W1LCC": {
+              "n": 93,
+              "mean": 0.10979060554612327,
+              "p50": 0.10526315789473684,
+              "p90": 0.15789473684210525,
+              "min": 0.05263157894736842,
+              "max": 0.21052631578947367
+            },
+            "meanNeighborsCloseRange": {
+              "n": 93,
+              "mean": 0.023769100169779275,
+              "p50": 0,
+              "p90": 0.10526315789473684,
+              "min": 0,
+              "max": 0.21052631578947367
+            },
+            "occupancyEntropy8x8": {
+              "n": 93,
+              "mean": 0.6311628611247385,
+              "p50": 0.6311906601163566,
+              "p90": 0.6729001996090188,
+              "min": 0.571937260974572,
+              "max": 0.6904440592581416
+            }
+          },
+          {
+            "population": 20,
+            "nSeconds": 90,
+            "k2InstantProximityPairs": {
+              "n": 90,
+              "mean": 0.3111111111111111,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 3
+            },
+            "W025Edges": {
+              "n": 90,
+              "mean": 0.5444444444444444,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 3
+            },
+            "W025LCC": {
+              "n": 90,
+              "mean": 0.076111111111111,
+              "p50": 0.05,
+              "p90": 0.1,
+              "min": 0.05,
+              "max": 0.2
+            },
+            "W1Edges": {
+              "n": 90,
+              "mean": 1.288888888888889,
+              "p50": 1,
+              "p90": 2.1000000000000085,
+              "min": 0,
+              "max": 6
+            },
+            "W1LCC": {
+              "n": 90,
+              "mean": 0.10111111111111108,
+              "p50": 0.1,
+              "p90": 0.15,
+              "min": 0.05,
+              "max": 0.25
+            },
+            "meanNeighborsCloseRange": {
+              "n": 90,
+              "mean": 0.022222222222222223,
+              "p50": 0,
+              "p90": 0.1,
+              "min": 0,
+              "max": 0.3
+            },
+            "occupancyEntropy8x8": {
+              "n": 90,
+              "mean": 0.6399220158017397,
+              "p50": 0.6390306199631982,
+              "p90": 0.6703213491478938,
+              "min": 0.5847824949271404,
+              "max": 0.7036546824812271
+            }
+          },
+          {
+            "population": 21,
+            "nSeconds": 90,
+            "k2InstantProximityPairs": {
+              "n": 90,
+              "mean": 0.3888888888888889,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 3
+            },
+            "W025Edges": {
+              "n": 90,
+              "mean": 0.6444444444444445,
+              "p50": 1,
+              "p90": 2,
+              "min": 0,
+              "max": 3
+            },
+            "W025LCC": {
+              "n": 90,
+              "mean": 0.0756613756613756,
+              "p50": 0.09523809523809523,
+              "p90": 0.09523809523809523,
+              "min": 0.047619047619047616,
+              "max": 0.19047619047619047
+            },
+            "W1Edges": {
+              "n": 90,
+              "mean": 1.4222222222222223,
+              "p50": 1,
+              "p90": 3,
+              "min": 0,
+              "max": 5
+            },
+            "W1LCC": {
+              "n": 90,
+              "mean": 0.0984126984126983,
+              "p50": 0.09523809523809523,
+              "p90": 0.19047619047619047,
+              "min": 0.047619047619047616,
+              "max": 0.23809523809523808
+            },
+            "meanNeighborsCloseRange": {
+              "n": 90,
+              "mean": 0.022222222222222227,
+              "p50": 0,
+              "p90": 0.09523809523809523,
+              "min": 0,
+              "max": 0.2857142857142857
+            },
+            "occupancyEntropy8x8": {
+              "n": 90,
+              "mean": 0.6505350320496722,
+              "p50": 0.6526878244313805,
+              "p90": 0.6844338561774124,
+              "min": 0.5545566500139182,
+              "max": 0.716179887923444
+            }
+          },
+          {
+            "population": 18,
+            "nSeconds": 65,
+            "k2InstantProximityPairs": {
+              "n": 65,
+              "mean": 0.2,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 2
+            },
+            "W025Edges": {
+              "n": 65,
+              "mean": 0.3076923076923077,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 2
+            },
+            "W025LCC": {
+              "n": 65,
+              "mean": 0.07094017094017087,
+              "p50": 0.05555555555555555,
+              "p90": 0.1111111111111111,
+              "min": 0.05555555555555555,
+              "max": 0.1111111111111111
+            },
+            "W1Edges": {
+              "n": 65,
+              "mean": 0.9384615384615385,
+              "p50": 1,
+              "p90": 2,
+              "min": 0,
+              "max": 3
+            },
+            "W1LCC": {
+              "n": 65,
+              "mean": 0.09999999999999994,
+              "p50": 0.1111111111111111,
+              "p90": 0.16666666666666666,
+              "min": 0.05555555555555555,
+              "max": 0.16666666666666666
+            },
+            "meanNeighborsCloseRange": {
+              "n": 65,
+              "mean": 0.008547008547008548,
+              "p50": 0,
+              "p90": 0,
+              "min": 0,
+              "max": 0.1111111111111111
+            },
+            "occupancyEntropy8x8": {
+              "n": 65,
+              "mean": 0.6213911149035044,
+              "p50": 0.6209134261663114,
+              "p90": 0.6579504632033485,
+              "min": 0.5468393520922374,
+              "max": 0.6764689817218671
+            }
+          },
+          {
+            "population": 22,
+            "nSeconds": 64,
+            "k2InstantProximityPairs": {
+              "n": 64,
+              "mean": 0.21875,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 2
+            },
+            "W025Edges": {
+              "n": 64,
+              "mean": 0.4375,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 2
+            },
+            "W025LCC": {
+              "n": 64,
+              "mean": 0.06321022727272724,
+              "p50": 0.045454545454545456,
+              "p90": 0.09090909090909091,
+              "min": 0.045454545454545456,
+              "max": 0.09090909090909091
+            },
+            "W1Edges": {
+              "n": 64,
+              "mean": 0.90625,
+              "p50": 1,
+              "p90": 2,
+              "min": 0,
+              "max": 5
+            },
+            "W1LCC": {
+              "n": 64,
+              "mean": 0.08238636363636362,
+              "p50": 0.09090909090909091,
+              "p90": 0.13636363636363635,
+              "min": 0.045454545454545456,
+              "max": 0.2727272727272727
+            },
+            "meanNeighborsCloseRange": {
+              "n": 64,
+              "mean": 0.012784090909090912,
+              "p50": 0,
+              "p90": 0.09090909090909091,
+              "min": 0,
+              "max": 0.09090909090909091
+            },
+            "occupancyEntropy8x8": {
+              "n": 64,
+              "mean": 0.6643489058295795,
+              "p50": 0.6617621826352811,
+              "p90": 0.697784057651671,
+              "min": 0.6048699477540164,
+              "max": 0.7129355728031862
+            }
+          }
+        ],
+        "measures": {
+          "instantaneousPairs": "edgeCount from proximity graph at k=2; not causal",
+          "closeRange": "mean neighbors within existing 0.022 range",
+          "senseRadius": "mean neighbors within existing 0.085 radius",
+          "occupancy": "instantaneous 8x8 grid normalized entropy and top-10%-cell ant share"
+        }
+      },
+      "plateAndNoduleBirths": {
+        "firstPlate": {
+          "timeSeconds": 220.01666666663016,
+          "id": "trail-plate-1",
+          "source": {
+            "x": 0.4631578947368421,
+            "y": 0.6421052631578947,
+            "index": 5900
+          },
+          "target": {
+            "x": 0.968421052631579,
+            "y": 0.031578947368421054,
+            "index": 380
+          }
+        },
+        "countsByHorizon": [
+          {
+            "seconds": 30,
+            "platesBornBy": 0,
+            "nodulesBornBy": 0,
+            "sphereBirthEventsBy": 0
+          },
+          {
+            "seconds": 60,
+            "platesBornBy": 0,
+            "nodulesBornBy": 0,
+            "sphereBirthEventsBy": 0
+          },
+          {
+            "seconds": 120,
+            "platesBornBy": 0,
+            "nodulesBornBy": 0,
+            "sphereBirthEventsBy": 0
+          },
+          {
+            "seconds": 300,
+            "platesBornBy": 7,
+            "nodulesBornBy": 4,
+            "sphereBirthEventsBy": 4
+          },
+          {
+            "seconds": 600,
+            "platesBornBy": 28,
+            "nodulesBornBy": 32,
+            "sphereBirthEventsBy": 32
+          }
+        ],
+        "totalPlateBirthEvents": 28,
+        "totalNoduleBirthEvents": 32,
+        "contactEvents": 35377,
+        "contactGroupsAndTypes": {
+          "FOOT_CONTACT:A": 17694,
+          "FOOT_CONTACT:B": 17683
+        },
+        "sphereBirthEvents": 32,
+        "totalContactPoints": 104829,
+        "contactGroupPointCounts": {
+          "A:3 points": 17167,
+          "B:3 points": 17192,
+          "A:2 points": 380,
+          "B:2 points": 354,
+          "A:1 points": 147,
+          "B:1 points": 137
+        }
+      }
+    },
+    {
+      "seed": 20261007,
+      "condition": "graph-on",
+      "parity": {
+        "offStateSha256": "c0f8ab71195fe8640dabf5a9ad9cfbfdfc1214eee2c82b983144ceadc88b1483",
+        "onStateSha256": "c0f8ab71195fe8640dabf5a9ad9cfbfdfc1214eee2c82b983144ceadc88b1483",
+        "offControllerSha256": "7b1649b4e206f9e7c2bc07e982ceb7c11fab9e072b24b7cd2a16f3306c230ed0",
+        "onControllerSha256": "7b1649b4e206f9e7c2bc07e982ceb7c11fab9e072b24b7cd2a16f3306c230ed0",
+        "trajectorySha256Equal": true,
+        "frameCount": 36001,
+        "tickCount": 36000,
+        "trajectoryEnabledSha256": "25e2b8c6db2ac1368719265b7052582f7a4d59585559a95d8b44f30ca0189f84",
+        "trajectoryDisabledSha256": "25e2b8c6db2ac1368719265b7052582f7a4d59585559a95d8b44f30ca0189f84",
+        "trajectoryFrameCount": 36001
+      },
+      "population": {
+        "start": 1,
+        "end": 21,
+        "oneHz": {
+          "n": 600,
+          "mean": 18.43,
+          "p50": 19,
+          "p90": 22,
+          "min": 2,
+          "max": 23
+        },
+        "startTimeSeconds": 0
+      },
+      "thresholdSweep": [
+        {
+          "k": 1,
+          "rawEncounterEpisodes": 337,
+          "episodeDurationSeconds": {
+            "n": 337,
+            "mean": 0.05440158259149964,
+            "p50": 0.016666666666669272,
+            "p90": 0.016666666666669272,
+            "min": 0.01666666666665151,
+            "max": 8.73333333333397
+          },
+          "rightCensoredEpisodes": 0,
+          "completedEpisodes": 337,
+          "cumulativePairExposureSeconds": 18.33333333333538,
+          "minNormalizedDistance": {
+            "n": 337,
+            "mean": 0.9999999770271195,
+            "p50": 0.9999999916788607,
+            "p90": 0.9999999920365896,
+            "min": 0.9999969538631515,
+            "max": 0.9999999923215481
+          }
+        },
+        {
+          "k": 1.25,
+          "rawEncounterEpisodes": 37,
+          "episodeDurationSeconds": {
+            "n": 37,
+            "mean": 1.1351351351353234,
+            "p50": 0.26666666666699257,
+            "p90": 1.5433333333337478,
+            "min": 0.049999999999954525,
+            "max": 11.150000000000595
+          },
+          "rightCensoredEpisodes": 0,
+          "completedEpisodes": 37,
+          "cumulativePairExposureSeconds": 42.00000000000696,
+          "minNormalizedDistance": {
+            "n": 37,
+            "mean": 1.1094112876025821,
+            "p50": 1.1113823574158275,
+            "p90": 1.2164532072204892,
+            "min": 0.9999969538631515,
+            "max": 1.2319498442912262
+          }
+        },
+        {
+          "k": 1.5,
+          "rawEncounterEpisodes": 175,
+          "episodeDurationSeconds": {
+            "n": 175,
+            "mean": 0.46028571428580617,
+            "p50": 0.19999999999997442,
+            "p90": 0.7200000000008343,
+            "min": 0.01666666666665151,
+            "max": 11.633333333333924
+          },
+          "rightCensoredEpisodes": 0,
+          "completedEpisodes": 175,
+          "cumulativePairExposureSeconds": 80.55000000001608,
+          "minNormalizedDistance": {
+            "n": 175,
+            "mean": 1.3411117754648094,
+            "p50": 1.374713878424841,
+            "p90": 1.4851097455661257,
+            "min": 0.9999969538631515,
+            "max": 1.4989351127388042
+          }
+        },
+        {
+          "k": 2,
+          "rawEncounterEpisodes": 518,
+          "episodeDurationSeconds": {
+            "n": 518,
+            "mean": 0.4643822393823207,
+            "p50": 0.24999999999996447,
+            "p90": 0.8666666666676974,
+            "min": 0.01666666666665151,
+            "max": 15.633333333334473
+          },
+          "rightCensoredEpisodes": 0,
+          "completedEpisodes": 518,
+          "cumulativePairExposureSeconds": 240.55000000004213,
+          "minNormalizedDistance": {
+            "n": 518,
+            "mean": 1.6099679675986023,
+            "p50": 1.6158303028344903,
+            "p90": 1.9101051373676996,
+            "min": 0.9999969538631515,
+            "max": 1.9989594065421548
+          }
+        }
+      ],
+      "k2InstantEventCounts": {
+        "NODE_ENTER": 743,
+        "ENCOUNTER_START": 518,
+        "ENCOUNTER_END": 518,
+        "NODE_EXIT": 722
+      },
+      "k2Windows": [
+        {
+          "windowSeconds": 0.25,
+          "oneHzTopology": {
+            "edgeCount": {
+              "n": 600,
+              "mean": 0.58,
+              "p50": 0,
+              "p90": 2,
+              "min": 0,
+              "max": 4
+            },
+            "componentCount": {
+              "n": 600,
+              "mean": 17.881666666666668,
+              "p50": 19,
+              "p90": 21,
+              "min": 1,
+              "max": 23
+            },
+            "largestComponentRatio": {
+              "n": 600,
+              "mean": 0.08971266506790367,
+              "p50": 0.06666666666666667,
+              "p90": 0.13636363636363635,
+              "min": 0.043478260869565216,
+              "max": 1
+            },
+            "bridgeFraction": {
+              "n": 600,
+              "mean": 0.38375,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 1
+            },
+            "articulationFraction": {
+              "n": 600,
+              "mean": 0.0043344666288030135,
+              "p50": 0,
+              "p90": 0,
+              "min": 0,
+              "max": 0.16666666666666666
+            },
+            "weightedDegreeSecondsPerNodeObservation": {
+              "n": 11058,
+              "mean": 0.010945318623018412,
+              "p50": 0,
+              "p90": 0,
+              "min": 0,
+              "max": 0.75
+            }
+          },
+          "adjacent20HzStability": {
+            "meanEdgeJaccard": {
+              "n": 600,
+              "mean": 0.8826188123027521,
+              "p50": 0.867586410454749,
+              "p90": 0.9417259786476868,
+              "min": 0.8461538461538461,
+              "max": 0.9607300884955752
+            },
+            "emptyGraphFraction": {
+              "n": 600,
+              "mean": 0.613695902500137,
+              "p50": 0.6091533129719344,
+              "p90": 0.7001817241963413,
+              "min": 0.2839506172839506,
+              "max": 0.73053241579138
+            },
+            "componentCountRangeOverRun": {
+              "min": 1,
+              "max": 23
+            }
+          },
+          "eventCounts": {
+            "EDGE_FORM": 511,
+            "BRIDGE_FORM": 330,
+            "BRIDGE_PERSIST": 224,
+            "BRIDGE_BREAK": 330,
+            "EDGE_END": 511,
+            "COMPONENT_SPLIT": 471,
+            "COMPONENT_MERGE": 234,
+            "ARTICULATION_FORM": 33,
+            "ARTICULATION_PERSIST": 19,
+            "ARTICULATION_BREAK": 33,
+            "CONNECTOR_PERSIST": 5,
+            "CONNECTOR_END": 5
+          },
+          "edgeLifetimes": {
+            "total": 511,
+            "closedCount": 511,
+            "rightCensoredCount": 0,
+            "closedDurationSeconds": {
+              "n": 511,
+              "mean": 0.7104696673190988,
+              "p50": 0.5000000000005684,
+              "p90": 1.1000000000013301,
+              "min": 0.1500000000001478,
+              "max": 15.850000000001149
+            },
+            "rightCensoredObservedDurationSeconds": {
+              "n": 0,
+              "mean": null,
+              "p50": null,
+              "p90": null,
+              "min": null,
+              "max": null
+            }
+          }
+        },
+        {
+          "windowSeconds": 1,
+          "oneHzTopology": {
+            "edgeCount": {
+              "n": 600,
+              "mean": 1.2433333333333334,
+              "p50": 1,
+              "p90": 3,
+              "min": 0,
+              "max": 6
+            },
+            "componentCount": {
+              "n": 600,
+              "mean": 17.27,
+              "p50": 18,
+              "p90": 21,
+              "min": 1,
+              "max": 23
+            },
+            "largestComponentRatio": {
+              "n": 600,
+              "mean": 0.11790022937999678,
+              "p50": 0.1,
+              "p90": 0.18238636363636376,
+              "min": 0.043478260869565216,
+              "max": 1
+            },
+            "bridgeFraction": {
+              "n": 600,
+              "mean": 0.6140833333333334,
+              "p50": 1,
+              "p90": 1,
+              "min": 0,
+              "max": 1
+            },
+            "articulationFraction": {
+              "n": 600,
+              "mean": 0.014108487258019473,
+              "p50": 0,
+              "p90": 0.05263157894736842,
+              "min": 0,
+              "max": 0.25
+            },
+            "weightedDegreeSecondsPerNodeObservation": {
+              "n": 11058,
+              "mean": 0.043386386929523665,
+              "p50": 0,
+              "p90": 0.049999999998931344,
+              "min": 0,
+              "max": 2.633333333333308
+            }
+          },
+          "adjacent20HzStability": {
+            "meanEdgeJaccard": {
+              "n": 600,
+              "mean": 0.941370062604023,
+              "p50": 0.936400124435386,
+              "p90": 0.9614265927977841,
+              "min": 0.9090909090909091,
+              "max": 0.9749023437500002
+            },
+            "emptyGraphFraction": {
+              "n": 600,
+              "mean": 0.41458572123980736,
+              "p50": 0.39059054296058404,
+              "p90": 0.5683963387023936,
+              "min": 0.09900990099009901,
+              "max": 0.6141078838174274
+            },
+            "componentCountRangeOverRun": {
+              "min": 1,
+              "max": 23
+            }
+          },
+          "eventCounts": {
+            "EDGE_FORM": 505,
+            "BRIDGE_FORM": 307,
+            "BRIDGE_BREAK": 307,
+            "COMPONENT_MERGE": 222,
+            "EDGE_END": 505,
+            "COMPONENT_SPLIT": 456,
+            "ARTICULATION_FORM": 28,
+            "BRIDGE_PERSIST": 24,
+            "ARTICULATION_PERSIST": 2,
+            "ARTICULATION_BREAK": 28
+          },
+          "edgeLifetimes": {
+            "total": 505,
+            "closedCount": 505,
+            "rightCensoredCount": 0,
+            "closedDurationSeconds": {
+              "n": 505,
+              "mean": 1.4728712871289575,
+              "p50": 1.250000000001421,
+              "p90": 1.8999999999976012,
+              "min": 0.1500000000001478,
+              "max": 16.600000000001085
+            },
+            "rightCensoredObservedDurationSeconds": {
+              "n": 0,
+              "mean": null,
+              "p50": null,
+              "p90": null,
+              "min": null,
+              "max": null
+            }
+          }
+        },
+        {
+          "windowSeconds": 5,
+          "oneHzTopology": {
+            "edgeCount": {
+              "n": 600,
+              "mean": 4.473333333333334,
+              "p50": 4,
+              "p90": 8,
+              "min": 0,
+              "max": 11
+            },
+            "componentCount": {
+              "n": 600,
+              "mean": 14.331666666666667,
+              "p50": 15,
+              "p90": 18,
+              "min": 1,
+              "max": 22
+            },
+            "largestComponentRatio": {
+              "n": 600,
+              "mean": 0.21014712981072076,
+              "p50": 0.1875,
+              "p90": 0.3333333333333333,
+              "min": 0.05,
+              "max": 1
+            },
+            "bridgeFraction": {
+              "n": 600,
+              "mean": 0.807341089466089,
+              "p50": 1,
+              "p90": 1,
+              "min": 0,
+              "max": 1
+            },
+            "articulationFraction": {
+              "n": 600,
+              "mean": 0.08095761781355415,
+              "p50": 0.05263157894736842,
+              "p90": 0.2,
+              "min": 0,
+              "max": 0.5
+            },
+            "weightedDegreeSecondsPerNodeObservation": {
+              "n": 11058,
+              "mean": 0.2125881714595819,
+              "p50": 0,
+              "p90": 0.6500000000007731,
+              "min": 0,
+              "max": 10.783333333333388
+            }
+          },
+          "adjacent20HzStability": {
+            "meanEdgeJaccard": {
+              "n": 600,
+              "mean": 0.9815947362441526,
+              "p50": 0.9817521935129674,
+              "p90": 0.9832255273445402,
+              "min": 0.9090909090909091,
+              "max": 0.9858373323489601
+            },
+            "emptyGraphFraction": {
+              "n": 600,
+              "mean": 0.0869760846107993,
+              "p50": 0.06907967966025264,
+              "p90": 0.16195737217972253,
+              "min": 0.03499708357636864,
+              "max": 0.47619047619047616
+            },
+            "componentCountRangeOverRun": {
+              "min": 1,
+              "max": 22
+            }
+          },
+          "eventCounts": {
+            "EDGE_FORM": 499,
+            "BRIDGE_FORM": 303,
+            "BRIDGE_BREAK": 303,
+            "COMPONENT_MERGE": 215,
+            "EDGE_END": 499,
+            "COMPONENT_SPLIT": 419,
+            "ARTICULATION_FORM": 27,
+            "ARTICULATION_BREAK": 27
+          },
+          "edgeLifetimes": {
+            "total": 499,
+            "closedCount": 496,
+            "rightCensoredCount": 3,
+            "closedDurationSeconds": {
+              "n": 496,
+              "mean": 5.388911290323599,
+              "p50": 5.200000000006071,
+              "p90": 5.8999999999979025,
+              "min": 0.1500000000001478,
+              "max": 20.600000000000502
+            },
+            "rightCensoredObservedDurationSeconds": {
+              "n": 3,
+              "mean": 2.699999999993755,
+              "p50": 2.3499999999945658,
+              "p90": 3.6299999999915826,
+              "min": 1.7999999999958618,
+              "max": 3.949999999990837
+            }
+          }
+        },
+        {
+          "windowSeconds": 20,
+          "oneHzTopology": {
+            "edgeCount": {
+              "n": 600,
+              "mean": 8.793333333333333,
+              "p50": 9,
+              "p90": 13.100000000000023,
+              "min": 1,
+              "max": 17
+            },
+            "componentCount": {
+              "n": 600,
+              "mean": 10.355,
+              "p50": 11,
+              "p90": 14,
+              "min": 1,
+              "max": 19
+            },
+            "largestComponentRatio": {
+              "n": 600,
+              "mean": 0.29157595828782273,
+              "p50": 0.25,
+              "p90": 0.45454545454545453,
+              "min": 0.09523809523809523,
+              "max": 1
+            },
+            "bridgeFraction": {
+              "n": 600,
+              "mean": 0.8149360276161748,
+              "p50": 1,
+              "p90": 1,
+              "min": 0,
+              "max": 1
+            },
+            "articulationFraction": {
+              "n": 600,
+              "mean": 0.18309741331292037,
+              "p50": 0.16666666666666666,
+              "p90": 0.35,
+              "min": 0,
+              "max": 0.5714285714285714
+            },
+            "weightedDegreeSecondsPerNodeObservation": {
+              "n": 11058,
+              "mean": 0.47961053837352396,
+              "p50": 0.14999999999992042,
+              "p90": 1.0166666666678452,
+              "min": 0,
+              "max": 34.73333333333552
+            }
+          },
+          "adjacent20HzStability": {
+            "meanEdgeJaccard": {
+              "n": 600,
+              "mean": 0.9911823668227643,
+              "p50": 0.9914333855933153,
+              "p90": 0.9926372004603614,
+              "min": 0.9090909090909091,
+              "max": 0.9935757185757187
+            },
+            "emptyGraphFraction": {
+              "n": 600,
+              "mean": 0.005746409174024302,
+              "p50": 0.0016636213069841845,
+              "p90": 0.008203646838118115,
+              "min": 0.0008332638946754438,
+              "max": 0.47619047619047616
+            },
+            "componentCountRangeOverRun": {
+              "min": 1,
+              "max": 20
+            }
+          },
+          "eventCounts": {
+            "EDGE_FORM": 499,
+            "BRIDGE_FORM": 302,
+            "BRIDGE_BREAK": 302,
+            "COMPONENT_MERGE": 214,
+            "EDGE_END": 499,
+            "ARTICULATION_FORM": 27,
+            "ARTICULATION_BREAK": 27,
+            "COMPONENT_SPLIT": 85
+          },
+          "edgeLifetimes": {
+            "total": 499,
+            "closedCount": 488,
+            "rightCensoredCount": 11,
+            "closedDurationSeconds": {
+              "n": 488,
+              "mean": 10.64016393442851,
+              "p50": 10.374999999993918,
+              "p90": 15.230000000013746,
+              "min": 0.1500000000001478,
+              "max": 23.350000000000513
+            },
+            "rightCensoredObservedDurationSeconds": {
+              "n": 11,
+              "mean": 7.545454545436976,
+              "p50": 8.299999999980628,
+              "p90": 10.649999999975194,
+              "min": 1.7999999999958618,
+              "max": 11.549999999973124
+            }
+          }
+        }
+      ],
+      "connectorsK2W025": [
+        {
+          "antId": "ant-61",
+          "timeSeconds": 94.70000000000468,
+          "onsetSeconds": 94.4500000000046,
+          "confirmedSeconds": 94.70000000000468,
+          "durationSeconds": 0.25000000000008527,
+          "externalComponents": [
+            "ant-58",
+            "ant-60"
+          ],
+          "mergedSize": 3,
+          "position": {
+            "x": 0.5055568777782515,
+            "y": 0.7019655574865538
+          },
+          "frameTimeSeconds": 94.70000000000468,
+          "localNeighborsCenterDistanceLe022": 2,
+          "localNeighborsCenterDistanceLe085": 3,
+          "colonyPopulation": 18,
+          "nearestNeighborsWithin085": [
+            {
+              "id": "ant-58",
+              "distance": 0.018329061468566193
+            },
+            {
+              "id": "ant-60",
+              "distance": 0.02145958674725488
+            },
+            {
+              "id": "ant-59",
+              "distance": 0.0709430560663658
+            }
+          ],
+          "laterRecruitmentsWithin085And10s": [
+            {
+              "antId": "ant-62",
+              "timeSeconds": 96.98333333333866,
+              "secondsAfter": 2.283333333333985,
+              "distance": 0.024611536450622116
+            },
+            {
+              "antId": "ant-63",
+              "timeSeconds": 97.46666666667214,
+              "secondsAfter": 2.7666666666674615,
+              "distance": 0.028162963287478058
+            },
+            {
+              "antId": "ant-64",
+              "timeSeconds": 98.33333333333906,
+              "secondsAfter": 3.6333333333343774,
+              "distance": 0.002946833589270878
+            },
+            {
+              "antId": "ant-65",
+              "timeSeconds": 99.10000000000595,
+              "secondsAfter": 4.4000000000012705,
+              "distance": 0.030182606595689686
+            },
+            {
+              "antId": "ant-66",
+              "timeSeconds": 99.91666666667285,
+              "secondsAfter": 5.216666666668175,
+              "distance": 0.025545881010887492
+            },
+            {
+              "antId": "ant-67",
+              "timeSeconds": 100.60000000000639,
+              "secondsAfter": 5.900000000001711,
+              "distance": 0.02234116112585595
+            },
+            {
+              "antId": "ant-68",
+              "timeSeconds": 101.25000000000658,
+              "secondsAfter": 6.550000000001901,
+              "distance": 0.020412317161897807
+            },
+            {
+              "antId": "ant-69",
+              "timeSeconds": 103.816666666674,
+              "secondsAfter": 9.116666666669317,
+              "distance": 0.0244214880618169
+            },
+            {
+              "antId": "ant-70",
+              "timeSeconds": 104.38333333334083,
+              "secondsAfter": 9.68333333333615,
+              "distance": 0.013291978417598252
+            }
+          ],
+          "colonyMeanNeighborsCenterDistanceLe022SameFrame": 0.2222222222222222,
+          "colonyMeanNeighborsCenterDistanceLe085SameFrame": 1.3333333333333333,
+          "populationSameFrame": 18,
+          "trajectoryFrameIndex": 5682,
+          "trajectoryFrameTimeSeconds": 94.70000000000468
+        },
+        {
+          "antId": "ant-417",
+          "timeSeconds": 365.0500000000588,
+          "onsetSeconds": 364.8000000000585,
+          "confirmedSeconds": 365.0500000000588,
+          "durationSeconds": 0.2500000000002842,
+          "externalComponents": [
+            "ant-413",
+            "ant-416"
+          ],
+          "mergedSize": 4,
+          "position": {
+            "x": 0.49244451333372147,
+            "y": 0.7148943737795083
+          },
+          "frameTimeSeconds": 365.0500000000588,
+          "localNeighborsCenterDistanceLe022": 1,
+          "localNeighborsCenterDistanceLe085": 3,
+          "colonyPopulation": 19,
+          "nearestNeighborsWithin085": [
+            {
+              "id": "ant-413",
+              "distance": 0.019084799109122974
+            },
+            {
+              "id": "ant-416",
+              "distance": 0.0234109413272834
+            },
+            {
+              "id": "ant-414",
+              "distance": 0.056374645185147426
+            }
+          ],
+          "laterRecruitmentsWithin085And10s": [
+            {
+              "antId": "ant-418",
+              "timeSeconds": 365.56666666672606,
+              "secondsAfter": 0.5166666666672768,
+              "distance": 0.023287359268258125
+            },
+            {
+              "antId": "ant-419",
+              "timeSeconds": 366.4666666667271,
+              "secondsAfter": 1.416666666668334,
+              "distance": 0.016398473587093003
+            },
+            {
+              "antId": "ant-420",
+              "timeSeconds": 367.11666666672784,
+              "secondsAfter": 2.0666666666690503,
+              "distance": 0.017044545716301023
+            },
+            {
+              "antId": "ant-421",
+              "timeSeconds": 369.91666666673115,
+              "secondsAfter": 4.866666666672359,
+              "distance": 0.013744082558712073
+            },
+            {
+              "antId": "ant-422",
+              "timeSeconds": 370.8000000000655,
+              "secondsAfter": 5.7500000000067075,
+              "distance": 0.019746619394023127
+            },
+            {
+              "antId": "ant-423",
+              "timeSeconds": 371.23333333339934,
+              "secondsAfter": 6.183333333340556,
+              "distance": 0.020563768887049846
+            },
+            {
+              "antId": "ant-424",
+              "timeSeconds": 372.0666666667336,
+              "secondsAfter": 7.016666666674837,
+              "distance": 0.00446920359455212
+            },
+            {
+              "antId": "ant-425",
+              "timeSeconds": 372.86666666673455,
+              "secondsAfter": 7.816666666675758,
+              "distance": 0.020800261590672144
+            },
+            {
+              "antId": "ant-426",
+              "timeSeconds": 373.4166666667352,
+              "secondsAfter": 8.366666666676394,
+              "distance": 0.01562346783316862
+            },
+            {
+              "antId": "ant-427",
+              "timeSeconds": 374.2500000000695,
+              "secondsAfter": 9.200000000010732,
+              "distance": 0.012860821329388589
+            },
+            {
+              "antId": "ant-428",
+              "timeSeconds": 374.90000000007024,
+              "secondsAfter": 9.850000000011448,
+              "distance": 0.008357289558428795
+            }
+          ],
+          "colonyMeanNeighborsCenterDistanceLe022SameFrame": 0.10526315789473684,
+          "colonyMeanNeighborsCenterDistanceLe085SameFrame": 1.1578947368421053,
+          "populationSameFrame": 19,
+          "trajectoryFrameIndex": 21903,
+          "trajectoryFrameTimeSeconds": 365.0500000000588
+        },
+        {
+          "antId": "ant-492",
+          "timeSeconds": 417.5000000001198,
+          "onsetSeconds": 417.25000000011954,
+          "confirmedSeconds": 417.5000000001198,
+          "durationSeconds": 0.2500000000002842,
+          "externalComponents": [
+            "ant-488",
+            "ant-490"
+          ],
+          "mergedSize": 5,
+          "position": {
+            "x": 0.49771895564105,
+            "y": 0.7067971102524315
+          },
+          "frameTimeSeconds": 417.5000000001198,
+          "localNeighborsCenterDistanceLe022": 0,
+          "localNeighborsCenterDistanceLe085": 4,
+          "colonyPopulation": 19,
+          "nearestNeighborsWithin085": [
+            {
+              "id": "ant-488",
+              "distance": 0.022833416610818405
+            },
+            {
+              "id": "ant-491",
+              "distance": 0.02335872266301181
+            },
+            {
+              "id": "ant-490",
+              "distance": 0.024281085011063512
+            },
+            {
+              "id": "ant-489",
+              "distance": 0.02794838549294499
+            }
+          ],
+          "laterRecruitmentsWithin085And10s": [
+            {
+              "antId": "ant-493",
+              "timeSeconds": 417.6833333334534,
+              "secondsAfter": 0.1833333333335645,
+              "distance": 0.018750996153175877
+            },
+            {
+              "antId": "ant-494",
+              "timeSeconds": 418.1500000001206,
+              "secondsAfter": 0.6500000000007731,
+              "distance": 0.01900430662986394
+            },
+            {
+              "antId": "ant-495",
+              "timeSeconds": 418.6666666667879,
+              "secondsAfter": 1.1666666666680499,
+              "distance": 0.020078962304467582
+            },
+            {
+              "antId": "ant-496",
+              "timeSeconds": 419.5500000001222,
+              "secondsAfter": 2.050000000002399,
+              "distance": 0.01812721783982107
+            },
+            {
+              "antId": "ant-497",
+              "timeSeconds": 420.38333333345656,
+              "secondsAfter": 2.8833333333367364,
+              "distance": 0.018164660947833977
+            },
+            {
+              "antId": "ant-498",
+              "timeSeconds": 421.2500000001242,
+              "secondsAfter": 3.750000000004377,
+              "distance": 0.01254469900810371
+            },
+            {
+              "antId": "ant-499",
+              "timeSeconds": 422.06666666679183,
+              "secondsAfter": 4.566666666672006,
+              "distance": 0.02819080334533474
+            },
+            {
+              "antId": "ant-500",
+              "timeSeconds": 422.53333333345904,
+              "secondsAfter": 5.033333333339215,
+              "distance": 0.0046278573516913305
+            },
+            {
+              "antId": "ant-501",
+              "timeSeconds": 423.0500000001263,
+              "secondsAfter": 5.5500000000064915,
+              "distance": 0.0246316030538629
+            },
+            {
+              "antId": "ant-502",
+              "timeSeconds": 423.650000000127,
+              "secondsAfter": 6.150000000007196,
+              "distance": 0.018651115012727888
+            },
+            {
+              "antId": "ant-503",
+              "timeSeconds": 424.46666666679465,
+              "secondsAfter": 6.966666666674826,
+              "distance": 0.028743347522003956
+            },
+            {
+              "antId": "ant-504",
+              "timeSeconds": 425.9166666667963,
+              "secondsAfter": 8.416666666676463,
+              "distance": 0.021912901551855508
+            },
+            {
+              "antId": "ant-505",
+              "timeSeconds": 426.7500000001306,
+              "secondsAfter": 9.2500000000108,
+              "distance": 0.018547350301848186
+            },
+            {
+              "antId": "ant-506",
+              "timeSeconds": 427.2333333334645,
+              "secondsAfter": 9.73333333334466,
+              "distance": 0.0022694080629860657
+            }
+          ],
+          "colonyMeanNeighborsCenterDistanceLe022SameFrame": 0.10526315789473684,
+          "colonyMeanNeighborsCenterDistanceLe085SameFrame": 1.7894736842105263,
+          "populationSameFrame": 19,
+          "trajectoryFrameIndex": 25050,
+          "trajectoryFrameTimeSeconds": 417.5000000001198
+        },
+        {
+          "antId": "ant-552",
+          "timeSeconds": 459.9000000001692,
+          "onsetSeconds": 459.6500000001689,
+          "confirmedSeconds": 459.9000000001692,
+          "durationSeconds": 0.2500000000002842,
+          "externalComponents": [
+            "ant-550",
+            "ant-551"
+          ],
+          "mergedSize": 3,
+          "position": {
+            "x": 0.49646473454199214,
+            "y": 0.7124058080844277
+          },
+          "frameTimeSeconds": 459.9000000001692,
+          "localNeighborsCenterDistanceLe022": 2,
+          "localNeighborsCenterDistanceLe085": 3,
+          "colonyPopulation": 19,
+          "nearestNeighborsWithin085": [
+            {
+              "id": "ant-550",
+              "distance": 0.01933050216474422
+            },
+            {
+              "id": "ant-551",
+              "distance": 0.02149522359788408
+            },
+            {
+              "id": "ant-549",
+              "distance": 0.05756473366644783
+            }
+          ],
+          "laterRecruitmentsWithin085And10s": [
+            {
+              "antId": "ant-553",
+              "timeSeconds": 460.31666666683634,
+              "secondsAfter": 0.41666666666714036,
+              "distance": 0.01769076907304387
+            },
+            {
+              "antId": "ant-554",
+              "timeSeconds": 461.1166666668373,
+              "secondsAfter": 1.216666666668118,
+              "distance": 0.012092686668680335
+            },
+            {
+              "antId": "ant-555",
+              "timeSeconds": 462.0166666668383,
+              "secondsAfter": 2.1166666666691185,
+              "distance": 0.022814067909777035
+            },
+            {
+              "antId": "ant-556",
+              "timeSeconds": 462.4333333335055,
+              "secondsAfter": 2.5333333333363157,
+              "distance": 0.017075417129564428
+            },
+            {
+              "antId": "ant-557",
+              "timeSeconds": 463.1333333335063,
+              "secondsAfter": 3.2333333333371,
+              "distance": 0.021080817996637437
+            },
+            {
+              "antId": "ant-558",
+              "timeSeconds": 464.01666666684065,
+              "secondsAfter": 4.116666666671449,
+              "distance": 0.0175492191425651
+            },
+            {
+              "antId": "ant-559",
+              "timeSeconds": 464.850000000175,
+              "secondsAfter": 4.950000000005787,
+              "distance": 0.010123073045924294
+            },
+            {
+              "antId": "ant-560",
+              "timeSeconds": 465.3000000001755,
+              "secondsAfter": 5.400000000006287,
+              "distance": 0.019359144586685192
+            },
+            {
+              "antId": "ant-561",
+              "timeSeconds": 466.1166666668431,
+              "secondsAfter": 6.216666666673916,
+              "distance": 0.006976720725324434
+            },
+            {
+              "antId": "ant-562",
+              "timeSeconds": 466.66666666684375,
+              "secondsAfter": 6.766666666674553,
+              "distance": 0.014310050968058112
+            },
+            {
+              "antId": "ant-563",
+              "timeSeconds": 467.38333333351125,
+              "secondsAfter": 7.4833333333420455,
+              "distance": 0.012078324595968378
+            },
+            {
+              "antId": "ant-564",
+              "timeSeconds": 468.2000000001789,
+              "secondsAfter": 8.300000000009675,
+              "distance": 0.006422691681793924
+            },
+            {
+              "antId": "ant-565",
+              "timeSeconds": 468.90000000017966,
+              "secondsAfter": 9.00000000001046,
+              "distance": 0.011926215858385866
+            },
+            {
+              "antId": "ant-566",
+              "timeSeconds": 469.8000000001807,
+              "secondsAfter": 9.900000000011516,
+              "distance": 0.010910342725320963
+            }
+          ],
+          "colonyMeanNeighborsCenterDistanceLe022SameFrame": 0.21052631578947367,
+          "colonyMeanNeighborsCenterDistanceLe085SameFrame": 0.631578947368421,
+          "populationSameFrame": 19,
+          "trajectoryFrameIndex": 27594,
+          "trajectoryFrameTimeSeconds": 459.9000000001692
+        },
+        {
+          "antId": "ant-633",
+          "timeSeconds": 517.8000000002367,
+          "onsetSeconds": 517.5500000002363,
+          "confirmedSeconds": 517.8000000002367,
+          "durationSeconds": 0.25000000000034106,
+          "externalComponents": [
+            "ant-631",
+            "ant-632"
+          ],
+          "mergedSize": 3,
+          "position": {
+            "x": 0.5019159790225248,
+            "y": 0.7142156808318477
+          },
+          "frameTimeSeconds": 517.8000000002367,
+          "localNeighborsCenterDistanceLe022": 2,
+          "localNeighborsCenterDistanceLe085": 2,
+          "colonyPopulation": 21,
+          "nearestNeighborsWithin085": [
+            {
+              "id": "ant-632",
+              "distance": 0.019271065591280154
+            },
+            {
+              "id": "ant-631",
+              "distance": 0.019630881723915222
+            }
+          ],
+          "laterRecruitmentsWithin085And10s": [
+            {
+              "antId": "ant-634",
+              "timeSeconds": 518.3333333335705,
+              "secondsAfter": 0.5333333333338715,
+              "distance": 0.02013243828527482
+            },
+            {
+              "antId": "ant-635",
+              "timeSeconds": 518.950000000238,
+              "secondsAfter": 1.1500000000013415,
+              "distance": 0.003684820140087739
+            },
+            {
+              "antId": "ant-636",
+              "timeSeconds": 519.7000000002388,
+              "secondsAfter": 1.9000000000021373,
+              "distance": 0.015974804014540798
+            },
+            {
+              "antId": "ant-637",
+              "timeSeconds": 520.5833333335731,
+              "secondsAfter": 2.7833333333364862,
+              "distance": 0.014984402925554939
+            },
+            {
+              "antId": "ant-638",
+              "timeSeconds": 521.2333333335739,
+              "secondsAfter": 3.4333333333372593,
+              "distance": 0.011165748525592713
+            },
+            {
+              "antId": "ant-639",
+              "timeSeconds": 521.9500000002414,
+              "secondsAfter": 4.150000000004752,
+              "distance": 0.008953859179529474
+            },
+            {
+              "antId": "ant-640",
+              "timeSeconds": 522.4666666669087,
+              "secondsAfter": 4.666666666672086,
+              "distance": 0.018522833865104286
+            },
+            {
+              "antId": "ant-641",
+              "timeSeconds": 522.8833333335758,
+              "secondsAfter": 5.083333333339169,
+              "distance": 0.005782773306774672
+            },
+            {
+              "antId": "ant-642",
+              "timeSeconds": 523.3666666669097,
+              "secondsAfter": 5.566666666673086,
+              "distance": 0.010816284703918535
+            },
+            {
+              "antId": "ant-643",
+              "timeSeconds": 524.100000000244,
+              "secondsAfter": 6.300000000007344,
+              "distance": 0.020613868363814403
+            },
+            {
+              "antId": "ant-644",
+              "timeSeconds": 524.7500000002431,
+              "secondsAfter": 6.950000000006412,
+              "distance": 0.004121858183011062
+            },
+            {
+              "antId": "ant-645",
+              "timeSeconds": 526.0000000002402,
+              "secondsAfter": 8.20000000000357,
+              "distance": 0.012520039397899816
+            },
+            {
+              "antId": "ant-646",
+              "timeSeconds": 526.4500000002391,
+              "secondsAfter": 8.650000000002478,
+              "distance": 0.02192557823274472
+            },
+            {
+              "antId": "ant-647",
+              "timeSeconds": 527.2666666669039,
+              "secondsAfter": 9.466666666667265,
+              "distance": 0.005480347519923654
+            }
+          ],
+          "colonyMeanNeighborsCenterDistanceLe022SameFrame": 0.19047619047619047,
+          "colonyMeanNeighborsCenterDistanceLe085SameFrame": 0.9523809523809523,
+          "populationSameFrame": 21,
+          "trajectoryFrameIndex": 31068,
+          "trajectoryFrameTimeSeconds": 517.8000000002367
+        }
+      ],
+      "densityRelationships": {
+        "pearsonBySecond": {
+          "W0.25.componentCount": {
+            "population": 0.9792411990770145,
+            "instantK2Edges": -0.3053800629330353,
+            "meanNeighborsCloseRange": -0.5103939620454943,
+            "meanNeighborsSenseRadius": 0.03509454049340967,
+            "occupancyEntropy8x8": 0.8621513684449945,
+            "top10PercentAntShare8x8": -0.7793961983224876
+          },
+          "W0.25.largestComponentRatio": {
+            "population": -0.563680539307442,
+            "instantK2Edges": 0.6232245799119313,
+            "meanNeighborsCloseRange": 0.8577576339056672,
+            "meanNeighborsSenseRadius": 0.23528826054591415,
+            "occupancyEntropy8x8": -0.6908936055834068,
+            "top10PercentAntShare8x8": 0.5932130285143943
+          },
+          "W0.25.edgeCount": {
+            "population": -0.05104259541605461,
+            "instantK2Edges": 0.82644485785255,
+            "meanNeighborsCloseRange": 0.638337130902735,
+            "meanNeighborsSenseRadius": 0.3165903225745174,
+            "occupancyEntropy8x8": -0.2041142766404682,
+            "top10PercentAntShare8x8": 0.24124875516608887
+          },
+          "W1.componentCount": {
+            "population": 0.9581667965708773,
+            "instantK2Edges": -0.2892445534468532,
+            "meanNeighborsCloseRange": -0.49223690876995563,
+            "meanNeighborsSenseRadius": -0.019055388653096708,
+            "occupancyEntropy8x8": 0.8577138067882297,
+            "top10PercentAntShare8x8": -0.7764611013750233
+          },
+          "W1.largestComponentRatio": {
+            "population": -0.517592569744283,
+            "instantK2Edges": 0.49400431685447505,
+            "meanNeighborsCloseRange": 0.7187096074365762,
+            "meanNeighborsSenseRadius": 0.3214268905420958,
+            "occupancyEntropy8x8": -0.661894066158824,
+            "top10PercentAntShare8x8": 0.5666876740656158
+          },
+          "W1.edgeCount": {
+            "population": 0.07563094002176585,
+            "instantK2Edges": 0.5291125444574205,
+            "meanNeighborsCloseRange": 0.3711137766677368,
+            "meanNeighborsSenseRadius": 0.4237302965214956,
+            "occupancyEntropy8x8": -0.09728033357423531,
+            "top10PercentAntShare8x8": 0.1317931755650376
+          },
+          "W5.componentCount": {
+            "population": 0.8192045637678895,
+            "instantK2Edges": -0.29679998116845674,
+            "meanNeighborsCloseRange": -0.4657178065033626,
+            "meanNeighborsSenseRadius": -0.0625276912949948,
+            "occupancyEntropy8x8": 0.7521648191605773,
+            "top10PercentAntShare8x8": -0.6933905642113256
+          },
+          "W5.largestComponentRatio": {
+            "population": -0.4348845281272621,
+            "instantK2Edges": 0.30440293014093883,
+            "meanNeighborsCloseRange": 0.5130660540581553,
+            "meanNeighborsSenseRadius": 0.21451156372852623,
+            "occupancyEntropy8x8": -0.5241949801143545,
+            "top10PercentAntShare8x8": 0.4895615548054661
+          },
+          "W5.edgeCount": {
+            "population": 0.3223730173404097,
+            "instantK2Edges": 0.2421212103394784,
+            "meanNeighborsCloseRange": 0.10340074245223807,
+            "meanNeighborsSenseRadius": 0.30051862912505906,
+            "occupancyEntropy8x8": 0.17176074272805333,
+            "top10PercentAntShare8x8": -0.11356928395218484
+          },
+          "W20.componentCount": {
+            "population": 0.5950165015740372,
+            "instantK2Edges": -0.3294351426714242,
+            "meanNeighborsCloseRange": -0.43840054707261245,
+            "meanNeighborsSenseRadius": -0.003218433319663309,
+            "occupancyEntropy8x8": 0.56038874832841,
+            "top10PercentAntShare8x8": -0.5325836088278161
+          },
+          "W20.largestComponentRatio": {
+            "population": -0.5774177745152314,
+            "instantK2Edges": 0.3622132811211182,
+            "meanNeighborsCloseRange": 0.5595074065668394,
+            "meanNeighborsSenseRadius": 0.0339069362483887,
+            "occupancyEntropy8x8": -0.5911103490467604,
+            "top10PercentAntShare8x8": 0.5818028714810366
+          },
+          "W20.edgeCount": {
+            "population": 0.4776273501429993,
+            "instantK2Edges": 0.18532497664633146,
+            "meanNeighborsCloseRange": 0.02263123152655446,
+            "meanNeighborsSenseRadius": 0.14651870453726631,
+            "occupancyEntropy8x8": 0.3369734016798521,
+            "top10PercentAntShare8x8": -0.2626004133669172
+          }
+        },
+        "fixedPopulationBandsMostObserved": [
+          {
+            "population": 20,
+            "nSeconds": 101,
+            "k2InstantProximityPairs": {
+              "n": 101,
+              "mean": 0.37623762376237624,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 3
+            },
+            "W025Edges": {
+              "n": 101,
+              "mean": 0.6336633663366337,
+              "p50": 1,
+              "p90": 1,
+              "min": 0,
+              "max": 3
+            },
+            "W025LCC": {
+              "n": 101,
+              "mean": 0.0797029702970296,
+              "p50": 0.1,
+              "p90": 0.1,
+              "min": 0.05,
+              "max": 0.2
+            },
+            "W1Edges": {
+              "n": 101,
+              "mean": 1.4653465346534653,
+              "p50": 1,
+              "p90": 3,
+              "min": 0,
+              "max": 6
+            },
+            "W1LCC": {
+              "n": 101,
+              "mean": 0.10940594059405942,
+              "p50": 0.1,
+              "p90": 0.2,
+              "min": 0.05,
+              "max": 0.25
+            },
+            "meanNeighborsCloseRange": {
+              "n": 101,
+              "mean": 0.029702970297029715,
+              "p50": 0,
+              "p90": 0.1,
+              "min": 0,
+              "max": 0.3
+            },
+            "occupancyEntropy8x8": {
+              "n": 101,
+              "mean": 0.6382085889888142,
+              "p50": 0.6369880158145604,
+              "p90": 0.6703213491478938,
+              "min": 0.5640306199631981,
+              "max": 0.7036546824812271
+            }
+          },
+          {
+            "population": 21,
+            "nSeconds": 99,
+            "k2InstantProximityPairs": {
+              "n": 99,
+              "mean": 0.3939393939393939,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 2
+            },
+            "W025Edges": {
+              "n": 99,
+              "mean": 0.6060606060606061,
+              "p50": 0,
+              "p90": 2,
+              "min": 0,
+              "max": 3
+            },
+            "W025LCC": {
+              "n": 99,
+              "mean": 0.073112073112073,
+              "p50": 0.047619047619047616,
+              "p90": 0.09523809523809523,
+              "min": 0.047619047619047616,
+              "max": 0.14285714285714285
+            },
+            "W1Edges": {
+              "n": 99,
+              "mean": 1.3333333333333333,
+              "p50": 1,
+              "p90": 3,
+              "min": 0,
+              "max": 4
+            },
+            "W1LCC": {
+              "n": 99,
+              "mean": 0.09860509860509849,
+              "p50": 0.09523809523809523,
+              "p90": 0.14285714285714285,
+              "min": 0.047619047619047616,
+              "max": 0.19047619047619047
+            },
+            "meanNeighborsCloseRange": {
+              "n": 99,
+              "mean": 0.02886002886002887,
+              "p50": 0,
+              "p90": 0.09523809523809523,
+              "min": 0,
+              "max": 0.19047619047619047
+            },
+            "occupancyEntropy8x8": {
+              "n": 99,
+              "mean": 0.6521737418910108,
+              "p50": 0.6625696696523055,
+              "p90": 0.6844338561774123,
+              "min": 0.5704296658869339,
+              "max": 0.716179887923444
+            }
+          },
+          {
+            "population": 19,
+            "nSeconds": 91,
+            "k2InstantProximityPairs": {
+              "n": 91,
+              "mean": 0.4065934065934066,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 3
+            },
+            "W025Edges": {
+              "n": 91,
+              "mean": 0.5824175824175825,
+              "p50": 0,
+              "p90": 2,
+              "min": 0,
+              "max": 3
+            },
+            "W025LCC": {
+              "n": 91,
+              "mean": 0.08097165991902831,
+              "p50": 0.05263157894736842,
+              "p90": 0.10526315789473684,
+              "min": 0.05263157894736842,
+              "max": 0.21052631578947367
+            },
+            "W1Edges": {
+              "n": 91,
+              "mean": 1.3846153846153846,
+              "p50": 1,
+              "p90": 3,
+              "min": 0,
+              "max": 5
+            },
+            "W1LCC": {
+              "n": 91,
+              "mean": 0.11451706188548286,
+              "p50": 0.10526315789473684,
+              "p90": 0.15789473684210525,
+              "min": 0.05263157894736842,
+              "max": 0.2631578947368421
+            },
+            "meanNeighborsCloseRange": {
+              "n": 91,
+              "mean": 0.02776171197223827,
+              "p50": 0,
+              "p90": 0.10526315789473684,
+              "min": 0,
+              "max": 0.21052631578947367
+            },
+            "occupancyEntropy8x8": {
+              "n": 91,
+              "mean": 0.6316678519024276,
+              "p50": 0.6311906601163568,
+              "p90": 0.6729001996090188,
+              "min": 0.52592750222162,
+              "max": 0.6904440592581416
+            }
+          },
+          {
+            "population": 18,
+            "nSeconds": 67,
+            "k2InstantProximityPairs": {
+              "n": 67,
+              "mean": 0.22388059701492538,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 1
+            },
+            "W025Edges": {
+              "n": 67,
+              "mean": 0.373134328358209,
+              "p50": 0,
+              "p90": 1,
+              "min": 0,
+              "max": 3
+            },
+            "W025LCC": {
+              "n": 67,
+              "mean": 0.0754560530679933,
+              "p50": 0.05555555555555555,
+              "p90": 0.1111111111111111,
+              "min": 0.05555555555555555,
+              "max": 0.16666666666666666
+            },
+            "W1Edges": {
+              "n": 67,
+              "mean": 0.9850746268656716,
+              "p50": 1,
+              "p90": 2,
+              "min": 0,
+              "max": 4
+            },
+            "W1LCC": {
+              "n": 67,
+              "mean": 0.10530679933665002,
+              "p50": 0.1111111111111111,
+              "p90": 0.16666666666666666,
+              "min": 0.05555555555555555,
+              "max": 0.2222222222222222
+            },
+            "meanNeighborsCloseRange": {
+              "n": 67,
+              "mean": 0.019900497512437818,
+              "p50": 0,
+              "p90": 0.1111111111111111,
+              "min": 0,
+              "max": 0.1111111111111111
+            },
+            "occupancyEntropy8x8": {
+              "n": 67,
+              "mean": 0.6225501867979819,
+              "p50": 0.6209134261663114,
+              "p90": 0.6579504632033485,
+              "min": 0.539849652998131,
+              "max": 0.6764689817218671
+            }
+          },
+          {
+            "population": 22,
+            "nSeconds": 67,
+            "k2InstantProximityPairs": {
+              "n": 67,
+              "mean": 0.5223880597014925,
+              "p50": 0,
+              "p90": 2,
+              "min": 0,
+              "max": 3
+            },
+            "W025Edges": {
+              "n": 67,
+              "mean": 0.7761194029850746,
+              "p50": 0,
+              "p90": 2,
+              "min": 0,
+              "max": 3
+            },
+            "W025LCC": {
+              "n": 67,
+              "mean": 0.07259158751696064,
+              "p50": 0.045454545454545456,
+              "p90": 0.09090909090909091,
+              "min": 0.045454545454545456,
+              "max": 0.18181818181818182
+            },
+            "W1Edges": {
+              "n": 67,
+              "mean": 1.4179104477611941,
+              "p50": 1,
+              "p90": 3,
+              "min": 0,
+              "max": 4
+            },
+            "W1LCC": {
+              "n": 67,
+              "mean": 0.09294436906377203,
+              "p50": 0.09090909090909091,
+              "p90": 0.13636363636363635,
+              "min": 0.045454545454545456,
+              "max": 0.18181818181818182
+            },
+            "meanNeighborsCloseRange": {
+              "n": 67,
+              "mean": 0.03799185888738127,
+              "p50": 0,
+              "p90": 0.09090909090909091,
+              "min": 0,
+              "max": 0.2727272727272727
+            },
+            "occupancyEntropy8x8": {
+              "n": 67,
+              "mean": 0.6651150666928582,
+              "p50": 0.6674810273486406,
+              "p90": 0.6920652129383114,
+              "min": 0.6098322358756344,
+              "max": 0.712935572803186
+            }
+          }
+        ],
+        "measures": {
+          "instantaneousPairs": "edgeCount from proximity graph at k=2; not causal",
+          "closeRange": "mean neighbors within existing 0.022 range",
+          "senseRadius": "mean neighbors within existing 0.085 radius",
+          "occupancy": "instantaneous 8x8 grid normalized entropy and top-10%-cell ant share"
+        }
+      },
+      "plateAndNoduleBirths": {
+        "firstPlate": {
+          "timeSeconds": 145.0166666666738,
+          "id": "trail-plate-1",
+          "source": {
+            "x": 0.5368421052631579,
+            "y": 0.6421052631578947,
+            "index": 5907
+          },
+          "target": {
+            "x": 0.9789473684210527,
+            "y": 0.08421052631578947,
+            "index": 861
+          }
+        },
+        "countsByHorizon": [
+          {
+            "seconds": 30,
+            "platesBornBy": 0,
+            "nodulesBornBy": 0,
+            "sphereBirthEventsBy": 0
+          },
+          {
+            "seconds": 60,
+            "platesBornBy": 0,
+            "nodulesBornBy": 0,
+            "sphereBirthEventsBy": 0
+          },
+          {
+            "seconds": 120,
+            "platesBornBy": 0,
+            "nodulesBornBy": 0,
+            "sphereBirthEventsBy": 0
+          },
+          {
+            "seconds": 300,
+            "platesBornBy": 10,
+            "nodulesBornBy": 5,
+            "sphereBirthEventsBy": 5
+          },
+          {
+            "seconds": 600,
+            "platesBornBy": 31,
+            "nodulesBornBy": 32,
+            "sphereBirthEventsBy": 32
+          }
+        ],
+        "totalPlateBirthEvents": 31,
+        "totalNoduleBirthEvents": 32,
+        "contactEvents": 35448,
+        "contactGroupsAndTypes": {
+          "FOOT_CONTACT:A": 17720,
+          "FOOT_CONTACT:B": 17728
+        },
+        "sphereBirthEvents": 32,
+        "totalContactPoints": 105001,
+        "contactGroupPointCounts": {
+          "A:3 points": 17170,
+          "B:3 points": 17200,
+          "B:2 points": 406,
+          "A:2 points": 407,
+          "B:1 points": 122,
+          "A:1 points": 143
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "commit": "a6801d609b82f1f1a0b5030b7c6e4b9b5d2ebe72",
+  "node": "v22.23.2",
+  "sourceHashes": {
+    "src/lib/agents/ant/AntController.js": "7b1649b4e206f9e7c2bc07e982ceb7c11fab9e072b24b7cd2a16f3306c230ed0",
+    "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+    "src/lib/agents/ant/LocalOccupancy.js": "df22dd38e9af8078ebcb1d225ca2a5eaf579e994d2d4a00ce9ceeefa2403ff16",
+    "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+    "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+    "src/lib/agents/ant/TrailPlateBirth.js": "3e3e90157879884552232e9b47a5818678b3c302ec4988651e0ba34dcfb94aa2",
+    "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+    "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+    "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+    "src/lib/agents/ant/BodyPoseController.js": "2ec4cc12c12ae301ea07056889c3be9255b1b1e155b7724cd3366278d60ace8e",
+    "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd",
+    "src/lib/agents/ant/DynamicSocialGraph.js": "631f3750c8d72b474861716116d6c81dde0fad918afd7e0f2846baa00626a4f4",
+    "src/lib/agents/ant/TemporalSocialTopology.js": "00aed74ae84559dee889b9125e068ee7509d48ad2525b7822f5483dc8bf5e87c"
+  },
+  "seeds": [
+    20261005,
+    20261006,
+    20261007
+  ],
+  "seconds": 600,
+  "dtSeconds": 0.016666666666666666,
+  "graphEnabledCondition": "DynamicSocialGraph and TemporalSocialTopology observe copied snapshots only",
+  "graphDisabledCondition": "No graph objects or observations are created",
+  "initialConditions": "Fresh natural default controller per run; injected LCG; AudioBridge absent and Audio Off.",
+  "trajectory": "Gzip file starts ANTTRJ01, uint32 schemaVersion=1, uint32 ticksPerSecond=60, uint32 recordBytes=52; each little-endian frame is Float64 timeSeconds, Uint32 agentCount, then sorted records Uint32 ID index and Float64 x,y,vx,vy,heading,radius. IDs map to strings in summary. Model is 2D; no z coordinate is fabricated. Includes t=0 after init.",
+  "hashCadence": "Agent state, RNG state/calls, full chemical bytes, full surface bytes, contacts, births, and lifecycle are SHA-256 digested at every tick. Material snapshots are SHA-256 digested at t=0 and 1 Hz. Paired per-tick digests contain eight OFF hashes then eight ON hashes in HASH_FIELDS order; the first row is t=0.",
+  "hashFields": [
+    "agents",
+    "rng",
+    "chemical",
+    "surface",
+    "contacts",
+    "births",
+    "lifecycle",
+    "material"
+  ],
+  "pairedTickHashBytesPerFrame": 512,
+  "encounter": "Four normalized center-distance thresholds: distance <= k * (radiusA + radiusB), k in [1,1.25,1.5,2].",
+  "topology": "TemporalSocialTopology observes each current graph snapshot every 3 ticks (20 Hz), with rolling-duration windows [0.25,1,5,20] seconds. Windows are exposure duration, not minimum episode cutoffs.",
+  "sampling": {
+    "checkpointSeconds": [
+      30,
+      60,
+      120,
+      300,
+      600
+    ],
+    "timelineSeconds": 1,
+    "topologyHz": 20
+  },
+  "files": [
+    {
+      "summary": "seed20261005-summary.json",
+      "timeline": "seed20261005-on-timeline.json.gz",
+      "rawEvents": "seed20261005-on-raw-events.json.gz",
+      "tickHashes": "seed20261005-paired-tick-hashes.bin.gz",
+      "trajectory": "seed20261005-trajectory.f64.gz"
+    },
+    {
+      "summary": "seed20261006-summary.json",
+      "timeline": "seed20261006-on-timeline.json.gz",
+      "rawEvents": "seed20261006-on-raw-events.json.gz",
+      "tickHashes": "seed20261006-paired-tick-hashes.bin.gz",
+      "trajectory": "seed20261006-trajectory.f64.gz"
+    },
+    {
+      "summary": "seed20261007-summary.json",
+      "timeline": "seed20261007-on-timeline.json.gz",
+      "rawEvents": "seed20261007-on-raw-events.json.gz",
+      "tickHashes": "seed20261007-paired-tick-hashes.bin.gz",
+      "trajectory": "seed20261007-trajectory.f64.gz"
+    }
+  ],
+  "createdAt": "2026-10-07T00:53:28.532Z"
+}

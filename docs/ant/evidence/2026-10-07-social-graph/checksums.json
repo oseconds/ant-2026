@@ -1,0 +1,288 @@
+{
+  "schemaVersion": 1,
+  "implementationCommit": "a6801d609b82f1f1a0b5030b7c6e4b9b5d2ebe72",
+  "toolingCommit": "f4365b19d3cbe74a11bcb4dbd1637bfe1f8feab1",
+  "captureHarness": {
+    "uncompressedBytes": 36225,
+    "sha256": "1cc7abf3ffbf1bd65069faf15545a454fb361e4c88167c63f0811624346e719c"
+  },
+  "sourceHashes": {
+    "src/lib/agents/ant/AntController.js": "7b1649b4e206f9e7c2bc07e982ceb7c11fab9e072b24b7cd2a16f3306c230ed0",
+    "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+    "src/lib/agents/ant/LocalOccupancy.js": "df22dd38e9af8078ebcb1d225ca2a5eaf579e994d2d4a00ce9ceeefa2403ff16",
+    "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+    "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+    "src/lib/agents/ant/TrailPlateBirth.js": "3e3e90157879884552232e9b47a5818678b3c302ec4988651e0ba34dcfb94aa2",
+    "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+    "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+    "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+    "src/lib/agents/ant/BodyPoseController.js": "2ec4cc12c12ae301ea07056889c3be9255b1b1e155b7724cd3366278d60ace8e",
+    "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd",
+    "src/lib/agents/ant/DynamicSocialGraph.js": "631f3750c8d72b474861716116d6c81dde0fad918afd7e0f2846baa00626a4f4",
+    "src/lib/agents/ant/TemporalSocialTopology.js": "00aed74ae84559dee889b9125e068ee7509d48ad2525b7822f5483dc8bf5e87c",
+    "scripts/ant-social-evidence.js": "5e220b6a7494b4908b1e0023e1006d2cb7f49a3ddc31c9c2577bc4ab67e2ea18",
+    "scripts/ant-social-visual-evidence.js": "f7cfbedbecc8ece3a7039be5f787835fe4ccba194d16da97e4130c92c190afb8"
+  },
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 72,
+      "sha256": "308a40fa1d89ae5ea4390b4c9b46a0108b09f171f07898f25d451fa0c69c4e9f"
+    },
+    {
+      "path": "README.md",
+      "bytes": 30732,
+      "sha256": "5654effb822b836561f517a1d336c8b5ada746c2cd1199b0cf1236be0cbaddd7"
+    },
+    {
+      "path": "data/analysis.json",
+      "bytes": 142784,
+      "sha256": "dda09d2fc10c68c56e0b82c83b87be1fc89d2e583254dec56e1f66e5d0fa200d"
+    },
+    {
+      "path": "data/archive-verification.json",
+      "bytes": 1041,
+      "sha256": "e4592340fea2930fa6ffd5889495c07c61c3215d75202c9a377f2f6a6688447e"
+    },
+    {
+      "path": "data/manifest.json",
+      "bytes": 4285,
+      "sha256": "8e0a6bbaa83de47420e1451468b6cb3e30b63c09dce37209b155482e34ef4499"
+    },
+    {
+      "path": "data/seed20261005-on-raw-events.json.gz",
+      "bytes": 4446647,
+      "sha256": "4c0b8728a9dd62067c20734f3a4f7628e480fc7565d41dc27270d994be92e503"
+    },
+    {
+      "path": "data/seed20261005-on-timeline.json.gz",
+      "bytes": 1733341,
+      "sha256": "cca30053174262e47e852d5f8e983dd4bf4a0f541914b818c952abacb2828669"
+    },
+    {
+      "path": "data/seed20261005-paired-tick-hashes.bin.gz",
+      "bytes": 5160103,
+      "sha256": "4b5c23dcc016d3615eb61059162d459d544bd3d669c724816acd247af258168a"
+    },
+    {
+      "path": "data/seed20261005-summary.json",
+      "bytes": 930825,
+      "sha256": "8f18f24bc0a75506c316cbd70b0cb85073dd57d6c56ef8c3744a072f7f3460ac"
+    },
+    {
+      "path": "data/seed20261005-trajectory.f64.gz",
+      "bytes": 22684913,
+      "sha256": "bce5ab225b8a03924f205458c57416fb7f35796ed0940d6d9efafeea9f42b904"
+    },
+    {
+      "path": "data/seed20261006-on-raw-events.json.gz",
+      "bytes": 4344559,
+      "sha256": "662fb75f6c5b7a2fc5e84a08628dbc56e0ca26921572ae564a8499e282704ad4"
+    },
+    {
+      "path": "data/seed20261006-on-timeline.json.gz",
+      "bytes": 1712335,
+      "sha256": "29d963f9d5b94d350075f887687ce2c6b4486ac8fc24a4629992bead8d6e3d84"
+    },
+    {
+      "path": "data/seed20261006-paired-tick-hashes.bin.gz",
+      "bytes": 5150852,
+      "sha256": "1c0cd3d9ab441d1f1bd28f1f4c8cbf8f9353035f26880e0c594dcfcaa4b04130"
+    },
+    {
+      "path": "data/seed20261006-summary.json",
+      "bytes": 893764,
+      "sha256": "c10a7e485392490baf097e1f5b44b946291b5ad7edc77ef79e9d1af43445e2c0"
+    },
+    {
+      "path": "data/seed20261006-trajectory.f64.gz",
+      "bytes": 22740491,
+      "sha256": "f5ddf63e5f9cbab58079197e934ecaffc0d96bec4f285dabd573e5e206aaf064"
+    },
+    {
+      "path": "data/seed20261007-on-raw-events.json.gz",
+      "bytes": 4444163,
+      "sha256": "e012b877c53dfb0634db40d97d97af853d4835602e56a4ee0cd1eab8f33689f4"
+    },
+    {
+      "path": "data/seed20261007-on-timeline.json.gz",
+      "bytes": 1769437,
+      "sha256": "595b888414e97d6238c9b5b192d37f241643d99e612bca3fc7c6968e74117e07"
+    },
+    {
+      "path": "data/seed20261007-paired-tick-hashes.bin.gz",
+      "bytes": 5146528,
+      "sha256": "56fa86367d381e1807616976a64535b87f5256adc04b298ba850300ade30cf0a"
+    },
+    {
+      "path": "data/seed20261007-summary.json",
+      "bytes": 905118,
+      "sha256": "85cae5818b5cf4273a16be0c415a300763cf73f90e742febac86c57aa0486007"
+    },
+    {
+      "path": "data/seed20261007-trajectory.f64.gz",
+      "bytes": 22704067,
+      "sha256": "b0a660dcbc5bda49b02d3eb625c47fa30e9c786a0576dfb1ccc72e7f4332c31f"
+    },
+    {
+      "path": "validation/archive-verification.txt",
+      "bytes": 824,
+      "sha256": "ace74e4fe2c8bcd6aee0fbe71139ca43b0bca05e04ed7919746b86eca43097b0"
+    },
+    {
+      "path": "validation/browser-dev.txt",
+      "bytes": 117,
+      "sha256": "4b82cc4b3fbb82741bd9141d3357ec7b429b114c58124b637dab767baf40e8a6"
+    },
+    {
+      "path": "validation/browser-production.txt",
+      "bytes": 450,
+      "sha256": "62037eb40a64cc83f916a842e7f10f32437772012dcbbd7e8ed47a4c37933be3"
+    },
+    {
+      "path": "validation/build-final.txt",
+      "bytes": 1734,
+      "sha256": "f5e3a27822d11efe7313b4789cbaa01f8b017cd043e8836506e335b33d9db390"
+    },
+    {
+      "path": "validation/capture-harness-source.txt.gz",
+      "bytes": 10371,
+      "sha256": "eefe4f07eff4716eba01ef9c174ed7c66c38d17fe00da3d7ae5490d0296bf136"
+    },
+    {
+      "path": "validation/capture-script-provenance.json",
+      "bytes": 127,
+      "sha256": "b8e6d5b1155fdf8411419e4393ff6cfc04951ae96a2c74fdfe34af366412b374"
+    },
+    {
+      "path": "validation/frozen-source-verification.json",
+      "bytes": 10969,
+      "sha256": "271f3d40e1db38baeff9e43da47836d216bc1f7e5902b1f6a3db1d57d734df1f"
+    },
+    {
+      "path": "validation/full-tests.txt",
+      "bytes": 63115,
+      "sha256": "1ba4f0721318446828610b4fb8e4739d74f3b5aeda37ef411e53a4c80e796824"
+    },
+    {
+      "path": "validation/natural-runs.txt",
+      "bytes": 39710,
+      "sha256": "9832d0bfe27f03cbd97c85d95fa32abb219571d0f0175863ab00768165469496"
+    },
+    {
+      "path": "validation/parent-analysis-verification.json",
+      "bytes": 1078,
+      "sha256": "f92ec6a5d5879b5d952703b756b2df567c2d9676fb769898cf2c6d5c1c3cea52"
+    },
+    {
+      "path": "validation/parent-invariance-final.txt",
+      "bytes": 604,
+      "sha256": "8047b58d24c0bcd2ddd04e78672f31481d21159f5785e95ed71b50fd827cd79b"
+    },
+    {
+      "path": "validation/parent-key-findings.json",
+      "bytes": 63794,
+      "sha256": "b700d893134a3a329de890d2b6e2fb436ee7e394040495b5ba5139f9b96efa58"
+    },
+    {
+      "path": "validation/parent-social-tests.txt",
+      "bytes": 5029,
+      "sha256": "07bcef9c51769797f146c9ec41291543d76942d16868b02dd90d19c0418dbc4d"
+    },
+    {
+      "path": "validation/parent-topology-final.txt",
+      "bytes": 2202,
+      "sha256": "3afcc5e689ec39a300881a9cec71eb81164e2e591e619cc766955c84c6f54853"
+    },
+    {
+      "path": "validation/provenance.json",
+      "bytes": 6965,
+      "sha256": "981e0f43396c0a0ce1c8f3ac9c62f52db1fc7c714728a4c64e37a16a8750d73d"
+    },
+    {
+      "path": "validation/tests-baseline.txt",
+      "bytes": 57986,
+      "sha256": "4fa5d18c883edbe7bfde3b2f6d8ceeef87689f366989fc6e41e72498ed581b30"
+    },
+    {
+      "path": "visuals/seed20261005-qualified-connector.png",
+      "bytes": 43640,
+      "sha256": "f8970e3e1e78fdcee541cfcb61c9b83c24baf06333287c79c5eef601bdd08c8d"
+    },
+    {
+      "path": "visuals/seed20261005-social-events-lifetimes.png",
+      "bytes": 150310,
+      "sha256": "8a234b9a5dde72575d8898e606e6245b840b316968f77808db68a46e02d8a58e"
+    },
+    {
+      "path": "visuals/seed20261005-social-spatial-k2.png",
+      "bytes": 123086,
+      "sha256": "c63dc11ced2bda802931148e64847d2b33e683983293f45aca96d856da2798cf"
+    },
+    {
+      "path": "visuals/seed20261005-social-timeline-k2.png",
+      "bytes": 247143,
+      "sha256": "a94b9ae28a93d5b4402939c747bbedecde54a4bf639512301aaf7fae3357db12"
+    },
+    {
+      "path": "visuals/seed20261006-qualified-connector.png",
+      "bytes": 42983,
+      "sha256": "6f7f5bd9630657f0f8e15eba5290e6e2e19800139dabac381c764f501547a90a"
+    },
+    {
+      "path": "visuals/seed20261006-social-events-lifetimes.png",
+      "bytes": 149800,
+      "sha256": "66145822fcc3f3c60e1102637359b5ed34c215a6bacdf13311d90cf56713ca07"
+    },
+    {
+      "path": "visuals/seed20261006-social-spatial-k2.png",
+      "bytes": 119293,
+      "sha256": "295260e18061bfda81e964207e2528284544464a7317c18bd15a97c4b48ddbff"
+    },
+    {
+      "path": "visuals/seed20261006-social-timeline-k2.png",
+      "bytes": 240688,
+      "sha256": "ef9f4548d23a946f3b860c7200ec88cab83ed6079a0d7fb09161e252e29e727d"
+    },
+    {
+      "path": "visuals/seed20261007-qualified-connector.png",
+      "bytes": 40092,
+      "sha256": "3f3c285246789eafdd88d3532a08eb69b5e2c6a093750a37aef4a34df2ec9b57"
+    },
+    {
+      "path": "visuals/seed20261007-social-events-lifetimes.png",
+      "bytes": 153836,
+      "sha256": "f7e3e41110f53ac7f95bdc2e0eb165811c3d647677956899ff19a102b2d82684"
+    },
+    {
+      "path": "visuals/seed20261007-social-spatial-k2.png",
+      "bytes": 126077,
+      "sha256": "a7f66fcc40cfc24dc2c2d1ad773fd324e1a9c737974ab1bdbc3c4116f4319645"
+    },
+    {
+      "path": "visuals/seed20261007-social-timeline-k2.png",
+      "bytes": 246760,
+      "sha256": "bda0c3f6cd5c6cdcc5f7a6de74bf6efebfaf9bfd09e4385359c6bf93e1e69bf8"
+    },
+    {
+      "path": "visuals/social-contact-sheet.png",
+      "bytes": 312018,
+      "sha256": "6b27d4d95af5f2814314f94809f06593385ef8a40009cc3ca21e401a635b3da4"
+    },
+    {
+      "path": "visuals/social-overview.png",
+      "bytes": 110385,
+      "sha256": "949fba8fe484e7bbdfdc71395a7a56d5a10eb288b174e429078e9a42b39f0ce0"
+    },
+    {
+      "path": "visuals/social-threshold-sweep-600s.png",
+      "bytes": 109529,
+      "sha256": "3f0e1523a4d4a3dedba07cce6488c247ea5ec0f324eaddb6f01b652b7a74a1a2"
+    },
+    {
+      "path": "visuals/social-visual-metadata.json",
+      "bytes": 6378,
+      "sha256": "14c60d51e4bbbd107b93bf9bf837a4af69b1e01f7a87030eb6762ddbacc034ac"
+    }
+  ]
+}

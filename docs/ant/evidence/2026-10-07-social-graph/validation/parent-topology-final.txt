@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: sampled disk encounters reproduce pair merge, connector persistence, and retirement split
+ok 1 - sampled disk encounters reproduce pair merge, connector persistence, and retirement split
+  ---
+  duration_ms: 6.4519
+  type: 'test'
+  ...
+# Subtest: two pairs merge through a supported bridge ant, persist, then split when it leaves
+ok 2 - two pairs merge through a supported bridge ant, persist, then split when it leaves
+  ---
+  duration_ms: 2.0904
+  type: 'test'
+  ...
+# Subtest: Tarjan topology reports no bridge or articulation in a triangle
+ok 3 - Tarjan topology reports no bridge or articulation in a triangle
+  ---
+  duration_ms: 0.2507
+  type: 'test'
+  ...
+# Subtest: one evaluation of bridge structure resets pending candidates without confirming them
+ok 4 - one evaluation of bridge structure resets pending candidates without confirming them
+  ---
+  duration_ms: 0.6373
+  type: 'test'
+  ...
+# Subtest: positive rolling weight without current contact cannot form or persist a connector
+ok 5 - positive rolling weight without current contact cannot form or persist a connector
+  ---
+  duration_ms: 0.543
+  type: 'test'
+  ...
+# Subtest: finish right-censors confirmed roles while preserving final observed metrics
+ok 6 - finish right-censors confirmed roles while preserving final observed metrics
+  ---
+  duration_ms: 0.3484
+  type: 'test'
+  ...
+# Subtest: isolated node birth and retirement do not create component merge or split events
+ok 7 - isolated node birth and retirement do not create component merge or split events
+  ---
+  duration_ms: 0.2769
+  type: 'test'
+  ...
+# Subtest: input order does not change topology or event order; snapshots and histories are detached
+ok 8 - input order does not change topology or event order; snapshots and histories are detached
+  ---
+  duration_ms: 0.8838
+  type: 'test'
+  ...
+# Subtest: rejects mismatched windows, invalid timestamps, and malformed graph snapshots atomically
+ok 9 - rejects mismatched windows, invalid timestamps, and malformed graph snapshots atomically
+  ---
+  duration_ms: 0.6929
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 69.3827

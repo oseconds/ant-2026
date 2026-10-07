@@ -1,0 +1,131 @@
+TAP version 13
+# Subtest: records undirected encounters from the first inside sample and holds prior status between ticks
+ok 1 - records undirected encounters from the first inside sample and holds prior status between ticks
+  ---
+  duration_ms: 1.8966
+  type: 'test'
+  ...
+# Subtest: window weights intersect encounter intervals exactly for active and separated live pairs
+ok 2 - window weights intersect encounter intervals exactly for active and separated live pairs
+  ---
+  duration_ms: 0.4236
+  type: 'test'
+  ...
+# Subtest: retains separated live-pair exposure only while its exact time window overlaps
+ok 3 - retains separated live-pair exposure only while its exact time window overlaps
+  ---
+  duration_ms: 0.1801
+  type: 'test'
+  ...
+# Subtest: ends encounters on distance or node exit and prevents retired ID reuse
+ok 4 - ends encounters on distance or node exit and prevents retired ID reuse
+  ---
+  duration_ms: 0.4117
+  type: 'test'
+  ...
+# Subtest: finishes by right-censoring active encounters and preserves detached final history
+ok 5 - finishes by right-censoring active encounters and preserves detached final history
+  ---
+  duration_ms: 0.3064
+  type: 'test'
+  ...
+# Subtest: uses stable encounter IDs and deterministic event and pair ordering
+ok 6 - uses stable encounter IDs and deterministic event and pair ordering
+  ---
+  duration_ms: 0.3582
+  type: 'test'
+  ...
+# Subtest: validates observations and permits same-time lifecycle refresh without duration
+ok 7 - validates observations and permits same-time lifecycle refresh without duration
+  ---
+  duration_ms: 0.2396
+  type: 'test'
+  ...
+# Subtest: DynamicSocialGraph stays observational across every natural controller tick
+ok 8 - DynamicSocialGraph stays observational across every natural controller tick
+  ---
+  duration_ms: 5406.0602
+  type: 'test'
+  ...
+# {"ticks":7200,"simulatedSeconds":120,"s1WindowsSeconds":[0.25,1,5,20],"s1SampleEveryTicks":3,"s1SamplesPerWindow":2401,"footContactGroups":5319,"plateBirths":1,"noduleBirths":0,"nodeEnters":97,"nodeExits":77,"audioContactCommands":5319,"materialSyncCommands":1}
+# Subtest: sampled disk encounters reproduce pair merge, connector persistence, and retirement split
+ok 9 - sampled disk encounters reproduce pair merge, connector persistence, and retirement split
+  ---
+  duration_ms: 6.9073
+  type: 'test'
+  ...
+# Subtest: two pairs merge through a supported bridge ant, persist, then split when it leaves
+ok 10 - two pairs merge through a supported bridge ant, persist, then split when it leaves
+  ---
+  duration_ms: 2.4143
+  type: 'test'
+  ...
+# Subtest: Tarjan topology reports no bridge or articulation in a triangle
+ok 11 - Tarjan topology reports no bridge or articulation in a triangle
+  ---
+  duration_ms: 0.1767
+  type: 'test'
+  ...
+# Subtest: one evaluation of bridge structure resets pending candidates without confirming them
+ok 12 - one evaluation of bridge structure resets pending candidates without confirming them
+  ---
+  duration_ms: 0.3123
+  type: 'test'
+  ...
+# Subtest: articulation freshness must reach distinct cut branches, not two contacts in one triangle branch
+ok 13 - articulation freshness must reach distinct cut branches, not two contacts in one triangle branch
+  ---
+  duration_ms: 0.6438
+  type: 'test'
+  ...
+# Subtest: positive rolling weight without current contact cannot form or persist a connector
+ok 14 - positive rolling weight without current contact cannot form or persist a connector
+  ---
+  duration_ms: 0.8355
+  type: 'test'
+  ...
+# Subtest: connector onset requires new contacts to cross distinct cut branches
+ok 15 - connector onset requires new contacts to cross distinct cut branches
+  ---
+  duration_ms: 0.8622
+  type: 'test'
+  ...
+# Subtest: connector persistence resets when its original supported contacts collapse into one cut branch
+ok 16 - connector persistence resets when its original supported contacts collapse into one cut branch
+  ---
+  duration_ms: 0.9762
+  type: 'test'
+  ...
+# Subtest: finish right-censors confirmed roles while preserving final observed metrics
+ok 17 - finish right-censors confirmed roles while preserving final observed metrics
+  ---
+  duration_ms: 0.4767
+  type: 'test'
+  ...
+# Subtest: isolated node birth and retirement do not create component merge or split events
+ok 18 - isolated node birth and retirement do not create component merge or split events
+  ---
+  duration_ms: 0.3814
+  type: 'test'
+  ...
+# Subtest: input order does not change topology or event order; snapshots and histories are detached
+ok 19 - input order does not change topology or event order; snapshots and histories are detached
+  ---
+  duration_ms: 0.5771
+  type: 'test'
+  ...
+# Subtest: rejects mismatched windows, invalid timestamps, and malformed graph snapshots atomically
+ok 20 - rejects mismatched windows, invalid timestamps, and malformed graph snapshots atomically
+  ---
+  duration_ms: 0.4398
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5486.6099
