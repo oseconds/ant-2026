@@ -15,3 +15,15 @@
 - Preserve historical evidence. Do not normalize, recolor, overwrite or fabricate natural milestones in committed evidence. Fixed-scale waveform/spectrogram comparisons must stay fixed-scale.
 - New claims must distinguish implemented facts, descriptive observations, research-supported interpretation and artistic/modeling extensions. In particular, graph spectral modes are not established ant biological entities.
 - After a pass, keep detailed measurements/reproduction in the relevant evidence package and record the process/decision chronology in `docs/ant/daily/`. Keep root README and this file concise rather than copying full experiment reports.
+
+## Subagent 배분 메모
+
+기본 모델은 **GPT-6 Luna**, 기본 reasoning은 **Medium**이다. 작업별로 필요한 수준을 고르고, spawn 시 `reasoning_effort`를 명시한다.
+
+| Reasoning | 배정할 작업 |
+| --- | --- |
+| **Medium** | 기존 conventions·문서 조회, 단순 구현, 범위가 정해진 검증 |
+| **High** | Scheduler 원인 추적·수리, race·clock 문제, 여러 시스템이 얽힌 구현·검증 |
+| **Max** | 어려운 수학·과학·아키텍처 판단, 또는 clock mapping·PCM equality·증거 주장을 독립적으로 반대 검토할 때 실질적 이득이 큰 작업 |
+
+High/Max가 더 깊은 분석·검증에 실질적 도움이 되면 적극 사용한다. 배정마다 작업의 불확실성·결합도·오류의 영향을 보고 수준을 선택하고, 짧게 선택 근거를 남긴다. 한 수준을 모든 작업에 관성적으로 적용하지 않는다. Max는 Medium/High 선행 시도 없이 바로 선택할 수 있다. 테스트 통과 결과만으로 더 깊은 검토가 불필요했다고 판단하지 않는다.
