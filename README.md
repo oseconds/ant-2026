@@ -168,6 +168,18 @@ S0는 60 Hz에서 encounter start/end, duration, minimum distance와 stable ID�
 - [Physical Audio Lab library, API and SvelteKit notes](docs/physical-audio-lab.md)
 - [Repository guidance for coding agents](AGENTS.md)
 
+## Subagent 배분 메모
+
+기본 모델은 **GPT-6 Luna**, 기본 reasoning은 **Medium**이다. 작업별로 필요한 수준을 고르고, spawn 시 `reasoning_effort`를 명시한다.
+
+| Reasoning | 배정할 작업 |
+| --- | --- |
+| **Medium** | 기존 conventions·문서 조회, 단순 구현, 범위가 정해진 검증 |
+| **High** | Scheduler 원인 추적·수리, race·clock 문제, 여러 시스템이 얽힌 구현·검증 |
+| **Max** | 어려운 수학·과학·아키텍처 판단, 또는 clock mapping·PCM equality·증거 주장을 독립적으로 반대 검토할 때 실질적 이득이 큰 작업 |
+
+모든 작업을 High로 묶거나 모든 최종 리뷰를 Max로 올리지 않는다. 불확실성·결합도·오류의 영향으로 판단하며, Max는 Medium/High 선행 시도 없이 바로 선택할 수 있다. 테스트 통과 결과만으로 더 깊은 검토가 불필요했다고 판단하지 않는다.
+
 ## Repository shape
 
 ```text
