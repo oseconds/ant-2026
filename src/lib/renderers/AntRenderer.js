@@ -24,6 +24,15 @@ export class AntRenderer {
         this.plateImages = new WeakMap();
         this.materialImage = null;
         this.materialRevision = null;
+        this.debugOptions = {
+            pheromone: true,
+            material: true,
+            surface: false,
+            candidate: false,
+            source: false,
+            exposure: false,
+            plateIds: false
+        };
         this.width = 1;
         this.height = 1;
         this.pixelRatio = 1;
@@ -81,6 +90,16 @@ export class AntRenderer {
         if (this.destroyed) return;
         this.snapshot = snapshot || null;
         this.instance?.redraw?.();
+    }
+
+    /** Change diagnostic overlays without writing to simulation state. */
+    setDebugOptions(patch = {}) {
+        if (this.destroyed || !patch || typeof patch !== 'object') return { ...this.debugOptions };
+        for (const key of Object.keys(this.debugOptions)) {
+            if (key in patch) this.debugOptions[key] = Boolean(patch[key]);
+        }
+        this.instance?.redraw?.();
+        return { ...this.debugOptions };
     }
 
     /** Resize the p5 canvas without changing simulation coordinates. */
@@ -188,12 +207,17 @@ function drawSnapshot(p, snapshot, renderer) {
     const width = p.width, height = p.height;
     p.background(255);
 
+    if (renderer.debugOptions.surface) drawScalarDebugGrid(p, snapshot?.surface, width, height, {
+        threshold: 0.002, maxAlpha: 42, tone: [40, 115, 155]
+    });
+
     // Frozen material is a solid, restrained layer beneath current chemical memory.
     // Compile one restrained material image per topology revision; live pheromone
     // never changes the frozen historical masks or their physical Z columns.
     const material = snapshot?.stratigraphy;
     const topology = material?.stratigraphy || material;
-    if (topology?.topLayerByCell?.length && material.width > 0 && material.height > 0) {
+    if (renderer.debugOptions.material
+        && topology?.topLayerByCell?.length && material.width > 0 && material.height > 0) {
         if (!renderer.materialImage || renderer.materialRevision !== material.revision) {
             const image = p.createImage(material.width, material.height);
             image.loadPixels();
@@ -211,7 +235,8 @@ function drawSnapshot(p, snapshot, renderer) {
         }
         p.image(renderer.materialImage, 0, 0, width, height);
     }
-    for (const plate of material ? [] : snapshot?.surfacePlates?.plates || []) {
+    for (const plate of renderer.debugOptions.material && !material
+        ? snapshot?.surfacePlates?.plates || [] : []) {
         if (!plate?.grid || !plate.mask?.length) continue;
         let image = renderer.plateImages.get(plate);
         if (!image) {
@@ -230,7 +255,8 @@ function drawSnapshot(p, snapshot, renderer) {
     }
 
     const field = snapshot?.pheromone;
-    if (field?.values?.length && field.width > 0 && field.height > 0) {
+    if (renderer.debugOptions.pheromone
+        && field?.values?.length && field.width > 0 && field.height > 0) {
         const image = updateFieldImage(p, renderer, field);
         // The field remains at its native grid resolution and fixed alpha values;
         // only the display interpolation is softened when it is scaled to canvas.
@@ -243,10 +269,92 @@ function drawSnapshot(p, snapshot, renderer) {
         p.image(image, 0, 0, width, height);
     }
 
+    if (renderer.debugOptions.exposure) drawExposureDebug(p, material, width, height);
+    if (renderer.debugOptions.source) drawSourceAnnulusDebug(p, snapshot?.surfacePlates?.requirements, width, height);
+    if (renderer.debugOptions.candidate) drawCandidateDebug(p, snapshot?.surfacePlates?.candidate, width, height);
+    if (renderer.debugOptions.plateIds) drawPlateIdsDebug(p, material?.plates || snapshot?.surfacePlates?.plates, width, height);
+
     const diameterScale = Math.min(width, height) * BODY_GEOMETRY.radiusScale;
     for (const agent of snapshot?.agents || []) {
         if (!isPoint(agent)) continue;
         drawAnt(p, agent, width, height, diameterScale);
+    }
+}
+
+function drawScalarDebugGrid(p, field, width, height, { threshold = 0, maxAlpha = 40, tone = [0, 0, 0] } = {}) {
+    if (!field?.values?.length || !(field.width > 0) || !(field.height > 0)) return;
+    const cellW = width / field.width, cellH = height / field.height;
+    p.noStroke();
+    for (let index = 0; index < field.values.length; index += 1) {
+        const value = field.values[index];
+        if (!Number.isFinite(value) || value <= threshold) continue;
+        const alpha = Math.min(maxAlpha, Math.max(4, value * maxAlpha * 3));
+        p.fill(tone[0], tone[1], tone[2], alpha);
+        const x = (index % field.width + 0.5) * cellW;
+        const y = (Math.floor(index / field.width) + 0.5) * cellH;
+        p.circle(x, y, Math.max(1, Math.min(cellW, cellH) * 0.85));
+    }
+}
+
+function drawExposureDebug(p, material, width, height) {
+    const layers = material?.stratigraphy?.layerCountByCell;
+    if (!layers?.length || !(material.width > 0) || !(material.height > 0)) return;
+    const cellW = width / material.width, cellH = height / material.height;
+    p.noStroke();
+    for (let index = 0; index < layers.length; index += 1) {
+        const depth = layers[index];
+        if (depth <= 1) continue;
+        p.fill(80, 55, 130, Math.min(75, 18 + depth * 7));
+        p.circle((index % material.width + 0.5) * cellW,
+            (Math.floor(index / material.width) + 0.5) * cellH,
+            Math.max(1, Math.min(cellW, cellH) * 0.9));
+    }
+}
+
+function drawSourceAnnulusDebug(p, requirements, width, height) {
+    const annulus = requirements?.sourceAnnulus;
+    const origin = annulus?.origin;
+    const radii = annulus?.radii;
+    if (!isPoint(origin) || !Array.isArray(radii) || radii.length !== 2) return;
+    p.noFill();
+    p.stroke(125, 95, 35, 145);
+    p.strokeWeight(1);
+    for (const radius of radii) {
+        if (!(radius > 0)) continue;
+        p.ellipse(origin.x * width, origin.y * height, radius * 2 * width, radius * 2 * height);
+    }
+}
+
+function drawCandidateDebug(p, candidate, width, height) {
+    const points = candidate?.pathPoints;
+    if (!Array.isArray(points) || points.length < 2) return;
+    p.noFill();
+    p.stroke(0, 115, 120, 190);
+    p.strokeWeight(1.4);
+    for (let index = 1; index < points.length; index += 1) {
+        const a = points[index - 1], b = points[index];
+        if (!isPoint(a) || !isPoint(b)) continue;
+        p.line(a.x * width, a.y * height, b.x * width, b.y * height);
+    }
+    if (isPoint(candidate.source)) {
+        p.noStroke(); p.fill(0, 115, 120, 190);
+        p.circle(candidate.source.x * width, candidate.source.y * height, 5);
+    }
+    if (isPoint(candidate.target)) {
+        p.noStroke(); p.fill(120, 65, 145, 190);
+        p.circle(candidate.target.x * width, candidate.target.y * height, 5);
+    }
+}
+
+function drawPlateIdsDebug(p, plates, width, height) {
+    if (!Array.isArray(plates) || typeof p.text !== 'function') return;
+    p.noStroke();
+    p.fill(50, 50, 50, 180);
+    if (typeof p.textSize === 'function') p.textSize(9);
+    for (const plate of plates) {
+        const point = plate?.source || plate?.centerline?.[0];
+        if (!isPoint(point) || typeof plate?.id !== 'string') continue;
+        p.text(plate.id.replace('trail-plate-', 'P'), point.x * width + 3, point.y * height - 3);
     }
 }
 
