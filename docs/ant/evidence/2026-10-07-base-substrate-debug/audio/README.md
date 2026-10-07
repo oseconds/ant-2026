@@ -1,8 +1,26 @@
 # Base substrate audio A/B — captured PCM follow-up
 
+Latest one-pass calibration: [Candidate D — Plate ×1 / Sphere `1/sqrt(12)` plus substrate ratio `.015`](calibration-0.015/README.md). On the frozen first-birth window, all-event substrate is 4.72 dB below born-only P1: D is +3.52 dB relative to C `.010` and −4.44 dB relative to B `.025`. The listening page compares A-Off and B/C/D at native level; no new numeric threshold or subjective judgment is asserted. Default stays Off. Earlier B/C captures and the original `.22` PCM remain reproducible.
+
+Born-Plate pickup readout follow-up: [A/B report and fixed-scale PCM evidence](mix-audibility/README.md). This separate pass keeps the original A/substrate captures unchanged and shows that the Plate-only readout increase still leaves B below the substrate stem.
+
+Frozen P1 pickup-distance/readout diagnosis: [per-strike distance analysis and six equal-strength controls](pickup-distance-readout/README.md). Evidence shows a pickup-locality effect with a branch-position counterexample; no candidate topology was tested.
+
+Full frozen P1 solver observability map: [48-node PCM/RMS/peak, distance metrics and fixed-scale heatmaps](p1-node-observability/README.md). Results supported testing one small finite-area pickup-aperture candidate.
+
+Frozen P1 1-hop pickup aperture A/B: [metrics, fixed-scale maps and natural 63-strike PCM](p1-pickup-aperture-ab/README.md). The predeclared normalized Gaussian aperture lowered the weak pooled-response tail and was rejected; production point pickups remain unchanged.
+
+Read-only aperture cancellation diagnosis: [signed center/neighbor traces, per-pair correlation, aperture RMS and PCM A→B relation](p1-aperture-cancellation-diagnosis/README.md). Weak response tracks lower local coherence, but neighbors are not predominantly anti-phase; normalized spatial averaging of the varying frozen Plate mode field explains the loss. No new topology was tested.
+
+Frozen event-count comparison: [born P1 vs matched parent-contact substrate vs original all-events substrate](event-count-matched-substrate/README.md). The 63 accepted P1 foot strikes map to 44 unique FOOT_CONTACT groups; production substrate emits one generic event per group. The matched substrate remains +21.44 dB over born P1 after configured gains, while the unchanged all-events stem remains +29.19 dB. Raw worklet output and fixed configured gain are reported separately; no PCM clipping/non-finite samples or production changes.
+
+Readout/excitation decomposition for the same frozen raw PCM: [reconstructed pickup displacement, per-group/per-foot injected impulse² and A/B/C level split](event-count-matched-substrate/readout-excitation-decomposition.json). Float32 reconstruction matches every stored sample; the generic worklet's original random per-node jitter was not captured, so per-group substrate energies are reported as nominal/expected/bounded values.
+
+The repository retains selected final PCM evidence as WAV, following the preceding frozen A/B evidence commit. This calibration close tracks the B/C/D stems and six +18/+20 dB Candidate D listening files. High-count exploratory pickup/node WAV captures remain local to avoid adding another large PCM batch; their hashes and measurement summaries remain in the committed JSON reports, and the harnesses can regenerate them.
+
 The scheduler repair captured six stereo float32 WAVs through Chrome 154.0.8037.98 `OfflineAudioContext` and the actual AudioWorklets at 48 kHz. Each condition contains 480,000 samples per channel. Production DSP, substrate settings, contact routing, Plate physics and simulation behavior were unchanged from branch commit `ad85d6bbfd489c3ec028e977eebfe4b4f0558693`.
 
-This pass establishes exact pre-birth Off silence, nonzero On PCM and unchanged born Plate PCM. It does not establish that substrate preserves born Plate audibility: the post-birth substrate stem has **+29.19 dB pooled RMS** relative to the born Plate stem. Default remains Off and main integration remains withheld. No level tuning was authorized.
+This original `.22` pass establishes exact pre-birth Off silence, nonzero On PCM and unchanged born Plate PCM. Its post-birth substrate stem had **+29.19 dB pooled RMS** relative to the born Plate stem. The later `.025` calibration is reported separately above; it reduced the gap, but did not meet the stated quiet-layer acceptance gate. Default remains Off and main integration remains withheld.
 
 ## Frozen windows and input
 

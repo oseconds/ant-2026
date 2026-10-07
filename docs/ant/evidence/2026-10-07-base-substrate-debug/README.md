@@ -1,6 +1,6 @@
 # Base substrate / Plate Debug continuation — 2026-10-07
 
-Status: implementation review, matched-seed invariance, tests, build and real Chrome debug visualization checks passed. The later harness-only PCM repair captured reliable pre-birth and first-Plate A/B. Off silence, On nonzero PCM and identical born Plate PCM are now verified. Post-birth substrate RMS is **29.19 dB above** born Plate RMS; absence of masking remains unverified. Default substrate remains **Off**; this pass is retained on `ant-base-substrate-debug`, with no main merge or remote push.
+Status: implementation review, matched-seed invariance, tests, build and real Chrome debug visualization checks passed. Candidate D `.015` places the natural all-event substrate **4.72 dB below** born P1 over the first-birth window, between Candidate B `.025` (−0.29 dB) and Candidate C `.010` (−8.24 dB). The browser page exposes all three at native file level for listening review; shared +18/+20 dB listening exports preserve the P1/substrate balance. No new numeric threshold or subjective result is asserted. Base remains **Off** by default. No further tuning followed the B/C/D comparison; this branch is now recorded in separate tooling and evidence commits, with no merge or push. See [Candidate D calibration evidence](audio/calibration-0.015/README.md) and [shared-gain evidence](../2026-10-08-candidate-d-absolute-level/README.md).
 
 The starting main commit was `96bcc263827a762000e1fb67b5c0795b919c497e`; the resumed branch commit was `c63634a9ac92019682f86e236794caf0681c5bc5`. Existing branch implementation was inspected and preserved rather than rebuilt. Captures have source hashes because they were made before the continuation commit.
 
@@ -10,9 +10,9 @@ The starting main commit was `96bcc263827a762000e1fb67b5c0795b919c497e`; the res
 | --- | --- |
 | Base Substrate default | Off; separate from the explicit Audio On gesture |
 | Mode | Optional existing generic Plate transport in born-surface mode |
-| Relative output | `ANT_BASE_SUBSTRATE_OUTPUT_RATIO = 0.22` |
+| Candidate relative output | Candidate D `ANT_BASE_SUBSTRATE_OUTPUT_RATIO = 0.015` (C reference: `0.010`; B reference: `0.025`; A: `0.22`) |
 | Damping | `ANT_BASE_SUBSTRATE_DAMPING = 1`, mapped to generic Plate processor control 100 |
-| Output gain | Base `0.7 × master volume × 0.22`; born surface `0.7 × master volume` |
+| Output gain | Candidate base `0.7 × master volume × 0.015`; born surface `0.7 × master volume` |
 | Material history | No substrate layer, birth, nodule or depth contribution |
 | Born Plate sonic baseline | 3 ms contact pulse, 75 ms local recovery, ×50 damping |
 

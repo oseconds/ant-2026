@@ -55,6 +55,87 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 - 현재 persistent pioneer/social organization은 미입증
 - 다음 gate는 movement-constrained null validation
 
+### 2026-10-07 — Born-Plate pickup readout A/B
+
+[`2026-10-07-born-plate-mix-ab.md`](./2026-10-07-born-plate-mix-ab.md)
+
+- Frozen seed/input and all 63 accepted P1 strike frames matched exactly
+- Plate-only mix gain raised pooled RMS +10.59 dB; no clipping/non-finite samples
+- Candidate remained 18.60 dB below the unchanged substrate stem
+- Stop this pass; pickup-distance/readout topology is the next hypothesis
+
+### 2026-10-07 — Born-Plate pickup-distance diagnosis
+
+[`2026-10-07-born-plate-pickup-distance.md`](./2026-10-07-born-plate-pickup-distance.md)
+
+- Frozen P1 descriptor and 63 accepted strikes matched exactly
+- Natural event-aligned correlations were moderately negative
+- Equal-strength midpoint response was about 13 dB below direct-pickup controls; the far-branch counterexample prevents a monotonic distance-only claim
+- Evidence recorded before testing any pickup-topology candidate
+
+### 2026-10-07 — Full frozen P1 observability map
+
+[Node-map evidence](../evidence/2026-10-07-base-substrate-debug/audio/p1-node-observability/README.md)
+
+- One identical controlled strike measured at all 48 valid P1 solver nodes
+- Channel-matched RMS tracks pickup distance; pooled output also varies strongly with location/topology
+- Nearby low-output and similarly distant high-output regions support a small finite-area pickup-aperture hypothesis
+- Candidate topology remains untested; production DSP and simulation unchanged
+
+### 2026-10-07 — Frozen P1 pickup-aperture A/B
+
+[`2026-10-07-born-plate-pickup-aperture.md`](./2026-10-07-born-plate-pickup-aperture.md) · [A/B evidence](../evidence/2026-10-07-base-substrate-debug/audio/p1-pickup-aperture-ab/README.md)
+
+- One sigma-1 Gaussian aperture used only each compiled pickup and its direct same-layer 1-hop neighbors
+- Pooled 100/250/500 ms P10 fell 23–25%; natural pooled 10 s RMS rose only +0.46 dB with an L/R tradeoff
+- Spatial rank remained recognizable, but the weak tail worsened; reject and stop without tuning
+- Production point pickup and all simulation/material/audio settings unchanged
+
+### 2026-10-07 — Event-count matched substrate vs born P1
+
+[2026-10-07-event-count-matched-substrate.md](./2026-10-07-event-count-matched-substrate.md) · [PCM evidence](../evidence/2026-10-07-base-substrate-debug/audio/event-count-matched-substrate/README.md)
+
+- Frozen 63 P1 accepts map to 44 unique FOOT_CONTACT groups; production substrate emits one generic excitation per group
+- Matched substrate pooled RMS is +21.44 dB over born P1 after configured gains; original all-events stem remains +29.19 dB
+- Raw worklet and fixed-gain levels recorded separately; no clipping/non-finite samples or production changes
+- Matched subset difference includes event selection, timing and position; no pure density or masking claim
+
+### 2026-10-07 — Base substrate / born P1 output calibration
+
+[2026-10-07-base-substrate-calibration-0.025.md](./2026-10-07-base-substrate-calibration-0.025.md) · [PCM and fixed-scale evidence](../evidence/2026-10-07-base-substrate-debug/audio/calibration-0.025/README.md)
+
+- Candidate B separates Plate ×1 from Sphere `1/sqrt(12)` and lowers the substrate output ratio to `.025`
+- Frozen 63 P1 strikes and 44 matched substrate parent groups reused; no simulation or event schedule changes
+- Pre-birth B is nonzero, but first-birth all-event substrate is only 0.29 dB below born-only P1 pooled RMS
+- Quiet-bed / obvious-new-Plate gate fails; default stays Off and no further tuning is made
+
+### 2026-10-07 — Base substrate / born P1 Candidate C
+
+[2026-10-07-base-substrate-calibration-0.010.md](./2026-10-07-base-substrate-calibration-0.010.md) · [PCM and fixed-scale evidence](../evidence/2026-10-07-base-substrate-debug/audio/calibration-0.010/README.md)
+
+- Same frozen P1 setup as Candidate B; only ratio changed `.025 → .010`
+- All-event substrate is 8.24 dB below P1 in the first 10 s, about 10 dB below at P1 event windows
+- Comparative level gate clears; no intermediate setting tested; default remains Off
+- Report margin first; no commit, merge or push
+
+### 2026-10-07 — Base substrate / born P1 Candidate D
+
+[2026-10-07-base-substrate-calibration-0.015.md](./2026-10-07-base-substrate-calibration-0.015.md) · [B/C/D PCM and listening evidence](../evidence/2026-10-07-base-substrate-debug/audio/calibration-0.015/README.md)
+
+- Same frozen seed/input/P1 descriptor, 63 accepted strikes and 44 matched parent groups; only ratio changed `.010 → .015`
+- D all-event substrate is 4.72 dB below born-only P1: +3.52 dB vs C and −4.44 dB vs B
+- Pre-birth Off remains exact silence; D On is nonzero; all stems finite and unclipped
+- Native-level B/C/D comparison page and requested test/build/dev/prod checks pass; keep default Off and stop without commit/merge/push
+
+### 2026-10-08 — Candidate D shared absolute gain
+
+[`2026-10-08-candidate-d-absolute-level.md`](./2026-10-08-candidate-d-absolute-level.md) · [WAV, plots and measurements](../evidence/2026-10-08-candidate-d-absolute-level/README.md)
+
+- Applied the same fixed +18 dB or +20 dB gain to frozen Candidate D P1-only, substrate-only and sum stems
+- Candidate D settings and P1/substrate relative level stayed unchanged; six 10 s lossless WAVs and fixed-scale plots produced
+- Both gains had zero clipping/non-finite samples; browser playback checks loaded and started all six files
+- Stopped after the requested comparison; no threshold decision, commit, merge or push
+
 ## Logging rule
 
 새 과정 로그는 `YYYY-MM-DD-topic.md` 형식으로 추가한다.

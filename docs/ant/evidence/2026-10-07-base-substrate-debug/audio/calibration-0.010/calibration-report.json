@@ -1,0 +1,863 @@
+{
+  "status": "frozen-p1-one-pass-candidate-c-substrate-calibration",
+  "decisionScope": "One calibration only: same Candidate B readout split, substrate output ratio changed to 0.010. No further tuning.",
+  "settings": {
+    "A": {
+      "plateReadoutMix": "1/sqrt(12)",
+      "sphereReadoutMix": "1/sqrt(12)",
+      "substrateOutputRatio": 0.22
+    },
+    "C": {
+      "plateReadoutMix": 1,
+      "sphereReadoutMix": "1/sqrt(12)",
+      "substrateOutputRatio": 0.01,
+      "substrateInternalReadout": 8,
+      "substrateDamping": 1,
+      "masterVolume": 0.35,
+      "existingLimiter": "unchanged"
+    },
+    "ratioScaleFromCapturedSubstrateA": 0.045454545454545456,
+    "ratioChangeDb": -26.848453616444125,
+    "retainedPlateBaseline": {
+      "contactPulseMs": 3,
+      "recoveryMs": 75,
+      "dampingMultiplier": 50
+    }
+  },
+  "frozenInput": {
+    "seed": 20261005,
+    "inputFile": "fresh-seed-20261005-through-first-birth-plus-10s.json.gz",
+    "inputGzipSha256": "25bf05aab8bbbb142be11b79f37a5988898d6069e24cae31bf721348b0bf7ff3",
+    "firstPlateId": "trail-plate-1",
+    "firstPlateBirthSeconds": 103.01666666667376,
+    "descriptorSha256": "fd079682ed0663f9bffdae36b1102958ef219f7d0bb6b35fcf2b1d09bc647b16",
+    "p1AcceptedStrikes": 63,
+    "p1ScheduleSha256": "d3a0468479ec1dc79751b9cbcd5b4fda83712d36e41d293d518cefde429a4933",
+    "matchedUniqueParentGroups": 44,
+    "matchedSubstrateScheduleSha256": "337dd257f15a19acf6869ce7870ed6be85bf69cb3e670f43f642d2bc07f69d35",
+    "allPostbirthGenericGroups": 624,
+    "inputAndStrikeScheduleReused": true
+  },
+  "clockMapping": {
+    "sampleRateHz": 48000,
+    "prebirth": [
+      {
+        "simulationTimeMs": 93016.66666667376,
+        "audioSampleIndex": 0
+      },
+      {
+        "simulationTimeMs": 103016.66666667376,
+        "audioSampleIndex": 480000
+      }
+    ],
+    "firstBirth10s": [
+      {
+        "simulationTimeMs": 103016.66666667376,
+        "audioSampleIndex": 0
+      },
+      {
+        "simulationTimeMs": 113016.66666667376,
+        "audioSampleIndex": 480000
+      }
+    ],
+    "conversion": "sampleFrame = round((simulationTimeMs - windowStartMs) * 48); each 10 s PCM maps its simulation endpoints to samples 0 and 480000",
+    "prebirthFootContactMarkers": 561,
+    "postbirthFootContactMarkers": 624,
+    "firstBirthMarker": {
+      "type": "PLATE_BIRTH",
+      "id": "trail-plate-1",
+      "simulationTimeMs": 103016.66666667376,
+      "audioSampleIndex": 0
+    }
+  },
+  "outputs": {
+    "prebirthOnC": {
+      "path": "C-prebirth-substrate-on-ratio-0.010-10s-48khz-f32.wav",
+      "sha256": "29ddc31917d4134723929bc3da12c0995c6bffc1113fe2b30e5ce52879abe5d0"
+    },
+    "matchedSubstrateC": {
+      "path": "C-matched-44-groups-ratio-0.010-10s-48khz-f32.wav",
+      "sha256": "4b3e123bab2aebdb5e699384fea4737cce16cafc545e122022e36c38bc2e5e67"
+    },
+    "firstBirthSubstrateC": {
+      "path": "C-first-birth-substrate-only-ratio-0.010-10s-48khz-f32.wav",
+      "sha256": "048dfa17e49dd22af95a37d2380bfb4b8b9a32d478d1227055cc0bef0f5ccbc2"
+    },
+    "firstBirthBornC": {
+      "path": "C-first-birth-born-only-10s-48khz-f32.wav",
+      "sha256": "d9d4c8909ef4c840df1fc496db66949ae9265dc7d98ce95391e92f80c2327097",
+      "reusedFrozenPcm": true,
+      "sourceSha256": "d9d4c8909ef4c840df1fc496db66949ae9265dc7d98ce95391e92f80c2327097"
+    },
+    "firstBirthSumC": {
+      "path": "C-first-birth-on-summed-10s-48khz-f32.wav",
+      "sha256": "5ad1a969306dd94e557e914a459f350ce7f0d3cc2b3958f5bb7783eec835c4ba"
+    },
+    "images": [
+      {
+        "file": "pre-off-fixed-scale-waveform-spectrogram.png",
+        "sha256": "6472cccfb231a3448091116b8b72e5f8c05e2926f56ad04d0bffb64963ca233a",
+        "bytes": 63252
+      },
+      {
+        "file": "pre-on-c-fixed-scale-waveform-spectrogram.png",
+        "sha256": "b02714dcb166c5f8ac77f1907ad8eeef79e81d0adbb40535742a74095be160a8",
+        "bytes": 512276
+      },
+      {
+        "file": "post-off-a-fixed-scale-waveform-spectrogram.png",
+        "sha256": "0628eb0217e90a2fd7bc3b500849d6023eeed0c6f94cb5f16984738f9bdc220d",
+        "bytes": 147216
+      },
+      {
+        "file": "post-on-c-fixed-scale-waveform-spectrogram.png",
+        "sha256": "26008c1cb6f537ca3bfdaab09bb7a33dc2eaa4bc36f80812ee16b1e2993277a9",
+        "bytes": 524327
+      },
+      {
+        "file": "post-born-c-fixed-scale-waveform-spectrogram.png",
+        "sha256": "0f2e64d8f56099e8cd875239298677ca763051acd7fe671f3af883568f067a60",
+        "bytes": 172214
+      },
+      {
+        "file": "post-base-c-fixed-scale-waveform-spectrogram.png",
+        "sha256": "b5dee2807929ce466f12a5c0c9c0c08a5ea54467647306f53ed759323825d6c3",
+        "bytes": 519843
+      }
+    ]
+  },
+  "sourcePcm": {
+    "A_p1": "7616551f36bf2dcc3f770ed7d07c3da7f7c55d559d58dddbf9409af254e46c48",
+    "frozenCandidateB_p1": "d9d4c8909ef4c840df1fc496db66949ae9265dc7d98ce95391e92f80c2327097",
+    "frozenSubstrateA_prebirth": "50aa078016c5d541b7ac1c467711771d1960c1a5bcb8930f86a254e51b33a304",
+    "frozenSubstrateA_postbirth": "8379449a3be339737a5d0fde7c0f9805a1898096e2513b2310c4cfa816684e37",
+    "frozenMatchedSubstrateA": "7d60ca5e11b3b28aedac8e6d5095bb74a7a2b78676f691cd473b702f3c91784e",
+    "frozenAllEventsSubstrateA": "8379449a3be339737a5d0fde7c0f9805a1898096e2513b2310c4cfa816684e37"
+  },
+  "metrics": {
+    "prebirth": {
+      "A_baseOff": {
+        "sampleRate": 48000,
+        "samplesPerChannel": 480000,
+        "durationSeconds": 10,
+        "left": {
+          "peak": 0,
+          "peakDbfs": null,
+          "rms": 0,
+          "rmsDbfs": null,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "right": {
+          "peak": 0,
+          "peakDbfs": null,
+          "rms": 0,
+          "rmsDbfs": null,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "peak": 0,
+        "peakDbfs": null,
+        "pooledRms": 0,
+        "pooledRmsDbfs": null,
+        "nonFiniteSamples": 0,
+        "clippingSamples": 0
+      },
+      "A_baseOn_0_22_reference": {
+        "sampleRate": 48000,
+        "samplesPerChannel": 480000,
+        "durationSeconds": 10,
+        "left": {
+          "peak": 0.04297226667404175,
+          "peakDbfs": -27.33623475640535,
+          "rms": 0.02163147652441543,
+          "rmsDbfs": -33.29827670828671,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "right": {
+          "peak": 0.04271377623081207,
+          "peakDbfs": -27.388640637158804,
+          "rms": 0.021622575228245015,
+          "rmsDbfs": -33.30185166481127,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "peak": 0.04297226667404175,
+        "peakDbfs": -27.33623475640535,
+        "pooledRms": 0.02162702633428196,
+        "pooledRmsDbfs": -33.30006381870199,
+        "nonFiniteSamples": 0,
+        "clippingSamples": 0
+      },
+      "C_baseOn_0_010": {
+        "sampleRate": 48000,
+        "samplesPerChannel": 480000,
+        "durationSeconds": 10,
+        "left": {
+          "peak": 0.00195328495465219,
+          "peakDbfs": -54.18468790223404,
+          "rms": 0.0009832489329409187,
+          "rmsDbfs": -60.146730324616485,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "right": {
+          "peak": 0.0019415352726355195,
+          "peakDbfs": -54.23709430094927,
+          "rms": 0.0009828443285440564,
+          "rmsDbfs": -60.15030528136617,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "peak": 0.00195328495465219,
+        "peakDbfs": -54.18468790223404,
+        "pooledRms": 0.0009830466515584782,
+        "pooledRmsDbfs": -60.148517435144285,
+        "nonFiniteSamples": 0,
+        "clippingSamples": 0
+      }
+    },
+    "matchedEvents": {
+      "A_substrate_44_groups_0_22": {
+        "sampleRate": 48000,
+        "samplesPerChannel": 480000,
+        "durationSeconds": 10,
+        "left": {
+          "peak": 0.02965659834444523,
+          "peakDbfs": -30.557573293367124,
+          "rms": 0.009084894157274483,
+          "rmsDbfs": -40.83360256068946,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "right": {
+          "peak": 0.031568944454193115,
+          "peakDbfs": -30.014798780516827,
+          "rms": 0.009325760915340592,
+          "rmsDbfs": -40.60631445504693,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "peak": 0.031568944454193115,
+        "peakDbfs": -30.014798780516827,
+        "pooledRms": 0.009206115318063701,
+        "pooledRmsDbfs": -40.71847178657051,
+        "nonFiniteSamples": 0,
+        "clippingSamples": 0
+      },
+      "C_substrate_44_groups_0_010": {
+        "sampleRate": 48000,
+        "samplesPerChannel": 480000,
+        "durationSeconds": 10,
+        "left": {
+          "peak": 0.0013480271445587277,
+          "peakDbfs": -57.406027250771004,
+          "rms": 0.0004129497343820995,
+          "rmsDbfs": -67.68205617796374,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "right": {
+          "peak": 0.0014349520206451416,
+          "peakDbfs": -56.86325239696095,
+          "rms": 0.0004238982234259256,
+          "rmsDbfs": -67.45476807146332,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "peak": 0.0014349520206451416,
+        "peakDbfs": -56.86325239696095,
+        "pooledRms": 0.000418459787165925,
+        "pooledRmsDbfs": -67.56692540340462,
+        "nonFiniteSamples": 0,
+        "clippingSamples": 0
+      },
+      "A_bornP1_63": {
+        "sampleRate": 48000,
+        "samplesPerChannel": 480000,
+        "durationSeconds": 10,
+        "left": {
+          "peak": 0.006492561660706997,
+          "peakDbfs": -43.751678342551905,
+          "rms": 0.0009114349662096913,
+          "rmsDbfs": -60.80548628398454,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "right": {
+          "peak": 0.004412050824612379,
+          "peakDbfs": -47.10718986696891,
+          "rms": 0.0006207485989886735,
+          "rmsDbfs": -64.14168503924323,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "peak": 0.006492561660706997,
+        "peakDbfs": -43.751678342551905,
+        "pooledRms": 0.0007797571804017139,
+        "pooledRmsDbfs": -62.160812346947395,
+        "nonFiniteSamples": 0,
+        "clippingSamples": 0
+      },
+      "C_bornP1_63": {
+        "sampleRate": 48000,
+        "samplesPerChannel": 480000,
+        "durationSeconds": 10,
+        "left": {
+          "peak": 0.02111227810382843,
+          "peakDbfs": -33.509298039160484,
+          "rms": 0.0030740655064726745,
+          "rmsDbfs": -50.24573764370991,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "right": {
+          "peak": 0.014634398743510246,
+          "peakDbfs": -36.69250231836499,
+          "rms": 0.0021148835224950972,
+          "rmsDbfs": -53.494270929188914,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "peak": 0.02111227810382843,
+        "peakDbfs": -33.509298039160484,
+        "pooledRms": 0.002638428609211018,
+        "pooledRmsDbfs": -51.57309304997723,
+        "nonFiniteSamples": 0,
+        "clippingSamples": 0
+      }
+    },
+    "firstBirth10s": {
+      "A_baseOff_bornP1": {
+        "sampleRate": 48000,
+        "samplesPerChannel": 480000,
+        "durationSeconds": 10,
+        "left": {
+          "peak": 0.006492561660706997,
+          "peakDbfs": -43.751678342551905,
+          "rms": 0.0009114349662096913,
+          "rmsDbfs": -60.80548628398454,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "right": {
+          "peak": 0.004412050824612379,
+          "peakDbfs": -47.10718986696891,
+          "rms": 0.0006207485989886735,
+          "rmsDbfs": -64.14168503924323,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "peak": 0.006492561660706997,
+        "peakDbfs": -43.751678342551905,
+        "pooledRms": 0.0007797571804017139,
+        "pooledRmsDbfs": -62.160812346947395,
+        "nonFiniteSamples": 0,
+        "clippingSamples": 0
+      },
+      "A_baseOn_0_22_sum": {
+        "sampleRate": 48000,
+        "samplesPerChannel": 480000,
+        "durationSeconds": 10,
+        "left": {
+          "peak": 0.04402383416891098,
+          "peakDbfs": -27.12624272230186,
+          "rms": 0.022620855178491214,
+          "rmsDbfs": -32.90981961307481,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "right": {
+          "peak": 0.04434262216091156,
+          "peakDbfs": -27.06357257700471,
+          "rms": 0.022386627078819384,
+          "rmsDbfs": -33.000226704929034,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "peak": 0.04434262216091156,
+        "peakDbfs": -27.06357257700471,
+        "pooledRms": 0.022504045869269844,
+        "pooledRmsDbfs": -32.95478791267076,
+        "nonFiniteSamples": 0,
+        "clippingSamples": 0
+      },
+      "A_baseOn_0_22_substrateOnly": {
+        "sampleRate": 48000,
+        "samplesPerChannel": 480000,
+        "durationSeconds": 10,
+        "left": {
+          "peak": 0.04373243823647499,
+          "peakDbfs": -27.183926170858605,
+          "rms": 0.022559938631896363,
+          "rmsDbfs": -32.93324172131382,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "right": {
+          "peak": 0.04426044225692749,
+          "peakDbfs": -27.079685017039385,
+          "rms": 0.022374720500209666,
+          "rmsDbfs": -33.00484762167099,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "peak": 0.04426044225692749,
+        "peakDbfs": -27.079685017039385,
+        "pooledRms": 0.022467520429916524,
+        "pooledRmsDbfs": -32.968897094586005,
+        "nonFiniteSamples": 0,
+        "clippingSamples": 0
+      },
+      "C_baseOff_bornP1": {
+        "sampleRate": 48000,
+        "samplesPerChannel": 480000,
+        "durationSeconds": 10,
+        "left": {
+          "peak": 0.02111227810382843,
+          "peakDbfs": -33.509298039160484,
+          "rms": 0.0030740655064726745,
+          "rmsDbfs": -50.24573764370991,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "right": {
+          "peak": 0.014634398743510246,
+          "peakDbfs": -36.69250231836499,
+          "rms": 0.0021148835224950972,
+          "rmsDbfs": -53.494270929188914,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "peak": 0.02111227810382843,
+        "peakDbfs": -33.509298039160484,
+        "pooledRms": 0.002638428609211018,
+        "pooledRmsDbfs": -51.57309304997723,
+        "nonFiniteSamples": 0,
+        "clippingSamples": 0
+      },
+      "C_baseOn_0_010_substrateOnly": {
+        "sampleRate": 48000,
+        "samplesPerChannel": 480000,
+        "durationSeconds": 10,
+        "left": {
+          "peak": 0.0019878381863236427,
+          "peakDbfs": -54.03237941735468,
+          "rms": 0.0010254517560047193,
+          "rmsDbfs": -59.78169533767807,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "right": {
+          "peak": 0.0020118383690714836,
+          "peakDbfs": -53.92813826794875,
+          "rms": 0.001017032750016275,
+          "rmsDbfs": -59.85330123805751,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "peak": 0.0020118383690714836,
+        "peakDbfs": -53.92813826794875,
+        "pooledRms": 0.001021250928640662,
+        "pooledRmsDbfs": -59.81735071096129,
+        "nonFiniteSamples": 0,
+        "clippingSamples": 0
+      },
+      "C_baseOn_0_010_sum": {
+        "sampleRate": 48000,
+        "samplesPerChannel": 480000,
+        "durationSeconds": 10,
+        "left": {
+          "peak": 0.022563733160495758,
+          "peakDbfs": -32.93178089796274,
+          "rms": 0.003285279880285343,
+          "rmsDbfs": -49.66855252034401,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "right": {
+          "peak": 0.015838325023651123,
+          "peakDbfs": -36.005814979487305,
+          "rms": 0.002351496357515205,
+          "rmsDbfs": -52.57311379285323,
+          "nonFiniteSamples": 0,
+          "clippingSamples": 0
+        },
+        "peak": 0.022563733160495758,
+        "peakDbfs": -32.93178089796274,
+        "pooledRms": 0.0028567988213396263,
+        "pooledRmsDbfs": -50.88240683993614,
+        "nonFiniteSamples": 0,
+        "clippingSamples": 0
+      }
+    }
+  },
+  "eventAlignedRms": {
+    "100": {
+      "p1AcceptedStrikeSchedule": {
+        "A born-only (substrate Off)": {
+          "eligibleWindows": 62,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.000974521117164307,
+          "pooledMedianRmsDbfs": -60.224174911972526,
+          "leftMedianRms": 0.0007171015867751503,
+          "rightMedianRms": 0.0008413195205060115
+        },
+        "A base On .22 sum": {
+          "eligibleWindows": 62,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.02175933388359379,
+          "pooledMedianRmsDbfs": -33.24708807571565,
+          "leftMedianRms": 0.021679889219956082,
+          "rightMedianRms": 0.02180949389550296
+        },
+        "C born-only (substrate Off)": {
+          "eligibleWindows": 62,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.0033202692565151683,
+          "pooledMedianRmsDbfs": -49.576533917020775,
+          "leftMedianRms": 0.002457021621825376,
+          "rightMedianRms": 0.0028786782773031847
+        },
+        "C base On .010 sum": {
+          "eligibleWindows": 62,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.0035819740321039375,
+          "pooledMedianRmsDbfs": -48.91755133877852,
+          "leftMedianRms": 0.0028656489120798515,
+          "rightMedianRms": 0.0029332412649740857
+        },
+        "C matched 44-group substrate": {
+          "eligibleWindows": 62,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.0005788725949059483,
+          "pooledMedianRmsDbfs": -64.7483402079332,
+          "leftMedianRms": 0.0005728563195853042,
+          "rightMedianRms": 0.0005864348086896142
+        },
+        "C all-event substrate": {
+          "eligibleWindows": 62,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.0009874050489640349,
+          "pooledMedianRmsDbfs": -60.11009312807791,
+          "leftMedianRms": 0.0009795500282560922,
+          "rightMedianRms": 0.0009913065884496533
+        }
+      },
+      "matchedGroupEventSchedule": {
+        "A matched 44-group substrate .22": {
+          "eligibleWindows": 43,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.012477686919324209,
+          "pooledMedianRmsDbfs": -38.077318311147394,
+          "leftMedianRms": 0.012344413549394823,
+          "rightMedianRms": 0.012680298104972117
+        },
+        "C matched 44-group substrate .010": {
+          "eligibleWindows": 43,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.0005671675874482535,
+          "pooledMedianRmsDbfs": -64.925771924433,
+          "leftMedianRms": 0.0005611097067324951,
+          "rightMedianRms": 0.0005763771864029943
+        }
+      },
+      "allPostbirthContactSchedule": {
+        "A all-event substrate .22": {
+          "eligibleWindows": 619,
+          "excludedIncompleteTailWindows": 5,
+          "pooledMedianRms": 0.022069317699301337,
+          "pooledMedianRmsDbfs": -33.124221867812594,
+          "leftMedianRms": 0.02215772787589537,
+          "rightMedianRms": 0.022061652481495244
+        },
+        "C all-event substrate .010": {
+          "eligibleWindows": 619,
+          "excludedIncompleteTailWindows": 5,
+          "pooledMedianRms": 0.0010031508043349773,
+          "pooledMedianRmsDbfs": -59.97267548580418,
+          "leftMedianRms": 0.0010071694494381315,
+          "rightMedianRms": 0.001002802385121332
+        }
+      }
+    },
+    "250": {
+      "p1AcceptedStrikeSchedule": {
+        "A born-only (substrate Off)": {
+          "eligibleWindows": 62,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.0009206040742992949,
+          "pooledMedianRmsDbfs": -60.718542147785364,
+          "leftMedianRms": 0.0006379290476166032,
+          "rightMedianRms": 0.0007304140765416161
+        },
+        "A base On .22 sum": {
+          "eligibleWindows": 62,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.021395542695868325,
+          "pooledMedianRmsDbfs": -33.393533864057325,
+          "leftMedianRms": 0.02151530435928526,
+          "rightMedianRms": 0.02126378944914386
+        },
+        "C born-only (substrate Off)": {
+          "eligibleWindows": 62,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.003137697089784879,
+          "pooledMedianRmsDbfs": -50.067779701818466,
+          "leftMedianRms": 0.002188132275434314,
+          "rightMedianRms": 0.0025016525215627843
+        },
+        "C base On .010 sum": {
+          "eligibleWindows": 62,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.0032943271296138094,
+          "pooledMedianRmsDbfs": -49.64466554393219,
+          "leftMedianRms": 0.0026125242814943814,
+          "rightMedianRms": 0.002660572618002766
+        },
+        "C matched 44-group substrate": {
+          "eligibleWindows": 62,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.0005366953662656714,
+          "pooledMedianRmsDbfs": -65.40544308639407,
+          "leftMedianRms": 0.0005252937709790189,
+          "rightMedianRms": 0.000542719183972432
+        },
+        "C all-event substrate": {
+          "eligibleWindows": 62,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.0009709839191890367,
+          "pooledMedianRmsDbfs": -60.25575925076464,
+          "leftMedianRms": 0.00097618395220345,
+          "rightMedianRms": 0.0009642625982202754
+        }
+      },
+      "matchedGroupEventSchedule": {
+        "A matched 44-group substrate .22": {
+          "eligibleWindows": 43,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.011605578299650166,
+          "pooledMedianRmsDbfs": -38.706664280224246,
+          "leftMedianRms": 0.011386604799647492,
+          "rightMedianRms": 0.011820496033384824
+        },
+        "C matched 44-group substrate .010": {
+          "eligibleWindows": 43,
+          "excludedIncompleteTailWindows": 1,
+          "pooledMedianRms": 0.0005275262861933258,
+          "pooledMedianRmsDbfs": -65.55511789921076,
+          "leftMedianRms": 0.000517572945128799,
+          "rightMedianRms": 0.0005372952742399161
+        }
+      },
+      "allPostbirthContactSchedule": {
+        "A all-event substrate .22": {
+          "eligibleWindows": 608,
+          "excludedIncompleteTailWindows": 16,
+          "pooledMedianRms": 0.0219427532166121,
+          "pooledMedianRmsDbfs": -33.1741776247752,
+          "leftMedianRms": 0.022041289779765324,
+          "rightMedianRms": 0.021846177766735843
+        },
+        "C all-event substrate .010": {
+          "eligibleWindows": 608,
+          "excludedIncompleteTailWindows": 16,
+          "pooledMedianRms": 0.0009973978734351663,
+          "pooledMedianRmsDbfs": -60.02263124163038,
+          "leftMedianRms": 0.001001876807963383,
+          "rightMedianRms": 0.0009930080802298545
+        }
+      }
+    },
+    "500": {
+      "p1AcceptedStrikeSchedule": {
+        "A born-only (substrate Off)": {
+          "eligibleWindows": 61,
+          "excludedIncompleteTailWindows": 2,
+          "pooledMedianRms": 0.0009185211844819168,
+          "pooledMedianRmsDbfs": -60.73821645624346,
+          "leftMedianRms": 0.0007158881294920392,
+          "rightMedianRms": 0.0007990606833543595
+        },
+        "A base On .22 sum": {
+          "eligibleWindows": 61,
+          "excludedIncompleteTailWindows": 2,
+          "pooledMedianRms": 0.022103863878189783,
+          "pooledMedianRmsDbfs": -33.110636051817394,
+          "leftMedianRms": 0.022223369220383576,
+          "rightMedianRms": 0.02217774357039299
+        },
+        "C born-only (substrate Off)": {
+          "eligibleWindows": 61,
+          "excludedIncompleteTailWindows": 2,
+          "pooledMedianRms": 0.003131960549009741,
+          "pooledMedianRmsDbfs": -50.08367434131945,
+          "leftMedianRms": 0.002453156594728338,
+          "rightMedianRms": 0.002732094928769171
+        },
+        "C base On .010 sum": {
+          "eligibleWindows": 61,
+          "excludedIncompleteTailWindows": 2,
+          "pooledMedianRms": 0.0032606640908117647,
+          "pooledMedianRmsDbfs": -49.733878786352335,
+          "leftMedianRms": 0.00268034582293147,
+          "rightMedianRms": 0.002933176175106212
+        },
+        "C matched 44-group substrate": {
+          "eligibleWindows": 61,
+          "excludedIncompleteTailWindows": 2,
+          "pooledMedianRms": 0.0005097444084739129,
+          "pooledMedianRmsDbfs": -65.85295058837727,
+          "leftMedianRms": 0.0005078325302991672,
+          "rightMedianRms": 0.0005159687135873479
+        },
+        "C all-event substrate": {
+          "eligibleWindows": 61,
+          "excludedIncompleteTailWindows": 2,
+          "pooledMedianRms": 0.0010010780758388964,
+          "pooledMedianRmsDbfs": -59.990640996193854,
+          "leftMedianRms": 0.0010048076677512327,
+          "rightMedianRms": 0.0010057269422525212
+        }
+      },
+      "matchedGroupEventSchedule": {
+        "A matched 44-group substrate .22": {
+          "eligibleWindows": 42,
+          "excludedIncompleteTailWindows": 2,
+          "pooledMedianRms": 0.011155055068616138,
+          "pooledMedianRmsDbfs": -39.050565628289405,
+          "leftMedianRms": 0.011055669110413543,
+          "rightMedianRms": 0.011246465313458362
+        },
+        "C matched 44-group substrate .010": {
+          "eligibleWindows": 42,
+          "excludedIncompleteTailWindows": 2,
+          "pooledMedianRms": 0.0005070479576196156,
+          "pooledMedianRmsDbfs": -65.89901924550018,
+          "leftMedianRms": 0.0005025304141387502,
+          "rightMedianRms": 0.0005112029688415973
+        }
+      },
+      "allPostbirthContactSchedule": {
+        "A all-event substrate .22": {
+          "eligibleWindows": 592,
+          "excludedIncompleteTailWindows": 32,
+          "pooledMedianRms": 0.022229606019042444,
+          "pooledMedianRmsDbfs": -33.06136468688577,
+          "leftMedianRms": 0.02227984651984994,
+          "rightMedianRms": 0.022171773284799273
+        },
+        "C all-event substrate .010": {
+          "eligibleWindows": 592,
+          "excludedIncompleteTailWindows": 32,
+          "pooledMedianRms": 0.0010104366372236896,
+          "pooledMedianRmsDbfs": -59.90981830337728,
+          "leftMedianRms": 0.0010127202963090183,
+          "rightMedianRms": 0.0010078078766657319
+        }
+      }
+    }
+  },
+  "levelChanges": {
+    "bornP1PooledAtoC_dB": 10.587719296970166,
+    "matchedSubstratePooledAtoC_dB": -26.848453616834117,
+    "firstBirthSubstrateCToBornC_dB": -8.244257660984069,
+    "firstBirthCOnSumToBornOnly_dB": 0.6906862100410915
+  },
+  "pcmChecks": {
+    "clippingThreshold": "|sample| >= 1",
+    "allMetricsIncludePerChannelAndPooledPeakRms": true,
+    "nonFiniteSamples": {
+      "A_baseOff_bornP1": 0,
+      "A_baseOn_0_22_sum": 0,
+      "A_baseOn_0_22_substrateOnly": 0,
+      "C_baseOff_bornP1": 0,
+      "C_baseOn_0_010_substrateOnly": 0,
+      "C_baseOn_0_010_sum": 0
+    },
+    "clippingSamples": {
+      "A_baseOff_bornP1": 0,
+      "A_baseOn_0_22_sum": 0,
+      "A_baseOn_0_22_substrateOnly": 0,
+      "C_baseOff_bornP1": 0,
+      "C_baseOn_0_010_substrateOnly": 0,
+      "C_baseOn_0_010_sum": 0
+    }
+  },
+  "browserCheck": {
+    "playerLoaded": true,
+    "tracks": [
+      {
+        "id": "pre-off",
+        "durationSeconds": 10,
+        "readyState": 4,
+        "source": "/docs/ant/evidence/2026-10-07-base-substrate-debug/audio/prebirth-off-silence-10s-48khz-f32.wav"
+      },
+      {
+        "id": "pre-on-c",
+        "durationSeconds": 10,
+        "readyState": 4,
+        "source": "/docs/ant/evidence/2026-10-07-base-substrate-debug/audio/calibration-0.010/C-prebirth-substrate-on-ratio-0.010-10s-48khz-f32.wav"
+      },
+      {
+        "id": "post-off-a",
+        "durationSeconds": 10,
+        "readyState": 4,
+        "source": "/docs/ant/evidence/2026-10-07-base-substrate-debug/audio/postbirth-off-born-only-10s-48khz-f32.wav"
+      },
+      {
+        "id": "post-on-c",
+        "durationSeconds": 10,
+        "readyState": 4,
+        "source": "/docs/ant/evidence/2026-10-07-base-substrate-debug/audio/calibration-0.010/C-first-birth-on-summed-10s-48khz-f32.wav"
+      },
+      {
+        "id": "post-born-c",
+        "durationSeconds": 10,
+        "readyState": 4,
+        "source": "/docs/ant/evidence/2026-10-07-base-substrate-debug/audio/calibration-0.010/C-first-birth-born-only-10s-48khz-f32.wav"
+      },
+      {
+        "id": "post-base-c",
+        "durationSeconds": 10,
+        "readyState": 4,
+        "source": "/docs/ant/evidence/2026-10-07-base-substrate-debug/audio/calibration-0.010/C-first-birth-substrate-only-ratio-0.010-10s-48khz-f32.wav"
+      }
+    ],
+    "playbackStarted": [
+      "pre-off",
+      "pre-on-c",
+      "post-off-a",
+      "post-on-c"
+    ],
+    "screenshot": "browser-listening-check.png",
+    "listeningPage": "listening.html",
+    "interpretation": "Native-rate browser decode/playback state verified. Perceptual quality remains a human listening judgment."
+  },
+  "renderer": {
+    "source": "stratigraphy-audio-overview.js / ANT existing audio snapshot renderer",
+    "waveformAmplitude": [
+      -1,
+      1
+    ],
+    "channelMode": "separate L/R",
+    "fftSize": 1024,
+    "window": "Hann",
+    "hopSize": 256,
+    "frequencyHz": [
+      0,
+      8000
+    ],
+    "dbfs": [
+      -100,
+      0
+    ],
+    "grayscaleGamma": 1,
+    "normalization": "none; fixed scale",
+    "overlayMarkers": [
+      "FOOT_CONTACT",
+      "PLATE_BIRTH"
+    ]
+  }
+}

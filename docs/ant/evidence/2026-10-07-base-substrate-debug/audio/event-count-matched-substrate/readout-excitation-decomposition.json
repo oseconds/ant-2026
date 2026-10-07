@@ -1,0 +1,3748 @@
+{
+  "status": "frozen-matched-pcm-readout-and-excitation-decomposition",
+  "source": {
+    "seed": 20261005,
+    "inputGzipSha256": "25bf05aab8bbbb142be11b79f37a5988898d6069e24cae31bf721348b0bf7ff3",
+    "firstPlateDescriptorSha256": "fd079682ed0663f9bffdae36b1102958ef219f7d0bb6b35fcf2b1d09bc647b16",
+    "p1AcceptedScheduleSha256": "d3a0468479ec1dc79751b9cbcd5b4fda83712d36e41d293d518cefde429a4933",
+    "matchedSubstrateScheduleSha256": "337dd257f15a19acf6869ce7870ed6be85bf69cb3e670f43f642d2bc07f69d35",
+    "rawWavSha256": {
+      "substrate": "5b79c9b8514cf022f8c6d9ea62b8d296e730a5f3a5ea8af88d80348196f49784",
+      "born": "19a02ff15c625d1bfc6d9a59244ce6d041d3d9944888300dcaf74d5d823c88b9"
+    },
+    "acceptedP1Feet": 63,
+    "uniqueMatchedParentGroups": 44,
+    "genericRandomJitter": "Per-node J=0.92+0.16*U was not stored for the original PCM; per-group realized sum(deltaV^2) is unrecoverable. Nominal J=1, expectation E[J^2]=1.0021333333333334, and strict multiplier bounds are reported."
+  },
+  "reconstruction": {
+    "inverse": "x = y / (1 - abs(y)); pickup displacement = x / readoutFactor",
+    "forward": "y = x / (1 + abs(x)); forward float32 sample compared to the stored raw WAV",
+    "readoutFactors": {
+      "substrate": 8,
+      "born": 0.2886751345948129
+    },
+    "stems": {
+      "substrate": {
+        "sha256": "5b79c9b8514cf022f8c6d9ea62b8d296e730a5f3a5ea8af88d80348196f49784",
+        "raw": {
+          "left": {
+            "rms": 0.16855091292727697,
+            "peak": 0.5502151846885681,
+            "nonFiniteSamples": 0
+          },
+          "right": {
+            "rms": 0.1730196839789758,
+            "peak": 0.5856947302818298,
+            "nonFiniteSamples": 0
+          },
+          "pooled": {
+            "rms": 0.17079991407024062,
+            "peak": 0.5856947302818298,
+            "nonFiniteSamples": 0
+          }
+        },
+        "preLimiter": {
+          "left": {
+            "rms": 0.24020303388656633,
+            "peak": 1.2232853710448142,
+            "nonFiniteSamples": 0
+          },
+          "right": {
+            "rms": 0.2503921976585118,
+            "peak": 1.413679171110343,
+            "nonFiniteSamples": 0
+          },
+          "pooled": {
+            "rms": 0.24535051470963962,
+            "peak": 1.413679171110343,
+            "nonFiniteSamples": 0
+          }
+        },
+        "displacement": {
+          "left": {
+            "rms": 0.03002537923582079,
+            "peak": 0.15291067138060177,
+            "nonFiniteSamples": 0
+          },
+          "right": {
+            "rms": 0.03129902470731397,
+            "peak": 0.17670989638879286,
+            "nonFiniteSamples": 0
+          },
+          "pooled": {
+            "rms": 0.030668814338704952,
+            "peak": 0.17670989638879286,
+            "nonFiniteSamples": 0
+          }
+        },
+        "reconstruction": {
+          "sampleCount": 960000,
+          "float32DifferentSamples": 0,
+          "exactFloat32SampleMatch": true,
+          "maxAbsoluteDoubleError": 1.1102230246251565e-16,
+          "rmsDoubleError": 1.183921296155844e-17,
+          "nonFiniteInputSamples": 0
+        }
+      },
+      "born": {
+        "sha256": "19a02ff15c625d1bfc6d9a59244ce6d041d3d9944888300dcaf74d5d823c88b9",
+        "raw": {
+          "left": {
+            "rms": 0.0037201426473986005,
+            "peak": 0.02650025114417076,
+            "nonFiniteSamples": 0
+          },
+          "right": {
+            "rms": 0.0025336677022081804,
+            "peak": 0.018008369952440262,
+            "nonFiniteSamples": 0
+          },
+          "pooled": {
+            "rms": 0.0031826823075989494,
+            "peak": 0.02650025114417076,
+            "nonFiniteSamples": 0
+          }
+        },
+        "preLimiter": {
+          "left": {
+            "rms": 0.0037621079389697503,
+            "peak": 0.02722163120772959,
+            "nonFiniteSamples": 0
+          },
+          "right": {
+            "rms": 0.002551141737513385,
+            "peak": 0.0183386185802501,
+            "nonFiniteSamples": 0
+          },
+          "pooled": {
+            "rms": 0.003214170212460911,
+            "peak": 0.02722163120772959,
+            "nonFiniteSamples": 0
+          }
+        },
+        "displacement": {
+          "left": {
+            "rms": 0.013032324187707342,
+            "peak": 0.09429849663338037,
+            "nonFiniteSamples": 0
+          },
+          "right": {
+            "rms": 0.008837414213365216,
+            "peak": 0.0635268382432396,
+            "nonFiniteSamples": 0
+          },
+          "pooled": {
+            "rms": 0.01113421222431321,
+            "peak": 0.09429849663338037,
+            "nonFiniteSamples": 0
+          }
+        },
+        "reconstruction": {
+          "sampleCount": 960000,
+          "float32DifferentSamples": 0,
+          "exactFloat32SampleMatch": true,
+          "maxAbsoluteDoubleError": 3.469446951953614e-18,
+          "rmsDoubleError": 2.9932884784507527e-19,
+          "nonFiniteInputSamples": 0
+        }
+      }
+    },
+    "rawPooledRmsGapDb": 34.593887158944995,
+    "reconstructedDisplacementPooledRmsGapDb": 8.800749829338706,
+    "preLimiterPooledRmsGapDb": 37.6543620296536,
+    "sampleExactReconstruction": {
+      "substrate": {
+        "sampleCount": 960000,
+        "float32DifferentSamples": 0,
+        "exactFloat32SampleMatch": true,
+        "maxAbsoluteDoubleError": 1.1102230246251565e-16,
+        "rmsDoubleError": 1.183921296155844e-17,
+        "nonFiniteInputSamples": 0
+      },
+      "born": {
+        "sampleCount": 960000,
+        "float32DifferentSamples": 0,
+        "exactFloat32SampleMatch": true,
+        "maxAbsoluteDoubleError": 3.469446951953614e-18,
+        "rmsDoubleError": 2.9932884784507527e-19,
+        "nonFiniteInputSamples": 0
+      }
+    }
+  },
+  "excitation": {
+    "interpretation": "Sum(deltaV^2) at each production solver input, before subsequent propagation. Generic Plate is a 48 kHz circular-grid initial-velocity injection; born Plate is a 6 kHz surface-worklet requested/compliant contact-impulse injection. These are solver-space proxies, not calibrated physical joules.",
+    "substrate": {
+      "events": 44,
+      "jitter": {
+        "nominalMultiplier": 1,
+        "expectedSquaredMultiplier": 1.0021333333333333,
+        "lowerSquaredMultiplier": 0.8464,
+        "upperSquaredMultiplier": 1.1664
+      },
+      "totals": {
+        "nominalJ1": 0.02385899286745896,
+        "expected": 0.023909892052242875,
+        "lowerBound": 0.02019425156301727,
+        "upperBound": 0.02782912928060413
+      },
+      "groups": [
+        {
+          "sourceContactIndex": 4295,
+          "frame": 4525,
+          "payload": {
+            "position": {
+              "x": -0.052467722536020146,
+              "y": 0.19076364436614066
+            },
+            "strength": 0.03404994138721377
+          },
+          "normalizedStrength": 0.03404994138721377,
+          "amplitude": 0.018171985932931303,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.000528021645498956,
+          "expectedDeltaVSquared": 0.0005291480916760204,
+          "jitterLowerBoundDeltaVSquared": 0.00044691752075031637,
+          "jitterUpperBoundDeltaVSquared": 0.0006158844473099823
+        },
+        {
+          "sourceContactIndex": 4302,
+          "frame": 11763,
+          "payload": {
+            "position": {
+              "x": 0.3416400884710041,
+              "y": -0.3654798836426443
+            },
+            "strength": 0.03482884871959687
+          },
+          "normalizedStrength": 0.03482884871959687,
+          "amplitude": 0.018358923692703248,
+          "affectedSolverNodes": 48,
+          "nominalDeltaVSquared": 0.0005391353724265168,
+          "expectedDeltaVSquared": 0.0005402855278876934,
+          "jitterLowerBoundDeltaVSquared": 0.0004563241792218038,
+          "jitterUpperBoundDeltaVSquared": 0.0006288474983982892
+        },
+        {
+          "sourceContactIndex": 4309,
+          "frame": 14274,
+          "payload": {
+            "position": {
+              "x": -0.08057508806558927,
+              "y": 0.18345065634532087
+            },
+            "strength": 0.03404994138721377
+          },
+          "normalizedStrength": 0.03404994138721377,
+          "amplitude": 0.018171985932931303,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005289192226977881,
+          "expectedDeltaVSquared": 0.0005300475837062101,
+          "jitterLowerBoundDeltaVSquared": 0.0004476772300914079,
+          "jitterUpperBoundDeltaVSquared": 0.0006169313813547001
+        },
+        {
+          "sourceContactIndex": 4317,
+          "frame": 23059,
+          "payload": {
+            "position": {
+              "x": -0.08351877081104278,
+              "y": 0.15386693771833387
+            },
+            "strength": 0.03404994138721377
+          },
+          "normalizedStrength": 0.03404994138721377,
+          "amplitude": 0.018171985932931303,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005373892591379215,
+          "expectedDeltaVSquared": 0.0005385356895574158,
+          "jitterLowerBoundDeltaVSquared": 0.0004548462689343368,
+          "jitterUpperBoundDeltaVSquared": 0.0006268108318584716
+        },
+        {
+          "sourceContactIndex": 4318,
+          "frame": 23757,
+          "payload": {
+            "position": {
+              "x": 0.3347504335371161,
+              "y": -0.3932425977588664
+            },
+            "strength": 0.03482884871959687
+          },
+          "normalizedStrength": 0.03482884871959687,
+          "amplitude": 0.018358923692703248,
+          "affectedSolverNodes": 48,
+          "nominalDeltaVSquared": 0.0005472205056086002,
+          "expectedDeltaVSquared": 0.0005483879093538985,
+          "jitterLowerBoundDeltaVSquared": 0.00046316743594711923,
+          "jitterUpperBoundDeltaVSquared": 0.0006382779977418714
+        },
+        {
+          "sourceContactIndex": 4363,
+          "frame": 59000,
+          "payload": {
+            "position": {
+              "x": 0.09094065746510395,
+              "y": -0.015382273641873431
+            },
+            "strength": 0.035548613287787884
+          },
+          "normalizedStrength": 0.035548613287787884,
+          "amplitude": 0.018531667189069092,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005609182589930626,
+          "expectedDeltaVSquared": 0.0005621148846122478,
+          "jitterLowerBoundDeltaVSquared": 0.00047476121441172815,
+          "jitterUpperBoundDeltaVSquared": 0.0006542550572895082
+        },
+        {
+          "sourceContactIndex": 4377,
+          "frame": 72419,
+          "payload": {
+            "position": {
+              "x": -0.028020491933924255,
+              "y": 0.20818550900292715
+            },
+            "strength": 0.03370849617272616
+          },
+          "normalizedStrength": 0.03370849617272616,
+          "amplitude": 0.018090039081454276,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005283948609215882,
+          "expectedDeltaVSquared": 0.0005295221032915543,
+          "jitterLowerBoundDeltaVSquared": 0.0004472334102840323,
+          "jitterUpperBoundDeltaVSquared": 0.0006163197657789405
+        },
+        {
+          "sourceContactIndex": 4380,
+          "frame": 73748,
+          "payload": {
+            "position": {
+              "x": 0.10228269307132526,
+              "y": -0.042424488831517046
+            },
+            "strength": 0.035548613287787884
+          },
+          "normalizedStrength": 0.035548613287787884,
+          "amplitude": 0.018531667189069092,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005567008574109361,
+          "expectedDeltaVSquared": 0.0005578884859067461,
+          "jitterLowerBoundDeltaVSquared": 0.00047119160571261633,
+          "jitterUpperBoundDeltaVSquared": 0.000649335880084116
+        },
+        {
+          "sourceContactIndex": 4388,
+          "frame": 83695,
+          "payload": {
+            "position": {
+              "x": 0.3583504771925923,
+              "y": -0.40935540980485835
+            },
+            "strength": 0.03482884871959687
+          },
+          "normalizedStrength": 0.03482884871959687,
+          "amplitude": 0.018358923692703248,
+          "affectedSolverNodes": 46,
+          "nominalDeltaVSquared": 0.00055051541293867,
+          "expectedDeltaVSquared": 0.0005516898458196058,
+          "jitterLowerBoundDeltaVSquared": 0.00046595624551129034,
+          "jitterUpperBoundDeltaVSquared": 0.0006421211776516648
+        },
+        {
+          "sourceContactIndex": 4391,
+          "frame": 84749,
+          "payload": {
+            "position": {
+              "x": -0.02551998299772054,
+              "y": 0.1799282861024821
+            },
+            "strength": 0.03370849617272616
+          },
+          "normalizedStrength": 0.03370849617272616,
+          "amplitude": 0.018090039081454276,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005329559098896583,
+          "expectedDeltaVSquared": 0.0005340928824974229,
+          "jitterLowerBoundDeltaVSquared": 0.0004510938821306068,
+          "jitterUpperBoundDeltaVSquared": 0.0006216397732952975
+        },
+        {
+          "sourceContactIndex": 4392,
+          "frame": 86394,
+          "payload": {
+            "position": {
+              "x": 0.08154546011493127,
+              "y": -0.06315178574266907
+            },
+            "strength": 0.035548613287787884
+          },
+          "normalizedStrength": 0.035548613287787884,
+          "amplitude": 0.018531667189069092,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.000547312651475635,
+          "expectedDeltaVSquared": 0.0005484802517987831,
+          "jitterLowerBoundDeltaVSquared": 0.00046324542820897754,
+          "jitterUpperBoundDeltaVSquared": 0.0006383854766811807
+        },
+        {
+          "sourceContactIndex": 4401,
+          "frame": 96231,
+          "payload": {
+            "position": {
+              "x": -0.05129233898310018,
+              "y": 0.1680706131734022
+            },
+            "strength": 0.03370849617272616
+          },
+          "normalizedStrength": 0.03370849617272616,
+          "amplitude": 0.018090039081454276,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005293709240626306,
+          "expectedDeltaVSquared": 0.0005305002487006309,
+          "jitterLowerBoundDeltaVSquared": 0.00044805955012661055,
+          "jitterUpperBoundDeltaVSquared": 0.0006174582458266524
+        },
+        {
+          "sourceContactIndex": 4403,
+          "frame": 96848,
+          "payload": {
+            "position": {
+              "x": 0.09327620776319777,
+              "y": -0.08963428821778206
+            },
+            "strength": 0.035548613287787884
+          },
+          "normalizedStrength": 0.035548613287787884,
+          "amplitude": 0.018531667189069092,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005527021468400834,
+          "expectedDeltaVSquared": 0.0005538812447533422,
+          "jitterLowerBoundDeltaVSquared": 0.00046780709708544655,
+          "jitterUpperBoundDeltaVSquared": 0.0006446717840742733
+        },
+        {
+          "sourceContactIndex": 4415,
+          "frame": 107473,
+          "payload": {
+            "position": {
+              "x": -0.04821399443378819,
+              "y": 0.14020018572767343
+            },
+            "strength": 0.03370849617272616
+          },
+          "normalizedStrength": 0.03370849617272616,
+          "amplitude": 0.018090039081454276,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005354161953587904,
+          "expectedDeltaVSquared": 0.0005365584165755558,
+          "jitterLowerBoundDeltaVSquared": 0.0004531762677516802,
+          "jitterUpperBoundDeltaVSquared": 0.0006245094502664931
+        },
+        {
+          "sourceContactIndex": 4416,
+          "frame": 108226,
+          "payload": {
+            "position": {
+              "x": 0.38819710011273584,
+              "y": -0.4371412364423933
+            },
+            "strength": 0.03482884871959687
+          },
+          "normalizedStrength": 0.03482884871959687,
+          "amplitude": 0.018358923692703248,
+          "affectedSolverNodes": 46,
+          "nominalDeltaVSquared": 0.0005546252363471532,
+          "expectedDeltaVSquared": 0.0005558084368513605,
+          "jitterLowerBoundDeltaVSquared": 0.0004694348000442305,
+          "jitterUpperBoundDeltaVSquared": 0.0006469148756753195
+        },
+        {
+          "sourceContactIndex": 4426,
+          "frame": 119043,
+          "payload": {
+            "position": {
+              "x": -0.07455018322950265,
+              "y": 0.12794812937897168
+            },
+            "strength": 0.03370849617272616
+          },
+          "normalizedStrength": 0.03370849617272616,
+          "amplitude": 0.018090039081454276,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005325952189043486,
+          "expectedDeltaVSquared": 0.0005337314220380112,
+          "jitterLowerBoundDeltaVSquared": 0.0004507885932806407,
+          "jitterUpperBoundDeltaVSquared": 0.0006212190633300323
+        },
+        {
+          "sourceContactIndex": 4432,
+          "frame": 122656,
+          "payload": {
+            "position": {
+              "x": 0.4049992536605009,
+              "y": -0.46116162529160765
+            },
+            "strength": 0.03482884871959687
+          },
+          "normalizedStrength": 0.03482884871959687,
+          "amplitude": 0.018358923692703248,
+          "affectedSolverNodes": 46,
+          "nominalDeltaVSquared": 0.0005508093308304031,
+          "expectedDeltaVSquared": 0.0005519843907361746,
+          "jitterLowerBoundDeltaVSquared": 0.0004662050176148532,
+          "jitterUpperBoundDeltaVSquared": 0.0006424640034805822
+        },
+        {
+          "sourceContactIndex": 4444,
+          "frame": 131561,
+          "payload": {
+            "position": {
+              "x": -0.07148099283941349,
+              "y": 0.10008319056389095
+            },
+            "strength": 0.03370849617272616
+          },
+          "normalizedStrength": 0.03370849617272616,
+          "amplitude": 0.018090039081454276,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005258583220575905,
+          "expectedDeltaVSquared": 0.0005269801531446466,
+          "jitterLowerBoundDeltaVSquared": 0.0004450864837895446,
+          "jitterUpperBoundDeltaVSquared": 0.0006133611468479735
+        },
+        {
+          "sourceContactIndex": 4446,
+          "frame": 134220,
+          "payload": {
+            "position": {
+              "x": 0.3256255941288546,
+              "y": -0.2670236366444415
+            },
+            "strength": 0.03373209806289524
+          },
+          "normalizedStrength": 0.03373209806289524,
+          "amplitude": 0.018095703535094855,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005347337903790699,
+          "expectedDeltaVSquared": 0.0005358745557985453,
+          "jitterLowerBoundDeltaVSquared": 0.0004525986801768448,
+          "jitterUpperBoundDeltaVSquared": 0.0006237134930981472
+        },
+        {
+          "sourceContactIndex": 4455,
+          "frame": 140791,
+          "payload": {
+            "position": {
+              "x": 0.43126453089767003,
+              "y": -0.45177534433314975
+            },
+            "strength": 0.03482884871959687
+          },
+          "normalizedStrength": 0.03482884871959687,
+          "amplitude": 0.018358923692703248,
+          "affectedSolverNodes": 46,
+          "nominalDeltaVSquared": 0.0005508812246982666,
+          "expectedDeltaVSquared": 0.0005520564379776229,
+          "jitterLowerBoundDeltaVSquared": 0.0004662658685846129,
+          "jitterUpperBoundDeltaVSquared": 0.0006425478604880582
+        },
+        {
+          "sourceContactIndex": 4459,
+          "frame": 143837,
+          "payload": {
+            "position": {
+              "x": 0.29682677009958425,
+              "y": -0.2769312300086335
+            },
+            "strength": 0.03373209806289524
+          },
+          "normalizedStrength": 0.03373209806289524,
+          "amplitude": 0.018095703535094855,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005428615330231491,
+          "expectedDeltaVSquared": 0.0005440196376269318,
+          "jitterLowerBoundDeltaVSquared": 0.00045947800155079344,
+          "jitterUpperBoundDeltaVSquared": 0.0006331936921182012
+        },
+        {
+          "sourceContactIndex": 4475,
+          "frame": 154388,
+          "payload": {
+            "position": {
+              "x": 0.30070563264576344,
+              "y": -0.3069090908935146
+            },
+            "strength": 0.03373209806289524
+          },
+          "normalizedStrength": 0.03373209806289524,
+          "amplitude": 0.018095703535094855,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005358397851768243,
+          "expectedDeltaVSquared": 0.0005369829100518681,
+          "jitterLowerBoundDeltaVSquared": 0.00045353479417366407,
+          "jitterUpperBoundDeltaVSquared": 0.0006250035254302479
+        },
+        {
+          "sourceContactIndex": 4505,
+          "frame": 174168,
+          "payload": {
+            "position": {
+              "x": 0.36527381829271305,
+              "y": -0.40419088290962935
+            },
+            "strength": 0.03487817638292909
+          },
+          "normalizedStrength": 0.03487817638292909,
+          "amplitude": 0.018370762331902983,
+          "affectedSolverNodes": 46,
+          "nominalDeltaVSquared": 0.0005525660399811439,
+          "expectedDeltaVSquared": 0.0005537448475331037,
+          "jitterLowerBoundDeltaVSquared": 0.00046769189624004025,
+          "jitterUpperBoundDeltaVSquared": 0.0006445130290340063
+        },
+        {
+          "sourceContactIndex": 4521,
+          "frame": 183227,
+          "payload": {
+            "position": {
+              "x": 0.003323985292088323,
+              "y": 0.17267019834487238
+            },
+            "strength": 0.034681160266418015
+          },
+          "normalizedStrength": 0.034681160266418015,
+          "amplitude": 0.018323478463940324,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005528484383667553,
+          "expectedDeltaVSquared": 0.0005540278483686044,
+          "jitterLowerBoundDeltaVSquared": 0.0004679309182336217,
+          "jitterUpperBoundDeltaVSquared": 0.0006448424185109834
+        },
+        {
+          "sourceContactIndex": 4522,
+          "frame": 185568,
+          "payload": {
+            "position": {
+              "x": 0.3832772508188122,
+              "y": -0.3806466229621731
+            },
+            "strength": 0.03487817638292909
+          },
+          "normalizedStrength": 0.03487817638292909,
+          "amplitude": 0.018370762331902983,
+          "affectedSolverNodes": 46,
+          "nominalDeltaVSquared": 0.0005527712928311369,
+          "expectedDeltaVSquared": 0.0005539505382558433,
+          "jitterLowerBoundDeltaVSquared": 0.0004678656222522743,
+          "jitterUpperBoundDeltaVSquared": 0.0006447524359582381
+        },
+        {
+          "sourceContactIndex": 4532,
+          "frame": 190525,
+          "payload": {
+            "position": {
+              "x": 0.06173010083770497,
+              "y": 0.0623457960464033
+            },
+            "strength": 0.03385938168112189
+          },
+          "normalizedStrength": 0.03385938168112189,
+          "amplitude": 0.018126251603469253,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005228881513786192,
+          "expectedDeltaVSquared": 0.0005240036461015603,
+          "jitterLowerBoundDeltaVSquared": 0.0004425725313268633,
+          "jitterUpperBoundDeltaVSquared": 0.0006098967397680214
+        },
+        {
+          "sourceContactIndex": 4535,
+          "frame": 193082,
+          "payload": {
+            "position": {
+              "x": -0.017623028360186418,
+              "y": 0.15208479277716658
+            },
+            "strength": 0.034681160266418015
+          },
+          "normalizedStrength": 0.034681160266418015,
+          "amplitude": 0.018323478463940324,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005564229782671667,
+          "expectedDeltaVSquared": 0.0005576100139541366,
+          "jitterLowerBoundDeltaVSquared": 0.00047095640880532994,
+          "jitterUpperBoundDeltaVSquared": 0.0006490117618508233
+        },
+        {
+          "sourceContactIndex": 4541,
+          "frame": 198941,
+          "payload": {
+            "position": {
+              "x": 0.4121779026184903,
+              "y": -0.38618950219841014
+            },
+            "strength": 0.03487817638292909
+          },
+          "normalizedStrength": 0.03487817638292909,
+          "amplitude": 0.018370762331902983,
+          "affectedSolverNodes": 46,
+          "nominalDeltaVSquared": 0.0005590207362410861,
+          "expectedDeltaVSquared": 0.0005602133138117338,
+          "jitterLowerBoundDeltaVSquared": 0.00047315515115445533,
+          "jitterUpperBoundDeltaVSquared": 0.0006520417867516029
+        },
+        {
+          "sourceContactIndex": 4552,
+          "frame": 204596,
+          "payload": {
+            "position": {
+              "x": 0.04591814730953211,
+              "y": 0.036491130307885
+            },
+            "strength": 0.03385938168112189
+          },
+          "normalizedStrength": 0.03385938168112189,
+          "amplitude": 0.018126251603469253,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005311650583732861,
+          "expectedDeltaVSquared": 0.0005322982104978159,
+          "jitterLowerBoundDeltaVSquared": 0.0004495781054071494,
+          "jitterUpperBoundDeltaVSquared": 0.000619550924086601
+        },
+        {
+          "sourceContactIndex": 4560,
+          "frame": 211288,
+          "payload": {
+            "position": {
+              "x": -0.02694284946557584,
+              "y": 0.10269359888775091
+            },
+            "strength": 0.034681160266418015
+          },
+          "normalizedStrength": 0.034681160266418015,
+          "amplitude": 0.018323478463940324,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005489452365861571,
+          "expectedDeltaVSquared": 0.000550116319757541,
+          "jitterLowerBoundDeltaVSquared": 0.00046462724824652344,
+          "jitterUpperBoundDeltaVSquared": 0.0006402897239540938
+        },
+        {
+          "sourceContactIndex": 4574,
+          "frame": 220612,
+          "payload": {
+            "position": {
+              "x": -0.01561175874033296,
+              "y": 0.07521730548223408
+            },
+            "strength": 0.034681160266418015
+          },
+          "normalizedStrength": 0.034681160266418015,
+          "amplitude": 0.018323478463940324,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005454447784591611,
+          "expectedDeltaVSquared": 0.0005466083939865406,
+          "jitterLowerBoundDeltaVSquared": 0.000461664460487834,
+          "jitterUpperBoundDeltaVSquared": 0.0006362067895947656
+        },
+        {
+          "sourceContactIndex": 4573,
+          "frame": 220673,
+          "payload": {
+            "position": {
+              "x": 0.06367662479945256,
+              "y": 0.011490247211561286
+            },
+            "strength": 0.03385938168112189
+          },
+          "normalizedStrength": 0.03385938168112189,
+          "amplitude": 0.018126251603469253,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005343150956394712,
+          "expectedDeltaVSquared": 0.000535454967843502,
+          "jitterLowerBoundDeltaVSquared": 0.0004522442969492485,
+          "jitterUpperBoundDeltaVSquared": 0.0006232251275538793
+        },
+        {
+          "sourceContactIndex": 4590,
+          "frame": 230788,
+          "payload": {
+            "position": {
+              "x": -0.036375219647692664,
+              "y": 0.053960642751881734
+            },
+            "strength": 0.034681160266418015
+          },
+          "normalizedStrength": 0.034681160266418015,
+          "amplitude": 0.018323478463940324,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005410144210656366,
+          "expectedDeltaVSquared": 0.0005421685851639099,
+          "jitterLowerBoundDeltaVSquared": 0.00045791460598995485,
+          "jitterUpperBoundDeltaVSquared": 0.0006310392207309586
+        },
+        {
+          "sourceContactIndex": 4596,
+          "frame": 237182,
+          "payload": {
+            "position": {
+              "x": 0.04845875262257496,
+              "y": -0.014338527203860493
+            },
+            "strength": 0.03385938168112189
+          },
+          "normalizedStrength": 0.03385938168112189,
+          "amplitude": 0.018126251603469253,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005362437846823492,
+          "expectedDeltaVSquared": 0.0005373877714230049,
+          "jitterLowerBoundDeltaVSquared": 0.0004538767393551404,
+          "jitterUpperBoundDeltaVSquared": 0.0006254747504534922
+        },
+        {
+          "sourceContactIndex": 4607,
+          "frame": 242498,
+          "payload": {
+            "position": {
+              "x": -0.025040022246775397,
+              "y": 0.026483529097617253
+            },
+            "strength": 0.034681160266418015
+          },
+          "normalizedStrength": 0.034681160266418015,
+          "amplitude": 0.018323478463940324,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.000551788550909071,
+          "expectedDeltaVSquared": 0.000552965699817677,
+          "jitterLowerBoundDeltaVSquared": 0.0004670338294894377,
+          "jitterUpperBoundDeltaVSquared": 0.0006436061657803404
+        },
+        {
+          "sourceContactIndex": 4616,
+          "frame": 252000,
+          "payload": {
+            "position": {
+              "x": 0.06617082894970261,
+              "y": -0.03809182500143051
+            },
+            "strength": 0.03385938168112189
+          },
+          "normalizedStrength": 0.03385938168112189,
+          "amplitude": 0.018126251603469253,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005276000784552083,
+          "expectedDeltaVSquared": 0.000528725625289246,
+          "jitterLowerBoundDeltaVSquared": 0.0004465607064044883,
+          "jitterUpperBoundDeltaVSquared": 0.0006153927315101551
+        },
+        {
+          "sourceContactIndex": 4639,
+          "frame": 264831,
+          "payload": {
+            "position": {
+              "x": 0.05035697648048986,
+              "y": -0.06394687863002899
+            },
+            "strength": 0.03385938168112189
+          },
+          "normalizedStrength": 0.03385938168112189,
+          "amplitude": 0.018126251603469253,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005245433168952118,
+          "expectedDeltaVSquared": 0.0005256623426379216,
+          "jitterLowerBoundDeltaVSquared": 0.0004439734634201073,
+          "jitterUpperBoundDeltaVSquared": 0.0006118273248265752
+        },
+        {
+          "sourceContactIndex": 4652,
+          "frame": 276318,
+          "payload": {
+            "position": {
+              "x": 0.06811068190621711,
+              "y": -0.08894830196281164
+            },
+            "strength": 0.03385938168112189
+          },
+          "normalizedStrength": 0.03385938168112189,
+          "amplitude": 0.018126251603469253,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005249281684686691,
+          "expectedDeltaVSquared": 0.0005260480152280689,
+          "jitterLowerBoundDeltaVSquared": 0.0004442992017918815,
+          "jitterUpperBoundDeltaVSquared": 0.0006122762157018556
+        },
+        {
+          "sourceContactIndex": 4745,
+          "frame": 351573,
+          "payload": {
+            "position": {
+              "x": -0.06126431437464427,
+              "y": 0.188958917652781
+            },
+            "strength": 0.03494377935761586
+          },
+          "normalizedStrength": 0.03494377935761586,
+          "amplitude": 0.018386507045827807,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005395837975931404,
+          "expectedDeltaVSquared": 0.0005407349096946724,
+          "jitterLowerBoundDeltaVSquared": 0.00045670372628283404,
+          "jitterUpperBoundDeltaVSquared": 0.000629370541512639
+        },
+        {
+          "sourceContactIndex": 4756,
+          "frame": 360003,
+          "payload": {
+            "position": {
+              "x": -0.08863679685054807,
+              "y": 0.17928170652125985
+            },
+            "strength": 0.03494377935761586
+          },
+          "normalizedStrength": 0.03494377935761586,
+          "amplitude": 0.018386507045827807,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005442248860275954,
+          "expectedDeltaVSquared": 0.0005453858991177876,
+          "jitterLowerBoundDeltaVSquared": 0.0004606319435337568,
+          "jitterUpperBoundDeltaVSquared": 0.0006347839070625874
+        },
+        {
+          "sourceContactIndex": 4769,
+          "frame": 368127,
+          "payload": {
+            "position": {
+              "x": -0.08902233314459085,
+              "y": 0.15060382706246903
+            },
+            "strength": 0.03494377935761586
+          },
+          "normalizedStrength": 0.03494377935761586,
+          "amplitude": 0.018386507045827807,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005520040387270083,
+          "expectedDeltaVSquared": 0.0005531816473429592,
+          "jitterLowerBoundDeltaVSquared": 0.0004672162183785398,
+          "jitterUpperBoundDeltaVSquared": 0.0006438575107711826
+        },
+        {
+          "sourceContactIndex": 4866,
+          "frame": 441275,
+          "payload": {
+            "position": {
+              "x": 0.12660959395398996,
+              "y": -0.06111195621957357
+            },
+            "strength": 0.03487657954739407
+          },
+          "normalizedStrength": 0.03487657954739407,
+          "amplitude": 0.018370379091374577,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005491807506192073,
+          "expectedDeltaVSquared": 0.0005503523362205284,
+          "jitterLowerBoundDeltaVSquared": 0.0004648265873240971,
+          "jitterUpperBoundDeltaVSquared": 0.0006405644275222435
+        },
+        {
+          "sourceContactIndex": 4890,
+          "frame": 461718,
+          "payload": {
+            "position": {
+              "x": 0.14420083177788345,
+              "y": -0.08425530370382547
+            },
+            "strength": 0.03487657954739407
+          },
+          "normalizedStrength": 0.03487657954739407,
+          "amplitude": 0.018370379091374577,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005508409531692302,
+          "expectedDeltaVSquared": 0.0005520160805359912,
+          "jitterLowerBoundDeltaVSquared": 0.00046623178276243647,
+          "jitterUpperBoundDeltaVSquared": 0.0006425008877765901
+        },
+        {
+          "sourceContactIndex": 4910,
+          "frame": 477358,
+          "payload": {
+            "position": {
+              "x": 0.12763125611871984,
+              "y": -0.10895470246306721
+            },
+            "strength": 0.03487657954739407
+          },
+          "normalizedStrength": 0.03487657954739407,
+          "amplitude": 0.018370379091374577,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005574746500450113,
+          "expectedDeltaVSquared": 0.0005586639292984406,
+          "jitterLowerBoundDeltaVSquared": 0.0004718465437980976,
+          "jitterUpperBoundDeltaVSquared": 0.0006502384318125013
+        }
+      ]
+    },
+    "born": {
+      "acceptedFeet": 63,
+      "totals": {
+        "requested": 0.019459157243224046,
+        "compliant": 0.018471454736786286,
+        "complianceLossRatio": 0.050757722654288684
+      },
+      "savedWorkletTotals": {
+        "requestedImpulseSquared": 0.019459157243224032,
+        "compliantImpulseSquared": 0.0184714547367863,
+        "exactTotalsMatch": true
+      },
+      "feet": [
+        {
+          "bornRecordingIndex": 0,
+          "parentContactIndex": 4295,
+          "contactLegId": "FR",
+          "frame": 4525,
+          "simulationTimeMs": 103110.93467720706,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4604478148183748,
+              "y": 0.6298791679411511
+            },
+            "strength": 0.019241860433975615,
+            "footprintRadius": 0.012560297689219844,
+            "hardness": 0.2879404621560313
+          },
+          "physicsStep": 565,
+          "affectedSolverNodes": 6,
+          "attenuatedNodeContributions": 0,
+          "requestedImpulseSquared": 0.0003085409818735088,
+          "compliantImpulseSquared": 0.0003085409818735088
+        },
+        {
+          "bornRecordingIndex": 1,
+          "parentContactIndex": 4295,
+          "contactLegId": "RR",
+          "frame": 4525,
+          "simulationTimeMs": 103110.93467720706,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.47737131336327343,
+              "y": 0.6465142272136879
+            },
+            "strength": 0.019316546991653628,
+            "footprintRadius": 0.012370340075094084,
+            "hardness": 0.32593198498118303
+          },
+          "physicsStep": 565,
+          "affectedSolverNodes": 3,
+          "attenuatedNodeContributions": 3,
+          "requestedImpulseSquared": 0.000310940810375404,
+          "compliantImpulseSquared": 0.00026900828399374475
+        },
+        {
+          "bornRecordingIndex": 2,
+          "parentContactIndex": 4302,
+          "contactLegId": "FR",
+          "frame": 11763,
+          "simulationTimeMs": 103261.73853206664,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7776456587230051,
+              "y": 0.21174880844608976
+            },
+            "strength": 0.019144807098538143,
+            "footprintRadius": 0.01389610292212212,
+            "hardness": 0.020779415575576013
+          },
+          "physicsStep": 1470,
+          "affectedSolverNodes": 8,
+          "attenuatedNodeContributions": 0,
+          "requestedImpulseSquared": 0.00030543635356317355,
+          "compliantImpulseSquared": 0.00030543635356317355
+        },
+        {
+          "bornRecordingIndex": 3,
+          "parentContactIndex": 4302,
+          "contactLegId": "RR",
+          "frame": 11763,
+          "simulationTimeMs": 103261.73853206664,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7711589800360279,
+              "y": 0.23457539381517017
+            },
+            "strength": 0.019344567240639637,
+            "footprintRadius": 0.013399395841402153,
+            "hardness": 0.12012083171956946
+          },
+          "physicsStep": 1470,
+          "affectedSolverNodes": 7,
+          "attenuatedNodeContributions": 6,
+          "requestedImpulseSquared": 0.0003118435557140444,
+          "compliantImpulseSquared": 0.0002304776452063082
+        },
+        {
+          "bornRecordingIndex": 4,
+          "parentContactIndex": 4309,
+          "contactLegId": "MR",
+          "frame": 14274,
+          "simulationTimeMs": 103314.03562295363,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4564070009364829,
+              "y": 0.6240055852261194
+            },
+            "strength": 0.01914409975444427,
+            "footprintRadius": 0.012808941970285093,
+            "hardness": 0.2382116059429813
+          },
+          "physicsStep": 1784,
+          "affectedSolverNodes": 6,
+          "attenuatedNodeContributions": 6,
+          "requestedImpulseSquared": 0.00030541378403600364,
+          "compliantImpulseSquared": 0.00029924160808432194
+        },
+        {
+          "bornRecordingIndex": 5,
+          "parentContactIndex": 4317,
+          "contactLegId": "FR",
+          "frame": 23059,
+          "simulationTimeMs": 103497.06257038385,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.437834353589117,
+              "y": 0.6016256408623182
+            },
+            "strength": 0.019109576464980217,
+            "footprintRadius": 0.012896748423042448,
+            "hardness": 0.2206503153915104
+          },
+          "physicsStep": 2882,
+          "affectedSolverNodes": 7,
+          "attenuatedNodeContributions": 5,
+          "requestedImpulseSquared": 0.00030431324846669444,
+          "compliantImpulseSquared": 0.0002965116522447321
+        },
+        {
+          "bornRecordingIndex": 6,
+          "parentContactIndex": 4317,
+          "contactLegId": "RR",
+          "frame": 23059,
+          "simulationTimeMs": 103497.06257038385,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.45346381697967214,
+              "y": 0.6194820087495256
+            },
+            "strength": 0.01914213349196507,
+            "footprintRadius": 0.012813942957623448,
+            "hardness": 0.2372114084753103
+          },
+          "physicsStep": 2882,
+          "affectedSolverNodes": 6,
+          "attenuatedNodeContributions": 6,
+          "requestedImpulseSquared": 0.00030535105001850446,
+          "compliantImpulseSquared": 0.00020712695098924893
+        },
+        {
+          "bornRecordingIndex": 7,
+          "parentContactIndex": 4318,
+          "contactLegId": "MR",
+          "frame": 23757,
+          "simulationTimeMs": 103511.61078126125,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7803289295427316,
+              "y": 0.2074561033091609
+            },
+            "strength": 0.01916749117037452,
+            "footprintRadius": 0.013839698581485625,
+            "hardness": 0.0320602837028751
+          },
+          "physicsStep": 2969,
+          "affectedSolverNodes": 8,
+          "attenuatedNodeContributions": 8,
+          "requestedImpulseSquared": 0.0003061605859729239,
+          "compliantImpulseSquared": 0.0003025312000201032
+        },
+        {
+          "bornRecordingIndex": 8,
+          "parentContactIndex": 4363,
+          "contactLegId": "FL",
+          "frame": 59000,
+          "simulationTimeMs": 104245.8298509607,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5562990938027531,
+              "y": 0.4783812895717125
+            },
+            "strength": 0.019823586844004218,
+            "footprintRadius": 0.01320633053376426,
+            "hardness": 0.15873389324714793
+          },
+          "physicsStep": 7375,
+          "affectedSolverNodes": 8,
+          "attenuatedNodeContributions": 0,
+          "requestedImpulseSquared": 0.0003274788164544791,
+          "compliantImpulseSquared": 0.0003274788164544791
+        },
+        {
+          "bornRecordingIndex": 9,
+          "parentContactIndex": 4377,
+          "contactLegId": "FL",
+          "frame": 72419,
+          "simulationTimeMs": 104525.40093894658,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.462419543906853,
+              "y": 0.6551689224922681
+            },
+            "strength": 0.018957145271174966,
+            "footprintRadius": 0.012796049209833932,
+            "hardness": 0.2407901580332136
+          },
+          "physicsStep": 9052,
+          "affectedSolverNodes": 3,
+          "attenuatedNodeContributions": 3,
+          "requestedImpulseSquared": 0.00029947778545681285,
+          "compliantImpulseSquared": 0.0002994777440555325
+        },
+        {
+          "bornRecordingIndex": 10,
+          "parentContactIndex": 4380,
+          "contactLegId": "ML",
+          "frame": 73748,
+          "simulationTimeMs": 104553.0729589854,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5542599671574235,
+              "y": 0.4730404389369887
+            },
+            "strength": 0.01988774922134881,
+            "footprintRadius": 0.013050019939317783,
+            "hardness": 0.18999601213644352
+          },
+          "physicsStep": 9218,
+          "affectedSolverNodes": 8,
+          "attenuatedNodeContributions": 8,
+          "requestedImpulseSquared": 0.0003296021278120625,
+          "compliantImpulseSquared": 0.0003276519019116048
+        },
+        {
+          "bornRecordingIndex": 11,
+          "parentContactIndex": 4388,
+          "contactLegId": "RR",
+          "frame": 83695,
+          "simulationTimeMs": 104760.31838956749,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7840024900157,
+              "y": 0.20085291329622518
+            },
+            "strength": 0.019154358321923953,
+            "footprintRadius": 0.013872353638429386,
+            "hardness": 0.02552927231412267
+          },
+          "physicsStep": 10461,
+          "affectedSolverNodes": 8,
+          "attenuatedNodeContributions": 8,
+          "requestedImpulseSquared": 0.0003057411901214735,
+          "compliantImpulseSquared": 0.0003057411849183859
+        },
+        {
+          "bornRecordingIndex": 12,
+          "parentContactIndex": 4391,
+          "contactLegId": "ML",
+          "frame": 84749,
+          "simulationTimeMs": 104782.27015293553,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4591922379988253,
+              "y": 0.651552940163594
+            },
+            "strength": 0.018987149858825454,
+            "footprintRadius": 0.012718962605310698,
+            "hardness": 0.2562074789378605
+          },
+          "physicsStep": 10593,
+          "affectedSolverNodes": 3,
+          "attenuatedNodeContributions": 3,
+          "requestedImpulseSquared": 0.0003004265378328552,
+          "compliantImpulseSquared": 0.00029688970546132884
+        },
+        {
+          "bornRecordingIndex": 13,
+          "parentContactIndex": 4392,
+          "contactLegId": "RL",
+          "frame": 86394,
+          "simulationTimeMs": 104816.54808859361,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5515953587666891,
+              "y": 0.46526237296311457
+            },
+            "strength": 0.019923223225522414,
+            "footprintRadius": 0.012963599159582758,
+            "hardness": 0.20728016808344837
+          },
+          "physicsStep": 10799,
+          "affectedSolverNodes": 8,
+          "attenuatedNodeContributions": 8,
+          "requestedImpulseSquared": 0.0003307790066010048,
+          "compliantImpulseSquared": 0.0003281054877645017
+        },
+        {
+          "bornRecordingIndex": 14,
+          "parentContactIndex": 4401,
+          "contactLegId": "FL",
+          "frame": 96231,
+          "simulationTimeMs": 105021.47624248479,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.44453293427727864,
+              "y": 0.6243368411143887
+            },
+            "strength": 0.01897417366661321,
+            "footprintRadius": 0.012752300527129013,
+            "hardness": 0.2495398945741973
+          },
+          "physicsStep": 12028,
+          "affectedSolverNodes": 5,
+          "attenuatedNodeContributions": 5,
+          "requestedImpulseSquared": 0.0003000160433532751,
+          "compliantImpulseSquared": 0.0002985927753307531
+        },
+        {
+          "bornRecordingIndex": 15,
+          "parentContactIndex": 4401,
+          "contactLegId": "RL",
+          "frame": 96231,
+          "simulationTimeMs": 105021.47624248479,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4545875384991427,
+              "y": 0.6458318389962605
+            },
+            "strength": 0.019043070619745778,
+            "footprintRadius": 0.012575293189422777,
+            "hardness": 0.2849413621154446
+          },
+          "physicsStep": 12028,
+          "affectedSolverNodes": 5,
+          "attenuatedNodeContributions": 5,
+          "requestedImpulseSquared": 0.00030219877018222046,
+          "compliantImpulseSquared": 0.0002402225257882042
+        },
+        {
+          "bornRecordingIndex": 16,
+          "parentContactIndex": 4403,
+          "contactLegId": "RR",
+          "frame": 96848,
+          "simulationTimeMs": 105034.3336495877,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5864898317594172,
+              "y": 0.4408148740859162
+            },
+            "strength": 0.019870581157520554,
+            "footprintRadius": 0.013091844297665323,
+            "hardness": 0.1816311404669355
+          },
+          "physicsStep": 12106,
+          "affectedSolverNodes": 7,
+          "attenuatedNodeContributions": 5,
+          "requestedImpulseSquared": 0.000329033316539935,
+          "compliantImpulseSquared": 0.0003279691360308268
+        },
+        {
+          "bornRecordingIndex": 17,
+          "parentContactIndex": 4415,
+          "contactLegId": "FR",
+          "frame": 107473,
+          "simulationTimeMs": 105255.69472669472,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4679194943105969,
+              "y": 0.5917544277189507
+            },
+            "strength": 0.018862948867208237,
+            "footprintRadius": 0.013038054899919656,
+            "hardness": 0.19238902001606867
+          },
+          "physicsStep": 13434,
+          "affectedSolverNodes": 9,
+          "attenuatedNodeContributions": 8,
+          "requestedImpulseSquared": 0.00029650902152188505,
+          "compliantImpulseSquared": 0.00029580303068922625
+        },
+        {
+          "bornRecordingIndex": 18,
+          "parentContactIndex": 4415,
+          "contactLegId": "ML",
+          "frame": 107473,
+          "simulationTimeMs": 105255.69472669472,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4408156787657901,
+              "y": 0.6193928644134002
+            },
+            "strength": 0.018988496872971387,
+            "footprintRadius": 0.012715501909634275,
+            "hardness": 0.25689961807314515
+          },
+          "physicsStep": 13434,
+          "affectedSolverNodes": 5,
+          "attenuatedNodeContributions": 5,
+          "requestedImpulseSquared": 0.0003004691659469166,
+          "compliantImpulseSquared": 0.0002559443668685717
+        },
+        {
+          "bornRecordingIndex": 19,
+          "parentContactIndex": 4416,
+          "contactLegId": "FR",
+          "frame": 108226,
+          "simulationTimeMs": 105271.38128254801,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.8147650101315984,
+              "y": 0.16746904082698177
+            },
+            "strength": 0.019232895345092815,
+            "footprintRadius": 0.013677069959231647,
+            "hardness": 0.0645860081536705
+          },
+          "physicsStep": 13528,
+          "affectedSolverNodes": 9,
+          "attenuatedNodeContributions": 6,
+          "requestedImpulseSquared": 0.0003082535405471806,
+          "compliantImpulseSquared": 0.0003082452401856526
+        },
+        {
+          "bornRecordingIndex": 20,
+          "parentContactIndex": 4416,
+          "contactLegId": "RR",
+          "frame": 108226,
+          "simulationTimeMs": 105271.38128254801,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7956274521098592,
+              "y": 0.18150057221042537
+            },
+            "strength": 0.019165333316279745,
+            "footprintRadius": 0.013845064123363785,
+            "hardness": 0.03098717532724314
+          },
+          "physicsStep": 13528,
+          "affectedSolverNodes": 6,
+          "attenuatedNodeContributions": 6,
+          "requestedImpulseSquared": 0.00030609165538494015,
+          "compliantImpulseSquared": 0.0002588213754535933
+        },
+        {
+          "bornRecordingIndex": 21,
+          "parentContactIndex": 4426,
+          "contactLegId": "MR",
+          "frame": 119043,
+          "simulationTimeMs": 105496.73777658795,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4647346777279054,
+              "y": 0.5865277660960814
+            },
+            "strength": 0.018875643513937123,
+            "footprintRadius": 0.013005440313665356,
+            "hardness": 0.19891193726692893
+          },
+          "physicsStep": 14880,
+          "affectedSolverNodes": 9,
+          "attenuatedNodeContributions": 9,
+          "requestedImpulseSquared": 0.00029690825322420476,
+          "compliantImpulseSquared": 0.00029337792392971636
+        },
+        {
+          "bornRecordingIndex": 22,
+          "parentContactIndex": 4432,
+          "contactLegId": "MR",
+          "frame": 122656,
+          "simulationTimeMs": 105571.99731646408,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.8101401310046,
+              "y": 0.17052798557231705
+            },
+            "strength": 0.019272658817427627,
+            "footprintRadius": 0.013578197391086002,
+            "hardness": 0.0843605217827996
+          },
+          "physicsStep": 15332,
+          "affectedSolverNodes": 9,
+          "attenuatedNodeContributions": 9,
+          "requestedImpulseSquared": 0.00030952946927787975,
+          "compliantImpulseSquared": 0.00030723724978541574
+        },
+        {
+          "bornRecordingIndex": 23,
+          "parentContactIndex": 4444,
+          "contactLegId": "RR",
+          "frame": 131561,
+          "simulationTimeMs": 105757.51948300909,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.46221093606802566,
+              "y": 0.5812902152957092
+            },
+            "strength": 0.01897792774354312,
+            "footprintRadius": 0.012742655700577251,
+            "hardness": 0.25146885988454964
+          },
+          "physicsStep": 16445,
+          "affectedSolverNodes": 10,
+          "attenuatedNodeContributions": 9,
+          "requestedImpulseSquared": 0.0003001347726063294,
+          "compliantImpulseSquared": 0.0002971921711711476
+        },
+        {
+          "bornRecordingIndex": 24,
+          "parentContactIndex": 4446,
+          "contactLegId": "FR",
+          "frame": 134220,
+          "simulationTimeMs": 105812.92318275226,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7524792741273985,
+              "y": 0.2781543002325042
+            },
+            "strength": 0.01881390377161241,
+            "footprintRadius": 0.013197879627313794,
+            "hardness": 0.16042407453724125
+          },
+          "physicsStep": 16777,
+          "affectedSolverNodes": 6,
+          "attenuatedNodeContributions": 3,
+          "requestedImpulseSquared": 0.0002949691342185504,
+          "compliantImpulseSquared": 0.000294969134190152
+        },
+        {
+          "bornRecordingIndex": 25,
+          "parentContactIndex": 4446,
+          "contactLegId": "ML",
+          "frame": 134220,
+          "simulationTimeMs": 105812.92318275226,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7304269818783192,
+              "y": 0.3099693345175903
+            },
+            "strength": 0.018954307347322525,
+            "footprintRadius": 0.012837412682386699,
+            "hardness": 0.2325174635226604
+          },
+          "physicsStep": 16777,
+          "affectedSolverNodes": 7,
+          "attenuatedNodeContributions": 5,
+          "requestedImpulseSquared": 0.000299388127284021,
+          "compliantImpulseSquared": 0.00025307413956545706
+        },
+        {
+          "bornRecordingIndex": 26,
+          "parentContactIndex": 4455,
+          "contactLegId": "RR",
+          "frame": 140791,
+          "simulationTimeMs": 105949.81078404529,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.8299567113508538,
+              "y": 0.1704014559671094
+            },
+            "strength": 0.01920285405039442,
+            "footprintRadius": 0.013751768162955924,
+            "hardness": 0.0496463674088152
+          },
+          "physicsStep": 17598,
+          "affectedSolverNodes": 9,
+          "attenuatedNodeContributions": 9,
+          "requestedImpulseSquared": 0.00030729132407989655,
+          "compliantImpulseSquared": 0.0003070325409354184
+        },
+        {
+          "bornRecordingIndex": 27,
+          "parentContactIndex": 4459,
+          "contactLegId": "FL",
+          "frame": 143837,
+          "simulationTimeMs": 106013.27390498531,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7118942359734388,
+              "y": 0.283035728442801
+            },
+            "strength": 0.01879715705031706,
+            "footprintRadius": 0.013240874539888838,
+            "hardness": 0.15182509202223243
+          },
+          "physicsStep": 17979,
+          "affectedSolverNodes": 7,
+          "attenuatedNodeContributions": 6,
+          "requestedImpulseSquared": 0.00029444424927741684,
+          "compliantImpulseSquared": 0.00029062383387954685
+        },
+        {
+          "bornRecordingIndex": 28,
+          "parentContactIndex": 4459,
+          "contactLegId": "MR",
+          "frame": 143837,
+          "simulationTimeMs": 106013.27390498531,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7496206766444038,
+              "y": 0.27436303138247636
+            },
+            "strength": 0.01883204417190476,
+            "footprintRadius": 0.01315130663485213,
+            "hardness": 0.16973867302957377
+          },
+          "physicsStep": 17979,
+          "affectedSolverNodes": 6,
+          "attenuatedNodeContributions": 6,
+          "requestedImpulseSquared": 0.00029553822800015974,
+          "compliantImpulseSquared": 0.00027504127266225585
+        },
+        {
+          "bornRecordingIndex": 29,
+          "parentContactIndex": 4459,
+          "contactLegId": "RL",
+          "frame": 143837,
+          "simulationTimeMs": 106013.27390498531,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7229032025184066,
+              "y": 0.30405792280047406
+            },
+            "strength": 0.01887722054121272,
+            "footprintRadius": 0.013035322495951277,
+            "hardness": 0.1929355008097446
+          },
+          "physicsStep": 17979,
+          "affectedSolverNodes": 7,
+          "attenuatedNodeContributions": 7,
+          "requestedImpulseSquared": 0.0002969578676676936,
+          "compliantImpulseSquared": 0.0002168831107075328
+        },
+        {
+          "bornRecordingIndex": 30,
+          "parentContactIndex": 4475,
+          "contactLegId": "RR",
+          "frame": 154388,
+          "simulationTimeMs": 106233.07505265226,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7481890678590983,
+              "y": 0.26878996996972226
+            },
+            "strength": 0.01882584236097079,
+            "footprintRadius": 0.013167228934758508,
+            "hardness": 0.16655421304829848
+          },
+          "physicsStep": 19298,
+          "affectedSolverNodes": 6,
+          "attenuatedNodeContributions": 6,
+          "requestedImpulseSquared": 0.00029534360543034485,
+          "compliantImpulseSquared": 0.00029037546597758545
+        },
+        {
+          "bornRecordingIndex": 31,
+          "parentContactIndex": 4505,
+          "contactLegId": "FL",
+          "frame": 174168,
+          "simulationTimeMs": 106645.17168302894,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7956633006237015,
+              "y": 0.1817014517197984
+            },
+            "strength": 0.01921782068674304,
+            "footprintRadius": 0.013782135575644793,
+            "hardness": 0.043572884871041336
+          },
+          "physicsStep": 21771,
+          "affectedSolverNodes": 6,
+          "attenuatedNodeContributions": 6,
+          "requestedImpulseSquared": 0.0003077705143456474,
+          "compliantImpulseSquared": 0.0003077681705853951
+        },
+        {
+          "bornRecordingIndex": 32,
+          "parentContactIndex": 4505,
+          "contactLegId": "MR",
+          "frame": 174168,
+          "simulationTimeMs": 106645.17168302894,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7730668682867382,
+              "y": 0.2131323480741985
+            },
+            "strength": 0.019249680013959894,
+            "footprintRadius": 0.013703028840205552,
+            "hardness": 0.05939423195888975
+          },
+          "physicsStep": 21771,
+          "affectedSolverNodes": 8,
+          "attenuatedNodeContributions": 8,
+          "requestedImpulseSquared": 0.00030879180492929546,
+          "compliantImpulseSquared": 0.00028962329060058567
+        },
+        {
+          "bornRecordingIndex": 33,
+          "parentContactIndex": 4521,
+          "contactLegId": "ML",
+          "frame": 183227,
+          "simulationTimeMs": 106833.90372486517,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.47818429501488013,
+              "y": 0.6382890564370722
+            },
+            "strength": 0.019751037879057187,
+            "footprintRadius": 0.012179560825030921,
+            "hardness": 0.36408783499381575
+          },
+          "physicsStep": 22903,
+          "affectedSolverNodes": 6,
+          "attenuatedNodeContributions": 6,
+          "requestedImpulseSquared": 0.0003250862348321935,
+          "compliantImpulseSquared": 0.0003250862347645709
+        },
+        {
+          "bornRecordingIndex": 34,
+          "parentContactIndex": 4522,
+          "contactLegId": "ML",
+          "frame": 185568,
+          "simulationTimeMs": 106882.66362840158,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.8012627087559248,
+              "y": 0.18334537213019603
+            },
+            "strength": 0.019212699172687944,
+            "footprintRadius": 0.013794852299216738,
+            "hardness": 0.0410295401566526
+          },
+          "physicsStep": 23196,
+          "affectedSolverNodes": 8,
+          "attenuatedNodeContributions": 8,
+          "requestedImpulseSquared": 0.000307606495688792,
+          "compliantImpulseSquared": 0.00030349836274932393
+        },
+        {
+          "bornRecordingIndex": 35,
+          "parentContactIndex": 4522,
+          "contactLegId": "RR",
+          "frame": 185568,
+          "simulationTimeMs": 106882.66362840158,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.7796557821326223,
+              "y": 0.2169422577283466
+            },
+            "strength": 0.019282913204532872,
+            "footprintRadius": 0.01362051080093359,
+            "hardness": 0.07589783981328224
+          },
+          "physicsStep": 23196,
+          "affectedSolverNodes": 8,
+          "attenuatedNodeContributions": 8,
+          "requestedImpulseSquared": 0.00030985893906475346,
+          "compliantImpulseSquared": 0.0002974416857367212
+        },
+        {
+          "bornRecordingIndex": 36,
+          "parentContactIndex": 4532,
+          "contactLegId": "ML",
+          "frame": 190525,
+          "simulationTimeMs": 106985.94491583033,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5225365722409538,
+              "y": 0.5457832015586732
+            },
+            "strength": 0.019077467930113813,
+            "footprintRadius": 0.012705334985272328,
+            "hardness": 0.2589330029455343
+          },
+          "physicsStep": 23815,
+          "affectedSolverNodes": 9,
+          "attenuatedNodeContributions": 8,
+          "requestedImpulseSquared": 0.00030329147344058504,
+          "compliantImpulseSquared": 0.00030329147064024994
+        },
+        {
+          "bornRecordingIndex": 37,
+          "parentContactIndex": 4535,
+          "contactLegId": "RL",
+          "frame": 193082,
+          "simulationTimeMs": 107039.20908768653,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4763971902270004,
+              "y": 0.6314537770490897
+            },
+            "strength": 0.019678526686002264,
+            "footprintRadius": 0.012360628974890616,
+            "hardness": 0.32787420502187686
+          },
+          "physicsStep": 24135,
+          "affectedSolverNodes": 6,
+          "attenuatedNodeContributions": 6,
+          "requestedImpulseSquared": 0.0003227036642866607,
+          "compliantImpulseSquared": 0.0003147228131139254
+        },
+        {
+          "bornRecordingIndex": 38,
+          "parentContactIndex": 4541,
+          "contactLegId": "RL",
+          "frame": 198941,
+          "simulationTimeMs": 107161.27775406795,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.8145018684005474,
+              "y": 0.1856284457523097
+            },
+            "strength": 0.019229324746995083,
+            "footprintRadius": 0.013753570984665163,
+            "hardness": 0.049285803066967546
+          },
+          "physicsStep": 24867,
+          "affectedSolverNodes": 9,
+          "attenuatedNodeContributions": 9,
+          "requestedImpulseSquared": 0.0003081390962761732,
+          "compliantImpulseSquared": 0.00030575471391499265
+        },
+        {
+          "bornRecordingIndex": 39,
+          "parentContactIndex": 4552,
+          "contactLegId": "FL",
+          "frame": 204596,
+          "simulationTimeMs": 107279.07615217108,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5234696217627602,
+              "y": 0.5161695333150202
+            },
+            "strength": 0.01898940430111179,
+            "footprintRadius": 0.012930576369132921,
+            "hardness": 0.21388472617341558
+          },
+          "physicsStep": 25574,
+          "affectedSolverNodes": 10,
+          "attenuatedNodeContributions": 10,
+          "requestedImpulseSquared": 0.00030049788448467793,
+          "compliantImpulseSquared": 0.00030003956730289443
+        },
+        {
+          "bornRecordingIndex": 40,
+          "parentContactIndex": 4552,
+          "contactLegId": "RL",
+          "frame": 204596,
+          "simulationTimeMs": 107279.07615217108,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5221151127423896,
+              "y": 0.539861204959582
+            },
+            "strength": 0.019082249940631055,
+            "footprintRadius": 0.012693103980500598,
+            "hardness": 0.2613792038998805
+          },
+          "physicsStep": 25574,
+          "affectedSolverNodes": 9,
+          "attenuatedNodeContributions": 9,
+          "requestedImpulseSquared": 0.00030344354024082704,
+          "compliantImpulseSquared": 0.00027277741764488415
+        },
+        {
+          "bornRecordingIndex": 41,
+          "parentContactIndex": 4560,
+          "contactLegId": "FL",
+          "frame": 211288,
+          "simulationTimeMs": 107418.49459885673,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4657234847481815,
+              "y": 0.5690936266447002
+            },
+            "strength": 0.019546388914922563,
+            "footprintRadius": 0.012690591022513586,
+            "hardness": 0.2618817954972828
+          },
+          "physicsStep": 26411,
+          "affectedSolverNodes": 9,
+          "attenuatedNodeContributions": 9,
+          "requestedImpulseSquared": 0.00031838442035908945,
+          "compliantImpulseSquared": 0.0003182554472576243
+        },
+        {
+          "bornRecordingIndex": 42,
+          "parentContactIndex": 4560,
+          "contactLegId": "RL",
+          "frame": 211288,
+          "simulationTimeMs": 107418.49459885673,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4681711565579009,
+              "y": 0.5926974166520678
+            },
+            "strength": 0.01947626842897508,
+            "footprintRadius": 0.01286568932282919,
+            "hardness": 0.22686213543416187
+          },
+          "physicsStep": 26411,
+          "affectedSolverNodes": 9,
+          "attenuatedNodeContributions": 9,
+          "requestedImpulseSquared": 0.0003161041807032206,
+          "compliantImpulseSquared": 0.0002481710896977925
+        },
+        {
+          "bornRecordingIndex": 43,
+          "parentContactIndex": 4574,
+          "contactLegId": "FR",
+          "frame": 220612,
+          "simulationTimeMs": 107612.7463106804,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.49691273856568435,
+              "y": 0.543619026919429
+            },
+            "strength": 0.019460050821816007,
+            "footprintRadius": 0.012906186410240519,
+            "hardness": 0.21876271795189617
+          },
+          "physicsStep": 27576,
+          "affectedSolverNodes": 11,
+          "attenuatedNodeContributions": 11,
+          "requestedImpulseSquared": 0.00031557796911639834,
+          "compliantImpulseSquared": 0.00031288609860510836
+        },
+        {
+          "bornRecordingIndex": 44,
+          "parentContactIndex": 4574,
+          "contactLegId": "ML",
+          "frame": 220612,
+          "simulationTimeMs": 107612.7463106804,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.46363038956690433,
+              "y": 0.5633873157964009
+            },
+            "strength": 0.019475074557458703,
+            "footprintRadius": 0.012868670546796593,
+            "hardness": 0.22626589064068128
+          },
+          "physicsStep": 27576,
+          "affectedSolverNodes": 9,
+          "attenuatedNodeContributions": 9,
+          "requestedImpulseSquared": 0.00031606542828948794,
+          "compliantImpulseSquared": 0.000292570499789327
+        },
+        {
+          "bornRecordingIndex": 45,
+          "parentContactIndex": 4574,
+          "contactLegId": "RR",
+          "frame": 220612,
+          "simulationTimeMs": 107612.7463106804,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5034595442428316,
+              "y": 0.5664284402267825
+            },
+            "strength": 0.01958963605116801,
+            "footprintRadius": 0.012582598330395517,
+            "hardness": 0.2834803339208966
+          },
+          "physicsStep": 27576,
+          "affectedSolverNodes": 10,
+          "attenuatedNodeContributions": 10,
+          "requestedImpulseSquared": 0.00031979485447349617,
+          "compliantImpulseSquared": 0.00027330570348327576
+        },
+        {
+          "bornRecordingIndex": 46,
+          "parentContactIndex": 4573,
+          "contactLegId": "ML",
+          "frame": 220673,
+          "simulationTimeMs": 107614.01578993062,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5239426761098599,
+              "y": 0.508568329844821
+            },
+            "strength": 0.019013389653662123,
+            "footprintRadius": 0.01286922874966681,
+            "hardness": 0.226154250066638
+          },
+          "physicsStep": 27584,
+          "affectedSolverNodes": 9,
+          "attenuatedNodeContributions": 9,
+          "requestedImpulseSquared": 0.00030125747644615725,
+          "compliantImpulseSquared": 0.0002857149121728264
+        },
+        {
+          "bornRecordingIndex": 47,
+          "parentContactIndex": 4590,
+          "contactLegId": "MR",
+          "frame": 230788,
+          "simulationTimeMs": 107824.75160933779,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.49673132869040926,
+              "y": 0.5375422357499715
+            },
+            "strength": 0.0194024810319257,
+            "footprintRadius": 0.013049944289597902,
+            "hardness": 0.19001114208041972
+          },
+          "physicsStep": 28848,
+          "affectedSolverNodes": 11,
+          "attenuatedNodeContributions": 11,
+          "requestedImpulseSquared": 0.0003137135460293395,
+          "compliantImpulseSquared": 0.00030693775554651675
+        },
+        {
+          "bornRecordingIndex": 48,
+          "parentContactIndex": 4590,
+          "contactLegId": "RL",
+          "frame": 230788,
+          "simulationTimeMs": 107824.75160933779,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.460921490342209,
+              "y": 0.555241543009742
+            },
+            "strength": 0.01941240348384761,
+            "footprintRadius": 0.013025166873369055,
+            "hardness": 0.194966625326189
+          },
+          "physicsStep": 28848,
+          "affectedSolverNodes": 9,
+          "attenuatedNodeContributions": 9,
+          "requestedImpulseSquared": 0.0003140344950378057,
+          "compliantImpulseSquared": 0.0002935482033182634
+        },
+        {
+          "bornRecordingIndex": 49,
+          "parentContactIndex": 4596,
+          "contactLegId": "FL",
+          "frame": 237182,
+          "simulationTimeMs": 107957.96166009529,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5263455184440944,
+              "y": 0.476249656882471
+            },
+            "strength": 0.019082328188331596,
+            "footprintRadius": 0.012692903845432878,
+            "hardness": 0.26141923091342417
+          },
+          "physicsStep": 29647,
+          "affectedSolverNodes": 8,
+          "attenuatedNodeContributions": 7,
+          "requestedImpulseSquared": 0.0003034460288384418,
+          "compliantImpulseSquared": 0.00030304733327961585
+        },
+        {
+          "bornRecordingIndex": 50,
+          "parentContactIndex": 4596,
+          "contactLegId": "RL",
+          "frame": 237182,
+          "simulationTimeMs": 107957.96166009529,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5232196071738197,
+              "y": 0.49977323396441947
+            },
+            "strength": 0.018955126703310322,
+            "footprintRadius": 0.013018248585821178,
+            "hardness": 0.19635028283576458
+          },
+          "physicsStep": 29647,
+          "affectedSolverNodes": 9,
+          "attenuatedNodeContributions": 9,
+          "requestedImpulseSquared": 0.000299414011717765,
+          "compliantImpulseSquared": 0.0002431866478425932
+        },
+        {
+          "bornRecordingIndex": 51,
+          "parentContactIndex": 4607,
+          "contactLegId": "RR",
+          "frame": 242498,
+          "simulationTimeMs": 108068.71814157451,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4962130343947673,
+              "y": 0.5289719361459223
+            },
+            "strength": 0.019424310661874448,
+            "footprintRadius": 0.012995433385275205,
+            "hardness": 0.20091332294495898
+          },
+          "physicsStep": 30312,
+          "affectedSolverNodes": 11,
+          "attenuatedNodeContributions": 11,
+          "requestedImpulseSquared": 0.00031441985808025185,
+          "compliantImpulseSquared": 0.0003072847652375639
+        },
+        {
+          "bornRecordingIndex": 52,
+          "parentContactIndex": 4616,
+          "contactLegId": "FR",
+          "frame": 252000,
+          "simulationTimeMs": 108266.66537591601,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5636798810958606,
+              "y": 0.45993104637842086
+            },
+            "strength": 0.018948792304145548,
+            "footprintRadius": 0.013034450153369192,
+            "hardness": 0.1931099693261616
+          },
+          "physicsStep": 31500,
+          "affectedSolverNodes": 8,
+          "attenuatedNodeContributions": 7,
+          "requestedImpulseSquared": 0.00029921392959834323,
+          "compliantImpulseSquared": 0.0002989544659383025
+        },
+        {
+          "bornRecordingIndex": 53,
+          "parentContactIndex": 4616,
+          "contactLegId": "ML",
+          "frame": 252000,
+          "simulationTimeMs": 108266.66537591601,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5259496906772574,
+              "y": 0.4685874157660993
+            },
+            "strength": 0.01901892740418845,
+            "footprintRadius": 0.012855064779749148,
+            "hardness": 0.22898704405017026
+          },
+          "physicsStep": 31500,
+          "affectedSolverNodes": 8,
+          "attenuatedNodeContributions": 8,
+          "requestedImpulseSquared": 0.00030143298769354275,
+          "compliantImpulseSquared": 0.0002828878956722806
+        },
+        {
+          "bornRecordingIndex": 54,
+          "parentContactIndex": 4639,
+          "contactLegId": "MR",
+          "frame": 264831,
+          "simulationTimeMs": 108533.97975922786,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.563704207053102,
+              "y": 0.45091380506531986
+            },
+            "strength": 0.01887367283285741,
+            "footprintRadius": 0.013226584112184669,
+            "hardness": 0.15468317756306607
+          },
+          "physicsStep": 33103,
+          "affectedSolverNodes": 9,
+          "attenuatedNodeContributions": 8,
+          "requestedImpulseSquared": 0.00029684626003917256,
+          "compliantImpulseSquared": 0.00029413040343998756
+        },
+        {
+          "bornRecordingIndex": 55,
+          "parentContactIndex": 4652,
+          "contactLegId": "RR",
+          "frame": 276318,
+          "simulationTimeMs": 108773.28772266465,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5653716119754495,
+              "y": 0.4436200045281287
+            },
+            "strength": 0.018906132011189188,
+            "footprintRadius": 0.013143562888448144,
+            "hardness": 0.17128742231037108
+          },
+          "physicsStep": 34539,
+          "affectedSolverNodes": 7,
+          "attenuatedNodeContributions": 7,
+          "requestedImpulseSquared": 0.00029786817783388614,
+          "compliantImpulseSquared": 0.00029440037201499753
+        },
+        {
+          "bornRecordingIndex": 56,
+          "parentContactIndex": 4745,
+          "contactLegId": "FR",
+          "frame": 351573,
+          "simulationTimeMs": 110341.11081864897,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4549145456198542,
+              "y": 0.6285941766835359
+            },
+            "strength": 0.019727279070249872,
+            "footprintRadius": 0.012609109728687694,
+            "hardness": 0.2781780542624611
+          },
+          "physicsStep": 43946,
+          "affectedSolverNodes": 6,
+          "attenuatedNodeContributions": 3,
+          "requestedImpulseSquared": 0.0003243046033762087,
+          "compliantImpulseSquared": 0.0003243046033762087
+        },
+        {
+          "bornRecordingIndex": 57,
+          "parentContactIndex": 4745,
+          "contactLegId": "RR",
+          "frame": 351573,
+          "simulationTimeMs": 110341.11081864897,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4705702414153991,
+              "y": 0.6464275495882155
+            },
+            "strength": 0.019812579301057214,
+            "footprintRadius": 0.01239770681753769,
+            "hardness": 0.3204586364924621
+          },
+          "physicsStep": 43946,
+          "affectedSolverNodes": 3,
+          "attenuatedNodeContributions": 3,
+          "requestedImpulseSquared": 0.00032711523539696836,
+          "compliantImpulseSquared": 0.0002833670654926409
+        },
+        {
+          "bornRecordingIndex": 58,
+          "parentContactIndex": 4756,
+          "contactLegId": "MR",
+          "frame": 360003,
+          "simulationTimeMs": 110516.72959105059,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4525237070768656,
+              "y": 0.623701983627609
+            },
+            "strength": 0.01972838384503169,
+            "footprintRadius": 0.012606371721969182,
+            "hardness": 0.27872565560616347
+          },
+          "physicsStep": 45000,
+          "affectedSolverNodes": 6,
+          "attenuatedNodeContributions": 6,
+          "requestedImpulseSquared": 0.0003243409280584411,
+          "compliantImpulseSquared": 0.00031356748947283856
+        },
+        {
+          "bornRecordingIndex": 59,
+          "parentContactIndex": 4769,
+          "contactLegId": "RR",
+          "frame": 368127,
+          "simulationTimeMs": 110685.98582786207,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.4490964209778143,
+              "y": 0.618267767981238
+            },
+            "strength": 0.019739226517039403,
+            "footprintRadius": 0.012579499902216993,
+            "hardness": 0.28410001955660147
+          },
+          "physicsStep": 46015,
+          "affectedSolverNodes": 5,
+          "attenuatedNodeContributions": 5,
+          "requestedImpulseSquared": 0.0003246975399660544,
+          "compliantImpulseSquared": 0.00031145700463327544
+        },
+        {
+          "bornRecordingIndex": 60,
+          "parentContactIndex": 4866,
+          "contactLegId": "FL",
+          "frame": 441275,
+          "simulationTimeMs": 112209.88660557546,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5884600350707297,
+              "y": 0.4387993400961693
+            },
+            "strength": 0.01951884605731894,
+            "footprintRadius": 0.013032470335213923,
+            "hardness": 0.19350593295721535
+          },
+          "physicsStep": 55159,
+          "affectedSolverNodes": 7,
+          "attenuatedNodeContributions": 0,
+          "requestedImpulseSquared": 0.00031748778022525173,
+          "compliantImpulseSquared": 0.00031748778022525173
+        },
+        {
+          "bornRecordingIndex": 61,
+          "parentContactIndex": 4890,
+          "contactLegId": "ML",
+          "frame": 461718,
+          "simulationTimeMs": 112635.78785940901,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5858516764212378,
+              "y": 0.4362400329748607
+            },
+            "strength": 0.019514070393688226,
+            "footprintRadius": 0.013044328854821647,
+            "hardness": 0.19113422903567082
+          },
+          "physicsStep": 57714,
+          "affectedSolverNodes": 7,
+          "attenuatedNodeContributions": 7,
+          "requestedImpulseSquared": 0.00031733244016516726,
+          "compliantImpulseSquared": 0.00031700659977529876
+        },
+        {
+          "bornRecordingIndex": 62,
+          "parentContactIndex": 4910,
+          "contactLegId": "RL",
+          "frame": 477358,
+          "simulationTimeMs": 112961.61552028875,
+          "payload": {
+            "plateId": "trail-plate-1",
+            "layerId": "trail-plate-1",
+            "position": {
+              "x": 0.5846619619521238,
+              "y": 0.427778836806969
+            },
+            "strength": 0.019427807220988552,
+            "footprintRadius": 0.013258530189753133,
+            "hardness": 0.14829396204937342
+          },
+          "physicsStep": 59669,
+          "affectedSolverNodes": 7,
+          "attenuatedNodeContributions": 7,
+          "requestedImpulseSquared": 0.000314533065348156,
+          "compliantImpulseSquared": 0.00031335406376912676
+        }
+      ]
+    },
+    "parentGroups": [
+      {
+        "contactIndex": 4295,
+        "simulationTimeMs": 103110.93467720706,
+        "substrate": {
+          "sourceContactIndex": 4295,
+          "frame": 4525,
+          "payload": {
+            "position": {
+              "x": -0.052467722536020146,
+              "y": 0.19076364436614066
+            },
+            "strength": 0.03404994138721377
+          },
+          "normalizedStrength": 0.03404994138721377,
+          "amplitude": 0.018171985932931303,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.000528021645498956,
+          "expectedDeltaVSquared": 0.0005291480916760204,
+          "jitterLowerBoundDeltaVSquared": 0.00044691752075031637,
+          "jitterUpperBoundDeltaVSquared": 0.0006158844473099823
+        },
+        "born": {
+          "acceptedP1Feet": 2,
+          "requestedImpulseSquared": 0.0006194817922489128,
+          "compliantImpulseSquared": 0.0005775492658672536,
+          "affectedSolverNodes": 9,
+          "attenuatedNodeContributions": 3
+        }
+      },
+      {
+        "contactIndex": 4302,
+        "simulationTimeMs": 103261.73853206664,
+        "substrate": {
+          "sourceContactIndex": 4302,
+          "frame": 11763,
+          "payload": {
+            "position": {
+              "x": 0.3416400884710041,
+              "y": -0.3654798836426443
+            },
+            "strength": 0.03482884871959687
+          },
+          "normalizedStrength": 0.03482884871959687,
+          "amplitude": 0.018358923692703248,
+          "affectedSolverNodes": 48,
+          "nominalDeltaVSquared": 0.0005391353724265168,
+          "expectedDeltaVSquared": 0.0005402855278876934,
+          "jitterLowerBoundDeltaVSquared": 0.0004563241792218038,
+          "jitterUpperBoundDeltaVSquared": 0.0006288474983982892
+        },
+        "born": {
+          "acceptedP1Feet": 2,
+          "requestedImpulseSquared": 0.000617279909277218,
+          "compliantImpulseSquared": 0.0005359139987694818,
+          "affectedSolverNodes": 15,
+          "attenuatedNodeContributions": 6
+        }
+      },
+      {
+        "contactIndex": 4309,
+        "simulationTimeMs": 103314.03562295363,
+        "substrate": {
+          "sourceContactIndex": 4309,
+          "frame": 14274,
+          "payload": {
+            "position": {
+              "x": -0.08057508806558927,
+              "y": 0.18345065634532087
+            },
+            "strength": 0.03404994138721377
+          },
+          "normalizedStrength": 0.03404994138721377,
+          "amplitude": 0.018171985932931303,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005289192226977881,
+          "expectedDeltaVSquared": 0.0005300475837062101,
+          "jitterLowerBoundDeltaVSquared": 0.0004476772300914079,
+          "jitterUpperBoundDeltaVSquared": 0.0006169313813547001
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.00030541378403600364,
+          "compliantImpulseSquared": 0.00029924160808432194,
+          "affectedSolverNodes": 6,
+          "attenuatedNodeContributions": 6
+        }
+      },
+      {
+        "contactIndex": 4317,
+        "simulationTimeMs": 103497.06257038385,
+        "substrate": {
+          "sourceContactIndex": 4317,
+          "frame": 23059,
+          "payload": {
+            "position": {
+              "x": -0.08351877081104278,
+              "y": 0.15386693771833387
+            },
+            "strength": 0.03404994138721377
+          },
+          "normalizedStrength": 0.03404994138721377,
+          "amplitude": 0.018171985932931303,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005373892591379215,
+          "expectedDeltaVSquared": 0.0005385356895574158,
+          "jitterLowerBoundDeltaVSquared": 0.0004548462689343368,
+          "jitterUpperBoundDeltaVSquared": 0.0006268108318584716
+        },
+        "born": {
+          "acceptedP1Feet": 2,
+          "requestedImpulseSquared": 0.0006096642984851989,
+          "compliantImpulseSquared": 0.000503638603233981,
+          "affectedSolverNodes": 13,
+          "attenuatedNodeContributions": 11
+        }
+      },
+      {
+        "contactIndex": 4318,
+        "simulationTimeMs": 103511.61078126125,
+        "substrate": {
+          "sourceContactIndex": 4318,
+          "frame": 23757,
+          "payload": {
+            "position": {
+              "x": 0.3347504335371161,
+              "y": -0.3932425977588664
+            },
+            "strength": 0.03482884871959687
+          },
+          "normalizedStrength": 0.03482884871959687,
+          "amplitude": 0.018358923692703248,
+          "affectedSolverNodes": 48,
+          "nominalDeltaVSquared": 0.0005472205056086002,
+          "expectedDeltaVSquared": 0.0005483879093538985,
+          "jitterLowerBoundDeltaVSquared": 0.00046316743594711923,
+          "jitterUpperBoundDeltaVSquared": 0.0006382779977418714
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.0003061605859729239,
+          "compliantImpulseSquared": 0.0003025312000201032,
+          "affectedSolverNodes": 8,
+          "attenuatedNodeContributions": 8
+        }
+      },
+      {
+        "contactIndex": 4363,
+        "simulationTimeMs": 104245.8298509607,
+        "substrate": {
+          "sourceContactIndex": 4363,
+          "frame": 59000,
+          "payload": {
+            "position": {
+              "x": 0.09094065746510395,
+              "y": -0.015382273641873431
+            },
+            "strength": 0.035548613287787884
+          },
+          "normalizedStrength": 0.035548613287787884,
+          "amplitude": 0.018531667189069092,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005609182589930626,
+          "expectedDeltaVSquared": 0.0005621148846122478,
+          "jitterLowerBoundDeltaVSquared": 0.00047476121441172815,
+          "jitterUpperBoundDeltaVSquared": 0.0006542550572895082
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.0003274788164544791,
+          "compliantImpulseSquared": 0.0003274788164544791,
+          "affectedSolverNodes": 8,
+          "attenuatedNodeContributions": 0
+        }
+      },
+      {
+        "contactIndex": 4377,
+        "simulationTimeMs": 104525.40093894658,
+        "substrate": {
+          "sourceContactIndex": 4377,
+          "frame": 72419,
+          "payload": {
+            "position": {
+              "x": -0.028020491933924255,
+              "y": 0.20818550900292715
+            },
+            "strength": 0.03370849617272616
+          },
+          "normalizedStrength": 0.03370849617272616,
+          "amplitude": 0.018090039081454276,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005283948609215882,
+          "expectedDeltaVSquared": 0.0005295221032915543,
+          "jitterLowerBoundDeltaVSquared": 0.0004472334102840323,
+          "jitterUpperBoundDeltaVSquared": 0.0006163197657789405
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.00029947778545681285,
+          "compliantImpulseSquared": 0.0002994777440555325,
+          "affectedSolverNodes": 3,
+          "attenuatedNodeContributions": 3
+        }
+      },
+      {
+        "contactIndex": 4380,
+        "simulationTimeMs": 104553.0729589854,
+        "substrate": {
+          "sourceContactIndex": 4380,
+          "frame": 73748,
+          "payload": {
+            "position": {
+              "x": 0.10228269307132526,
+              "y": -0.042424488831517046
+            },
+            "strength": 0.035548613287787884
+          },
+          "normalizedStrength": 0.035548613287787884,
+          "amplitude": 0.018531667189069092,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005567008574109361,
+          "expectedDeltaVSquared": 0.0005578884859067461,
+          "jitterLowerBoundDeltaVSquared": 0.00047119160571261633,
+          "jitterUpperBoundDeltaVSquared": 0.000649335880084116
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.0003296021278120625,
+          "compliantImpulseSquared": 0.0003276519019116048,
+          "affectedSolverNodes": 8,
+          "attenuatedNodeContributions": 8
+        }
+      },
+      {
+        "contactIndex": 4388,
+        "simulationTimeMs": 104760.31838956749,
+        "substrate": {
+          "sourceContactIndex": 4388,
+          "frame": 83695,
+          "payload": {
+            "position": {
+              "x": 0.3583504771925923,
+              "y": -0.40935540980485835
+            },
+            "strength": 0.03482884871959687
+          },
+          "normalizedStrength": 0.03482884871959687,
+          "amplitude": 0.018358923692703248,
+          "affectedSolverNodes": 46,
+          "nominalDeltaVSquared": 0.00055051541293867,
+          "expectedDeltaVSquared": 0.0005516898458196058,
+          "jitterLowerBoundDeltaVSquared": 0.00046595624551129034,
+          "jitterUpperBoundDeltaVSquared": 0.0006421211776516648
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.0003057411901214735,
+          "compliantImpulseSquared": 0.0003057411849183859,
+          "affectedSolverNodes": 8,
+          "attenuatedNodeContributions": 8
+        }
+      },
+      {
+        "contactIndex": 4391,
+        "simulationTimeMs": 104782.27015293553,
+        "substrate": {
+          "sourceContactIndex": 4391,
+          "frame": 84749,
+          "payload": {
+            "position": {
+              "x": -0.02551998299772054,
+              "y": 0.1799282861024821
+            },
+            "strength": 0.03370849617272616
+          },
+          "normalizedStrength": 0.03370849617272616,
+          "amplitude": 0.018090039081454276,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005329559098896583,
+          "expectedDeltaVSquared": 0.0005340928824974229,
+          "jitterLowerBoundDeltaVSquared": 0.0004510938821306068,
+          "jitterUpperBoundDeltaVSquared": 0.0006216397732952975
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.0003004265378328552,
+          "compliantImpulseSquared": 0.00029688970546132884,
+          "affectedSolverNodes": 3,
+          "attenuatedNodeContributions": 3
+        }
+      },
+      {
+        "contactIndex": 4392,
+        "simulationTimeMs": 104816.54808859361,
+        "substrate": {
+          "sourceContactIndex": 4392,
+          "frame": 86394,
+          "payload": {
+            "position": {
+              "x": 0.08154546011493127,
+              "y": -0.06315178574266907
+            },
+            "strength": 0.035548613287787884
+          },
+          "normalizedStrength": 0.035548613287787884,
+          "amplitude": 0.018531667189069092,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.000547312651475635,
+          "expectedDeltaVSquared": 0.0005484802517987831,
+          "jitterLowerBoundDeltaVSquared": 0.00046324542820897754,
+          "jitterUpperBoundDeltaVSquared": 0.0006383854766811807
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.0003307790066010048,
+          "compliantImpulseSquared": 0.0003281054877645017,
+          "affectedSolverNodes": 8,
+          "attenuatedNodeContributions": 8
+        }
+      },
+      {
+        "contactIndex": 4401,
+        "simulationTimeMs": 105021.47624248479,
+        "substrate": {
+          "sourceContactIndex": 4401,
+          "frame": 96231,
+          "payload": {
+            "position": {
+              "x": -0.05129233898310018,
+              "y": 0.1680706131734022
+            },
+            "strength": 0.03370849617272616
+          },
+          "normalizedStrength": 0.03370849617272616,
+          "amplitude": 0.018090039081454276,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005293709240626306,
+          "expectedDeltaVSquared": 0.0005305002487006309,
+          "jitterLowerBoundDeltaVSquared": 0.00044805955012661055,
+          "jitterUpperBoundDeltaVSquared": 0.0006174582458266524
+        },
+        "born": {
+          "acceptedP1Feet": 2,
+          "requestedImpulseSquared": 0.0006022148135354955,
+          "compliantImpulseSquared": 0.0005388153011189572,
+          "affectedSolverNodes": 10,
+          "attenuatedNodeContributions": 10
+        }
+      },
+      {
+        "contactIndex": 4403,
+        "simulationTimeMs": 105034.3336495877,
+        "substrate": {
+          "sourceContactIndex": 4403,
+          "frame": 96848,
+          "payload": {
+            "position": {
+              "x": 0.09327620776319777,
+              "y": -0.08963428821778206
+            },
+            "strength": 0.035548613287787884
+          },
+          "normalizedStrength": 0.035548613287787884,
+          "amplitude": 0.018531667189069092,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005527021468400834,
+          "expectedDeltaVSquared": 0.0005538812447533422,
+          "jitterLowerBoundDeltaVSquared": 0.00046780709708544655,
+          "jitterUpperBoundDeltaVSquared": 0.0006446717840742733
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.000329033316539935,
+          "compliantImpulseSquared": 0.0003279691360308268,
+          "affectedSolverNodes": 7,
+          "attenuatedNodeContributions": 5
+        }
+      },
+      {
+        "contactIndex": 4415,
+        "simulationTimeMs": 105255.69472669472,
+        "substrate": {
+          "sourceContactIndex": 4415,
+          "frame": 107473,
+          "payload": {
+            "position": {
+              "x": -0.04821399443378819,
+              "y": 0.14020018572767343
+            },
+            "strength": 0.03370849617272616
+          },
+          "normalizedStrength": 0.03370849617272616,
+          "amplitude": 0.018090039081454276,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005354161953587904,
+          "expectedDeltaVSquared": 0.0005365584165755558,
+          "jitterLowerBoundDeltaVSquared": 0.0004531762677516802,
+          "jitterUpperBoundDeltaVSquared": 0.0006245094502664931
+        },
+        "born": {
+          "acceptedP1Feet": 2,
+          "requestedImpulseSquared": 0.0005969781874688017,
+          "compliantImpulseSquared": 0.0005517473975577979,
+          "affectedSolverNodes": 14,
+          "attenuatedNodeContributions": 13
+        }
+      },
+      {
+        "contactIndex": 4416,
+        "simulationTimeMs": 105271.38128254801,
+        "substrate": {
+          "sourceContactIndex": 4416,
+          "frame": 108226,
+          "payload": {
+            "position": {
+              "x": 0.38819710011273584,
+              "y": -0.4371412364423933
+            },
+            "strength": 0.03482884871959687
+          },
+          "normalizedStrength": 0.03482884871959687,
+          "amplitude": 0.018358923692703248,
+          "affectedSolverNodes": 46,
+          "nominalDeltaVSquared": 0.0005546252363471532,
+          "expectedDeltaVSquared": 0.0005558084368513605,
+          "jitterLowerBoundDeltaVSquared": 0.0004694348000442305,
+          "jitterUpperBoundDeltaVSquared": 0.0006469148756753195
+        },
+        "born": {
+          "acceptedP1Feet": 2,
+          "requestedImpulseSquared": 0.0006143451959321208,
+          "compliantImpulseSquared": 0.0005670666156392459,
+          "affectedSolverNodes": 15,
+          "attenuatedNodeContributions": 12
+        }
+      },
+      {
+        "contactIndex": 4426,
+        "simulationTimeMs": 105496.73777658795,
+        "substrate": {
+          "sourceContactIndex": 4426,
+          "frame": 119043,
+          "payload": {
+            "position": {
+              "x": -0.07455018322950265,
+              "y": 0.12794812937897168
+            },
+            "strength": 0.03370849617272616
+          },
+          "normalizedStrength": 0.03370849617272616,
+          "amplitude": 0.018090039081454276,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005325952189043486,
+          "expectedDeltaVSquared": 0.0005337314220380112,
+          "jitterLowerBoundDeltaVSquared": 0.0004507885932806407,
+          "jitterUpperBoundDeltaVSquared": 0.0006212190633300323
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.00029690825322420476,
+          "compliantImpulseSquared": 0.00029337792392971636,
+          "affectedSolverNodes": 9,
+          "attenuatedNodeContributions": 9
+        }
+      },
+      {
+        "contactIndex": 4432,
+        "simulationTimeMs": 105571.99731646408,
+        "substrate": {
+          "sourceContactIndex": 4432,
+          "frame": 122656,
+          "payload": {
+            "position": {
+              "x": 0.4049992536605009,
+              "y": -0.46116162529160765
+            },
+            "strength": 0.03482884871959687
+          },
+          "normalizedStrength": 0.03482884871959687,
+          "amplitude": 0.018358923692703248,
+          "affectedSolverNodes": 46,
+          "nominalDeltaVSquared": 0.0005508093308304031,
+          "expectedDeltaVSquared": 0.0005519843907361746,
+          "jitterLowerBoundDeltaVSquared": 0.0004662050176148532,
+          "jitterUpperBoundDeltaVSquared": 0.0006424640034805822
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.00030952946927787975,
+          "compliantImpulseSquared": 0.00030723724978541574,
+          "affectedSolverNodes": 9,
+          "attenuatedNodeContributions": 9
+        }
+      },
+      {
+        "contactIndex": 4444,
+        "simulationTimeMs": 105757.51948300909,
+        "substrate": {
+          "sourceContactIndex": 4444,
+          "frame": 131561,
+          "payload": {
+            "position": {
+              "x": -0.07148099283941349,
+              "y": 0.10008319056389095
+            },
+            "strength": 0.03370849617272616
+          },
+          "normalizedStrength": 0.03370849617272616,
+          "amplitude": 0.018090039081454276,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005258583220575905,
+          "expectedDeltaVSquared": 0.0005269801531446466,
+          "jitterLowerBoundDeltaVSquared": 0.0004450864837895446,
+          "jitterUpperBoundDeltaVSquared": 0.0006133611468479735
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.0003001347726063294,
+          "compliantImpulseSquared": 0.0002971921711711476,
+          "affectedSolverNodes": 10,
+          "attenuatedNodeContributions": 9
+        }
+      },
+      {
+        "contactIndex": 4446,
+        "simulationTimeMs": 105812.92318275226,
+        "substrate": {
+          "sourceContactIndex": 4446,
+          "frame": 134220,
+          "payload": {
+            "position": {
+              "x": 0.3256255941288546,
+              "y": -0.2670236366444415
+            },
+            "strength": 0.03373209806289524
+          },
+          "normalizedStrength": 0.03373209806289524,
+          "amplitude": 0.018095703535094855,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005347337903790699,
+          "expectedDeltaVSquared": 0.0005358745557985453,
+          "jitterLowerBoundDeltaVSquared": 0.0004525986801768448,
+          "jitterUpperBoundDeltaVSquared": 0.0006237134930981472
+        },
+        "born": {
+          "acceptedP1Feet": 2,
+          "requestedImpulseSquared": 0.0005943572615025713,
+          "compliantImpulseSquared": 0.0005480432737556091,
+          "affectedSolverNodes": 13,
+          "attenuatedNodeContributions": 8
+        }
+      },
+      {
+        "contactIndex": 4455,
+        "simulationTimeMs": 105949.81078404529,
+        "substrate": {
+          "sourceContactIndex": 4455,
+          "frame": 140791,
+          "payload": {
+            "position": {
+              "x": 0.43126453089767003,
+              "y": -0.45177534433314975
+            },
+            "strength": 0.03482884871959687
+          },
+          "normalizedStrength": 0.03482884871959687,
+          "amplitude": 0.018358923692703248,
+          "affectedSolverNodes": 46,
+          "nominalDeltaVSquared": 0.0005508812246982666,
+          "expectedDeltaVSquared": 0.0005520564379776229,
+          "jitterLowerBoundDeltaVSquared": 0.0004662658685846129,
+          "jitterUpperBoundDeltaVSquared": 0.0006425478604880582
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.00030729132407989655,
+          "compliantImpulseSquared": 0.0003070325409354184,
+          "affectedSolverNodes": 9,
+          "attenuatedNodeContributions": 9
+        }
+      },
+      {
+        "contactIndex": 4459,
+        "simulationTimeMs": 106013.27390498531,
+        "substrate": {
+          "sourceContactIndex": 4459,
+          "frame": 143837,
+          "payload": {
+            "position": {
+              "x": 0.29682677009958425,
+              "y": -0.2769312300086335
+            },
+            "strength": 0.03373209806289524
+          },
+          "normalizedStrength": 0.03373209806289524,
+          "amplitude": 0.018095703535094855,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005428615330231491,
+          "expectedDeltaVSquared": 0.0005440196376269318,
+          "jitterLowerBoundDeltaVSquared": 0.00045947800155079344,
+          "jitterUpperBoundDeltaVSquared": 0.0006331936921182012
+        },
+        "born": {
+          "acceptedP1Feet": 3,
+          "requestedImpulseSquared": 0.0008869403449452702,
+          "compliantImpulseSquared": 0.0007825482172493355,
+          "affectedSolverNodes": 20,
+          "attenuatedNodeContributions": 19
+        }
+      },
+      {
+        "contactIndex": 4475,
+        "simulationTimeMs": 106233.07505265226,
+        "substrate": {
+          "sourceContactIndex": 4475,
+          "frame": 154388,
+          "payload": {
+            "position": {
+              "x": 0.30070563264576344,
+              "y": -0.3069090908935146
+            },
+            "strength": 0.03373209806289524
+          },
+          "normalizedStrength": 0.03373209806289524,
+          "amplitude": 0.018095703535094855,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005358397851768243,
+          "expectedDeltaVSquared": 0.0005369829100518681,
+          "jitterLowerBoundDeltaVSquared": 0.00045353479417366407,
+          "jitterUpperBoundDeltaVSquared": 0.0006250035254302479
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.00029534360543034485,
+          "compliantImpulseSquared": 0.00029037546597758545,
+          "affectedSolverNodes": 6,
+          "attenuatedNodeContributions": 6
+        }
+      },
+      {
+        "contactIndex": 4505,
+        "simulationTimeMs": 106645.17168302894,
+        "substrate": {
+          "sourceContactIndex": 4505,
+          "frame": 174168,
+          "payload": {
+            "position": {
+              "x": 0.36527381829271305,
+              "y": -0.40419088290962935
+            },
+            "strength": 0.03487817638292909
+          },
+          "normalizedStrength": 0.03487817638292909,
+          "amplitude": 0.018370762331902983,
+          "affectedSolverNodes": 46,
+          "nominalDeltaVSquared": 0.0005525660399811439,
+          "expectedDeltaVSquared": 0.0005537448475331037,
+          "jitterLowerBoundDeltaVSquared": 0.00046769189624004025,
+          "jitterUpperBoundDeltaVSquared": 0.0006445130290340063
+        },
+        "born": {
+          "acceptedP1Feet": 2,
+          "requestedImpulseSquared": 0.0006165623192749428,
+          "compliantImpulseSquared": 0.0005973914611859807,
+          "affectedSolverNodes": 14,
+          "attenuatedNodeContributions": 14
+        }
+      },
+      {
+        "contactIndex": 4521,
+        "simulationTimeMs": 106833.90372486517,
+        "substrate": {
+          "sourceContactIndex": 4521,
+          "frame": 183227,
+          "payload": {
+            "position": {
+              "x": 0.003323985292088323,
+              "y": 0.17267019834487238
+            },
+            "strength": 0.034681160266418015
+          },
+          "normalizedStrength": 0.034681160266418015,
+          "amplitude": 0.018323478463940324,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005528484383667553,
+          "expectedDeltaVSquared": 0.0005540278483686044,
+          "jitterLowerBoundDeltaVSquared": 0.0004679309182336217,
+          "jitterUpperBoundDeltaVSquared": 0.0006448424185109834
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.0003250862348321935,
+          "compliantImpulseSquared": 0.0003250862347645709,
+          "affectedSolverNodes": 6,
+          "attenuatedNodeContributions": 6
+        }
+      },
+      {
+        "contactIndex": 4522,
+        "simulationTimeMs": 106882.66362840158,
+        "substrate": {
+          "sourceContactIndex": 4522,
+          "frame": 185568,
+          "payload": {
+            "position": {
+              "x": 0.3832772508188122,
+              "y": -0.3806466229621731
+            },
+            "strength": 0.03487817638292909
+          },
+          "normalizedStrength": 0.03487817638292909,
+          "amplitude": 0.018370762331902983,
+          "affectedSolverNodes": 46,
+          "nominalDeltaVSquared": 0.0005527712928311369,
+          "expectedDeltaVSquared": 0.0005539505382558433,
+          "jitterLowerBoundDeltaVSquared": 0.0004678656222522743,
+          "jitterUpperBoundDeltaVSquared": 0.0006447524359582381
+        },
+        "born": {
+          "acceptedP1Feet": 2,
+          "requestedImpulseSquared": 0.0006174654347535454,
+          "compliantImpulseSquared": 0.0006009400484860452,
+          "affectedSolverNodes": 16,
+          "attenuatedNodeContributions": 16
+        }
+      },
+      {
+        "contactIndex": 4532,
+        "simulationTimeMs": 106985.94491583033,
+        "substrate": {
+          "sourceContactIndex": 4532,
+          "frame": 190525,
+          "payload": {
+            "position": {
+              "x": 0.06173010083770497,
+              "y": 0.0623457960464033
+            },
+            "strength": 0.03385938168112189
+          },
+          "normalizedStrength": 0.03385938168112189,
+          "amplitude": 0.018126251603469253,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005228881513786192,
+          "expectedDeltaVSquared": 0.0005240036461015603,
+          "jitterLowerBoundDeltaVSquared": 0.0004425725313268633,
+          "jitterUpperBoundDeltaVSquared": 0.0006098967397680214
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.00030329147344058504,
+          "compliantImpulseSquared": 0.00030329147064024994,
+          "affectedSolverNodes": 9,
+          "attenuatedNodeContributions": 8
+        }
+      },
+      {
+        "contactIndex": 4535,
+        "simulationTimeMs": 107039.20908768653,
+        "substrate": {
+          "sourceContactIndex": 4535,
+          "frame": 193082,
+          "payload": {
+            "position": {
+              "x": -0.017623028360186418,
+              "y": 0.15208479277716658
+            },
+            "strength": 0.034681160266418015
+          },
+          "normalizedStrength": 0.034681160266418015,
+          "amplitude": 0.018323478463940324,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005564229782671667,
+          "expectedDeltaVSquared": 0.0005576100139541366,
+          "jitterLowerBoundDeltaVSquared": 0.00047095640880532994,
+          "jitterUpperBoundDeltaVSquared": 0.0006490117618508233
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.0003227036642866607,
+          "compliantImpulseSquared": 0.0003147228131139254,
+          "affectedSolverNodes": 6,
+          "attenuatedNodeContributions": 6
+        }
+      },
+      {
+        "contactIndex": 4541,
+        "simulationTimeMs": 107161.27775406795,
+        "substrate": {
+          "sourceContactIndex": 4541,
+          "frame": 198941,
+          "payload": {
+            "position": {
+              "x": 0.4121779026184903,
+              "y": -0.38618950219841014
+            },
+            "strength": 0.03487817638292909
+          },
+          "normalizedStrength": 0.03487817638292909,
+          "amplitude": 0.018370762331902983,
+          "affectedSolverNodes": 46,
+          "nominalDeltaVSquared": 0.0005590207362410861,
+          "expectedDeltaVSquared": 0.0005602133138117338,
+          "jitterLowerBoundDeltaVSquared": 0.00047315515115445533,
+          "jitterUpperBoundDeltaVSquared": 0.0006520417867516029
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.0003081390962761732,
+          "compliantImpulseSquared": 0.00030575471391499265,
+          "affectedSolverNodes": 9,
+          "attenuatedNodeContributions": 9
+        }
+      },
+      {
+        "contactIndex": 4552,
+        "simulationTimeMs": 107279.07615217108,
+        "substrate": {
+          "sourceContactIndex": 4552,
+          "frame": 204596,
+          "payload": {
+            "position": {
+              "x": 0.04591814730953211,
+              "y": 0.036491130307885
+            },
+            "strength": 0.03385938168112189
+          },
+          "normalizedStrength": 0.03385938168112189,
+          "amplitude": 0.018126251603469253,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005311650583732861,
+          "expectedDeltaVSquared": 0.0005322982104978159,
+          "jitterLowerBoundDeltaVSquared": 0.0004495781054071494,
+          "jitterUpperBoundDeltaVSquared": 0.000619550924086601
+        },
+        "born": {
+          "acceptedP1Feet": 2,
+          "requestedImpulseSquared": 0.000603941424725505,
+          "compliantImpulseSquared": 0.0005728169849477786,
+          "affectedSolverNodes": 19,
+          "attenuatedNodeContributions": 19
+        }
+      },
+      {
+        "contactIndex": 4560,
+        "simulationTimeMs": 107418.49459885673,
+        "substrate": {
+          "sourceContactIndex": 4560,
+          "frame": 211288,
+          "payload": {
+            "position": {
+              "x": -0.02694284946557584,
+              "y": 0.10269359888775091
+            },
+            "strength": 0.034681160266418015
+          },
+          "normalizedStrength": 0.034681160266418015,
+          "amplitude": 0.018323478463940324,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005489452365861571,
+          "expectedDeltaVSquared": 0.000550116319757541,
+          "jitterLowerBoundDeltaVSquared": 0.00046462724824652344,
+          "jitterUpperBoundDeltaVSquared": 0.0006402897239540938
+        },
+        "born": {
+          "acceptedP1Feet": 2,
+          "requestedImpulseSquared": 0.0006344886010623101,
+          "compliantImpulseSquared": 0.0005664265369554168,
+          "affectedSolverNodes": 18,
+          "attenuatedNodeContributions": 18
+        }
+      },
+      {
+        "contactIndex": 4573,
+        "simulationTimeMs": 107614.01578993062,
+        "substrate": {
+          "sourceContactIndex": 4573,
+          "frame": 220673,
+          "payload": {
+            "position": {
+              "x": 0.06367662479945256,
+              "y": 0.011490247211561286
+            },
+            "strength": 0.03385938168112189
+          },
+          "normalizedStrength": 0.03385938168112189,
+          "amplitude": 0.018126251603469253,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005343150956394712,
+          "expectedDeltaVSquared": 0.000535454967843502,
+          "jitterLowerBoundDeltaVSquared": 0.0004522442969492485,
+          "jitterUpperBoundDeltaVSquared": 0.0006232251275538793
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.00030125747644615725,
+          "compliantImpulseSquared": 0.0002857149121728264,
+          "affectedSolverNodes": 9,
+          "attenuatedNodeContributions": 9
+        }
+      },
+      {
+        "contactIndex": 4574,
+        "simulationTimeMs": 107612.7463106804,
+        "substrate": {
+          "sourceContactIndex": 4574,
+          "frame": 220612,
+          "payload": {
+            "position": {
+              "x": -0.01561175874033296,
+              "y": 0.07521730548223408
+            },
+            "strength": 0.034681160266418015
+          },
+          "normalizedStrength": 0.034681160266418015,
+          "amplitude": 0.018323478463940324,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005454447784591611,
+          "expectedDeltaVSquared": 0.0005466083939865406,
+          "jitterLowerBoundDeltaVSquared": 0.000461664460487834,
+          "jitterUpperBoundDeltaVSquared": 0.0006362067895947656
+        },
+        "born": {
+          "acceptedP1Feet": 3,
+          "requestedImpulseSquared": 0.0009514382518793825,
+          "compliantImpulseSquared": 0.0008787623018777111,
+          "affectedSolverNodes": 30,
+          "attenuatedNodeContributions": 30
+        }
+      },
+      {
+        "contactIndex": 4590,
+        "simulationTimeMs": 107824.75160933779,
+        "substrate": {
+          "sourceContactIndex": 4590,
+          "frame": 230788,
+          "payload": {
+            "position": {
+              "x": -0.036375219647692664,
+              "y": 0.053960642751881734
+            },
+            "strength": 0.034681160266418015
+          },
+          "normalizedStrength": 0.034681160266418015,
+          "amplitude": 0.018323478463940324,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005410144210656366,
+          "expectedDeltaVSquared": 0.0005421685851639099,
+          "jitterLowerBoundDeltaVSquared": 0.00045791460598995485,
+          "jitterUpperBoundDeltaVSquared": 0.0006310392207309586
+        },
+        "born": {
+          "acceptedP1Feet": 2,
+          "requestedImpulseSquared": 0.0006277480410671451,
+          "compliantImpulseSquared": 0.0006004859588647801,
+          "affectedSolverNodes": 20,
+          "attenuatedNodeContributions": 20
+        }
+      },
+      {
+        "contactIndex": 4596,
+        "simulationTimeMs": 107957.96166009529,
+        "substrate": {
+          "sourceContactIndex": 4596,
+          "frame": 237182,
+          "payload": {
+            "position": {
+              "x": 0.04845875262257496,
+              "y": -0.014338527203860493
+            },
+            "strength": 0.03385938168112189
+          },
+          "normalizedStrength": 0.03385938168112189,
+          "amplitude": 0.018126251603469253,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005362437846823492,
+          "expectedDeltaVSquared": 0.0005373877714230049,
+          "jitterLowerBoundDeltaVSquared": 0.0004538767393551404,
+          "jitterUpperBoundDeltaVSquared": 0.0006254747504534922
+        },
+        "born": {
+          "acceptedP1Feet": 2,
+          "requestedImpulseSquared": 0.0006028600405562068,
+          "compliantImpulseSquared": 0.000546233981122209,
+          "affectedSolverNodes": 17,
+          "attenuatedNodeContributions": 16
+        }
+      },
+      {
+        "contactIndex": 4607,
+        "simulationTimeMs": 108068.71814157451,
+        "substrate": {
+          "sourceContactIndex": 4607,
+          "frame": 242498,
+          "payload": {
+            "position": {
+              "x": -0.025040022246775397,
+              "y": 0.026483529097617253
+            },
+            "strength": 0.034681160266418015
+          },
+          "normalizedStrength": 0.034681160266418015,
+          "amplitude": 0.018323478463940324,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.000551788550909071,
+          "expectedDeltaVSquared": 0.000552965699817677,
+          "jitterLowerBoundDeltaVSquared": 0.0004670338294894377,
+          "jitterUpperBoundDeltaVSquared": 0.0006436061657803404
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.00031441985808025185,
+          "compliantImpulseSquared": 0.0003072847652375639,
+          "affectedSolverNodes": 11,
+          "attenuatedNodeContributions": 11
+        }
+      },
+      {
+        "contactIndex": 4616,
+        "simulationTimeMs": 108266.66537591601,
+        "substrate": {
+          "sourceContactIndex": 4616,
+          "frame": 252000,
+          "payload": {
+            "position": {
+              "x": 0.06617082894970261,
+              "y": -0.03809182500143051
+            },
+            "strength": 0.03385938168112189
+          },
+          "normalizedStrength": 0.03385938168112189,
+          "amplitude": 0.018126251603469253,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005276000784552083,
+          "expectedDeltaVSquared": 0.000528725625289246,
+          "jitterLowerBoundDeltaVSquared": 0.0004465607064044883,
+          "jitterUpperBoundDeltaVSquared": 0.0006153927315101551
+        },
+        "born": {
+          "acceptedP1Feet": 2,
+          "requestedImpulseSquared": 0.0006006469172918859,
+          "compliantImpulseSquared": 0.0005818423616105831,
+          "affectedSolverNodes": 16,
+          "attenuatedNodeContributions": 15
+        }
+      },
+      {
+        "contactIndex": 4639,
+        "simulationTimeMs": 108533.97975922786,
+        "substrate": {
+          "sourceContactIndex": 4639,
+          "frame": 264831,
+          "payload": {
+            "position": {
+              "x": 0.05035697648048986,
+              "y": -0.06394687863002899
+            },
+            "strength": 0.03385938168112189
+          },
+          "normalizedStrength": 0.03385938168112189,
+          "amplitude": 0.018126251603469253,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005245433168952118,
+          "expectedDeltaVSquared": 0.0005256623426379216,
+          "jitterLowerBoundDeltaVSquared": 0.0004439734634201073,
+          "jitterUpperBoundDeltaVSquared": 0.0006118273248265752
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.00029684626003917256,
+          "compliantImpulseSquared": 0.00029413040343998756,
+          "affectedSolverNodes": 9,
+          "attenuatedNodeContributions": 8
+        }
+      },
+      {
+        "contactIndex": 4652,
+        "simulationTimeMs": 108773.28772266465,
+        "substrate": {
+          "sourceContactIndex": 4652,
+          "frame": 276318,
+          "payload": {
+            "position": {
+              "x": 0.06811068190621711,
+              "y": -0.08894830196281164
+            },
+            "strength": 0.03385938168112189
+          },
+          "normalizedStrength": 0.03385938168112189,
+          "amplitude": 0.018126251603469253,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005249281684686691,
+          "expectedDeltaVSquared": 0.0005260480152280689,
+          "jitterLowerBoundDeltaVSquared": 0.0004442992017918815,
+          "jitterUpperBoundDeltaVSquared": 0.0006122762157018556
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.00029786817783388614,
+          "compliantImpulseSquared": 0.00029440037201499753,
+          "affectedSolverNodes": 7,
+          "attenuatedNodeContributions": 7
+        }
+      },
+      {
+        "contactIndex": 4745,
+        "simulationTimeMs": 110341.11081864897,
+        "substrate": {
+          "sourceContactIndex": 4745,
+          "frame": 351573,
+          "payload": {
+            "position": {
+              "x": -0.06126431437464427,
+              "y": 0.188958917652781
+            },
+            "strength": 0.03494377935761586
+          },
+          "normalizedStrength": 0.03494377935761586,
+          "amplitude": 0.018386507045827807,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005395837975931404,
+          "expectedDeltaVSquared": 0.0005407349096946724,
+          "jitterLowerBoundDeltaVSquared": 0.00045670372628283404,
+          "jitterUpperBoundDeltaVSquared": 0.000629370541512639
+        },
+        "born": {
+          "acceptedP1Feet": 2,
+          "requestedImpulseSquared": 0.0006514198387731771,
+          "compliantImpulseSquared": 0.0006076716688688496,
+          "affectedSolverNodes": 9,
+          "attenuatedNodeContributions": 6
+        }
+      },
+      {
+        "contactIndex": 4756,
+        "simulationTimeMs": 110516.72959105059,
+        "substrate": {
+          "sourceContactIndex": 4756,
+          "frame": 360003,
+          "payload": {
+            "position": {
+              "x": -0.08863679685054807,
+              "y": 0.17928170652125985
+            },
+            "strength": 0.03494377935761586
+          },
+          "normalizedStrength": 0.03494377935761586,
+          "amplitude": 0.018386507045827807,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005442248860275954,
+          "expectedDeltaVSquared": 0.0005453858991177876,
+          "jitterLowerBoundDeltaVSquared": 0.0004606319435337568,
+          "jitterUpperBoundDeltaVSquared": 0.0006347839070625874
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.0003243409280584411,
+          "compliantImpulseSquared": 0.00031356748947283856,
+          "affectedSolverNodes": 6,
+          "attenuatedNodeContributions": 6
+        }
+      },
+      {
+        "contactIndex": 4769,
+        "simulationTimeMs": 110685.98582786207,
+        "substrate": {
+          "sourceContactIndex": 4769,
+          "frame": 368127,
+          "payload": {
+            "position": {
+              "x": -0.08902233314459085,
+              "y": 0.15060382706246903
+            },
+            "strength": 0.03494377935761586
+          },
+          "normalizedStrength": 0.03494377935761586,
+          "amplitude": 0.018386507045827807,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005520040387270083,
+          "expectedDeltaVSquared": 0.0005531816473429592,
+          "jitterLowerBoundDeltaVSquared": 0.0004672162183785398,
+          "jitterUpperBoundDeltaVSquared": 0.0006438575107711826
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.0003246975399660544,
+          "compliantImpulseSquared": 0.00031145700463327544,
+          "affectedSolverNodes": 5,
+          "attenuatedNodeContributions": 5
+        }
+      },
+      {
+        "contactIndex": 4866,
+        "simulationTimeMs": 112209.88660557546,
+        "substrate": {
+          "sourceContactIndex": 4866,
+          "frame": 441275,
+          "payload": {
+            "position": {
+              "x": 0.12660959395398996,
+              "y": -0.06111195621957357
+            },
+            "strength": 0.03487657954739407
+          },
+          "normalizedStrength": 0.03487657954739407,
+          "amplitude": 0.018370379091374577,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005491807506192073,
+          "expectedDeltaVSquared": 0.0005503523362205284,
+          "jitterLowerBoundDeltaVSquared": 0.0004648265873240971,
+          "jitterUpperBoundDeltaVSquared": 0.0006405644275222435
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.00031748778022525173,
+          "compliantImpulseSquared": 0.00031748778022525173,
+          "affectedSolverNodes": 7,
+          "attenuatedNodeContributions": 0
+        }
+      },
+      {
+        "contactIndex": 4890,
+        "simulationTimeMs": 112635.78785940901,
+        "substrate": {
+          "sourceContactIndex": 4890,
+          "frame": 461718,
+          "payload": {
+            "position": {
+              "x": 0.14420083177788345,
+              "y": -0.08425530370382547
+            },
+            "strength": 0.03487657954739407
+          },
+          "normalizedStrength": 0.03487657954739407,
+          "amplitude": 0.018370379091374577,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005508409531692302,
+          "expectedDeltaVSquared": 0.0005520160805359912,
+          "jitterLowerBoundDeltaVSquared": 0.00046623178276243647,
+          "jitterUpperBoundDeltaVSquared": 0.0006425008877765901
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.00031733244016516726,
+          "compliantImpulseSquared": 0.00031700659977529876,
+          "affectedSolverNodes": 7,
+          "attenuatedNodeContributions": 7
+        }
+      },
+      {
+        "contactIndex": 4910,
+        "simulationTimeMs": 112961.61552028875,
+        "substrate": {
+          "sourceContactIndex": 4910,
+          "frame": 477358,
+          "payload": {
+            "position": {
+              "x": 0.12763125611871984,
+              "y": -0.10895470246306721
+            },
+            "strength": 0.03487657954739407
+          },
+          "normalizedStrength": 0.03487657954739407,
+          "amplitude": 0.018370379091374577,
+          "affectedSolverNodes": 49,
+          "nominalDeltaVSquared": 0.0005574746500450113,
+          "expectedDeltaVSquared": 0.0005586639292984406,
+          "jitterLowerBoundDeltaVSquared": 0.0004718465437980976,
+          "jitterUpperBoundDeltaVSquared": 0.0006502384318125013
+        },
+        "born": {
+          "acceptedP1Feet": 1,
+          "requestedImpulseSquared": 0.000314533065348156,
+          "compliantImpulseSquared": 0.00031335406376912676,
+          "affectedSolverNodes": 7,
+          "attenuatedNodeContributions": 7
+        }
+      }
+    ]
+  },
+  "decomposition": {
+    "rawWorkletLevelGapDb": 34.593887158944995,
+    "A_readoutScaleAndLimiterDb": 25.793137329606516,
+    "A_componentsDb": {
+      "linearReadoutScale": 28.85361220031512,
+      "limiterNonlinearity": -3.060474870708603
+    },
+    "pickupDisplacementGapAfterRemovingReadoutAndLimiterDb": 8.800749829338706,
+    "B_excitationEnergyDb": 1.1207651532134764,
+    "B_boundsFromUnrecordedGenericJitterDb": {
+      "lower": 0.3872666197567031,
+      "upper": 1.7799851825845903
+    },
+    "bornRequestedInsteadOfCompliantBDb": 0.8945358790190905,
+    "C_residualTransferDb": 7.67998467612523,
+    "C_boundsFromUnrecordedGenericJitterDb": {
+      "lower": 7.020764646754116,
+      "upper": 8.413483209582003
+    },
+    "closureDb": 34.59388715894522,
+    "caveat": "C is a residual transfer term, not a pure intrinsic resonator constant. It includes distinct event timing/spatial distribution, per-group versus per-foot semantics, resonator/topology response, and solver discretization. Generic realized jitter energy cannot be recovered from the saved PCM; the expected value is used for B and the matching bounds are shown."
+  }
+}
