@@ -21,7 +21,8 @@ const legacyMessages = recording.legacyStrikes;
 const bornMessages = recording.bornStrikes;
 const emptyTopology = compileSurfaceTopology({ plates: [], nodules: [], generation: 1, maxLayers: 256 });
 const bornFrames = bornMessages.filter(row => row.simulationTimeMs >= startPost && row.simulationTimeMs < endPost)
-  .map(row => ({ frame: toFrame(row.simulationTimeMs, startPost), payload: row.payload }));
+  .map(row => ({ frame: toFrame(row.simulationTimeMs, startPost), payload: row.payload }))
+  .sort((a, b) => a.frame - b.frame);
 const baseGain = audioBridge.legacy.plate.output.gain;
 const bornGain = audioBridge.surface.worklet.gainNode.gain.value;
 const prebirthBornRoutes = bornMessages.filter(row => row.simulationTimeMs >= startPre && row.simulationTimeMs < endPre);
@@ -32,9 +33,11 @@ if (!bornFrames.length || surfaceRoutePlateIds.some(id => id !== firstBirthEvent
 if (topology.layerIds.length !== 1 || topology.layerIds[0] !== firstBirthEvent.id)
   throw new Error(`First-birth replay topology includes extra/missing layers: ${JSON.stringify(topology.layerIds)}`);
 const legacyPre = legacyMessages.filter(row => row.simulationTimeMs >= startPre && row.simulationTimeMs < endPre)
-  .map(row => ({ frame: toFrame(row.simulationTimeMs, startPre), payload: row.payload }));
+  .map(row => ({ frame: toFrame(row.simulationTimeMs, startPre), payload: row.payload }))
+  .sort((a, b) => a.frame - b.frame);
 const legacyPost = legacyMessages.filter(row => row.simulationTimeMs >= startPost && row.simulationTimeMs < endPost)
-  .map(row => ({ frame: toFrame(row.simulationTimeMs, startPost), payload: row.payload }));
+  .map(row => ({ frame: toFrame(row.simulationTimeMs, startPost), payload: row.payload }))
+  .sort((a, b) => a.frame - b.frame);
 const bornSchedule = bornFrames;
 const surfaceSha = sha(workletSource), plateSha = sha(plateSource);
 const server = await createServer({ server: { host: '127.0.0.1', port: 0 }, logLevel: 'error' });
@@ -60,19 +63,24 @@ try {
         split.connect(merger, 0, leftIndex); split.connect(merger, 1, leftIndex + 1);
       };
       const watch = (node, label) => {
-        let resolveReady, resolveDone;
+        let resolveReady, resolveDone, rejectReady, rejectDone;
         const ready = new Promise((resolve, reject) => {
           const timer = setTimeout(() => reject(new Error(`${label} scheduler handshake timed out.`)), 10000);
-          resolveReady = () => { clearTimeout(timer); resolve(); };
+          resolveReady = value => { clearTimeout(timer); resolve(value); };
+          rejectReady = error => { clearTimeout(timer); reject(error); };
         });
         const done = new Promise((resolve, reject) => {
           const timer = setTimeout(() => reject(new Error(`${label} render timed out.`)), 90000);
           resolveDone = value => { clearTimeout(timer); resolve(value); };
+          rejectDone = error => { clearTimeout(timer); reject(error); };
         });
         node.port.onmessage = event => {
-          if (event.data?.type === 'evidence-ready') resolveReady();
+          if (event.data?.type === 'evidence-ready') resolveReady(event.data);
           if (event.data?.type === 'evidence-done') resolveDone(event.data);
         };
+        node.addEventListener('processorerror', () => {
+          const error = new Error(`${label} processor error`); rejectReady(error); rejectDone(error);
+        });
         return { ready, done };
       };
       const monitors = [];
@@ -80,31 +88,34 @@ try {
       if (baseEnabled) {
         baseNode = new AudioWorkletNode(context, 'plate-processor', { numberOfInputs: 0, numberOfOutputs: 1,
           outputChannelCount: [2], processorOptions: { resolution: 'normal', stiffness: 0.92, damping: 100,
-            stereoPickups: [{ x: -0.32, y: -0.18 }, { x: 0.32, y: -0.18 }] } });
+            stereoPickups: [{ x: -0.32, y: -0.18 }, { x: 0.32, y: -0.18 }],
+            evidenceSchedule: { endFrame: frames, events: baseEvents } } });
         connectStereo(baseNode, 2, baseGain);
         const monitor = watch(baseNode, `${label} legacy Plate`); monitors.push(monitor);
-        baseNode.port.postMessage({ type: 'evidence-schedule', payload: { endFrame: frames, events: baseEvents.map(e => ({ frame: e.frame, payload: e.payload })) } });
       }
       let bornNode, bornControl;
       if (bornEnabled) {
         const makeBorn = (leftIndex, trackEvents) => {
-          const node = new AudioWorkletNode(context, 'surface-plate-processor', { numberOfInputs: 0, numberOfOutputs: 1, outputChannelCount: [2] });
+          const node = new AudioWorkletNode(context, 'surface-plate-processor', { numberOfInputs: 0, numberOfOutputs: 1, outputChannelCount: [2],
+            processorOptions: { evidenceTopology: { ...topology, maxLayers: 256 },
+              evidenceSchedule: { endFrame: frames, events: trackEvents.map(e => ({ frame: e.frame,
+                message: { type: 'strike', payload: e.payload } })) } } });
           connectStereo(node, leftIndex, bornGain);
           monitors.push(watch(node, `${label} born Plate${leftIndex === 4 ? ' control' : ''}`));
-          node.port.postMessage({ type: 'topology', payload: { ...topology, maxLayers: 256 } });
-          node.port.postMessage({ type: 'evidence-schedule', payload: { endFrame: frames,
-            events: trackEvents.map(e => ({ frame: e.frame, message: { type: 'strike', payload: e.payload } })) } });
           return node;
         };
         bornNode = makeBorn(0, bornEvents);
         bornControl = makeBorn(4, bornEvents);
       }
-      await Promise.all(monitors.map(monitor => monitor.ready));
-      const buffer = await context.startRendering();
-      const reports = await Promise.all(monitors.map(monitor => monitor.done));
+      // Constructor-cloned inputs exist before frame 0; ACK cannot gate starting an offline render.
+      const rendering = context.startRendering();
+      const allReady = Promise.all(monitors.map(monitor => monitor.ready));
+      const allDone = Promise.all(monitors.map(monitor => monitor.done));
+      const [buffer, ready, reports] = await Promise.all([rendering, allReady, allDone]);
+      if (ready.some(ack => ack.frame !== 0 || ack.endFrame !== frames)) throw new Error(`${label} initial scheduler state differs`);
       const channels = Array.from({ length: 6 }, (_, index) => Array.from(buffer.getChannelData(index)));
       for (const node of [baseNode, bornNode, bornControl]) { node?.disconnect(); node?.port.close(); }
-      return { channels, reports };
+      return { channels, reports, ready };
     };
     const preOff = await render({ label: 'prebirth Off', baseEnabled: false, bornEnabled: true, bornEvents: [], topology: payload.emptyTopology, bornGain: payload.bornGain });
     const preOn = await render({ label: 'prebirth On', baseEnabled: true, baseEvents: payload.preBase, bornEnabled: true,
@@ -114,7 +125,8 @@ try {
     const post = await render({ label: 'postbirth On', baseEnabled: true, baseEvents: payload.postBase, bornEnabled: true,
       bornEvents: payload.bornEvents, topology: payload.topology, baseGain: payload.baseGain, bornGain: payload.bornGain });
     return { preOff: preOff.channels, preOn: preOn.channels, postOff: postOff.channels, post: post.channels,
-      reports: { preOff: preOff.reports, preOn: preOn.reports, postOff: postOff.reports, post: post.reports } };
+      reports: { preOff: preOff.reports, preOn: preOn.reports, postOff: postOff.reports, post: post.reports },
+      ready: { preOff: preOff.ready, preOn: preOn.ready, postOff: postOff.ready, post: post.ready } };
   }, { plateSource: instrumentPlate(plateSource), surfaceSource: instrumentSurface(workletSource),
     preBase: legacyPre, postBase: legacyPost, bornEvents: bornSchedule, topology,
     emptyTopology, baseGain, bornGain });
@@ -156,15 +168,26 @@ try {
   if (maxOffOnDiff !== 0) throw new Error(`Born Plate OFF/ON PCM differs: ${offOnDiffSamples} samples; max ${maxOffOnDiff}`);
   if (metrics['prebirth-off-silence-10s-48khz-f32.wav'].peak !== 0
     || metrics['prebirth-on-substrate-10s-48khz-f32.wav'].peak === 0) throw new Error('Pre-birth A/B did not produce exact Off silence and nonzero On PCM.');
-  const preOffSurface = output.reports.preOff[0][0];
-  const preOnSurface = output.reports.preOn[1][0];
-  const postOffSurface = output.reports.postOff[0][0];
+  const preOffSurface = output.reports.preOff[0];
+  const preOnSurface = output.reports.preOn[1];
+  const postOffSurface = output.reports.postOff[0];
   const postBase = output.reports.post[0];
   const postSurface = output.reports.post[1];
   if (preOffSurface.strikes !== 0 || preOnSurface.strikes !== 0
     || postOffSurface.strikes !== bornSchedule.length || postBase.injected !== legacyPost.length
-    || postSurface[0].strikes !== bornSchedule.length || postSurface[1].strikes !== bornSchedule.length) {
+    || postSurface.strikes !== bornSchedule.length || output.reports.post[2].strikes !== bornSchedule.length
+    || output.reports.preOff[1].strikes !== 0 || output.reports.preOn[2].strikes !== 0
+    || output.reports.postOff[1].strikes !== bornSchedule.length
+    || output.reports.preOn[0].injected !== legacyPre.length
+    || Object.values(output.reports).flat().some(row => row.renderedFrames !== 480000
+      || row.scheduled !== (row.injected ?? row.strikes))) {
     throw new Error(`Scheduled/injected route counts differ: ${JSON.stringify({ preOffSurface, preOnSurface, postOffSurface, postBase, postSurface, legacyPost: legacyPost.length, born: bornSchedule.length })}`);
+  }
+  for (const [rows, schedule] of [[output.reports.preOn[0].receipts, legacyPre], [postBase.receipts, legacyPost]]) {
+    if (rows.length !== schedule.length || rows.some((row, index) => row.requestedFrame !== schedule[index].frame
+      || row.actualFrame !== Math.ceil(row.requestedFrame / 128) * 128)) {
+      throw new Error('Substrate scheduler delivery differs from its declared block clock mapping.');
+    }
   }
   const substrateToBornDb = 20 * Math.log10(metrics['postbirth-substrate-only-10s-48khz-f32.wav'].rms / metrics['postbirth-born-only-10s-48khz-f32.wav'].rms);
   const inputStream = gzipSync(Buffer.from(JSON.stringify(recording)));
@@ -178,6 +201,16 @@ try {
       gzipSha256: sha(inputStream), firstPlateBirthSeconds: firstBirth / 1000,
       firstPlateId: firstBirthEvent.id, firstPlateDescriptorSha256: sha(JSON.stringify(firstBirthEvent)) },
     windows: { prebirthSimulationSeconds: [startPre / 1000, endPre / 1000], postbirthSimulationSeconds: [startPost / 1000, endPost / 1000] },
+    clockMapping: { sampleRate: 48000, audioSeconds: [0, 10], audioSampleRange: [0, 480000],
+      formula: 'requestedFrame = round((simulationTimeMs - windowStartMs) * 48)',
+      simulatedSecondsPerAudioSecond: 1,
+      prebirthAnchors: [{ simulationTimeMs: startPre, audioSampleIndex: 0 }, { simulationTimeMs: endPre, audioSampleIndex: 480000 }],
+      postbirthAnchors: [{ simulationTimeMs: startPost, audioSampleIndex: 0 }, { simulationTimeMs: endPost, audioSampleIndex: 480000 }],
+      bornSchedule: 'sample-exact dispatch before its requested frame',
+      substrateSchedule: 'existing replay dispatch at next 128-frame block boundary; 0..127 samples (0..2.645833 ms) late; receipts retain requested/actual frames' },
+    replayLimits: { initialConditions: 'Each 10-second condition starts from rest; these windows are not a continuous live audio recording.',
+      scheduleOrder: 'Stable requested-frame sort; original payloads/timestamps preserved, equal-frame emission order preserved.',
+      baseRandomness: 'Unchanged generic Plate Math.random strike jitter; base PCM noise realization can vary between runs.' },
     settings: { masterVolume: 0.35, substrateOutputRatio: ANT_BASE_SUBSTRATE_OUTPUT_RATIO, substrateDamping: ANT_BASE_SUBSTRATE_DAMPING,
       substrateFinalGain: baseGain, bornPlateFinalGain: bornGain, substratePlateConfiguredDamping: audioBridge.legacy.plate.getState().damping,
       bornPlateDampingMultiplier: 50, bornContactPulseMs: 3, bornContactRecoveryMs: 75 },
@@ -185,8 +218,11 @@ try {
       prebirthLegacyStrikeMessages: legacyPre.length, postbirthFootContactGroups: postGroups.length,
       postbirthLegacyStrikeMessages: legacyPost.length, postbirthBornPlateStrikeMessages: bornSchedule.length,
       prebirthBornPlateRoutes: prebirthBornRoutes.length, postbirthBornPlateIds: surfaceRoutePlateIds,
-      surfaceRoutes: audioBridge.surface.diagnostics.strikeRoutes, workletReports: output.reports },
+      surfaceRoutes: audioBridge.surface.diagnostics.strikeRoutes, workletReports: output.reports,
+      schedulerReady: output.ready, schedules: { prebirthBase: legacyPre, postbirthBase: legacyPost, postbirthBorn: bornSchedule } },
     worklets: { legacyPlateSha256: plateSha, bornSurfaceSha256: surfaceSha },
+    capture: { createdAtUtc: new Date().toISOString(), chrome: browser.version(), harnessSha256: sha(await readFile(resolve('scripts/ant-base-substrate-audio-evidence.js'))),
+      scheduler: 'Schedule and topology cloned through processorOptions; all ready ACKs originate at process frame 0.' },
     bornPlateEquivalenceUnderSubstrate: { comparedChannelSamples: bornL.length * 2,
       exactDuplicateControlSamples: exactBornControlSamples, duplicateControlMaxAbsoluteDifference: maxBornControlAbsDiff,
       offOnDifferentSamples: offOnDiffSamples, offOnMaxAbsoluteDifference: maxOffOnDiff },
@@ -260,22 +296,25 @@ async function captureFreshRun() {
 
 function instrumentSurface(source) {
   source = source.replace(/\r\n/g, '\n');
-  source = source.replace('    super();', '    super(); this.__evFrame=0; this.__evEnd=0; this.__evEvents=[]; this.__evCursor=0; this.__evDone=false;');
-  source = source.replace("    if (message.type === 'topology') {", "    if (message.type === 'evidence-schedule') { this.__evFrame=0; this.__evEnd=p.endFrame; this.__evEvents=p.events||[]; this.__evCursor=0; this.port.postMessage({type:'evidence-ready'}); return; }\n    if (message.type === 'topology') {");
-  source = source.replace('    if (!this.topology) return true;', "    if (!this.topology) { this.__evFrame += left.length; if (!this.__evDone && this.__evEnd>0 && this.__evFrame>=this.__evEnd) { this.__evDone=true; this.port.postMessage({type:'evidence-done',strikes:this.telemetry.strikes,scheduled:this.__evEvents.length,diagnostics:this.getDiagnostics?.()||null}); } return true; }");
+  source = source.replace('  constructor() {', '  constructor(options) {');
+  source = source.replace('    super();', '    super(); const schedule=options.processorOptions.evidenceSchedule; this.__evFrame=0; this.__evEnd=schedule.endFrame; this.__evEvents=schedule.events; this.__evCursor=0; this.__evDone=false; this.__evReady=false;');
+  source = source.replace('    this.port.onmessage = (event) => this.handleMessage(event.data);', "    this.port.onmessage = (event) => this.handleMessage(event.data);\n    this.handleMessage({type:'topology',payload:options.processorOptions.evidenceTopology});");
+  source = source.replace('    if (this.destroyed) return false;', "    if (this.destroyed) return false;\n    if (!this.__evReady) { this.__evReady=true; this.port.postMessage({type:'evidence-ready',frame:this.__evFrame,endFrame:this.__evEnd,scheduled:this.__evEvents.length}); }");
+  source = source.replace('    if (!this.topology) return true;', "    if (!this.topology) { this.__evFrame += left.length; if (!this.__evDone && this.__evEnd>0 && this.__evFrame>=this.__evEnd) { this.__evDone=true; this.port.postMessage({type:'evidence-done',strikes:this.telemetry.strikes,scheduled:this.__evEvents.length,renderedFrames:this.__evFrame,diagnostics:this.getDiagnostics?.()||null}); } return true; }");
   source = source.replace('    for (let frame = 0; frame < left.length; frame++) {', "    for (let frame = 0; frame < left.length; frame++) {\n      while(this.__evCursor<this.__evEvents.length && this.__evEvents[this.__evCursor].frame<=this.__evFrame)this.handleMessage(this.__evEvents[this.__evCursor++].message); this.__evFrame++;");
-  source = source.replace('    return true;\n  }\n\n  advancePhysics()', "    if (!this.__evDone && this.__evEnd>0 && this.__evFrame>=this.__evEnd) { this.__evDone=true; this.port.postMessage({type:'evidence-done',strikes:this.telemetry.strikes,scheduled:this.__evEvents.length,diagnostics:this.getDiagnostics?.()||null}); }\n    return true;\n  }\n\n  advancePhysics()");
-  if (!source.includes("this.port.postMessage({type:'evidence-ready'})") || !source.includes("type:'evidence-done'")) throw new Error('Surface worklet replay scheduler instrumentation failed.');
+  source = source.replace('    return true;\n  }\n\n  advancePhysics()', "    if (!this.__evDone && this.__evEnd>0 && this.__evFrame>=this.__evEnd) { this.__evDone=true; this.port.postMessage({type:'evidence-done',strikes:this.telemetry.strikes,scheduled:this.__evEvents.length,renderedFrames:this.__evFrame,diagnostics:this.getDiagnostics?.()||null}); }\n    return true;\n  }\n\n  advancePhysics()");
+  if (!source.includes("type:'evidence-ready',frame:") || !source.includes('payload:options.processorOptions.evidenceTopology')
+    || !source.includes("type:'evidence-done'")) throw new Error('Surface worklet replay scheduler instrumentation failed.');
   return source;
 }
 function instrumentPlate(source) {
   source = source.replace(/\r\n/g, '\n');
-  source = source.replace('    super();', '    super(); this.__evFrame=0; this.__evEnd=0; this.__evEvents=[]; this.__evCursor=0; this.__evInjected=0; this.__evDone=false;');
-  source = source.replace("    const payload = message.payload || {};", "    const payload = message.payload || {};\n    if (message.type === 'evidence-schedule') { this.__evFrame=0; this.__evEnd=payload.endFrame; this.__evEvents=payload.events||[]; this.__evCursor=0; this.port.postMessage({type:'evidence-ready'}); return; }");
-  source = source.replace('    const channels = outputs[0];', "    const channels = outputs[0];\n    while(this.__evCursor<this.__evEvents.length && this.__evEvents[this.__evCursor].frame<=this.__evFrame) { this.applyStrike(this.__evEvents[this.__evCursor++].payload); this.__evInjected++; }");
-  source = source.replace("    if (!this.active) {\n      for (const channel of channels) channel.fill(0);\n      return true;\n    }", "    if (!this.active) {\n      for (const channel of channels) channel.fill(0);\n      this.__evFrame += output.length;\n      if (!this.__evDone && this.__evEnd>0 && this.__evFrame>=this.__evEnd) { this.__evDone=true; this.port.postMessage({type:'evidence-done',injected:this.__evInjected,scheduled:this.__evEvents.length}); }\n      return true;\n    }");
-  source = source.replace('    return true;\n  }\n}', "    this.__evFrame += output.length;\n    if (!this.__evDone && this.__evEnd>0 && this.__evFrame>=this.__evEnd) { this.__evDone=true; this.port.postMessage({type:'evidence-done',injected:this.__evInjected,scheduled:this.__evEvents.length}); }\n    return true;\n  }\n}");
-  if (!source.includes("type:'evidence-done'")) throw new Error('Legacy Plate replay scheduler instrumentation failed.');
+  source = source.replace('    super();', '    super(); const schedule=options.processorOptions.evidenceSchedule; this.__evFrame=0; this.__evEnd=schedule.endFrame; this.__evEvents=schedule.events; this.__evCursor=0; this.__evInjected=0; this.__evDone=false; this.__evReady=false; this.__evReceipts=[];');
+  source = source.replace('    if (this.destroyed) return false;', "    if (this.destroyed) return false;\n    if (!this.__evReady) { this.__evReady=true; this.port.postMessage({type:'evidence-ready',frame:this.__evFrame,endFrame:this.__evEnd,scheduled:this.__evEvents.length}); }");
+  source = source.replace('    const channels = outputs[0];', "    const channels = outputs[0];\n    while(this.__evCursor<this.__evEvents.length && this.__evEvents[this.__evCursor].frame<=this.__evFrame) { const event=this.__evEvents[this.__evCursor++]; this.applyStrike(event.payload); this.__evInjected++; this.__evReceipts.push({requestedFrame:event.frame,actualFrame:this.__evFrame}); }");
+  source = source.replace("    if (!this.active) {\n      for (const channel of channels) channel.fill(0);\n      return true;\n    }", "    if (!this.active) {\n      for (const channel of channels) channel.fill(0);\n      this.__evFrame += output.length;\n      if (!this.__evDone && this.__evEnd>0 && this.__evFrame>=this.__evEnd) { this.__evDone=true; this.port.postMessage({type:'evidence-done',injected:this.__evInjected,scheduled:this.__evEvents.length,renderedFrames:this.__evFrame,receipts:this.__evReceipts}); }\n      return true;\n    }");
+  source = source.replace('    return true;\n  }\n}', "    this.__evFrame += output.length;\n    if (!this.__evDone && this.__evEnd>0 && this.__evFrame>=this.__evEnd) { this.__evDone=true; this.port.postMessage({type:'evidence-done',injected:this.__evInjected,scheduled:this.__evEvents.length,renderedFrames:this.__evFrame,receipts:this.__evReceipts}); }\n    return true;\n  }\n}");
+  if (!source.includes("type:'evidence-ready',frame:") || !source.includes("type:'evidence-done'")) throw new Error('Legacy Plate replay scheduler instrumentation failed.');
   return source;
 }
 function toFrame(timeMs, startMs) { return Math.max(0, Math.min(480000 - 1, Math.round((timeMs - startMs) * 48))); }
@@ -296,7 +335,15 @@ function measure(left, right) {
     if (!Number.isFinite(value)) { nonFiniteSamples++; continue; }
     sum += value * value; peak = Math.max(peak, Math.abs(value)); if (Math.abs(value) >= 1) clippingSamples++;
   }
+  const channelMetrics = data => {
+    let squareSum = 0, channelPeak = 0;
+    for (const value of data) { squareSum += value * value; channelPeak = Math.max(channelPeak, Math.abs(value)); }
+    const rms = Math.sqrt(squareSum / data.length);
+    return { peak: channelPeak, rms, peakDbfs: 20 * Math.log10(Math.max(1e-30, channelPeak)),
+      rmsDbfs: 20 * Math.log10(Math.max(1e-30, rms)) };
+  };
   return { sampleRate: 48000, samplesPerChannel: left.length, durationSeconds: left.length / 48000,
     rms: Math.sqrt(sum / (left.length * 2)), rmsDbfs: 20 * Math.log10(Math.max(1e-30, Math.sqrt(sum / (left.length * 2)))),
-    peak, peakDbfs: 20 * Math.log10(Math.max(1e-30, peak)), nonFiniteSamples, clippingSamples };
+    peak, peakDbfs: 20 * Math.log10(Math.max(1e-30, peak)), nonFiniteSamples, clippingSamples,
+    left: channelMetrics(left), right: channelMetrics(right) };
 }
