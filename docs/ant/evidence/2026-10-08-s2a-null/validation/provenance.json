@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-08",
+  "baseCommit": "66c61e105b55a6360deb2db34795fe69b326f884",
+  "toolingCommit": "4b01f2207245f54fc668e5f940bb378a6d7cd74f",
+  "node": "v22.23.2",
+  "platform": "win32",
+  "parameters": {
+    "family": "per-ant in-lifetime circular whole-tuple phase shift",
+    "nullSeed": "ANT-S2a-2026-10-08-phase-v1",
+    "replicatesPerSeed": 32,
+    "seeds": [
+      20261005,
+      20261006,
+      20261007
+    ],
+    "seconds": 600,
+    "frameCount": 36001,
+    "trajectoryHz": 60,
+    "topologyHz": 20,
+    "k": 2,
+    "windowsSeconds": [
+      0.25,
+      1,
+      5,
+      20
+    ],
+    "offsetDerivation": "1 + uint64LE(SHA256(JSON.stringify([nullSeed, sourceSeed, zeroBasedReplicate, stableAntId]))[0:8]) modulo (sampleCount-1)",
+    "direction": "null sample i = original sample (i+offset) modulo sampleCount",
+    "tupleFields": [
+      "x",
+      "y",
+      "vx",
+      "vy",
+      "heading",
+      "radius"
+    ],
+    "storage": "Offsets and hash of exact virtual binary trajectory; redundant null trajectory archives are not written.",
+    "durationQuantiles": "Type 7 linear interpolation; completed durations only, censor counts/elapsed kept separately",
+    "topologyAverages": "All 12001 analysis samples including t=0; weighted degrees include active isolates and use pooled node-time samples",
+    "rank": "Within-seed null midrank percentile = 100*(below+equal/2)/available replicates; no p-value or decision threshold"
+  },
+  "sourceCode": {
+    "scripts/ant-social-evidence.js": {
+      "gitBlobSha256": "3b75621490299f59ddb2a7c94544ffbee926ce48d62d2516f8491b44cd736979",
+      "workingTreeSha256": "3b75621490299f59ddb2a7c94544ffbee926ce48d62d2516f8491b44cd736979"
+    },
+    "scripts/ant-social-null.js": {
+      "gitBlobSha256": "c6457c4b3898a307aa11b8f983dbe861e730e7829d1ac3c9d01da0df39041de6",
+      "workingTreeSha256": "c6457c4b3898a307aa11b8f983dbe861e730e7829d1ac3c9d01da0df39041de6"
+    },
+    "scripts/ant-social-null-plots.py": {
+      "gitBlobSha256": "f9483f172ae0e9f8ad32395724e5a690a54a36ed8e9b35855a94b3d5f04bea71",
+      "workingTreeSha256": "f9483f172ae0e9f8ad32395724e5a690a54a36ed8e9b35855a94b3d5f04bea71"
+    },
+    "tests/ant-social-null.test.js": {
+      "gitBlobSha256": "849b4b323360c6dd40ae1d0185aee52645825333573766eef58d9cda0d68eb40",
+      "workingTreeSha256": "849b4b323360c6dd40ae1d0185aee52645825333573766eef58d9cda0d68eb40"
+    },
+    "src/lib/agents/ant/DynamicSocialGraph.js": {
+      "gitBlobSha256": "631f3750c8d72b474861716116d6c81dde0fad918afd7e0f2846baa00626a4f4",
+      "workingTreeSha256": "631f3750c8d72b474861716116d6c81dde0fad918afd7e0f2846baa00626a4f4",
+      "recordedArchiveSourceSha256": "631f3750c8d72b474861716116d6c81dde0fad918afd7e0f2846baa00626a4f4"
+    },
+    "src/lib/agents/ant/TemporalSocialTopology.js": {
+      "gitBlobSha256": "00aed74ae84559dee889b9125e068ee7509d48ad2525b7822f5483dc8bf5e87c",
+      "workingTreeSha256": "00aed74ae84559dee889b9125e068ee7509d48ad2525b7822f5483dc8bf5e87c",
+      "recordedArchiveSourceSha256": "00aed74ae84559dee889b9125e068ee7509d48ad2525b7822f5483dc8bf5e87c"
+    }
+  },
+  "analysisChecks": "All 96 offset/byte generations repeated; all 96 virtual hashes/invariants independently regenerated; full observed and replicate-0 analysis replay per seed.",
+  "originalArchivePolicy": "No write targets in original S0/S1 package; each source input checked against Git before replay and after generation/verification.",
+  "noProductionSourceChanges": true,
+  "checks": [
+    {
+      "seed": 20261005,
+      "replicates": 32,
+      "stableIds": 765,
+      "allSourceBytesMatchGit": true,
+      "packetCopiedByteIdentically": true,
+      "observedExactArchiveReplay": true
+    },
+    {
+      "seed": 20261006,
+      "replicates": 32,
+      "stableIds": 705,
+      "allSourceBytesMatchGit": true,
+      "packetCopiedByteIdentically": true,
+      "observedExactArchiveReplay": true
+    },
+    {
+      "seed": 20261007,
+      "replicates": 32,
+      "stableIds": 743,
+      "allSourceBytesMatchGit": true,
+      "packetCopiedByteIdentically": true,
+      "observedExactArchiveReplay": true
+    }
+  ],
+  "verificationLogs": [
+    "full-tests.txt",
+    "build.txt",
+    "codec-selfcheck.txt",
+    "replay-verification.txt",
+    "plot-runtime.txt"
+  ],
+  "review": "Independent Luna scientific review and code review; numerical evidence audit reconciled README claims with all seed packets; final figures inspected."
+}

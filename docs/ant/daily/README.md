@@ -138,6 +138,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 - Subsequent direct listening judged D too dominant and the substrate timbre too metallic / long-tailed; next audio side-pass shifts timbre toward dull, sand-like and granular before re-calibrating level
 - Calibration tooling/evidence was later committed and merged via PR #1; base substrate remains default Off
 
+### 2026-10-08 — S2a trajectory synchrony null
+
+[`2026-10-08-s2a-synchrony-null.md`](./2026-10-08-s2a-synchrony-null.md) · [Null evidence](../evidence/2026-10-08-s2a-null/README.md)
+
+- Replayed the three committed 600 s archives; one whole-tuple in-lifetime phase-shift family, 32 replicates per seed
+- Original 1 s topology is sparser than the null; short connector counts overlap null variation
+- Large seam and birth-phase effects prevent social preference/organization inference
+- All 96 rotation/hash invariants, observed archive replay, 270 tests and build pass; stronger movement-constrained validation remains pending
+
 ## Logging rule
 
 새 과정 로그는 `YYYY-MM-DD-topic.md` 형식으로 추가한다.
