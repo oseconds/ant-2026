@@ -1497,6 +1497,85 @@ async function verifyAntAudioToggle(page, audioButton) {
   assert.ok(reenabled.freshStrikes > 0, 're-enabled Plate worklet receives fresh tripod contacts');
   assert.ok(reenabled.plateWorklets[0].portCloses > 0, 'the prior Plate worklet was closed before re-enabling');
   assert.ok(reenabled.plateWorklets[1].portCloses === 0);
+  await verifyBaseSubstrateAB(page, audioButton);
+}
+
+async function verifyBaseSubstrateAB(page, audioButton) {
+  if (audioButton && await audioButton.getAttribute('aria-pressed') === 'true') {
+    await audioButton.click();
+    await page.waitForFunction(() =>
+      document.querySelector('[data-action="ant-audio"]')?.getAttribute('aria-pressed') === 'false');
+  }
+  await page.evaluate(async () => {
+    const { app } = await import('/src/main.js');
+    app.lab.model.configure({ audioExperiment: { mode: 'bornSurface', baseSubstrate: false } });
+  });
+  await page.waitForFunction(() => {
+    const state = JSON.parse(document.querySelector('#state-json').textContent);
+    return state.audioExperiment?.mode === 'bornSurface' && state.audioExperiment?.baseSubstrate === false;
+  });
+
+  const baseline = await page.evaluate(() => ({
+    surfaces: window.__physicalAudioProbe.worklets.filter(item => item.name === 'surface-plate-processor').length,
+    plates: window.__physicalAudioProbe.worklets.filter(item => item.name === 'plate-processor').length
+  }));
+  await audioButton.click();
+  await page.waitForFunction(count =>
+    window.__physicalAudioProbe.worklets.filter(item => item.name === 'surface-plate-processor').length > count,
+  baseline.surfaces, { timeout: 10000 });
+
+  const substrateButton = page.locator('[data-action="ant-substrate"]');
+  await substrateButton.click();
+  await page.waitForFunction(count =>
+    document.querySelector('[data-action="ant-substrate"]')?.getAttribute('aria-pressed') === 'true'
+    && window.__physicalAudioProbe.worklets.filter(item => item.name === 'plate-processor').length > count,
+  baseline.plates, { timeout: 10000 });
+  const indices = await page.evaluate(() => ({
+    base: window.__physicalAudioProbe.worklets
+      .map((item, index) => item.name === 'plate-processor' ? index : -1).filter(index => index >= 0).at(-1),
+    surface: window.__physicalAudioProbe.worklets
+      .map((item, index) => item.name === 'surface-plate-processor' ? index : -1).filter(index => index >= 0).at(-1)
+  }));
+  await page.waitForFunction(index => {
+    const probe = window.__physicalAudioProbe;
+    return probe.workletMessages.some(item => item.index === index && item.message?.type === 'strike')
+      && probe.workletRms.some(item => item.index === index
+        && Math.max(item.leftRms || 0, item.rightRms || 0, item.rms || 0) > 1e-7);
+  }, indices.base, { timeout: 12000 });
+
+  const result = await page.evaluate(({ base, surface }) => {
+    const probe = window.__physicalAudioProbe;
+    const baseRecord = probe.worklets[base];
+    const configure = probe.workletMessages.filter(item => item.index === base
+      && item.message?.type === 'configure').at(-1)?.message;
+    const peak = Math.max(0, ...probe.workletRms.filter(item => item.index === base)
+      .map(item => Math.max(item.leftRms || 0, item.rightRms || 0, item.rms || 0)));
+    return {
+      baseOutputChannelCount: baseRecord?.outputChannelCount,
+      baseGain: baseRecord?.outputGainNodes?.[0]?.gain?.value,
+      damping: configure?.payload?.damping,
+      peak,
+      surfaceClosed: probe.worklets[surface]?.portCloses > 0
+    };
+  }, indices);
+  assert.deepEqual(result.baseOutputChannelCount, [2], 'base substrate uses the preserved stereo Plate transport');
+  assert.equal(result.damping, 100, 'base substrate uses maximum generic Plate damping');
+  assert.ok(result.peak > 1e-7, 'base substrate produces nonzero output before the first born Plate');
+  assert.ok(result.baseGain <= 0.7 * 0.35 * 0.22 + 1e-6,
+    'base substrate stays below the current ANT master output');
+  assert.equal(result.surfaceClosed, false, 'base substrate runs beside, not instead of, the born-surface processor');
+
+  await substrateButton.click();
+  await page.waitForFunction(index => {
+    const record = window.__physicalAudioProbe.worklets[index];
+    return document.querySelector('[data-action="ant-substrate"]')?.getAttribute('aria-pressed') === 'false'
+      && record?.portCloses > 0;
+  }, indices.base, { timeout: 8000 });
+  assert.equal(await page.evaluate(index => window.__physicalAudioProbe.worklets[index]?.portCloses,
+    indices.surface), 0, 'substrate Off leaves born-surface audio running');
+  await audioButton.click();
+  await page.waitForFunction(() =>
+    document.querySelector('[data-action="ant-audio"]')?.getAttribute('aria-pressed') === 'false');
 }
 
 async function verifyBornSurfaceAudioLifecycle(page, audioButton) {
@@ -1550,52 +1629,6 @@ async function verifyBornSurfaceAudioLifecycle(page, audioButton) {
   let indices = await surfaceWorkletIndices();
   assert.equal(indices.length, 1, 'born-surface Audio On creates one surface processor');
   await assertQuietBeforeBirth(indices[0], 'first born-surface processor');
-
-  const substrateButton = page.locator('[data-action="ant-substrate"]');
-  await substrateButton.click();
-  await page.waitForFunction(() =>
-    document.querySelector('[data-action="ant-substrate"]')?.getAttribute('aria-pressed') === 'true'
-    && window.__physicalAudioProbe.worklets.some(item => item.name === 'plate-processor'),
-  null, { timeout: 10000 });
-  const baseRecordIndex = await page.evaluate(() =>
-    window.__physicalAudioProbe.worklets.find(item => item.name === 'plate-processor')?.index);
-  assert.ok(Number.isInteger(baseRecordIndex), 'base substrate creates one existing legacy Plate processor');
-  await page.waitForFunction(index => {
-    const probe = window.__physicalAudioProbe;
-    return probe.workletMessages.some(item => item.index === index && item.message?.type === 'strike')
-      && probe.workletRms.some(item => item.index === index
-        && (item.leftRms > 1e-7 || item.rightRms > 1e-7 || item.rms > 1e-7));
-  }, baseRecordIndex, { timeout: 12000 });
-  const baseAB = await page.evaluate(index => {
-    const probe = window.__physicalAudioProbe;
-    const record = probe.worklets[index];
-    const configure = probe.workletMessages.filter(item => item.index === index
-      && item.message?.type === 'configure').at(-1)?.message;
-    const peak = Math.max(0, ...probe.workletRms.filter(item => item.index === index)
-      .map(item => Math.max(item.leftRms || 0, item.rightRms || 0, item.rms || 0)));
-    return {
-      outputChannelCount: record?.outputChannelCount,
-      outputGainValues: record?.outputGainNodes?.map(node => node.gain?.value),
-      damping: configure?.payload?.damping,
-      peak
-    };
-  }, baseRecordIndex);
-  assert.deepEqual(baseAB.outputChannelCount, [2], 'base substrate uses the preserved stereo Plate transport');
-  assert.equal(baseAB.damping, 100, 'base substrate uses maximum generic Plate damping');
-  assert.ok(baseAB.peak > 1e-7, 'base substrate produces nonzero output before the first born Plate');
-  assert.ok(baseAB.outputGainValues.some(value => value <= 0.7 * 0.22 + 1e-6),
-    'base substrate output is capped below the born-surface master output');
-
-  await substrateButton.click();
-  await page.waitForFunction(index => {
-    const record = window.__physicalAudioProbe.worklets[index];
-    return document.querySelector('[data-action="ant-substrate"]')?.getAttribute('aria-pressed') === 'false'
-      && record?.portCloses > 0;
-  }, baseRecordIndex, { timeout: 8000 });
-  assert.equal(await page.evaluate(index => window.__physicalAudioProbe.worklets[index]?.portCloses > 0,
-    baseRecordIndex), true, 'substrate Off releases only the auxiliary Plate');
-  assert.equal(await page.evaluate(index => window.__physicalAudioProbe.worklets[index]?.portCloses,
-    indices[0]), 0, 'substrate A/B leaves the born-surface processor running');
 
   await audioButton.click();
   await page.waitForFunction(index => {
