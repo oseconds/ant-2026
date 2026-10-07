@@ -731,6 +731,8 @@ async function verifyAnt(page, requestedUrls) {
   const state = await readState(page);
   assert.equal(state.model, 'ant');
   assert.equal(state.audioExperiment?.mode, 'bornSurface', 'ANT opens with surface-born audio selected');
+  assert.equal(state.audioExperiment?.baseSubstrate, false,
+    'base substrate starts as an explicit A/B option, preserving the born-surface baseline');
   const navigation = await page.locator('nav button[data-model]').evaluateAll(buttons => buttons.map(button => button.dataset.model));
   assert.deepEqual(navigation, ['ant', 'string', 'plate', 'sphere'], 'navigation starts with ANT and retains all supporting models');
   assert.equal((await page.locator('#model-title').textContent()).trim(), 'ANT');
@@ -764,6 +766,12 @@ async function verifyAnt(page, requestedUrls) {
     'ANT exposes one explicit audio toggle');
   const audioButton = page.locator('[data-action="ant-audio"]');
   assert.equal(await audioButton.getAttribute('aria-pressed'), 'false', 'ANT audio starts off');
+  const substrateButton = page.locator('[data-action="ant-substrate"]');
+  assert.equal(await substrateButton.count(), 1, 'ANT exposes one base-substrate A/B toggle');
+  assert.equal(await substrateButton.getAttribute('aria-pressed'), 'false', 'base substrate starts off');
+  assert.equal(await page.locator('#ant-plate-debug').count(), 1, 'ANT exposes one collapsed Plate debug panel');
+  assert.equal(await page.locator('#ant-plate-debug').evaluate(details => details.open), false,
+    'Plate debug stays collapsed in the normal view');
   assert.match(await audioButton.textContent(), /Audio Off/i);
   const volumeSlider = page.locator('#ant-volume');
   assert.equal(await volumeSlider.count(), 1, 'ANT exposes one dedicated volume range');
@@ -1494,6 +1502,8 @@ async function verifyAntAudioToggle(page, audioButton) {
 async function verifyBornSurfaceAudioLifecycle(page, audioButton) {
   const initial = await readState(page);
   assert.equal(initial.audioExperiment?.mode, 'bornSurface', 'new ANT sessions default to born-surface audio');
+  assert.equal(initial.audioExperiment?.baseSubstrate, false,
+    'base substrate remains an explicit A/B option instead of changing the baseline implicitly');
   assert.equal(await page.evaluate(() => window.__physicalAudioProbe.audioContexts.length), 0,
     'born-surface ANT creates no audio context before an explicit gesture');
 
@@ -1540,6 +1550,52 @@ async function verifyBornSurfaceAudioLifecycle(page, audioButton) {
   let indices = await surfaceWorkletIndices();
   assert.equal(indices.length, 1, 'born-surface Audio On creates one surface processor');
   await assertQuietBeforeBirth(indices[0], 'first born-surface processor');
+
+  const substrateButton = page.locator('[data-action="ant-substrate"]');
+  await substrateButton.click();
+  await page.waitForFunction(() =>
+    document.querySelector('[data-action="ant-substrate"]')?.getAttribute('aria-pressed') === 'true'
+    && window.__physicalAudioProbe.worklets.some(item => item.name === 'plate-processor'),
+  null, { timeout: 10000 });
+  const baseRecordIndex = await page.evaluate(() =>
+    window.__physicalAudioProbe.worklets.find(item => item.name === 'plate-processor')?.index);
+  assert.ok(Number.isInteger(baseRecordIndex), 'base substrate creates one existing legacy Plate processor');
+  await page.waitForFunction(index => {
+    const probe = window.__physicalAudioProbe;
+    return probe.workletMessages.some(item => item.index === index && item.message?.type === 'strike')
+      && probe.workletRms.some(item => item.index === index
+        && (item.leftRms > 1e-7 || item.rightRms > 1e-7 || item.rms > 1e-7));
+  }, baseRecordIndex, { timeout: 12000 });
+  const baseAB = await page.evaluate(index => {
+    const probe = window.__physicalAudioProbe;
+    const record = probe.worklets[index];
+    const configure = probe.workletMessages.filter(item => item.index === index
+      && item.message?.type === 'configure').at(-1)?.message;
+    const peak = Math.max(0, ...probe.workletRms.filter(item => item.index === index)
+      .map(item => Math.max(item.leftRms || 0, item.rightRms || 0, item.rms || 0)));
+    return {
+      outputChannelCount: record?.outputChannelCount,
+      outputGainValues: record?.outputGainNodes?.map(node => node.gain?.value),
+      damping: configure?.payload?.damping,
+      peak
+    };
+  }, baseRecordIndex);
+  assert.deepEqual(baseAB.outputChannelCount, [2], 'base substrate uses the preserved stereo Plate transport');
+  assert.equal(baseAB.damping, 100, 'base substrate uses maximum generic Plate damping');
+  assert.ok(baseAB.peak > 1e-7, 'base substrate produces nonzero output before the first born Plate');
+  assert.ok(baseAB.outputGainValues.some(value => value <= 0.7 * 0.22 + 1e-6),
+    'base substrate output is capped below the born-surface master output');
+
+  await substrateButton.click();
+  await page.waitForFunction(index => {
+    const record = window.__physicalAudioProbe.worklets[index];
+    return document.querySelector('[data-action="ant-substrate"]')?.getAttribute('aria-pressed') === 'false'
+      && record?.portCloses > 0;
+  }, baseRecordIndex, { timeout: 8000 });
+  assert.equal(await page.evaluate(index => window.__physicalAudioProbe.worklets[index]?.portCloses > 0,
+    baseRecordIndex), true, 'substrate Off releases only the auxiliary Plate');
+  assert.equal(await page.evaluate(index => window.__physicalAudioProbe.worklets[index]?.portCloses,
+    indices[0]), 0, 'substrate A/B leaves the born-surface processor running');
 
   await audioButton.click();
   await page.waitForFunction(index => {
