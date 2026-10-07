@@ -113,7 +113,7 @@ export function describe(values) {
     min: sorted[0], p10: quantile(0.1), p50: quantile(0.5), p90: quantile(0.9), max: sorted[n - 1] };
 }
 
-function durations(items, isCensored) {
+export function durations(items, isCensored) {
   const completed = items.filter(item => !isCensored(item)), censored = items.filter(isCensored);
   const values = completed.map(item => item.durationSeconds), histogram = Array(BINS.length).fill(0);
   for (const value of values) {
@@ -137,12 +137,13 @@ function overlapSeam(interval, seams) {
   });
 }
 
-function replay(source, bytes, offsets = null, archive = null) {
+export function replay(source, bytes, offsets = null, archive = null, collectDetails = false) {
   const graph = new DynamicSocialGraph({ distanceMultiplier: 2 });
   const states = WINDOWS.map(windowSeconds => ({ windowSeconds, topology: new TemporalSocialTopology({ windowSeconds }),
     samples: Object.fromEntries(['edgeCount', 'componentCount', 'largestComponentRatio', 'weightedDegree',
       'persistentBridgeCount', 'persistentArticulationCount', 'persistentConnectorCount'].map(key => [key, []])) }));
   const timeline = [], connectorPositions = new Map();
+  if (collectDetails) for (const state of states) state.detailSamples = [];
   const seams = offsets ? seamFrames(source, offsets) : new Map();
   for (let tick = 0; tick < source.frames.length; tick += 1) {
     const { at, length, timeSeconds } = source.frames[tick];
@@ -152,6 +153,10 @@ function replay(source, bytes, offsets = null, archive = null) {
     const row = { tick, seconds: timeSeconds, population: frame.agents.length, windows: [] };
     for (const state of states) {
       const snap = state.topology.observe(graph.getSnapshot(state.windowSeconds)), m = snap.metrics;
+      if (collectDetails) state.detailSamples.push({ tick, timeSeconds, nodeCount: m.nodeCount,
+        edgeCount: m.edgeCount, weightedDegreeSum: m.weightedDegrees.reduce((sum, degree) => sum + degree.weightSeconds, 0),
+        persistentBridgeCount: m.persistentBridgeCount, persistentArticulationCount: m.persistentArticulationCount,
+        persistentConnectorCount: m.persistentConnectorCount });
       for (const [key, values] of Object.entries(state.samples)) {
         if (key === 'weightedDegree') for (const degree of m.weightedDegrees) values.push(degree.weightSeconds);
         else values.push(m[key]);
@@ -232,7 +237,10 @@ function replay(source, bytes, offsets = null, archive = null) {
       articulationPersistence: durations(persistentEnds('ARTICULATION_BREAK', 'persistentSeconds'), item => item.rightCensored),
       connectorPersistence: durations(connectors, item => item.rightCensored), connectors };
   });
-  return { raw, windows, timeline, diagnostics: { birthDistanceToOrigin: describe(birthDistances),
+  return { raw, windows, timeline, ...(collectDetails ? { details: { encounters,
+    windows: states.map(state => ({ windowSeconds: state.windowSeconds, samples: state.detailSamples,
+      events: state.topology.getEvents(), edgeLifetimes: state.topology.getEdgeLifetimes() })) } } : {}),
+    diagnostics: { birthDistanceToOrigin: describe(birthDistances),
     seamJumpDistance: describe(seamJumps), seamCount: seams.size,
     seamPolicy: 'Flag raw intervals overlapping either endpoint seam +/- one 60 Hz sample; no frames removed from graph/topology.',
     entryPolicy: 'Count episodes starting exactly on either endpoint first active sample; entryAdjacent also includes the next sample.',
@@ -266,7 +274,7 @@ function measures(run, windowSeconds) {
   };
 }
 
-function compare(observed, values) {
+export function compare(observed, values) {
   const finite = values.filter(Number.isFinite), distribution = describe(finite);
   if (observed === null || !finite.length) return { observed, null: distribution, differenceFromNullMean: null,
     ratioToNullMean: null, standardizedDifference: null, rank: null };
@@ -278,7 +286,7 @@ function compare(observed, values) {
       midPercentile: 100 * (below + equal / 2) / finite.length } };
 }
 
-async function sourceInputs(seed) {
+export async function sourceInputs(seed) {
   const names = ['manifest.json', `seed${seed}-summary.json`, `seed${seed}-trajectory.f64.gz`,
     `seed${seed}-on-timeline.json.gz`, `seed${seed}-on-raw-events.json.gz`];
   const hashes = {}, buffers = {};
@@ -302,7 +310,7 @@ async function sourceInputs(seed) {
   } };
 }
 
-async function assertSourcesUnchanged(hashes) {
+export async function assertSourcesUnchanged(hashes) {
   for (const [name, hash] of Object.entries(hashes)) assert.equal(sha(await readFile(resolve(SOURCE, name))), hash,
     'source archives remain byte-identical');
 }
