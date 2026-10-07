@@ -1,6 +1,6 @@
 # Base substrate / Plate Debug continuation — 2026-10-07
 
-Status: implementation review, matched-seed invariance, tests, build and real Chrome debug visualization checks passed. The dedicated PCM capture failed during the pre-birth On scheduler handshake. Pre-birth silence/nonzero PCM and post-birth masking therefore remain unverified. Default substrate remains **Off**; this pass is retained on `ant-base-substrate-debug`, with no main merge or remote push.
+Status: implementation review, matched-seed invariance, tests, build and real Chrome debug visualization checks passed. The later harness-only PCM repair captured reliable pre-birth and first-Plate A/B. Off silence, On nonzero PCM and identical born Plate PCM are now verified. Post-birth substrate RMS is **29.19 dB above** born Plate RMS; absence of masking remains unverified. Default substrate remains **Off**; this pass is retained on `ant-base-substrate-debug`, with no main merge or remote push.
 
 The starting main commit was `96bcc263827a762000e1fb67b5c0795b919c497e`; the resumed branch commit was `c63634a9ac92019682f86e236794caf0681c5bc5`. Existing branch implementation was inspected and preserved rather than rebuilt. Captures have source hashes because they were made before the continuation commit.
 
@@ -32,13 +32,29 @@ Each Off run also matched an injected read-only copy of main's `TrailPlateBirth`
 
 Raw hashes, all birth descriptors, counters, provenance and limits: [matched-seeds.json](invariance/matched-seeds.json). Harness: [`scripts/ant-base-substrate-invariance.js`](../../../../scripts/ant-base-substrate-invariance.js).
 
-## Audio A/B status — failed gate
+## Audio A/B — initial failure and PCM-only follow-up
 
 The dedicated capture used a fresh natural seed 20261005 run and intended to replay actual bridge routes through Chrome `OfflineAudioContext` AudioWorklets: the 10 seconds immediately before first birth, then the following 10 seconds with isolated born/substrate stems and a duplicate born control.
 
-It stopped with `prebirth On legacy Plate scheduler handshake timed out.` No successful WAV or PCM report was produced. This failure does not establish a production DSP defect, Off silence, On nonzero PCM, or absence of masking after birth. The failure record and frozen harness hash are in [audio/FAILURE.md](audio/FAILURE.md). The existing PCM harness was preserved without further repair or rerun after the user's visualization-only instruction. The subtitle “quiet/short” describes the chosen settings; decay and perceptual masking are not newly demonstrated by this failed capture.
+The initial attempt stopped with `prebirth On legacy Plate scheduler handshake timed out.` No successful WAV or PCM report was produced in that pass. This failure did not establish a production DSP defect or acoustic result. The historical failure record and harness hash remain in [audio/FAILURE.md](audio/FAILURE.md). The harness was preserved during the user's visualization-only instruction.
 
-Browser diagnostics did show installed sleeping → awake layers and delivered base contacts, and ordinary audio smoke tests passed. Those observations do not replace the requested matched first-birth PCM evidence. Default On is not adopted and main integration is withheld.
+The user then explicitly authorized repairing only the PCM scheduler and rerunning the frozen A/B, using existing waveform/spectrogram conventions. Schedule/topology now arrive through constructor-cloned `processorOptions`; the first process block acknowledges frame 0 after rendering starts. Flat report indexing was corrected. A receipt audit also found non-monotonic sub-tick timestamps in the original emission sequence; stable sorting the replay schedules by requested frame preserves every payload/timestamp and equal-frame order while restoring the declared clock mapping. Production DSP, settings, routing and simulation did not change.
+
+The final Chrome 48 kHz capture has ten processors across four conditions, each reporting frame-0 readiness and all 480,000 frames. Pre-birth On dispatches all 561 contact groups; post-birth dispatches all 624 base groups and 63 accepted P1 strike routes per born processor. Off and On born outputs plus the duplicate control are identical over 960,000 channel samples. Every WAV is finite and unclipped. The source stream and Plate hashes match the provisional capture exactly. Legacy dispatch remains at the next 128-frame boundary (measured maximum 127 samples); born routes dispatch at their requested sample.
+
+| Final 10 s condition | Peak, max L/R | RMS, pooled L/R |
+| --- | ---: | ---: |
+| Pre-birth Off | 0 | 0 |
+| Pre-birth On | 0.0429723 | 0.0216270 |
+| First Plate, Off / isolated born | 0.00649256 | 0.000779757 |
+| First Plate window, substrate stem | 0.0442604 | 0.0224675 |
+| First Plate window, On sum | 0.0443426 | 0.0225040 |
+
+Pre-birth simulation window: `[93.0167, 103.0167)` s. First-Plate window: `[103.0167, 113.0167)` s. Each maps to audio `[0, 10)` s at 48 frames per simulation millisecond. Both conditions start from rest; these are controlled window replays, not stitched continuous-live PCM. Unchanged generic Plate strike jitter uses `Math.random`, so the base noise realization can vary between reruns.
+
+The waveform/spectrogram evidence reuses the immutable `ant-surface-stratigraphy-v1` and overview/zoom renderers: waveform ±1, separate L/R, FFT 1024 Hann, hop 256, 0–8 kHz, grayscale −100…0 dBFS, gamma 1, no normalization. Existing FOOT_CONTACT/P1 markers use explicit absolute simulation/audio anchors; the display-only time origin is shifted to each window start. See [audio/README.md](audio/README.md) for PCM, plots, markers, per-channel metrics, source hashes and reproduction.
+
+Substrate RMS is 28.81 times born Plate RMS in this first-Plate window. The measured level imbalance does not prove psychoacoustic masking, but it supplies no acceptance evidence that born Plate audibility is preserved. “Quiet/short” describes the intended settings, not an established result relative to born Plates. No tuning was authorized. Default On is not adopted and main integration remains withheld.
 
 ## Plate geometry visualization
 
@@ -87,4 +103,4 @@ node scripts/ant-plate-debug-visual-evidence.js --production
 node scripts/ant-base-substrate-invariance.js
 ```
 
-Do not treat the preserved PCM script as a passing check: its final failure is recorded above. The long invariance run was not repeated or broadened for the visualization change. Natural browser milestones use the unchanged fixed-tick model with display scheduling frozen; no forced births or overlap were manufactured. The browser evidence is not a mature 20–30 Plate realtime stress test, and the cumulative asynchronous audio/wall display is not a general performance guarantee.
+For the later PCM-only follow-up, run `node scripts/ant-base-substrate-audio-evidence.js`, then `node scripts/ant-base-substrate-audio-visuals.js`. The historical failure and constructor-only provisional report are retained and are not the final accepted timing evidence. The long invariance run and Plate debug evidence were not repeated or broadened for this repair. Natural browser milestones use the unchanged fixed-tick model with display scheduling frozen; no forced births or overlap were manufactured. These captures are not a mature 20–30 Plate realtime stress test, and the cumulative asynchronous audio/wall display is not a general performance guarantee.

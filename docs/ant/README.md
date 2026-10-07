@@ -101,7 +101,7 @@ gait
 
 Plate history는 장기 저장되지만 vibration memory는 짧게 둔다.
 
-`ant-base-substrate-debug` continuation은 optional audio-only base substrate를 **Off 기본값**으로 유지한다. Matched-seed invariance와 Plate Debug geometry/browser 검증은 통과했지만, first-birth PCM capture가 실패하여 pre-birth A/B와 post-birth masking은 미확인이다. Main integration은 보류한다. [설정·검증·실패 기록](evidence/2026-10-07-base-substrate-debug/README.md).
+`ant-base-substrate-debug` continuation은 optional audio-only base substrate를 **Off 기본값**으로 유지한다. Invariance와 Plate Debug 검증 후 PCM harness만 수리해 pre-birth Off silence/On nonzero 및 born Plate Off/On PCM 동일성을 확인했다. First-Plate window의 substrate RMS는 born보다 **29.19 dB 높아**, non-masking acceptance는 미확인이고 main integration은 보류한다. [설정·PCM·고정 스케일 evidence](evidence/2026-10-07-base-substrate-debug/README.md).
 
 mature 20–30 Plate의 AudioWorklet realtime collapse는 unresolved known issue다. Audio/runtime, sleep/wake, ROM optimization은 현재 연구 본선에서 보류한다.
 
@@ -258,7 +258,7 @@ S6+    memory / sensing / closed loop               ONLY IF JUSTIFIED
 - [Plate decay](evidence/2026-10-06-plate-decay/README.md)
 - [Stratigraphy / runtime](evidence/2026-10-06-stratigraphy-runtime/README.md)
 - [Runtime re-check](evidence/2026-10-06-runtime-recheck/README.md)
-- [Base substrate / Plate Debug continuation — PCM gate unresolved](evidence/2026-10-07-base-substrate-debug/README.md)
+- [Base substrate / Plate Debug — PCM captured, non-masking gate unresolved](evidence/2026-10-07-base-substrate-debug/README.md)
 
 ### Social observation
 
