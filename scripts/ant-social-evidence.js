@@ -38,9 +38,11 @@ const output = resolve(String(args.get('--output') || resolve(root, 'test-result
 const seconds = Number(args.get('--seconds') || 600);
 const seeds = String(args.get('--seeds') || '20261005,20261006,20261007').split(',').map(Number);
 
-if (args.has('--selfcheck')) selfcheck();
-else if (args.has('--verify')) await verifyArchive();
-else await main();
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  if (args.has('--selfcheck')) selfcheck();
+  else if (args.has('--verify')) await verifyArchive();
+  else await main();
+}
 
 async function main() {
   assert.ok(Number.isInteger(seconds) && seconds > 0, '--seconds must be a positive integer');
@@ -275,7 +277,7 @@ function trajectoryFrame(timeSeconds, agents, idMap) {
     vx: agent.vx, vy: agent.vy, heading: agent.heading, radius: agent.radius })) };
 }
 
-function encodeFrame(frame) {
+export function encodeFrame(frame) {
   const recordBytes = 4 + 6 * 8;
   const buffer = Buffer.allocUnsafe(12 + frame.agents.length * recordBytes);
   buffer.writeDoubleLE(frame.timeSeconds, 0); buffer.writeUInt32LE(frame.agents.length, 8);
@@ -289,7 +291,7 @@ function encodeFrame(frame) {
   return buffer;
 }
 
-function decodeFrame(buffer, idStrings) {
+export function decodeFrame(buffer, idStrings) {
   const timeSeconds = buffer.readDoubleLE(0), count = buffer.readUInt32LE(8), agents = [];
   assert.equal(buffer.length, 12 + count * 52);
   let offset = 12;
@@ -435,7 +437,7 @@ function pearson(xs, ys) {
 function mean(values) { return values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : 0; }
 function sum(values, select) { return values.reduce((total, value) => total + select(value), 0); }
 
-function trajectoryHeader() {
+export function trajectoryHeader() {
   const header = Buffer.alloc(20);
   Buffer.from('ANTTRJ01').copy(header, 0);
   header.writeUInt32LE(1, 8);
