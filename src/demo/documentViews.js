@@ -129,6 +129,40 @@ export const documentViews = {
     <p class="ant-audio-controls"><button type="button" data-action="ant-audio" aria-pressed="false">Audio Off</button>
       <label for="ant-volume">Volume</label>
       <input id="ant-volume" type="range" data-action="ant-volume" min="0" max="100" step="1" value="100">
-      <output id="ant-volume-value" for="ant-volume">100%</output></p>
-    <p id="ant-diagnostics" aria-label="Live ANT diagnostics"></p>`
+      <output id="ant-volume-value" for="ant-volume">100%</output>
+      <button type="button" data-action="ant-substrate" aria-pressed="false">Base Substrate Off</button></p>
+    <p id="ant-diagnostics" aria-label="Live ANT diagnostics"></p>
+    <details id="ant-plate-debug">
+      <summary>Plate Debug</summary>
+      <p class="ant-debug-note">Read-only diagnostics. Base substrate is an optional quiet legacy Plate and is not part of born material history.</p>
+      <fieldset class="ant-debug-overlays">
+        <legend>Debug overlay</legend>
+        <label><input type="checkbox" data-ant-overlay="surface"> SurfaceField</label>
+        <label><input type="checkbox" data-ant-overlay="candidate"> Birth candidate</label>
+        <label><input type="checkbox" data-ant-overlay="source"> Source annulus</label>
+        <label><input type="checkbox" data-ant-overlay="exposure"> Exposure depth</label>
+        <label><input type="checkbox" data-ant-overlay="plateIds"> Plate IDs</label>
+        <label><input type="checkbox" data-ant-overlay="pheromone" checked> Pheromone</label>
+        <label><input type="checkbox" data-ant-overlay="material" checked> Material</label>
+      </fieldset>
+      <table class="ant-debug-table"><caption>Material / audio status</caption><tbody>
+        <tr><th scope="row">Born Plates</th><td data-ant-debug="plate-count">—</td></tr>
+        <tr><th scope="row">Exposed / fully buried Plates</th><td data-ant-debug="plate-exposure">—</td></tr>
+        <tr><th scope="row">Nodules</th><td data-ant-debug="nodule-count">—</td></tr>
+        <tr><th scope="row">First / latest birth</th><td data-ant-debug="birth-times">—</td></tr>
+        <tr><th scope="row">Base substrate input / delivered</th><td data-ant-debug="substrate-events">—</td></tr>
+        <tr><th scope="row">Born audio layers awake / sleeping</th><td data-ant-debug="audio-layers">—</td></tr>
+        <tr><th scope="row">Surface audio / wall</th><td data-ant-debug="audio-wall">—</td></tr>
+      </tbody></table>
+      <table class="ant-debug-table"><caption>Strongest current birth candidate</caption><tbody>
+        <tr><th scope="row">Chemical</th><td data-ant-debug="candidate-chemical">—</td></tr>
+        <tr><th scope="row">Surface support</th><td data-ant-debug="candidate-support">—</td></tr>
+        <tr><th scope="row">Persistence</th><td data-ant-debug="candidate-persistence">—</td></tr>
+        <tr><th scope="row">Geodesic length</th><td data-ant-debug="candidate-length">—</td></tr>
+        <tr><th scope="row">Repeat contacts</th><td data-ant-debug="candidate-contacts">—</td></tr>
+        <tr><th scope="row">Corridor refractory</th><td data-ant-debug="candidate-refractory">—</td></tr>
+        <tr><th scope="row">Global birth gap</th><td data-ant-debug="candidate-gap">—</td></tr>
+        <tr><th scope="row">Birth ready</th><td data-ant-debug="candidate-ready">—</td></tr>
+      </tbody></table>
+    </details>`
 };
