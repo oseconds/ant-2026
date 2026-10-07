@@ -55,6 +55,38 @@ test('AntRenderer paints equal agent marks and a cached pheromone field without 
   assert.equal(calls.filter(([name]) => name === 'remove').length, 1);
 });
 
+test('Plate debug overlays are opt-in and do not mutate detached snapshots', async () => {
+  const calls = [];
+  const canvas = makeCanvas(makeParent());
+  const renderer = new AntRenderer(canvas, { loadP5: async () => ({ default: makeP5(calls) }) });
+  await renderer.init({ width: 120, height: 120 });
+  const snapshot = {
+    agents: [],
+    pheromone: { width: 2, height: 2, values: new Float32Array([0, 0.1, 0, 0]) },
+    surface: { width: 2, height: 2, values: new Float32Array([0, 0.2, 0, 0]) },
+    surfacePlates: {
+      requirements: { sourceAnnulus: { origin: { x: 0.5, y: 0.72 }, radii: [0.055, 0.115] } },
+      candidate: { source: { x: 0.45, y: 0.72 }, target: { x: 0.05, y: 0.72 },
+        pathPoints: [{ x: 0.45, y: 0.72 }, { x: 0.3, y: 0.72 }, { x: 0.05, y: 0.72 }] }
+    },
+    stratigraphy: { width: 2, height: 2, revision: 1, plates: [],
+      stratigraphy: { topLayerByCell: new Int32Array([-1, -1, -1, -1]),
+        layerCountByCell: new Uint16Array([0, 2, 0, 0]) } }
+  };
+  const before = structuredClone(snapshot);
+  renderer.render(snapshot);
+  const baselineLines = calls.filter(([name]) => name === 'line').length;
+  const baselineCircles = calls.filter(([name]) => name === 'circle').length;
+  renderer.setDebugOptions({ surface: true, candidate: true, source: true, exposure: true });
+  renderer.render(snapshot);
+  assert.ok(calls.filter(([name]) => name === 'line').length > baselineLines,
+    'candidate path is drawn only after opt-in');
+  assert.ok(calls.filter(([name]) => name === 'circle').length > baselineCircles,
+    'surface/exposure diagnostics add debug marks only after opt-in');
+  assert.deepEqual(snapshot, before, 'debug rendering leaves the detached model snapshot unchanged');
+  await renderer.destroy();
+});
+
 test('pheromone display uses two fixed scales with monotonic weak trace and strong route contrast', () => {
   const values = [0, 0.004, 0.01, 0.02, 0.04, 0.05, 0.1, 0.18, 0.4];
   const alpha = values.map(pheromoneValueToAlpha);
