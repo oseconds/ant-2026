@@ -2,6 +2,7 @@
 
 - For ANT work, start with `docs/ant/README.md`. Use `docs/ant/evidence/` for experiment evidence and `docs/ant/daily/` for chronology.
 - For generic String/Plate/Sphere or shared library work, start with `docs/physical-audio-lab.md`.
+- For work spanning ANT and shared audio, read the relevant sections of both guides.
 - The root `README.md` is the public project overview. Consult it when project-level context is useful, but do not treat it as the canonical ANT implementation guide.
 - Before resuming work, inspect `git status`, `git diff` and recent commits. Preserve valid partial/untracked work; never absorb unrelated files into a pass.
 - Work one ANT experiment at a time and prefer small, falsifiable passes. Do not tune behavior merely to manufacture a desired visual/social pattern.
