@@ -168,6 +168,12 @@ k=2 / 0.25 s connector는 총 11건, 0.30–0.65 s였다. 전부 recruitment ori
 
 전체 수치와 raw archive: [2026-10-07 social graph evidence](evidence/2026-10-07-social-graph/README.md).
 
+## S2a first synchrony null — 2026-10-08
+
+Replayed the existing three 600 s archives with 32 deterministic per-ant circular whole-tuple phase shifts per seed. At k=2 / 1 s, original mean edge counts (1.07–1.24) were below every within-seed null value (null means 2.69–3.02); original short connector counts overlapped null variation. Every rotation preserved the archived ID/lifecycle mask and individual tuple sequence, and all source archives remained byte-identical.
+
+The comparator moves birth/recruitment-origin alignment and introduces discontinuous circular seams; approximately 54–57% of null raw episodes were seam-flagged. It does not preserve instantaneous colony density or collision exclusion. S2a is complete as a first synchrony test, while full movement-constrained validation and social organization remain unestablished. [Method, limitations and seed-level evidence](evidence/2026-10-08-s2a-null/README.md).
+
 ## Social graph vs material graph
 
 ### Social graph
@@ -213,7 +219,7 @@ Research evidence와 artistic/modeling interpretation을 구분한다. Graph spe
 
 ### Research gate
 
-다음 research gate는 **movement-constrained null validation**이다.
+S2a first synchrony-breaking null은 완료했다. 다음 연구 결정은 **더 강한 spatial/movement-constrained null validation**이며, birth/recruitment-origin alignment, circular seams, density와 collision confounds를 다뤄야 한다. 두 번째 family는 아직 선택하거나 실행하지 않았다.
 
 우선순위:
 
@@ -255,7 +261,8 @@ current metallic / resonant / long-tail substrate
 
 ```text
 S0/S1  dynamic graph + temporal observables        COMPLETE
-S2     movement-constrained null validation        NEXT
+S2a    first trajectory synchrony null             COMPLETE
+S2     stronger movement-constrained validation    PENDING DECISION
 S3     spectral diagnostics if they add value      CONDITIONAL
 S4     social ↔ material comparison                LATER
 S5     weak one-way mapping                        LATER
@@ -284,6 +291,7 @@ S6+    memory / sensing / closed loop               ONLY IF JUSTIFIED
 ### Social observation
 
 - [S0/S1 DynamicSocialGraph evidence](evidence/2026-10-07-social-graph/README.md)
+- [S2a trajectory synchrony null](evidence/2026-10-08-s2a-null/README.md)
 
 ## Daily chronology
 

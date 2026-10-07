@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "inputs": [
+    "summary.json",
+    "seed20261005.json.gz",
+    "seed20261006.json.gz",
+    "seed20261007.json.gz"
+  ],
+  "outputs": [
+    "run-summaries.png",
+    "one-second-timelines.png",
+    "completed-lifetimes.png"
+  ],
+  "interpretation": "Descriptive observed-versus-null plots only. Null bands are pointwise 10th\u201390th percentiles; no p-values or decision thresholds.",
+  "scales": {
+    "runSummaries": {
+      "description": "Per-metric shared linear scale across all four windows, seeds, observed values, and individual null replicates; y floor is zero.",
+      "yLimits": {
+        "edgeCount": [
+          0,
+          10.574368802599784
+        ],
+        "componentCount": [
+          0,
+          18.817756853595537
+        ],
+        "largestComponentRatio": [
+          0,
+          1.0
+        ],
+        "weightedDegree": [
+          0,
+          1.0
+        ],
+        "bridgePersistEvents": [
+          0,
+          672.0
+        ],
+        "articulationPersistEvents": [
+          0,
+          70.35000000000001
+        ],
+        "connectorPersistEvents": [
+          0,
+          17.85
+        ],
+        "mergeCount": [
+          0,
+          927.1500000000001
+        ],
+        "splitCount": [
+          0,
+          905.1
+        ]
+      }
+    },
+    "timelines": {
+      "description": "Per-metric shared linear scale across seeds; y floor is zero. Bands are pointwise null p10\u2013p90.",
+      "yLimits": {
+        "edgeCount": [
+          0.0,
+          39.79500000000001
+        ],
+        "componentCount": [
+          0.0,
+          24.1
+        ],
+        "largestComponentRatio": [
+          0.0,
+          1.0478260869565217
+        ],
+        "weightedDegreeMean": [
+          0.0,
+          1.5013333333325696
+        ]
+      }
+    },
+    "lifetimes": {
+      "description": "All five facets share one linear normalized-frequency y scale. Generator lowerBoundsSeconds bins are equally spaced categories; bands are pointwise null p10\u2013p90.",
+      "yLimits": [
+        0.0,
+        0.988608870967742
+      ]
+    }
+  },
+  "seedColors": {
+    "20261005": "#2878b5",
+    "20261006": "#e07a24",
+    "20261007": "#3a9d5d"
+  },
+  "windowLabels": {
+    "0.25": "transient",
+    "1": "primary",
+    "5": "memory sensitivity",
+    "20": "memory sensitivity"
+  }
+}
