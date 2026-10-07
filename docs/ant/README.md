@@ -1,6 +1,6 @@
 # ANT — Current Architecture, Evidence and Research Boundary
 
-**Current repository state: 2026-10-07**
+**Current repository state: 2026-10-08**
 
 이 문서는 ANT의 **현재 verified state**를 위한 GitHub-side hub다. 과정은 [daily logs](daily/README.md), 실험별 원본과 재현 자료는 [evidence packages](evidence/)에 둔다.
 
@@ -101,7 +101,9 @@ gait
 
 Plate history는 장기 저장되지만 vibration memory는 짧게 둔다.
 
-`ant-base-substrate-debug` continuation의 optional audio-only base substrate 기본값은 **Off**다. Frozen P1 Candidate D는 Plate pickup ×1 / Sphere `1/sqrt(12)`, substrate ratio `.015`다. B/C/D는 동일한 input, P1 descriptor, 63 accepted strikes, 44 matched parent groups와 playback/분석 창을 사용했다. D의 첫-birth 10 s all-event substrate RMS는 born-only P1보다 **4.72 dB 낮고** (C 대비 +3.52 dB, B 대비 −4.44 dB); pre-birth Off는 silence, On은 nonzero다. Candidate D stems에도 +18/+20 dB 공통 post-gain listening exports를 만들었으며 P1/substrate 상대 밸런스는 유지됐다. 브라우저 페이지에서 A-Off와 B/C/D를 원래 PCM level로 비교할 수 있고, 청감 결정은 아직 기록하지 않았다. 새 numeric threshold는 두지 않았으며 default는 계속 Off, main integration은 보류한다. [Candidate D PCM·고정 스케일 evidence](evidence/2026-10-07-base-substrate-debug/audio/calibration-0.015/README.md) · [Candidate C `.010`](evidence/2026-10-07-base-substrate-debug/audio/calibration-0.010/README.md) · [Candidate B `.025`](evidence/2026-10-07-base-substrate-debug/audio/calibration-0.025/README.md) · [shared +18/+20 dB evidence](evidence/2026-10-08-candidate-d-absolute-level/README.md).
+Optional audio-only base substrate tooling/evidence is now integrated on `main` via PR #1, but the feature default remains **Off**. Frozen P1 calibration compared B `.025`, C `.010`, and D `.015` with identical input, P1 descriptor, 63 accepted strikes, 44 matched parent groups and playback/analysis windows. D's first-birth 10 s all-event substrate RMS is **4.72 dB below** born-only P1 (C: −8.24 dB, B: −0.29 dB); pre-birth Off is exact silence and On is nonzero. Shared +18/+20 dB post-gain exports preserved the P1/substrate balance while making the stems directly audible and the fixed-scale plots easier to read.
+
+The later listening judgment is **subjective/artistic, not a numeric acceptance rule**: at an audible absolute level Candidate D felt too dominant, and the current substrate character read as too metallic with too much resonant decay. Therefore `.015` is retained as calibration evidence, not an adopted production balance. The next audio side-pass should isolate timbre/material character first—toward a duller, sand-like, granular/noisy response with shorter ringing—before any final ratio calibration. No biological claim is attached to that timbral direction. [Candidate D PCM·fixed-scale evidence](evidence/2026-10-07-base-substrate-debug/audio/calibration-0.015/README.md) · [Candidate C `.010`](evidence/2026-10-07-base-substrate-debug/audio/calibration-0.010/README.md) · [Candidate B `.025`](evidence/2026-10-07-base-substrate-debug/audio/calibration-0.025/README.md) · [shared +18/+20 dB evidence](evidence/2026-10-08-candidate-d-absolute-level/README.md).
 
 Frozen P1 pickup-distance diagnosis found a clear midpoint drop but a far-branch counterexample; this supports pickup locality without establishing a monotonic distance law. No candidate topology was tested. [거리/RMS 상관과 동일 세기 위치별 PCM](evidence/2026-10-07-base-substrate-debug/audio/pickup-distance-readout/README.md).
 
@@ -207,9 +209,11 @@ history-derived
 
 Research evidence와 artistic/modeling interpretation을 구분한다. Graph spectral mode → material excitation은 향후 가능한 artistic/mathematical mapping이지 ant biology의 검증된 mechanism이 아니다.
 
-## Next pass
+## Current next work
 
-다음 pass는 **movement-constrained null validation**이다.
+### Research gate
+
+다음 research gate는 **movement-constrained null validation**이다.
 
 우선순위:
 
@@ -233,6 +237,19 @@ recorded lossless trajectories
 > 현재 graph event가 raw position, recruitment density, movement geometry를 넘어 추가 정보를 가지는가?
 
 Null에서도 설명되지 않는 structure가 있을 때만 spectral diagnostics를 검토한다.
+
+### Audio side-pass
+
+Social-graph research gate와 별도로, optional base substrate는 **timbre-only material-character pass**를 한 번 더 연다.
+
+```text
+current metallic / resonant / long-tail substrate
+→ duller
+→ sand-like / granular / noisy
+→ shorter ringing
+```
+
+이 pass에서는 behavior, Plate birth/material semantics, P1 sonic baseline을 바꾸지 않고 substrate timbre만 격리해서 본다. 현재 B/C/D ratio 결과는 상대 레벨 calibration evidence로 보존하며, timbre가 바뀐 뒤에만 짧은 level recalibration을 다시 한다.
 
 현재 roadmap:
 
