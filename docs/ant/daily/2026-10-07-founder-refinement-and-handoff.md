@@ -588,3 +588,11 @@ NEXT
 ROADMAP
 = graph → temporal → null → spectral(if useful) → social/material comparison
 ```
+
+## Repository maintenance — rename (2026-10-07)
+
+- GitHub repository renamed `oseconds/codex-simul` → `oseconds/ant-2026`; local directory renamed `codex-simul` → `ant-2026`.
+- `origin` updated to `https://github.com/oseconds/ant-2026.git`. After the rename, `main` remained clean and aligned with `origin/main`.
+- Historical evidence may retain old absolute paths such as `...\codex-simul\...`; these are provenance and must remain unchanged.
+
+Repository maintenance only. No simulation, behavior, experimental evidence, or architecture changed.
