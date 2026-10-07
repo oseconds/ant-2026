@@ -2,6 +2,7 @@ import { AntAudioBridge } from './AntAudioBridge.js';
 import { SurfaceAudioBridge } from './SurfaceAudioBridge.js';
 
 export const ANT_BASE_SUBSTRATE_OUTPUT_RATIO = 0.22;
+export const ANT_BASE_SUBSTRATE_DAMPING = 1;
 
 /** Select an isolated ANT acoustic experiment while sharing the application's engine. */
 export class AntEnvironmentAudioBridge {
@@ -55,7 +56,14 @@ export class AntEnvironmentAudioBridge {
       this.legacy.stop();
       return this.legacy.cleanupPromise || Promise.resolve(false);
     }
-    return Promise.resolve(this.legacy.setEnabled(true)).then(() => true);
+    return this.startBaseSubstrate();
+  }
+
+  startBaseSubstrate() {
+    return Promise.resolve(this.legacy.setEnabled(true)).then((enabled) => {
+      if (enabled) this.legacy.plate?.configure?.({ damping: ANT_BASE_SUBSTRATE_DAMPING });
+      return Boolean(enabled);
+    });
   }
 
   setVolume(value) {
@@ -87,7 +95,7 @@ export class AntEnvironmentAudioBridge {
     if (this.mode === 'legacy') return this.legacy.setEnabled(true);
     const primary = Promise.resolve(this.surface.setEnabled(true));
     if (!this.baseSubstrateEnabled) return primary;
-    const substrate = Promise.resolve(this.legacy.setEnabled(true));
+    const substrate = this.startBaseSubstrate();
     return Promise.all([primary, substrate]).then(([surfaceEnabled, substrateEnabled]) =>
       Boolean(surfaceEnabled && substrateEnabled));
   }
@@ -113,6 +121,7 @@ export class AntEnvironmentAudioBridge {
       baseSubstrate: {
         enabled: this.baseSubstrateEnabled,
         outputRatio: ANT_BASE_SUBSTRATE_OUTPUT_RATIO,
+        damping: ANT_BASE_SUBSTRATE_DAMPING,
         audioActive: this.legacy.enabled,
         inputGroups: this.baseSubstrateDiagnostics.inputGroups,
         deliveredGroups: this.baseSubstrateDiagnostics.deliveredGroups
