@@ -69,6 +69,8 @@ test('optional base substrate adds a quiet legacy Plate before born material wit
     ] };
   assert.equal(await bridge.handleFootContact(event, { responses: [] }), true,
     'base substrate can sound before any born material route exists');
+  assert.ok(handles[baseIndex].sent.some(message => message.type === 'configure'
+    && message.payload?.damping === 100), 'base substrate uses the maximum generic Plate damping');
   assert.ok(handles[baseIndex].sent.some(message => message.type === 'strike'));
   const diagnostics = bridge.getDiagnostics();
   assert.equal(diagnostics.baseSubstrate.inputGroups, 1);
