@@ -1515,6 +1515,7 @@ async function verifyBaseSubstrateAB(page, audioButton) {
     return state.audioExperiment?.mode === 'bornSurface' && state.audioExperiment?.baseSubstrate === false;
   });
 
+  const selectedVolume = await readAntAudioVolume(page);
   const baseline = await page.evaluate(() => ({
     surfaces: window.__physicalAudioProbe.worklets.filter(item => item.name === 'surface-plate-processor').length,
     plates: window.__physicalAudioProbe.worklets.filter(item => item.name === 'plate-processor').length
@@ -1561,7 +1562,7 @@ async function verifyBaseSubstrateAB(page, audioButton) {
   assert.deepEqual(result.baseOutputChannelCount, [2], 'base substrate uses the preserved stereo Plate transport');
   assert.equal(result.damping, 100, 'base substrate uses maximum generic Plate damping');
   assert.ok(result.peak > 1e-7, 'base substrate produces nonzero output before the first born Plate');
-  assert.ok(result.baseGain <= 0.7 * 0.35 * 0.22 + 1e-6,
+  assert.ok(result.baseGain <= 0.7 * selectedVolume * 0.22 + 1e-6,
     'base substrate stays below the current ANT master output');
   assert.equal(result.surfaceClosed, false, 'base substrate runs beside, not instead of, the born-surface processor');
 
