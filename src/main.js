@@ -300,6 +300,15 @@ export function mountLab(root) {
           ? `${candidate.repeat.refractoryRemainingSeconds.toFixed(1)} s remaining` : 'first corridor');
         setDebug('candidate-gap', `${candidate.globalGapRemainingSeconds.toFixed(1)} s remaining`);
         setDebug('candidate-ready', candidate.birthReady ? 'yes' : 'no');
+      } else if (requirements && birth?.inputDiagnostics) {
+        const progress = birth.inputDiagnostics;
+        setDebug('candidate-chemical',
+          `max ${progress.maxChemical.toFixed(3)} / ${requirements.chemicalThreshold.toFixed(2)} · ${progress.chemicalQualifiedCells} cells`);
+        setDebug('candidate-support',
+          `max ${progress.maxSupport.toFixed(3)} / ${requirements.supportThreshold.toFixed(3)} · ${progress.supportedCells} cells`);
+        setDebug('candidate-persistence', 'no complete source→boundary route');
+        for (const key of ['candidate-length', 'candidate-contacts', 'candidate-refractory',
+          'candidate-gap', 'candidate-ready']) setDebug(key, '—');
       } else {
         for (const key of ['candidate-chemical', 'candidate-support', 'candidate-persistence',
           'candidate-length', 'candidate-contacts', 'candidate-refractory', 'candidate-gap',
