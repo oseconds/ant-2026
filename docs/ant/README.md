@@ -230,6 +230,10 @@ There is no prescribed destination or global reward in this design. Agent presen
 
 The full design contract, implemented-vs-proposed boundary and staged plan are in [`world-model.md`](world-model.md). Current production remains frozen until each new causal link is separately tested and authorized.
 
+## Future hypothesis — Material-mediated social dynamics
+
+[**Material-mediated Social Dynamics (2026-10-09 concept note)**](material-mediated-social-dynamics.md) explores a **proposed, not implemented** pathway: fixed history-derived Plate character → temporary organism-state after-effect → possible encounter-mediated influence → later environmental consequences. It explicitly separates changing place conditions from immutable Plate character, and treats “ant paradise / ant hell” as retrospective observational metaphors, not built-in Plate types or success targets. The S0–S2c social baseline remains read-only/parked; the active W1→W2→W3 roadmap is unchanged. [Design discussion chronology](daily/2026-10-09-material-mediated-social-dynamics.md).
+
 ## Current research boundary
 
 현재 **하지 않는 것**:
