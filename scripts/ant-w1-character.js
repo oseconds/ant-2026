@@ -1,4 +1,12 @@
 const TIME_EPSILON = 1e-9;
+const TICK_SECONDS = 1 / 60;
+export const W1_CHARACTER_SOURCE = Object.freeze({
+  directionalOrder: Object.freeze({
+    name: 'cumulative-same-cell-foot-contact-nematic-order',
+    definition: 'Travel-weighted nematic order of unique movement segments at actual same-cell FOOT_CONTACTs in [0, episode close] with 1e-9 s endpoint tolerance, including pre-admission contacts.',
+    limitation: 'Cumulative contacts may be stale or reused across episodes; this is not an exact causal decomposition of crystallizer EMA.'
+  })
+});
 
 export class W1CharacterDataGapError extends Error {
   constructor(code, details) {
@@ -76,12 +84,13 @@ export function createW1CharacterContext({ frames, flags, feet, width, height })
     }
     if (!observations) throw new W1CharacterDataGapError('NO_OBSERVED_CELL_SAMPLES', { episodeId: episode.id, cells: cells.length });
     const consolidation = cellFractionSum / cells.length;
-    const segmentByKey = new Map();
-    let missingDirectionFeet = 0, segmentsStartingBeforeAdmission = 0, maxPreAdmissionSeconds = 0;
+    const segmentByKey = new Map(), legacyPreAdmissionSegments = new Set();
+    let missingDirectionFeet = 0, maxPreAdmissionSeconds = 0, maxPreAdmissionContactSeconds = 0;
     for (const foot of feet) {
       const admittedAt = admissionTimes.get(foot.cellIndex);
-      if (admittedAt === undefined || foot.timeSeconds + TIME_EPSILON < admittedAt ||
-          foot.timeSeconds > episode.closeTimeSeconds + TIME_EPSILON) continue;
+      if (admittedAt === undefined) continue;
+      // Direction uses actual same-cell contacts from time zero through closure; source motion is one completed 60 Hz tick old.
+      if (foot.timeSeconds > episode.closeTimeSeconds + TIME_EPSILON) continue;
       if (!foot.directionAvailable) { missingDirectionFeet += 1; continue; }
       if (foot.segmentEndSeconds > foot.timeSeconds + TIME_EPSILON) {
         throw new RangeError('direction segment must be completed by the foot time');
@@ -89,23 +98,28 @@ export function createW1CharacterContext({ frames, flags, feet, width, height })
       const key = `${foot.antId}\u0000${foot.segmentEndSeconds}`;
       const existing = segmentByKey.get(key);
       if (existing) {
-        if (!sameNumber(existing.travelDistance, foot.travelDistance) ||
-            !sameNumber(existing.nematicX, foot.nematicX) || !sameNumber(existing.nematicY, foot.nematicY) ||
-            !sameNumber(existing.segmentStartSeconds, foot.segmentStartSeconds)) {
+        if (!sameNumber(existing.foot.travelDistance, foot.travelDistance) ||
+            !sameNumber(existing.foot.nematicX, foot.nematicX) || !sameNumber(existing.foot.nematicY, foot.nematicY) ||
+            !sameNumber(existing.foot.segmentStartSeconds, foot.segmentStartSeconds)) {
           throw new TypeError('duplicate ant movement segment has inconsistent direction or travel distance');
         }
-        continue;
       }
       if (foot.travelDistance <= 0) continue;
-      segmentByKey.set(key, foot);
-      if (foot.segmentStartSeconds < admittedAt) {
-        segmentsStartingBeforeAdmission += 1;
+      const beforeAdmission = foot.timeSeconds < admittedAt;
+      if (!existing) segmentByKey.set(key, { foot, preAdmissionContactSeconds: 0 });
+      const segment = segmentByKey.get(key);
+      if (beforeAdmission) {
+        segment.preAdmissionContactSeconds = Math.max(segment.preAdmissionContactSeconds,
+          admittedAt - foot.timeSeconds);
+        maxPreAdmissionContactSeconds = Math.max(maxPreAdmissionContactSeconds, segment.preAdmissionContactSeconds);
+      } else if (foot.segmentStartSeconds < admittedAt) {
+        legacyPreAdmissionSegments.add(key);
         maxPreAdmissionSeconds = Math.max(maxPreAdmissionSeconds, admittedAt - foot.segmentStartSeconds);
       }
     }
     let x = 0, y = 0, travelWeight = 0;
     const ants = new Set();
-    for (const foot of segmentByKey.values()) {
+    for (const { foot } of segmentByKey.values()) {
       const magnitude = Math.hypot(foot.nematicX, foot.nematicY);
       x += foot.travelDistance * foot.nematicX / magnitude;
       y += foot.travelDistance * foot.nematicY / magnitude;
@@ -115,7 +129,11 @@ export function createW1CharacterContext({ frames, flags, feet, width, height })
     if (!(travelWeight > 0)) {
       throw new W1CharacterDataGapError('NO_VALID_DIRECTIONAL_TRAVEL', {
         episodeId: episode.id, candidateFeet: missingDirectionFeet, missingDirectionFeet,
-        cells: cells.length, closeTimeSeconds: episode.closeTimeSeconds
+        cells: cells.length, closeTimeSeconds: episode.closeTimeSeconds,
+        characterSource: W1_CHARACTER_SOURCE,
+        partialCharacter: { consolidation },
+        partialEvidence: { nQualifiedSamples: qualified, nObservations: observations,
+          preAdmissionDirectionalSegments: 0, maxPreAdmissionContactSeconds, directionalWindowStartSeconds: 0 }
       });
     }
     return {
@@ -127,8 +145,11 @@ export function createW1CharacterContext({ frames, flags, feet, width, height })
         nQualifiedSamples: qualified, nObservations: observations,
         uniqueDirectionalSegments: segmentByKey.size, uniqueAnts: ants.size,
         missingDirectionFeet, travelWeight,
-        segmentsStartingBeforeAdmission, maxPreAdmissionSeconds
-      }
+        segmentsStartingBeforeAdmission: legacyPreAdmissionSegments.size, maxPreAdmissionSeconds,
+        preAdmissionDirectionalSegments: [...segmentByKey.values()].filter(segment => segment.preAdmissionContactSeconds > 0).length,
+        maxPreAdmissionContactSeconds, directionalWindowStartSeconds: 0
+      },
+      characterSource: W1_CHARACTER_SOURCE
     };
   }
 
@@ -145,6 +166,8 @@ function validateFoot(foot, index, cellCount) {
   if (!foot.directionAvailable) return;
   if (![foot.nematicX, foot.nematicY, foot.segmentStartSeconds, foot.segmentEndSeconds, foot.travelDistance].every(Number.isFinite) ||
       foot.segmentStartSeconds < 0 || foot.segmentEndSeconds < foot.segmentStartSeconds || foot.travelDistance < 0 ||
+      foot.segmentEndSeconds - foot.segmentStartSeconds > TICK_SECONDS + TIME_EPSILON ||
+      foot.timeSeconds - foot.segmentEndSeconds > TICK_SECONDS + TIME_EPSILON ||
       Math.hypot(foot.nematicX, foot.nematicY) === 0) {
     throw new TypeError(`invalid directed foot row at index ${index}`);
   }
