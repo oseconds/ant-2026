@@ -14,6 +14,17 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-09 — Material-mediated social dynamics hypothesis (design only)
+
+[Concept note](../material-mediated-social-dynamics.md) · [Process log](./2026-10-09-material-mediated-social-dynamics.md)
+
+- Fixed Plate character vs changing environmental condition / organism consequence
+- Portable, decaying material after-effects on ant internal state; vitality beyond activity alone is a future candidate
+- Ant–ant encounter as a separately testable link; distinguish encounter opportunity from true encounter-mediated influence
+- “Ant paradise / ant hell” as emergent, reversible observations, **not** predefined good/bad/trap Plate behaviors
+- **No experiments or production changes**; W1-first roadmap and S0–S2c parked read-only baseline preserved
+
+
 ### 2026-10-08 — Persistent-world / sounding-world pivot
 
 [`2026-10-08-persistent-world-pivot.md`](./2026-10-08-persistent-world-pivot.md) · [Persistent-world contract](../world-model.md)
