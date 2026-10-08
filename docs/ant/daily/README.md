@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-08 — One local-accretion shadow family
+
+[Chronology](./2026-10-08-local-accretion-shadow.md) · [Design](./2026-10-08-local-accretion-shadow-design.md) · [Evidence](../evidence/2026-10-08-local-accretion-shadow/README.md)
+
+- User-authorized hash-verified saved snapshots close four-cell omissions on 25 timestamps; original evidence unchanged, no ANT rerun
+- One local persistence field retains more early raster topology and reduces cell-weighted re-inscription
+- Final 64–65% occupancy converges to dense fans; counted islands/holes are mostly tiny, so durable vocabulary remains unproven
+- Mixed result; production unchanged; stop after this family
+
 ### 2026-10-08 — Interior endpoint production candidate rejected
 
 [`2026-10-08-interior-endpoint-production-rejection.md`](./2026-10-08-interior-endpoint-production-rejection.md)
