@@ -60,8 +60,8 @@ DynamicSocialGraph
 TemporalSocialTopology
 ```
 
-- **social graph**: 빠르고 이동하며 일시적인 현재 관계의 관찰
-- **material graph**: 느리고 공간적이며 과거 반복 행동이 환경에 고정된 역사
+- **social graph**: 빠르고 이동하며 일시적인 현재 관계의 관찰. S0–S2c 검증 뒤 현재는 행동에 연결하지 않는 parked diagnostic baseline으로 유지합니다.
+- **material graph**: 느리고 공간적이며 과거 반복 행동이 환경에 고정된 역사. 현재 프로젝트의 생성적 중심은 이 material/history 축입니다.
 
 자세한 현재 구조와 연구 경계는 [ANT documentation hub](docs/ant/README.md)에 정리합니다.
 
@@ -113,7 +113,7 @@ Plate의 존재는 오래 유지되지만 vibration memory는 짧게 분리했�
 
 단, mature 20–30 Plate에서 AudioWorklet render progression이 realtime을 따라가지 못하는 문제는 **해결되지 않은 known issue**이며 현재 보류 중입니다.
 
-### 5. S0/S1 read-only social graph
+### 5. S0–S2c read-only social observation
 
 2026-10-07에 `DynamicSocialGraph`와 `TemporalSocialTopology`를 별도 관찰 라이브러리로 추가했습니다.
 
@@ -142,7 +142,11 @@ S0는 60 Hz에서 encounter start/end, duration, minimum distance와 stable ID�
 
 따라서 현재 결과는 pioneer/social role의 증거가 아닙니다. proximity, recruitment density, temporal-window memory 효과로 제한해서 해석합니다.
 
-전체 정의·수치·raw data·재현 명령: [S0/S1 social graph evidence](docs/ant/evidence/2026-10-07-social-graph/README.md).
+후속 S2a/S2b null 검증과 S2c leave-one-seed-out predictive-value check까지 진행했지만, 선택한 temporal graph summaries는 compact spatial/movement baseline 위에서 일관된 추가 예측력을 보이지 않았습니다. 현재 결정은 **spectral SKIP**이며 social graph는 read-only diagnostic layer로 parked 상태입니다.
+
+이 baseline은 버리지 않습니다. 나중에 명시적인 relationship / partner memory / social mechanism을 추가하는 별도 가설이 생기면, 현재의 **no-relationship frozen baseline**을 대조군으로 다시 사용해 같은 관찰 정의와 matched conditions에서 비교합니다.
+
+전체 정의·수치·raw data·재현 명령: [S0/S1 social graph evidence](docs/ant/evidence/2026-10-07-social-graph/README.md), [S2a](docs/ant/evidence/2026-10-08-s2a-null/README.md), [S2b](docs/ant/evidence/2026-10-08-s2b-null/README.md), [S2c](docs/ant/evidence/2026-10-08-s2c-incremental-value/README.md).
 
 ## 현재 상태
 
@@ -153,12 +157,16 @@ S0는 60 Hz에서 encounter start/end, duration, minimum distance와 stable ID�
 | SurfaceField / Plate birth / stratigraphy | active, frozen qualification |
 | sonic baseline | 3 ms / 75 ms / ×50 damping |
 | mature AudioWorklet runtime | unresolved, deferred |
-| S0/S1 social observation | complete |
+| S0–S2c social observation / validation | complete; parked diagnostic baseline |
 | persistent pioneer-like organization | not demonstrated |
-| next research pass | movement-constrained null validation |
-| spectral / social feedback / Plate coupling | not yet justified |
+| spectral diagnostics | SKIP at current gate |
+| current active pass | Material Voice — sand-like base substrate timbre |
+| next material pass | Material History — long-run morphology / stratigraphy observability |
+| social feedback / graph→Plate coupling | not justified; parked |
 
-다음 단계는 recorded trajectories를 보존한 채 encounter synchrony와 temporal alignment를 깨는 **movement-constrained / trajectory-preserving null model**입니다. Null validation 전에 λ₂/eigenmode나 social→material coupling으로 넘어가지 않습니다.
+현재 개발축은 **movement → chemical/mechanical memory → frozen material history → physical vibration/sound**에 둡니다. Social observation은 이 생성계의 독립 원인으로 취급하지 않고 옆에서 읽는 기준선으로 보존합니다.
+
+향후 explicit relationship / partner memory / social rule을 도입하는 별도 연구를 열 경우, 현재 S0–S2c 상태를 frozen no-relationship control로 삼아 같은 seed/관찰 정의/검증 절차로 비교한 뒤에만 추가 social mechanism의 효과를 주장합니다.
 
 ## Documentation map
 

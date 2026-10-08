@@ -180,31 +180,37 @@ S2b completed eight deterministic five-second identity permutations per seed whi
 
 S2c used only the three natural archives to predict an existing k=2 / 1 s component merge in the next second. Leave-one-seed-out logistic models compared five current spatial/movement features with three additional causal graph summaries. Future-merge prevalence was 30–32%. Primary added-minus-baseline ROC AUC was +0.002855 / −0.025544 / −0.008080; average precision and Brier likewise improved seed 05 slightly and worsened seeds 06/07. A training alignment control also produced small gains. **Decision: spectral SKIP at this gate; no consistent held-out additional-value signal.** This concerns the selected features/model, not all possible temporal information or social organization. [S2c definitions, leakage audit, results and reproduction](evidence/2026-10-08-s2c-incremental-value/README.md).
 
-## Social graph vs material graph
+## Social observation vs material generation
 
-### Social graph
+### Social observation
 
 ```text
 fast
 mobile
 ephemeral
-current/recent interaction-derived
+current/recent proximity-derived
+read-only / parked baseline
 ```
 
-### Material graph
+S0–S2c 결과에서 현재 social topology를 독립적인 생성 원인이나 causal layer로 올릴 근거는 확인되지 않았다. 따라서 social graph는 버리지 않고 **현재 movement system을 읽는 frozen diagnostic baseline**으로 유지한다.
+
+향후 explicit relationship / partner memory / social mechanism을 별도 가설로 도입할 경우, 이 no-relationship baseline과 matched seed / observer semantics로 다시 비교한다. 그때 차이가 재현될 때에만 social mechanism의 추가 효과를 논의한다.
+
+### Material generation
 
 ```text
-slow
-spatial
-persistent
-history-derived
+movement
+→ chemical memory
+→ FOOT_CONTACT / mechanical memory
+→ frozen Plate / stratigraphy
+→ physical vibration / sound
 ```
 
-장기 연구 질문은:
+이 축은 현재 구현과 evidence가 직접 연결되는 생성계다. 현재 프로젝트의 중심 질문은 social topology를 material의 원인으로 가정하는 대신:
 
-> transient social topology가 repeated traffic을 거쳐 persistent material topology로 전환되는가?
+> 현재 행동이 사라진 뒤에도 반복 행동의 역사가 환경의 물질 구조와 소리로 남는가?
 
-이지만, 아직 둘을 coupling하지 않는다.
+로 둔다.
 
 ## Current research boundary
 
@@ -227,32 +233,48 @@ Research evidence와 artistic/modeling interpretation을 구분한다. Graph spe
 
 S2a synchrony null, S2b exact-spatial identity null and S2c incremental predictive-value check are complete. S2a/S2b retain their recruitment/seam and remap/turnover limitations. S2c found no consistent held-out gain from the selected simple temporal graph summaries beyond the compact current-frame baseline.
 
-The current decision is **spectral SKIP**. Keep social topology as a read-only derived observation layer. Do not escalate automatically to another null, spectral diagnostics, roles, adaptive memory, feedback or material coupling. This bounded comparison does not prove that every temporal summary is redundant. Any revised hypothesis or research pass requires separate authorization.
+The current decision is **spectral SKIP**. Keep social topology as a read-only derived observation layer and frozen no-relationship comparison baseline. Do not escalate automatically to another null, spectral diagnostics, roles, adaptive memory, feedback or material coupling. This bounded comparison does not prove that every temporal summary is redundant.
 
-### Audio side-pass
+A future relationship/memory hypothesis may reopen social research, but it must be introduced as a new explicit mechanism and compared against the current frozen baseline under matched seeds, movement conditions and observer definitions.
 
-Social-graph research gate와 별도로, optional base substrate는 **timbre-only material-character pass**를 한 번 더 연다.
+### Material / audio direction
+
+현재 active pass는 optional base substrate의 **timbre-only material-character pass**다. 이 substrate는 현재 작품적 모델에서 Plate 이전의 **pre-material granular bed**로 둔다.
 
 ```text
-current metallic / resonant / long-tail substrate
-→ duller
-→ sand-like / granular / noisy
-→ shorter ringing
+base substrate
+dull / sandy / granular / frictional
+short / diffuse / weakly pitched
+
+        ↓ repeated traffic / history
+
+Plate
+structured / resonant / spatially defined
+clearer modal identity
 ```
 
 이 pass에서는 behavior, Plate birth/material semantics, P1 sonic baseline을 바꾸지 않고 substrate timbre만 격리해서 본다. 현재 B/C/D ratio 결과는 상대 레벨 calibration evidence로 보존하며, timbre가 바뀐 뒤에만 짧은 level recalibration을 다시 한다.
 
+그 다음 material pass는 새 mechanism 추가보다 **이미 존재하는 역사성의 observability**를 본다: Plate birth cadence, exposed↔buried 변화, overlap/depth, active sonic material count, current traffic과 frozen material history의 spatial mismatch.
+
 현재 roadmap:
 
 ```text
-S0/S1  dynamic graph + temporal observables        COMPLETE
-S2a    first trajectory synchrony null             COMPLETE
-S2b    exact-spatial-movie identity null            COMPLETE (boundary-sensitive)
-S2c    incremental predictive-value check          COMPLETE (no consistent gain)
-S3     spectral diagnostics                        SKIP AT CURRENT GATE
-S4     social ↔ material comparison                LATER
-S5     weak one-way mapping                        LATER
-S6+    memory / sensing / closed loop               ONLY IF JUSTIFIED
+GENERATED WORLD   movement / pheromone / gait → SurfaceField → material    DONE
+MATERIAL VOICE    Plate sonic identity + granular base substrate           NOW
+MATERIAL HISTORY  long-run morphology / stratigraphy / sonic observability NEXT
+
+SOCIAL OBSERVATION
+  S0/S1/S2a/S2b/S2c                                                   COMPLETE
+  diagnostic no-relationship baseline                                 PARKED
+  spectral diagnostics                                                 SKIP
+
+FUTURE RELATIONSHIP HYPOTHESIS
+  explicit relationship / partner memory
+  → compare against frozen S0–S2c baseline                             ONLY IF REOPENED
+
+MATERIAL SENSING   vibration/material state → weak ant sensing             FUTURE RESEARCH
+CLOSED LOOP        movement → material → vibration → sensing → movement    ONLY IF JUSTIFIED
 ```
 
 ## Evidence index
