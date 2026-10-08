@@ -14,6 +14,25 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-08 — Roadmap refocus: material history
+
+[`2026-10-08-roadmap-material-focus.md`](./2026-10-08-roadmap-material-focus.md)
+
+- S0–S2c social observation/validation is retained as a frozen no-relationship diagnostic baseline
+- Current evidence did not justify spectral escalation or social→material causal coupling
+- Active development focus moves to Material Voice, then Material History observability
+- Future relationship/memory mechanisms, if introduced, must be compared against the frozen S0–S2c baseline
+- Longer-term closed-loop candidate shifts toward material/vibration sensing rather than assumed social causation
+
+### 2026-10-08 — S2a trajectory synchrony null
+
+[`2026-10-08-s2a-synchrony-null.md`](./2026-10-08-s2a-synchrony-null.md) · [Null evidence](../evidence/2026-10-08-s2a-null/README.md)
+
+- Replayed the three committed 600 s archives; one whole-tuple in-lifetime phase-shift family, 32 replicates per seed
+- Original 1 s topology is sparser than the null; short connector counts overlap null variation
+- Large seam and birth-phase effects prevent social preference/organization inference
+- All 96 rotation/hash invariants, observed archive replay, 270 tests and build pass; stronger movement-constrained validation remains pending
+
 ### 2026-10-08 — S2c incremental predictive value
 
 [Chronology](./2026-10-08-s2c-incremental-value.md) · [Evidence](../evidence/2026-10-08-s2c-incremental-value/README.md)
@@ -155,15 +174,6 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 - At the pass stop there was no threshold decision, commit, merge or push
 - Subsequent direct listening judged D too dominant and the substrate timbre too metallic / long-tailed; next audio side-pass shifts timbre toward dull, sand-like and granular before re-calibrating level
 - Calibration tooling/evidence was later committed and merged via PR #1; base substrate remains default Off
-
-### 2026-10-08 — S2a trajectory synchrony null
-
-[`2026-10-08-s2a-synchrony-null.md`](./2026-10-08-s2a-synchrony-null.md) · [Null evidence](../evidence/2026-10-08-s2a-null/README.md)
-
-- Replayed the three committed 600 s archives; one whole-tuple in-lifetime phase-shift family, 32 replicates per seed
-- Original 1 s topology is sparser than the null; short connector counts overlap null variation
-- Large seam and birth-phase effects prevent social preference/organization inference
-- All 96 rotation/hash invariants, observed archive replay, 270 tests and build pass; stronger movement-constrained validation remains pending
 
 ## Logging rule
 
