@@ -1,0 +1,2581 @@
+{
+  "schemaVersion": 1,
+  "parameters": {
+    "seeds": [
+      20261005,
+      20261006,
+      20261007
+    ],
+    "seconds": 600,
+    "trajectoryHz": 60,
+    "archivedTopologyHz": 20,
+    "predictorSamplingHz": 1,
+    "eligibleSeconds": [
+      1,
+      599
+    ],
+    "target": "Any archived k=2/W=1 COMPONENT_MERGE in (t,t+1s]; compare integer 60Hz ticks.",
+    "targetWindowSeconds": 1,
+    "predictorWindowsSeconds": [
+      1,
+      0.25
+    ],
+    "baselineFeatures": [
+      "population",
+      "instantEdgeCount",
+      "instantLargestComponentRatio",
+      "meanNeighborsSenseRadius",
+      "meanSpeed"
+    ],
+    "socialFeatures": [
+      "rollingEdgeCount",
+      "weightedDegreeMean",
+      "rollingLargestComponentRatio"
+    ],
+    "model": "Standardized logistic regression; fixed total-loss slope L2 penalty=1; unpenalized intercept; Newton fitting.",
+    "scaling": "Population mean/SD from two training seeds only; zero SD becomes one.",
+    "controlSeed": "ANT-S2c-2026-10-08-training-control-v1",
+    "control": "One nonzero circular social-vector shift per training seed/fold/view; baseline and target fixed, held-out data untouched.",
+    "metrics": "ROC trapezoidal threshold curve with exact tie groups; noninterpolated average precision; Brier; ten fixed calibration bins.",
+    "evaluation": "Leave one natural seed out; no frame shuffle, class reweighting, held-out tuning or null trajectory data."
+  },
+  "seeds": [
+    {
+      "seed": 20261005,
+      "sourceHashes": {
+        "manifest.json": "8e0a6bbaa83de47420e1451468b6cb3e30b63c09dce37209b155482e34ef4499",
+        "seed20261005-summary.json": "8f18f24bc0a75506c316cbd70b0cb85073dd57d6c56ef8c3744a072f7f3460ac",
+        "seed20261005-trajectory.f64.gz": "bce5ab225b8a03924f205458c57416fb7f35796ed0940d6d9efafeea9f42b904",
+        "seed20261005-on-timeline.json.gz": "cca30053174262e47e852d5f8e983dd4bf4a0f541914b818c952abacb2828669",
+        "seed20261005-on-raw-events.json.gz": "4c0b8728a9dd62067c20734f3a4f7628e480fc7565d41dc27270d994be92e503"
+      },
+      "sourceUncompressedSha256": "209dc3cdce01d51b583dda1c629a3559f19b39585983010e7f694452217bb5b9",
+      "eligibleSamples": 599,
+      "positiveSamples": 181,
+      "primaryMergeEventCount": 222,
+      "sourceBytesUnchanged": true,
+      "exactObservedReplay": true,
+      "prevalence": 0.3021702838063439
+    },
+    {
+      "seed": 20261006,
+      "sourceHashes": {
+        "manifest.json": "8e0a6bbaa83de47420e1451468b6cb3e30b63c09dce37209b155482e34ef4499",
+        "seed20261006-summary.json": "c10a7e485392490baf097e1f5b44b946291b5ad7edc77ef79e9d1af43445e2c0",
+        "seed20261006-trajectory.f64.gz": "f5ddf63e5f9cbab58079197e934ecaffc0d96bec4f285dabd573e5e206aaf064",
+        "seed20261006-on-timeline.json.gz": "29d963f9d5b94d350075f887687ce2c6b4486ac8fc24a4629992bead8d6e3d84",
+        "seed20261006-on-raw-events.json.gz": "662fb75f6c5b7a2fc5e84a08628dbc56e0ca26921572ae564a8499e282704ad4"
+      },
+      "sourceUncompressedSha256": "ca85ff243a45cc956e35e2d7b8e0ec253762c902038eb933ab575d30f29f8379",
+      "eligibleSamples": 599,
+      "positiveSamples": 190,
+      "primaryMergeEventCount": 223,
+      "sourceBytesUnchanged": true,
+      "exactObservedReplay": true,
+      "prevalence": 0.31719532554257096
+    },
+    {
+      "seed": 20261007,
+      "sourceHashes": {
+        "manifest.json": "8e0a6bbaa83de47420e1451468b6cb3e30b63c09dce37209b155482e34ef4499",
+        "seed20261007-summary.json": "85cae5818b5cf4273a16be0c415a300763cf73f90e742febac86c57aa0486007",
+        "seed20261007-trajectory.f64.gz": "b0a660dcbc5bda49b02d3eb625c47fa30e9c786a0576dfb1ccc72e7f4332c31f",
+        "seed20261007-on-timeline.json.gz": "595b888414e97d6238c9b5b192d37f241643d99e612bca3fc7c6968e74117e07",
+        "seed20261007-on-raw-events.json.gz": "e012b877c53dfb0634db40d97d97af853d4835602e56a4ee0cd1eab8f33689f4"
+      },
+      "sourceUncompressedSha256": "25e2b8c6db2ac1368719265b7052582f7a4d59585559a95d8b44f30ca0189f84",
+      "eligibleSamples": 599,
+      "positiveSamples": 184,
+      "primaryMergeEventCount": 222,
+      "sourceBytesUnchanged": true,
+      "exactObservedReplay": true,
+      "prevalence": 0.3071786310517529
+    }
+  ],
+  "results": [
+    {
+      "windowSeconds": 1,
+      "heldOutSeed": 20261005,
+      "trainingSeeds": [
+        20261006,
+        20261007
+      ],
+      "controlShiftsSamples": {
+        "20261006": 360,
+        "20261007": 253
+      },
+      "incremental": {
+        "rocAuc": 0.0028549525496318617,
+        "averagePrecision": 0.012513148747908265,
+        "brier": -0.00013409937967498453
+      },
+      "controlIncremental": {
+        "rocAuc": -0.0005022601707673768,
+        "averagePrecision": 0.0054103026526120535,
+        "brier": -0.0003335205037778566
+      },
+      "runs": {
+        "baseline": {
+          "features": [
+            "population",
+            "instantEdgeCount",
+            "instantLargestComponentRatio",
+            "meanNeighborsSenseRadius",
+            "meanSpeed"
+          ],
+          "model": {
+            "mean": [
+              18.408180300500835,
+              0.3397328881469115,
+              0.07700176845758024,
+              0.7976816339525373,
+              0.05749422544372139
+            ],
+            "scale": [
+              3.55512278610078,
+              0.629497981159572,
+              0.05487749380312929,
+              0.33159258828343713,
+              0.006992408518784557
+            ],
+            "beta": [
+              -0.8498532381421485,
+              0.39823207937869504,
+              0.018386810556013922,
+              0.05014737907973747,
+              0.2371114670926072,
+              -0.20526995741047538
+            ],
+            "trainingRows": 1198,
+            "trainingPrevalence": 0.3121869782971619,
+            "iterations": 5,
+            "gradientMax": 8.777662607872827e-8,
+            "converged": true,
+            "objective": 712.4803547673812,
+            "slopeL2Penalty": 1
+          },
+          "metrics": {
+            "n": 599,
+            "positives": 181,
+            "negatives": 418,
+            "prevalence": 0.3021702838063439,
+            "rocAuc": 0.5652277353353239,
+            "averagePrecision": 0.37088044810006277,
+            "brier": 0.2089698757206679,
+            "meanPrediction": 0.30836062721418156,
+            "calibration": [
+              {
+                "lower": 0,
+                "upper": 0.1,
+                "n": 23,
+                "meanPrediction": 0.07513711922775719,
+                "eventFraction": 0.08695652173913043
+              },
+              {
+                "lower": 0.1,
+                "upper": 0.2,
+                "n": 63,
+                "meanPrediction": 0.16162802797646061,
+                "eventFraction": 0.19047619047619047
+              },
+              {
+                "lower": 0.2,
+                "upper": 0.3,
+                "n": 189,
+                "meanPrediction": 0.25978508191990884,
+                "eventFraction": 0.328042328042328
+              },
+              {
+                "lower": 0.3,
+                "upper": 0.4,
+                "n": 222,
+                "meanPrediction": 0.34661427043212517,
+                "eventFraction": 0.28378378378378377
+              },
+              {
+                "lower": 0.4,
+                "upper": 0.5,
+                "n": 83,
+                "meanPrediction": 0.43762249490437183,
+                "eventFraction": 0.37349397590361444
+              },
+              {
+                "lower": 0.5,
+                "upper": 0.6,
+                "n": 18,
+                "meanPrediction": 0.5458487374819373,
+                "eventFraction": 0.6111111111111112
+              },
+              {
+                "lower": 0.6,
+                "upper": 0.7,
+                "n": 1,
+                "meanPrediction": 0.6016033260069704,
+                "eventFraction": 0
+              },
+              {
+                "lower": 0.7,
+                "upper": 0.8,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.8,
+                "upper": 0.9,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.9,
+                "upper": 1,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              }
+            ]
+          }
+        },
+        "baselinePlusSocial": {
+          "features": [
+            "population",
+            "instantEdgeCount",
+            "instantLargestComponentRatio",
+            "meanNeighborsSenseRadius",
+            "meanSpeed",
+            "rollingEdgeCount",
+            "weightedDegreeMean",
+            "rollingLargestComponentRatio"
+          ],
+          "model": {
+            "mean": [
+              18.408180300500835,
+              0.3397328881469115,
+              0.07700176845758024,
+              0.7976816339525373,
+              0.05749422544372139,
+              1.1485809682804675,
+              0.04072879518359595,
+              0.1112648335188333
+            ],
+            "scale": [
+              3.55512278610078,
+              0.629497981159572,
+              0.05487749380312929,
+              0.33159258828343713,
+              0.006992408518784557,
+              1.1489824879581299,
+              0.08155414303739687,
+              0.0670337271457929
+            ],
+            "beta": [
+              -0.8513954381256568,
+              0.42593393034941895,
+              0.11405801291791798,
+              -0.02863715652495766,
+              0.24330691106289823,
+              -0.2256231636169456,
+              -0.10193564603951609,
+              -0.19018467294567615,
+              0.24705733803399288
+            ],
+            "trainingRows": 1198,
+            "trainingPrevalence": 0.3121869782971619,
+            "iterations": 4,
+            "gradientMax": 9.021336339065655e-8,
+            "converged": true,
+            "objective": 710.4761878975036,
+            "slopeL2Penalty": 1
+          },
+          "metrics": {
+            "n": 599,
+            "positives": 181,
+            "negatives": 418,
+            "prevalence": 0.3021702838063439,
+            "rocAuc": 0.5680826878849558,
+            "averagePrecision": 0.38339359684797103,
+            "brier": 0.20883577634099293,
+            "meanPrediction": 0.31091666928660083,
+            "calibration": [
+              {
+                "lower": 0,
+                "upper": 0.1,
+                "n": 20,
+                "meanPrediction": 0.07214556694524221,
+                "eventFraction": 0.1
+              },
+              {
+                "lower": 0.1,
+                "upper": 0.2,
+                "n": 71,
+                "meanPrediction": 0.1625720489417171,
+                "eventFraction": 0.2112676056338028
+              },
+              {
+                "lower": 0.2,
+                "upper": 0.3,
+                "n": 181,
+                "meanPrediction": 0.2576249367421107,
+                "eventFraction": 0.3149171270718232
+              },
+              {
+                "lower": 0.3,
+                "upper": 0.4,
+                "n": 222,
+                "meanPrediction": 0.3486245243070764,
+                "eventFraction": 0.28378378378378377
+              },
+              {
+                "lower": 0.4,
+                "upper": 0.5,
+                "n": 81,
+                "meanPrediction": 0.44309540005447456,
+                "eventFraction": 0.37037037037037035
+              },
+              {
+                "lower": 0.5,
+                "upper": 0.6,
+                "n": 21,
+                "meanPrediction": 0.5443464526740373,
+                "eventFraction": 0.5714285714285714
+              },
+              {
+                "lower": 0.6,
+                "upper": 0.7,
+                "n": 3,
+                "meanPrediction": 0.6355990772823127,
+                "eventFraction": 0.6666666666666666
+              },
+              {
+                "lower": 0.7,
+                "upper": 0.8,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.8,
+                "upper": 0.9,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.9,
+                "upper": 1,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              }
+            ]
+          }
+        },
+        "trainingShiftControl": {
+          "features": [
+            "population",
+            "instantEdgeCount",
+            "instantLargestComponentRatio",
+            "meanNeighborsSenseRadius",
+            "meanSpeed",
+            "rollingEdgeCount",
+            "weightedDegreeMean",
+            "rollingLargestComponentRatio"
+          ],
+          "model": {
+            "mean": [
+              18.408180300500835,
+              0.3397328881469115,
+              0.07700176845758024,
+              0.7976816339525373,
+              0.05749422544372139,
+              1.1485809682804675,
+              0.04072879518359594,
+              0.11126483351883337
+            ],
+            "scale": [
+              3.55512278610078,
+              0.629497981159572,
+              0.05487749380312929,
+              0.33159258828343713,
+              0.006992408518784557,
+              1.1489824879581279,
+              0.08155414303739701,
+              0.06703372714579302
+            ],
+            "beta": [
+              -0.850885583210474,
+              0.38920223466756837,
+              0.01943880933448152,
+              0.04667927284537666,
+              0.24144237458944356,
+              -0.2064920079978525,
+              -0.048654956852055294,
+              -0.06590570776592994,
+              0.12093004299150312
+            ],
+            "trainingRows": 1198,
+            "trainingPrevalence": 0.3121869782971619,
+            "iterations": 6,
+            "gradientMax": 6.548894837532515e-8,
+            "converged": true,
+            "objective": 711.7008181281449,
+            "slopeL2Penalty": 1
+          },
+          "metrics": {
+            "n": 599,
+            "positives": 181,
+            "negatives": 418,
+            "prevalence": 0.3021702838063439,
+            "rocAuc": 0.5647254751645565,
+            "averagePrecision": 0.3762907507526748,
+            "brier": 0.20863635521689006,
+            "meanPrediction": 0.30767707716895437,
+            "calibration": [
+              {
+                "lower": 0,
+                "upper": 0.1,
+                "n": 14,
+                "meanPrediction": 0.06908943111986449,
+                "eventFraction": 0.07142857142857142
+              },
+              {
+                "lower": 0.1,
+                "upper": 0.2,
+                "n": 70,
+                "meanPrediction": 0.15952330629049669,
+                "eventFraction": 0.2
+              },
+              {
+                "lower": 0.2,
+                "upper": 0.3,
+                "n": 199,
+                "meanPrediction": 0.26021000965371477,
+                "eventFraction": 0.3316582914572864
+              },
+              {
+                "lower": 0.3,
+                "upper": 0.4,
+                "n": 221,
+                "meanPrediction": 0.34746208377078935,
+                "eventFraction": 0.28054298642533937
+              },
+              {
+                "lower": 0.4,
+                "upper": 0.5,
+                "n": 76,
+                "meanPrediction": 0.4364363315204301,
+                "eventFraction": 0.34210526315789475
+              },
+              {
+                "lower": 0.5,
+                "upper": 0.6,
+                "n": 18,
+                "meanPrediction": 0.5448249756564091,
+                "eventFraction": 0.6111111111111112
+              },
+              {
+                "lower": 0.6,
+                "upper": 0.7,
+                "n": 1,
+                "meanPrediction": 0.6177625563890247,
+                "eventFraction": 1
+              },
+              {
+                "lower": 0.7,
+                "upper": 0.8,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.8,
+                "upper": 0.9,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.9,
+                "upper": 1,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "windowSeconds": 1,
+      "heldOutSeed": 20261006,
+      "trainingSeeds": [
+        20261005,
+        20261007
+      ],
+      "controlShiftsSamples": {
+        "20261005": 440,
+        "20261007": 4
+      },
+      "incremental": {
+        "rocAuc": -0.025543688071033466,
+        "averagePrecision": -0.027010324220728965,
+        "brier": 0.00389695900145276
+      },
+      "controlIncremental": {
+        "rocAuc": 0.000025736713420987378,
+        "averagePrecision": 0.003808328937637495,
+        "brier": 0.0001500830590078217
+      },
+      "runs": {
+        "baseline": {
+          "features": [
+            "population",
+            "instantEdgeCount",
+            "instantLargestComponentRatio",
+            "meanNeighborsSenseRadius",
+            "meanSpeed"
+          ],
+          "model": {
+            "mean": [
+              18.437395659432386,
+              0.3580968280467446,
+              0.07786192712275186,
+              0.8014102939820446,
+              0.0576796659629619
+            ],
+            "scale": [
+              3.513247606316212,
+              0.6482134564440523,
+              0.05544033008634055,
+              0.3303333965246543,
+              0.006945355760069911
+            ],
+            "beta": [
+              -0.8578975633394788,
+              0.28235936076831,
+              -0.04908597345361598,
+              0.07976964925848182,
+              0.12981758893265294,
+              -0.25203259101176356
+            ],
+            "trainingRows": 1198,
+            "trainingPrevalence": 0.3046744574290484,
+            "iterations": 4,
+            "gradientMax": 1.6362888821674915e-10,
+            "converged": true,
+            "objective": 718.0915128066218,
+            "slopeL2Penalty": 1
+          },
+          "metrics": {
+            "n": 599,
+            "positives": 190,
+            "negatives": 409,
+            "prevalence": 0.31719532554257096,
+            "rocAuc": 0.6321451550636983,
+            "averagePrecision": 0.43235548605715823,
+            "brier": 0.20609000124568652,
+            "meanPrediction": 0.30346991535792495,
+            "calibration": [
+              {
+                "lower": 0,
+                "upper": 0.1,
+                "n": 14,
+                "meanPrediction": 0.08038524474235335,
+                "eventFraction": 0
+              },
+              {
+                "lower": 0.1,
+                "upper": 0.2,
+                "n": 48,
+                "meanPrediction": 0.16172930150936696,
+                "eventFraction": 0.14583333333333334
+              },
+              {
+                "lower": 0.2,
+                "upper": 0.3,
+                "n": 201,
+                "meanPrediction": 0.25734996260190757,
+                "eventFraction": 0.2736318407960199
+              },
+              {
+                "lower": 0.3,
+                "upper": 0.4,
+                "n": 260,
+                "meanPrediction": 0.340256189745664,
+                "eventFraction": 0.35
+              },
+              {
+                "lower": 0.4,
+                "upper": 0.5,
+                "n": 73,
+                "meanPrediction": 0.4270247581025204,
+                "eventFraction": 0.4794520547945205
+              },
+              {
+                "lower": 0.5,
+                "upper": 0.6,
+                "n": 3,
+                "meanPrediction": 0.5077734140714284,
+                "eventFraction": 0.6666666666666666
+              },
+              {
+                "lower": 0.6,
+                "upper": 0.7,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.7,
+                "upper": 0.8,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.8,
+                "upper": 0.9,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.9,
+                "upper": 1,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              }
+            ]
+          }
+        },
+        "baselinePlusSocial": {
+          "features": [
+            "population",
+            "instantEdgeCount",
+            "instantLargestComponentRatio",
+            "meanNeighborsSenseRadius",
+            "meanSpeed",
+            "rollingEdgeCount",
+            "weightedDegreeMean",
+            "rollingLargestComponentRatio"
+          ],
+          "model": {
+            "mean": [
+              18.437395659432386,
+              0.3580968280467446,
+              0.07786192712275186,
+              0.8014102939820446,
+              0.0576796659629619,
+              1.1903171953255425,
+              0.04237566172917353,
+              0.11370498485058841
+            ],
+            "scale": [
+              3.513247606316212,
+              0.6482134564440523,
+              0.05544033008634055,
+              0.3303333965246543,
+              0.006945355760069911,
+              1.163800004427445,
+              0.08235218709641524,
+              0.06927362539409532
+            ],
+            "beta": [
+              -0.8689279716743812,
+              0.30955749743054817,
+              0.12080128184375089,
+              0.09052147989889353,
+              0.19356824549671453,
+              -0.27473245604851854,
+              -0.16474321276496237,
+              -0.37803808803400224,
+              0.22160811660877666
+            ],
+            "trainingRows": 1198,
+            "trainingPrevalence": 0.3046744574290484,
+            "iterations": 4,
+            "gradientMax": 6.26984348051085e-8,
+            "converged": true,
+            "objective": 710.8876260169084,
+            "slopeL2Penalty": 1
+          },
+          "metrics": {
+            "n": 599,
+            "positives": 190,
+            "negatives": 409,
+            "prevalence": 0.31719532554257096,
+            "rocAuc": 0.6066014669926648,
+            "averagePrecision": 0.40534516183642927,
+            "brier": 0.20998696024713928,
+            "meanPrediction": 0.3074238104708322,
+            "calibration": [
+              {
+                "lower": 0,
+                "upper": 0.1,
+                "n": 14,
+                "meanPrediction": 0.08163212435065592,
+                "eventFraction": 0
+              },
+              {
+                "lower": 0.1,
+                "upper": 0.2,
+                "n": 59,
+                "meanPrediction": 0.16346010931104493,
+                "eventFraction": 0.1694915254237288
+              },
+              {
+                "lower": 0.2,
+                "upper": 0.3,
+                "n": 218,
+                "meanPrediction": 0.2565763218634237,
+                "eventFraction": 0.2889908256880734
+              },
+              {
+                "lower": 0.3,
+                "upper": 0.4,
+                "n": 203,
+                "meanPrediction": 0.3434175414552068,
+                "eventFraction": 0.3694581280788177
+              },
+              {
+                "lower": 0.4,
+                "upper": 0.5,
+                "n": 86,
+                "meanPrediction": 0.43742714097355995,
+                "eventFraction": 0.38372093023255816
+              },
+              {
+                "lower": 0.5,
+                "upper": 0.6,
+                "n": 18,
+                "meanPrediction": 0.5264704103163328,
+                "eventFraction": 0.4444444444444444
+              },
+              {
+                "lower": 0.6,
+                "upper": 0.7,
+                "n": 1,
+                "meanPrediction": 0.6172656907143638,
+                "eventFraction": 1
+              },
+              {
+                "lower": 0.7,
+                "upper": 0.8,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.8,
+                "upper": 0.9,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.9,
+                "upper": 1,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              }
+            ]
+          }
+        },
+        "trainingShiftControl": {
+          "features": [
+            "population",
+            "instantEdgeCount",
+            "instantLargestComponentRatio",
+            "meanNeighborsSenseRadius",
+            "meanSpeed",
+            "rollingEdgeCount",
+            "weightedDegreeMean",
+            "rollingLargestComponentRatio"
+          ],
+          "model": {
+            "mean": [
+              18.437395659432386,
+              0.3580968280467446,
+              0.07786192712275186,
+              0.8014102939820446,
+              0.0576796659629619,
+              1.1903171953255425,
+              0.04237566172917354,
+              0.11370498485058844
+            ],
+            "scale": [
+              3.513247606316212,
+              0.6482134564440523,
+              0.05544033008634055,
+              0.3303333965246543,
+              0.006945355760069911,
+              1.1638000044274455,
+              0.08235218709641527,
+              0.06927362539409532
+            ],
+            "beta": [
+              -0.862977146798077,
+              0.2542484713068703,
+              -0.04909876491807403,
+              0.13982898594453297,
+              0.13826064491053608,
+              -0.2821906668353541,
+              0.12067371386411993,
+              -0.15749309447079515,
+              -0.11221207046966213
+            ],
+            "trainingRows": 1198,
+            "trainingPrevalence": 0.3046744574290484,
+            "iterations": 4,
+            "gradientMax": 2.6930088437016053e-8,
+            "converged": true,
+            "objective": 715.3486249403146,
+            "slopeL2Penalty": 1
+          },
+          "metrics": {
+            "n": 599,
+            "positives": 190,
+            "negatives": 409,
+            "prevalence": 0.31719532554257096,
+            "rocAuc": 0.6321708917771193,
+            "averagePrecision": 0.43616381499479573,
+            "brier": 0.20624008430469434,
+            "meanPrediction": 0.3069950851498212,
+            "calibration": [
+              {
+                "lower": 0,
+                "upper": 0.1,
+                "n": 14,
+                "meanPrediction": 0.0785678640302886,
+                "eventFraction": 0
+              },
+              {
+                "lower": 0.1,
+                "upper": 0.2,
+                "n": 53,
+                "meanPrediction": 0.16381920665500477,
+                "eventFraction": 0.1320754716981132
+              },
+              {
+                "lower": 0.2,
+                "upper": 0.3,
+                "n": 202,
+                "meanPrediction": 0.25805840772302013,
+                "eventFraction": 0.2722772277227723
+              },
+              {
+                "lower": 0.3,
+                "upper": 0.4,
+                "n": 244,
+                "meanPrediction": 0.3441740751202532,
+                "eventFraction": 0.36885245901639346
+              },
+              {
+                "lower": 0.4,
+                "upper": 0.5,
+                "n": 83,
+                "meanPrediction": 0.4388242452027503,
+                "eventFraction": 0.43373493975903615
+              },
+              {
+                "lower": 0.5,
+                "upper": 0.6,
+                "n": 3,
+                "meanPrediction": 0.526334304794475,
+                "eventFraction": 0.6666666666666666
+              },
+              {
+                "lower": 0.6,
+                "upper": 0.7,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.7,
+                "upper": 0.8,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.8,
+                "upper": 0.9,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.9,
+                "upper": 1,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "windowSeconds": 1,
+      "heldOutSeed": 20261007,
+      "trainingSeeds": [
+        20261005,
+        20261006
+      ],
+      "controlShiftsSamples": {
+        "20261005": 129,
+        "20261006": 69
+      },
+      "incremental": {
+        "rocAuc": -0.008080146673650535,
+        "averagePrecision": -0.006800599318365852,
+        "brier": 0.0006599595498560651
+      },
+      "controlIncremental": {
+        "rocAuc": 0.005303823991618439,
+        "averagePrecision": 0.003333092450679531,
+        "brier": -0.0006488014578337753
+      },
+      "runs": {
+        "baseline": {
+          "features": [
+            "population",
+            "instantEdgeCount",
+            "instantLargestComponentRatio",
+            "meanNeighborsSenseRadius",
+            "meanSpeed"
+          ],
+          "model": {
+            "mean": [
+              18.419866444073456,
+              0.2871452420701169,
+              0.07256057356823685,
+              0.7922400451025612,
+              0.05793017807804897
+            ],
+            "scale": [
+              3.5005135777061813,
+              0.5536508340250105,
+              0.03690063506827944,
+              0.3336639816109297,
+              0.006812585333446378
+            ],
+            "beta": [
+              -0.8602781267085958,
+              -0.012391437182111935,
+              0.41393723698470875,
+              -0.5058776349891595,
+              0.1836633853092267,
+              -0.27406348801005803
+            ],
+            "trainingRows": 1198,
+            "trainingPrevalence": 0.3096828046744574,
+            "iterations": 5,
+            "gradientMax": 6.885506775855532e-9,
+            "converged": true,
+            "objective": 713.1160649261047,
+            "slopeL2Penalty": 1
+          },
+          "metrics": {
+            "n": 599,
+            "positives": 184,
+            "negatives": 415,
+            "prevalence": 0.3071786310517529,
+            "rocAuc": 0.6385280251440546,
+            "averagePrecision": 0.4183047289335369,
+            "brier": 0.20412947538211162,
+            "meanPrediction": 0.31113755060103954,
+            "calibration": [
+              {
+                "lower": 0,
+                "upper": 0.1,
+                "n": 13,
+                "meanPrediction": 0.05409598147959184,
+                "eventFraction": 0.23076923076923078
+              },
+              {
+                "lower": 0.1,
+                "upper": 0.2,
+                "n": 50,
+                "meanPrediction": 0.16530496213630363,
+                "eventFraction": 0.14
+              },
+              {
+                "lower": 0.2,
+                "upper": 0.3,
+                "n": 211,
+                "meanPrediction": 0.2537684765147607,
+                "eventFraction": 0.21800947867298578
+              },
+              {
+                "lower": 0.3,
+                "upper": 0.4,
+                "n": 234,
+                "meanPrediction": 0.34705809970892043,
+                "eventFraction": 0.3717948717948718
+              },
+              {
+                "lower": 0.4,
+                "upper": 0.5,
+                "n": 68,
+                "meanPrediction": 0.4336134948163463,
+                "eventFraction": 0.4264705882352941
+              },
+              {
+                "lower": 0.5,
+                "upper": 0.6,
+                "n": 16,
+                "meanPrediction": 0.5382893055750162,
+                "eventFraction": 0.5
+              },
+              {
+                "lower": 0.6,
+                "upper": 0.7,
+                "n": 7,
+                "meanPrediction": 0.6496866472513335,
+                "eventFraction": 0.5714285714285714
+              },
+              {
+                "lower": 0.7,
+                "upper": 0.8,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.8,
+                "upper": 0.9,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.9,
+                "upper": 1,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              }
+            ]
+          }
+        },
+        "baselinePlusSocial": {
+          "features": [
+            "population",
+            "instantEdgeCount",
+            "instantLargestComponentRatio",
+            "meanNeighborsSenseRadius",
+            "meanSpeed",
+            "rollingEdgeCount",
+            "weightedDegreeMean",
+            "rollingLargestComponentRatio"
+          ],
+          "model": {
+            "mean": [
+              18.419866444073456,
+              0.2871452420701169,
+              0.07256057356823685,
+              0.7922400451025612,
+              0.05793017807804897,
+              1.0934891485809684,
+              0.03107266598157614,
+              0.10695225813506598
+            ],
+            "scale": [
+              3.5005135777061813,
+              0.5536508340250105,
+              0.03690063506827944,
+              0.3336639816109297,
+              0.006812585333446378,
+              1.1195370851118247,
+              0.0425519028598382,
+              0.053025198082693764
+            ],
+            "beta": [
+              -0.8627234721654493,
+              -0.05465870867424223,
+              0.40033675320833917,
+              -0.428055639757784,
+              0.22523652109731904,
+              -0.2648926997056338,
+              0.10377900597107223,
+              -0.041480503310694854,
+              -0.1968213607533201
+            ],
+            "trainingRows": 1198,
+            "trainingPrevalence": 0.3096828046744574,
+            "iterations": 5,
+            "gradientMax": 9.570043646434101e-9,
+            "converged": true,
+            "objective": 711.8833579634394,
+            "slopeL2Penalty": 1
+          },
+          "metrics": {
+            "n": 599,
+            "positives": 184,
+            "negatives": 415,
+            "prevalence": 0.3071786310517529,
+            "rocAuc": 0.6304478784704041,
+            "averagePrecision": 0.411504129615171,
+            "brier": 0.2047894349319677,
+            "meanPrediction": 0.30876723227360836,
+            "calibration": [
+              {
+                "lower": 0,
+                "upper": 0.1,
+                "n": 22,
+                "meanPrediction": 0.05553948665282574,
+                "eventFraction": 0.18181818181818182
+              },
+              {
+                "lower": 0.1,
+                "upper": 0.2,
+                "n": 56,
+                "meanPrediction": 0.1669632736906985,
+                "eventFraction": 0.17857142857142858
+              },
+              {
+                "lower": 0.2,
+                "upper": 0.3,
+                "n": 193,
+                "meanPrediction": 0.2543254230340234,
+                "eventFraction": 0.22797927461139897
+              },
+              {
+                "lower": 0.3,
+                "upper": 0.4,
+                "n": 231,
+                "meanPrediction": 0.3447168324906128,
+                "eventFraction": 0.3593073593073593
+              },
+              {
+                "lower": 0.4,
+                "upper": 0.5,
+                "n": 72,
+                "meanPrediction": 0.4349674637435851,
+                "eventFraction": 0.4305555555555556
+              },
+              {
+                "lower": 0.5,
+                "upper": 0.6,
+                "n": 18,
+                "meanPrediction": 0.54255764716738,
+                "eventFraction": 0.4444444444444444
+              },
+              {
+                "lower": 0.6,
+                "upper": 0.7,
+                "n": 7,
+                "meanPrediction": 0.654524301343022,
+                "eventFraction": 0.5714285714285714
+              },
+              {
+                "lower": 0.7,
+                "upper": 0.8,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.8,
+                "upper": 0.9,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.9,
+                "upper": 1,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              }
+            ]
+          }
+        },
+        "trainingShiftControl": {
+          "features": [
+            "population",
+            "instantEdgeCount",
+            "instantLargestComponentRatio",
+            "meanNeighborsSenseRadius",
+            "meanSpeed",
+            "rollingEdgeCount",
+            "weightedDegreeMean",
+            "rollingLargestComponentRatio"
+          ],
+          "model": {
+            "mean": [
+              18.419866444073456,
+              0.2871452420701169,
+              0.07256057356823685,
+              0.7922400451025612,
+              0.05793017807804897,
+              1.0934891485809684,
+              0.031072665981576146,
+              0.10695225813506595
+            ],
+            "scale": [
+              3.5005135777061813,
+              0.5536508340250105,
+              0.03690063506827944,
+              0.3336639816109297,
+              0.006812585333446378,
+              1.1195370851118236,
+              0.042551902859838196,
+              0.05302519808269382
+            ],
+            "beta": [
+              -0.8616912186008138,
+              -0.00781823901628916,
+              0.4094681690204923,
+              -0.4993680599755083,
+              0.17754685149905947,
+              -0.27399114725325285,
+              -0.02298011985424543,
+              -0.056745532822064654,
+              0.12534460360103622
+            ],
+            "trainingRows": 1198,
+            "trainingPrevalence": 0.3096828046744574,
+            "iterations": 5,
+            "gradientMax": 6.620397341450257e-9,
+            "converged": true,
+            "objective": 711.9574027623368,
+            "slopeL2Penalty": 1
+          },
+          "metrics": {
+            "n": 599,
+            "positives": 184,
+            "negatives": 415,
+            "prevalence": 0.3071786310517529,
+            "rocAuc": 0.643831849135673,
+            "averagePrecision": 0.4216378213842164,
+            "brier": 0.20348067392427785,
+            "meanPrediction": 0.3084103879406038,
+            "calibration": [
+              {
+                "lower": 0,
+                "upper": 0.1,
+                "n": 13,
+                "meanPrediction": 0.06578757090493695,
+                "eventFraction": 0.23076923076923078
+              },
+              {
+                "lower": 0.1,
+                "upper": 0.2,
+                "n": 54,
+                "meanPrediction": 0.16654815591032038,
+                "eventFraction": 0.12962962962962962
+              },
+              {
+                "lower": 0.2,
+                "upper": 0.3,
+                "n": 209,
+                "meanPrediction": 0.25318023771833825,
+                "eventFraction": 0.215311004784689
+              },
+              {
+                "lower": 0.3,
+                "upper": 0.4,
+                "n": 231,
+                "meanPrediction": 0.3433831645176383,
+                "eventFraction": 0.37662337662337664
+              },
+              {
+                "lower": 0.4,
+                "upper": 0.5,
+                "n": 72,
+                "meanPrediction": 0.4330792244531462,
+                "eventFraction": 0.4444444444444444
+              },
+              {
+                "lower": 0.5,
+                "upper": 0.6,
+                "n": 13,
+                "meanPrediction": 0.5424939917211377,
+                "eventFraction": 0.5384615384615384
+              },
+              {
+                "lower": 0.6,
+                "upper": 0.7,
+                "n": 7,
+                "meanPrediction": 0.6312395422559742,
+                "eventFraction": 0.42857142857142855
+              },
+              {
+                "lower": 0.7,
+                "upper": 0.8,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.8,
+                "upper": 0.9,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.9,
+                "upper": 1,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "windowSeconds": 0.25,
+      "heldOutSeed": 20261005,
+      "trainingSeeds": [
+        20261006,
+        20261007
+      ],
+      "controlShiftsSamples": {
+        "20261006": 216,
+        "20261007": 137
+      },
+      "incremental": {
+        "rocAuc": 0.0016257368685413942,
+        "averagePrecision": 0.023254433055437618,
+        "brier": -0.0003710915241751378
+      },
+      "controlIncremental": {
+        "rocAuc": -0.0018239974622640265,
+        "averagePrecision": 0.005563110605016186,
+        "brier": -0.00022957218255634237
+      },
+      "runs": {
+        "baseline": {
+          "features": [
+            "population",
+            "instantEdgeCount",
+            "instantLargestComponentRatio",
+            "meanNeighborsSenseRadius",
+            "meanSpeed"
+          ],
+          "model": {
+            "mean": [
+              18.408180300500835,
+              0.3397328881469115,
+              0.07700176845758024,
+              0.7976816339525373,
+              0.05749422544372139
+            ],
+            "scale": [
+              3.55512278610078,
+              0.629497981159572,
+              0.05487749380312929,
+              0.33159258828343713,
+              0.006992408518784557
+            ],
+            "beta": [
+              -0.8498532381421485,
+              0.39823207937869504,
+              0.018386810556013922,
+              0.05014737907973747,
+              0.2371114670926072,
+              -0.20526995741047538
+            ],
+            "trainingRows": 1198,
+            "trainingPrevalence": 0.3121869782971619,
+            "iterations": 5,
+            "gradientMax": 8.777662607872827e-8,
+            "converged": true,
+            "objective": 712.4803547673812,
+            "slopeL2Penalty": 1
+          },
+          "metrics": {
+            "n": 599,
+            "positives": 181,
+            "negatives": 418,
+            "prevalence": 0.3021702838063439,
+            "rocAuc": 0.5652277353353239,
+            "averagePrecision": 0.37088044810006277,
+            "brier": 0.2089698757206679,
+            "meanPrediction": 0.30836062721418156,
+            "calibration": [
+              {
+                "lower": 0,
+                "upper": 0.1,
+                "n": 23,
+                "meanPrediction": 0.07513711922775719,
+                "eventFraction": 0.08695652173913043
+              },
+              {
+                "lower": 0.1,
+                "upper": 0.2,
+                "n": 63,
+                "meanPrediction": 0.16162802797646061,
+                "eventFraction": 0.19047619047619047
+              },
+              {
+                "lower": 0.2,
+                "upper": 0.3,
+                "n": 189,
+                "meanPrediction": 0.25978508191990884,
+                "eventFraction": 0.328042328042328
+              },
+              {
+                "lower": 0.3,
+                "upper": 0.4,
+                "n": 222,
+                "meanPrediction": 0.34661427043212517,
+                "eventFraction": 0.28378378378378377
+              },
+              {
+                "lower": 0.4,
+                "upper": 0.5,
+                "n": 83,
+                "meanPrediction": 0.43762249490437183,
+                "eventFraction": 0.37349397590361444
+              },
+              {
+                "lower": 0.5,
+                "upper": 0.6,
+                "n": 18,
+                "meanPrediction": 0.5458487374819373,
+                "eventFraction": 0.6111111111111112
+              },
+              {
+                "lower": 0.6,
+                "upper": 0.7,
+                "n": 1,
+                "meanPrediction": 0.6016033260069704,
+                "eventFraction": 0
+              },
+              {
+                "lower": 0.7,
+                "upper": 0.8,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.8,
+                "upper": 0.9,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.9,
+                "upper": 1,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              }
+            ]
+          }
+        },
+        "baselinePlusSocial": {
+          "features": [
+            "population",
+            "instantEdgeCount",
+            "instantLargestComponentRatio",
+            "meanNeighborsSenseRadius",
+            "meanSpeed",
+            "rollingEdgeCount",
+            "weightedDegreeMean",
+            "rollingLargestComponentRatio"
+          ],
+          "model": {
+            "mean": [
+              18.408180300500835,
+              0.3397328881469115,
+              0.07700176845758024,
+              0.7976816339525373,
+              0.05749422544372139,
+              0.510016694490818,
+              0.01013093889465897,
+              0.08485564608477635
+            ],
+            "scale": [
+              3.55512278610078,
+              0.629497981159572,
+              0.05487749380312929,
+              0.33159258828343713,
+              0.006992408518784557,
+              0.7385067049869029,
+              0.022633635054137225,
+              0.057325450147127956
+            ],
+            "beta": [
+              -0.851273788986359,
+              0.43291167154112925,
+              0.21072148931229093,
+              0.11230616347234589,
+              0.2563133046813781,
+              -0.21380499922770677,
+              -0.18205101525068748,
+              -0.18634032147102159,
+              0.08015767493791243
+            ],
+            "trainingRows": 1198,
+            "trainingPrevalence": 0.3121869782971619,
+            "iterations": 5,
+            "gradientMax": 1.9984014443252818e-14,
+            "converged": true,
+            "objective": 709.8623860401713,
+            "slopeL2Penalty": 1
+          },
+          "metrics": {
+            "n": 599,
+            "positives": 181,
+            "negatives": 418,
+            "prevalence": 0.3021702838063439,
+            "rocAuc": 0.5668534722038653,
+            "averagePrecision": 0.3941348811555004,
+            "brier": 0.20859878419649278,
+            "meanPrediction": 0.30831337751326027,
+            "calibration": [
+              {
+                "lower": 0,
+                "upper": 0.1,
+                "n": 16,
+                "meanPrediction": 0.06822822272070334,
+                "eventFraction": 0.0625
+              },
+              {
+                "lower": 0.1,
+                "upper": 0.2,
+                "n": 75,
+                "meanPrediction": 0.15665943855907213,
+                "eventFraction": 0.22666666666666666
+              },
+              {
+                "lower": 0.2,
+                "upper": 0.3,
+                "n": 190,
+                "meanPrediction": 0.25797663709645746,
+                "eventFraction": 0.3157894736842105
+              },
+              {
+                "lower": 0.3,
+                "upper": 0.4,
+                "n": 206,
+                "meanPrediction": 0.34250323011853134,
+                "eventFraction": 0.2815533980582524
+              },
+              {
+                "lower": 0.4,
+                "upper": 0.5,
+                "n": 88,
+                "meanPrediction": 0.4418943870820635,
+                "eventFraction": 0.32954545454545453
+              },
+              {
+                "lower": 0.5,
+                "upper": 0.6,
+                "n": 18,
+                "meanPrediction": 0.5399328793714537,
+                "eventFraction": 0.6111111111111112
+              },
+              {
+                "lower": 0.6,
+                "upper": 0.7,
+                "n": 6,
+                "meanPrediction": 0.6103132217215032,
+                "eventFraction": 0.8333333333333334
+              },
+              {
+                "lower": 0.7,
+                "upper": 0.8,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.8,
+                "upper": 0.9,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.9,
+                "upper": 1,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              }
+            ]
+          }
+        },
+        "trainingShiftControl": {
+          "features": [
+            "population",
+            "instantEdgeCount",
+            "instantLargestComponentRatio",
+            "meanNeighborsSenseRadius",
+            "meanSpeed",
+            "rollingEdgeCount",
+            "weightedDegreeMean",
+            "rollingLargestComponentRatio"
+          ],
+          "model": {
+            "mean": [
+              18.408180300500835,
+              0.3397328881469115,
+              0.07700176845758024,
+              0.7976816339525373,
+              0.05749422544372139,
+              0.510016694490818,
+              0.01013093889465894,
+              0.08485564608477618
+            ],
+            "scale": [
+              3.55512278610078,
+              0.629497981159572,
+              0.05487749380312929,
+              0.33159258828343713,
+              0.006992408518784557,
+              0.7385067049869047,
+              0.02263363505413736,
+              0.057325450147127956
+            ],
+            "beta": [
+              -0.8506438512839545,
+              0.39568097186201934,
+              0.01708400934420645,
+              0.050140784629107385,
+              0.23866862166284844,
+              -0.20629289234848228,
+              -0.028545009778016175,
+              -0.09854480020505364,
+              0.10607706886054181
+            ],
+            "trainingRows": 1198,
+            "trainingPrevalence": 0.3121869782971619,
+            "iterations": 5,
+            "gradientMax": 2.142730437526552e-14,
+            "converged": true,
+            "objective": 711.8357076743042,
+            "slopeL2Penalty": 1
+          },
+          "metrics": {
+            "n": 599,
+            "positives": 181,
+            "negatives": 418,
+            "prevalence": 0.3021702838063439,
+            "rocAuc": 0.5634037378730599,
+            "averagePrecision": 0.37644355870507895,
+            "brier": 0.20874030353811157,
+            "meanPrediction": 0.3081523501385804,
+            "calibration": [
+              {
+                "lower": 0,
+                "upper": 0.1,
+                "n": 14,
+                "meanPrediction": 0.07058630569087142,
+                "eventFraction": 0.07142857142857142
+              },
+              {
+                "lower": 0.1,
+                "upper": 0.2,
+                "n": 66,
+                "meanPrediction": 0.1580649756777794,
+                "eventFraction": 0.18181818181818182
+              },
+              {
+                "lower": 0.2,
+                "upper": 0.3,
+                "n": 198,
+                "meanPrediction": 0.2589514217905865,
+                "eventFraction": 0.3282828282828283
+              },
+              {
+                "lower": 0.3,
+                "upper": 0.4,
+                "n": 227,
+                "meanPrediction": 0.34735647818267096,
+                "eventFraction": 0.2775330396475771
+              },
+              {
+                "lower": 0.4,
+                "upper": 0.5,
+                "n": 76,
+                "meanPrediction": 0.43813783690945524,
+                "eventFraction": 0.3815789473684211
+              },
+              {
+                "lower": 0.5,
+                "upper": 0.6,
+                "n": 18,
+                "meanPrediction": 0.5412212995268293,
+                "eventFraction": 0.6111111111111112
+              },
+              {
+                "lower": 0.6,
+                "upper": 0.7,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.7,
+                "upper": 0.8,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.8,
+                "upper": 0.9,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.9,
+                "upper": 1,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "windowSeconds": 0.25,
+      "heldOutSeed": 20261006,
+      "trainingSeeds": [
+        20261005,
+        20261007
+      ],
+      "controlShiftsSamples": {
+        "20261005": 569,
+        "20261007": 159
+      },
+      "incremental": {
+        "rocAuc": -0.009329558615364997,
+        "averagePrecision": -0.0012566755429200271,
+        "brier": 0.0011973663365404952
+      },
+      "controlIncremental": {
+        "rocAuc": -0.0016986230858319074,
+        "averagePrecision": -0.0023561899584454427,
+        "brier": 0.00044731678539813857
+      },
+      "runs": {
+        "baseline": {
+          "features": [
+            "population",
+            "instantEdgeCount",
+            "instantLargestComponentRatio",
+            "meanNeighborsSenseRadius",
+            "meanSpeed"
+          ],
+          "model": {
+            "mean": [
+              18.437395659432386,
+              0.3580968280467446,
+              0.07786192712275186,
+              0.8014102939820446,
+              0.0576796659629619
+            ],
+            "scale": [
+              3.513247606316212,
+              0.6482134564440523,
+              0.05544033008634055,
+              0.3303333965246543,
+              0.006945355760069911
+            ],
+            "beta": [
+              -0.8578975633394788,
+              0.28235936076831,
+              -0.04908597345361598,
+              0.07976964925848182,
+              0.12981758893265294,
+              -0.25203259101176356
+            ],
+            "trainingRows": 1198,
+            "trainingPrevalence": 0.3046744574290484,
+            "iterations": 4,
+            "gradientMax": 1.6362888821674915e-10,
+            "converged": true,
+            "objective": 718.0915128066218,
+            "slopeL2Penalty": 1
+          },
+          "metrics": {
+            "n": 599,
+            "positives": 190,
+            "negatives": 409,
+            "prevalence": 0.31719532554257096,
+            "rocAuc": 0.6321451550636983,
+            "averagePrecision": 0.43235548605715823,
+            "brier": 0.20609000124568652,
+            "meanPrediction": 0.30346991535792495,
+            "calibration": [
+              {
+                "lower": 0,
+                "upper": 0.1,
+                "n": 14,
+                "meanPrediction": 0.08038524474235335,
+                "eventFraction": 0
+              },
+              {
+                "lower": 0.1,
+                "upper": 0.2,
+                "n": 48,
+                "meanPrediction": 0.16172930150936696,
+                "eventFraction": 0.14583333333333334
+              },
+              {
+                "lower": 0.2,
+                "upper": 0.3,
+                "n": 201,
+                "meanPrediction": 0.25734996260190757,
+                "eventFraction": 0.2736318407960199
+              },
+              {
+                "lower": 0.3,
+                "upper": 0.4,
+                "n": 260,
+                "meanPrediction": 0.340256189745664,
+                "eventFraction": 0.35
+              },
+              {
+                "lower": 0.4,
+                "upper": 0.5,
+                "n": 73,
+                "meanPrediction": 0.4270247581025204,
+                "eventFraction": 0.4794520547945205
+              },
+              {
+                "lower": 0.5,
+                "upper": 0.6,
+                "n": 3,
+                "meanPrediction": 0.5077734140714284,
+                "eventFraction": 0.6666666666666666
+              },
+              {
+                "lower": 0.6,
+                "upper": 0.7,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.7,
+                "upper": 0.8,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.8,
+                "upper": 0.9,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.9,
+                "upper": 1,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              }
+            ]
+          }
+        },
+        "baselinePlusSocial": {
+          "features": [
+            "population",
+            "instantEdgeCount",
+            "instantLargestComponentRatio",
+            "meanNeighborsSenseRadius",
+            "meanSpeed",
+            "rollingEdgeCount",
+            "weightedDegreeMean",
+            "rollingLargestComponentRatio"
+          ],
+          "model": {
+            "mean": [
+              18.437395659432386,
+              0.3580968280467446,
+              0.07786192712275186,
+              0.8014102939820446,
+              0.0576796659629619,
+              0.5484140233722872,
+              0.010615485153443837,
+              0.08671858109171109
+            ],
+            "scale": [
+              3.513247606316212,
+              0.6482134564440523,
+              0.05544033008634055,
+              0.3303333965246543,
+              0.006945355760069911,
+              0.783112655532894,
+              0.022940786281359784,
+              0.058625732466928364
+            ],
+            "beta": [
+              -0.8633063186411883,
+              0.3168364209734534,
+              0.13951913467693042,
+              0.26213639200635847,
+              0.16376412889066577,
+              -0.26383880461545006,
+              -0.13553813411346036,
+              -0.2918098815569302,
+              0.0053236918640613235
+            ],
+            "trainingRows": 1198,
+            "trainingPrevalence": 0.3046744574290484,
+            "iterations": 4,
+            "gradientMax": 1.3685530486640118e-10,
+            "converged": true,
+            "objective": 713.5634765455817,
+            "slopeL2Penalty": 1
+          },
+          "metrics": {
+            "n": 599,
+            "positives": 190,
+            "negatives": 409,
+            "prevalence": 0.31719532554257096,
+            "rocAuc": 0.6228155964483333,
+            "averagePrecision": 0.4310988105142382,
+            "brier": 0.20728736758222702,
+            "meanPrediction": 0.30663147388481327,
+            "calibration": [
+              {
+                "lower": 0,
+                "upper": 0.1,
+                "n": 13,
+                "meanPrediction": 0.08335999671494781,
+                "eventFraction": 0
+              },
+              {
+                "lower": 0.1,
+                "upper": 0.2,
+                "n": 58,
+                "meanPrediction": 0.1622575601241399,
+                "eventFraction": 0.1896551724137931
+              },
+              {
+                "lower": 0.2,
+                "upper": 0.3,
+                "n": 223,
+                "meanPrediction": 0.258429201914756,
+                "eventFraction": 0.273542600896861
+              },
+              {
+                "lower": 0.3,
+                "upper": 0.4,
+                "n": 208,
+                "meanPrediction": 0.3461259710977685,
+                "eventFraction": 0.3605769230769231
+              },
+              {
+                "lower": 0.4,
+                "upper": 0.5,
+                "n": 87,
+                "meanPrediction": 0.4399377564334426,
+                "eventFraction": 0.42528735632183906
+              },
+              {
+                "lower": 0.5,
+                "upper": 0.6,
+                "n": 10,
+                "meanPrediction": 0.5279135587472801,
+                "eventFraction": 0.6
+              },
+              {
+                "lower": 0.6,
+                "upper": 0.7,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.7,
+                "upper": 0.8,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.8,
+                "upper": 0.9,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.9,
+                "upper": 1,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              }
+            ]
+          }
+        },
+        "trainingShiftControl": {
+          "features": [
+            "population",
+            "instantEdgeCount",
+            "instantLargestComponentRatio",
+            "meanNeighborsSenseRadius",
+            "meanSpeed",
+            "rollingEdgeCount",
+            "weightedDegreeMean",
+            "rollingLargestComponentRatio"
+          ],
+          "model": {
+            "mean": [
+              18.437395659432386,
+              0.3580968280467446,
+              0.07786192712275186,
+              0.8014102939820446,
+              0.0576796659629619,
+              0.5484140233722872,
+              0.010615485153443816,
+              0.08671858109171086
+            ],
+            "scale": [
+              3.513247606316212,
+              0.6482134564440523,
+              0.05544033008634055,
+              0.3303333965246543,
+              0.006945355760069911,
+              0.783112655532894,
+              0.022940786281359756,
+              0.058625732466928426
+            ],
+            "beta": [
+              -0.8622902626913612,
+              0.2871190099895973,
+              -0.05292219171726292,
+              0.07861102194813543,
+              0.13670876107978683,
+              -0.2608629677493792,
+              -0.18629915750604784,
+              0.21977028086428532,
+              0.019066233853886908
+            ],
+            "trainingRows": 1198,
+            "trainingPrevalence": 0.3046744574290484,
+            "iterations": 4,
+            "gradientMax": 3.887690169790403e-10,
+            "converged": true,
+            "objective": 714.8267114804535,
+            "slopeL2Penalty": 1
+          },
+          "metrics": {
+            "n": 599,
+            "positives": 190,
+            "negatives": 409,
+            "prevalence": 0.31719532554257096,
+            "rocAuc": 0.6304465319778664,
+            "averagePrecision": 0.4299992960987128,
+            "brier": 0.20653731803108466,
+            "meanPrediction": 0.30061317248270053,
+            "calibration": [
+              {
+                "lower": 0,
+                "upper": 0.1,
+                "n": 14,
+                "meanPrediction": 0.07938530338414505,
+                "eventFraction": 0
+              },
+              {
+                "lower": 0.1,
+                "upper": 0.2,
+                "n": 48,
+                "meanPrediction": 0.15884913823602212,
+                "eventFraction": 0.14583333333333334
+              },
+              {
+                "lower": 0.2,
+                "upper": 0.3,
+                "n": 225,
+                "meanPrediction": 0.25901293698702343,
+                "eventFraction": 0.28
+              },
+              {
+                "lower": 0.3,
+                "upper": 0.4,
+                "n": 244,
+                "meanPrediction": 0.3423756818060832,
+                "eventFraction": 0.35655737704918034
+              },
+              {
+                "lower": 0.4,
+                "upper": 0.5,
+                "n": 66,
+                "meanPrediction": 0.43167815017669026,
+                "eventFraction": 0.48484848484848486
+              },
+              {
+                "lower": 0.5,
+                "upper": 0.6,
+                "n": 2,
+                "meanPrediction": 0.5114011700022112,
+                "eventFraction": 0.5
+              },
+              {
+                "lower": 0.6,
+                "upper": 0.7,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.7,
+                "upper": 0.8,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.8,
+                "upper": 0.9,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.9,
+                "upper": 1,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "windowSeconds": 0.25,
+      "heldOutSeed": 20261007,
+      "trainingSeeds": [
+        20261005,
+        20261006
+      ],
+      "controlShiftsSamples": {
+        "20261005": 383,
+        "20261006": 338
+      },
+      "incremental": {
+        "rocAuc": 0.0006024096385531807,
+        "averagePrecision": 0.002311611507562039,
+        "brier": 0.000037739751876292305
+      },
+      "controlIncremental": {
+        "rocAuc": -0.012454164484022812,
+        "averagePrecision": -0.006181499751557351,
+        "brier": 0.0011290615516333369
+      },
+      "runs": {
+        "baseline": {
+          "features": [
+            "population",
+            "instantEdgeCount",
+            "instantLargestComponentRatio",
+            "meanNeighborsSenseRadius",
+            "meanSpeed"
+          ],
+          "model": {
+            "mean": [
+              18.419866444073456,
+              0.2871452420701169,
+              0.07256057356823685,
+              0.7922400451025612,
+              0.05793017807804897
+            ],
+            "scale": [
+              3.5005135777061813,
+              0.5536508340250105,
+              0.03690063506827944,
+              0.3336639816109297,
+              0.006812585333446378
+            ],
+            "beta": [
+              -0.8602781267085958,
+              -0.012391437182111935,
+              0.41393723698470875,
+              -0.5058776349891595,
+              0.1836633853092267,
+              -0.27406348801005803
+            ],
+            "trainingRows": 1198,
+            "trainingPrevalence": 0.3096828046744574,
+            "iterations": 5,
+            "gradientMax": 6.885506775855532e-9,
+            "converged": true,
+            "objective": 713.1160649261047,
+            "slopeL2Penalty": 1
+          },
+          "metrics": {
+            "n": 599,
+            "positives": 184,
+            "negatives": 415,
+            "prevalence": 0.3071786310517529,
+            "rocAuc": 0.6385280251440546,
+            "averagePrecision": 0.4183047289335369,
+            "brier": 0.20412947538211162,
+            "meanPrediction": 0.31113755060103954,
+            "calibration": [
+              {
+                "lower": 0,
+                "upper": 0.1,
+                "n": 13,
+                "meanPrediction": 0.05409598147959184,
+                "eventFraction": 0.23076923076923078
+              },
+              {
+                "lower": 0.1,
+                "upper": 0.2,
+                "n": 50,
+                "meanPrediction": 0.16530496213630363,
+                "eventFraction": 0.14
+              },
+              {
+                "lower": 0.2,
+                "upper": 0.3,
+                "n": 211,
+                "meanPrediction": 0.2537684765147607,
+                "eventFraction": 0.21800947867298578
+              },
+              {
+                "lower": 0.3,
+                "upper": 0.4,
+                "n": 234,
+                "meanPrediction": 0.34705809970892043,
+                "eventFraction": 0.3717948717948718
+              },
+              {
+                "lower": 0.4,
+                "upper": 0.5,
+                "n": 68,
+                "meanPrediction": 0.4336134948163463,
+                "eventFraction": 0.4264705882352941
+              },
+              {
+                "lower": 0.5,
+                "upper": 0.6,
+                "n": 16,
+                "meanPrediction": 0.5382893055750162,
+                "eventFraction": 0.5
+              },
+              {
+                "lower": 0.6,
+                "upper": 0.7,
+                "n": 7,
+                "meanPrediction": 0.6496866472513335,
+                "eventFraction": 0.5714285714285714
+              },
+              {
+                "lower": 0.7,
+                "upper": 0.8,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.8,
+                "upper": 0.9,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.9,
+                "upper": 1,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              }
+            ]
+          }
+        },
+        "baselinePlusSocial": {
+          "features": [
+            "population",
+            "instantEdgeCount",
+            "instantLargestComponentRatio",
+            "meanNeighborsSenseRadius",
+            "meanSpeed",
+            "rollingEdgeCount",
+            "weightedDegreeMean",
+            "rollingLargestComponentRatio"
+          ],
+          "model": {
+            "mean": [
+              18.419866444073456,
+              0.2871452420701169,
+              0.07256057356823685,
+              0.7922400451025612,
+              0.05793017807804897,
+              0.4774624373956594,
+              0.0075507381866542315,
+              0.08179128895758371
+            ],
+            "scale": [
+              3.5005135777061813,
+              0.5536508340250105,
+              0.03690063506827944,
+              0.3336639816109297,
+              0.006812585333446378,
+              0.6927308507354528,
+              0.012798719364115854,
+              0.041428654203323464
+            ],
+            "beta": [
+              -0.8664618334664109,
+              -0.05701853451989729,
+              0.2614551058429547,
+              -0.19711692190375493,
+              0.210571675791009,
+              -0.2674692322966612,
+              0.15372180812502245,
+              0.0747842457880655,
+              -0.443159464562512
+            ],
+            "trainingRows": 1198,
+            "trainingPrevalence": 0.3096828046744574,
+            "iterations": 5,
+            "gradientMax": 1.5274756848260296e-8,
+            "converged": true,
+            "objective": 711.0015230656256,
+            "slopeL2Penalty": 1
+          },
+          "metrics": {
+            "n": 599,
+            "positives": 184,
+            "negatives": 415,
+            "prevalence": 0.3071786310517529,
+            "rocAuc": 0.6391304347826078,
+            "averagePrecision": 0.4206163404410989,
+            "brier": 0.20416721513398792,
+            "meanPrediction": 0.3142151311926759,
+            "calibration": [
+              {
+                "lower": 0,
+                "upper": 0.1,
+                "n": 13,
+                "meanPrediction": 0.05264456272455852,
+                "eventFraction": 0.3076923076923077
+              },
+              {
+                "lower": 0.1,
+                "upper": 0.2,
+                "n": 50,
+                "meanPrediction": 0.16858854740170487,
+                "eventFraction": 0.12
+              },
+              {
+                "lower": 0.2,
+                "upper": 0.3,
+                "n": 208,
+                "meanPrediction": 0.2544539912098896,
+                "eventFraction": 0.1971153846153846
+              },
+              {
+                "lower": 0.3,
+                "upper": 0.4,
+                "n": 221,
+                "meanPrediction": 0.3461052764536902,
+                "eventFraction": 0.39819004524886875
+              },
+              {
+                "lower": 0.4,
+                "upper": 0.5,
+                "n": 82,
+                "meanPrediction": 0.43076765495542274,
+                "eventFraction": 0.3902439024390244
+              },
+              {
+                "lower": 0.5,
+                "upper": 0.6,
+                "n": 16,
+                "meanPrediction": 0.5281847343647316,
+                "eventFraction": 0.5
+              },
+              {
+                "lower": 0.6,
+                "upper": 0.7,
+                "n": 7,
+                "meanPrediction": 0.6430901827273546,
+                "eventFraction": 0.42857142857142855
+              },
+              {
+                "lower": 0.7,
+                "upper": 0.8,
+                "n": 2,
+                "meanPrediction": 0.704912947856994,
+                "eventFraction": 1
+              },
+              {
+                "lower": 0.8,
+                "upper": 0.9,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.9,
+                "upper": 1,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              }
+            ]
+          }
+        },
+        "trainingShiftControl": {
+          "features": [
+            "population",
+            "instantEdgeCount",
+            "instantLargestComponentRatio",
+            "meanNeighborsSenseRadius",
+            "meanSpeed",
+            "rollingEdgeCount",
+            "weightedDegreeMean",
+            "rollingLargestComponentRatio"
+          ],
+          "model": {
+            "mean": [
+              18.419866444073456,
+              0.2871452420701169,
+              0.07256057356823685,
+              0.7922400451025612,
+              0.05793017807804897,
+              0.4774624373956594,
+              0.007550738186654245,
+              0.08179128895758356
+            ],
+            "scale": [
+              3.5005135777061813,
+              0.5536508340250105,
+              0.03690063506827944,
+              0.3336639816109297,
+              0.006812585333446378,
+              0.6927308507354533,
+              0.012798719364115843,
+              0.04142865420332352
+            ],
+            "beta": [
+              -0.8638046513928933,
+              -0.020814706135004114,
+              0.42808055863462824,
+              -0.5099854855376825,
+              0.18482578695976223,
+              -0.2723032960991862,
+              -0.239404234881907,
+              0.12784506946791893,
+              0.03741800311828219
+            ],
+            "trainingRows": 1198,
+            "trainingPrevalence": 0.3096828046744574,
+            "iterations": 5,
+            "gradientMax": 7.529175422016365e-9,
+            "converged": true,
+            "objective": 711.0875182024449,
+            "slopeL2Penalty": 1
+          },
+          "metrics": {
+            "n": 599,
+            "positives": 184,
+            "negatives": 415,
+            "prevalence": 0.3071786310517529,
+            "rocAuc": 0.6260738606600318,
+            "averagePrecision": 0.4121232291819795,
+            "brier": 0.20525853693374496,
+            "meanPrediction": 0.31302749005063,
+            "calibration": [
+              {
+                "lower": 0,
+                "upper": 0.1,
+                "n": 9,
+                "meanPrediction": 0.05932914158500598,
+                "eventFraction": 0.3333333333333333
+              },
+              {
+                "lower": 0.1,
+                "upper": 0.2,
+                "n": 39,
+                "meanPrediction": 0.1695715823803898,
+                "eventFraction": 0.1282051282051282
+              },
+              {
+                "lower": 0.2,
+                "upper": 0.3,
+                "n": 224,
+                "meanPrediction": 0.25382709629598965,
+                "eventFraction": 0.21875
+              },
+              {
+                "lower": 0.3,
+                "upper": 0.4,
+                "n": 232,
+                "meanPrediction": 0.34528833744566334,
+                "eventFraction": 0.375
+              },
+              {
+                "lower": 0.4,
+                "upper": 0.5,
+                "n": 81,
+                "meanPrediction": 0.4364162929471955,
+                "eventFraction": 0.4074074074074074
+              },
+              {
+                "lower": 0.5,
+                "upper": 0.6,
+                "n": 9,
+                "meanPrediction": 0.5426949065435919,
+                "eventFraction": 0.4444444444444444
+              },
+              {
+                "lower": 0.6,
+                "upper": 0.7,
+                "n": 5,
+                "meanPrediction": 0.6316149615832781,
+                "eventFraction": 0.6
+              },
+              {
+                "lower": 0.7,
+                "upper": 0.8,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.8,
+                "upper": 0.9,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              },
+              {
+                "lower": 0.9,
+                "upper": 1,
+                "n": 0,
+                "meanPrediction": null,
+                "eventFraction": null
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-08 — S2c incremental predictive value
+
+[Chronology](./2026-10-08-s2c-incremental-value.md) · [Evidence](../evidence/2026-10-08-s2c-incremental-value/README.md)
+
+- Natural archives only; one exact future 1 s merge target and causal predictors
+- Three leave-one-seed-out logistic comparisons, with a training-only alignment control
+- Primary temporal features slightly improve seed 05 and worsen seeds 06/07
+- No consistent incremental gain; spectral SKIP at this gate, with no social-organization claim
+
 ### 2026-10-08 — S2b exact-spatial-movie identity null
 
 [Chronology](./2026-10-08-s2b-identity-null.md) · [Evidence](../evidence/2026-10-08-s2b-null/README.md)
