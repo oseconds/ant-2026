@@ -31,9 +31,13 @@ The removed source is retained in Git history at the starting HEAD, so earlier a
 
 ## Validation and stop
 
-- Static source/reference audit completed against the stated main HEAD.
-- Git tree/branch diff and changed-path scope must be checked after creating the commit.
-- **`npm test`, `npm run build`, and dev/production browser smoke were not executed here**: this session cannot access a runnable repository checkout, and the external Git host is not reachable from the local execution sandbox. Those checks remain **pending** before considering a merge.
-- Do not treat historical source hashes as expected to match the new current HEAD.
-
-Commit this cleanup on a dedicated branch and push that branch only. **Do not merge into main or open a PR** before execution validation.
+- Verified branch `ant-small-dead-code-cleanup-20261008` at expected cleanup HEAD `c6c22c5a25db160b9c675d241ed749bb00576072`; working tree was clean before verification.
+- Branch diff from starting `main` contains exactly the five cleanup code paths above plus this daily log and its `docs/ant/daily/README.md` index entry. `git diff --check` passes.
+- Independent search across active `src/`, `tests/`, `scripts/` and evidence JavaScript found no remaining `StepEventGenerator` or `TrajectoryBuffer` references/imports.
+- Focused run passed **53/53** across ANT controller, gait, surface integration, Plate birth, ANT audio integration, environment audio and model contract tests. It confirmed actual gait-derived `FOOT_CONTACT`, Plate/audio routing and model-switch cleanup.
+- Full `npm test` passed **265/265**.
+- `npm run build` passed. Rollup reported existing Zod annotation-comment warnings and the existing >500 kB application chunk warning.
+- `npm run test:browser` passed in Vite development mode; `CHECK_PRODUCTION=1 npm run test:browser` passed against the production preview. Browser checks confirmed ANT initialization, contact generation, Plate/audio behavior and switching among ANT/String/Plate/Sphere models.
+- Historical `docs/ant/evidence/` files and checksum ledgers have no branch diff. S0–S2c evidence has no diff. No production behavior, audio DSP, or non-removal test source changed.
+- The default sandbox initially blocked Node test worker creation with `spawn EPERM`; the same focused command passed when rerun with process permission. No test assertion failed.
+- Do not compare historical source hashes to current HEAD. Preserve the cleanup commit as branch-only; verification is recorded separately, then push the same branch. Do not merge or open a PR.
