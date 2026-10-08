@@ -212,9 +212,9 @@ movement
 
 로 둔다.
 
-## Circulating-world design target
+## Persistent-world design target
 
-The verified production chain above remains unchanged, but the long-term architecture is now defined as a **circulating world** rather than a one-way agent→material→sound pipeline.
+The verified production chain above remains unchanged, but the long-term architecture is now defined as a **persistent circulating world** rather than a one-way agent→material→sound pipeline.
 
 ```text
 internal state
@@ -226,7 +226,7 @@ internal state
 → internal state / action
 ```
 
-There is no prescribed destination or global reward in this design. Future state/feedback links should alter local possibilities and consequences rather than command routes. Internal state is not directly sonified, and any future acoustic feedback must derive from pre-master physical vibration rather than speaker/master output.
+There is no prescribed destination or global reward in this design. Agent presence is not the existence condition of the world: zero-ant intervals are valid and slower world state may continue. Future state/feedback links should alter local possibilities and consequences rather than command routes. Internal state is not directly sonified; the world itself is the target sounding body; any future acoustic feedback must derive from pre-master physical vibration rather than speaker/master output. Exceptional entities may occur, but their influence must remain finite and bounded.
 
 The full design contract, implemented-vs-proposed boundary and staged plan are in [`world-model.md`](world-model.md). Current production remains frozen until each new causal link is separately tested and authorized.
 
@@ -247,7 +247,7 @@ Research evidence와 artistic/modeling interpretation을 구분한다. Graph spe
 
 ## Current next work
 
-**Current architecture-design next step:** W1 vitality shadow from [the circulating-world contract](world-model.md). This does not yet change production movement, material or audio. The previously planned substrate timbre pass remains a separate artistic/audio side-pass rather than the active world-model research step.
+**Current architecture-design next step:** W1 vitality shadow from [the persistent-world contract](world-model.md). This does not yet change production movement, material or audio. The previously planned substrate timbre pass remains a separate artistic/audio side-pass rather than the active world-model research step.
 
 ### Research gate
 
@@ -257,40 +257,35 @@ The current decision is **spectral SKIP**. Keep social topology as a read-only d
 
 A future relationship/memory hypothesis may reopen social research, but it must be introduced as a new explicit mechanism and compared against the current frozen baseline under matched seeds, movement conditions and observer definitions.
 
-### Material / audio direction
+### Material / sound direction
 
-Optional Base Substrate timbre work remains a separate **artistic/audio side-pass**, not the active architecture-research step. The intended artistic character is still a pre-material granular bed:
+The optional Base Substrate implementation and B/C/D calibration evidence remain preserved, with the feature default Off. It is no longer the conceptual target of an always-present "base plate" that must sound on every step.
+
+The target sound model is now:
 
 ```text
-base substrate
-dull / sandy / granular / frictional
-short / diffuse / weakly pitched
-
-        ↓ repeated traffic / history
-
-structured material
-clearer modal identity
+activity
+→ changes environmental/material state
+→ changes physical vibration
+→ the current world becomes audible
 ```
 
-Candidate B/C/D remain calibration evidence only. No new substrate ratio or timbre is adopted by the world-model design.
+Localized material may develop different resonant character, but **the world itself is the primary sounding body**.
 
-The active architecture sequence is now defined in [`world-model.md`](world-model.md):
+The active architecture sequence is defined in [`world-model.md`](world-model.md):
 
 ```text
-W0  circulating-world design contract          COMPLETE
-W1  vitality shadow                            NEXT
-W2  episodic crystallization shadow            LATER
-W3  weak material → organism feedback          LATER
-W4  vibration → acoustic climate shadow        LATER
-W5  weak acoustic-climate feedback             LATER
-W6  closed-world integration                   ONLY AFTER PRIOR GATES
+W0  persistent-world design contract                 COMPLETE
+W1  vitality shadow                                  NEXT
+W2  episodic crystallization + material character    LATER
+W3  weak material → organism feedback                LATER
+W4  sounding-world / acoustic-climate shadow         LATER
+W5  weak acoustic-climate feedback                   LATER
+W6  persistent-world integration                     ONLY AFTER PRIOR GATES
 
 SOCIAL OBSERVATION
-  S0/S1/S2a/S2b/S2c                            COMPLETE / PARKED
-  spectral diagnostics                         SKIP
-
-AUDIO SIDE-PASS
-  granular base-substrate timbre               AVAILABLE, NOT ACTIVE RESEARCH GATE
+  S0/S1/S2a/S2b/S2c                                  COMPLETE / PARKED
+  spectral diagnostics                               SKIP
 ```
 
 Production movement, `TrailPlateBirth`, stratigraphy and audio remain unchanged until each new causal link is separately tested and authorized.
@@ -300,6 +295,7 @@ Production movement, `TrailPlateBirth`, stratigraphy and audio remain unchanged 
 ### Behavior / movement
 
 - [Interior endpoint shadow selector — frozen three-seed diagnostic; production selector unchanged](evidence/2026-10-08-interior-endpoint-shadow/README.md)
+- [Local-accretion shadow — branch-only mixed/negative morphology comparison](https://github.com/oseconds/ant-2026/tree/ant-local-accretion-shadow/docs/ant/evidence/2026-10-08-local-accretion-shadow)
 - [Movement / material morphology diagnosis — frozen three-seed archive/replay, no production intervention](evidence/2026-10-08-movement-material-morphology/README.md)
 - [Integrated refinement](evidence/2026-10-05-integrated-refinement/README.md)
 - [Gait / FOOT_CONTACT](evidence/2026-10-05-gait/README.md)

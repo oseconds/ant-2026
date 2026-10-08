@@ -1,17 +1,19 @@
-# ANT — World Model Design Contract
+# ANT — Persistent World Design Contract
 
-**Status:** design / not production implementation  
+**Status:** design contract / not production implementation  
 **Date:** 2026-10-08
 
-This document defines the current conceptual target for ANT after the S0–S2c social-observation work and the material-morphology shadow experiments. It is a design contract for future passes, not a claim that the complete loop already exists.
+This document defines the current conceptual target for ANT. It is intentionally separate from the verified implementation state in [`docs/ant/README.md`](./README.md).
 
-For verified implementation state, use [`docs/ant/README.md`](./README.md).
+The central shift is:
+
+> **ANT is not a task-solving agent simulation. It is a persistent world in which agents, memories, materials and vibrations become conditions for one another.**
+
+No part of this document implies that all proposed feedback links already exist.
 
 ## Core idea
 
-ANT is not primarily a task-solving agent simulation.
-
-It is a **circulating world** in which agents and environment continuously create the conditions for one another's next state.
+ANT does not require a prescribed destination, food target, global reward, pathfinding objective or authored narrative goal.
 
 ```text
 not:
@@ -24,19 +26,72 @@ agent state
 → next local action / condition
 ```
 
-The agents do not require a prescribed destination, food target, global reward, pathfinding objective or authored narrative goal.
+A future ant may carry internal state such as vitality, but that state regulates possibilities and consequences rather than encoding a destination to optimize.
 
-They may later carry internal states such as vitality, but those states should regulate possibilities and consequences rather than encode a destination to optimize.
+The viewer remains outside the world and may ask:
 
-The artistic observation position remains external:
+> Where is this ant going?  
+> Why did it stop here?  
+> Why did this material form?  
+> Why does the world sound like this now?
 
-> The viewer may wonder where an ant is going or what it is doing, while the world itself does not need to contain a single authored answer.
+The world does not need to contain a single authored answer. Meaning is observational and relational rather than a hidden reward function.
 
-Meaning is therefore observational and relational rather than a hidden reward function.
+## Persistent world
+
+The world is not created by the current presence of ants.
+
+Agents may appear and disappear while slower layers continue according to their own state and timescale.
+
+```text
+ants may reach zero
+
+pheromone        may decay
+material         may remain
+stratigraphy     may remain
+vibration        may decay / propagate
+acoustic climate may drift
+world state      continues
+```
+
+A new ant therefore does not enter a reset simulation. It enters a world that may already contain history.
+
+```text
+new ant ≠ new world
+
+new ant
+enters an already existing world
+```
+
+Nothing is required to happen merely to keep the simulation interesting.
+
+> **Things happen because the current conditions allow them to happen.**
+
+Periods with little visible activity are valid world states.
+
+## Multiple timescales
+
+The target world contains processes with different characteristic times.
+
+```text
+FAST
+gait / collision / contact
+
+MEDIUM
+movement / pheromone / internal state
+
+SLOW
+material formation / stratigraphy
+
+VERY SLOW
+world resonance / acoustic climate / environmental drift
+```
+
+Removing one fast process temporarily should not imply that all slower layers stop existing.
 
 ## Target circulation
 
-The long-term world model is:
+The long-term conceptual loop is:
 
 ```text
                     INTERNAL STATE
@@ -50,15 +105,17 @@ The long-term world model is:
                 ENVIRONMENTAL MEMORY
                           ↓
                MATERIAL CRYSTALLIZATION
+                    + CHARACTER
                           ↓
             STRATIGRAPHY / MATERIAL STATE
                      ↙             ↘
           locomotion condition    vibration
                   ↓               ↙      ↘
              internal state   audible   acoustic
-                              sound     climate
-                                          ↓
-                                  shared colony condition
+                              world     climate
+                              sound        ↓
+                                  shared world/colony
+                                       condition
                                           ↓
                                         action
 ```
@@ -91,18 +148,21 @@ current/recent proximity
 
 Not currently implemented as production feedback:
 
-- vitality or other explicit organism-level internal state
+- vitality or another explicit organism-level internal state
 - episodic crystallization based on history transitions
+- history-derived variable material character at birth
 - material/depth → locomotion feedback
 - physical vibration → acoustic-climate feedback
 - acoustic climate → colony or individual behavior
-- a closed world loop
+- a persistent-world closed circulation
 
 The current production `TrailPlateBirth` remains the source→boundary selected-path mechanism until a separate production-adoption pass says otherwise.
 
-## Why the model is changing
+The optional Base Substrate implementation remains default Off and its calibration evidence is preserved. The target world model no longer assumes a separate always-present "base plate" that emits a direct sound for every foot event.
 
-Two morphology directions exposed opposite failure modes.
+## Why the material model is changing
+
+Two morphology experiments exposed opposite failure modes.
 
 ### Selected-path production
 
@@ -110,21 +170,21 @@ The current selector compresses persistent chemical/mechanical history into dete
 
 This gives readable arterial material, but strongly constrains topology toward rooted path/tree-like forms.
 
-The interior-endpoint production candidate increased branches and births but also increased prior-union overlap and reduced new area per birth. It was rejected for the current sustained-novelty goal.
+The rejected interior-endpoint production candidate increased branches and births while also increasing prior-union overlap and reducing new area per birth. It demonstrated richer branching but not better sustained material novelty.
 
-### Absolute local accretion shadow
+### Absolute local-accretion shadow
 
 The branch `ant-local-accretion-shadow` removed path selection and froze locally mature cells directly from cumulative chemical/mechanical evidence.
 
-That shadow retained broader topology early and reduced repeated-cell freezing, but by the late run all three seeds converged toward one dense fan-shaped mass. The largest component contained more than 99% of local material and most surviving holes/islands were tiny.
+That shadow retained broader topology early and reduced repeated-cell freezing, but by the late run all three seeds converged toward a dense fan-shaped mass. At the final observation the largest component contained more than 99% of local material and most surviving holes/islands were tiny.
 
-This shadow is not merged into production. It is retained as evidence that:
+This shadow is not production. It is retained as a negative/mixed comparison showing that:
 
 > removing path selection is not sufficient if absolute accumulated state is still translated directly into permanent material.
 
-The next formation hypothesis should therefore examine **changes in history**, not only high accumulated values.
+The next formation hypothesis should therefore examine **history transitions**, not only high accumulated values.
 
-## Material principle
+## Material formation principle
 
 A future material mechanism should move conceptually from:
 
@@ -151,9 +211,51 @@ The desired unit is neither:
 
 but a spatially coherent, temporally related **material episode**.
 
-Artery, fan, braid, loop, island, fossil and palimpsest are possible observational morphology classes. They must not be generation templates or hard-coded targets.
+Artery, fan, braid, loop, island, fossil and palimpsest are possible observational morphology classes. They are not generation templates or hard-coded targets.
 
-Material geometry and future acoustic topology are separate concerns. A material shape may be arbitrary raster/continuous geometry even if a later audio compiler derives a simpler solver graph from it.
+Material geometry and future acoustic topology remain separate concerns. A material shape may have arbitrary geometry even if a later audio compiler derives a simpler solver graph.
+
+## Material character principle
+
+A material episode should eventually be able to inherit a **character from its formation history**.
+
+Do not assign fixed moral or categorical types such as good/bad, safe/dangerous, type A/type B.
+
+Prefer bounded continuous properties such as, conceptually:
+
+- compactness
+- porosity / roughness
+- directionality / anisotropy
+- stiffness
+- damping
+- resonance tendency
+
+These are candidate dimensions, not adopted production parameters.
+
+The key rule is:
+
+```text
+formation history
+→ material character
+
+not:
+random character preset
+→ material
+```
+
+Different histories may produce similar characters, and similar histories may produce only small differences. Diversity itself is not an optimization target.
+
+The purpose is only to prevent meaningful formation differences from being erased when material is born.
+
+A future material descriptor may therefore contain:
+
+```text
+geometry
++ provenance
++ bounded material character
+```
+
+The same material character may have both acoustic and environmental consequences without directly mapping behavior to sound.
 
 ## Organism principle
 
@@ -180,7 +282,7 @@ Do not introduce a global reward function merely to make behavior appear purpose
 
 ## Feedback principle
 
-Feedback should modify **conditions of action**, not command an action.
+Feedback changes **conditions of action**, not commanded actions.
 
 Prefer:
 
@@ -202,11 +304,64 @@ Likewise, sound/vibration feedback should not provide heading vectors or target 
 
 A feedback link is useful only if the system can continue producing new states without collapsing immediately into one fixed attractor, runaway reinforcement or featureless randomness.
 
-## Sound principle
+## World as sounding body
 
-Internal state is **not directly sonified** in the production world.
+The target concept is not:
 
-Avoid mappings such as:
+```text
+every ant step
+→ a base-platform sound
+```
+
+Instead:
+
+```text
+activity
+→ changes the world
+→ changes material / vibration conditions
+→ the current world becomes audible
+```
+
+> **The world itself is the primary sounding body.**
+
+FOOT_CONTACT can remain an important physical cause without every contact needing a one-to-one audible event.
+
+Localized material structures may have distinct resonant responses, but they exist inside the same world rather than as a stack of unrelated instruments.
+
+This reframes sound from an event effect into a phenomenon of world state.
+
+## Acoustic climate
+
+Sound is not required to remain a terminal output.
+
+The long-term model may derive a slow shared **acoustic climate** from physical world vibration.
+
+Critical boundary:
+
+```text
+physical vibration state
+├─→ render / mix / limiter / speakers
+└─→ slow acoustic-climate state → world
+```
+
+Do **not** feed master output RMS, user volume, limiter output or PA gain back into world dynamics.
+
+The feedback signal must come from a stable pre-master physical/world state so playback gain does not change the simulated ecology.
+
+If introduced later, acoustic climate should initially be:
+
+- slow relative to the audio waveform
+- shared rather than a direct per-ant control signal
+- derived from physical material/world vibration
+- connected to only one small organism/colony tendency in the first test
+
+Possible future effects include weak changes in arousal, hesitation, recovery or movement persistence.
+
+The sign and strength must be tested rather than chosen to manufacture a desired morphology.
+
+Internal state is not directly sonified in production.
+
+Avoid:
 
 ```text
 vitality → pitch
@@ -214,51 +369,54 @@ vitality → volume
 vitality → filter cutoff
 ```
 
-Instead:
+Prefer:
 
 ```text
 internal state
 → action
-→ FOOT_CONTACT
-→ material excitation
+→ world/material consequence
 → vibration
-→ sound
+→ audible world
 ```
 
-Internal-state diagnostic sonification is allowed only as explicitly labeled tooling.
+Diagnostic sonification is allowed only as explicitly labeled tooling.
 
-Sound is also not required to remain a terminal output forever. The long-term model may include a shared **acoustic climate** derived from physical vibration.
+## Finite influence principle
 
-Critical boundary:
+Exceptional states are allowed.
+
+A rare ant trajectory, unusual material episode, high stiffness, long resonance or deep local history may strongly affect its surroundings.
+
+But:
+
+> **No entity is larger than the world.**
 
 ```text
-physical vibration state
-├─→ render / mix / limiter / speakers
-└─→ slow acoustic-climate state → simulation
+strong      ≠ infinite
+rare        ≠ globally dominant forever
+persistent  ≠ unlimited influence
 ```
 
-Do **not** feed master output RMS, user volume, limiter output or PA gain back into world dynamics.
+Future mechanisms should therefore keep influence finite through one or more of:
 
-The feedback signal must come from a stable pre-master physical/world state so changing playback gain does not change the simulated ecology.
+- bounded state ranges
+- spatial locality
+- attenuation with distance
+- damping / decay
+- burial / occlusion
+- turnover
+- finite energy or finite coupling
+- slow bounded global aggregation for climate-like variables
 
-## Acoustic-climate principle
+A global/shared variable such as acoustic climate may exist, but its response and influence must still be bounded.
 
-If introduced later, acoustic climate should initially be:
-
-- slow relative to the audio waveform
-- shared rather than a direct per-ant control signal
-- derived from physical material vibration, not the final mix
-- connected to only one small colony/organism tendency in the first test
-
-Examples of future candidate effects include weak changes in arousal, hesitation, recovery or movement persistence.
-
-The sign and strength must be tested rather than chosen to manufacture a desired morphology.
+This is not a requirement that all states become average or harmless. Strong events may occur. They must remain world-internal finite events rather than hidden global controllers.
 
 ## Social layer
 
 The S0–S2c social observation remains parked and read-only.
 
-The current world model does not require a social graph to close the environmental loop.
+The persistent-world model does not require a social graph to close the environmental loop.
 
 If explicit relationship, partner memory or social preference is introduced later, it is a new mechanism and must be compared against the frozen no-relationship baseline.
 
@@ -266,47 +424,49 @@ If explicit relationship, partner memory or social preference is introduced late
 
 Future ANT passes should preserve these rules unless an explicit architecture review changes them:
 
-1. **No prescribed destination by default.** Do not add food targets, waypoint objectives, global rewards or pathfinding merely to create apparent purpose.
-2. **State, not command.** Internal/environmental variables alter local conditions and propensities, not explicit desired routes.
-3. **No direct internal-state sonification in production.**
-4. **No master-output feedback.** World feedback derives from pre-master physical state.
-5. **Sound does not directly steer individual ants.** Any first sound feedback is slow/shared and mediated by organism/colony state.
-6. **Material is both history and potential environment.** It should eventually be capable of affecting future conditions, but that feedback is not implemented until separately validated.
-7. **One new causal link per pass.** Avoid adding vitality, material feedback and acoustic feedback simultaneously.
-8. **Preserve negative baselines.** Current production, rejected interior-endpoint candidate, local-accretion shadow and S0–S2c social baseline remain comparison points.
-9. **Do not tune to desired pictures.** Morphology classes are observations, not objectives.
-10. **Separate evidence from interpretation.** Measured dynamics may support an implementation claim; concepts such as vitality, climate, fossil or world are artistic/modeling interpretations unless separately researched.
+1. **Persistent world.** Agent presence is not the existence condition of the world; zero-ant intervals are valid.
+2. **No prescribed destination by default.** Do not add food targets, waypoint objectives, global rewards or pathfinding merely to create apparent purpose.
+3. **State, not command.** Internal/environmental variables alter local conditions and propensities, not explicit desired routes.
+4. **Material records history without being only an archive.** It may later condition future activity.
+5. **Material character comes from formation history.** Do not assign arbitrary personality presets merely for variety.
+6. **The world is the sounding body.** Do not assume every contact needs a direct audible event.
+7. **No direct internal-state sonification in production.**
+8. **No master-output feedback.** World feedback derives from pre-master physical state.
+9. **Sound does not directly steer individual ants.** Any first acoustic feedback is slow/shared and mediated by world/organism state.
+10. **Finite influence.** Exceptional entities are allowed, but every influence is bounded in magnitude, space, time, energy or coupling.
+11. **One new causal link per pass.** Avoid adding vitality, material feedback and acoustic feedback simultaneously.
+12. **Preserve negative baselines.** Current production, rejected interior-endpoint candidate, local-accretion shadow and S0–S2c social baseline remain comparison points.
+13. **Do not tune to desired pictures.** Morphology classes are observations, not objectives.
+14. **Separate evidence from interpretation.** Measured dynamics support implementation claims; concepts such as vitality, climate, fossil, character or world remain modeling/artistic interpretations unless separately researched.
 
 ## Planned passes
 
-The current sequence is:
-
 ```text
-W0  WORLD MODEL CONTRACT                         THIS DOCUMENT
+W0  PERSISTENT-WORLD CONTRACT                    THIS DOCUMENT
 
 W1  vitality shadow
     compute internal-state dynamics without behavior feedback
 
-W2  episodic crystallization shadow
+W2  episodic crystallization + character shadow
     derive coherent material episodes from history transitions
-    using frozen natural inputs first
+    and test bounded history-derived material character
 
 W3  weak material → organism feedback
     run natural ANT again with one isolated environmental consequence
 
-W4  vibration → acoustic climate shadow
+W4  sounding-world / acoustic-climate shadow
     derive slow shared state from pre-master physical vibration
 
 W5  weak acoustic-climate feedback
     connect one shared state to one organism/colony tendency
 
-W6  closed-world integration
-    only after each link is individually stable and interpretable
+W6  persistent-world integration
+    only after each causal link is independently stable and interpretable
 ```
 
 Each stage is separately authorized, measured and reversible.
 
-A successful stage is not one that looks more alive. It is one that adds a clear causal relation while preserving enough openness for multiple future states to remain possible.
+A successful stage is not one that merely looks more alive or more varied. It adds a clear causal relation while preserving enough openness for multiple future states to remain possible.
 
 ## Current next step
 
@@ -319,6 +479,7 @@ First define and replay a candidate internal-state process against frozen natura
 - does it remain dynamic rather than pinning at a floor/ceiling?
 - does it vary meaningfully within and between individuals?
 - can cost/recovery be derived from existing events without future leakage?
+- can exceptional states occur without unbounded influence?
 - is the state interpretable without directly controlling movement or sound?
 
 Only after that shadow pass should vitality be considered for behavioral feedback.

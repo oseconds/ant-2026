@@ -14,6 +14,27 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-08 — Persistent-world / sounding-world pivot
+
+[`2026-10-08-persistent-world-pivot.md`](./2026-10-08-persistent-world-pivot.md) · [Persistent-world contract](../world-model.md)
+
+- World persists even through zero-ant intervals; agents participate in the world but do not define its existence
+- World itself becomes the target sounding body rather than an always-present per-step base plate
+- Future material episodes may inherit bounded continuous character from formation history
+- Exceptional entities/states are allowed, but influence must remain finite and world-internal
+- W2 expands to episodic crystallization + material character; W6 becomes persistent-world integration
+- Documentation/design change only; production unchanged
+
+### 2026-10-08 — Local-accretion shadow decision
+
+[`2026-10-08-local-accretion-shadow-decision.md`](./2026-10-08-local-accretion-shadow-decision.md) · [Branch evidence](https://github.com/oseconds/ant-2026/tree/ant-local-accretion-shadow/docs/ant/evidence/2026-10-08-local-accretion-shadow)
+
+- One path-free absolute local-accretion family retained more early topology but converged late toward dense fan/blob material
+- Final largest component held 99.43–99.72% of local material; most remaining holes/islands were tiny
+- More than half of frozen-cell events still re-inscribed prior territory
+- Decision: preserve branch as mixed/negative baseline; do not merge production rule
+- Next material hypothesis should use history transition/coherent episodes rather than tune this family
+
 ### 2026-10-08 — Circulating-world model design
 
 [`2026-10-08-circulating-world-model.md`](./2026-10-08-circulating-world-model.md) · [World-model contract](../world-model.md)
@@ -22,7 +43,7 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 - No prescribed destination/global reward by default; future vitality is state regulation, not a target
 - Material and vibration may later become environmental feedback, but only through separately validated links
 - No direct vitality→sound mapping and no master-output→simulation feedback
-- Planned sequence: vitality shadow → episodic crystallization → material feedback → acoustic climate → closed-world integration
+- Initial planned sequence: vitality shadow → episodic crystallization → material feedback → acoustic climate → integration; later refined by the persistent-world pivot above
 - Design/documentation pass only; production behavior/material/audio unchanged
 
 ### 2026-10-08 — Interior endpoint production candidate rejected

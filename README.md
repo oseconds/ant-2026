@@ -30,6 +30,8 @@ CHECK_PRODUCTION=1 npm run test:browser
 
 ANT는 결과 상태를 직접 코딩하기보다, 서로 다른 시간척도의 상호작용이 누적되도록 구성합니다.
 
+장기 설계에서 ANT는 **목표를 수행하는 개체들의 시뮬레이션보다, 개체·기억·물질·진동이 서로의 다음 조건을 만드는 persistent world**를 지향합니다. 개미가 잠시 하나도 없어도 세계는 reset되지 않으며, 느린 환경 상태는 자기 시간척도대로 남거나 변할 수 있습니다. 이 설계는 아직 production 구현과 구분합니다.
+
 ```text
 equal ants
   ↓ movement / local occupancy
@@ -63,7 +65,7 @@ TemporalSocialTopology
 - **social graph**: 빠르고 이동하며 일시적인 현재 관계의 관찰. S0–S2c 검증 뒤 현재는 행동에 연결하지 않는 parked diagnostic baseline으로 유지합니다.
 - **material graph**: 느리고 공간적이며 과거 반복 행동이 환경에 고정된 역사. 현재 프로젝트의 생성적 중심은 이 material/history 축입니다.
 
-자세한 현재 구조와 연구 경계는 [ANT documentation hub](docs/ant/README.md)에 정리합니다.
+자세한 현재 구조와 연구 경계는 [ANT documentation hub](docs/ant/README.md), 미래 세계 모델은 [persistent-world design contract](docs/ant/world-model.md)에 정리합니다.
 
 ## 주요 검증된 변화
 
@@ -160,17 +162,19 @@ S0는 60 Hz에서 encounter start/end, duration, minimum distance와 stable ID�
 | S0–S2c social observation / validation | complete; parked diagnostic baseline |
 | persistent pioneer-like organization | not demonstrated |
 | spectral diagnostics | SKIP at current gate |
-| current active pass | Material Voice — sand-like base substrate timbre |
-| next material pass | Material History — long-run morphology / stratigraphy observability |
+| current architecture pass | W1 vitality shadow |
+| next world-model pass | W2 episodic crystallization + material character shadow |
+| target sound concept | world itself as sounding body; Base Substrate calibration preserved but not conceptual default |
 | social feedback / graph→Plate coupling | not justified; parked |
 
-현재 개발축은 **movement → chemical/mechanical memory → frozen material history → physical vibration/sound**에 둡니다. Social observation은 이 생성계의 독립 원인으로 취급하지 않고 옆에서 읽는 기준선으로 보존합니다.
+현재 검증된 production은 유지하면서, 미래 설계축은 **internal state → action → environmental memory → material/character → vibration/world sound → shared condition**의 persistent circulation으로 확장합니다. Social observation은 이 생성계의 독립 원인으로 취급하지 않고 옆에서 읽는 기준선으로 보존합니다.
 
 향후 explicit relationship / partner memory / social rule을 도입하는 별도 연구를 열 경우, 현재 S0–S2c 상태를 frozen no-relationship control로 삼아 같은 seed/관찰 정의/검증 절차로 비교한 뒤에만 추가 social mechanism의 효과를 주장합니다.
 
 ## Documentation map
 
 - [ANT current architecture / verified baseline / roadmap](docs/ant/README.md)
+- [ANT persistent-world design contract](docs/ant/world-model.md)
 - [ANT daily experiment/process logs](docs/ant/daily/README.md)
 - [ANT evidence packages](docs/ant/evidence/)
 - [Physical Audio Lab library, API and SvelteKit notes](docs/physical-audio-lab.md)
