@@ -14,6 +14,17 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-09 — W1 episode continuity / closure diagnostic
+
+[Chronology](./2026-10-09-w1-continuity-diagnostic.md) · [Evidence](../evidence/2026-10-09-w1-continuity-diagnostic/README.md)
+
+- Read-only observer preserves all 1,797 original frames and complete W1 geometry/character
+- Original active anchors disappear at 307–309 s; 33–45 disconnected descendants still share one pending episode at 599.25 s
+- Separate sibling rejoins, distinct-parent mergers and lineage absorptions
+- Stale point-contact admissions and q-false EMA carry-over observed; exact field contribution/counterfactual effect unresolved
+- 52 focused / 344 full tests, build and 24-file byte reproduction pass
+- Propose one split-inheritance candidate only; implement no continuity/closure change or second family
+
 ### 2026-10-09 — W1 cumulative causal attribution: complete replay, negative morphology
 
 [Chronology](./2026-10-09-w1-causal-attribution.md) · [Evidence](../evidence/2026-10-08-w1-causal-character-attribution/README.md)
