@@ -1,0 +1,1497 @@
+{
+  "schemaVersion": 1,
+  "branch": "ant-interior-endpoint-shadow-selector",
+  "baseCommit": "746af8fb72f1bc835115d6886bdab001b2a638d7",
+  "toolingCommit": "b9e08961a5e47e4ce7531bce87902fc81b9a8dd8",
+  "replayManifest": {
+    "schemaVersion": 1,
+    "commit": "b9e08961a5e47e4ce7531bce87902fc81b9a8dd8",
+    "node": "v22.23.2",
+    "seeds": [
+      20261005,
+      20261006,
+      20261007
+    ],
+    "seconds": 600,
+    "dtSeconds": 0.016666666666666666,
+    "sourceHashes": {
+      "src/lib/agents/ant/AntController.js": "7c69aedfbd96d8fe3d3b2c4464f5cd5056651b2ecbae274eb71cee8053283633",
+      "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+      "src/lib/agents/ant/LocalOccupancy.js": "df22dd38e9af8078ebcb1d225ca2a5eaf579e994d2d4a00ce9ceeefa2403ff16",
+      "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+      "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+      "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+      "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+      "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+      "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+      "src/lib/agents/ant/BodyPoseController.js": "2ec4cc12c12ae301ea07056889c3be9255b1b1e155b7724cd3366278d60ace8e",
+      "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd"
+    },
+    "runnerHash": "27bd6ebb8eea0c0a779147e847c2b40637ccd87d781067c60aa9f984376c0e08",
+    "transformedSourceHash": "fd5ad7538950d5a7e21673cc99f0b29589556c181274b3b2de00c083cbf558ac",
+    "diagnosticToolHashes": {
+      "scripts/ant-morphology-shadow-temporal.js": "9308acbbd0519f524374a21b6c33db710e09912b9acedd1a5c8d1b32305fef2d",
+      "scripts/ant-morphology-shadow-analysis.js": "43c26f7bc252967d10a16485aae5bb52bb8694236763c9d6151bf65a985dc189",
+      "scripts/ant-morphology-shadow-plots.js": "a873fbf3bffb127528e64fe4a6311cf794c1ee9cd87d30f7438fd1767a6e6bf3",
+      "scripts/ant-morphology-plates.js": "915ce76cb706412866d8255bb73cbeb9f4707da73992bcd255d1c4c2d3914e33"
+    },
+    "method": "Fresh natural default controller; injected LCG; AudioBridge absent; paired plain and diagnostic runs. Production selector is checked unchanged; shadow selector runs on the same supported mask, support, and chemical-memory arrays.",
+    "snapshots": "Exact Float32 chemical field, persistent chemical memory, surface field, supported-mask support, and Uint32 contact-count arrays at each actual qualification analysis tick. Array rows are lossless XOR deltas from prior snapshot, gzip compressed.",
+    "hashFields": [
+      "agents",
+      "rng",
+      "chemical",
+      "surface",
+      "chemicalMemory",
+      "birthState",
+      "contactCounts",
+      "contacts",
+      "births",
+      "lifecycle"
+    ],
+    "checkpointSeconds": [
+      30,
+      60,
+      120,
+      300,
+      600
+    ],
+    "archiveDirectory": "C:\\Users\\5dudt\\Documents\\Github\\ant-2026\\docs\\ant\\evidence\\2026-10-07-social-graph\\data",
+    "files": [
+      {
+        "summary": "seed20261005-summary.json",
+        "snapshots": "seed20261005-snapshots.bin.gz",
+        "bytes": {
+          "snapshots": 42694915
+        }
+      },
+      {
+        "summary": "seed20261006-summary.json",
+        "snapshots": "seed20261006-snapshots.bin.gz",
+        "bytes": {
+          "snapshots": 43440798
+        }
+      },
+      {
+        "summary": "seed20261007-summary.json",
+        "snapshots": "seed20261007-snapshots.bin.gz",
+        "bytes": {
+          "snapshots": 42321540
+        }
+      }
+    ],
+    "createdAt": "2026-10-08T07:45:58.396Z"
+  },
+  "seeds": [
+    {
+      "seed": 20261005,
+      "seconds": 600,
+      "analysisCount": 599,
+      "parity": {
+        "everyTick": true,
+        "comparedTicks": 36001,
+        "fields": {
+          "agents": {
+            "baseline": "3ce0f4995d96fcab59be4ce48474273d137a71dfb19bb19c5aaa3cda2549ad53",
+            "instrumented": "3ce0f4995d96fcab59be4ce48474273d137a71dfb19bb19c5aaa3cda2549ad53",
+            "match": true
+          },
+          "rng": {
+            "baseline": "b5788908b9270cd35cb52701159fa8d2bc2ba45f463b9bd4d5ae43db01b2345e",
+            "instrumented": "b5788908b9270cd35cb52701159fa8d2bc2ba45f463b9bd4d5ae43db01b2345e",
+            "match": true
+          },
+          "chemical": {
+            "baseline": "95cdcb8991dd82db948d5130f4668f53652e2bb8177d493d3c1715f8bc4f61c7",
+            "instrumented": "95cdcb8991dd82db948d5130f4668f53652e2bb8177d493d3c1715f8bc4f61c7",
+            "match": true
+          },
+          "surface": {
+            "baseline": "2bedca71eb837baf48b98845dc582ccf9a6cd295e3dd1f28b2675d4c1bca56f0",
+            "instrumented": "2bedca71eb837baf48b98845dc582ccf9a6cd295e3dd1f28b2675d4c1bca56f0",
+            "match": true
+          },
+          "chemicalMemory": {
+            "baseline": "797aa879e3a8cd64a2fb5a57e6459a25f8214115a5bb5c97da86e0d6c3a0ac22",
+            "instrumented": "797aa879e3a8cd64a2fb5a57e6459a25f8214115a5bb5c97da86e0d6c3a0ac22",
+            "match": true
+          },
+          "birthState": {
+            "baseline": "d6eb97110ec595039c62d10d90038770908b8fb3599ec77293f6db21aed559a8",
+            "instrumented": "d6eb97110ec595039c62d10d90038770908b8fb3599ec77293f6db21aed559a8",
+            "match": true
+          },
+          "contactCounts": {
+            "baseline": "4e6ea91babd467ddfeab732611468edd5d2c87989c38e4ae4d8ab9cf47030c87",
+            "instrumented": "4e6ea91babd467ddfeab732611468edd5d2c87989c38e4ae4d8ab9cf47030c87",
+            "match": true
+          },
+          "contacts": {
+            "baseline": "b0061e9b5028790b4acc9e77413ebabd4b7c31f4e0e536a7686d4bac77023971",
+            "instrumented": "b0061e9b5028790b4acc9e77413ebabd4b7c31f4e0e536a7686d4bac77023971",
+            "match": true
+          },
+          "births": {
+            "baseline": "59cf8b5449e638f1156a94a6156dd797ab08f3565a94fd1b3c5a3c2278393b8a",
+            "instrumented": "59cf8b5449e638f1156a94a6156dd797ab08f3565a94fd1b3c5a3c2278393b8a",
+            "match": true
+          },
+          "lifecycle": {
+            "baseline": "60bbff9a2602c6a3bf8df3806364a4d427a1bb0384e85b16632966f0dd293049",
+            "instrumented": "60bbff9a2602c6a3bf8df3806364a4d427a1bb0384e85b16632966f0dd293049",
+            "match": true
+          }
+        },
+        "trajectory": true,
+        "behavior": true,
+        "rng": true,
+        "chemical": true,
+        "surface": true,
+        "chemicalMemory": true,
+        "contactCounts": true,
+        "contacts": true,
+        "births": true
+      },
+      "archiveComparison": {
+        "archiveControllerSha256": "7b1649b4e206f9e7c2bc07e982ceb7c11fab9e072b24b7cd2a16f3306c230ed0",
+        "archiveEligible": true,
+        "trajectoryMatch": true,
+        "contactsMatch": true,
+        "birthsMatch": true,
+        "archivedContactGroups": 35751,
+        "archivedBirthEvents": 64
+      },
+      "rawArchive": {
+        "path": "docs/ant/evidence/2026-10-07-social-graph/data/seed20261005-on-raw-events.json.gz",
+        "contacts": 35751,
+        "births": 64
+      },
+      "analysis": {
+        "seed": 20261005,
+        "analysisCount": 599,
+        "selectorFunnel": {
+          "sourceConnectedComponentsWithBoundaryEndpoints": 519,
+          "sourceConnectedComponentsWithInteriorEndpointsAtLengthFloor": 559,
+          "componentsGainingInteriorEndpointFamily": 559,
+          "interiorOnlyEligibleComponents": 40,
+          "qualifyingInteriorEndpoints": 16196,
+          "productionEligibleComponentObservations": 519,
+          "shadowEligibleComponentObservations": 559,
+          "note": "Component counts are repeated observations at each one-second qualification analysis, not unique spatial components."
+        },
+        "instantaneous": {
+          "productionSelectedCandidateAnalyses": 519,
+          "shadowSelectedCandidateAnalyses": 559,
+          "shadowOnlySelectedCandidateAnalyses": 40,
+          "selectedGeometryDifferentAnalyses": 559,
+          "additionalRetainedNetworkCells": {
+            "n": 519,
+            "min": 107,
+            "p50": 278,
+            "p90": 406,
+            "max": 516
+          },
+          "additionalRibbonCells": {
+            "n": 519,
+            "min": 291,
+            "p50": 773,
+            "p90": 1162,
+            "max": 1511
+          },
+          "materialDifferenceDefinition": "Exact selected geometry difference: source, target, principal path, retained skeleton cells, or ribbon mask differs."
+        },
+        "temporal": {
+          "shadowCandidateAnalyses": 559,
+          "persistenceSurvivors": 519,
+          "scheduleGateCounts": {
+            "noCandidate": 40,
+            "persistence": 40,
+            "globalGap": 401,
+            "refractory": 74,
+            "newContacts": 0,
+            "birthCap": 0,
+            "ready": 44
+          },
+          "scheduleQualifiedAnalyses": 44,
+          "isolatedVirtualBirths": 44,
+          "note": "Virtual births update only the separate diagnostic shadow state; no Plate, production birth state, material, or audio is changed."
+        },
+        "morphology": {
+          "production": {
+            "candidateCount": 519,
+            "principalGeodesicLengthWorldUnits": {
+              "n": 519,
+              "min": 0.7308042828546611,
+              "p50": 0.9017794479822326,
+              "p90": 0.9605771999572525,
+              "max": 1.0517019815308564
+            },
+            "principalTortuosity": {
+              "n": 519,
+              "min": 1.0761804348195074,
+              "p50": 1.1682666256919816,
+              "p90": 1.253315224067631,
+              "max": 1.4363195867400627
+            },
+            "footprintArea": {
+              "n": 519,
+              "min": 0.022049861495844876,
+              "p50": 0.1700831024930748,
+              "p90": 0.21650969529085873,
+              "max": 0.25373961218836566
+            },
+            "centerlineCells": {
+              "n": 519,
+              "min": 62,
+              "p50": 492,
+              "p90": 655,
+              "max": 755
+            },
+            "endpointProxy": {
+              "n": 519,
+              "min": 1,
+              "p50": 10,
+              "p90": 14,
+              "max": 18
+            },
+            "junctionNodeProxy": {
+              "n": 519,
+              "min": 0,
+              "p50": 110,
+              "p90": 205,
+              "max": 280
+            },
+            "junctionClusterProxy": {
+              "n": 519,
+              "min": 0,
+              "p50": 20,
+              "p90": 27,
+              "max": 35
+            },
+            "retainedSourceConnectedSkeletonFraction": {
+              "n": 519,
+              "min": 0.07411385606874328,
+              "p50": 0.29766803840877915,
+              "p90": 0.3777648428405122,
+              "max": 0.4171270718232044
+            },
+            "targetBoundaryDistanceWorldUnits": {
+              "n": 519,
+              "min": 0,
+              "p50": 0.021052631578947368,
+              "p90": 0.042105263157894736,
+              "max": 0.04210526315789476
+            },
+            "sourceEndpointDisplacementWorldUnits": {
+              "n": 519,
+              "min": 0.6204278748754263,
+              "p50": 0.7684210526315789,
+              "p90": 0.8189581923246285,
+              "max": 0.881700698584081
+            },
+            "productionUnionOverlapFraction": {
+              "n": 519,
+              "min": 0,
+              "p50": 0.9580318379160637,
+              "p90": 0.9975947083583885,
+              "max": 1
+            },
+            "newSpatialAreaNormalized": {
+              "n": 519,
+              "min": 0,
+              "p50": 0.008088642659279778,
+              "p90": 0.05662049861495845,
+              "max": 0.09473684210526316
+            },
+            "perAnalysisMedianHalfWidthWorldUnits": {
+              "n": 519,
+              "min": 0.012,
+              "p50": 0.012,
+              "p90": 0.012,
+              "max": 0.012
+            },
+            "widthClamp": {
+              "lowClampSamples": 185371,
+              "highClampSamples": 8700,
+              "samples": 235707,
+              "lowClampFraction": 0.7864467325959772,
+              "highClampFraction": 0.03691023177080019,
+              "definition": "Clamp sample counts are exact; the displayed half-width distribution is the distribution of each analysis candidate median."
+            },
+            "curvatureAt030": {
+              "n": 519,
+              "min": 6.278094666224737,
+              "p50": 10.521642172864627,
+              "p90": 13.219360805102713,
+              "max": 17.416171612918763
+            },
+            "curvatureAt010": {
+              "n": 519,
+              "min": 0.8155745311216853,
+              "p50": 2.631878323747085,
+              "p90": 3.8588497869404614,
+              "max": 5.945479752070568
+            }
+          },
+          "shadow": {
+            "candidateCount": 559,
+            "principalGeodesicLengthWorldUnits": {
+              "n": 559,
+              "min": 0.3775795545798822,
+              "p50": 0.9050816427083876,
+              "p90": 0.9689876196753926,
+              "max": 1.0517019815308564
+            },
+            "principalTortuosity": {
+              "n": 559,
+              "min": 1.0696510876905923,
+              "p50": 1.175222806685972,
+              "p90": 1.3423615894184582,
+              "max": 2.3007768267789976
+            },
+            "footprintArea": {
+              "n": 559,
+              "min": 0.012299168975069252,
+              "p50": 0.25185595567867036,
+              "p90": 0.29274238227146815,
+              "max": 0.3254293628808864
+            },
+            "centerlineCells": {
+              "n": 559,
+              "min": 38,
+              "p50": 756,
+              "p90": 902,
+              "max": 1027
+            },
+            "endpointProxy": {
+              "n": 559,
+              "min": 3,
+              "p50": 39,
+              "p90": 50,
+              "max": 62
+            },
+            "junctionNodeProxy": {
+              "n": 559,
+              "min": 4,
+              "p50": 208,
+              "p90": 304,
+              "max": 396
+            },
+            "junctionClusterProxy": {
+              "n": 559,
+              "min": 1,
+              "p50": 41,
+              "p90": 51,
+              "max": 64
+            },
+            "retainedSourceConnectedSkeletonFraction": {
+              "n": 559,
+              "min": 0.2422680412371134,
+              "p50": 0.4715398442180947,
+              "p90": 0.5219079312257349,
+              "max": 0.7058823529411765
+            },
+            "targetBoundaryDistanceWorldUnits": {
+              "n": 559,
+              "min": 0,
+              "p50": 0.031578947368421054,
+              "p90": 0.09473684210526316,
+              "max": 0.33684210526315794
+            },
+            "sourceEndpointDisplacementWorldUnits": {
+              "n": 559,
+              "min": 0.2683694480838308,
+              "p50": 0.7644453749627498,
+              "p90": 0.8189581923246285,
+              "max": 0.881700698584081
+            },
+            "productionUnionOverlapFraction": {
+              "n": 559,
+              "min": 0,
+              "p50": 0.8906783796974134,
+              "p90": 0.9634898055950688,
+              "max": 0.9930811808118081
+            },
+            "newSpatialAreaNormalized": {
+              "n": 559,
+              "min": 0.0016620498614958448,
+              "p50": 0.029473684210526315,
+              "p90": 0.15024930747922438,
+              "max": 0.18404432132963988
+            },
+            "perAnalysisMedianHalfWidthWorldUnits": {
+              "n": 559,
+              "min": 0.012,
+              "p50": 0.012,
+              "p90": 0.012,
+              "max": 0.012
+            },
+            "widthClamp": {
+              "lowClampSamples": 325863,
+              "highClampSamples": 9997,
+              "samples": 389675,
+              "lowClampFraction": 0.8362430230320138,
+              "highClampFraction": 0.025654712260216848,
+              "definition": "Clamp sample counts are exact; the displayed half-width distribution is the distribution of each analysis candidate median."
+            },
+            "curvatureAt030": {
+              "n": 559,
+              "min": 6.278094666224737,
+              "p50": 10.843261519236208,
+              "p90": 13.767680973366584,
+              "max": 17.416171612918763
+            },
+            "curvatureAt010": {
+              "n": 559,
+              "min": 0.8095516187975017,
+              "p50": 2.7384093546288395,
+              "p90": 4.21679022401482,
+              "max": 6.012096460728187
+            }
+          },
+          "pairedDeltas": {
+            "principalGeodesicLengthWorldUnits": {
+              "n": 519,
+              "min": 0,
+              "p50": 0,
+              "p90": 0.034133059864413506,
+              "max": 0.16736310459591197
+            },
+            "principalTortuosity": {
+              "n": 519,
+              "min": -0.009156264760356692,
+              "p50": 0,
+              "p90": 0.0997436878753728,
+              "max": 0.9343156642970152
+            },
+            "footprintArea": {
+              "n": 519,
+              "min": 0.032243767313019395,
+              "p50": 0.08565096952908588,
+              "p90": 0.1287534626038781,
+              "max": 0.16742382271468143
+            },
+            "centerlineCells": {
+              "n": 519,
+              "min": 107,
+              "p50": 278,
+              "p90": 406,
+              "max": 516
+            },
+            "newSpatialArea": {
+              "n": 519,
+              "min": 0.0006648199445983376,
+              "p50": 0.019390581717451522,
+              "p90": 0.09839335180055402,
+              "max": 0.1325207756232687
+            }
+          }
+        },
+        "examples": {
+          "productionAndShadow": {
+            "seed": 20261005,
+            "tick": 8821,
+            "timeSeconds": 147.01666666667265,
+            "additionalNetworkCells": 516,
+            "shadowFootprintArea": 0.21329639889196675,
+            "shadowPrincipalTortuosity": 1.2065068186711456,
+            "shadowCurvatureAt010": 2.9251111261947282
+          },
+          "interiorBranchesOmittedByProduction": {
+            "seed": 20261005,
+            "tick": 8821,
+            "timeSeconds": 147.01666666667265,
+            "additionalNetworkCells": 516,
+            "shadowFootprintArea": 0.21329639889196675,
+            "shadowPrincipalTortuosity": 1.2065068186711456,
+            "shadowCurvatureAt010": 2.9251111261947282
+          },
+          "maximumMeasuredCurvature": {
+            "seed": 20261005,
+            "tick": 21841,
+            "timeSeconds": 364.01666666672423,
+            "additionalNetworkCells": 283,
+            "shadowFootprintArea": 0.2883102493074792,
+            "shadowPrincipalTortuosity": 1.6293469078257288,
+            "shadowCurvatureAt010": 6.012096460728187
+          },
+          "minimumFootprintAmongChanged": {
+            "seed": 20261005,
+            "tick": 5041,
+            "timeSeconds": 84.01666666666823,
+            "additionalNetworkCells": 153,
+            "shadowFootprintArea": 0.072797783933518,
+            "shadowPrincipalTortuosity": 1.114756509792391,
+            "shadowCurvatureAt010": 1.9218109615107954
+          },
+          "exactNoDifference": null,
+          "availability": {
+            "changedCandidateCount": 519,
+            "noDifferenceCandidateCount": 0
+          }
+        }
+      },
+      "artifacts": {
+        "fullSummary": {
+          "path": "test-results/ant-interior-endpoint-shadow/seed20261005-summary.json",
+          "bytes": 225877622,
+          "sha256": "40141611fb8e8e0e25a9ac4c0cd143e687bf94e10c2d4577594f73c7ac812b0a"
+        },
+        "packagedSummary": {
+          "path": "docs/ant/evidence/2026-10-08-interior-endpoint-shadow/data/seed20261005-summary.json.gz",
+          "bytes": 27439904,
+          "sha256": "d3dd3aa8bcc2acd9159094bb45615e868436352c1533f5f584582b1aac4df32d"
+        },
+        "fullSnapshots": {
+          "path": "test-results/ant-interior-endpoint-shadow/seed20261005-snapshots.bin.gz",
+          "bytes": 42694915,
+          "sha256": "a9eb9cd63ee9fd39271efdf9ea9729507fb3b08990d15d2a5f9aebd7fb992e9f"
+        }
+      },
+      "sourceChoice": {
+        "pairedCandidateAnalyses": 519,
+        "changedSourceCellCount": 0
+      }
+    },
+    {
+      "seed": 20261006,
+      "seconds": 600,
+      "analysisCount": 599,
+      "parity": {
+        "everyTick": true,
+        "comparedTicks": 36001,
+        "fields": {
+          "agents": {
+            "baseline": "fd0a47a8c8b24f6ad818cabae6706260286fb49c5a9c6663b671362f82d5f94a",
+            "instrumented": "fd0a47a8c8b24f6ad818cabae6706260286fb49c5a9c6663b671362f82d5f94a",
+            "match": true
+          },
+          "rng": {
+            "baseline": "61a19491f565711c737ee21c15662fc774898e18477e479fad2ae573a94d6325",
+            "instrumented": "61a19491f565711c737ee21c15662fc774898e18477e479fad2ae573a94d6325",
+            "match": true
+          },
+          "chemical": {
+            "baseline": "d49f7489186d98ec31e42f62f85b7315c5ed15fd54df3f696c4a665c72729e59",
+            "instrumented": "d49f7489186d98ec31e42f62f85b7315c5ed15fd54df3f696c4a665c72729e59",
+            "match": true
+          },
+          "surface": {
+            "baseline": "3bddef1a4fc0695b31adbdd33adcbebd9aa7627baa9441b4e5a4491da7f26319",
+            "instrumented": "3bddef1a4fc0695b31adbdd33adcbebd9aa7627baa9441b4e5a4491da7f26319",
+            "match": true
+          },
+          "chemicalMemory": {
+            "baseline": "a39058017a27fb220aca66c0ef6b065e63b5657cc25a49e6e0ca5aeefbfe9d61",
+            "instrumented": "a39058017a27fb220aca66c0ef6b065e63b5657cc25a49e6e0ca5aeefbfe9d61",
+            "match": true
+          },
+          "birthState": {
+            "baseline": "29df1bcb6a0f9c13864fbe7a6d3001f0f8cb6cf1e434fb79c0dbbafc97d4d0c7",
+            "instrumented": "29df1bcb6a0f9c13864fbe7a6d3001f0f8cb6cf1e434fb79c0dbbafc97d4d0c7",
+            "match": true
+          },
+          "contactCounts": {
+            "baseline": "3aad77b0a85cb75b058cb8d40ab46d51cfba5c402710b7d9201e2b397fe004dc",
+            "instrumented": "3aad77b0a85cb75b058cb8d40ab46d51cfba5c402710b7d9201e2b397fe004dc",
+            "match": true
+          },
+          "contacts": {
+            "baseline": "6a39adad566c840bc893166898fd2bfe55b9c6bde3e00f9c0b4f20a01c25b4ed",
+            "instrumented": "6a39adad566c840bc893166898fd2bfe55b9c6bde3e00f9c0b4f20a01c25b4ed",
+            "match": true
+          },
+          "births": {
+            "baseline": "f18777ead3b51a1e6eba81129b5bb2d614ed6f91f2cf68c51cece7dc2b33f3b6",
+            "instrumented": "f18777ead3b51a1e6eba81129b5bb2d614ed6f91f2cf68c51cece7dc2b33f3b6",
+            "match": true
+          },
+          "lifecycle": {
+            "baseline": "150698777734cff2b603e72bc5b686f5ccdf3664ab404dcec6ab0240856ecb94",
+            "instrumented": "150698777734cff2b603e72bc5b686f5ccdf3664ab404dcec6ab0240856ecb94",
+            "match": true
+          }
+        },
+        "trajectory": true,
+        "behavior": true,
+        "rng": true,
+        "chemical": true,
+        "surface": true,
+        "chemicalMemory": true,
+        "contactCounts": true,
+        "contacts": true,
+        "births": true
+      },
+      "archiveComparison": {
+        "archiveControllerSha256": "7b1649b4e206f9e7c2bc07e982ceb7c11fab9e072b24b7cd2a16f3306c230ed0",
+        "archiveEligible": true,
+        "trajectoryMatch": true,
+        "contactsMatch": true,
+        "birthsMatch": true,
+        "archivedContactGroups": 35377,
+        "archivedBirthEvents": 60
+      },
+      "rawArchive": {
+        "path": "docs/ant/evidence/2026-10-07-social-graph/data/seed20261006-on-raw-events.json.gz",
+        "contacts": 35377,
+        "births": 60
+      },
+      "analysis": {
+        "seed": 20261006,
+        "analysisCount": 599,
+        "selectorFunnel": {
+          "sourceConnectedComponentsWithBoundaryEndpoints": 492,
+          "sourceConnectedComponentsWithInteriorEndpointsAtLengthFloor": 544,
+          "componentsGainingInteriorEndpointFamily": 544,
+          "interiorOnlyEligibleComponents": 52,
+          "qualifyingInteriorEndpoints": 15462,
+          "productionEligibleComponentObservations": 492,
+          "shadowEligibleComponentObservations": 544,
+          "note": "Component counts are repeated observations at each one-second qualification analysis, not unique spatial components."
+        },
+        "instantaneous": {
+          "productionSelectedCandidateAnalyses": 492,
+          "shadowSelectedCandidateAnalyses": 544,
+          "shadowOnlySelectedCandidateAnalyses": 52,
+          "selectedGeometryDifferentAnalyses": 544,
+          "additionalRetainedNetworkCells": {
+            "n": 492,
+            "min": 101,
+            "p50": 287,
+            "p90": 378,
+            "max": 482
+          },
+          "additionalRibbonCells": {
+            "n": 492,
+            "min": 266,
+            "p50": 815,
+            "p90": 1077,
+            "max": 1450
+          },
+          "materialDifferenceDefinition": "Exact selected geometry difference: source, target, principal path, retained skeleton cells, or ribbon mask differs."
+        },
+        "temporal": {
+          "shadowCandidateAnalyses": 544,
+          "persistenceSurvivors": 524,
+          "scheduleGateCounts": {
+            "noCandidate": 55,
+            "persistence": 20,
+            "globalGap": 439,
+            "refractory": 37,
+            "newContacts": 0,
+            "birthCap": 0,
+            "ready": 48
+          },
+          "scheduleQualifiedAnalyses": 48,
+          "isolatedVirtualBirths": 48,
+          "note": "Virtual births update only the separate diagnostic shadow state; no Plate, production birth state, material, or audio is changed."
+        },
+        "morphology": {
+          "production": {
+            "candidateCount": 492,
+            "principalGeodesicLengthWorldUnits": {
+              "n": 492,
+              "min": 0.7100615170812178,
+              "p50": 0.9246381098270094,
+              "p90": 1.016510973630776,
+              "max": 1.1689876196753926
+            },
+            "principalTortuosity": {
+              "n": 492,
+              "min": 1.0745722245478806,
+              "p50": 1.1594467165313602,
+              "p90": 1.3146907881880059,
+              "max": 1.928551117333049
+            },
+            "footprintArea": {
+              "n": 492,
+              "min": 0.022714681440443214,
+              "p50": 0.17296398891966758,
+              "p90": 0.20764542936288088,
+              "max": 0.2423268698060942
+            },
+            "centerlineCells": {
+              "n": 492,
+              "min": 60,
+              "p50": 503,
+              "p90": 602,
+              "max": 710
+            },
+            "endpointProxy": {
+              "n": 492,
+              "min": 1,
+              "p50": 10,
+              "p90": 15,
+              "max": 20
+            },
+            "junctionNodeProxy": {
+              "n": 492,
+              "min": 0,
+              "p50": 126,
+              "p90": 167,
+              "max": 206
+            },
+            "junctionClusterProxy": {
+              "n": 492,
+              "min": 0,
+              "p50": 19,
+              "p90": 26,
+              "max": 31
+            },
+            "retainedSourceConnectedSkeletonFraction": {
+              "n": 492,
+              "min": 0.0639063906390639,
+              "p50": 0.29890363531448355,
+              "p90": 0.33579335793357934,
+              "max": 0.38915375446960665
+            },
+            "targetBoundaryDistanceWorldUnits": {
+              "n": 492,
+              "min": 0.010526315789473684,
+              "p50": 0.021052631578947368,
+              "p90": 0.031578947368421054,
+              "max": 0.04210526315789476
+            },
+            "sourceEndpointDisplacementWorldUnits": {
+              "n": 492,
+              "min": 0.5743356996085784,
+              "p50": 0.7747397025118821,
+              "p90": 0.8517864557534279,
+              "max": 0.8927532191201035
+            },
+            "productionUnionOverlapFraction": {
+              "n": 492,
+              "min": 0,
+              "p50": 0.9205097087378641,
+              "p90": 0.9943374858437146,
+              "max": 1
+            },
+            "newSpatialAreaNormalized": {
+              "n": 492,
+              "min": 0,
+              "p50": 0.01263157894736842,
+              "p90": 0.04786703601108033,
+              "max": 0.18670360110803325
+            },
+            "perAnalysisMedianHalfWidthWorldUnits": {
+              "n": 492,
+              "min": 0.012,
+              "p50": 0.012,
+              "p90": 0.012,
+              "max": 0.012
+            },
+            "widthClamp": {
+              "lowClampSamples": 175909,
+              "highClampSamples": 7377,
+              "samples": 222576,
+              "lowClampFraction": 0.7903322909927396,
+              "highClampFraction": 0.033143735173603625,
+              "definition": "Clamp sample counts are exact; the displayed half-width distribution is the distribution of each analysis candidate median."
+            },
+            "curvatureAt030": {
+              "n": 492,
+              "min": 5.372999453649732,
+              "p50": 10.67368142042176,
+              "p90": 12.983274055044532,
+              "max": 16.435922290189335
+            },
+            "curvatureAt010": {
+              "n": 492,
+              "min": 1.0047425223847486,
+              "p50": 2.625221031411847,
+              "p90": 3.977493726171701,
+              "max": 5.2461167176880545
+            }
+          },
+          "shadow": {
+            "candidateCount": 544,
+            "principalGeodesicLengthWorldUnits": {
+              "n": 544,
+              "min": 0.3060112401248998,
+              "p50": 0.9235801617913425,
+              "p90": 1.0375636052097232,
+              "max": 1.4862732578199294
+            },
+            "principalTortuosity": {
+              "n": 544,
+              "min": 1.0745722245478806,
+              "p50": 1.1765636962305792,
+              "p90": 1.6091046827240367,
+              "max": 5.898059824267656
+            },
+            "footprintArea": {
+              "n": 544,
+              "min": 0.009529085872576178,
+              "p50": 0.25141274238227146,
+              "p90": 0.30049861495844876,
+              "max": 0.3301939058171745
+            },
+            "centerlineCells": {
+              "n": 544,
+              "min": 28,
+              "p50": 759,
+              "p90": 902,
+              "max": 997
+            },
+            "endpointProxy": {
+              "n": 544,
+              "min": 2,
+              "p50": 38,
+              "p90": 53,
+              "max": 65
+            },
+            "junctionNodeProxy": {
+              "n": 544,
+              "min": 0,
+              "p50": 230,
+              "p90": 270,
+              "max": 325
+            },
+            "junctionClusterProxy": {
+              "n": 544,
+              "min": 0,
+              "p50": 39,
+              "p90": 53,
+              "max": 59
+            },
+            "retainedSourceConnectedSkeletonFraction": {
+              "n": 544,
+              "min": 0.14814814814814814,
+              "p50": 0.46519524617996605,
+              "p90": 0.5158536585365854,
+              "max": 0.5673575129533679
+            },
+            "targetBoundaryDistanceWorldUnits": {
+              "n": 544,
+              "min": 0.010526315789473684,
+              "p50": 0.03157894736842104,
+              "p90": 0.18947368421052632,
+              "max": 0.4105263157894737
+            },
+            "sourceEndpointDisplacementWorldUnits": {
+              "n": 544,
+              "min": 0.2337221401176265,
+              "p50": 0.7625587484747297,
+              "p90": 0.8484628434268058,
+              "max": 0.8927532191201035
+            },
+            "productionUnionOverlapFraction": {
+              "n": 544,
+              "min": 0,
+              "p50": 0.8041060735671514,
+              "p90": 0.9232268121590024,
+              "max": 0.9822393822393822
+            },
+            "newSpatialAreaNormalized": {
+              "n": 544,
+              "min": 0.005096952908587258,
+              "p50": 0.04664819944598338,
+              "p90": 0.16764542936288088,
+              "max": 0.2604986149584487
+            },
+            "perAnalysisMedianHalfWidthWorldUnits": {
+              "n": 544,
+              "min": 0.012,
+              "p50": 0.012,
+              "p90": 0.012,
+              "max": 0.012
+            },
+            "widthClamp": {
+              "lowClampSamples": 312382,
+              "highClampSamples": 8792,
+              "samples": 374110,
+              "lowClampFraction": 0.8350004009515918,
+              "highClampFraction": 0.023501109299403918,
+              "definition": "Clamp sample counts are exact; the displayed half-width distribution is the distribution of each analysis candidate median."
+            },
+            "curvatureAt030": {
+              "n": 544,
+              "min": 5.372999453649732,
+              "p50": 11.065480629437406,
+              "p90": 13.086259131176488,
+              "max": 17.004839092820607
+            },
+            "curvatureAt010": {
+              "n": 544,
+              "min": 0.8689273355792392,
+              "p50": 2.712085816080677,
+              "p90": 4.403786145557545,
+              "max": 6.864372602234833
+            }
+          },
+          "pairedDeltas": {
+            "principalGeodesicLengthWorldUnits": {
+              "n": 492,
+              "min": 0,
+              "p50": 0,
+              "p90": 0.028276752642265923,
+              "max": 0.34705855524712814
+            },
+            "principalTortuosity": {
+              "n": 492,
+              "min": -0.0845738344905187,
+              "p50": 0,
+              "p90": 0.3080275165009607,
+              "max": 3.9798188046869614
+            },
+            "footprintArea": {
+              "n": 492,
+              "min": 0.02947368421052632,
+              "p50": 0.09030470914127423,
+              "p90": 0.11933518005540165,
+              "max": 0.16066481994459833
+            },
+            "centerlineCells": {
+              "n": 492,
+              "min": 101,
+              "p50": 287,
+              "p90": 378,
+              "max": 482
+            },
+            "newSpatialArea": {
+              "n": 492,
+              "min": 0.00409972299168975,
+              "p50": 0.03290858725761773,
+              "p90": 0.10349030470914128,
+              "max": 0.16066481994459833
+            }
+          }
+        },
+        "examples": {
+          "productionAndShadow": {
+            "seed": 20261006,
+            "tick": 10981,
+            "timeSeconds": 183.0166666666517,
+            "additionalNetworkCells": 482,
+            "shadowFootprintArea": 0.22692520775623268,
+            "shadowPrincipalTortuosity": 1.7611168676144346,
+            "shadowCurvatureAt010": 2.8042364798747808
+          },
+          "interiorBranchesOmittedByProduction": {
+            "seed": 20261006,
+            "tick": 10981,
+            "timeSeconds": 183.0166666666517,
+            "additionalNetworkCells": 482,
+            "shadowFootprintArea": 0.22692520775623268,
+            "shadowPrincipalTortuosity": 1.7611168676144346,
+            "shadowCurvatureAt010": 2.8042364798747808
+          },
+          "maximumMeasuredCurvature": {
+            "seed": 20261006,
+            "tick": 15781,
+            "timeSeconds": 263.0166666666067,
+            "additionalNetworkCells": 274,
+            "shadowFootprintArea": 0.26160664819944596,
+            "shadowPrincipalTortuosity": 2.1785256005755427,
+            "shadowCurvatureAt010": 6.864372602234833
+          },
+          "minimumFootprintAmongChanged": {
+            "seed": 20261006,
+            "tick": 6481,
+            "timeSeconds": 108.0166666666752,
+            "additionalNetworkCells": 175,
+            "shadowFootprintArea": 0.07922437673130193,
+            "shadowPrincipalTortuosity": 1.1463827080654703,
+            "shadowCurvatureAt010": 2.718978765723348
+          },
+          "exactNoDifference": null,
+          "availability": {
+            "changedCandidateCount": 492,
+            "noDifferenceCandidateCount": 0
+          }
+        }
+      },
+      "artifacts": {
+        "fullSummary": {
+          "path": "test-results/ant-interior-endpoint-shadow/seed20261006-summary.json",
+          "bytes": 219192262,
+          "sha256": "7139d522adc0886970a44833980aa62373f0c10ae61ab98d3520e8c5a2ca7a39"
+        },
+        "packagedSummary": {
+          "path": "docs/ant/evidence/2026-10-08-interior-endpoint-shadow/data/seed20261006-summary.json.gz",
+          "bytes": 27035564,
+          "sha256": "f9ea16cec6b3d073e7672868200341a076aacd35ff59a297515ef4a275699ccf"
+        },
+        "fullSnapshots": {
+          "path": "test-results/ant-interior-endpoint-shadow/seed20261006-snapshots.bin.gz",
+          "bytes": 43440798,
+          "sha256": "a46fec776dff03833ac0551e601b42b4191360e06135e244ebe149edeef22c3e"
+        }
+      },
+      "sourceChoice": {
+        "pairedCandidateAnalyses": 492,
+        "changedSourceCellCount": 0
+      }
+    },
+    {
+      "seed": 20261007,
+      "seconds": 600,
+      "analysisCount": 599,
+      "parity": {
+        "everyTick": true,
+        "comparedTicks": 36001,
+        "fields": {
+          "agents": {
+            "baseline": "0838ab0ba88304faf8d734a8279397168d078176a096c0bb599b5781dc4367de",
+            "instrumented": "0838ab0ba88304faf8d734a8279397168d078176a096c0bb599b5781dc4367de",
+            "match": true
+          },
+          "rng": {
+            "baseline": "a60b66dc0363667726dd007a41651ae598c01e69930889cc05db41fc0976e28c",
+            "instrumented": "a60b66dc0363667726dd007a41651ae598c01e69930889cc05db41fc0976e28c",
+            "match": true
+          },
+          "chemical": {
+            "baseline": "558544addfde6d497efb4bfc9d802645f27dcdb426811dc64242ea3f9bf0b70d",
+            "instrumented": "558544addfde6d497efb4bfc9d802645f27dcdb426811dc64242ea3f9bf0b70d",
+            "match": true
+          },
+          "surface": {
+            "baseline": "d9aee1cd7537b83f7ec9a5d7d8c720b76ed3afa2a2c73de93e18691faaa968e3",
+            "instrumented": "d9aee1cd7537b83f7ec9a5d7d8c720b76ed3afa2a2c73de93e18691faaa968e3",
+            "match": true
+          },
+          "chemicalMemory": {
+            "baseline": "912c3774f4b1d3ca3ec95e9e77de2ddd49fe868b40c267fa545434168935f416",
+            "instrumented": "912c3774f4b1d3ca3ec95e9e77de2ddd49fe868b40c267fa545434168935f416",
+            "match": true
+          },
+          "birthState": {
+            "baseline": "eaa8c0510cb5d694f9ba95d8800f71043cc85290eb729d44c892920122b6bf16",
+            "instrumented": "eaa8c0510cb5d694f9ba95d8800f71043cc85290eb729d44c892920122b6bf16",
+            "match": true
+          },
+          "contactCounts": {
+            "baseline": "9a7a2bc782fc6e3cf6a62105627edf96856bea5a2aea69afc9c1f66a2cdaeb18",
+            "instrumented": "9a7a2bc782fc6e3cf6a62105627edf96856bea5a2aea69afc9c1f66a2cdaeb18",
+            "match": true
+          },
+          "contacts": {
+            "baseline": "2897d9dcdf0b32a1448451a875accf781c9310bfff1b92882f9512343a7ab33d",
+            "instrumented": "2897d9dcdf0b32a1448451a875accf781c9310bfff1b92882f9512343a7ab33d",
+            "match": true
+          },
+          "births": {
+            "baseline": "ff2ac9af39f1c88700fe573f67d0f12e5bc60c76fa411c7454b69525f90e4a4e",
+            "instrumented": "ff2ac9af39f1c88700fe573f67d0f12e5bc60c76fa411c7454b69525f90e4a4e",
+            "match": true
+          },
+          "lifecycle": {
+            "baseline": "b62501a647b005f2fcaa8072e8c9437a10e918485f405f6d10bd06638d5cbf00",
+            "instrumented": "b62501a647b005f2fcaa8072e8c9437a10e918485f405f6d10bd06638d5cbf00",
+            "match": true
+          }
+        },
+        "trajectory": true,
+        "behavior": true,
+        "rng": true,
+        "chemical": true,
+        "surface": true,
+        "chemicalMemory": true,
+        "contactCounts": true,
+        "contacts": true,
+        "births": true
+      },
+      "archiveComparison": {
+        "archiveControllerSha256": "7b1649b4e206f9e7c2bc07e982ceb7c11fab9e072b24b7cd2a16f3306c230ed0",
+        "archiveEligible": true,
+        "trajectoryMatch": true,
+        "contactsMatch": true,
+        "birthsMatch": true,
+        "archivedContactGroups": 35448,
+        "archivedBirthEvents": 63
+      },
+      "rawArchive": {
+        "path": "docs/ant/evidence/2026-10-07-social-graph/data/seed20261007-on-raw-events.json.gz",
+        "contacts": 35448,
+        "births": 63
+      },
+      "analysis": {
+        "seed": 20261007,
+        "analysisCount": 599,
+        "selectorFunnel": {
+          "sourceConnectedComponentsWithBoundaryEndpoints": 491,
+          "sourceConnectedComponentsWithInteriorEndpointsAtLengthFloor": 552,
+          "componentsGainingInteriorEndpointFamily": 552,
+          "interiorOnlyEligibleComponents": 61,
+          "qualifyingInteriorEndpoints": 16175,
+          "productionEligibleComponentObservations": 491,
+          "shadowEligibleComponentObservations": 552,
+          "note": "Component counts are repeated observations at each one-second qualification analysis, not unique spatial components."
+        },
+        "instantaneous": {
+          "productionSelectedCandidateAnalyses": 491,
+          "shadowSelectedCandidateAnalyses": 552,
+          "shadowOnlySelectedCandidateAnalyses": 61,
+          "selectedGeometryDifferentAnalyses": 552,
+          "additionalRetainedNetworkCells": {
+            "n": 491,
+            "min": 165,
+            "p50": 294,
+            "p90": 362,
+            "max": 473
+          },
+          "additionalRibbonCells": {
+            "n": 491,
+            "min": 432,
+            "p50": 839,
+            "p90": 1035,
+            "max": 1346
+          },
+          "materialDifferenceDefinition": "Exact selected geometry difference: source, target, principal path, retained skeleton cells, or ribbon mask differs."
+        },
+        "temporal": {
+          "shadowCandidateAnalyses": 552,
+          "persistenceSurvivors": 522,
+          "scheduleGateCounts": {
+            "noCandidate": 47,
+            "persistence": 30,
+            "globalGap": 402,
+            "refractory": 76,
+            "newContacts": 0,
+            "birthCap": 0,
+            "ready": 44
+          },
+          "scheduleQualifiedAnalyses": 44,
+          "isolatedVirtualBirths": 44,
+          "note": "Virtual births update only the separate diagnostic shadow state; no Plate, production birth state, material, or audio is changed."
+        },
+        "morphology": {
+          "production": {
+            "candidateCount": 491,
+            "principalGeodesicLengthWorldUnits": {
+              "n": 491,
+              "min": 0.7685494032507338,
+              "p50": 0.9112478157360393,
+              "p90": 1.0023725973096431,
+              "max": 1.1664335071794
+            },
+            "principalTortuosity": {
+              "n": 491,
+              "min": 1.0929807714799047,
+              "p50": 1.1619179845895182,
+              "p90": 1.2365872813833523,
+              "max": 1.3727550632989187
+            },
+            "footprintArea": {
+              "n": 491,
+              "min": 0.023822714681440444,
+              "p50": 0.17285318559556787,
+              "p90": 0.2029916897506925,
+              "max": 0.23545706371191136
+            },
+            "centerlineCells": {
+              "n": 491,
+              "min": 61,
+              "p50": 505,
+              "p90": 584,
+              "max": 674
+            },
+            "endpointProxy": {
+              "n": 491,
+              "min": 2,
+              "p50": 10,
+              "p90": 16,
+              "max": 19
+            },
+            "junctionNodeProxy": {
+              "n": 491,
+              "min": 0,
+              "p50": 126,
+              "p90": 151,
+              "max": 195
+            },
+            "junctionClusterProxy": {
+              "n": 491,
+              "min": 0,
+              "p50": 20,
+              "p90": 24,
+              "max": 32
+            },
+            "retainedSourceConnectedSkeletonFraction": {
+              "n": 491,
+              "min": 0.06464646464646465,
+              "p50": 0.3013130615065653,
+              "p90": 0.34974424552429667,
+              "max": 0.40547762191048764
+            },
+            "targetBoundaryDistanceWorldUnits": {
+              "n": 491,
+              "min": 0,
+              "p50": 0.021052631578947368,
+              "p90": 0.042105263157894736,
+              "max": 0.04210526315789476
+            },
+            "sourceEndpointDisplacementWorldUnits": {
+              "n": 491,
+              "min": 0.6408097370620811,
+              "p50": 0.785816088666907,
+              "p90": 0.8585886763960128,
+              "max": 0.9031799776468479
+            },
+            "productionUnionOverlapFraction": {
+              "n": 491,
+              "min": 0,
+              "p50": 0.9492707672796449,
+              "p90": 0.9960500329163924,
+              "max": 1
+            },
+            "newSpatialAreaNormalized": {
+              "n": 491,
+              "min": 0,
+              "p50": 0.009307479224376731,
+              "p90": 0.04011080332409972,
+              "max": 0.09795013850415513
+            },
+            "perAnalysisMedianHalfWidthWorldUnits": {
+              "n": 491,
+              "min": 0.012,
+              "p50": 0.012,
+              "p90": 0.012,
+              "max": 0.012
+            },
+            "widthClamp": {
+              "lowClampSamples": 181993,
+              "highClampSamples": 8662,
+              "samples": 229634,
+              "lowClampFraction": 0.7925350775582013,
+              "highClampFraction": 0.03772089498941794,
+              "definition": "Clamp sample counts are exact; the displayed half-width distribution is the distribution of each analysis candidate median."
+            },
+            "curvatureAt030": {
+              "n": 491,
+              "min": 6.451260476058872,
+              "p50": 10.941619855381804,
+              "p90": 12.804970136979069,
+              "max": 17.4101803456429
+            },
+            "curvatureAt010": {
+              "n": 491,
+              "min": 0.6820519041706908,
+              "p50": 2.6821825527691443,
+              "p90": 3.8653527060196358,
+              "max": 5.916221627932079
+            }
+          },
+          "shadow": {
+            "candidateCount": 552,
+            "principalGeodesicLengthWorldUnits": {
+              "n": 552,
+              "min": 0.3118675473470477,
+              "p50": 0.9068876729742172,
+              "p90": 1.0059846578413025,
+              "max": 1.2110928828332872
+            },
+            "principalTortuosity": {
+              "n": 552,
+              "min": 1.050108517512044,
+              "p50": 1.175125592230809,
+              "p90": 1.3882921962999846,
+              "max": 1.8845024539911732
+            },
+            "footprintArea": {
+              "n": 552,
+              "min": 0.008421052631578947,
+              "p50": 0.26094182825484763,
+              "p90": 0.29030470914127426,
+              "max": 0.34116343490304707
+            },
+            "centerlineCells": {
+              "n": 552,
+              "min": 24,
+              "p50": 784,
+              "p90": 870,
+              "max": 1029
+            },
+            "endpointProxy": {
+              "n": 552,
+              "min": 2,
+              "p50": 41,
+              "p90": 51,
+              "max": 61
+            },
+            "junctionNodeProxy": {
+              "n": 552,
+              "min": 0,
+              "p50": 227,
+              "p90": 268,
+              "max": 316
+            },
+            "junctionClusterProxy": {
+              "n": 552,
+              "min": 0,
+              "p50": 42,
+              "p90": 49,
+              "max": 61
+            },
+            "retainedSourceConnectedSkeletonFraction": {
+              "n": 552,
+              "min": 0.17391304347826086,
+              "p50": 0.47641234711706465,
+              "p90": 0.5235940530058177,
+              "max": 0.5843828715365239
+            },
+            "targetBoundaryDistanceWorldUnits": {
+              "n": 552,
+              "min": 0,
+              "p50": 0.031578947368421054,
+              "p90": 0.14736842105263157,
+              "max": 0.28421052631578947
+            },
+            "sourceEndpointDisplacementWorldUnits": {
+              "n": 552,
+              "min": 0.2949247521288821,
+              "p50": 0.7675553883845955,
+              "p90": 0.8426971604052815,
+              "max": 0.9031799776468479
+            },
+            "productionUnionOverlapFraction": {
+              "n": 552,
+              "min": 0,
+              "p50": 0.85748124753257,
+              "p90": 0.9636650868878357,
+              "max": 0.9933135215453195
+            },
+            "newSpatialAreaNormalized": {
+              "n": 552,
+              "min": 0.001994459833795014,
+              "p50": 0.03523545706371191,
+              "p90": 0.13662049861495845,
+              "max": 0.1772853185595568
+            },
+            "perAnalysisMedianHalfWidthWorldUnits": {
+              "n": 552,
+              "min": 0.012,
+              "p50": 0.012,
+              "p90": 0.012,
+              "max": 0.012
+            },
+            "widthClamp": {
+              "lowClampSamples": 321271,
+              "highClampSamples": 10092,
+              "samples": 385520,
+              "lowClampFraction": 0.8333445735629799,
+              "highClampFraction": 0.02617763021373729,
+              "definition": "Clamp sample counts are exact; the displayed half-width distribution is the distribution of each analysis candidate median."
+            },
+            "curvatureAt030": {
+              "n": 552,
+              "min": 4.389394773436844,
+              "p50": 11.045406062411011,
+              "p90": 13.54939959847985,
+              "max": 17.4101803456429
+            },
+            "curvatureAt010": {
+              "n": 552,
+              "min": 0.27975548923990856,
+              "p50": 2.733615938448689,
+              "p90": 4.418248878281254,
+              "max": 7.415506361683524
+            }
+          },
+          "pairedDeltas": {
+            "principalGeodesicLengthWorldUnits": {
+              "n": 491,
+              "min": 0,
+              "p50": 0,
+              "p90": 0.0359390901302431,
+              "max": 0.10781727039072919
+            },
+            "principalTortuosity": {
+              "n": 491,
+              "min": -0.004348049308721569,
+              "p50": 0,
+              "p90": 0.21601283855770803,
+              "max": 0.7303182363252738
+            },
+            "footprintArea": {
+              "n": 491,
+              "min": 0.04786703601108033,
+              "p50": 0.09296398891966759,
+              "p90": 0.1146814404432133,
+              "max": 0.14914127423822712
+            },
+            "centerlineCells": {
+              "n": 491,
+              "min": 165,
+              "p50": 294,
+              "p90": 362,
+              "max": 473
+            },
+            "newSpatialArea": {
+              "n": 491,
+              "min": 0.001329639889196676,
+              "p50": 0.021939058171745154,
+              "p90": 0.09894736842105264,
+              "max": 0.14138504155124654
+            }
+          }
+        },
+        "examples": {
+          "productionAndShadow": {
+            "seed": 20261007,
+            "tick": 29881,
+            "timeSeconds": 498.01666666688027,
+            "additionalNetworkCells": 473,
+            "shadowFootprintArea": 0.34116343490304707,
+            "shadowPrincipalTortuosity": 1.244332055277862,
+            "shadowCurvatureAt010": 3.1948384698104384
+          },
+          "interiorBranchesOmittedByProduction": {
+            "seed": 20261007,
+            "tick": 29881,
+            "timeSeconds": 498.01666666688027,
+            "additionalNetworkCells": 473,
+            "shadowFootprintArea": 0.34116343490304707,
+            "shadowPrincipalTortuosity": 1.244332055277862,
+            "shadowCurvatureAt010": 3.1948384698104384
+          },
+          "maximumMeasuredCurvature": {
+            "seed": 20261007,
+            "tick": 23821,
+            "timeSeconds": 397.01666666676266,
+            "additionalNetworkCells": 281,
+            "shadowFootprintArea": 0.28941828254847646,
+            "shadowPrincipalTortuosity": 1.8007961646949582,
+            "shadowCurvatureAt010": 7.415506361683524
+          },
+          "minimumFootprintAmongChanged": {
+            "seed": 20261007,
+            "tick": 5881,
+            "timeSeconds": 98.01666666667231,
+            "additionalNetworkCells": 246,
+            "shadowFootprintArea": 0.10116343490304709,
+            "shadowPrincipalTortuosity": 1.1532283011667053,
+            "shadowCurvatureAt010": 1.6304792654880855
+          },
+          "exactNoDifference": null,
+          "availability": {
+            "changedCandidateCount": 491,
+            "noDifferenceCandidateCount": 0
+          }
+        }
+      },
+      "artifacts": {
+        "fullSummary": {
+          "path": "test-results/ant-interior-endpoint-shadow/seed20261007-summary.json",
+          "bytes": 220055044,
+          "sha256": "6822af6225f211136c58d203203e4e9add2818da26d7fa28c4554e7bc1baa452"
+        },
+        "packagedSummary": {
+          "path": "docs/ant/evidence/2026-10-08-interior-endpoint-shadow/data/seed20261007-summary.json.gz",
+          "bytes": 26966735,
+          "sha256": "4ea25a59a4ec9baa9ad83c83e2fceece40dbb10e09a8b5122cf1bd236821c81c"
+        },
+        "fullSnapshots": {
+          "path": "test-results/ant-interior-endpoint-shadow/seed20261007-snapshots.bin.gz",
+          "bytes": 42321540,
+          "sha256": "80e410278f3a732d7d0784fd8c1d775785d923df1e2cb60da8d79bf12dca4350"
+        }
+      },
+      "sourceChoice": {
+        "pairedCandidateAnalyses": 491,
+        "changedSourceCellCount": 0
+      }
+    }
+  ]
+}
