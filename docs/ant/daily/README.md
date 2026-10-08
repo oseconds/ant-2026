@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-08 — Small dead-code cleanup (branch-only)
+
+[`2026-10-08-small-dead-code-cleanup.md`](./2026-10-08-small-dead-code-cleanup.md)
+
+- Remove only unused distance-based STEP and trajectory-buffer modules, their barrel exports and dedicated tests
+- Current FOOT_CONTACT / movement / DSP / social observer / evidence left unchanged
+- Static audit and branch diff only; npm/build/browser execution checks pending before merge
+
 ### 2026-10-08 — Roadmap refocus: material history
 
 [`2026-10-08-roadmap-material-focus.md`](./2026-10-08-roadmap-material-focus.md)
