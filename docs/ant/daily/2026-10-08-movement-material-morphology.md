@@ -1,0 +1,19 @@
+# 2026-10-08 — Movement / material morphology diagnosis
+
+Started `ant-movement-material-morphology-audit` from fetched `origin/main` at `eb84b7cc7a1727a1d6291941cbaf2b50609675d8`, with a clean working tree. Read AGENTS, the ANT guide, recent daily logs and movement/founder/Surface/Plate evidence; invoked the installed caveman skill. The founder-refined behavior baseline `e38450ce11f99e63f5ab0cb6e8e8ee4281fcadd9` stayed frozen.
+
+The question was where natural Plate diversity is narrowed: movement, environmental retention, or source-to-boundary qualification/descriptor construction. The existing three 600 s social archives supplied exact trajectories, all contacts and born descriptors. Missing field/candidate/component intermediates required a paired natural replay with external read-only instrumentation; production source was not edited.
+
+All three pairs matched every tick across behavior/RNG/fields/candidates/contact/birth/lifecycle state and matched the old archive's complete trajectories, contacts and birth descriptors. Snapshot copies and actual analysis timestamps were tested. The compact evidence keeps all candidate/funnel records plus only verified exact field rows used by comparisons; full field streams remain reproducible in ignored test-results.
+
+Movement has several excursion scales: near-unit one-second tortuosity grows to median 1.84–2.16 at 20 s. Long windows select a small subset of longer-lived ants. Rare local-return traces retain some environmental values but can fail chemical qualification. Chemical-qualified and jointly supported cell counts are almost identical in these runs; mechanical support is not the main additional eligibility gate.
+
+The strongest directly observed shape filter is source/boundary eligibility plus skeleton pruning: about 71–73% of each eligible component's skeleton is omitted. There is never more than one eligible component, so longest-component competition did not filter the natural runs. Minimum-geodesic rejection was also zero. Persistence and birth scheduling are reported separately from spatial rejection.
+
+The 32/28/31 born Plates are different masks, with median 90–95% overlap with the union of earlier material. Principal lengths cluster around 0.91–0.93; network size still varies. About 79% of half-width samples hit the lower clamp; all frozen densities are 1.2, and stiffness/damping occupy narrow ranges. Compiled topology differences are sonic-potential facts, not measured acoustic diversity.
+
+Independent review identified misleading residual movement labels: raw accumulated turning made the `irregular` remainder horizon-sensitive. Renamed it `unclassified-remainder` without changing thresholds or measurements; retained continuous measures and actual extrema. Zero strict broad-turn labels does not prove absence of broad bends. Plot checkpoint selection was repaired to use actual captured times and show offsets, including requested 600 s versus observed 599.25 s. Initial failed plot evidence was retained. Review also corrected a diagnostic sphere/Plate event classification edge case; all three full paired replays were repeated and confirmed unchanged morphology records and byte-identical field streams.
+
+Decision: **stop after diagnosis**. Recommend one future shadow-selector comparison for source-connected interior endpoints, with every other rule held fixed. No intervention or artificial Plate birth ran. Movement/pheromone/recruitment/Plate thresholds/material/audio DSP and runtime performance were untouched. No main merge or PR.
+
+Detailed definitions, fixed-scale natural geometry, seed tables, gate breakdowns, hashes, limitations and reproduction are in [the evidence package](../evidence/2026-10-08-movement-material-morphology/README.md). Final full tests passed 289/289 and build passed. Final source/evidence integrity is recorded with the package; the completion report records the separate commits and verified remote HEAD.

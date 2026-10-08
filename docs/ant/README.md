@@ -281,6 +281,7 @@ CLOSED LOOP        movement → material → vibration → sensing → movement 
 
 ### Behavior / movement
 
+- [Movement / material morphology diagnosis — frozen three-seed archive/replay, no production intervention](evidence/2026-10-08-movement-material-morphology/README.md)
 - [Integrated refinement](evidence/2026-10-05-integrated-refinement/README.md)
 - [Gait / FOOT_CONTACT](evidence/2026-10-05-gait/README.md)
 - [Reinforcement](evidence/2026-10-05-reinforcement/README.md)

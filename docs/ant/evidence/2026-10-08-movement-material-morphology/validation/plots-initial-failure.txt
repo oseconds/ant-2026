@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "C:\Users\5dudt\Documents\Github\ant-2026\scripts\ant-morphology-plots.py", line 392, in <module>
+    main()
+  File "C:\Users\5dudt\Documents\Github\ant-2026\scripts\ant-morphology-plots.py", line 372, in main
+    snapshots = decode_snapshots(args.input)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\5dudt\Documents\Github\ant-2026\scripts\ant-morphology-plots.py", line 246, in decode_snapshots
+    raise ValueError(f'expected checkpoint snapshots; missing {sorted(expected - set(snapshots))[:4]}')
+ValueError: expected checkpoint snapshots; missing [(20261005, 30), (20261005, 60), (20261005, 120), (20261005, 300)]

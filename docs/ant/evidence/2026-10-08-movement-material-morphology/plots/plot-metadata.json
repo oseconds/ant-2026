@@ -1,0 +1,2356 @@
+{
+  "schemaVersion": 1,
+  "inputSha256": {
+    "movement": "1f532e81f3a0a4604254020dcc53758ee1769bb12ce9ebd3bae13b2bba03a0ee",
+    "plates": "15f7d151ea9ee88f2e80454c17dd2a5095bce2893cadd44b55e537b96603ffd1",
+    "retention": "3e48afb42bde3a2e20aa16e1ece797b7a7be54736f53cb55aff024f883ac5060",
+    "seed20261005-snapshots.bin.gz": "afa9d0b07984d9beb729f2dd012d20d572596bf874845b46f51fd5a0f8a340f4",
+    "seed20261005-summary.json.gz": "1299a593bbef84f97a2db181cbb69f1065caab668b734e27ad19107bd56cbe69",
+    "seed20261006-snapshots.bin.gz": "3b6ad77dbc3683770eaa059c7a8667f3cce25a5084237286a60fb90e3528dc11",
+    "seed20261006-summary.json.gz": "373035ddf26e91ee066dc50008b95fc114d7a896993b640437edc03fcaf5a639",
+    "seed20261007-snapshots.bin.gz": "d81ce85e7e422bf9d2e19d884e13e5bc075def30b4bcbd8f092d3615779bb87e",
+    "seed20261007-summary.json.gz": "dc4d210bc25696fff2fb02b7ffa53bcaf9b6360d98177c88c7b3945b9e0f460f"
+  },
+  "plotterSha256": "29112a8738991769f8e9caf6b456efe205d5931523afc9acf322c9293903883d",
+  "outputs": [
+    "all-born-plates.png",
+    "candidate-seed20261005.png",
+    "candidate-seed20261006.png",
+    "candidate-seed20261007.png",
+    "contact-support-checkpoints.png",
+    "contact-traffic-components.png",
+    "field-chemical.png",
+    "field-chemicalMemory.png",
+    "field-contact-counts.png",
+    "field-support.png",
+    "field-surface.png",
+    "movement-aggregate-comparison.png",
+    "movement-confined-local-return.png",
+    "movement-maximum-tortuosity.png",
+    "movement-traces.png",
+    "plate-measure-extremes.png"
+  ],
+  "fixedScales": {
+    "worldX": [
+      0.0,
+      1.0
+    ],
+    "worldY": [
+      0.0,
+      1.0
+    ],
+    "aspect": "equal",
+    "fieldLimits": {
+      "chemical": [
+        0.0,
+        0.8
+      ],
+      "chemicalMemory": [
+        0.0,
+        1.0
+      ],
+      "surface": [
+        0.0,
+        1.0
+      ],
+      "support": [
+        0.0,
+        1.0
+      ]
+    },
+    "movementAggregateTortuosityY": [
+      0.0,
+      6.357104393805598
+    ],
+    "contactCountLimits": [
+      0,
+      183.0
+    ],
+    "checkpointSeconds": [
+      30,
+      60,
+      120,
+      300,
+      600
+    ],
+    "candidateRejectedSelector": {
+      "minimumSkeletonPixels": 10,
+      "maximumBboxDiagonalWorldUnits": 0.12,
+      "examples": [
+        {
+          "seed": 20261005,
+          "seconds": 70.01666666666415,
+          "selector": "small rejected component",
+          "skeletonPixels": 10,
+          "retainedNetworkPixels": 0,
+          "principalPathPixels": 0,
+          "rejection": "missing-source",
+          "bboxDiagonalWorldUnits": 0.08486587103472157
+        },
+        {
+          "seed": 20261006,
+          "seconds": 72.01666666666473,
+          "selector": "small rejected component",
+          "skeletonPixels": 10,
+          "retainedNetworkPixels": 0,
+          "principalPathPixels": 0,
+          "rejection": "missing-source",
+          "bboxDiagonalWorldUnits": 0.09055079228465923
+        },
+        {
+          "seed": 20261007,
+          "seconds": 45.01666666666584,
+          "selector": "small rejected component",
+          "skeletonPixels": 10,
+          "retainedNetworkPixels": 0,
+          "principalPathPixels": 0,
+          "rejection": "missing-source",
+          "bboxDiagonalWorldUnits": 0.0941502306315701
+        }
+      ]
+    }
+  },
+  "selectedExamples": {
+    "movement": {
+      "representatives": [
+        {
+          "seed": 20261005,
+          "seconds": 1,
+          "antId": "ant-393",
+          "startSeconds": 345,
+          "endSeconds": 346,
+          "selection": "Median tortuosity among all complete windows; descriptive example.",
+          "metrics": {
+            "antId": "ant-393",
+            "startSeconds": 345,
+            "sampleCount": 61,
+            "durationSeconds": 1,
+            "pathLength": 0.048052966446877815,
+            "netDisplacement": 0.048043702498813116,
+            "tortuosity": 1.0001928233583772,
+            "meanSegmentLength": 0.0008008827741146303,
+            "bodyHeadingTurning": {
+              "signedAccumulatedRadians": 0.04253325846216428,
+              "absoluteAccumulatedRadians": 4.457466741537793,
+              "coherence": 0.009542024860401005,
+              "signedTurnPerPathRadianPerUnit": 0.8851328358507163,
+              "longestSameSignRunSeconds": 0.016666666666666666,
+              "signedStepRadians": {
+                "n": 60,
+                "mean": 0.0007088876410360714,
+                "p50": 0.016754348528237983,
+                "p90": 0.07499999999999929
+              },
+              "absoluteStepRadians": {
+                "n": 60,
+                "mean": 0.07429111235896321,
+                "p50": 0.07499999999999929,
+                "p90": 0.07499999999999929
+              },
+              "histogram": {
+                "edgesRadians": [
+                  -3.141592653589793,
+                  -1.5707963267948966,
+                  -0.5235987755982988,
+                  0,
+                  0.5235987755982988,
+                  1.5707963267948966,
+                  3.141592653589793
+                ],
+                "counts": [
+                  0,
+                  0,
+                  30,
+                  30,
+                  0,
+                  0
+                ],
+                "sampleCount": 60
+              }
+            },
+            "pathTurning": {
+              "signedAccumulatedRadians": 0.06369965577347947,
+              "absoluteAccumulatedRadians": 1.228587296707459,
+              "coherence": 0.05184788736151739,
+              "signedTurnPerPathRadianPerUnit": 1.3256133904636034,
+              "longestSameSignRunSeconds": 0.016666666666666666,
+              "signedStepRadians": {
+                "n": 59,
+                "mean": 0.001079655182601347,
+                "p50": 0.019638346403927365,
+                "p90": 0.022374095127689085
+              },
+              "absoluteStepRadians": {
+                "n": 59,
+                "mean": 0.02082351350351625,
+                "p50": 0.02013683059648863,
+                "p90": 0.022384738992898078
+              },
+              "histogram": {
+                "edgesRadians": [
+                  -3.141592653589793,
+                  -1.5707963267948966,
+                  -0.5235987755982988,
+                  0,
+                  0.5235987755982988,
+                  1.5707963267948966,
+                  3.141592653589793
+                ],
+                "counts": [
+                  0,
+                  0,
+                  29,
+                  30,
+                  0,
+                  0
+                ],
+                "sampleCount": 59
+              }
+            },
+            "maxExcursion": 0.048043702498813116,
+            "radiusOfGyration": 0.013884780857955773,
+            "grid": {
+              "cellSize": 0.03,
+              "uniqueCells": 4,
+              "revisitedCells": 0,
+              "sampleFractionInRevisitedCells": 0,
+              "longestResidenceSeconds": 0.4166666666666667,
+              "approximateReturns": 0,
+              "returnGapSeconds": 1
+            },
+            "category": "straight-gentle"
+          }
+        },
+        {
+          "seed": 20261005,
+          "seconds": 5,
+          "antId": "ant-318",
+          "startSeconds": 290,
+          "endSeconds": 295,
+          "selection": "Median tortuosity among all complete windows; descriptive example.",
+          "metrics": {
+            "antId": "ant-318",
+            "startSeconds": 290,
+            "sampleCount": 301,
+            "durationSeconds": 5,
+            "pathLength": 0.28682732725154936,
+            "netDisplacement": 0.28226112077646437,
+            "tortuosity": 1.016177242060557,
+            "meanSegmentLength": 0.0009560910908384978,
+            "bodyHeadingTurning": {
+              "signedAccumulatedRadians": 0.8573843971279498,
+              "absoluteAccumulatedRadians": 22.035040122692457,
+              "coherence": 0.038910044744823735,
+              "signedTurnPerPathRadianPerUnit": 2.989200524732493,
+              "longestSameSignRunSeconds": 0.2,
+              "signedStepRadians": {
+                "n": 300,
+                "mean": 0.002857947990426499,
+                "p50": 0.06213535355328581,
+                "p90": 0.07499999999999929
+              },
+              "absoluteStepRadians": {
+                "n": 300,
+                "mean": 0.07345013374230819,
+                "p50": 0.07499999999999929,
+                "p90": 0.07499999999999929
+              },
+              "histogram": {
+                "edgesRadians": [
+                  -3.141592653589793,
+                  -1.5707963267948966,
+                  -0.5235987755982988,
+                  0,
+                  0.5235987755982988,
+                  1.5707963267948966,
+                  3.141592653589793
+                ],
+                "counts": [
+                  0,
+                  0,
+                  144,
+                  156,
+                  0,
+                  0
+                ],
+                "sampleCount": 300
+              }
+            },
+            "pathTurning": {
+              "signedAccumulatedRadians": 0.7837147405233209,
+              "absoluteAccumulatedRadians": 6.916522638206658,
+              "coherence": 0.11331051476562873,
+              "signedTurnPerPathRadianPerUnit": 2.7323572967508714,
+              "longestSameSignRunSeconds": 0.2,
+              "signedStepRadians": {
+                "n": 299,
+                "mean": 0.0026211195335228126,
+                "p50": 0.01920882154633463,
+                "p90": 0.022401862725200394
+              },
+              "absoluteStepRadians": {
+                "n": 299,
+                "mean": 0.023132182736477117,
+                "p50": 0.020897078269512703,
+                "p90": 0.023935426394595866
+              },
+              "histogram": {
+                "edgesRadians": [
+                  -3.141592653589793,
+                  -1.5707963267948966,
+                  -0.5235987755982988,
+                  0,
+                  0.5235987755982988,
+                  1.5707963267948966,
+                  3.141592653589793
+                ],
+                "counts": [
+                  0,
+                  0,
+                  144,
+                  155,
+                  0,
+                  0
+                ],
+                "sampleCount": 299
+              }
+            },
+            "maxExcursion": 0.28226112077646437,
+            "radiusOfGyration": 0.0813092632019011,
+            "grid": {
+              "cellSize": 0.03,
+              "uniqueCells": 14,
+              "revisitedCells": 0,
+              "sampleFractionInRevisitedCells": 0,
+              "longestResidenceSeconds": 0.6,
+              "approximateReturns": 0,
+              "returnGapSeconds": 1
+            },
+            "category": "unclassified-remainder"
+          }
+        },
+        {
+          "seed": 20261005,
+          "seconds": 20,
+          "antId": "ant-19",
+          "startSeconds": 40,
+          "endSeconds": 60,
+          "selection": "Median tortuosity among all complete windows; descriptive example.",
+          "metrics": {
+            "antId": "ant-19",
+            "startSeconds": 40,
+            "sampleCount": 1201,
+            "durationSeconds": 20,
+            "pathLength": 0.928034903689629,
+            "netDisplacement": 0.5047088303228934,
+            "tortuosity": 1.83875305509497,
+            "meanSegmentLength": 0.0007733624197413575,
+            "bodyHeadingTurning": {
+              "signedAccumulatedRadians": 2.2646732335529514,
+              "absoluteAccumulatedRadians": 83.30059905111129,
+              "coherence": 0.02718675807077211,
+              "signedTurnPerPathRadianPerUnit": 2.44028885610788,
+              "longestSameSignRunSeconds": 0.25,
+              "signedStepRadians": {
+                "n": 1200,
+                "mean": 0.0018872276946274595,
+                "p50": 0.008550869670462369,
+                "p90": 0.07499999999999929
+              },
+              "absoluteStepRadians": {
+                "n": 1200,
+                "mean": 0.06941716587592607,
+                "p50": 0.07499999999999929,
+                "p90": 0.07499999999999929
+              },
+              "histogram": {
+                "edgesRadians": [
+                  -3.141592653589793,
+                  -1.5707963267948966,
+                  -0.5235987755982988,
+                  0,
+                  0.5235987755982988,
+                  1.5707963267948966,
+                  3.141592653589793
+                ],
+                "counts": [
+                  0,
+                  0,
+                  585,
+                  615,
+                  0,
+                  0
+                ],
+                "sampleCount": 1200
+              }
+            },
+            "pathTurning": {
+              "signedAccumulatedRadians": 2.197127066195834,
+              "absoluteAccumulatedRadians": 28.100722170181243,
+              "coherence": 0.07818756588851265,
+              "signedTurnPerPathRadianPerUnit": 2.3675047753706457,
+              "longestSameSignRunSeconds": 0.3,
+              "signedStepRadians": {
+                "n": 1199,
+                "mean": 0.0018324662770607457,
+                "p50": 0.0021253028248350847,
+                "p90": 0.02267798189656354
+              },
+              "absoluteStepRadians": {
+                "n": 1199,
+                "mean": 0.023436799141101954,
+                "p50": 0.02094183879734057,
+                "p90": 0.037100142287137094
+              },
+              "histogram": {
+                "edgesRadians": [
+                  -3.141592653589793,
+                  -1.5707963267948966,
+                  -0.5235987755982988,
+                  0,
+                  0.5235987755982988,
+                  1.5707963267948966,
+                  3.141592653589793
+                ],
+                "counts": [
+                  0,
+                  0,
+                  582,
+                  617,
+                  0,
+                  0
+                ],
+                "sampleCount": 1199
+              }
+            },
+            "maxExcursion": 0.5047088303228934,
+            "radiusOfGyration": 0.17877817139835947,
+            "grid": {
+              "cellSize": 0.03,
+              "uniqueCells": 39,
+              "revisitedCells": 0,
+              "sampleFractionInRevisitedCells": 0,
+              "longestResidenceSeconds": 1.8666666666666667,
+              "approximateReturns": 0,
+              "returnGapSeconds": 1
+            },
+            "category": "unclassified-remainder"
+          }
+        },
+        {
+          "seed": 20261006,
+          "seconds": 1,
+          "antId": "ant-93",
+          "startSeconds": 158,
+          "endSeconds": 159,
+          "selection": "Median tortuosity among all complete windows; descriptive example.",
+          "metrics": {
+            "antId": "ant-93",
+            "startSeconds": 158,
+            "sampleCount": 61,
+            "durationSeconds": 1,
+            "pathLength": 0.05677304437751029,
+            "netDisplacement": 0.05675213219371093,
+            "tortuosity": 1.0003684827863026,
+            "meanSegmentLength": 0.0009462174062918381,
+            "bodyHeadingTurning": {
+              "signedAccumulatedRadians": 0.38516582692815504,
+              "absoluteAccumulatedRadians": 4.336483568669685,
+              "coherence": 0.08881985157534297,
+              "signedTurnPerPathRadianPerUnit": 6.784308136921616,
+              "longestSameSignRunSeconds": 0.1,
+              "signedStepRadians": {
+                "n": 60,
+                "mean": 0.006419430448802584,
+                "p50": 0.0731540402643116,
+                "p90": 0.07499999999999929
+              },
+              "absoluteStepRadians": {
+                "n": 60,
+                "mean": 0.07227472614449475,
+                "p50": 0.07499999999999929,
+                "p90": 0.07499999999999929
+              },
+              "histogram": {
+                "edgesRadians": [
+                  -3.141592653589793,
+                  -1.5707963267948966,
+                  -0.5235987755982988,
+                  0,
+                  0.5235987755982988,
+                  1.5707963267948966,
+                  3.141592653589793
+                ],
+                "counts": [
+                  0,
+                  0,
+                  27,
+                  33,
+                  0,
+                  0
+                ],
+                "sampleCount": 60
+              }
+            },
+            "pathTurning": {
+              "signedAccumulatedRadians": 0.29561418916624915,
+              "absoluteAccumulatedRadians": 1.2609105467530326,
+              "coherence": 0.23444501271520368,
+              "signedTurnPerPathRadianPerUnit": 5.206946226109936,
+              "longestSameSignRunSeconds": 0.13333333333333333,
+              "signedStepRadians": {
+                "n": 59,
+                "mean": 0.005010409985868629,
+                "p50": 0.012358524449171735,
+                "p90": 0.029819292396164127
+              },
+              "absoluteStepRadians": {
+                "n": 59,
+                "mean": 0.02137136519920394,
+                "p50": 0.019986377849394946,
+                "p90": 0.029819292396164127
+              },
+              "histogram": {
+                "edgesRadians": [
+                  -3.141592653589793,
+                  -1.5707963267948966,
+                  -0.5235987755982988,
+                  0,
+                  0.5235987755982988,
+                  1.5707963267948966,
+                  3.141592653589793
+                ],
+                "counts": [
+                  0,
+                  0,
+                  26,
+                  33,
+                  0,
+                  0
+                ],
+                "sampleCount": 59
+              }
+            },
+            "maxExcursion": 0.05675213219371093,
+            "radiusOfGyration": 0.018648062430565635,
+            "grid": {
+              "cellSize": 0.03,
+              "uniqueCells": 3,
+              "revisitedCells": 0,
+              "sampleFractionInRevisitedCells": 0,
+              "longestResidenceSeconds": 0.55,
+              "approximateReturns": 0,
+              "returnGapSeconds": 1
+            },
+            "category": "straight-gentle"
+          }
+        },
+        {
+          "seed": 20261006,
+          "seconds": 5,
+          "antId": "ant-458",
+          "startSeconds": 425,
+          "endSeconds": 430,
+          "selection": "Median tortuosity among all complete windows; descriptive example.",
+          "metrics": {
+            "antId": "ant-458",
+            "startSeconds": 425,
+            "sampleCount": 301,
+            "durationSeconds": 5,
+            "pathLength": 0.34910631104968287,
+            "netDisplacement": 0.3426402178148413,
+            "tortuosity": 1.0188713784858023,
+            "meanSegmentLength": 0.001163687703498943,
+            "bodyHeadingTurning": {
+              "signedAccumulatedRadians": 0.5230996379933845,
+              "absoluteAccumulatedRadians": 22.1139090025477,
+              "coherence": 0.023654779348740166,
+              "signedTurnPerPathRadianPerUnit": 1.4983963951283021,
+              "longestSameSignRunSeconds": 0.2,
+              "signedStepRadians": {
+                "n": 300,
+                "mean": 0.0017436654599779485,
+                "p50": 0.05850096001827154,
+                "p90": 0.07499999999999929
+              },
+              "absoluteStepRadians": {
+                "n": 300,
+                "mean": 0.07371303000849233,
+                "p50": 0.07499999999999929,
+                "p90": 0.07499999999999929
+              },
+              "histogram": {
+                "edgesRadians": [
+                  -3.141592653589793,
+                  -1.5707963267948966,
+                  -0.5235987755982988,
+                  0,
+                  0.5235987755982988,
+                  1.5707963267948966,
+                  3.141592653589793
+                ],
+                "counts": [
+                  0,
+                  0,
+                  146,
+                  154,
+                  0,
+                  0
+                ],
+                "sampleCount": 300
+              }
+            },
+            "pathTurning": {
+              "signedAccumulatedRadians": 0.5714341735388376,
+              "absoluteAccumulatedRadians": 6.904858917739818,
+              "coherence": 0.0827582692632171,
+              "signedTurnPerPathRadianPerUnit": 1.6368485915383932,
+              "longestSameSignRunSeconds": 0.2,
+              "signedStepRadians": {
+                "n": 299,
+                "mean": 0.0019111510820696911,
+                "p50": 0.012620155460844884,
+                "p90": 0.023062715559289772
+              },
+              "absoluteStepRadians": {
+                "n": 299,
+                "mean": 0.023093173637925814,
+                "p50": 0.021957356341375633,
+                "p90": 0.02466774440995606
+              },
+              "histogram": {
+                "edgesRadians": [
+                  -3.141592653589793,
+                  -1.5707963267948966,
+                  -0.5235987755982988,
+                  0,
+                  0.5235987755982988,
+                  1.5707963267948966,
+                  3.141592653589793
+                ],
+                "counts": [
+                  0,
+                  0,
+                  146,
+                  153,
+                  0,
+                  0
+                ],
+                "sampleCount": 299
+              }
+            },
+            "maxExcursion": 0.3426402178148413,
+            "radiusOfGyration": 0.09828347052255441,
+            "grid": {
+              "cellSize": 0.03,
+              "uniqueCells": 17,
+              "revisitedCells": 0,
+              "sampleFractionInRevisitedCells": 0,
+              "longestResidenceSeconds": 0.55,
+              "approximateReturns": 0,
+              "returnGapSeconds": 1
+            },
+            "category": "unclassified-remainder"
+          }
+        },
+        {
+          "seed": 20261006,
+          "seconds": 20,
+          "antId": "ant-8",
+          "startSeconds": 20,
+          "endSeconds": 40,
+          "selection": "Median tortuosity among all complete windows; descriptive example.",
+          "metrics": {
+            "antId": "ant-8",
+            "startSeconds": 20,
+            "sampleCount": 1201,
+            "durationSeconds": 20,
+            "pathLength": 0.9225734593686504,
+            "netDisplacement": 0.49843973634958394,
+            "tortuosity": 1.8509227737846277,
+            "meanSegmentLength": 0.000768811216140542,
+            "bodyHeadingTurning": {
+              "signedAccumulatedRadians": -0.03775001710472717,
+              "absoluteAccumulatedRadians": 71.97688416166667,
+              "coherence": 0.0005244741772919368,
+              "signedTurnPerPathRadianPerUnit": -0.040918169411204214,
+              "longestSameSignRunSeconds": 0.3333333333333333,
+              "signedStepRadians": {
+                "n": 1200,
+                "mean": -3.145834758727264e-05,
+                "p50": -3.4978908658445107e-09,
+                "p90": 0.07500000000000019
+              },
+              "absoluteStepRadians": {
+                "n": 1200,
+                "mean": 0.05998073680138889,
+                "p50": 0.07499999999999929,
+                "p90": 0.07500000000000019
+              },
+              "histogram": {
+                "edgesRadians": [
+                  -3.141592653589793,
+                  -1.5707963267948966,
+                  -0.5235987755982988,
+                  0,
+                  0.5235987755982988,
+                  1.5707963267948966,
+                  3.141592653589793
+                ],
+                "counts": [
+                  0,
+                  0,
+                  602,
+                  598,
+                  0,
+                  0
+                ],
+                "sampleCount": 1200
+              }
+            },
+            "pathTurning": {
+              "signedAccumulatedRadians": 0.0647525284181103,
+              "absoluteAccumulatedRadians": 34.31321715305722,
+              "coherence": 0.0018871016415999634,
+              "signedTurnPerPathRadianPerUnit": 0.07018685369772369,
+              "longestSameSignRunSeconds": 0.85,
+              "signedStepRadians": {
+                "n": 1199,
+                "mean": 5.400544488583011e-05,
+                "p50": -1.6092353405383622e-07,
+                "p90": 0.04967552023910145
+              },
+              "absoluteStepRadians": {
+                "n": 1199,
+                "mean": 0.028618196124317947,
+                "p50": 0.020730397915951434,
+                "p90": 0.0699962980856399
+              },
+              "histogram": {
+                "edgesRadians": [
+                  -3.141592653589793,
+                  -1.5707963267948966,
+                  -0.5235987755982988,
+                  0,
+                  0.5235987755982988,
+                  1.5707963267948966,
+                  3.141592653589793
+                ],
+                "counts": [
+                  0,
+                  0,
+                  602,
+                  597,
+                  0,
+                  0
+                ],
+                "sampleCount": 1199
+              }
+            },
+            "maxExcursion": 0.5075630851325689,
+            "radiusOfGyration": 0.17055661913400108,
+            "grid": {
+              "cellSize": 0.03,
+              "uniqueCells": 41,
+              "revisitedCells": 1,
+              "sampleFractionInRevisitedCells": 0.014154870940882597,
+              "longestResidenceSeconds": 1.8,
+              "approximateReturns": 0,
+              "returnGapSeconds": 1
+            },
+            "category": "unclassified-remainder"
+          }
+        },
+        {
+          "seed": 20261007,
+          "seconds": 1,
+          "antId": "ant-467",
+          "startSeconds": 403,
+          "endSeconds": 404,
+          "selection": "Median tortuosity among all complete windows; descriptive example.",
+          "metrics": {
+            "antId": "ant-467",
+            "startSeconds": 403,
+            "sampleCount": 61,
+            "durationSeconds": 1,
+            "pathLength": 0.06197955363313926,
+            "netDisplacement": 0.06196607702887762,
+            "tortuosity": 1.0002174835798523,
+            "meanSegmentLength": 0.001032992560552321,
+            "bodyHeadingTurning": {
+              "signedAccumulatedRadians": -0.05996276324138898,
+              "absoluteAccumulatedRadians": 4.440037236758622,
+              "coherence": 0.013505013594247205,
+              "signedTurnPerPathRadianPerUnit": -0.9674603917981116,
+              "longestSameSignRunSeconds": 0.016666666666666666,
+              "signedStepRadians": {
+                "n": 60,
+                "mean": -0.000999379387356483,
+                "p50": -0.0038214704956733986,
+                "p90": 0.07500000000000019
+              },
+              "absoluteStepRadians": {
+                "n": 60,
+                "mean": 0.0740006206126437,
+                "p50": 0.07500000000000019,
+                "p90": 0.07500000000000019
+              },
+              "histogram": {
+                "edgesRadians": [
+                  -3.141592653589793,
+                  -1.5707963267948966,
+                  -0.5235987755982988,
+                  0,
+                  0.5235987755982988,
+                  1.5707963267948966,
+                  3.141592653589793
+                ],
+                "counts": [
+                  0,
+                  0,
+                  30,
+                  30,
+                  0,
+                  0
+                ],
+                "sampleCount": 60
+              }
+            },
+            "pathTurning": {
+              "signedAccumulatedRadians": -0.04183229069310768,
+              "absoluteAccumulatedRadians": 1.2074568768924396,
+              "coherence": 0.034644956266073015,
+              "signedTurnPerPathRadianPerUnit": -0.6749369467988676,
+              "longestSameSignRunSeconds": 0.016666666666666666,
+              "signedStepRadians": {
+                "n": 59,
+                "mean": -0.0007090218761543674,
+                "p50": 0.017341395741958365,
+                "p90": 0.01985751898648127
+              },
+              "absoluteStepRadians": {
+                "n": 59,
+                "mean": 0.02046537079478711,
+                "p50": 0.019808964119209627,
+                "p90": 0.02430368600102657
+              },
+              "histogram": {
+                "edgesRadians": [
+                  -3.141592653589793,
+                  -1.5707963267948966,
+                  -0.5235987755982988,
+                  0,
+                  0.5235987755982988,
+                  1.5707963267948966,
+                  3.141592653589793
+                ],
+                "counts": [
+                  0,
+                  0,
+                  29,
+                  30,
+                  0,
+                  0
+                ],
+                "sampleCount": 59
+              }
+            },
+            "maxExcursion": 0.06196607702887762,
+            "radiusOfGyration": 0.0178041947689589,
+            "grid": {
+              "cellSize": 0.03,
+              "uniqueCells": 4,
+              "revisitedCells": 0,
+              "sampleFractionInRevisitedCells": 0,
+              "longestResidenceSeconds": 0.5,
+              "approximateReturns": 0,
+              "returnGapSeconds": 1
+            },
+            "category": "straight-gentle"
+          }
+        },
+        {
+          "seed": 20261007,
+          "seconds": 5,
+          "antId": "ant-375",
+          "startSeconds": 335,
+          "endSeconds": 340,
+          "selection": "Median tortuosity among all complete windows; descriptive example.",
+          "metrics": {
+            "antId": "ant-375",
+            "startSeconds": 335,
+            "sampleCount": 301,
+            "durationSeconds": 5,
+            "pathLength": 0.20873980342252516,
+            "netDisplacement": 0.20546861953595905,
+            "tortuosity": 1.015920600887639,
+            "meanSegmentLength": 0.0006957993447417505,
+            "bodyHeadingTurning": {
+              "signedAccumulatedRadians": 0.41217533167545817,
+              "absoluteAccumulatedRadians": 22.31217533167555,
+              "coherence": 0.018473112798208974,
+              "signedTurnPerPathRadianPerUnit": 1.9745890573689227,
+              "longestSameSignRunSeconds": 0.16666666666666666,
+              "signedStepRadians": {
+                "n": 300,
+                "mean": 0.0013739177722515272,
+                "p50": 0.06654391004552096,
+                "p90": 0.07500000000000019
+              },
+              "absoluteStepRadians": {
+                "n": 300,
+                "mean": 0.07437391777225183,
+                "p50": 0.07500000000000019,
+                "p90": 0.07500000000000019
+              },
+              "histogram": {
+                "edgesRadians": [
+                  -3.141592653589793,
+                  -1.5707963267948966,
+                  -0.5235987755982988,
+                  0,
+                  0.5235987755982988,
+                  1.5707963267948966,
+                  3.141592653589793
+                ],
+                "counts": [
+                  0,
+                  0,
+                  146,
+                  154,
+                  0,
+                  0
+                ],
+                "sampleCount": 300
+              }
+            },
+            "pathTurning": {
+              "signedAccumulatedRadians": 0.4734533769851832,
+              "absoluteAccumulatedRadians": 6.664983535574232,
+              "coherence": 0.07103594096791599,
+              "signedTurnPerPathRadianPerUnit": 2.268150919098225,
+              "longestSameSignRunSeconds": 0.2,
+              "signedStepRadians": {
+                "n": 299,
+                "mean": 0.0015834561103183385,
+                "p50": 0.014623575346722317,
+                "p90": 0.022209517349448493
+              },
+              "absoluteStepRadians": {
+                "n": 299,
+                "mean": 0.02229091483469643,
+                "p50": 0.02073108826673442,
+                "p90": 0.023143914543625056
+              },
+              "histogram": {
+                "edgesRadians": [
+                  -3.141592653589793,
+                  -1.5707963267948966,
+                  -0.5235987755982988,
+                  0,
+                  0.5235987755982988,
+                  1.5707963267948966,
+                  3.141592653589793
+                ],
+                "counts": [
+                  0,
+                  0,
+                  144,
+                  155,
+                  0,
+                  0
+                ],
+                "sampleCount": 299
+              }
+            },
+            "maxExcursion": 0.20546861953595905,
+            "radiusOfGyration": 0.06388478187819653,
+            "grid": {
+              "cellSize": 0.03,
+              "uniqueCells": 10,
+              "revisitedCells": 0,
+              "sampleFractionInRevisitedCells": 0,
+              "longestResidenceSeconds": 1.4333333333333333,
+              "approximateReturns": 0,
+              "returnGapSeconds": 1
+            },
+            "category": "unclassified-remainder"
+          }
+        },
+        {
+          "seed": 20261007,
+          "seconds": 20,
+          "antId": "ant-20",
+          "startSeconds": 40,
+          "endSeconds": 60,
+          "selection": "Median tortuosity among all complete windows; descriptive example.",
+          "metrics": {
+            "antId": "ant-20",
+            "startSeconds": 40,
+            "sampleCount": 1201,
+            "durationSeconds": 20,
+            "pathLength": 1.2462415513916871,
+            "netDisplacement": 0.5825237515365383,
+            "tortuosity": 2.13938324077678,
+            "meanSegmentLength": 0.0010385346261597393,
+            "bodyHeadingTurning": {
+              "signedAccumulatedRadians": -0.23208380667852602,
+              "absoluteAccumulatedRadians": 79.75751859586431,
+              "coherence": 0.0029098674427737313,
+              "signedTurnPerPathRadianPerUnit": -0.18622698498485812,
+              "longestSameSignRunSeconds": 0.3,
+              "signedStepRadians": {
+                "n": 1200,
+                "mean": -0.00019340317223210502,
+                "p50": 0.0025373143027689338,
+                "p90": 0.07500000000000019
+              },
+              "absoluteStepRadians": {
+                "n": 1200,
+                "mean": 0.06646459882988692,
+                "p50": 0.07499999999999929,
+                "p90": 0.07500000000000019
+              },
+              "histogram": {
+                "edgesRadians": [
+                  -3.141592653589793,
+                  -1.5707963267948966,
+                  -0.5235987755982988,
+                  0,
+                  0.5235987755982988,
+                  1.5707963267948966,
+                  3.141592653589793
+                ],
+                "counts": [
+                  0,
+                  0,
+                  596,
+                  604,
+                  0,
+                  0
+                ],
+                "sampleCount": 1200
+              }
+            },
+            "pathTurning": {
+              "signedAccumulatedRadians": -0.22653844448693683,
+              "absoluteAccumulatedRadians": 33.69272192149167,
+              "coherence": 0.00672366112226849,
+              "signedTurnPerPathRadianPerUnit": -0.18177731615027576,
+              "longestSameSignRunSeconds": 0.36666666666666664,
+              "signedStepRadians": {
+                "n": 1199,
+                "mean": -0.00018893948664465123,
+                "p50": 0.0004154886585676643,
+                "p90": 0.04013011110524204
+              },
+              "absoluteStepRadians": {
+                "n": 1199,
+                "mean": 0.02810068550583125,
+                "p50": 0.022081873470933377,
+                "p90": 0.06310179196410548
+              },
+              "histogram": {
+                "edgesRadians": [
+                  -3.141592653589793,
+                  -1.5707963267948966,
+                  -0.5235987755982988,
+                  0,
+                  0.5235987755982988,
+                  1.5707963267948966,
+                  3.141592653589793
+                ],
+                "counts": [
+                  0,
+                  0,
+                  597,
+                  602,
+                  0,
+                  0
+                ],
+                "sampleCount": 1199
+              }
+            },
+            "maxExcursion": 0.5825237515365383,
+            "radiusOfGyration": 0.19773094939049837,
+            "grid": {
+              "cellSize": 0.03,
+              "uniqueCells": 55,
+              "revisitedCells": 1,
+              "sampleFractionInRevisitedCells": 0.018318068276436304,
+              "longestResidenceSeconds": 1.05,
+              "approximateReturns": 1,
+              "returnGapSeconds": 1
+            },
+            "category": "unclassified-remainder"
+          }
+        }
+      ],
+      "maximumTortuosity": [
+        {
+          "seed": 20261005,
+          "seconds": 1,
+          "antId": "ant-1",
+          "startSeconds": 8,
+          "endSeconds": 9,
+          "tortuosity": 1.5250543946858557,
+          "selection": "maximum finite tortuosity among complete windows"
+        },
+        {
+          "seed": 20261005,
+          "seconds": 5,
+          "antId": "ant-609",
+          "startSeconds": 535,
+          "endSeconds": 540,
+          "tortuosity": 12.674665919026321,
+          "selection": "maximum finite tortuosity among complete windows"
+        },
+        {
+          "seed": 20261005,
+          "seconds": 20,
+          "antId": "ant-28",
+          "startSeconds": 60,
+          "endSeconds": 80,
+          "tortuosity": 17.034069037722627,
+          "selection": "maximum finite tortuosity among complete windows"
+        },
+        {
+          "seed": 20261006,
+          "seconds": 1,
+          "antId": "ant-9",
+          "startSeconds": 50,
+          "endSeconds": 51,
+          "tortuosity": 1.6345000740637827,
+          "selection": "maximum finite tortuosity among complete windows"
+        },
+        {
+          "seed": 20261006,
+          "seconds": 5,
+          "antId": "ant-14",
+          "startSeconds": 45,
+          "endSeconds": 50,
+          "tortuosity": 9.25821480335171,
+          "selection": "maximum finite tortuosity among complete windows"
+        },
+        {
+          "seed": 20261006,
+          "seconds": 20,
+          "antId": "ant-23",
+          "startSeconds": 60,
+          "endSeconds": 80,
+          "tortuosity": 26.582018944575147,
+          "selection": "maximum finite tortuosity among complete windows"
+        },
+        {
+          "seed": 20261007,
+          "seconds": 1,
+          "antId": "ant-11",
+          "startSeconds": 23,
+          "endSeconds": 24,
+          "tortuosity": 20.24976753303617,
+          "selection": "maximum finite tortuosity among complete windows"
+        },
+        {
+          "seed": 20261007,
+          "seconds": 5,
+          "antId": "ant-350",
+          "startSeconds": 340,
+          "endSeconds": 345,
+          "tortuosity": 16.16317312085709,
+          "selection": "maximum finite tortuosity among complete windows"
+        },
+        {
+          "seed": 20261007,
+          "seconds": 20,
+          "antId": "ant-31",
+          "startSeconds": 60,
+          "endSeconds": 80,
+          "tortuosity": 22.513711523651565,
+          "selection": "maximum finite tortuosity among complete windows"
+        }
+      ],
+      "confinedLocalReturn": [
+        {
+          "seed": 20261005,
+          "seconds": 5,
+          "antId": "ant-54",
+          "startSeconds": 100,
+          "endSeconds": 105,
+          "category": "confined-local-return",
+          "metrics": {
+            "antId": "ant-54",
+            "startSeconds": 100,
+            "sampleCount": 301,
+            "durationSeconds": 5,
+            "pathLength": 0.2214030215152095,
+            "netDisplacement": 0.08231161839734306,
+            "tortuosity": 2.6898149474650124,
+            "meanSegmentLength": 0.000738010071717365,
+            "bodyHeadingTurning": {
+              "signedAccumulatedRadians": 2.3659399168061843,
+              "absoluteAccumulatedRadians": 18.411739906821303,
+              "coherence": 0.1285017021085354,
+              "signedTurnPerPathRadianPerUnit": 10.68612298339232,
+              "longestSameSignRunSeconds": 0.25,
+              "signedStepRadians": {
+                "n": 300,
+                "mean": 0.007886466389353948,
+                "p50": 0.02117630378066071,
+                "p90": 0.07500000000000019
+              },
+              "absoluteStepRadians": {
+                "n": 300,
+                "mean": 0.061372466356071013,
+                "p50": 0.07397536957971074,
+                "p90": 0.07500000000000019
+              },
+              "histogram": {
+                "edgesRadians": [
+                  -3.141592653589793,
+                  -1.5707963267948966,
+                  -0.5235987755982988,
+                  0,
+                  0.5235987755982988,
+                  1.5707963267948966,
+                  3.141592653589793
+                ],
+                "counts": [
+                  0,
+                  0,
+                  136,
+                  164,
+                  0,
+                  0
+                ],
+                "sampleCount": 300
+              }
+            },
+            "pathTurning": {
+              "signedAccumulatedRadians": 2.29739552332553,
+              "absoluteAccumulatedRadians": 9.392623850295426,
+              "coherence": 0.24459571254450588,
+              "signedTurnPerPathRadianPerUnit": 10.376531935304723,
+              "longestSameSignRunSeconds": 0.5,
+              "signedStepRadians": {
+                "n": 299,
+                "mean": 0.007683597067978361,
+                "p50": 0.011109520050411882,
+                "p90": 0.06673882303991983
+              },
+              "absoluteStepRadians": {
+                "n": 299,
+                "mean": 0.03141345769329574,
+                "p50": 0.021154343634804063,
+                "p90": 0.07061611247552155
+              },
+              "histogram": {
+                "edgesRadians": [
+                  -3.141592653589793,
+                  -1.5707963267948966,
+                  -0.5235987755982988,
+                  0,
+                  0.5235987755982988,
+                  1.5707963267948966,
+                  3.141592653589793
+                ],
+                "counts": [
+                  0,
+                  0,
+                  135,
+                  164,
+                  0,
+                  0
+                ],
+                "sampleCount": 299
+              }
+            },
+            "maxExcursion": 0.0934272875168884,
+            "radiusOfGyration": 0.03565955396101674,
+            "grid": {
+              "cellSize": 0.03,
+              "uniqueCells": 9,
+              "revisitedCells": 1,
+              "sampleFractionInRevisitedCells": 0.07641196013289037,
+              "longestResidenceSeconds": 1.4333333333333333,
+              "approximateReturns": 1,
+              "returnGapSeconds": 1
+            },
+            "category": "confined-local-return"
+          },
+          "selection": "observed representative in analyst-defined category"
+        },
+        {
+          "seed": 20261006,
+          "seconds": 5,
+          "antId": "ant-19",
+          "startSeconds": 60,
+          "endSeconds": 65,
+          "category": "confined-local-return",
+          "metrics": {
+            "antId": "ant-19",
+            "startSeconds": 60,
+            "sampleCount": 301,
+            "durationSeconds": 5,
+            "pathLength": 0.17726575183078266,
+            "netDisplacement": 0.047108799670950975,
+            "tortuosity": 3.7629010517984236,
+            "meanSegmentLength": 0.0005908858394359422,
+            "bodyHeadingTurning": {
+              "signedAccumulatedRadians": -6.476052503186903,
+              "absoluteAccumulatedRadians": 18.341382555611574,
+              "coherence": 0.3530842063596533,
+              "signedTurnPerPathRadianPerUnit": -36.533015747841254,
+              "longestSameSignRunSeconds": 0.3,
+              "signedStepRadians": {
+                "n": 300,
+                "mean": -0.021586841677289678,
+                "p50": -0.060856978774308956,
+                "p90": 0.07500000000000019
+              },
+              "absoluteStepRadians": {
+                "n": 300,
+                "mean": 0.06113794185203858,
+                "p50": 0.07499999999999929,
+                "p90": 0.07500000000000019
+              },
+              "histogram": {
+                "edgesRadians": [
+                  -3.141592653589793,
+                  -1.5707963267948966,
+                  -0.5235987755982988,
+                  0,
+                  0.5235987755982988,
+                  1.5707963267948966,
+                  3.141592653589793
+                ],
+                "counts": [
+                  0,
+                  0,
+                  198,
+                  102,
+                  0,
+                  0
+                ],
+                "sampleCount": 300
+              }
+            },
+            "pathTurning": {
+              "signedAccumulatedRadians": -6.337229373046091,
+              "absoluteAccumulatedRadians": 9.121444356963766,
+              "coherence": 0.6947616106661807,
+              "signedTurnPerPathRadianPerUnit": -35.749880095821275,
+              "longestSameSignRunSeconds": 0.5833333333333334,
+              "signedStepRadians": {
+                "n": 299,
+                "mean": -0.02119474706704378,
+                "p50": -0.019836332113576827,
+                "p90": 0.019799774335363195
+              },
+              "absoluteStepRadians": {
+                "n": 299,
+                "mean": 0.03050650286609955,
+                "p50": 0.020711953709089848,
+                "p90": 0.07061366068565178
+              },
+              "histogram": {
+                "edgesRadians": [
+                  -3.141592653589793,
+                  -1.5707963267948966,
+                  -0.5235987755982988,
+                  0,
+                  0.5235987755982988,
+                  1.5707963267948966,
+                  3.141592653589793
+                ],
+                "counts": [
+                  0,
+                  0,
+                  214,
+                  85,
+                  0,
+                  0
+                ],
+                "sampleCount": 299
+              }
+            },
+            "maxExcursion": 0.07985273733018126,
+            "radiusOfGyration": 0.029911420783775414,
+            "grid": {
+              "cellSize": 0.03,
+              "uniqueCells": 5,
+              "revisitedCells": 1,
+              "sampleFractionInRevisitedCells": 0.20930232558139536,
+              "longestResidenceSeconds": 2.066666666666667,
+              "approximateReturns": 1,
+              "returnGapSeconds": 1
+            },
+            "category": "confined-local-return"
+          },
+          "selection": "observed representative in analyst-defined category"
+        },
+        {
+          "seed": 20261007,
+          "seconds": 5,
+          "antId": "ant-628",
+          "startSeconds": 525,
+          "endSeconds": 530,
+          "category": "confined-local-return",
+          "metrics": {
+            "antId": "ant-628",
+            "startSeconds": 525,
+            "sampleCount": 301,
+            "durationSeconds": 5,
+            "pathLength": 0.28508436488114447,
+            "netDisplacement": 0.0484120169798312,
+            "tortuosity": 5.888710751297817,
+            "meanSegmentLength": 0.0009502812162704815,
+            "bodyHeadingTurning": {
+              "signedAccumulatedRadians": 5.576771550232138,
+              "absoluteAccumulatedRadians": 21.24779600596233,
+              "coherence": 0.2624635302723748,
+              "signedTurnPerPathRadianPerUnit": 19.56182883813067,
+              "longestSameSignRunSeconds": 0.25,
+              "signedStepRadians": {
+                "n": 300,
+                "mean": 0.018589238500773795,
+                "p50": 0.07499999999999929,
+                "p90": 0.07500000000000019
+              },
+              "absoluteStepRadians": {
+                "n": 300,
+                "mean": 0.0708259866865411,
+                "p50": 0.07499999999999929,
+                "p90": 0.07500000000000019
+              },
+              "histogram": {
+                "edgesRadians": [
+                  -3.141592653589793,
+                  -1.5707963267948966,
+                  -0.5235987755982988,
+                  0,
+                  0.5235987755982988,
+                  1.5707963267948966,
+                  3.141592653589793
+                ],
+                "counts": [
+                  0,
+                  0,
+                  109,
+                  191,
+                  0,
+                  0
+                ],
+                "sampleCount": 300
+              }
+            },
+            "pathTurning": {
+              "signedAccumulatedRadians": 5.45080001343476,
+              "absoluteAccumulatedRadians": 10.095971310759575,
+              "coherence": 0.5398985244367406,
+              "signedTurnPerPathRadianPerUnit": 19.119954248305664,
+              "longestSameSignRunSeconds": 0.2833333333333333,
+              "signedStepRadians": {
+                "n": 299,
+                "mean": 0.018230100379380467,
+                "p50": 0.020037298487013605,
+                "p90": 0.07139235977849356
+              },
+              "absoluteStepRadians": {
+                "n": 299,
+                "mean": 0.033765790336988545,
+                "p50": 0.02229885843507029,
+                "p90": 0.07139235977849356
+              },
+              "histogram": {
+                "edgesRadians": [
+                  -3.141592653589793,
+                  -1.5707963267948966,
+                  -0.5235987755982988,
+                  0,
+                  0.5235987755982988,
+                  1.5707963267948966,
+                  3.141592653589793
+                ],
+                "counts": [
+                  0,
+                  0,
+                  103,
+                  196,
+                  0,
+                  0
+                ],
+                "sampleCount": 299
+              }
+            },
+            "maxExcursion": 0.10251767102897619,
+            "radiusOfGyration": 0.04006340668721808,
+            "grid": {
+              "cellSize": 0.03,
+              "uniqueCells": 13,
+              "revisitedCells": 1,
+              "sampleFractionInRevisitedCells": 0.2026578073089701,
+              "longestResidenceSeconds": 0.6333333333333333,
+              "approximateReturns": 1,
+              "returnGapSeconds": 1
+            },
+            "category": "confined-local-return"
+          },
+          "selection": "observed representative in analyst-defined category"
+        }
+      ],
+      "aggregateTortuosityY": [
+        0.0,
+        6.357104393805598
+      ]
+    },
+    "plates": [
+      [
+        {
+          "seed": 20261005,
+          "id": "trail-plate-1",
+          "bornAtSimulationTimeMs": 103016.66666667376
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-2",
+          "bornAtSimulationTimeMs": 126016.66666668045
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-3",
+          "bornAtSimulationTimeMs": 175016.66666665635
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-4",
+          "bornAtSimulationTimeMs": 213016.66666663424
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-5",
+          "bornAtSimulationTimeMs": 224016.66666662783
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-6",
+          "bornAtSimulationTimeMs": 238016.66666661968
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-7",
+          "bornAtSimulationTimeMs": 264016.66666660784
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-8",
+          "bornAtSimulationTimeMs": 280016.66666662646
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-9",
+          "bornAtSimulationTimeMs": 291016.66666663927
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-10",
+          "bornAtSimulationTimeMs": 301016.6666666509
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-11",
+          "bornAtSimulationTimeMs": 312016.6666666637
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-12",
+          "bornAtSimulationTimeMs": 322016.66666667536
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-13",
+          "bornAtSimulationTimeMs": 340016.6666666963
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-14",
+          "bornAtSimulationTimeMs": 350016.66666670796
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-15",
+          "bornAtSimulationTimeMs": 364016.66666672425
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-16",
+          "bornAtSimulationTimeMs": 374016.6666667359
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-17",
+          "bornAtSimulationTimeMs": 389016.66666675336
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-18",
+          "bornAtSimulationTimeMs": 401016.6666667673
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-19",
+          "bornAtSimulationTimeMs": 412016.66666678013
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-20",
+          "bornAtSimulationTimeMs": 426016.66666679643
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-21",
+          "bornAtSimulationTimeMs": 438016.6666668104
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-22",
+          "bornAtSimulationTimeMs": 451016.66666682553
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-23",
+          "bornAtSimulationTimeMs": 461016.6666668372
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-24",
+          "bornAtSimulationTimeMs": 471016.6666668488
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-25",
+          "bornAtSimulationTimeMs": 481016.66666686046
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-26",
+          "bornAtSimulationTimeMs": 491016.6666668721
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-27",
+          "bornAtSimulationTimeMs": 503016.66666688607
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-28",
+          "bornAtSimulationTimeMs": 513016.6666668977
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-29",
+          "bornAtSimulationTimeMs": 525033.3333335757
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-30",
+          "bornAtSimulationTimeMs": 535200.0000002187
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-31",
+          "bornAtSimulationTimeMs": 555533.3333335047
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-32",
+          "bornAtSimulationTimeMs": 573833.3333334621
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-1",
+          "bornAtSimulationTimeMs": 220016.66666663016
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-2",
+          "bornAtSimulationTimeMs": 231016.66666662376
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-3",
+          "bornAtSimulationTimeMs": 242016.66666661736
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-4",
+          "bornAtSimulationTimeMs": 253016.66666661095
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-5",
+          "bornAtSimulationTimeMs": 264016.66666660784
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-6",
+          "bornAtSimulationTimeMs": 289016.66666663694
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-7",
+          "bornAtSimulationTimeMs": 299016.6666666486
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-8",
+          "bornAtSimulationTimeMs": 309016.6666666602
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-9",
+          "bornAtSimulationTimeMs": 319016.66666667187
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-10",
+          "bornAtSimulationTimeMs": 329016.6666666835
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-11",
+          "bornAtSimulationTimeMs": 350016.66666670796
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-12",
+          "bornAtSimulationTimeMs": 361016.66666672076
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-13",
+          "bornAtSimulationTimeMs": 371016.6666667324
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-14",
+          "bornAtSimulationTimeMs": 400016.66666676616
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-15",
+          "bornAtSimulationTimeMs": 424016.6666667941
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-16",
+          "bornAtSimulationTimeMs": 434016.66666680574
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-17",
+          "bornAtSimulationTimeMs": 446016.6666668197
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-18",
+          "bornAtSimulationTimeMs": 456016.66666683136
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-19",
+          "bornAtSimulationTimeMs": 466016.666666843
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-20",
+          "bornAtSimulationTimeMs": 478016.66666685697
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-21",
+          "bornAtSimulationTimeMs": 490016.66666687094
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-22",
+          "bornAtSimulationTimeMs": 503016.66666688607
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-23",
+          "bornAtSimulationTimeMs": 523016.66666690935
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-24",
+          "bornAtSimulationTimeMs": 533166.6666668901
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-25",
+          "bornAtSimulationTimeMs": 543333.3333335331
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-26",
+          "bornAtSimulationTimeMs": 571800.0000001335
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-27",
+          "bornAtSimulationTimeMs": 581966.6666667765
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-28",
+          "bornAtSimulationTimeMs": 592133.3333334195
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-1",
+          "bornAtSimulationTimeMs": 145016.66666667382
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-2",
+          "bornAtSimulationTimeMs": 156016.6666666674
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-3",
+          "bornAtSimulationTimeMs": 187016.66666664937
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-4",
+          "bornAtSimulationTimeMs": 198016.66666664297
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-5",
+          "bornAtSimulationTimeMs": 209016.66666663656
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-6",
+          "bornAtSimulationTimeMs": 220016.66666663016
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-7",
+          "bornAtSimulationTimeMs": 237016.66666662027
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-8",
+          "bornAtSimulationTimeMs": 253016.66666661095
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-9",
+          "bornAtSimulationTimeMs": 264016.66666660784
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-10",
+          "bornAtSimulationTimeMs": 278016.66666662414
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-11",
+          "bornAtSimulationTimeMs": 310016.6666666614
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-12",
+          "bornAtSimulationTimeMs": 320016.66666667303
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-13",
+          "bornAtSimulationTimeMs": 348016.6666667056
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-14",
+          "bornAtSimulationTimeMs": 358016.66666671727
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-15",
+          "bornAtSimulationTimeMs": 368016.6666667289
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-16",
+          "bornAtSimulationTimeMs": 378016.66666674055
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-17",
+          "bornAtSimulationTimeMs": 388016.6666667522
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-18",
+          "bornAtSimulationTimeMs": 398016.66666676383
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-19",
+          "bornAtSimulationTimeMs": 408016.6666667755
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-20",
+          "bornAtSimulationTimeMs": 438016.6666668104
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-21",
+          "bornAtSimulationTimeMs": 470016.66666684765
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-22",
+          "bornAtSimulationTimeMs": 485016.6666668651
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-23",
+          "bornAtSimulationTimeMs": 511016.6666668954
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-24",
+          "bornAtSimulationTimeMs": 521016.666666907
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-25",
+          "bornAtSimulationTimeMs": 531133.3333335615
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-26",
+          "bornAtSimulationTimeMs": 541300.0000002045
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-27",
+          "bornAtSimulationTimeMs": 552483.3333335118
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-28",
+          "bornAtSimulationTimeMs": 562650.0000001548
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-29",
+          "bornAtSimulationTimeMs": 572816.6666667978
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-30",
+          "bornAtSimulationTimeMs": 582983.3333334408
+        },
+        {
+          "seed": 20261007,
+          "id": "trail-plate-31",
+          "bornAtSimulationTimeMs": 594166.6666667481
+        }
+      ],
+      [
+        {
+          "seed": 20261005,
+          "id": "trail-plate-1",
+          "selector": "smallest footprint",
+          "value": 0.025595567867036012
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-13",
+          "selector": "largest footprint",
+          "value": 0.23168975069252076
+        },
+        {
+          "seed": 20261006,
+          "id": "trail-plate-5",
+          "selector": "maximum principal tortuosity",
+          "value": 1.4992873412379433
+        },
+        {
+          "seed": 20261005,
+          "id": "trail-plate-12",
+          "selector": "most junction-pixel clusters (raster proxy)",
+          "value": 32
+        }
+      ]
+    ],
+    "fields": {
+      "trafficCheckpoints": {
+        "contactScale": 0.03,
+        "checkpoints": [
+          30,
+          60,
+          120,
+          300,
+          600
+        ],
+        "sampleTimes": [
+          {
+            "seed": 20261005,
+            "requestedSeconds": 30,
+            "sampledSeconds": 30.016666666667422,
+            "offsetSeconds": 0.016666666667422447
+          },
+          {
+            "seed": 20261005,
+            "requestedSeconds": 60,
+            "sampledSeconds": 60.01666666666366,
+            "offsetSeconds": 0.016666666663660124
+          },
+          {
+            "seed": 20261005,
+            "requestedSeconds": 120,
+            "sampledSeconds": 120.0166666666787,
+            "offsetSeconds": 0.016666666678702313
+          },
+          {
+            "seed": 20261005,
+            "requestedSeconds": 300,
+            "sampledSeconds": 300.01666666664977,
+            "offsetSeconds": 0.016666666649769013
+          },
+          {
+            "seed": 20261005,
+            "requestedSeconds": 600,
+            "sampledSeconds": 599.2500000000696,
+            "offsetSeconds": -0.7499999999304237
+          },
+          {
+            "seed": 20261006,
+            "requestedSeconds": 30,
+            "sampledSeconds": 30.016666666667422,
+            "offsetSeconds": 0.016666666667422447
+          },
+          {
+            "seed": 20261006,
+            "requestedSeconds": 60,
+            "sampledSeconds": 60.01666666666366,
+            "offsetSeconds": 0.016666666663660124
+          },
+          {
+            "seed": 20261006,
+            "requestedSeconds": 120,
+            "sampledSeconds": 120.0166666666787,
+            "offsetSeconds": 0.016666666678702313
+          },
+          {
+            "seed": 20261006,
+            "requestedSeconds": 300,
+            "sampledSeconds": 300.01666666664977,
+            "offsetSeconds": 0.016666666649769013
+          },
+          {
+            "seed": 20261006,
+            "requestedSeconds": 600,
+            "sampledSeconds": 599.2500000000696,
+            "offsetSeconds": -0.7499999999304237
+          },
+          {
+            "seed": 20261007,
+            "requestedSeconds": 30,
+            "sampledSeconds": 30.016666666667422,
+            "offsetSeconds": 0.016666666667422447
+          },
+          {
+            "seed": 20261007,
+            "requestedSeconds": 60,
+            "sampledSeconds": 60.01666666666366,
+            "offsetSeconds": 0.016666666663660124
+          },
+          {
+            "seed": 20261007,
+            "requestedSeconds": 120,
+            "sampledSeconds": 120.0166666666787,
+            "offsetSeconds": 0.016666666678702313
+          },
+          {
+            "seed": 20261007,
+            "requestedSeconds": 300,
+            "sampledSeconds": 300.01666666664977,
+            "offsetSeconds": 0.016666666649769013
+          },
+          {
+            "seed": 20261007,
+            "requestedSeconds": 600,
+            "sampledSeconds": 599.2500000000696,
+            "offsetSeconds": -0.7499999999304237
+          }
+        ],
+        "metrics": [
+          "occupiedCells",
+          "repeatCellsAtLeastTwoSeconds",
+          "repeatComponentsEightNeighbor",
+          "medianDistinctContactSecondsPerCell"
+        ]
+      },
+      "snapshots": {
+        "contactCountLimits": [
+          0,
+          183.0
+        ],
+        "fieldLimits": {
+          "chemical": [
+            0.0,
+            0.8
+          ],
+          "chemicalMemory": [
+            0.0,
+            1.0
+          ],
+          "surface": [
+            0.0,
+            1.0
+          ],
+          "support": [
+            0.0,
+            1.0
+          ]
+        },
+        "snapshotTimes": [
+          {
+            "seed": 20261005,
+            "requestedSeconds": 30,
+            "sampledSeconds": 30.016666666667422,
+            "offsetSeconds": 0.016666666667422447,
+            "tick": 1801
+          },
+          {
+            "seed": 20261005,
+            "requestedSeconds": 60,
+            "sampledSeconds": 60.01666666666366,
+            "offsetSeconds": 0.016666666663660124,
+            "tick": 3601
+          },
+          {
+            "seed": 20261005,
+            "requestedSeconds": 120,
+            "sampledSeconds": 120.0166666666787,
+            "offsetSeconds": 0.016666666678702313,
+            "tick": 7201
+          },
+          {
+            "seed": 20261005,
+            "requestedSeconds": 300,
+            "sampledSeconds": 300.01666666664977,
+            "offsetSeconds": 0.016666666649769013,
+            "tick": 18001
+          },
+          {
+            "seed": 20261005,
+            "requestedSeconds": 600,
+            "sampledSeconds": 599.2500000000696,
+            "offsetSeconds": -0.7499999999304237,
+            "tick": 35955
+          },
+          {
+            "seed": 20261006,
+            "requestedSeconds": 30,
+            "sampledSeconds": 30.016666666667422,
+            "offsetSeconds": 0.016666666667422447,
+            "tick": 1801
+          },
+          {
+            "seed": 20261006,
+            "requestedSeconds": 60,
+            "sampledSeconds": 60.01666666666366,
+            "offsetSeconds": 0.016666666663660124,
+            "tick": 3601
+          },
+          {
+            "seed": 20261006,
+            "requestedSeconds": 120,
+            "sampledSeconds": 120.0166666666787,
+            "offsetSeconds": 0.016666666678702313,
+            "tick": 7201
+          },
+          {
+            "seed": 20261006,
+            "requestedSeconds": 300,
+            "sampledSeconds": 300.01666666664977,
+            "offsetSeconds": 0.016666666649769013,
+            "tick": 18001
+          },
+          {
+            "seed": 20261006,
+            "requestedSeconds": 600,
+            "sampledSeconds": 599.2500000000696,
+            "offsetSeconds": -0.7499999999304237,
+            "tick": 35955
+          },
+          {
+            "seed": 20261007,
+            "requestedSeconds": 30,
+            "sampledSeconds": 30.016666666667422,
+            "offsetSeconds": 0.016666666667422447,
+            "tick": 1801
+          },
+          {
+            "seed": 20261007,
+            "requestedSeconds": 60,
+            "sampledSeconds": 60.01666666666366,
+            "offsetSeconds": 0.016666666663660124,
+            "tick": 3601
+          },
+          {
+            "seed": 20261007,
+            "requestedSeconds": 120,
+            "sampledSeconds": 120.0166666666787,
+            "offsetSeconds": 0.016666666678702313,
+            "tick": 7201
+          },
+          {
+            "seed": 20261007,
+            "requestedSeconds": 300,
+            "sampledSeconds": 300.01666666664977,
+            "offsetSeconds": 0.016666666649769013,
+            "tick": 18001
+          },
+          {
+            "seed": 20261007,
+            "requestedSeconds": 600,
+            "sampledSeconds": 599.2500000000696,
+            "offsetSeconds": -0.7499999999304237,
+            "tick": 35955
+          }
+        ]
+      }
+    },
+    "candidates": [
+      {
+        "seed": 20261005,
+        "seconds": 70.01666666666415,
+        "selector": "small rejected component",
+        "skeletonPixels": 10,
+        "retainedNetworkPixels": 0,
+        "principalPathPixels": 0,
+        "rejection": "missing-source",
+        "bboxDiagonalWorldUnits": 0.08486587103472157
+      },
+      {
+        "seed": 20261005,
+        "seconds": 340.0166666666963,
+        "selector": "broadest supported component",
+        "skeletonPixels": 1819,
+        "retainedNetworkPixels": 696,
+        "principalPathPixels": 71,
+        "rejection": null,
+        "bboxDiagonalWorldUnits": 1.233691395703883
+      },
+      {
+        "seed": 20261005,
+        "seconds": 231.01666666662376,
+        "selector": "most unretained skeleton pixels",
+        "skeletonPixels": 1825,
+        "retainedNetworkPixels": 480,
+        "principalPathPixels": 74,
+        "rejection": null,
+        "bboxDiagonalWorldUnits": 1.1918932075830235
+      },
+      {
+        "seed": 20261005,
+        "seconds": 580.9500000001123,
+        "selector": "largest observed path turn sum",
+        "skeletonPixels": 1707,
+        "retainedNetworkPixels": 484,
+        "principalPathPixels": 79,
+        "rejection": null,
+        "bboxDiagonalWorldUnits": 1.2116699403390883
+      },
+      {
+        "seed": 20261006,
+        "seconds": 72.01666666666473,
+        "selector": "small rejected component",
+        "skeletonPixels": 10,
+        "retainedNetworkPixels": 0,
+        "principalPathPixels": 0,
+        "rejection": "missing-source",
+        "bboxDiagonalWorldUnits": 0.09055079228465923
+      },
+      {
+        "seed": 20261006,
+        "seconds": 484.01666666686396,
+        "selector": "broadest supported component",
+        "skeletonPixels": 1913,
+        "retainedNetworkPixels": 623,
+        "principalPathPixels": 74,
+        "rejection": null,
+        "bboxDiagonalWorldUnits": 1.2696325291212296
+      },
+      {
+        "seed": 20261006,
+        "seconds": 411.016666666779,
+        "selector": "most unretained skeleton pixels",
+        "skeletonPixels": 1887,
+        "retainedNetworkPixels": 510,
+        "principalPathPixels": 68,
+        "rejection": null,
+        "bboxDiagonalWorldUnits": 1.2510383498952329
+      },
+      {
+        "seed": 20261006,
+        "seconds": 558.5833333334976,
+        "selector": "largest observed path turn sum",
+        "skeletonPixels": 1670,
+        "retainedNetworkPixels": 536,
+        "principalPathPixels": 93,
+        "rejection": null,
+        "bboxDiagonalWorldUnits": 1.2214609117785022
+      },
+      {
+        "seed": 20261007,
+        "seconds": 45.01666666666584,
+        "selector": "small rejected component",
+        "skeletonPixels": 10,
+        "retainedNetworkPixels": 0,
+        "principalPathPixels": 0,
+        "rejection": "missing-source",
+        "bboxDiagonalWorldUnits": 0.0941502306315701
+      },
+      {
+        "seed": 20261007,
+        "seconds": 593.1500000000838,
+        "selector": "broadest supported component",
+        "skeletonPixels": 1778,
+        "retainedNetworkPixels": 562,
+        "principalPathPixels": 76,
+        "rejection": null,
+        "bboxDiagonalWorldUnits": 1.1980131289195923
+      },
+      {
+        "seed": 20261007,
+        "seconds": 347.01666666670445,
+        "selector": "most unretained skeleton pixels",
+        "skeletonPixels": 1817,
+        "retainedNetworkPixels": 461,
+        "principalPathPixels": 76,
+        "rejection": null,
+        "bboxDiagonalWorldUnits": 1.2421498653900995
+      },
+      {
+        "seed": 20261007,
+        "seconds": 396.0166666667615,
+        "selector": "largest observed path turn sum",
+        "skeletonPixels": 1559,
+        "retainedNetworkPixels": 600,
+        "principalPathPixels": 93,
+        "rejection": null,
+        "bboxDiagonalWorldUnits": 1.2510383498952329
+      }
+    ]
+  },
+  "interpretation": "Descriptive summaries and actual examples from three archived natural seeds. Selected examples are labeled by their continuous metric selector; no example establishes a morphology class or causal mechanism."
+}
