@@ -1,6 +1,7 @@
 # Repository guidance
 
 - For ANT work, start with `docs/ant/README.md`. Use `docs/ant/evidence/` for experiment evidence and `docs/ant/daily/` for chronology.
+- For future ANT world-loop architecture, also read `docs/ant/world-model.md`. It is a design contract, not current implementation. Preserve the goal-less/state-and-condition framing: no prescribed destination/global reward by default, no direct internal-state sonification, no master-output feedback, and only one new causal feedback link per pass.
 - For generic String/Plate/Sphere or shared library work, start with `docs/physical-audio-lab.md`.
 - For work spanning ANT and shared audio, read the relevant sections of both guides.
 - The root `README.md` is the public project overview. Consult it when project-level context is useful, but do not treat it as the canonical ANT implementation guide.

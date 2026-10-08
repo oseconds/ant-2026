@@ -14,6 +14,17 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-08 — Circulating-world model design
+
+[`2026-10-08-circulating-world-model.md`](./2026-10-08-circulating-world-model.md) · [World-model contract](../world-model.md)
+
+- Reframe ANT as a circulating world rather than a task-solving agent system
+- No prescribed destination/global reward by default; future vitality is state regulation, not a target
+- Material and vibration may later become environmental feedback, but only through separately validated links
+- No direct vitality→sound mapping and no master-output→simulation feedback
+- Planned sequence: vitality shadow → episodic crystallization → material feedback → acoustic climate → closed-world integration
+- Design/documentation pass only; production behavior/material/audio unchanged
+
 ### 2026-10-08 — Interior endpoint production candidate rejected
 
 [`2026-10-08-interior-endpoint-production-rejection.md`](./2026-10-08-interior-endpoint-production-rejection.md)

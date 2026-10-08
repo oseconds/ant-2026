@@ -212,6 +212,24 @@ movement
 
 로 둔다.
 
+## Circulating-world design target
+
+The verified production chain above remains unchanged, but the long-term architecture is now defined as a **circulating world** rather than a one-way agent→material→sound pipeline.
+
+```text
+internal state
+→ action
+→ environmental memory
+→ material
+→ vibration
+→ shared environmental condition
+→ internal state / action
+```
+
+There is no prescribed destination or global reward in this design. Future state/feedback links should alter local possibilities and consequences rather than command routes. Internal state is not directly sonified, and any future acoustic feedback must derive from pre-master physical vibration rather than speaker/master output.
+
+The full design contract, implemented-vs-proposed boundary and staged plan are in [`world-model.md`](world-model.md). Current production remains frozen until each new causal link is separately tested and authorized.
+
 ## Current research boundary
 
 현재 **하지 않는 것**:
@@ -228,6 +246,8 @@ movement
 Research evidence와 artistic/modeling interpretation을 구분한다. Graph spectral mode → material excitation은 향후 가능한 artistic/mathematical mapping이지 ant biology의 검증된 mechanism이 아니다.
 
 ## Current next work
+
+**Current architecture-design next step:** W1 vitality shadow from [the circulating-world contract](world-model.md). This does not yet change production movement, material or audio. The previously planned substrate timbre pass remains a separate artistic/audio side-pass rather than the active world-model research step.
 
 ### Research gate
 
