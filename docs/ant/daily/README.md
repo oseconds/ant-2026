@@ -14,6 +14,16 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-08 — Interior endpoint production candidate rejected
+
+[`2026-10-08-interior-endpoint-production-rejection.md`](./2026-10-08-interior-endpoint-production-rejection.md)
+
+- Candidate branch: `ant-interior-endpoint-production-candidate`
+- Richer retained branch morphology survived actual births, but median prior-union overlap increased and median new area per birth fell in all three seeds
+- Final 600 s union-area gain was only +2.5–5.1 percentage points despite substantially more Plate births / centerline material
+- Decision: **do not adopt the selector into production**; preserve the branch/evidence as a rejected morphology variant
+- No candidate production code was merged into `main`; current selector remains unchanged
+
 ### 2026-10-08 — Interior endpoint shadow selector
 
 [Chronology](./2026-10-08-interior-endpoint-shadow.md) · [Evidence](../evidence/2026-10-08-interior-endpoint-shadow/README.md)
