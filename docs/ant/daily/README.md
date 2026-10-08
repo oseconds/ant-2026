@@ -24,15 +24,6 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 - Future relationship/memory mechanisms, if introduced, must be compared against the frozen S0–S2c baseline
 - Longer-term closed-loop candidate shifts toward material/vibration sensing rather than assumed social causation
 
-### 2026-10-08 — S2a trajectory synchrony null
-
-[`2026-10-08-s2a-synchrony-null.md`](./2026-10-08-s2a-synchrony-null.md) · [Null evidence](../evidence/2026-10-08-s2a-null/README.md)
-
-- Replayed the three committed 600 s archives; one whole-tuple in-lifetime phase-shift family, 32 replicates per seed
-- Original 1 s topology is sparser than the null; short connector counts overlap null variation
-- Large seam and birth-phase effects prevent social preference/organization inference
-- All 96 rotation/hash invariants, observed archive replay, 270 tests and build pass; stronger movement-constrained validation remains pending
-
 ### 2026-10-08 — S2c incremental predictive value
 
 [Chronology](./2026-10-08-s2c-incremental-value.md) · [Evidence](../evidence/2026-10-08-s2c-incremental-value/README.md)
@@ -50,6 +41,16 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 - All frame-level geometry/active-ID invariants and full observer replay pass
 - Recent graph differences concentrate around remaps and lifecycle identity repairs
 - No social-organization claim; stop after verification, separate commits and branch push
+
+### 2026-10-08 — S2a trajectory synchrony null
+
+[`2026-10-08-s2a-synchrony-null.md`](./2026-10-08-s2a-synchrony-null.md) · [Null evidence](../evidence/2026-10-08-s2a-null/README.md)
+
+- Replayed the three committed 600 s archives; one whole-tuple in-lifetime phase-shift family, 32 replicates per seed
+- Original 1 s topology is sparser than the null; short connector counts overlap null variation
+- Large seam and birth-phase effects prevent social preference/organization inference
+- All 96 rotation/hash invariants, observed archive replay, 270 tests and build pass; stronger movement-constrained validation remains pending
+
 
 ### 2026-10-03 — Runtime / natural sleep diagnosis
 
