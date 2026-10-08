@@ -259,7 +259,7 @@ A future relationship/memory hypothesis may reopen social research, but it must 
 
 ### Material / audio direction
 
-현재 active pass는 optional base substrate의 **timbre-only material-character pass**다. 이 substrate는 현재 작품적 모델에서 Plate 이전의 **pre-material granular bed**로 둔다.
+Optional Base Substrate timbre work remains a separate **artistic/audio side-pass**, not the active architecture-research step. The intended artistic character is still a pre-material granular bed:
 
 ```text
 base substrate
@@ -268,34 +268,32 @@ short / diffuse / weakly pitched
 
         ↓ repeated traffic / history
 
-Plate
-structured / resonant / spatially defined
+structured material
 clearer modal identity
 ```
 
-이 pass에서는 behavior, Plate birth/material semantics, P1 sonic baseline을 바꾸지 않고 substrate timbre만 격리해서 본다. 현재 B/C/D ratio 결과는 상대 레벨 calibration evidence로 보존하며, timbre가 바뀐 뒤에만 짧은 level recalibration을 다시 한다.
+Candidate B/C/D remain calibration evidence only. No new substrate ratio or timbre is adopted by the world-model design.
 
-그 다음 material pass는 새 mechanism 추가보다 **이미 존재하는 역사성의 observability**를 본다: Plate birth cadence, exposed↔buried 변화, overlap/depth, active sonic material count, current traffic과 frozen material history의 spatial mismatch.
-
-현재 roadmap:
+The active architecture sequence is now defined in [`world-model.md`](world-model.md):
 
 ```text
-GENERATED WORLD   movement / pheromone / gait → SurfaceField → material    DONE
-MATERIAL VOICE    Plate sonic identity + granular base substrate           NOW
-MATERIAL HISTORY  long-run morphology / stratigraphy / sonic observability NEXT
+W0  circulating-world design contract          COMPLETE
+W1  vitality shadow                            NEXT
+W2  episodic crystallization shadow            LATER
+W3  weak material → organism feedback          LATER
+W4  vibration → acoustic climate shadow        LATER
+W5  weak acoustic-climate feedback             LATER
+W6  closed-world integration                   ONLY AFTER PRIOR GATES
 
 SOCIAL OBSERVATION
-  S0/S1/S2a/S2b/S2c                                                   COMPLETE
-  diagnostic no-relationship baseline                                 PARKED
-  spectral diagnostics                                                 SKIP
+  S0/S1/S2a/S2b/S2c                            COMPLETE / PARKED
+  spectral diagnostics                         SKIP
 
-FUTURE RELATIONSHIP HYPOTHESIS
-  explicit relationship / partner memory
-  → compare against frozen S0–S2c baseline                             ONLY IF REOPENED
-
-MATERIAL SENSING   vibration/material state → weak ant sensing             FUTURE RESEARCH
-CLOSED LOOP        movement → material → vibration → sensing → movement    ONLY IF JUSTIFIED
+AUDIO SIDE-PASS
+  granular base-substrate timbre               AVAILABLE, NOT ACTIVE RESEARCH GATE
 ```
+
+Production movement, `TrailPlateBirth`, stratigraphy and audio remain unchanged until each new causal link is separately tested and authorized.
 
 ## Evidence index
 
