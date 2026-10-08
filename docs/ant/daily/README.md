@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-08 — Movement / material morphology diagnosis
+
+[Chronology](./2026-10-08-movement-material-morphology.md) · [Evidence](../evidence/2026-10-08-movement-material-morphology/README.md)
+
+- Three frozen 600 s natural seeds; archive reuse plus read-only replay with every-tick and archive parity
+- Movement scales, environmental retention, qualification/pruning and frozen geometry measured separately
+- Source/boundary selection and pruning directly observed; competition/minimum-length rejection inactive in these runs
+- Production unchanged; stop after diagnosis, with one future shadow-selector comparison recommended
+
 ### 2026-10-08 — Small dead-code cleanup (branch-only)
 
 [`2026-10-08-small-dead-code-cleanup.md`](./2026-10-08-small-dead-code-cleanup.md)
