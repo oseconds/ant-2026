@@ -446,7 +446,7 @@ export function trajectoryHeader() {
   return header;
 }
 
-function densityMetrics(agents) {
+export function densityMetrics(agents) {
   let closeTotal = 0, senseTotal = 0;
   const counts = new Uint32Array(OCCUPANCY_SIZE ** 2);
   for (const agent of agents) {
@@ -611,7 +611,7 @@ async function verifyArchive() {
 }
 
 // Independent breadth-first component oracle checks the saved DFS topology at checkpoints.
-function componentMembers(nodes, edges) {
+export function componentMembers(nodes, edges) {
   const adjacent = new Map(nodes.map(node => [node.id, []]));
   for (const { antA, antB } of edges) {
     adjacent.get(antA).push(antB);
