@@ -14,6 +14,16 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-08 — Interior endpoint shadow selector
+
+[Chronology](./2026-10-08-interior-endpoint-shadow.md) · [Evidence](../evidence/2026-10-08-interior-endpoint-shadow/README.md)
+
+- Three frozen 600 s seeds; 599 qualification analyses per seed
+- All per-tick instrumentation parity and committed trajectory/contact/birth archive comparisons matched exactly
+- Shadow added 40 / 52 / 61 selected candidates where production selected none; paired network and footprint measures increased
+- 519 / 524 / 522 candidates survived persistence; 44 / 48 / 44 reached isolated scheduler-ready state
+- Production selector, movement, material and audio unchanged; stop after this comparison
+
 ### 2026-10-08 — Movement / material morphology diagnosis
 
 [Chronology](./2026-10-08-movement-material-morphology.md) · [Evidence](../evidence/2026-10-08-movement-material-morphology/README.md)
