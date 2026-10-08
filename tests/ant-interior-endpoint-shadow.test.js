@@ -7,7 +7,7 @@ import { createShadowTemporalQualifier } from '../scripts/ant-morphology-shadow-
 const SIZE = 96;
 const CELL_COUNT = SIZE * SIZE;
 
-test('shadow selector adds only source-connected interior graph endpoints and keeps production geometry', async () => {
+test('production and shadow selectors retain the same qualifying source-connected interior endpoint', async () => {
   const source = await readFile(new URL('../src/lib/agents/ant/TrailPlateBirth.js', import.meta.url), 'utf8');
   const selectors = await makeDiagnosticSelector(source);
   const mask = new Uint8Array(CELL_COUNT), supports = new Float32Array(CELL_COUNT), chemical = new Float32Array(CELL_COUNT);
@@ -22,8 +22,10 @@ test('shadow selector adds only source-connected interior graph endpoints and ke
   assert.ok(production);
   assert.ok(shadow);
   assert.equal(shadow.source.index, production.source.index);
-  assert.ok(!production.skeletonIndices.includes(branchEndpoint));
+  assert.ok(production.skeletonIndices.includes(branchEndpoint));
   assert.ok(shadow.skeletonIndices.includes(branchEndpoint));
+  assert.deepEqual(shadow.skeletonIndices, production.skeletonIndices);
+  assert.deepEqual(shadow.path, production.path);
   assert.ok(shadowFunnel.components.some(component => component.interiorEndpointIndices.includes(branchEndpoint)));
   assert.ok(Buffer.from(mask).equals(original));
 });

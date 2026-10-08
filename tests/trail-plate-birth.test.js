@@ -165,6 +165,34 @@ test('distant qualifying branches survive skeleton pruning while short dead-end 
   assert.ok(original.centerline.every(node => node.y <= 0.74), 'short dead-end twigs are pruned');
 });
 
+test('qualifying interior endpoints extend the network without changing the farthest-boundary route', () => {
+  const branchPoint = (x, y) => (Math.abs(x - 48 / 95) <= 0.012 && y <= 80 / 95)
+    || (Math.abs(y - 45 / 95) <= 0.012 && x >= 48 / 95 && x <= 80 / 95);
+  const fields = {
+    pheromone: { sample(x, y) { return branchPoint(x, y) ? 0.12 : 0; } },
+    surface: { sampleSupport(x, y) { return branchPoint(x, y) ? 0.025 : 0; } }
+  };
+  const first = new TrailPlateBirth();
+  const [plate] = observeUntilBirth(first, fields.pheromone, fields.surface, { seconds: 60 });
+  assert.ok(plate);
+
+  assert.ok(plate.centerline.some(node => Math.abs(node.x - 80 / 95) <= 2 / 95
+    && Math.abs(node.y - 45 / 95) <= 1 / 95),
+    'a distant source-connected interior graph endpoint is retained');
+  assert.ok(plate.target.y <= 0.05, 'the principal target remains a boundary endpoint');
+  assert.ok(Math.abs(plate.target.x - 48 / 95) <= 2 / 95,
+    'the principal boundary target remains on the original route');
+  assert.equal(plate.principalPath.at(-1),
+    Math.round(plate.target.y * 95) * TRAIL_PLATE_GRID_SIZE + Math.round(plate.target.x * 95));
+  assertConnectedPlate(plate);
+
+  const repeated = new TrailPlateBirth();
+  const [same] = observeUntilBirth(repeated, fields.pheromone, fields.surface, { seconds: 60 });
+  assert.deepEqual(same.source, plate.source, 'source selection stays deterministic');
+  assert.deepEqual(same.principalPath, plate.principalPath, 'the original principal path stays deterministic');
+  assert.deepEqual(same.centerline, plate.centerline, 'the expanded network stays deterministic');
+});
+
 test('spawn-center pixels, remote trails, chemical-only ridges, and short paths cannot qualify', () => {
   const system = new TrailPlateBirth();
   const centerHot = { sample(x, y) {

@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
-import { compareRows, hasPlateBirth, makeDiagnosticSelector, serializeSnapshots, u32Bytes, xorBytes } from '../scripts/ant-morphology-replay.js';
+import { compareFrozenBehaviorHashes, compareRows, hasPlateBirth, makeDiagnosticSelector,
+  serializeSnapshots, u32Bytes, xorBytes } from '../scripts/ant-morphology-replay.js';
 
 test('paired per-tick parity reports the first field mismatch', () => {
   const baseline = Buffer.alloc(320), diagnostic = Buffer.from(baseline);
@@ -10,6 +11,15 @@ test('paired per-tick parity reports the first field mismatch', () => {
   assert.deepEqual(result.firstMismatch, { chemical: [0] });
   assert.equal(result.comparedTicks, 1);
   assert.equal(result.fieldChains.chemical.match, false);
+});
+
+test('production candidate replay rejects any frozen-main behavior hash change', () => {
+  const fields = Object.fromEntries(['agents', 'rng', 'chemical', 'surface', 'chemicalMemory',
+    'contactCounts', 'contacts', 'lifecycle'].map(name => [name,
+    { baseline: name, instrumented: name, match: true }]));
+  assert.equal(Object.keys(compareFrozenBehaviorHashes(fields, fields)).length, 8);
+  const changed = { ...fields, rng: { baseline: 'candidate-rng', instrumented: 'candidate-rng', match: true } };
+  assert.throws(() => compareFrozenBehaviorHashes(changed, fields), /rng plain candidate run differs/);
 });
 
 test('only a Plate birth marks a successful material-analysis birth', () => {

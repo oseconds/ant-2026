@@ -17,8 +17,11 @@ const output = resolve(String(args.get('--output') || resolve(root, 'test-result
 const archive = resolve(String(args.get('--archive') || resolve(root, 'docs/ant/evidence/2026-10-07-social-graph/data')));
 const seeds = String(args.get('--seeds') || '20261005,20261006,20261007').split(',').map(Number);
 const seconds = Number(args.get('--seconds') || 600);
+const productionCandidateMode = args.has('--production-candidate');
+const MAIN_BASELINE_SHA = '30fe4bd8980ffd6dd13aa30a7a9f2a2676faf018';
 const DT = 1 / 60;
 const HASH_FIELDS = ['agents', 'rng', 'chemical', 'surface', 'chemicalMemory', 'birthState', 'contactCounts', 'contacts', 'births', 'lifecycle'];
+const MAIN_BEHAVIOR_FIELDS = ['agents', 'rng', 'chemical', 'surface', 'chemicalMemory', 'contactCounts', 'contacts', 'lifecycle'];
 const CHECKPOINTS = new Set([30, 60, 120, 300, 600]);
 const SOURCE_PATHS = ['src/lib/agents/ant/AntController.js', 'src/lib/agents/ant/AntAgent.js',
   'src/lib/agents/ant/LocalOccupancy.js', 'src/lib/agents/ant/PheromoneField.js',
@@ -39,6 +42,17 @@ async function main() {
   await mkdir(output, { recursive: true });
   const source = await readFile(resolve(root, 'src/lib/agents/ant/TrailPlateBirth.js'), 'utf8');
   const sourceHash = sha256(source);
+  const frozenBaseline = productionCandidateMode
+    ? JSON.parse(await readFile(resolve(root,
+      'docs/ant/evidence/2026-10-08-interior-endpoint-shadow/data/replay-verification.json'), 'utf8'))
+    : null;
+  if (productionCandidateMode) {
+    const baselineSource = execFileSync('git', ['show', `${MAIN_BASELINE_SHA}:src/lib/agents/ant/TrailPlateBirth.js`],
+      { cwd: root, encoding: 'utf8' });
+    assert.equal(sha256(baselineSource.replace(/\r?\n/g, '\r\n')),
+      frozenBaseline.replayManifest.sourceHashes['src/lib/agents/ant/TrailPlateBirth.js'],
+      'Frozen selector hash belongs to the user-specified current-main merge base');
+  }
   const { selectCandidateDiagnostic, selectCandidateShadowDiagnostic, corridorSimilarityDiagnostic,
     distanceToCorridorEdgeDiagnostic, transformedSourceHash } = await makeDiagnosticSelector(source);
   const { AntController } = await import(pathToFileURL(resolve(root, 'src/lib/agents/ant/AntController.js')).href);
@@ -51,14 +65,28 @@ async function main() {
   ].map(async path => [path, sha256(await readFile(resolve(root, path)))])));
   const manifest = { schemaVersion: 1, commit: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim(),
     node: process.version, seeds, seconds, dtSeconds: DT, sourceHashes, runnerHash, transformedSourceHash, diagnosticToolHashes,
-    method: 'Fresh natural default controller; injected LCG; AudioBridge absent; paired plain and diagnostic runs. Production selector is checked unchanged; shadow selector runs on the same supported mask, support, and chemical-memory arrays.',
+    method: productionCandidateMode
+      ? 'Fresh natural default controller; injected LCG; AudioBridge absent; paired plain and diagnostic candidate runs. Trajectory/contact streams and per-tick behavior-field hash chains are compared with frozen main evidence; expected birth differences are retained as raw candidate descriptors.'
+      : 'Fresh natural default controller; injected LCG; AudioBridge absent; paired plain and diagnostic runs. Production selector is checked unchanged; shadow selector runs on the same supported mask, support, and chemical-memory arrays.',
     snapshots: 'Exact Float32 chemical field, persistent chemical memory, surface field, supported-mask support, and Uint32 contact-count arrays at each actual qualification analysis tick. Array rows are lossless XOR deltas from prior snapshot, gzip compressed.',
     hashFields: HASH_FIELDS, checkpointSeconds: [...CHECKPOINTS], archiveDirectory: archive, files: [] };
   for (const seed of seeds) {
     const result = await runPair({ AntController, seed, seconds, output, selectCandidateDiagnostic,
       selectCandidateShadowDiagnostic, corridorSimilarityDiagnostic, distanceToCorridorEdgeDiagnostic });
-    const archiveResult = await compareArchive(seed, result, archive, seconds);
+    const archiveResult = await compareArchive(seed, result, archive, seconds, productionCandidateMode);
     result.summary.archiveComparison = archiveResult;
+    if (productionCandidateMode) {
+      result.summary.mainBaselineBehaviorParity = await compareMainBaseline(seed, result.summary, frozenBaseline);
+      const births = Buffer.from(JSON.stringify(result.births));
+      const compressedBirths = gzipSync(births, { level: 6 });
+      const birthsFile = `seed${seed}-births.json.gz`;
+      await writeFile(resolve(output, birthsFile), compressedBirths);
+      result.files.births = { path: birthsFile, eventCount: result.births.length,
+        plateBirthCount: result.births.filter(event => event.type === 'plate-birth').length,
+        uncompressedBytes: births.length, gzipBytes: compressedBirths.length,
+        sha256: sha256(compressedBirths) };
+      result.summary.candidateBirthArtifact = result.files.births;
+    }
     await writeFile(resolve(output, `seed${seed}-summary.json`), `${JSON.stringify(result.summary, null, 2)}\n`);
     manifest.files.push(result.files);
     console.log(JSON.stringify({ seed, seconds, parity: result.summary.parity,
@@ -295,7 +323,7 @@ function compactCandidate(candidate) {
     skeletonIndices: candidate.skeletonIndices };
 }
 
-async function compareArchive(seed, result, archive, seconds) {
+async function compareArchive(seed, result, archive, seconds, allowBirthDifference = false) {
   const summary = JSON.parse(await readFile(resolve(archive, `seed${seed}-summary.json`), 'utf8'));
   const raw = JSON.parse(gunzipSync(await readFile(resolve(archive, `seed${seed}-on-raw-events.json.gz`))));
   const trajectory = gunzipSync(await readFile(resolve(archive, `seed${seed}-trajectory.f64.gz`)));
@@ -308,10 +336,41 @@ async function compareArchive(seed, result, archive, seconds) {
   if (archiveEligible) {
     assert.ok(trajectoryMatch, `Seed ${seed} trajectory differs from archived natural run`);
     assert.ok(contactsMatch, `Seed ${seed} raw contacts differ from archived natural run`);
-    assert.ok(birthsMatch, `Seed ${seed} born descriptors differ from archived natural run`);
+    if (!allowBirthDifference) assert.ok(birthsMatch, `Seed ${seed} born descriptors differ from archived natural run`);
   }
   return { archiveControllerSha256: summary.runs.on.controllerSha256, archiveEligible, trajectoryMatch, contactsMatch, birthsMatch,
+    birthDifferenceExpected: allowBirthDifference && !birthsMatch,
     archivedContactGroups: archivedContacts.length, archivedBirthEvents: archivedBirths.length };
+}
+
+async function compareMainBaseline(seed, candidate, frozenEvidence) {
+  const frozenBaseline = frozenEvidence.seeds.find(item => item.seed === seed);
+  assert.ok(frozenBaseline && frozenBaseline.seed === seed, `Missing frozen main evidence for seed ${seed}`);
+  const fields = compareFrozenBehaviorHashes(candidate.parity.fields, frozenBaseline.parity.fields);
+  const baselineSummary = JSON.parse(gunzipSync(await readFile(resolve(root,
+    `docs/ant/evidence/2026-10-08-interior-endpoint-shadow/data/seed${seed}-summary.json.gz`))));
+  const checkpoints = candidate.checkpoints.map(({ seconds, population, totalSpawned, totalRetired, totalFootContacts }) => {
+    const baseline = baselineSummary.checkpoints.find(item => item.seconds === seconds);
+    assert.ok(baseline, `Missing frozen main checkpoint at ${seconds} s, seed ${seed}`);
+    assert.deepEqual({ population, totalSpawned, totalRetired, totalFootContacts },
+      { population: baseline.population, totalSpawned: baseline.totalSpawned,
+        totalRetired: baseline.totalRetired, totalFootContacts: baseline.totalFootContacts },
+      `Population/recruitment/contact checkpoint differs at ${seconds} s, seed ${seed}`);
+    return { seconds, population, totalSpawned, totalRetired, totalFootContacts, match: true };
+  });
+  return { baselineMergeCommit: MAIN_BASELINE_SHA, archivedReplayCommit: frozenEvidence.replayManifest.commit,
+    fields, checkpoints, trajectoriesMatchArchivedEvents: candidate.archiveComparison?.trajectoryMatch };
+}
+
+function compareFrozenBehaviorHashes(candidateFields, baselineFields) {
+  return Object.fromEntries(MAIN_BEHAVIOR_FIELDS.map(name => {
+    const current = candidateFields[name], baseline = baselineFields[name];
+    assert.ok(current && baseline?.match, `Missing behavior hash chain for ${name}`);
+    assert.equal(current.baseline, baseline.baseline, `${name} plain candidate run differs from frozen main`);
+    assert.equal(current.instrumented, baseline.baseline, `${name} diagnostic candidate run differs from frozen main`);
+    return [name, { baseline: baseline.baseline, candidatePlain: current.baseline,
+      candidateInstrumented: current.instrumented, match: true }];
+  }));
 }
 
 async function makeDiagnosticSelector(source) {
@@ -483,4 +542,5 @@ function selfcheck() {
   console.log('ANT morphology replay parity and lossless snapshot selfchecks passed.');
 }
 
-export { compareRows, hasPlateBirth, makeDiagnosticSelector, serializeSnapshots, u32Bytes, xorBytes };
+export { compareFrozenBehaviorHashes, compareRows, hasPlateBirth, makeDiagnosticSelector,
+  serializeSnapshots, u32Bytes, xorBytes };

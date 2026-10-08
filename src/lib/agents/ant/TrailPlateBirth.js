@@ -382,19 +382,26 @@ function selectCandidate(mask, supports, chemicalMemory) {
     const geodesicLength = farthest / (TRAIL_PLATE_GRID_SIZE - 1);
     if (target < 0 || geodesicLength < TRAIL_PLATE_MIN_GEODESIC_LENGTH) continue;
     const path = tracePath(target, parent);
+    const source = path[0];
     const network = new Uint8Array(CELL_COUNT);
-    // Keep only skeleton branches that connect an annular source to an actual
-    // distant observation-boundary target. Short exploratory dead-end twigs
-    // remain evidence for the field, but do not become modeled plate area.
+    // Preserve the boundary family, then add long interior endpoints from this exact source.
     for (const endpoint of targetIndices) {
       if (distance[endpoint] / (TRAIL_PLATE_GRID_SIZE - 1) < TRAIL_PLATE_MIN_GEODESIC_LENGTH) continue;
       for (const index of tracePath(endpoint, parent)) network[index] = 1;
+    }
+    for (const endpoint of component) {
+      if (nearObservationBoundary(gridPoint(endpoint))
+        || neighbors(endpoint).filter(adjacent => componentSet[adjacent]).length !== 1
+        || distance[endpoint] / (TRAIL_PLATE_GRID_SIZE - 1) < TRAIL_PLATE_MIN_GEODESIC_LENGTH) continue;
+      const endpointPath = tracePath(endpoint, parent);
+      if (endpointPath[0] !== source) continue;
+      for (const index of endpointPath) network[index] = 1;
     }
     const networkIndices = [];
     for (const index of component) if (network[index]) networkIndices.push(index);
     const networkComponent = new Uint8Array(CELL_COUNT);
     for (const index of networkIndices) networkComponent[index] = 1;
-    const source = path[0], sourcePoint = gridPoint(source), targetPoint = gridPoint(target);
+    const sourcePoint = gridPoint(source), targetPoint = gridPoint(target);
     const corridorMask = maskComponent(mask, source);
     const distances = distanceToCorridorEdge(corridorMask);
     const ribbonCenterline = networkIndices.map(index => ({
