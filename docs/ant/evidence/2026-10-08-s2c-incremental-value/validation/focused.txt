@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: future merge labels preserve the open lower/closed upper horizon and reject incomplete horizons
+ok 1 - future merge labels preserve the open lower/closed upper horizon and reject incomplete horizons
+  ---
+  duration_ms: 3.8157
+  type: 'test'
+  ...
+# Subtest: feature extraction is deterministic and future trajectory/snapshot changes cannot affect earlier predictors
+ok 2 - feature extraction is deterministic and future trajectory/snapshot changes cannot affect earlier predictors
+  ---
+  duration_ms: 21.9403
+  type: 'test'
+  ...
+# Subtest: leave-one-seed-out folds and training-only control preserve baseline/target and cannot reach held-out data
+ok 3 - leave-one-seed-out folds and training-only control preserve baseline/target and cannot reach held-out data
+  ---
+  duration_ms: 1.0818
+  type: 'test'
+  ...
+# Subtest: metrics group ties correctly, match hand calculations and retain single-class limitations
+ok 4 - metrics group ties correctly, match hand calculations and retain single-class limitations
+  ---
+  duration_ms: 0.478
+  type: 'test'
+  ...
+# Subtest: regularized logistic fit is deterministic, uses training-only scales and handles constant predictors
+ok 5 - regularized logistic fit is deterministic, uses training-only scales and handles constant predictors
+  ---
+  duration_ms: 0.882
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 91.2612

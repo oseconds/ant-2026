@@ -174,6 +174,12 @@ Replayed the existing three 600 s archives with 32 deterministic per-ant circula
 
 The comparator moves birth/recruitment-origin alignment and introduces discontinuous circular seams; approximately 54–57% of null raw episodes were seam-flagged. It does not preserve instantaneous colony density or collision exclusion. S2a is complete as a first synchrony test, while full movement-constrained validation and social organization remain unestablished. [Method, limitations and seed-level evidence](evidence/2026-10-08-s2a-null/README.md).
 
+## S2b exact spatial movie and S2c predictive value — 2026-10-08
+
+S2b completed eight deterministic five-second identity permutations per seed while preserving every instantaneous spatial configuration. Most simple recent-graph changes concentrated around intentional remaps and lifecycle repairs; this identity/data-stream null did not isolate social continuity from artificial boundaries. [S2b evidence and limitations](evidence/2026-10-08-s2b-null/README.md).
+
+S2c used only the three natural archives to predict an existing k=2 / 1 s component merge in the next second. Leave-one-seed-out logistic models compared five current spatial/movement features with three additional causal graph summaries. Future-merge prevalence was 30–32%. Primary added-minus-baseline ROC AUC was +0.002855 / −0.025544 / −0.008080; average precision and Brier likewise improved seed 05 slightly and worsened seeds 06/07. A training alignment control also produced small gains. **Decision: spectral SKIP at this gate; no consistent held-out additional-value signal.** This concerns the selected features/model, not all possible temporal information or social organization. [S2c definitions, leakage audit, results and reproduction](evidence/2026-10-08-s2c-incremental-value/README.md).
+
 ## Social graph vs material graph
 
 ### Social graph
@@ -219,30 +225,9 @@ Research evidence와 artistic/modeling interpretation을 구분한다. Graph spe
 
 ### Research gate
 
-S2a first synchrony-breaking null은 완료했다. 다음 연구 결정은 **더 강한 spatial/movement-constrained null validation**이며, birth/recruitment-origin alignment, circular seams, density와 collision confounds를 다뤄야 한다. 두 번째 family는 아직 선택하거나 실행하지 않았다.
+S2a synchrony null, S2b exact-spatial identity null and S2c incremental predictive-value check are complete. S2a/S2b retain their recruitment/seam and remap/turnover limitations. S2c found no consistent held-out gain from the selected simple temporal graph summaries beyond the compact current-frame baseline.
 
-우선순위:
-
-```text
-recorded lossless trajectories
-→ preserve geometry / density / lifecycle as much as possible
-→ break synchrony or temporal alignment
-→ rebuild encounters/topology
-→ compare simple temporal observables
-```
-
-후보:
-
-- trajectory-preserving time shifts
-- synchrony breaking
-- path-segment randomization
-- movement/density/geometry-preserving comparators
-
-질문:
-
-> 현재 graph event가 raw position, recruitment density, movement geometry를 넘어 추가 정보를 가지는가?
-
-Null에서도 설명되지 않는 structure가 있을 때만 spectral diagnostics를 검토한다.
+The current decision is **spectral SKIP**. Keep social topology as a read-only derived observation layer. Do not escalate automatically to another null, spectral diagnostics, roles, adaptive memory, feedback or material coupling. This bounded comparison does not prove that every temporal summary is redundant. Any revised hypothesis or research pass requires separate authorization.
 
 ### Audio side-pass
 
@@ -263,8 +248,8 @@ current metallic / resonant / long-tail substrate
 S0/S1  dynamic graph + temporal observables        COMPLETE
 S2a    first trajectory synchrony null             COMPLETE
 S2b    exact-spatial-movie identity null            COMPLETE (boundary-sensitive)
-S2     stronger movement-constrained validation    PENDING DECISION
-S3     spectral diagnostics if they add value      CONDITIONAL
+S2c    incremental predictive-value check          COMPLETE (no consistent gain)
+S3     spectral diagnostics                        SKIP AT CURRENT GATE
 S4     social ↔ material comparison                LATER
 S5     weak one-way mapping                        LATER
 S6+    memory / sensing / closed loop               ONLY IF JUSTIFIED
@@ -294,6 +279,7 @@ S6+    memory / sensing / closed loop               ONLY IF JUSTIFIED
 - [S0/S1 DynamicSocialGraph evidence](evidence/2026-10-07-social-graph/README.md)
 - [S2a trajectory synchrony null](evidence/2026-10-08-s2a-null/README.md)
 - [S2b exact-spatial-movie identity null](evidence/2026-10-08-s2b-null/README.md)
+- [S2c incremental predictive value](evidence/2026-10-08-s2c-incremental-value/README.md)
 
 ## Daily chronology
 

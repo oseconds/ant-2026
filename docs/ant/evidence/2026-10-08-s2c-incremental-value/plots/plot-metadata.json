@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "inputs": [
+    "summary.json"
+  ],
+  "outputs": [
+    "held-out-performance.png",
+    "incremental-changes.png",
+    "calibration.png"
+  ],
+  "fixedScales": {
+    "performance": {
+      "rocAuc": [
+        0,
+        1.0
+      ],
+      "averagePrecision": [
+        0,
+        1.0
+      ],
+      "brier": [
+        0,
+        0.25
+      ]
+    },
+    "incremental": {
+      "rocAuc": [
+        -0.03,
+        0.03
+      ],
+      "averagePrecision": [
+        -0.03,
+        0.03
+      ],
+      "brier": [
+        -0.005,
+        0.005
+      ]
+    },
+    "calibration": {
+      "x": [
+        0,
+        1
+      ],
+      "y": [
+        0,
+        1
+      ]
+    }
+  },
+  "checks": {
+    "finiteMetrics": true,
+    "convergedFits": true,
+    "calibrationCounts": true
+  },
+  "interpretation": "Descriptive three-seed held-out comparisons; frames are not independent replicates; no confidence intervals or thresholds."
+}
