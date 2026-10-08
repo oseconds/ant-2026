@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-08 — Interior endpoint production candidate
+
+[Chronology](./2026-10-08-interior-endpoint-production.md) · [Evidence](../evidence/2026-10-08-interior-endpoint-production/README.md)
+
+- Three frozen 600 s seeds; every-tick behavior, population/recruitment checkpoints, trajectory and FOOT_CONTACT parity pass
+- Actual born Plates retain larger branch networks, but median prior-union overlap rises and new area per birth falls across all seeds
+- Final union coverage increases modestly; Chrome overlays and stratigraphy show denser, more overlapped material history
+- Reject for production adoption in this pass; preserve the candidate branch and evidence, with no bundled parameter retuning
+
 ### 2026-10-08 — Interior endpoint shadow selector
 
 [Chronology](./2026-10-08-interior-endpoint-shadow.md) · [Evidence](../evidence/2026-10-08-interior-endpoint-shadow/README.md)

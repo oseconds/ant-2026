@@ -281,6 +281,7 @@ CLOSED LOOP        movement → material → vibration → sensing → movement 
 
 ### Behavior / movement
 
+- [Interior endpoint production candidate — branch-only evaluation; rejected for production adoption because actual births remain overlap-dominated](evidence/2026-10-08-interior-endpoint-production/README.md)
 - [Interior endpoint shadow selector — frozen three-seed diagnostic; production selector unchanged](evidence/2026-10-08-interior-endpoint-shadow/README.md)
 - [Movement / material morphology diagnosis — frozen three-seed archive/replay, no production intervention](evidence/2026-10-08-movement-material-morphology/README.md)
 - [Integrated refinement](evidence/2026-10-05-integrated-refinement/README.md)
