@@ -1,0 +1,238 @@
+TAP version 13
+# Subtest: straight corridor reports exact area and two skeleton endpoints
+ok 1 - straight corridor reports exact area and two skeleton endpoints
+  ---
+  duration_ms: 2.3179
+  type: 'test'
+  ...
+# Subtest: T corridor reports three endpoints and a junction proxy
+ok 2 - T corridor reports three endpoints and a junction proxy
+  ---
+  duration_ms: 0.2251
+  type: 'test'
+  ...
+# Subtest: closed ring has one true hole and one skeleton graph cycle
+ok 3 - closed ring has one true hole and one skeleton graph cycle
+  ---
+  duration_ms: 0.2223
+  type: 'test'
+  ...
+# Subtest: diagonal contact joins foreground without adding graph cycles
+ok 4 - diagonal contact joins foreground without adding graph cycles
+  ---
+  duration_ms: 0.1498
+  type: 'test'
+  ...
+# Subtest: filled 2x2 patch has no fake hole or skeleton graph cycle
+ok 5 - filled 2x2 patch has no fake hole or skeleton graph cycle
+  ---
+  duration_ms: 0.4306
+  type: 'test'
+  ...
+# Subtest: isolated pixel remains one skeleton node and one graph component
+ok 6 - isolated pixel remains one skeleton node and one graph component
+  ---
+  duration_ms: 0.1446
+  type: 'test'
+  ...
+# Subtest: thin branch adjacent to filled patch stays connected through thinning
+ok 7 - thin branch adjacent to filled patch stays connected through thinning
+  ---
+  duration_ms: 0.2171
+  type: 'test'
+  ...
+# Subtest: thick ring retains one cycle while equally bounded filled blob has none
+ok 8 - thick ring retains one cycle while equally bounded filled blob has none
+  ---
+  duration_ms: 1.0684
+  type: 'test'
+  ...
+# Subtest: separated islands classify annulus adjacency and raster-boundary contact
+ok 9 - separated islands classify annulus adjacency and raster-boundary contact
+  ---
+  duration_ms: 0.4321
+  type: 'test'
+  ...
+# Subtest: background opening to raster edge is not a hole
+ok 10 - background opening to raster edge is not a hole
+  ---
+  duration_ms: 0.7122
+  type: 'test'
+  ...
+# Subtest: rejects malformed dimensions and masks
+ok 11 - rejects malformed dimensions and masks
+  ---
+  duration_ms: 0.3552
+  type: 'test'
+  ...
+# Subtest: W1 novelty and mismatch count exact binary intersections
+ok 12 - W1 novelty and mismatch count exact binary intersections
+  ---
+  duration_ms: 0.2184
+  type: 'test'
+  ...
+# Subtest: W1 geometry helpers reject invalid indices and nonbinary masks
+ok 13 - W1 geometry helpers reject invalid indices and nonbinary masks
+  ---
+  duration_ms: 3.3849
+  type: 'test'
+  ...
+# Subtest: W1 stops at first uncharacterizable closure and excludes future predicate changes
+ok 14 - W1 stops at first uncharacterizable closure and excludes future predicate changes
+  ---
+  duration_ms: 140.9805
+  type: 'test'
+  ...
+# Subtest: nematic order is one for reversed travel, zero for perpendicular travel, near zero when isotropic
+ok 15 - nematic order is one for reversed travel, zero for perpendicular travel, near zero when isotropic
+  ---
+  duration_ms: 0.5106
+  type: 'test'
+  ...
+# Subtest: consolidation averages each cell fraction, independent of cell area and interval length
+ok 16 - consolidation averages each cell fraction, independent of cell area and interval length
+  ---
+  duration_ms: 0.299
+  type: 'test'
+  ...
+# Subtest: initial admission and closure observations count in consolidation
+ok 17 - initial admission and closure observations count in consolidation
+  ---
+  duration_ms: 0.0968
+  type: 'test'
+  ...
+# Subtest: duplicate feet in one ant movement segment contribute once and retain source-time evidence
+ok 18 - duplicate feet in one ant movement segment contribute once and retain source-time evidence
+  ---
+  duration_ms: 0.1107
+  type: 'test'
+  ...
+# Subtest: future frames cannot change a closed episode character
+ok 19 - future frames cannot change a closed episode character
+  ---
+  duration_ms: 0.1354
+  type: 'test'
+  ...
+# Subtest: invalid cell indices and nonfinite inputs fail, and missing travel is a typed data gap
+ok 20 - invalid cell indices and nonfinite inputs fail, and missing travel is a typed data gap
+  ---
+  duration_ms: 0.2118
+  type: 'test'
+  ...
+# Subtest: summary and rank correlations report descriptive values without p-values
+ok 21 - summary and rank correlations report descriptive values without p-values
+  ---
+  duration_ms: 0.3353
+  type: 'test'
+  ...
+# Subtest: requires all frozen evidence bits and one q frame cannot activate a cell
+ok 22 - requires all frozen evidence bits and one q frame cannot activate a cell
+  ---
+  duration_ms: 0.2938
+  type: 'test'
+  ...
+# Subtest: constant q forms one finite episode, then closes without horizon eviction
+ok 23 - constant q forms one finite episode, then closes without horizon eviction
+  ---
+  duration_ms: 2.7828
+  type: 'test'
+  ...
+# Subtest: short closed candidates report discard reason; a later pulse can rematerialize
+ok 24 - short closed candidates report discard reason; a later pulse can rematerialize
+  ---
+  duration_ms: 0.2556
+  type: 'test'
+  ...
+# Subtest: spatial split and rejoin preserve one historical episode and count events once
+ok 25 - spatial split and rejoin preserve one historical episode and count events once
+  ---
+  duration_ms: 0.4322
+  type: 'test'
+  ...
+# Subtest: merge retains every parent identity and the complete cell union
+ok 26 - merge retains every parent identity and the complete cell union
+  ---
+  duration_ms: 0.3441
+  type: 'test'
+  ...
+# Subtest: split descendants stay on canonical lineage when another branch cross-merges their parent
+ok 27 - split descendants stay on canonical lineage when another branch cross-merges their parent
+  ---
+  duration_ms: 0.8933
+  type: 'test'
+  ...
+# Subtest: ring geometry remains the exact admitted union without dilation
+ok 28 - ring geometry remains the exact admitted union without dilation
+  ---
+  duration_ms: 0.1575
+  type: 'test'
+  ...
+# Subtest: invalid inputs are rejected atomically before time or state advances
+ok 29 - invalid inputs are rejected atomically before time or state advances
+  ---
+  duration_ms: 0.2017
+  type: 'test'
+  ...
+# Subtest: future perturbations cannot change prior snapshots
+ok 30 - future perturbations cannot change prior snapshots
+  ---
+  duration_ms: 0.577
+  type: 'test'
+  ...
+# Subtest: all EMA state bounds remain finite and inside [0, 1]
+ok 31 - all EMA state bounds remain finite and inside [0, 1]
+  ---
+  duration_ms: 0.6705
+  type: 'test'
+  ...
+# Subtest: direction uses latest completed consecutive displacement and ignores future frames
+ok 32 - direction uses latest completed consecutive displacement and ignores future frames
+  ---
+  duration_ms: 0.7881
+  type: 'test'
+  ...
+# Subtest: missing direction stays missing at zero displacement and recording edge
+ok 33 - missing direction stays missing at zero displacement and recording edge
+  ---
+  duration_ms: 0.21
+  type: 'test'
+  ...
+# Subtest: stable-ID lifecycle gap rejects trajectory instead of bridging direction
+ok 34 - stable-ID lifecycle gap rejects trajectory instead of bridging direction
+  ---
+  duration_ms: 0.2937
+  type: 'test'
+  ...
+# Subtest: nematic representation is invariant to reversed direction
+ok 35 - nematic representation is invariant to reversed direction
+  ---
+  duration_ms: 0.1786
+  type: 'test'
+  ...
+# Subtest: unordered foot groups sort on a copy and bucket by causal field interval
+ok 36 - unordered foot groups sort on a copy and bucket by causal field interval
+  ---
+  duration_ms: 0.6766
+  type: 'test'
+  ...
+# Subtest: malformed trajectory byte packet fails before indexing
+ok 37 - malformed trajectory byte packet fails before indexing
+  ---
+  duration_ms: 0.6682
+  type: 'test'
+  ...
+# Subtest: archived seed loader verifies packet and committed source hashes
+ok 38 - archived seed loader verifies packet and committed source hashes
+  ---
+  duration_ms: 602.6864
+  type: 'test'
+  ...
+1..38
+# tests 38
+# suites 0
+# pass 38
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 793.3498

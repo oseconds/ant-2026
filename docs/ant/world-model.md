@@ -444,7 +444,7 @@ Future ANT passes should preserve these rules unless an explicit architecture re
 ```text
 W0  PERSISTENT-WORLD CONTRACT                    COMPLETE
 
-W1  episodic crystallization + 2D material-character shadow  THIS PASS
+W1  episodic crystallization + 2D material-character shadow  STOPPED / INCOMPLETE
     derive coherent material episodes from history transitions
     and test bounded consolidation and directional-order axes
 
@@ -475,7 +475,7 @@ A successful stage is not one that merely looks more alive or more varied. It ad
 
 ## Current next step
 
-**W1 — episodic crystallization and 2D history-derived material-character shadow.**
+**W1 remains unresolved after its first episodic crystallization / 2D material-character shadow.**
 
 Material ontology precedes vitality so that future vitality can respond to properties of the actual world. This pass remains a shadow: no production material or behavior changes, and no feedback or audio mapping.
 
@@ -484,4 +484,8 @@ Test two bounded, continuous axes derived from formation history:
 - consolidation [0, 1], from repeated, consistent chemical/mechanical evidence during formation
 - directional order [0, 1], from actual nematic movement/contact directions
 
-Do not prescribe a fixed class, artificial distribution, or mapping to feedback, audio, or stiffness. W1 evidence and results remain pending; this is an ordering decision, not a claim of a completed experiment.
+Do not prescribe a fixed class, artificial distribution, or mapping to feedback, audio, or stiffness.
+
+The [first W1 shadow evidence](evidence/2026-10-08-w1-episodic-material-shadow/README.md) stops at 82.017 s in seed 20261005. Its first persistent closed cell has no actual contact during the declared admission-through-closure character window, although two earlier contacts carry valid directions. The fixed estimator cannot assign that episode's second axis faithfully. No fallback or second family was tested. There are no complete two-axis episode distributions or late-time W1 morphology results; the other two seeds have verified inputs only.
+
+The next decision is a causal character-attribution review, not vitality or feedback. W1 is not accepted as a complete material ontology. W2 and later links remain separately gated and unimplemented. The [ordering entry](daily/2026-10-08-w1-material-before-vitality.md) records the decision before this result; the [stop chronology](daily/2026-10-08-w1-episodic-material-shadow.md) records what followed.

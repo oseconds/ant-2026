@@ -14,6 +14,17 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-08 — W1 episodic-material shadow: character-attribution stop
+
+[`2026-10-08-w1-episodic-material-shadow.md`](./2026-10-08-w1-episodic-material-shadow.md) · [Evidence](../evidence/2026-10-08-w1-episodic-material-shadow/README.md)
+
+- One detached 20 s / 90 s history-contrast family; production and natural archives unchanged
+- Seed 20261005 stopped at 82.017 s: first persistent closed cell has no actual feet in its declared character window
+- Two earlier direction-bearing contacts exist; no substituted directionalOrder or second estimator was tried
+- N=0 complete two-axis freezes; 49 open lineages / 678 pending cells; other seeds verified as inputs only
+- 38 focused and 330 full tests pass; build passes; 22 result/plot files reproduce byte-for-byte
+- W1 remains incomplete; no late-blob avoidance or character-distribution claim, no W2/feedback escalation
+
 ### 2026-10-08 — W1 material-before-vitality ordering
 
 [`2026-10-08-w1-material-before-vitality.md`](./2026-10-08-w1-material-before-vitality.md) · [World-model contract](../world-model.md)

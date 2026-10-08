@@ -247,7 +247,7 @@ Research evidence와 artistic/modeling interpretation을 구분한다. Graph spe
 
 ## Current next work
 
-**Current architecture-design next step:** W1 episodic crystallization and a 2D history-derived material-character shadow from [the persistent-world contract](world-model.md). This does not change production movement, material or audio. The previously planned substrate timbre pass remains a separate artistic/audio side-pass rather than the active world-model research step.
+**Current architecture-design state:** the first W1 episodic crystallization / 2D material-character shadow [stopped at a directional attribution gap](evidence/2026-10-08-w1-episodic-material-shadow/README.md). Seed 20261005 reached 82.017 s; its first persistent closed one-cell episode had no actual feet in the declared admission-through-closure character window. Two earlier direction-bearing contacts exist, so this is an estimator-coverage limit rather than missing trajectories. No valid two-axis episode froze; the other seeds have verified inputs only. W1 remains incomplete and needs an attribution-design review before any further pass. Production movement, material and audio remain unchanged. The substrate timbre pass remains a separate artistic/audio side-pass.
 
 ### Research gate
 
@@ -276,7 +276,7 @@ The active architecture sequence is defined in [`world-model.md`](world-model.md
 
 ```text
 W0  persistent-world design contract                         COMPLETE
-W1  episodic crystallization + 2D material-character shadow  NEXT
+W1  episodic crystallization + 2D material-character shadow  STOPPED / INCOMPLETE
 W2  material-conditions shadow                               LATER
 W3  vitality shadow: movement/environment-condition cost/recovery  LATER
 W4  one weak bounded vitality/material effect on movement          LATER

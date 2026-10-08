@@ -18,3 +18,7 @@ These axes are not fixed material classes or an artificial distribution. No mapp
 ## Status
 
 This is a design and ordering update only. W1 tooling, experiment, and result evidence remain pending. No numeric experiment claims are made.
+
+## Subsequent same-day result
+
+The status above records the ordering decision before execution. The later [W1 stop chronology](2026-10-08-w1-episodic-material-shadow.md) records a directional character-attribution gap at 82.017 s. W1 remains incomplete; that result does not advance the roadmap to W2 or vitality.
