@@ -1,6 +1,6 @@
 # ANT — Current Architecture, Evidence and Research Boundary
 
-**Current repository state: 2026-10-08**
+**Current repository state: 2026-10-09**
 
 이 문서는 ANT의 **현재 verified state**를 위한 GitHub-side hub다. 과정은 [daily logs](daily/README.md), 실험별 원본과 재현 자료는 [evidence packages](evidence/)에 둔다.
 
@@ -247,7 +247,7 @@ Research evidence와 artistic/modeling interpretation을 구분한다. Graph spe
 
 ## Current next work
 
-**Current architecture-design state:** the first W1 episodic crystallization / 2D material-character shadow [stopped at a directional attribution gap](evidence/2026-10-08-w1-episodic-material-shadow/README.md). Seed 20261005 reached 82.017 s; its first persistent closed one-cell episode had no actual feet in the declared admission-through-closure character window. Two earlier direction-bearing contacts exist, so this is an estimator-coverage limit rather than missing trajectories. No valid two-axis episode froze; the other seeds have verified inputs only. W1 remains incomplete and needs an attribution-design review before any further pass. Production movement, material and audio remain unchanged. The substrate timbre pass remains a separate artistic/audio side-pass.
+**Current architecture-design state:** the [W1 causal-attribution continuation](evidence/2026-10-08-w1-causal-character-attribution/README.md) completes all three frozen histories through 599.25 s. The single directional estimator now inherits same-cell actual contacts from recorded run start through closure, matching cumulative contact-history qualification; crystallization and consolidation are unchanged. All 328 closures have both bounded coordinates. Morphology remains negative: 228 one-cell closures, sparse frozen material, and giant dense unfinished lineages containing 99.95–100% of pending unions. No substantial frozen cycle appears; one 22-cell episode and an 18-cell union patch reach the existing review scale. Character coverage is complete, but coherent material ontology remains unresolved. The original [attribution stop](evidence/2026-10-08-w1-episodic-material-shadow/README.md) and initial 20 s comparison are preserved. Next review concerns episode continuity/closure and stale/reused cumulative character; W2 and later links remain gated. Production movement, material and audio are unchanged. The substrate timbre pass remains a separate artistic/audio side-pass.
 
 ### Research gate
 
@@ -276,7 +276,7 @@ The active architecture sequence is defined in [`world-model.md`](world-model.md
 
 ```text
 W0  persistent-world design contract                         COMPLETE
-W1  episodic crystallization + 2D material-character shadow  STOPPED / INCOMPLETE
+W1  episodic crystallization + 2D material-character shadow  ANALYZED / NEGATIVE FORMATION
 W2  material-conditions shadow                               LATER
 W3  vitality shadow: movement/environment-condition cost/recovery  LATER
 W4  one weak bounded vitality/material effect on movement          LATER
@@ -305,6 +305,9 @@ Production movement, `TrailPlateBirth`, stratigraphy and audio remain unchanged 
 - [Founder-effect refinement](evidence/2026-10-07-founder-effect-refinement/README.md)
 
 ### Material / audio
+
+- [W1 causal-attribution continuation — complete three-seed analysis; coherent formation remains negative](evidence/2026-10-08-w1-causal-character-attribution/README.md)
+- [First W1 shadow — preserved admission-only character-attribution stop](evidence/2026-10-08-w1-episodic-material-shadow/README.md)
 
 - [Surface Plates](evidence/2026-10-05-surface-plates/README.md)
 - [Contact sonic baseline](evidence/2026-10-06-contact-sonic-baseline/README.md)

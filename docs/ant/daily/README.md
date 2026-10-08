@@ -14,6 +14,18 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-09 — W1 cumulative causal attribution: complete replay, negative morphology
+
+[Chronology](./2026-10-09-w1-causal-attribution.md) · [Evidence](../evidence/2026-10-08-w1-causal-character-attribution/README.md)
+
+- Resumed the paused working tree; user selected revising the single causal interval after the initial 20 s lookback
+- Same-cell actual contacts from run start through closure; exact crystallization and consolidation unchanged
+- Three frozen histories reach 599.25 s; 328/328 closures have both bounded coordinates, zero directional gaps
+- Frozen material stays tiny/speckled; pending largest components hold 99.95–100% and do not close
+- No substantial frozen cycles; isolated 18/22-cell union patches exist, only the 22-cell patch is one substantial episode
+- 43 focused / 335 full tests and build pass; preserve earlier attribution evidence and production baseline
+- Shadow analysis complete, formation viability negative; no second family, adoption or feedback
+
 ### 2026-10-08 — W1 episodic-material shadow: character-attribution stop
 
 [`2026-10-08-w1-episodic-material-shadow.md`](./2026-10-08-w1-episodic-material-shadow.md) · [Evidence](../evidence/2026-10-08-w1-episodic-material-shadow/README.md)
