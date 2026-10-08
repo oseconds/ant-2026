@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-08 — W1 material-before-vitality ordering
+
+[`2026-10-08-w1-material-before-vitality.md`](./2026-10-08-w1-material-before-vitality.md) · [World-model contract](../world-model.md)
+
+- Set W1 to episodic crystallization and a 2D history-derived material-character shadow
+- Put material conditions before vitality so future vitality can respond to actual world properties
+- W1 axes: consolidation [0, 1] and directional order [0, 1], both derived from formation history
+- Ordering/design decision only; W1 tooling and results remain pending
+
 ### 2026-10-08 — Persistent-world / sounding-world pivot
 
 [`2026-10-08-persistent-world-pivot.md`](./2026-10-08-persistent-world-pivot.md) · [Persistent-world contract](../world-model.md)

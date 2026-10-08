@@ -162,8 +162,8 @@ S0는 60 Hz에서 encounter start/end, duration, minimum distance와 stable ID�
 | S0–S2c social observation / validation | complete; parked diagnostic baseline |
 | persistent pioneer-like organization | not demonstrated |
 | spectral diagnostics | SKIP at current gate |
-| current architecture pass | W1 vitality shadow |
-| next world-model pass | W2 episodic crystallization + material character shadow |
+| current architecture pass | W1 episodic crystallization + 2D history-derived material-character shadow |
+| next world-model pass | W2 material-conditions shadow |
 | target sound concept | world itself as sounding body; Base Substrate calibration preserved but not conceptual default |
 | social feedback / graph→Plate coupling | not justified; parked |
 

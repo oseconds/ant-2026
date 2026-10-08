@@ -442,25 +442,30 @@ Future ANT passes should preserve these rules unless an explicit architecture re
 ## Planned passes
 
 ```text
-W0  PERSISTENT-WORLD CONTRACT                    THIS DOCUMENT
+W0  PERSISTENT-WORLD CONTRACT                    COMPLETE
 
-W1  vitality shadow
-    compute internal-state dynamics without behavior feedback
-
-W2  episodic crystallization + character shadow
+W1  episodic crystallization + 2D material-character shadow  THIS PASS
     derive coherent material episodes from history transitions
-    and test bounded history-derived material character
+    and test bounded consolidation and directional-order axes
 
-W3  weak material → organism feedback
-    run natural ANT again with one isolated environmental consequence
+W2  material-conditions shadow
+    derive potential local consequences from material conditions
+    without feeding them back into movement
 
-W4  sounding-world / acoustic-climate shadow
+W3  vitality shadow
+    derive movement- and environmental-condition cost/recovery
+    without behavior feedback
+
+W4  weak vitality/material → movement feedback
+    test one weak, bounded vitality/material consequence on movement
+
+W5  sounding-world / acoustic-climate shadow
     derive slow shared state from pre-master physical vibration
 
-W5  weak acoustic-climate feedback
+W6  weak acoustic-climate feedback
     connect one shared state to one organism/colony tendency
 
-W6  persistent-world integration
+W7  persistent-world integration
     only after each causal link is independently stable and interpretable
 ```
 
@@ -470,16 +475,13 @@ A successful stage is not one that merely looks more alive or more varied. It ad
 
 ## Current next step
 
-**W1 — vitality shadow.**
+**W1 — episodic crystallization and 2D history-derived material-character shadow.**
 
-Do not change ant behavior yet.
+Material ontology precedes vitality so that future vitality can respond to properties of the actual world. This pass remains a shadow: no production material or behavior changes, and no feedback or audio mapping.
 
-First define and replay a candidate internal-state process against frozen natural trajectories to answer:
+Test two bounded, continuous axes derived from formation history:
 
-- does it remain dynamic rather than pinning at a floor/ceiling?
-- does it vary meaningfully within and between individuals?
-- can cost/recovery be derived from existing events without future leakage?
-- can exceptional states occur without unbounded influence?
-- is the state interpretable without directly controlling movement or sound?
+- consolidation [0, 1], from repeated, consistent chemical/mechanical evidence during formation
+- directional order [0, 1], from actual nematic movement/contact directions
 
-Only after that shadow pass should vitality be considered for behavioral feedback.
+Do not prescribe a fixed class, artificial distribution, or mapping to feedback, audio, or stiffness. W1 evidence and results remain pending; this is an ordering decision, not a claim of a completed experiment.

@@ -247,7 +247,7 @@ Research evidence와 artistic/modeling interpretation을 구분한다. Graph spe
 
 ## Current next work
 
-**Current architecture-design next step:** W1 vitality shadow from [the persistent-world contract](world-model.md). This does not yet change production movement, material or audio. The previously planned substrate timbre pass remains a separate artistic/audio side-pass rather than the active world-model research step.
+**Current architecture-design next step:** W1 episodic crystallization and a 2D history-derived material-character shadow from [the persistent-world contract](world-model.md). This does not change production movement, material or audio. The previously planned substrate timbre pass remains a separate artistic/audio side-pass rather than the active world-model research step.
 
 ### Research gate
 
@@ -275,13 +275,14 @@ Localized material may develop different resonant character, but **the world its
 The active architecture sequence is defined in [`world-model.md`](world-model.md):
 
 ```text
-W0  persistent-world design contract                 COMPLETE
-W1  vitality shadow                                  NEXT
-W2  episodic crystallization + material character    LATER
-W3  weak material → organism feedback                LATER
-W4  sounding-world / acoustic-climate shadow         LATER
-W5  weak acoustic-climate feedback                   LATER
-W6  persistent-world integration                     ONLY AFTER PRIOR GATES
+W0  persistent-world design contract                         COMPLETE
+W1  episodic crystallization + 2D material-character shadow  NEXT
+W2  material-conditions shadow                               LATER
+W3  vitality shadow: movement/environment-condition cost/recovery  LATER
+W4  one weak bounded vitality/material effect on movement          LATER
+W5  sounding-world / acoustic-climate shadow                 LATER
+W6  weak acoustic-climate feedback                           LATER
+W7  persistent-world integration                             ONLY AFTER PRIOR GATES
 
 SOCIAL OBSERVATION
   S0/S1/S2a/S2b/S2c                                  COMPLETE / PARKED
