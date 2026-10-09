@@ -249,7 +249,9 @@ Research evidence와 artistic/modeling interpretation을 구분한다. Graph spe
 
 **Current architecture-design state:** the [W1 causal-attribution continuation](evidence/2026-10-08-w1-causal-character-attribution/README.md) completes all three frozen histories through 599.25 s. The single directional estimator now inherits same-cell actual contacts from recorded run start through closure, matching cumulative contact-history qualification; crystallization and consolidation are unchanged. All 328 closures have both bounded coordinates. Morphology remains negative: 228 one-cell closures, sparse frozen material, and giant dense unfinished lineages containing 99.95–100% of pending unions. No substantial frozen cycle appears; one 22-cell episode and an 18-cell union patch reach the existing review scale. Character coverage is complete, but coherent material ontology remains unresolved. The original [attribution stop](evidence/2026-10-08-w1-episodic-material-shadow/README.md) and initial 20 s comparison are preserved. The completed continuity/closure diagnosis is recorded below; stale/reused cumulative character and W2 and later links remain gated. Production movement, material and audio are unchanged. The substrate timbre pass remains a separate artistic/audio side-pass.
 
-The [read-only continuity / closure diagnosis](evidence/2026-10-09-w1-continuity-diagnostic/README.md) now verifies the retention mechanism: original active anchors disappear around 307–309 s, yet 33–45 disconnected descendants still share one episode at 599.25 s. Cumulative union is geometry, not a linkage input. About 38–43% of canonical first admissions have no same-cell point foot in the prior 20 s; q-false filter carry-over is a separate observation. The cumulative contact bit's counterfactual contribution remains unmeasured. One split-inheritance candidate is proposed for a separately authorized pass; no rule or feedback is implemented.
+The [read-only continuity / closure diagnosis](evidence/2026-10-09-w1-continuity-diagnostic/README.md) verifies the original retention mechanism: original active anchors disappear around 307–309 s, yet 33–45 disconnected descendants still share one episode at 599.25 s. Cumulative union is geometry, not a linkage input. About 38–43% of canonical first admissions have no same-cell point foot in the prior 20 s; q-false filter carry-over is a separate observation. The cumulative contact bit's counterfactual contribution remains unmeasured.
+
+The separately authorized [maximum-overlap split inheritance shadow](evidence/2026-10-09-w1-max-overlap-split-shadow/README.md) is complete with a **Mixed** result. One child retains identity; other children have independent closure ownership without copied parent history. Exact frozen-input/active-mask parity yields 617 rather than 328 freezes, larger isolated fragments and a lower one-cell fraction. Absolute one-cell counts and weighted re-inscription worsen, while ID 0 stays continuously active for 583–585 s and retains 98.2–99.8% of pending union. Actual microholes occur, but no substantial frozen cycles. Both coordinates cover every freeze; two zero-consolidation carry-over forks expose an existing attribution boundary. The giant core and later reabsorption remain unresolved. No second candidate or production change is made; W2 and later links remain gated. A provenance-only nonwinning merge-history proposal is recorded for future design review, with no claim it would close the core.
 
 ### Research gate
 
@@ -278,7 +280,7 @@ The active architecture sequence is defined in [`world-model.md`](world-model.md
 
 ```text
 W0  persistent-world design contract                         COMPLETE
-W1  episodic crystallization + 2D material-character shadow  ANALYZED / NEGATIVE FORMATION
+W1  episodic crystallization + 2D material-character shadow  SPLIT SHADOW MIXED / ONTOLOGY UNRESOLVED
 W2  material-conditions shadow                               LATER
 W3  vitality shadow: movement/environment-condition cost/recovery  LATER
 W4  one weak bounded vitality/material effect on movement          LATER
@@ -308,6 +310,7 @@ Production movement, `TrailPlateBirth`, stratigraphy and audio remain unchanged 
 
 ### Material / audio
 
+- [W1 max-overlap split inheritance shadow — Mixed; independent closure improves, giant active core and re-inscription remain](evidence/2026-10-09-w1-max-overlap-split-shadow/README.md)
 - [W1 continuity / closure diagnosis — verified overlap retention; stale-contact contribution remains partly unidentified](evidence/2026-10-09-w1-continuity-diagnostic/README.md)
 - [W1 causal-attribution continuation — complete three-seed analysis; coherent formation remains negative](evidence/2026-10-08-w1-causal-character-attribution/README.md)
 - [First W1 shadow — preserved admission-only character-attribution stop](evidence/2026-10-08-w1-episodic-material-shadow/README.md)

@@ -14,6 +14,18 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-09 — W1 max-overlap split inheritance shadow: Mixed
+
+[Chronology](./2026-10-09-w1-max-overlap-split-shadow.md) · [Evidence](../evidence/2026-10-09-w1-max-overlap-split-shadow/README.md)
+
+- One maximum-overlap child inherits identity; fresh split children copy no parent geometry/clock, subsequent merges unchanged
+- Matched three-seed frozen inputs / 1,797 frames preserve q, active masks, EMA and spatial components exactly
+- 617 vs 328 freezes; larger isolated fragments, but more absolute one-cell speckle and weighted re-inscription
+- Continuously owned ID 0 remains open for 583–585 s and retains 98.2–99.8% of pending union
+- Both coordinates cover all freezes; two carry-over fork zeros are preserved, no substantial frozen cycle
+- 67 focused / 359 full tests, build and 20-file numerical/plot byte reproduction pass
+- Mixed result preserved; no second candidate, production adoption or feedback; one future merge-history design-review proposal only
+
 ### 2026-10-09 — W1 episode continuity / closure diagnostic
 
 [Chronology](./2026-10-09-w1-continuity-diagnostic.md) · [Evidence](../evidence/2026-10-09-w1-continuity-diagnostic/README.md)
