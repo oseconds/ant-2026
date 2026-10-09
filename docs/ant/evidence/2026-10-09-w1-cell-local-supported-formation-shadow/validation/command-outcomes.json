@@ -1,0 +1,39 @@
+{
+  "startingHead": "9c838039b614685a8f639958188486a447a04724",
+  "remoteBranchBeforeWork": {
+    "ref": "refs/heads/ant-w1-episodic-material-shadow",
+    "sha": "9c838039b614685a8f639958188486a447a04724",
+    "matchesStartingHead": true
+  },
+  "toolingCommit": "ea03d606cc790f550adf7b0e0438155269a80cab",
+  "focusedTests": {
+    "command": "node --experimental-test-isolation=none --test tests/ant-w1-supported-spell-shadow.test.js tests/ant-w1-supported-spell-shadow-analysis.test.js tests/ant-w1-supported-spell-shadow-plots.test.js",
+    "passed": 10,
+    "failed": 0,
+    "log": "focused-tests.log"
+  },
+  "fullTests": {
+    "command": "npm test",
+    "passed": 380,
+    "failed": 0,
+    "exitCode": 0,
+    "log": "full-tests.log",
+    "execution": "child-process execution allowed after the workspace sandbox returned spawn EPERM"
+  },
+  "sandboxAttempts": {
+    "npmTest": "Node test workers were denied with spawn EPERM",
+    "serialFallback": "378 passed; model-contract.test.js could not spawn its nested SSR check and failed with EPERM; not used as the full-suite result"
+  },
+  "build": {
+    "command": "npm run build",
+    "exitCode": 0,
+    "modulesTransformed": 408,
+    "log": "build.log",
+    "notes": [
+      "Vite removed dependency comments with misplaced pure annotations",
+      "Existing application chunks exceed the default 500 kB warning threshold"
+    ]
+  },
+  "svgXmlFilesValidated": 8,
+  "independentNumericalAndPlotReproduction": "reproduction.json"
+}

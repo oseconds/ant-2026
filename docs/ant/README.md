@@ -35,6 +35,10 @@ af9c417  Record ANT social graph baseline evidence
 
 그 이후 커밋은 daily/documentation을 추가할 수 있으므로 **repository HEAD와 latest implementation baseline을 구분**한다.
 
+### Latest W1 cell-local supported-formation shadow — Negative
+
+Three frozen seeds preserved all `1,797` matched q/EMA/active frames and existing W1/max-overlap episode results. Local 20 s supported-spell completion events occurred while ID 0 remained open, but 95.4–96.0% were single-cell; the unique local union still covered 62.1–62.3% of the world and 94.9–96.5% of ID 0's final historical footprint. Treat this as a negative formation hypothesis, not evidence of physical material birth. [Evidence and fixed-scale plots](evidence/2026-10-09-w1-cell-local-supported-formation-shadow/README.md) · [Chronology](daily/2026-10-09-w1-cell-local-supported-formation-shadow.md).
+
 ## Architecture
 
 ### Agent / movement

@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: fresh SSR import succeeds when browser-only globals throw on access
+not ok 1 - fresh SSR import succeeds when browser-only globals throw on access
+  ---
+  duration_ms: 2.963
+  type: 'test'
+  location: 'C:\\Users\\5dudt\\Documents\\Github\\ant-2026\\tests\\model-contract.test.js:12:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+
+    null !== 0
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/5dudt/Documents/Github/ant-2026/tests/model-contract.test.js:31:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: model modules and construction are safe without browser globals
+ok 2 - model modules and construction are safe without browser globals
+  ---
+  duration_ms: 1.12
+  type: 'test'
+  ...
+# Subtest: model settings are JSON-safe copies and partial configuration preserves unrelated values
+ok 3 - model settings are JSON-safe copies and partial configuration preserves unrelated values
+  ---
+  duration_ms: 0.9821
+  type: 'test'
+  ...
+# Subtest: zero-valued damping and pickup coordinates are retained by model state
+ok 4 - zero-valued damping and pickup coordinates are retained by model state
+  ---
+  duration_ms: 0.3382
+  type: 'test'
+  ...
+# Subtest: string inspector stepping preserves a stable delay line and produces finite samples
+ok 5 - string inspector stepping preserves a stable delay line and produces finite samples
+  ---
+  duration_ms: 0.585
+  type: 'test'
+  ...
+# Subtest: worklet model uses message envelopes and cleans a worklet created after destroy
+ok 6 - worklet model uses message envelopes and cleans a worklet created after destroy
+  ---
+  duration_ms: 0.3637
+  type: 'test'
+  ...
+# Subtest: worklet model posts normalized strike payloads and removes its subscriptions on destroy
+ok 7 - worklet model posts normalized strike payloads and removes its subscriptions on destroy
+  ---
+  duration_ms: 0.8255
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 6
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 25.1449

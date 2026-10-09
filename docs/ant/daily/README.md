@@ -14,6 +14,18 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-09 — W1 cell-local supported-formation shadow: Negative
+
+[Chronology](./2026-10-09-w1-cell-local-supported-formation-shadow.md) · [Evidence](../evidence/2026-10-09-w1-cell-local-supported-formation-shadow/README.md)
+
+- 20 s per-cell q-and-active spell completion; episode identity changes are provenance only, and closure is unchanged
+- Three frozen seeds preserve 1,797 matched q/EMA/active observations and existing W1 / max-overlap outputs
+- ID 0 remains open; 30,828 events occur during its active lifetime, but 95.4–96.0% are singleton cells
+- Cumulative local area is 62.1–62.3% of the world and 94.9–96.5% of ID 0's final union; re-inscription is 45.9–47.5%
+- q-off/active carry-over and stale cumulative contact qualification are documented separately from physical support
+- 10 focused / 380 full tests, build, and 15-file independent byte reproduction pass; fixed-scale 96×96 maps and full per-cell evidence
+- Negative result preserved; no threshold adjustment, material adoption, production change, merge, or PR
+
 ### 2026-10-09 — W1 per-cell formation-history audit
 
 [Chronology](./2026-10-09-w1-per-cell-formation-history.md) · [Evidence](../evidence/2026-10-09-w1-per-cell-formation-history/README.md)

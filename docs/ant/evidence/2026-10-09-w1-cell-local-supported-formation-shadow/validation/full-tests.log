@@ -1,0 +1,2295 @@
+
+> physical-audio-lab@0.1.0 test
+> node --test tests/*.test.js
+
+TAP version 13
+# Subtest: volume uses the existing output gain, retains Off/On settings and leaves STEP excitation unchanged
+ok 1 - volume uses the existing output gain, retains Off/On settings and leaves STEP excitation unchanged
+  ---
+  duration_ms: 2.6304
+  type: 'test'
+  ...
+# Subtest: volume changes during pending initialization reach the ready output gain
+ok 2 - volume changes during pending initialization reach the ready output gain
+  ---
+  duration_ms: 0.3108
+  type: 'test'
+  ...
+# Subtest: bridge lazily creates the existing Plate and sends restrained spatial strikes
+ok 3 - bridge lazily creates the existing Plate and sends restrained spatial strikes
+  ---
+  duration_ms: 1.0607
+  type: 'test'
+  ...
+# Subtest: one valid tripod centroid excites the existing Plate once and malformed or outside contacts are dropped
+ok 4 - one valid tripod centroid excites the existing Plate once and malformed or outside contacts are dropped
+  ---
+  duration_ms: 0.5046
+  type: 'test'
+  ...
+# Subtest: steps are dropped while loading, and Off cancels pending initialization and disconnects late worklets
+ok 5 - steps are dropped while loading, and Off cancels pending initialization and disconnects late worklets
+  ---
+  duration_ms: 0.6026
+  type: 'test'
+  ...
+# Subtest: Off destroys Plate resources and On creates a fresh Plate without destroying shared audio
+ok 6 - Off destroys Plate resources and On creates a fresh Plate without destroying shared audio
+  ---
+  duration_ms: 0.8408
+  type: 'test'
+  ...
+# Subtest: failed worklet initialization disables audio and exposes its error
+ok 7 - failed worklet initialization disables audio and exposes its error
+  ---
+  duration_ms: 0.7942
+  type: 'test'
+  ...
+# Subtest: bridge requires an injected shared engine
+ok 8 - bridge requires an injected shared engine
+  ---
+  duration_ms: 0.5659
+  type: 'test'
+  ...
+# Subtest: simultaneous STEP events keep their distinct positions and natural call order
+ok 9 - simultaneous STEP events keep their distinct positions and natural call order
+  ---
+  duration_ms: 1.3684
+  type: 'test'
+  ...
+# Subtest: Off immediately after a STEP cancels its pending Plate strike
+ok 10 - Off immediately after a STEP cancels its pending Plate strike
+  ---
+  duration_ms: 0.9014
+  type: 'test'
+  ...
+# Subtest: processor errors expose the failure and immediately disable and disconnect the Plate
+ok 11 - processor errors expose the failure and immediately disable and disconnect the Plate
+  ---
+  duration_ms: 0.3878
+  type: 'test'
+  ...
+# Subtest: a rejected old strike after Off and On cannot disable or report error on the new Plate
+ok 12 - a rejected old strike after Off and On cannot disable or report error on the new Plate
+  ---
+  duration_ms: 1.0084
+  type: 'test'
+  ...
+# Subtest: rapid On-Off-On ignores the stale first initialization
+ok 13 - rapid On-Off-On ignores the stale first initialization
+  ---
+  duration_ms: 0.3019
+  type: 'test'
+  ...
+# Subtest: FOOT_CONTACT observation and Audio On/Off preserve movement, field, spawning, and the simulation random stream
+ok 14 - FOOT_CONTACT observation and Audio On/Off preserve movement, field, spawning, and the simulation random stream
+  ---
+  duration_ms: 810.9236
+  type: 'test'
+  ...
+# Subtest: base substrate A/B changes only audio state, not ANT trajectories or environmental memory
+ok 15 - base substrate A/B changes only audio state, not ANT trajectories or environmental memory
+  ---
+  duration_ms: 160.6491
+  type: 'test'
+  ...
+# Subtest: adding the deterministic gait leaves the behavior random stream and ant trajectories unchanged
+ok 16 - adding the deterministic gait leaves the behavior random stream and ant trajectories unchanged
+  ---
+  duration_ms: 423.8365
+  type: 'test'
+  ...
+# Subtest: controller measures final post-contact displacement rather than intended velocity for gait contacts
+ok 17 - controller measures final post-contact displacement rather than intended velocity for gait contacts
+  ---
+  duration_ms: 13.8873
+  type: 'test'
+  ...
+# Subtest: actual hesitation produces fewer gait contacts than the same freely moving ant
+ok 18 - actual hesitation produces fewer gait contacts than the same freely moving ant
+  ---
+  duration_ms: 42.1271
+  type: 'test'
+  ...
+# Subtest: Lab switching from audible ANT destroys its Plate and reuses the existing engine
+ok 19 - Lab switching from audible ANT destroys its Plate and reuses the existing engine
+  ---
+  duration_ms: 2.7901
+  type: 'test'
+  ...
+# Subtest: alternating maximum turn input is smoothed without pose snaps
+ok 20 - alternating maximum turn input is smoothed without pose snaps
+  ---
+  duration_ms: 3.8103
+  type: 'test'
+  ...
+# Subtest: sustained turns articulate smoothly within bounds and straight travel relaxes to neutral
+ok 21 - sustained turns articulate smoothly within bounds and straight travel relaxes to neutral
+  ---
+  duration_ms: 1.7416
+  type: 'test'
+  ...
+# Subtest: left and right sustained turns produce mirrored bounded articulation
+ok 22 - left and right sustained turns produce mirrored bounded articulation
+  ---
+  duration_ms: 0.4998
+  type: 'test'
+  ...
+# Subtest: antenna posture follows existing left/right trail signals without mutating the ant
+ok 23 - antenna posture follows existing left/right trail signals without mutating the ant
+  ---
+  duration_ms: 1.6308
+  type: 'test'
+  ...
+# Subtest: gaster secretion point matches articulated rear geometry and stays finite
+ok 24 - gaster secretion point matches articulated rear geometry and stays finite
+  ---
+  duration_ms: 0.4651
+  type: 'test'
+  ...
+# Subtest: pose filtering is deterministic, simulation-time based, and has retain/reset lifecycle
+ok 25 - pose filtering is deterministic, simulation-time based, and has retain/reset lifecycle
+  ---
+  duration_ms: 0.899
+  type: 'test'
+  ...
+# Subtest: body-pose observation cannot change movement, pheromone, gait contacts, or RNG consumption
+ok 26 - body-pose observation cannot change movement, pheromone, gait contacts, or RNG consumption
+  ---
+  duration_ms: 414.9836
+  type: 'test'
+  ...
+# Subtest: isolates annular local route evidence from the spawn pixel and remote field activity
+ok 27 - isolates annular local route evidence from the spawn pixel and remote field activity
+  ---
+  duration_ms: 0.9505
+  type: 'test'
+  ...
+# Subtest: uses the mean of the four strongest sector means with per-sample saturation
+ok 28 - uses the mean of the four strongest sector means with per-sample saturation
+  ---
+  duration_ms: 1.0592
+  type: 'test'
+  ...
+# Subtest: activation rises and decays continuously, with equivalent elapsed-time response across step sizes
+ok 29 - activation rises and decays continuously, with equivalent elapsed-time response across step sizes
+  ---
+  duration_ms: 5.8237
+  type: 'test'
+  ...
+# Subtest: configuration clamps the ceiling to 8–100 without changing evidence or activation
+ok 30 - configuration clamps the ceiling to 8–100 without changing evidence or activation
+  ---
+  duration_ms: 0.2772
+  type: 'test'
+  ...
+# Subtest: invalid time steps do not advance activation and reset clears its evidence history
+ok 31 - invalid time steps do not advance activation and reset clears its evidence history
+  ---
+  duration_ms: 0.9263
+  type: 'test'
+  ...
+# Subtest: population has equal agents with stable individual personalities and shared pheromone memory
+ok 32 - population has equal agents with stable individual personalities and shared pheromone memory
+  ---
+  duration_ms: 800.7733
+  type: 'test'
+  ...
+# Subtest: ants enter one at a time from a common region with irregular delays and distinct headings
+ok 33 - ants enter one at a time from a common region with irregular delays and distinct headings
+  ---
+  duration_ms: 209.448
+  type: 'test'
+  ...
+# Subtest: occupied spawn space delays entry without allocating an overlapping agent or skipping an ID
+ok 34 - occupied spawn space delays entry without allocating an overlapping agent or skipping an ID
+  ---
+  duration_ms: 2.1501
+  type: 'test'
+  ...
+# Subtest: changing the target preserves shared history and introduces additional ants gradually
+ok 35 - changing the target preserves shared history and introduces additional ants gradually
+  ---
+  duration_ms: 203.6269
+  type: 'test'
+  ...
+# Subtest: swept occupancy guard prevents direct pass-through in head-on and crossing encounters
+ok 36 - swept occupancy guard prevents direct pass-through in head-on and crossing encounters
+  ---
+  duration_ms: 1.3063
+  type: 'test'
+  ...
+# Subtest: local occupancy reads front and sides more strongly than the rear
+ok 37 - local occupancy reads front and sides more strongly than the rear
+  ---
+  duration_ms: 0.5262
+  type: 'test'
+  ...
+# Subtest: probabilistic trail choice increases attraction while exploration can still choose away
+ok 38 - probabilistic trail choice increases attraction while exploration can still choose away
+  ---
+  duration_ms: 5.4085
+  type: 'test'
+  ...
+# Subtest: long runs across seeds remain finite, spread out, and collision stable
+ok 39 - long runs across seeds remain finite, spread out, and collision stable
+  ---
+  duration_ms: 914.0879
+  type: 'test'
+  ...
+# Subtest: a dense equal-agent cluster disperses without body overlap or unstable velocity
+ok 40 - a dense equal-agent cluster disperses without body overlap or unstable velocity
+  ---
+  duration_ms: 554.7577
+  type: 'test'
+  ...
+# Subtest: near-boundary body collisions still prevent overlap
+ok 41 - near-boundary body collisions still prevent overlap
+  ---
+  duration_ms: 1.2339
+  type: 'test'
+  ...
+# Subtest: fixed-step controller is deterministic across equivalent frame schedules
+ok 42 - fixed-step controller is deterministic across equivalent frame schedules
+  ---
+  duration_ms: 10.119
+  type: 'test'
+  ...
+# Subtest: stop and destroy halt simulation and detach listeners
+ok 43 - stop and destroy halt simulation and detach listeners
+  ---
+  duration_ms: 0.9053
+  type: 'test'
+  ...
+# Subtest: an isolated ant has repeated near-stops after warmup and resumes forward movement
+ok 44 - an isolated ant has repeated near-stops after warmup and resumes forward movement
+  ---
+  duration_ms: 295.0213
+  type: 'test'
+  ...
+# Subtest: approaching bodies brake smoothly before a head-on contact
+ok 45 - approaching bodies brake smoothly before a head-on contact
+  ---
+  duration_ms: 20.5705
+  type: 'test'
+  ...
+# Subtest: agents use bounded turn rate and exponential velocity response
+ok 46 - agents use bounded turn rate and exponential velocity response
+  ---
+  duration_ms: 0.1753
+  type: 'test'
+  ...
+# Subtest: long-range discovery ignores weak residue and favors reinforced trails probabilistically
+ok 47 - long-range discovery ignores weak residue and favors reinforced trails probabilistically
+  ---
+  duration_ms: 20.3637
+  type: 'test'
+  ...
+# Subtest: a wide sensor discovers a thin adjacent trail without broadening the pheromone field
+ok 48 - a wide sensor discovers a thin adjacent trail without broadening the pheromone field
+  ---
+  duration_ms: 0.4627
+  type: 'test'
+  ...
+# Subtest: distance deposition keeps convex adherence reinforcement above the evidence baseline
+ok 49 - distance deposition keeps convex adherence reinforcement above the evidence baseline
+  ---
+  duration_ms: 6.7774
+  type: 'test'
+  ...
+# Subtest: far pheromone concentration does not add to deposition at fixed local evidence
+ok 50 - far pheromone concentration does not add to deposition at fixed local evidence
+  ---
+  duration_ms: 0.9675
+  type: 'test'
+  ...
+# Subtest: configured base amount and bounded reinforcement gain scale real deposits
+ok 51 - configured base amount and bounded reinforcement gain scale real deposits
+  ---
+  duration_ms: 2.0953
+  type: 'test'
+  ...
+# Subtest: a stationary ant adds no pheromone despite the nonzero deposition baseline
+ok 52 - a stationary ant adds no pheromone despite the nonzero deposition baseline
+  ---
+  duration_ms: 0.817
+  type: 'test'
+  ...
+# Subtest: records undirected encounters from the first inside sample and holds prior status between ticks
+ok 53 - records undirected encounters from the first inside sample and holds prior status between ticks
+  ---
+  duration_ms: 3.9231
+  type: 'test'
+  ...
+# Subtest: window weights intersect encounter intervals exactly for active and separated live pairs
+ok 54 - window weights intersect encounter intervals exactly for active and separated live pairs
+  ---
+  duration_ms: 1.1024
+  type: 'test'
+  ...
+# Subtest: retains separated live-pair exposure only while its exact time window overlaps
+ok 55 - retains separated live-pair exposure only while its exact time window overlaps
+  ---
+  duration_ms: 0.3543
+  type: 'test'
+  ...
+# Subtest: ends encounters on distance or node exit and prevents retired ID reuse
+ok 56 - ends encounters on distance or node exit and prevents retired ID reuse
+  ---
+  duration_ms: 0.6368
+  type: 'test'
+  ...
+# Subtest: finishes by right-censoring active encounters and preserves detached final history
+ok 57 - finishes by right-censoring active encounters and preserves detached final history
+  ---
+  duration_ms: 0.5949
+  type: 'test'
+  ...
+# Subtest: uses stable encounter IDs and deterministic event and pair ordering
+ok 58 - uses stable encounter IDs and deterministic event and pair ordering
+  ---
+  duration_ms: 0.543
+  type: 'test'
+  ...
+# Subtest: validates observations and permits same-time lifecycle refresh without duration
+ok 59 - validates observations and permits same-time lifecycle refresh without duration
+  ---
+  duration_ms: 0.3837
+  type: 'test'
+  ...
+# Subtest: ANT experiment selection retains volume and historical descriptors while releasing the old transport
+ok 60 - ANT experiment selection retains volume and historical descriptors while releasing the old transport
+  ---
+  duration_ms: 8.8062
+  type: 'test'
+  ...
+# Subtest: optional base substrate adds a quiet legacy Plate before born material without changing the surface transport
+ok 61 - optional base substrate adds a quiet legacy Plate before born material without changing the surface transport
+  ---
+  duration_ms: 4.4817
+  type: 'test'
+  ...
+# Subtest: disabling base substrate does not stop the selected legacy experiment
+ok 62 - disabling base substrate does not stop the selected legacy experiment
+  ---
+  duration_ms: 1.4606
+  type: 'test'
+  ...
+# Subtest: zero travel freezes gait phase and emits no contact
+ok 63 - zero travel freezes gait phase and emits no contact
+  ---
+  duration_ms: 4.106
+  type: 'test'
+  ...
+# Subtest: positive distance advances deterministic hashed phase without behavior random input
+ok 64 - positive distance advances deterministic hashed phase without behavior random input
+  ---
+  duration_ms: 0.5145
+  type: 'test'
+  ...
+# Subtest: tripod touchdowns alternate B then A and share their foot geometry with snapshots
+ok 65 - tripod touchdowns alternate B then A and share their foot geometry with snapshots
+  ---
+  duration_ms: 0.6603
+  type: 'test'
+  ...
+# Subtest: knee bends are visible while leg geometry stays finite and deterministic
+ok 66 - knee bends are visible while leg geometry stays finite and deterministic
+  ---
+  duration_ms: 0.3622
+  type: 'test'
+  ...
+# Subtest: leg geometry rotates with body heading and keeps left/right and front/rear ordering
+ok 67 - leg geometry rotates with body heading and keeps left/right and front/rear ordering
+  ---
+  duration_ms: 0.2693
+  type: 'test'
+  ...
+# Subtest: out-of-domain feet are excluded and an empty tripod produces no contact
+ok 68 - out-of-domain feet are excluded and an empty tripod produces no contact
+  ---
+  duration_ms: 0.2907
+  type: 'test'
+  ...
+# Subtest: burst cap emits four groups but retains the correct gait phase and next tripod
+ok 69 - burst cap emits four groups but retains the correct gait phase and next tripod
+  ---
+  duration_ms: 0.4313
+  type: 'test'
+  ...
+# Subtest: retain removes retired gait state and reset clears all agent traits
+ok 70 - retain removes retired gait state and reset clears all agent traits
+  ---
+  duration_ms: 0.3081
+  type: 'test'
+  ...
+# Subtest: continuous mode preserves thorax-distance dose when the gaster point travels a different distance
+ok 71 - continuous mode preserves thorax-distance dose when the gaster point travels a different distance
+  ---
+  duration_ms: 1.9662
+  type: 'test'
+  ...
+# Subtest: dab thresholds follow traveled distance, ignore pure gaster rotation, and interpolate the rear point
+ok 72 - dab thresholds follow traveled distance, ignore pure gaster rotation, and interpolate the rear point
+  ---
+  duration_ms: 0.4626
+  type: 'test'
+  ...
+# Subtest: large movement emits every crossed dab boundary and retirement flushes the final partial dose
+ok 73 - large movement emits every crossed dab boundary and retirement flushes the final partial dose
+  ---
+  duration_ms: 0.3597
+  type: 'test'
+  ...
+# Subtest: pathological dab bursts are bounded while their weighted amount is conserved
+ok 74 - pathological dab bursts are bounded while their weighted amount is conserved
+  ---
+  duration_ms: 0.4731
+  type: 'test'
+  ...
+# Subtest: continuous and dab modes preserve adherence-weighted dose across different movement subdivisions
+ok 75 - continuous and dab modes preserve adherence-weighted dose across different movement subdivisions
+  ---
+  duration_ms: 6.742
+  type: 'test'
+  ...
+# Subtest: dab remainder is flushed and cleared on retirement; retain and reset release transient state
+ok 76 - dab remainder is flushed and cleared on retirement; retain and reset release transient state
+  ---
+  duration_ms: 0.3539
+  type: 'test'
+  ...
+# Subtest: controller deposits continuous dose between pose-specific rear endpoints using existing LCR samples
+ok 77 - controller deposits continuous dose between pose-specific rear endpoints using existing LCR samples
+  ---
+  duration_ms: 22.1311
+  type: 'test'
+  ...
+# Subtest: zero thorax travel and rotation create no gaster dose; retiring an ant flushes dab remainder and clears its state
+ok 78 - zero thorax travel and rotation create no gaster dose; retiring an ant flushes dab remainder and clears its state
+  ---
+  duration_ms: 6.5032
+  type: 'test'
+  ...
+# Subtest: same pose preserves traveled-distance quantity for continuous deposition
+ok 79 - same pose preserves traveled-distance quantity for continuous deposition
+  ---
+  duration_ms: 2.8674
+  type: 'test'
+  ...
+# Subtest: shadow selector adds only source-connected interior graph endpoints and keeps production geometry
+ok 80 - shadow selector adds only source-connected interior graph endpoints and keeps production geometry
+  ---
+  duration_ms: 27.2373
+  type: 'test'
+  ...
+# Subtest: shadow selector can admit a qualifying interior-only route while production remains null
+ok 81 - shadow selector can admit a qualifying interior-only route while production remains null
+  ---
+  duration_ms: 6.6946
+  type: 'test'
+  ...
+# Subtest: shadow temporal state applies persistence, global gap, refractory, and new-contact gates independently
+ok 82 - shadow temporal state applies persistence, global gap, refractory, and new-contact gates independently
+  ---
+  duration_ms: 8.0206
+  type: 'test'
+  ...
+# Subtest: absolute uniform evidence adds neither route confidence nor adherence nor random draws
+ok 83 - absolute uniform evidence adds neither route confidence nor adherence nor random draws
+  ---
+  duration_ms: 9.3912
+  type: 'test'
+  ...
+# Subtest: weak evidence shortens decision clocks and intermediate evidence restores them continuously
+ok 84 - weak evidence shortens decision clocks and intermediate evidence restores them continuously
+  ---
+  duration_ms: 4.1139
+  type: 'test'
+  ...
+# Subtest: weak evidence reduces only the baseline trace and intermediate evidence restores it continuously
+ok 85 - weak evidence reduces only the baseline trace and intermediate evidence restores it continuously
+  ---
+  duration_ms: 18.9947
+  type: 'test'
+  ...
+# Subtest: absolute evidence preserves the full quadratic adherence reinforcement increment
+ok 86 - absolute evidence preserves the full quadratic adherence reinforcement increment
+  ---
+  duration_ms: 13.5833
+  type: 'test'
+  ...
+# Subtest: straight corridor reports exact area and two skeleton endpoints
+ok 87 - straight corridor reports exact area and two skeleton endpoints
+  ---
+  duration_ms: 4.1767
+  type: 'test'
+  ...
+# Subtest: T corridor reports three endpoints and a junction proxy
+ok 88 - T corridor reports three endpoints and a junction proxy
+  ---
+  duration_ms: 0.4955
+  type: 'test'
+  ...
+# Subtest: closed ring has one true hole and one skeleton graph cycle
+ok 89 - closed ring has one true hole and one skeleton graph cycle
+  ---
+  duration_ms: 0.3955
+  type: 'test'
+  ...
+# Subtest: diagonal contact joins foreground without adding graph cycles
+ok 90 - diagonal contact joins foreground without adding graph cycles
+  ---
+  duration_ms: 0.2967
+  type: 'test'
+  ...
+# Subtest: filled 2x2 patch has no fake hole or skeleton graph cycle
+ok 91 - filled 2x2 patch has no fake hole or skeleton graph cycle
+  ---
+  duration_ms: 0.7799
+  type: 'test'
+  ...
+# Subtest: isolated pixel remains one skeleton node and one graph component
+ok 92 - isolated pixel remains one skeleton node and one graph component
+  ---
+  duration_ms: 0.1969
+  type: 'test'
+  ...
+# Subtest: thin branch adjacent to filled patch stays connected through thinning
+ok 93 - thin branch adjacent to filled patch stays connected through thinning
+  ---
+  duration_ms: 0.4585
+  type: 'test'
+  ...
+# Subtest: thick ring retains one cycle while equally bounded filled blob has none
+ok 94 - thick ring retains one cycle while equally bounded filled blob has none
+  ---
+  duration_ms: 1.9409
+  type: 'test'
+  ...
+# Subtest: separated islands classify annulus adjacency and raster-boundary contact
+ok 95 - separated islands classify annulus adjacency and raster-boundary contact
+  ---
+  duration_ms: 0.7061
+  type: 'test'
+  ...
+# Subtest: background opening to raster edge is not a hole
+ok 96 - background opening to raster edge is not a hole
+  ---
+  duration_ms: 0.7188
+  type: 'test'
+  ...
+# Subtest: rejects malformed dimensions and masks
+ok 97 - rejects malformed dimensions and masks
+  ---
+  duration_ms: 0.7385
+  type: 'test'
+  ...
+# Subtest: straight motion has unit tortuosity and no turning
+ok 98 - straight motion has unit tortuosity and no turning
+  ---
+  duration_ms: 1.8703
+  type: 'test'
+  ...
+# Subtest: closed arc keeps finite path but guards zero net displacement
+ok 99 - closed arc keeps finite path but guards zero net displacement
+  ---
+  duration_ms: 1.2408
+  type: 'test'
+  ...
+# Subtest: local return is counted after an intervening cell and one-second gap
+ok 100 - local return is counted after an intervening cell and one-second gap
+  ---
+  duration_ms: 0.42
+  type: 'test'
+  ...
+# Subtest: unclassified movement retains continuous excursion and turning measures
+ok 101 - unclassified movement retains continuous excursion and turning measures
+  ---
+  duration_ms: 0.8842
+  type: 'test'
+  ...
+# Subtest: visit-run revisits exclude ordinary residence and distinguish heading from travel curvature
+ok 102 - visit-run revisits exclude ordinary residence and distinguish heading from travel curvature
+  ---
+  duration_ms: 0.3767
+  type: 'test'
+  ...
+# Subtest: broad sustained path turn category uses geometry and stated body-scale cutoff
+ok 103 - broad sustained path turn category uses geometry and stated body-scale cutoff
+  ---
+  duration_ms: 0.6712
+  type: 'test'
+  ...
+# Subtest: non-finite trajectory fields are rejected
+ok 104 - non-finite trajectory fields are rejected
+  ---
+  duration_ms: 0.8916
+  type: 'test'
+  ...
+# Subtest: partial lifecycle windows are censored and omitted from completed metrics
+ok 105 - partial lifecycle windows are censored and omitted from completed metrics
+  ---
+  duration_ms: 3.3527
+  type: 'test'
+  ...
+# Subtest: measures principal geometry and flags a pixel-graph junction cluster
+ok 106 - measures principal geometry and flags a pixel-graph junction cluster
+  ---
+  duration_ms: 4.5936
+  type: 'test'
+  ...
+# Subtest: reports clamp saturation, footprint convention, and overlap without a class threshold
+ok 107 - reports clamp saturation, footprint convention, and overlap without a class threshold
+  ---
+  duration_ms: 1.1566
+  type: 'test'
+  ...
+# Subtest: empty masks and paths outside the archived centerline fail explicitly
+ok 108 - empty masks and paths outside the archived centerline fail explicitly
+  ---
+  duration_ms: 6.1701
+  type: 'test'
+  ...
+# Subtest: arc-length curvature keeps straight paths straight and recovers circular turning
+ok 109 - arc-length curvature keeps straight paths straight and recovers circular turning
+  ---
+  duration_ms: 7.7859
+  type: 'test'
+  ...
+# Subtest: coarse arc-length spacing reduces staircase turn inflation
+ok 110 - coarse arc-length spacing reduces staircase turn inflation
+  ---
+  duration_ms: 1.5709
+  type: 'test'
+  ...
+# Subtest: paired per-tick parity reports the first field mismatch
+ok 111 - paired per-tick parity reports the first field mismatch
+  ---
+  duration_ms: 2.0562
+  type: 'test'
+  ...
+# Subtest: only a Plate birth marks a successful material-analysis birth
+ok 112 - only a Plate birth marks a successful material-analysis birth
+  ---
+  duration_ms: 0.1555
+  type: 'test'
+  ...
+# Subtest: snapshot byte copies stay fixed after live typed arrays change
+ok 113 - snapshot byte copies stay fixed after live typed arrays change
+  ---
+  duration_ms: 0.1525
+  type: 'test'
+  ...
+# Subtest: XOR snapshot stream keeps exact arrays and offsets
+ok 114 - XOR snapshot stream keeps exact arrays and offsets
+  ---
+  duration_ms: 0.4381
+  type: 'test'
+  ...
+# Subtest: diagnostic selector reports eligibility, pruning, and longest candidate from the copied production algorithm
+ok 115 - diagnostic selector reports eligibility, pruning, and longest candidate from the copied production algorithm
+  ---
+  duration_ms: 25.7879
+  type: 'test'
+  ...
+# Subtest: snapshot XOR decoder restores exact typed field bytes and EMA chemical memory
+ok 116 - snapshot XOR decoder restores exact typed field bytes and EMA chemical memory
+  ---
+  duration_ms: 17.1254
+  type: 'test'
+  ...
+# Subtest: compact snapshot subset retains selected exact rows and drops unselected rows
+ok 117 - compact snapshot subset retains selected exact rows and drops unselected rows
+  ---
+  duration_ms: 7.0252
+  type: 'test'
+  ...
+# Subtest: representative trace summarizes sampled environment and all-ant foot traffic spatially
+ok 118 - representative trace summarizes sampled environment and all-ant foot traffic spatially
+  ---
+  duration_ms: 2.8457
+  type: 'test'
+  ...
+# Subtest: contact recurrence components use 8-neighbor connectivity and actual distinct seconds
+ok 119 - contact recurrence components use 8-neighbor connectivity and actual distinct seconds
+  ---
+  duration_ms: 4.9369
+  type: 'test'
+  ...
+# Subtest: tube includes route-adjacent cells at the declared scale
+ok 120 - tube includes route-adjacent cells at the declared scale
+  ---
+  duration_ms: 0.8761
+  type: 'test'
+  ...
+# Subtest: funnel reduction counts repeated component observations and prioritizes births
+ok 121 - funnel reduction counts repeated component observations and prioritizes births
+  ---
+  duration_ms: 0.511
+  type: 'test'
+  ...
+# Subtest: cold colonies recruit gradually to the floor with bounded delays and blocked-entry retries
+ok 122 - cold colonies recruit gradually to the floor with bounded delays and blocked-entry retries
+  ---
+  duration_ms: 85.4163
+  type: 'test'
+  ...
+# Subtest: sustained local evidence raises the limit gradually; decay pauses recruitment without culling living ants
+ok 123 - sustained local evidence raises the limit gradually; decay pauses recruitment without culling living ants
+  ---
+  duration_ms: 1367.2867
+  type: 'test'
+  ...
+# Subtest: feedback sampling alone leaves controller randomness untouched and respects ceiling changes
+ok 124 - feedback sampling alone leaves controller randomness untouched and respects ceiling changes
+  ---
+  duration_ms: 1.2584
+  type: 'test'
+  ...
+# Subtest: AntRenderer paints equal agent marks and a cached pheromone field without changing the snapshot
+ok 125 - AntRenderer paints equal agent marks and a cached pheromone field without changing the snapshot
+  ---
+  duration_ms: 4.9634
+  type: 'test'
+  ...
+# Subtest: Plate debug overlays are opt-in and do not mutate detached snapshots
+ok 126 - Plate debug overlays are opt-in and do not mutate detached snapshots
+  ---
+  duration_ms: 1.9957
+  type: 'test'
+  ...
+# Subtest: Plate geometry debug draws joined outlines, exposed graph lines, and compiled audio pickup nodes
+ok 127 - Plate geometry debug draws joined outlines, exposed graph lines, and compiled audio pickup nodes
+  ---
+  duration_ms: 3.6576
+  type: 'test'
+  ...
+# Subtest: pheromone display uses two fixed scales with monotonic weak trace and strong route contrast
+ok 128 - pheromone display uses two fixed scales with monotonic weak trace and strong route contrast
+  ---
+  duration_ms: 0.2565
+  type: 'test'
+  ...
+# Subtest: historical plate masks draw beneath live pheromone and cache frozen geometry
+ok 129 - historical plate masks draw beneath live pheromone and cache frozen geometry
+  ---
+  duration_ms: 0.703
+  type: 'test'
+  ...
+# Subtest: articulated ants draw snapshot gait legs and a four-part body without mutating the snapshot
+ok 130 - articulated ants draw snapshot gait legs and a four-part body without mutating the snapshot
+  ---
+  duration_ms: 1.7462
+  type: 'test'
+  ...
+# Subtest: renderer uses the detached smoothed body pose instead of raw angular velocity
+ok 131 - renderer uses the detached smoothed body pose instead of raw angular velocity
+  ---
+  duration_ms: 4.1196
+  type: 'test'
+  ...
+# Subtest: antenna engagement changes only its own antenna and remains in the articulated head frame
+ok 132 - antenna engagement changes only its own antenna and remains in the articulated head frame
+  ---
+  duration_ms: 1.0562
+  type: 'test'
+  ...
+# Subtest: destroy cancels initialization while the p5 module is still loading
+ok 133 - destroy cancels initialization while the p5 module is still loading
+  ---
+  duration_ms: 0.569
+  type: 'test'
+  ...
+# Subtest: destroy racing p5 setup removes a canvas created immediately before setup
+ok 134 - destroy racing p5 setup removes a canvas created immediately before setup
+  ---
+  duration_ms: 0.7106
+  type: 'test'
+  ...
+# Subtest: p5 setup failures reject init and remove the failed instance
+ok 135 - p5 setup failures reject init and remove the failed instance
+  ---
+  duration_ms: 0.8262
+  type: 'test'
+  ...
+# Subtest: identity blocks preserve the entire spatial movie and reconstruct every frame from the ledger
+ok 136 - identity blocks preserve the entire spatial movie and reconstruct every frame from the ledger
+  ---
+  duration_ms: 78.7217
+  type: 'test'
+  ...
+# Subtest: lifecycle repairs retain every still-valid binding and fill only required vacancies
+ok 137 - lifecycle repairs retain every still-valid binding and fill only required vacancies
+  ---
+  duration_ms: 8.2871
+  type: 'test'
+  ...
+# Subtest: dedicated deterministic null stream avoids behavior RNG and rejects corrupted tuples/IDs/ledger
+ok 138 - dedicated deterministic null stream avoids behavior RNG and rejects corrupted tuples/IDs/ledger
+  ---
+  duration_ms: 144.3153
+  type: 'test'
+  ...
+# Subtest: DynamicSocialGraph stays observational across every natural controller tick
+ok 139 - DynamicSocialGraph stays observational across every natural controller tick
+  ---
+  duration_ms: 6282.2842
+  type: 'test'
+  ...
+# {"ticks":7200,"simulatedSeconds":120,"s1WindowsSeconds":[0.25,1,5,20],"s1SampleEveryTicks":3,"s1SamplesPerWindow":2401,"footContactGroups":5319,"plateBirths":1,"noduleBirths":0,"nodeEnters":97,"nodeExits":77,"audioContactCommands":5319,"materialSyncCommands":1}
+# Subtest: independent whole-tuple phase rotations preserve windows and invert byte-exactly
+ok 140 - independent whole-tuple phase rotations preserve windows and invert byte-exactly
+  ---
+  duration_ms: 5.4069
+  type: 'test'
+  ...
+# Subtest: dedicated replay seed yields repeatable nonzero offsets without Math.random
+ok 141 - dedicated replay seed yields repeatable nonzero offsets without Math.random
+  ---
+  duration_ms: 0.9109
+  type: 'test'
+  ...
+# Subtest: archive validation rejects non-finite values, invalid IDs/radii and re-entry
+ok 142 - archive validation rejects non-finite values, invalid IDs/radii and re-entry
+  ---
+  duration_ms: 0.7201
+  type: 'test'
+  ...
+# Subtest: future merge labels preserve the open lower/closed upper horizon and reject incomplete horizons
+ok 143 - future merge labels preserve the open lower/closed upper horizon and reject incomplete horizons
+  ---
+  duration_ms: 7.2049
+  type: 'test'
+  ...
+# Subtest: feature extraction is deterministic and future trajectory/snapshot changes cannot affect earlier predictors
+ok 144 - feature extraction is deterministic and future trajectory/snapshot changes cannot affect earlier predictors
+  ---
+  duration_ms: 51.0732
+  type: 'test'
+  ...
+# Subtest: leave-one-seed-out folds and training-only control preserve baseline/target and cannot reach held-out data
+ok 145 - leave-one-seed-out folds and training-only control preserve baseline/target and cannot reach held-out data
+  ---
+  duration_ms: 2.3176
+  type: 'test'
+  ...
+# Subtest: metrics group ties correctly, match hand calculations and retain single-class limitations
+ok 146 - metrics group ties correctly, match hand calculations and retain single-class limitations
+  ---
+  duration_ms: 1.0964
+  type: 'test'
+  ...
+# Subtest: regularized logistic fit is deterministic, uses training-only scales and handles constant predictors
+ok 147 - regularized logistic fit is deterministic, uses training-only scales and handles constant predictors
+  ---
+  duration_ms: 1.8505
+  type: 'test'
+  ...
+# Subtest: sampled disk encounters reproduce pair merge, connector persistence, and retirement split
+ok 148 - sampled disk encounters reproduce pair merge, connector persistence, and retirement split
+  ---
+  duration_ms: 14.2516
+  type: 'test'
+  ...
+# Subtest: two pairs merge through a supported bridge ant, persist, then split when it leaves
+ok 149 - two pairs merge through a supported bridge ant, persist, then split when it leaves
+  ---
+  duration_ms: 4.383
+  type: 'test'
+  ...
+# Subtest: Tarjan topology reports no bridge or articulation in a triangle
+ok 150 - Tarjan topology reports no bridge or articulation in a triangle
+  ---
+  duration_ms: 0.3041
+  type: 'test'
+  ...
+# Subtest: one evaluation of bridge structure resets pending candidates without confirming them
+ok 151 - one evaluation of bridge structure resets pending candidates without confirming them
+  ---
+  duration_ms: 0.5319
+  type: 'test'
+  ...
+# Subtest: articulation freshness must reach distinct cut branches, not two contacts in one triangle branch
+ok 152 - articulation freshness must reach distinct cut branches, not two contacts in one triangle branch
+  ---
+  duration_ms: 1.02
+  type: 'test'
+  ...
+# Subtest: positive rolling weight without current contact cannot form or persist a connector
+ok 153 - positive rolling weight without current contact cannot form or persist a connector
+  ---
+  duration_ms: 1.0301
+  type: 'test'
+  ...
+# Subtest: connector onset requires new contacts to cross distinct cut branches
+ok 154 - connector onset requires new contacts to cross distinct cut branches
+  ---
+  duration_ms: 1.7945
+  type: 'test'
+  ...
+# Subtest: connector persistence resets when its original supported contacts collapse into one cut branch
+ok 155 - connector persistence resets when its original supported contacts collapse into one cut branch
+  ---
+  duration_ms: 1.7849
+  type: 'test'
+  ...
+# Subtest: finish right-censors confirmed roles while preserving final observed metrics
+ok 156 - finish right-censors confirmed roles while preserving final observed metrics
+  ---
+  duration_ms: 0.8711
+  type: 'test'
+  ...
+# Subtest: isolated node birth and retirement do not create component merge or split events
+ok 157 - isolated node birth and retirement do not create component merge or split events
+  ---
+  duration_ms: 0.6798
+  type: 'test'
+  ...
+# Subtest: input order does not change topology or event order; snapshots and histories are detached
+ok 158 - input order does not change topology or event order; snapshots and histories are detached
+  ---
+  duration_ms: 1.0238
+  type: 'test'
+  ...
+# Subtest: rejects mismatched windows, invalid timestamps, and malformed graph snapshots atomically
+ok 159 - rejects mismatched windows, invalid timestamps, and malformed graph snapshots atomically
+  ---
+  duration_ms: 0.7426
+  type: 'test'
+  ...
+# Subtest: surface contact memory does not feed back into ANT motion, pheromone, gait, colony, or randomness
+ok 160 - surface contact memory does not feed back into ANT motion, pheromone, gait, colony, or randomness
+  ---
+  duration_ms: 329.1798
+  type: 'test'
+  ...
+# Subtest: aligned moving ant ahead regulates headway without occupancy steering
+ok 161 - aligned moving ant ahead regulates headway without occupancy steering
+  ---
+  duration_ms: 1.9396
+  type: 'test'
+  ...
+# Subtest: opposing, crossing, stopped, rear, and adjacent-lane bodies are not classified as same flow
+ok 162 - opposing, crossing, stopped, rear, and adjacent-lane bodies are not classified as same flow
+  ---
+  duration_ms: 2.3656
+  type: 'test'
+  ...
+# Subtest: same-flow classification is independent of neighbor order and restores emergency separation at close range
+ok 163 - same-flow classification is independent of neighbor order and restores emergency separation at close range
+  ---
+  duration_ms: 0.261
+  type: 'test'
+  ...
+# Subtest: strong-trail procession advances with headway, low lateral drift, and no swept overlap
+ok 164 - strong-trail procession advances with headway, low lateral drift, and no swept overlap
+  ---
+  duration_ms: 83.8444
+  type: 'test'
+  ...
+# Subtest: short-range sensing gives mirrored, continuous centering corrections without changing the field
+ok 165 - short-range sensing gives mirrored, continuous centering corrections without changing the field
+  ---
+  duration_ms: 9.0538
+  type: 'test'
+  ...
+# Subtest: trail adherence rises on a coherent trail and fades gradually through a temporary gap
+ok 166 - trail adherence rises on a coherent trail and fades gradually through a temporary gap
+  ---
+  duration_ms: 1.9024
+  type: 'test'
+  ...
+# Subtest: uniform pheromone is ambiguous and does not build trail adherence
+ok 167 - uniform pheromone is ambiguous and does not build trail adherence
+  ---
+  duration_ms: 2.7708
+  type: 'test'
+  ...
+# Subtest: an isolated strong point does not become a route-following target
+ok 168 - an isolated strong point does not become a route-following target
+  ---
+  duration_ms: 1.8651
+  type: 'test'
+  ...
+# Subtest: local adherence senses continue updating during a committed movement interval
+ok 169 - local adherence senses continue updating during a committed movement interval
+  ---
+  duration_ms: 30.8712
+  type: 'test'
+  ...
+# Subtest: an ant stays near a narrow straight trail over several seconds with smooth finite motion
+ok 170 - an ant stays near a narrow straight trail over several seconds with smooth finite motion
+  ---
+  duration_ms: 67.1925
+  type: 'test'
+  ...
+# Subtest: high adherence reduces exploration while leaving occasional stochastic departures
+ok 171 - high adherence reduces exploration while leaving occasional stochastic departures
+  ---
+  duration_ms: 24.1501
+  type: 'test'
+  ...
+# Subtest: adherence response is bounded and independent of update step size
+ok 172 - adherence response is bounded and independent of update step size
+  ---
+  duration_ms: 2.4089
+  type: 'test'
+  ...
+# Subtest: outward exits on every side and corner use only the first boundary hit for gait distance
+ok 173 - outward exits on every side and corner use only the first boundary hit for gait distance
+  ---
+  duration_ms: 37.23
+  type: 'test'
+  ...
+# Subtest: boundary proximity alone does not turn or brake an ant inward
+ok 174 - boundary proximity alone does not turn or brake an ant inward
+  ---
+  duration_ms: 4.1839
+  type: 'test'
+  ...
+# Subtest: exits are replaced one at a time with fresh individuals while audio toggles leave turnover unchanged
+ok 175 - exits are replaced one at a time with fresh individuals while audio toggles leave turnover unchanged
+  ---
+  duration_ms: 47.2926
+  type: 'test'
+  ...
+# Subtest: several simultaneous exits preserve a pending timer and replacement remains gradual
+ok 176 - several simultaneous exits preserve a pending timer and replacement remains gradual
+  ---
+  duration_ms: 3.0885
+  type: 'test'
+  ...
+# Subtest: W1 novelty and mismatch count exact binary intersections
+ok 177 - W1 novelty and mismatch count exact binary intersections
+  ---
+  duration_ms: 1.6388
+  type: 'test'
+  ...
+# Subtest: W1 geometry helpers reject invalid indices and nonbinary masks
+ok 178 - W1 geometry helpers reject invalid indices and nonbinary masks
+  ---
+  duration_ms: 15.5587
+  type: 'test'
+  ...
+# Subtest: W1 preserves full episode geometry across character gaps and keeps attribution causal
+ok 179 - W1 preserves full episode geometry across character gaps and keeps attribution causal
+  ---
+  duration_ms: 764.1349
+  type: 'test'
+  ...
+# Subtest: baseline normalizer preserves processing IDs, component order and later same-frame redirect
+ok 180 - baseline normalizer preserves processing IDs, component order and later same-frame redirect
+  ---
+  duration_ms: 1.8368
+  type: 'test'
+  ...
+# Subtest: candidate normalizer transfers actual merges only, excluding split provenance
+ok 181 - candidate normalizer transfers actual merges only, excluding split provenance
+  ---
+  duration_ms: 0.3201
+  type: 'test'
+  ...
+# Subtest: representative selection uses recorded largest multi-cell and earliest actual one-cell only
+ok 182 - representative selection uses recorded largest multi-cell and earliest actual one-cell only
+  ---
+  duration_ms: 0.3003
+  type: 'test'
+  ...
+# Subtest: summary separates cell unions from sample denominators and reports unavailable ages
+ok 183 - summary separates cell unions from sample denominators and reports unavailable ages
+  ---
+  duration_ms: 1.0652
+  type: 'test'
+  ...
+# Subtest: actual merge transfers source admissions and owned active samples, without direct-credit leakage
+ok 184 - actual merge transfers source admissions and owned active samples, without direct-credit leakage
+  ---
+  duration_ms: 4.5712
+  type: 'test'
+  ...
+# Subtest: same-frame source admission then transfer preserves operation order and separates direct/import overlap
+ok 185 - same-frame source admission then transfer preserves operation order and separates direct/import overlap
+  ---
+  duration_ms: 0.8017
+  type: 'test'
+  ...
+# Subtest: union overlap records direct plus imported rows while split provenance alone is not transferred
+ok 186 - union overlap records direct plus imported rows while split provenance alone is not transferred
+  ---
+  duration_ms: 0.7188
+  type: 'test'
+  ...
+# Subtest: rejects invalid frame order, duplicate cell owners and invalid grid indices
+ok 187 - rejects invalid frame order, duplicate cell owners and invalid grid indices
+  ---
+  duration_ms: 1.5407
+  type: 'test'
+  ...
+# Subtest: prefix snapshot is identical when future flags and foot events already exist in the input
+ok 188 - prefix snapshot is identical when future flags and foot events already exist in the input
+  ---
+  duration_ms: 0.7892
+  type: 'test'
+  ...
+# Subtest: multi-hop actual transfers preserve earliest admission and do not mark ordinary earlier history ambiguous
+ok 189 - multi-hop actual transfers preserve earliest admission and do not mark ordinary earlier history ambiguous
+  ---
+  duration_ms: 0.927
+  type: 'test'
+  ...
+# Subtest: owned and global spells use archived timestamps and remain separate under another identity reactivation
+ok 190 - owned and global spells use archived timestamps and remain separate under another identity reactivation
+  ---
+  duration_ms: 1.575
+  type: 'test'
+  ...
+# Subtest: nematic order is one for reversed travel, zero for perpendicular travel, near zero when isotropic
+ok 191 - nematic order is one for reversed travel, zero for perpendicular travel, near zero when isotropic
+  ---
+  duration_ms: 2.9084
+  type: 'test'
+  ...
+# Subtest: consolidation averages each cell fraction, independent of cell area and interval length
+ok 192 - consolidation averages each cell fraction, independent of cell area and interval length
+  ---
+  duration_ms: 0.5092
+  type: 'test'
+  ...
+# Subtest: initial admission and closure observations count in consolidation
+ok 193 - initial admission and closure observations count in consolidation
+  ---
+  duration_ms: 0.1774
+  type: 'test'
+  ...
+# Subtest: duplicate feet in one ant movement segment contribute once and retain source-time evidence
+ok 194 - duplicate feet in one ant movement segment contribute once and retain source-time evidence
+  ---
+  duration_ms: 0.2046
+  type: 'test'
+  ...
+# Subtest: future frames cannot change a closed episode character
+ok 195 - future frames cannot change a closed episode character
+  ---
+  duration_ms: 0.9371
+  type: 'test'
+  ...
+# Subtest: the prior cell 5636 gap is covered by cumulative same-cell contact history
+ok 196 - the prior cell 5636 gap is covered by cumulative same-cell contact history
+  ---
+  duration_ms: 1.8408
+  type: 'test'
+  ...
+# Subtest: cell 7239 early direction contacts remain eligible before admission
+ok 197 - cell 7239 early direction contacts remain eligible before admission
+  ---
+  duration_ms: 2.175
+  type: 'test'
+  ...
+# Subtest: direction contacts use zero through closure, same-cell geometry, and endpoint epsilon
+ok 198 - direction contacts use zero through closure, same-cell geometry, and endpoint epsilon
+  ---
+  duration_ms: 0.26
+  type: 'test'
+  ...
+# Subtest: deduplication is independent of foot-row order and early contacts leave consolidation unchanged
+ok 199 - deduplication is independent of foot-row order and early contacts leave consolidation unchanged
+  ---
+  duration_ms: 0.4928
+  type: 'test'
+  ...
+# Subtest: direction segments cannot use future samples and cannot span more than one 60 Hz tick
+ok 200 - direction segments cannot use future samples and cannot span more than one 60 Hz tick
+  ---
+  duration_ms: 0.8132
+  type: 'test'
+  ...
+# Subtest: invalid cell indices and nonfinite inputs fail, and missing travel is a typed data gap
+ok 201 - invalid cell indices and nonfinite inputs fail, and missing travel is a typed data gap
+  ---
+  duration_ms: 0.9776
+  type: 'test'
+  ...
+# Subtest: summary and rank correlations report descriptive values without p-values
+ok 202 - summary and rank correlations report descriptive values without p-values
+  ---
+  duration_ms: 0.6812
+  type: 'test'
+  ...
+# Subtest: W1 continuity observer preserves source geometry through a merge then split
+ok 203 - W1 continuity observer preserves source geometry through a merge then split
+  ---
+  duration_ms: 34.7143
+  type: 'test'
+  ...
+# Subtest: W1 component labels resolve aliases created by a later merge in the same frame
+ok 204 - W1 component labels resolve aliases created by a later merge in the same frame
+  ---
+  duration_ms: 0.2346
+  type: 'test'
+  ...
+# Subtest: W1 merge counter distinguishes split siblings from distinct parent episodes
+ok 205 - W1 merge counter distinguishes split siblings from distinct parent episodes
+  ---
+  duration_ms: 0.1669
+  type: 'test'
+  ...
+# Subtest: W1 summary separates raw cohort admissions from canonical first admissions and event classes
+ok 206 - W1 summary separates raw cohort admissions from canonical first admissions and event classes
+  ---
+  duration_ms: 1.4986
+  type: 'test'
+  ...
+# Subtest: W1 persisted frame compaction drops repeated lineage geometry without mutating replay state
+ok 207 - W1 persisted frame compaction drops repeated lineage geometry without mutating replay state
+  ---
+  duration_ms: 0.354
+  type: 'test'
+  ...
+# Subtest: W1 admission contact lookback is same-cell and never reads a future event
+ok 208 - W1 admission contact lookback is same-cell and never reads a future event
+  ---
+  duration_ms: 0.7643
+  type: 'test'
+  ...
+# Subtest: W1 active-cell q=false rows expose EMA carry-over without changing activation
+ok 209 - W1 active-cell q=false rows expose EMA carry-over without changing activation
+  ---
+  duration_ms: 10.0943
+  type: 'test'
+  ...
+# Subtest: W1 input validation rejects invalid time, flags, and out-of-grid contacts
+ok 210 - W1 input validation rejects invalid time, flags, and out-of-grid contacts
+  ---
+  duration_ms: 1.3859
+  type: 'test'
+  ...
+# Subtest: W1 observer replay is deterministic and consumes no random values
+ok 211 - W1 observer replay is deterministic and consumes no random values
+  ---
+  duration_ms: 1.4833
+  type: 'test'
+  ...
+# Subtest: requires all frozen evidence bits and one q frame cannot activate a cell
+ok 212 - requires all frozen evidence bits and one q frame cannot activate a cell
+  ---
+  duration_ms: 3.3589
+  type: 'test'
+  ...
+# Subtest: constant q forms one finite episode, then closes without horizon eviction
+ok 213 - constant q forms one finite episode, then closes without horizon eviction
+  ---
+  duration_ms: 7.2566
+  type: 'test'
+  ...
+# Subtest: short closed candidates report discard reason; a later pulse can rematerialize
+ok 214 - short closed candidates report discard reason; a later pulse can rematerialize
+  ---
+  duration_ms: 1.186
+  type: 'test'
+  ...
+# Subtest: spatial split and rejoin preserve one historical episode and count events once
+ok 215 - spatial split and rejoin preserve one historical episode and count events once
+  ---
+  duration_ms: 1.2013
+  type: 'test'
+  ...
+# Subtest: merge retains every parent identity and the complete cell union
+ok 216 - merge retains every parent identity and the complete cell union
+  ---
+  duration_ms: 2.8679
+  type: 'test'
+  ...
+# Subtest: split descendants stay on canonical lineage when another branch cross-merges their parent
+ok 217 - split descendants stay on canonical lineage when another branch cross-merges their parent
+  ---
+  duration_ms: 2.5001
+  type: 'test'
+  ...
+# Subtest: ring geometry remains the exact admitted union without dilation
+ok 218 - ring geometry remains the exact admitted union without dilation
+  ---
+  duration_ms: 0.4706
+  type: 'test'
+  ...
+# Subtest: invalid inputs are rejected atomically before time or state advances
+ok 219 - invalid inputs are rejected atomically before time or state advances
+  ---
+  duration_ms: 0.8759
+  type: 'test'
+  ...
+# Subtest: future perturbations cannot change prior snapshots
+ok 220 - future perturbations cannot change prior snapshots
+  ---
+  duration_ms: 1.2204
+  type: 'test'
+  ...
+# Subtest: all EMA state bounds remain finite and inside [0, 1]
+ok 221 - all EMA state bounds remain finite and inside [0, 1]
+  ---
+  duration_ms: 2.7299
+  type: 'test'
+  ...
+# Subtest: direction uses latest completed consecutive displacement and ignores future frames
+ok 222 - direction uses latest completed consecutive displacement and ignores future frames
+  ---
+  duration_ms: 2.898
+  type: 'test'
+  ...
+# Subtest: missing direction stays missing at zero displacement and recording edge
+ok 223 - missing direction stays missing at zero displacement and recording edge
+  ---
+  duration_ms: 0.518
+  type: 'test'
+  ...
+# Subtest: stable-ID lifecycle gap rejects trajectory instead of bridging direction
+ok 224 - stable-ID lifecycle gap rejects trajectory instead of bridging direction
+  ---
+  duration_ms: 1.3233
+  type: 'test'
+  ...
+# Subtest: nematic representation is invariant to reversed direction
+ok 225 - nematic representation is invariant to reversed direction
+  ---
+  duration_ms: 0.3587
+  type: 'test'
+  ...
+# Subtest: unordered foot groups sort on a copy and bucket by causal field interval
+ok 226 - unordered foot groups sort on a copy and bucket by causal field interval
+  ---
+  duration_ms: 1.4373
+  type: 'test'
+  ...
+# Subtest: malformed trajectory byte packet fails before indexing
+ok 227 - malformed trajectory byte packet fails before indexing
+  ---
+  duration_ms: 1.3173
+  type: 'test'
+  ...
+# Subtest: archived seed loader verifies packet and committed source hashes
+ok 228 - archived seed loader verifies packet and committed source hashes
+  ---
+  duration_ms: 1042.7434
+  type: 'test'
+  ...
+# Subtest: shadow adapter preserves the complete old measurement function and rejects source drift
+ok 229 - shadow adapter preserves the complete old measurement function and rejects source drift
+  ---
+  duration_ms: 41.9453
+  type: 'test'
+  ...
+# Subtest: shadow analysis preserves unsplit geometry, attribution windows and character values
+ok 230 - shadow analysis preserves unsplit geometry, attribution windows and character values
+  ---
+  duration_ms: 417.135
+  type: 'test'
+  ...
+# Subtest: analysis distributions, CSV and finite self-checks handle empty and exceptional values
+ok 231 - analysis distributions, CSV and finite self-checks handle empty and exceptional values
+  ---
+  duration_ms: 0.944
+  type: 'test'
+  ...
+# Subtest: split-child fates distinguish independent closure from later absorption and censoring
+ok 232 - split-child fates distinguish independent closure from later absorption and censoring
+  ---
+  duration_ms: 0.6475
+  type: 'test'
+  ...
+# Subtest: larger exact overlap inherits; losing child gets a fresh fork with no copied state
+ok 233 - larger exact overlap inherits; losing child gets a fresh fork with no copied state
+  ---
+  duration_ms: 6.3959
+  type: 'test'
+  ...
+# Subtest: equal overlap tie routes to lower deterministic current component label
+ok 234 - equal overlap tie routes to lower deterministic current component label
+  ---
+  duration_ms: 1.5594
+  type: 'test'
+  ...
+# Subtest: crossing overlaps route each parent once and leave losing edges as provenance only
+ok 235 - crossing overlaps route each parent once and leave losing edges as provenance only
+  ---
+  duration_ms: 0.9003
+  type: 'test'
+  ...
+# Subtest: crossing split routes each child to one parent and records the other edge as provenance
+ok 236 - crossing split routes each child to one parent and records the other edge as provenance
+  ---
+  duration_ms: 4.2985
+  type: 'test'
+  ...
+# Subtest: split fork closes independently while inherited child remains active
+ok 237 - split fork closes independently while inherited child remains active
+  ---
+  duration_ms: 2.3104
+  type: 'test'
+  ...
+# Subtest: pure merge retains original canonical identity and admitted union
+ok 238 - pure merge retains original canonical identity and admitted union
+  ---
+  duration_ms: 4.9462
+  type: 'test'
+  ...
+# Subtest: later merge uses only routed parents and preserves prior split provenance
+ok 239 - later merge uses only routed parents and preserves prior split provenance
+  ---
+  duration_ms: 3.6264
+  type: 'test'
+  ...
+# Subtest: no-split replay preserves original active masks, EMA bounds and episode recurrence
+ok 240 - no-split replay preserves original active masks, EMA bounds and episode recurrence
+  ---
+  duration_ms: 6.9985
+  type: 'test'
+  ...
+# Subtest: invalid and future frames are atomic and candidate consumes no RNG
+ok 241 - invalid and future frames are atomic and candidate consumes no RNG
+  ---
+  duration_ms: 1.5701
+  type: 'test'
+  ...
+# Subtest: replay is deterministic and all emitted numeric state is finite
+ok 242 - replay is deterministic and all emitted numeric state is finite
+  ---
+  duration_ms: 10.1098
+  type: 'test'
+  ...
+# Subtest: only split routing and provenance metadata differ from original implementation
+ok 243 - only split routing and provenance metadata differ from original implementation
+  ---
+  duration_ms: 1.203
+  type: 'test'
+  ...
+# Subtest: actual point-contact age uses only the latest recorded contact at or before the observed endpoint
+ok 244 - actual point-contact age uses only the latest recorded contact at or before the observed endpoint
+  ---
+  duration_ms: 1.5775
+  type: 'test'
+  ...
+# Subtest: EMA carry-over is counted only while q is false and active remains true
+ok 245 - EMA carry-over is counted only while q is false and active remains true
+  ---
+  duration_ms: 0.3116
+  type: 'test'
+  ...
+# Subtest: existing episode summary keeps geometry and observed persistence separate
+ok 246 - existing episode summary keeps geometry and observed persistence separate
+  ---
+  duration_ms: 0.4099
+  type: 'test'
+  ...
+# Subtest: milestone map preserves the fixed world extent and renders only observed cell rectangles
+ok 247 - milestone map preserves the fixed world extent and renders only observed cell rectangles
+  ---
+  duration_ms: 21.5851
+  type: 'test'
+  ...
+# Subtest: full timeline ends at the exact final observation time
+ok 248 - full timeline ends at the exact final observation time
+  ---
+  duration_ms: 1.8194
+  type: 'test'
+  ...
+# Subtest: eligible cells closing at one observation form deterministic 8-connected endpoint geometry only
+ok 249 - eligible cells closing at one observation form deterministic 8-connected endpoint geometry only
+  ---
+  duration_ms: 5.2807
+  type: 'test'
+  ...
+# Subtest: 20-second spells retain identity provenance and classify q-off, active-off and both
+ok 250 - 20-second spells retain identity provenance and classify q-off, active-off and both
+  ---
+  duration_ms: 2.067
+  type: 'test'
+  ...
+# Subtest: repeat local materialization records overlap without increasing unique area
+ok 251 - repeat local materialization records overlap without increasing unique area
+  ---
+  duration_ms: 0.8503
+  type: 'test'
+  ...
+# Subtest: right-censored spells do not materialize and prior prefix snapshots do not acquire future events
+ok 252 - right-censored spells do not materialize and prior prefix snapshots do not acquire future events
+  ---
+  duration_ms: 0.4457
+  type: 'test'
+  ...
+# Subtest: rejects invalid masks, ownership and nonsequential observations without using RNG
+ok 253 - rejects invalid masks, ownership and nonsequential observations without using RNG
+  ---
+  duration_ms: 1.4489
+  type: 'test'
+  ...
+# Subtest: AudioEngine creates browser resources lazily and shares module loading
+ok 254 - AudioEngine creates browser resources lazily and shares module loading
+  ---
+  duration_ms: 2.2185
+  type: 'test'
+  ...
+# Subtest: AudioEngine keeps mono as the default and allows a stereo worklet output
+ok 255 - AudioEngine keeps mono as the default and allows a stereo worklet output
+  ---
+  duration_ms: 2.9176
+  type: 'test'
+  ...
+# Subtest: AudioEngine rejects unsupported channel counts before loading a worklet
+ok 256 - AudioEngine rejects unsupported channel counts before loading a worklet
+  ---
+  duration_ms: 0.6385
+  type: 'test'
+  ...
+# Subtest: AudioEngine rejects a pending module after destroy and closes the context
+ok 257 - AudioEngine rejects a pending module after destroy and closes the context
+  ---
+  duration_ms: 0.4651
+  type: 'test'
+  ...
+# Subtest: snapshot transform uses fixed amplitude and dBFS scales without peak normalization
+ok 258 - snapshot transform uses fixed amplitude and dBFS scales without peak normalization
+  ---
+  duration_ms: 15.9619
+  type: 'test'
+  ...
+# Subtest: spectrogram uses a 1024-point Hann window, 256-sample hop and fixed 8 kHz ceiling
+ok 259 - spectrogram uses a 1024-point Hann window, 256-sample hop and fixed 8 kHz ceiling
+  ---
+  duration_ms: 3.0483
+  type: 'test'
+  ...
+# Subtest: waveform envelopes preserve peak scale, handle short inputs and do not mutate samples
+ok 260 - waveform envelopes preserve peak scale, handle short inputs and do not mutate samples
+  ---
+  duration_ms: 0.4316
+  type: 'test'
+  ...
+# Subtest: silence is shown at the fixed -100 dBFS floor and invalid inputs are rejected
+ok 261 - silence is shown at the fixed -100 dBFS floor and invalid inputs are rejected
+  ---
+  duration_ms: 0.9561
+  type: 'test'
+  ...
+# Subtest: frozen stratigraphy preset fixes duration, dimensions, stereo separation and analysis axes
+ok 262 - frozen stratigraphy preset fixes duration, dimensions, stereo separation and analysis axes
+  ---
+  duration_ms: 100.4782
+  type: 'test'
+  ...
+# Subtest: frozen grayscale transfer has deterministic linear-luminance dBFS landmarks
+ok 263 - frozen grayscale transfer has deterministic linear-luminance dBFS landmarks
+  ---
+  duration_ms: 0.9921
+  type: 'test'
+  ...
+# Subtest: frozen preset rejects FFT, hop, frequency and range overrides
+ok 264 - frozen preset rejects FFT, hop, frequency and range overrides
+  ---
+  duration_ms: 0.4227
+  type: 'test'
+  ...
+# Subtest: frozen renderers use a fixed canvas, grayscale pixels and aligned comparison rows
+ok 265 - frozen renderers use a fixed canvas, grayscale pixels and aligned comparison rows
+  ---
+  duration_ms: 3.22
+  type: 'test'
+  ...
+# Subtest: compiles sparse 32-grid nodes and global four-neighbor indices without changing frozen 96-grid masks
+ok 266 - compiles sparse 32-grid nodes and global four-neighbor indices without changing frozen 96-grid masks
+  ---
+  duration_ms: 10.0851
+  type: 'test'
+  ...
+# Subtest: diagonal graph bridges survive conservative downsampling
+ok 267 - diagonal graph bridges survive conservative downsampling
+  ---
+  duration_ms: 3.6233
+  type: 'test'
+  ...
+# Subtest: stratigraphy order controls local bottom-to-top columns, top exposure routing, and only adjacent vertical links
+ok 268 - stratigraphy order controls local bottom-to-top columns, top exposure routing, and only adjacent vertical links
+  ---
+  duration_ms: 23.7998
+  type: 'test'
+  ...
+# Subtest: never couples masks that only share a coarse32 bin but have no 96-cell overlap
+ok 269 - never couples masks that only share a coarse32 bin but have no 96-cell overlap
+  ---
+  duration_ms: 1.4055
+  type: 'test'
+  ...
+# Subtest: uses A-to-C adjacency where the middle stratum is locally absent at 96-cell scale
+ok 270 - uses A-to-C adjacency where the middle stratum is locally absent at 96-cell scale
+  ---
+  duration_ms: 2.7915
+  type: 'test'
+  ...
+# Subtest: rejects a supplied exposure table that disagrees with frozen birth masks
+ok 271 - rejects a supplied exposure table that disagrees with frozen birth masks
+  ---
+  duration_ms: 2.0709
+  type: 'test'
+  ...
+# Subtest: packs nodules and couples only to the deepest valid local foundation plate
+ok 272 - packs nodules and couples only to the deepest valid local foundation plate
+  ---
+  duration_ms: 7.1571
+  type: 'test'
+  ...
+# Subtest: supports no born plates and enforces the explicit technical layer ceiling
+ok 273 - supports no born plates and enforces the explicit technical layer ceiling
+  ---
+  duration_ms: 46.1609
+  type: 'test'
+  ...
+# Subtest: Lab switches built-in models with one shared lazy AudioEngine
+ok 274 - Lab switches built-in models with one shared lazy AudioEngine
+  ---
+  duration_ms: 2.9523
+  type: 'test'
+  ...
+# Subtest: Lab latest request wins a pending init and destroys the stale candidate
+ok 275 - Lab latest request wins a pending init and destroys the stale candidate
+  ---
+  duration_ms: 1.2567
+  type: 'test'
+  ...
+# Subtest: default registry covers the physical models and visual ANT experiment
+ok 276 - default registry covers the physical models and visual ANT experiment
+  ---
+  duration_ms: 0.9909
+  type: 'test'
+  ...
+# Subtest: Lab can switch through ANT without giving it audio resources
+ok 277 - Lab can switch through ANT without giving it audio resources
+  ---
+  duration_ms: 73.9761
+  type: 'test'
+  ...
+# Subtest: destroying a Lab during model init disposes the late candidate
+ok 278 - destroying a Lab during model init disposes the late candidate
+  ---
+  duration_ms: 0.4537
+  type: 'test'
+  ...
+# Subtest: plate descriptors create immutable bottom-to-top cell columns and age never creates depth
+ok 279 - plate descriptors create immutable bottom-to-top cell columns and age never creates depth
+  ---
+  duration_ms: 4.8975
+  type: 'test'
+  ...
+# Subtest: cached topology lookup and stable plate index mapping expose only the uppermost material
+ok 280 - cached topology lookup and stable plate index mapping expose only the uppermost material
+  ---
+  duration_ms: 0.514
+  type: 'test'
+  ...
+# Subtest: FOOT_CONTACT counts each in-domain foot and ignores centroid, strength, malformed and out-of-domain data
+ok 281 - FOOT_CONTACT counts each in-domain foot and ignores centroid, strength, malformed and out-of-domain data
+  ---
+  duration_ms: 0.5759
+  type: 'test'
+  ...
+# Subtest: a nodule requires four overlapping plates, three buried layers, compaction, actual foot load and persistence
+ok 282 - a nodule requires four overlapping plates, three buried layers, compaction, actual foot load and persistence
+  ---
+  duration_ms: 3.2344
+  type: 'test'
+  ...
+# Subtest: elapsed simulation time alone cannot create a nodule without contact load or enough material history
+ok 283 - elapsed simulation time alone cannot create a nodule without contact load or enough material history
+  ---
+  duration_ms: 4.5081
+  type: 'test'
+  ...
+# Subtest: loss of a qualification condition resets persistence instead of banking old elapsed time
+ok 284 - loss of a qualification condition resets persistence instead of banking old elapsed time
+  ---
+  duration_ms: 2.5906
+  type: 'test'
+  ...
+# Subtest: metadata cap, read-only topology reuse and reset retain deterministic bounded state
+ok 285 - metadata cap, read-only topology reuse and reset retain deterministic bounded state
+  ---
+  duration_ms: 0.8327
+  type: 'test'
+  ...
+# Subtest: default metadata ceiling preserves more than the previous twelve plate limit without eviction
+ok 286 - default metadata ceiling preserves more than the previous twelve plate limit without eviction
+  ---
+  duration_ms: 1.0464
+  type: 'test'
+  ...
+# Subtest: fresh SSR import succeeds when browser-only globals throw on access
+ok 287 - fresh SSR import succeeds when browser-only globals throw on access
+  ---
+  duration_ms: 129.0346
+  type: 'test'
+  ...
+# Subtest: model modules and construction are safe without browser globals
+ok 288 - model modules and construction are safe without browser globals
+  ---
+  duration_ms: 3.3939
+  type: 'test'
+  ...
+# Subtest: model settings are JSON-safe copies and partial configuration preserves unrelated values
+ok 289 - model settings are JSON-safe copies and partial configuration preserves unrelated values
+  ---
+  duration_ms: 1.711
+  type: 'test'
+  ...
+# Subtest: zero-valued damping and pickup coordinates are retained by model state
+ok 290 - zero-valued damping and pickup coordinates are retained by model state
+  ---
+  duration_ms: 0.6898
+  type: 'test'
+  ...
+# Subtest: string inspector stepping preserves a stable delay line and produces finite samples
+ok 291 - string inspector stepping preserves a stable delay line and produces finite samples
+  ---
+  duration_ms: 1.0635
+  type: 'test'
+  ...
+# Subtest: worklet model uses message envelopes and cleans a worklet created after destroy
+ok 292 - worklet model uses message envelopes and cleans a worklet created after destroy
+  ---
+  duration_ms: 0.6048
+  type: 'test'
+  ...
+# Subtest: worklet model posts normalized strike payloads and removes its subscriptions on destroy
+ok 293 - worklet model posts normalized strike payloads and removes its subscriptions on destroy
+  ---
+  duration_ms: 0.5781
+  type: 'test'
+  ...
+# Subtest: stationary agents deposit no signal while traveled distance deposits finite field mass
+ok 294 - stationary agents deposit no signal while traveled distance deposits finite field mass
+  ---
+  duration_ms: 5.715
+  type: 'test'
+  ...
+# Subtest: segment deposition is approximately stable under path subdivision
+ok 295 - segment deposition is approximately stable under path subdivision
+  ---
+  duration_ms: 6.5038
+  type: 'test'
+  ...
+# Subtest: exponential decay honors half-life and composes over elapsed time
+ok 296 - exponential decay honors half-life and composes over elapsed time
+  ---
+  duration_ms: 0.6041
+  type: 'test'
+  ...
+# Subtest: reinforcement is bounded and snapshots do not expose live field storage
+ok 297 - reinforcement is bounded and snapshots do not expose live field storage
+  ---
+  duration_ms: 2.1129
+  type: 'test'
+  ...
+# Subtest: sampling returns no signal outside the observed square and preserves valid edge samples
+ok 298 - sampling returns no signal outside the observed square and preserves valid edge samples
+  ---
+  duration_ms: 0.8482
+  type: 'test'
+  ...
+# Subtest: segments outside the field leave no edge trail while crossing travel deposits only the in-domain length
+ok 299 - segments outside the field leave no edge trail while crossing travel deposits only the in-domain length
+  ---
+  duration_ms: 0.4998
+  type: 'test'
+  ...
+# Subtest: point deposition preserves a fixed amount with the existing brush and ignores outside points
+ok 300 - point deposition preserves a fixed amount with the existing brush and ignores outside points
+  ---
+  duration_ms: 1.46
+  type: 'test'
+  ...
+# Subtest: default half-life is fifteen seconds and abandoned traces retain one sixteenth after one minute
+ok 301 - default half-life is fifteen seconds and abandoned traces retain one sixteenth after one minute
+  ---
+  duration_ms: 4.3311
+  type: 'test'
+  ...
+# Subtest: simulation elapsed time is formatted as mm:ss and hh:mm:ss after an hour
+ok 302 - simulation elapsed time is formatted as mm:ss and hh:mm:ss after an hour
+  ---
+  duration_ms: 1.0492
+  type: 'test'
+  ...
+# Subtest: invalid and negative simulation times format safely as zero
+ok 303 - invalid and negative simulation times format safely as zero
+  ---
+  duration_ms: 0.2
+  type: 'test'
+  ...
+# Subtest: full-run preset is immutable and keeps fixed FFT, dBFS, gamma, overview, and detail axes
+ok 304 - full-run preset is immutable and keeps fixed FFT, dBFS, gamma, overview, and detail axes
+  ---
+  duration_ms: 2.3039
+  type: 'test'
+  ...
+# Subtest: zoom selection gives stable representative windows for 180s and 600s runs
+ok 305 - zoom selection gives stable representative windows for 180s and 600s runs
+  ---
+  duration_ms: 1.5797
+  type: 'test'
+  ...
+# Subtest: detail selection rejects short runs and does not duplicate the only complete ten-second window
+ok 306 - detail selection rejects short runs and does not duplicate the only complete ten-second window
+  ---
+  duration_ms: 1.0336
+  type: 'test'
+  ...
+# Subtest: overview maps actual continuous PCM and anchored events into fixed-size signal and contact panels
+ok 307 - overview maps actual continuous PCM and anchored events into fixed-size signal and contact panels
+  ---
+  duration_ms: 535.5251
+  type: 'test'
+  ...
+# Subtest: waveform and spectrogram timeline columns follow nonuniform simulation/audio clock anchors
+ok 308 - waveform and spectrogram timeline columns follow nonuniform simulation/audio clock anchors
+  ---
+  duration_ms: 286.1869
+  type: 'test'
+  ...
+# Subtest: ten-second zoom renderer accepts actual builder output with fixed grayscale pixel panels
+ok 309 - ten-second zoom renderer accepts actual builder output with fixed grayscale pixel panels
+  ---
+  duration_ms: 93.971
+  type: 'test'
+  ...
+# Subtest: WAV decoder accepts little-endian IEEE float32 stereo and rejects incompatible layouts
+ok 310 - WAV decoder accepts little-endian IEEE float32 stereo and rejects incompatible layouts
+  ---
+  duration_ms: 0.3503
+  type: 'test'
+  ...
+# Subtest: overview renderer keeps event and waveform styling grayscale, fixed-weight, and clear of spectra
+ok 311 - overview renderer keeps event and waveform styling grayscale, fixed-weight, and clear of spectra
+  ---
+  duration_ms: 0.6946
+  type: 'test'
+  ...
+# Subtest: overview rejects unanchored, mismatched, or non-continuous input contracts
+ok 312 - overview rejects unanchored, mismatched, or non-continuous input contracts
+  ---
+  duration_ms: 0.342
+  type: 'test'
+  ...
+# Subtest: pending note initialization is cancelled by stop or destroy without creating a source
+ok 313 - pending note initialization is cancelled by stop or destroy without creating a source
+  ---
+  duration_ms: 2.7083
+  type: 'test'
+  ...
+# Subtest: pending pattern initialization is cancelled by stop or destroy
+ok 314 - pending pattern initialization is cancelled by stop or destroy
+  ---
+  duration_ms: 1.2422
+  type: 'test'
+  ...
+# Subtest: strike reuses inspector noise and validates input before opening audio
+ok 315 - strike reuses inspector noise and validates input before opening audio
+  ---
+  duration_ms: 9.5111
+  type: 'test'
+  ...
+# Subtest: three-voice cap fades distinct oldest voices and source cleanup disconnects nodes
+ok 316 - three-voice cap fades distinct oldest voices and source cleanup disconnects nodes
+  ---
+  duration_ms: 10.6291
+  type: 'test'
+  ...
+# Subtest: pattern stop detaches callbacks and immediately disconnects scheduled voices
+ok 317 - pattern stop detaches callbacks and immediately disconnects scheduled voices
+  ---
+  duration_ms: 2.7734
+  type: 'test'
+  ...
+# Subtest: stores bounded immutable birth descriptors and recreates surfaces without replaying contacts
+ok 318 - stores bounded immutable birth descriptors and recreates surfaces without replaying contacts
+  ---
+  duration_ms: 279.6887
+  type: 'test'
+  ...
+# Subtest: routes each foot only to the uppermost overlapping plate and leaves unsupported energy unused
+ok 319 - routes each foot only to the uppermost overlapping plate and leaves unsupported energy unused
+  ---
+  duration_ms: 3.8694
+  type: 'test'
+  ...
+# Subtest: syncMaterial compiles exposure routing so buried overlapping layers receive no direct foot strikes
+ok 320 - syncMaterial compiles exposure routing so buried overlapping layers receive no direct foot strikes
+  ---
+  duration_ms: 7.2908
+  type: 'test'
+  ...
+# Subtest: syncPlates fallback compiles once per topology change and Off/On sends topology without replaying impacts
+ok 321 - syncPlates fallback compiles once per topology change and Off/On sends topology without replaying impacts
+  ---
+  duration_ms: 2.7115
+  type: 'test'
+  ...
+# Subtest: does not backlog contacts during load and Off cancels a pending enable without destroying AudioEngine
+ok 322 - does not backlog contacts during load and Off cancels a pending enable without destroying AudioEngine
+  ---
+  duration_ms: 4.1493
+  type: 'test'
+  ...
+# Subtest: a processor error disables and disconnects only the surface worklet
+ok 323 - a processor error disables and disconnects only the surface worklet
+  ---
+  duration_ms: 2.3073
+  type: 'test'
+  ...
+# Subtest: rejects empty or off-mask frozen surfaces before allocating worklet layers
+ok 324 - rejects empty or off-mask frozen surfaces before allocating worklet layers
+  ---
+  duration_ms: 0.4433
+  type: 'test'
+  ...
+# Subtest: SurfaceField uses the shared 96-square defaults and returns isolated snapshots
+ok 325 - SurfaceField uses the shared 96-square defaults and returns isolated snapshots
+  ---
+  duration_ms: 3.8993
+  type: 'test'
+  ...
+# Subtest: a FOOT_CONTACT compacts only its individual in-domain foot positions
+ok 326 - a FOOT_CONTACT compacts only its individual in-domain foot positions
+  ---
+  duration_ms: 1.5918
+  type: 'test'
+  ...
+# Subtest: contact deposition is deterministic and independent of event strength and global RNG
+ok 327 - contact deposition is deterministic and independent of event strength and global RNG
+  ---
+  duration_ms: 0.4153
+  type: 'test'
+  ...
+# Subtest: compaction saturates smoothly and response derives bounded material properties
+ok 328 - compaction saturates smoothly and response derives bounded material properties
+  ---
+  duration_ms: 7.3037
+  type: 'test'
+  ...
+# Subtest: valid edge contacts remain at their real positions and outside feet are ignored
+ok 329 - valid edge contacts remain at their real positions and outside feet are ignored
+  ---
+  duration_ms: 0.3974
+  type: 'test'
+  ...
+# Subtest: event validation skips malformed feet without discarding valid feet
+ok 330 - event validation skips malformed feet without discarding valid feet
+  ---
+  duration_ms: 0.4261
+  type: 'test'
+  ...
+# Subtest: bilinear samples are bounded and return empty material outside the domain
+ok 331 - bilinear samples are bounded and return empty material outside the domain
+  ---
+  duration_ms: 0.7964
+  type: 'test'
+  ...
+# Subtest: sampleSupport returns a numeric center-weighted local support value
+ok 332 - sampleSupport returns a numeric center-weighted local support value
+  ---
+  duration_ms: 0.2363
+  type: 'test'
+  ...
+# Subtest: relax uses the configured slow half-life and clear resets field metrics
+ok 333 - relax uses the configured slow half-life and clear resets field metrics
+  ---
+  duration_ms: 3.2234
+  type: 'test'
+  ...
+# Subtest: constructor rejects invalid dimensions, dose, radius, and half-life
+ok 334 - constructor rejects invalid dimensions, dose, radius, and half-life
+  ---
+  duration_ms: 0.8256
+  type: 'test'
+  ...
+# Subtest: compiled topology stays silent until contact, routes the exposed plate, and outputs stereo
+ok 335 - compiled topology stays silent until contact, routes the exposed plate, and outputs stereo
+  ---
+  duration_ms: 29.186
+  type: 'test'
+  ...
+# Subtest: same-point contact widths create measurably different spatial distributions at equal impulse energy
+ok 336 - same-point contact widths create measurably different spatial distributions at equal impulse energy
+  ---
+  duration_ms: 13.2674
+  type: 'test'
+  ...
+# Subtest: recompilation preserves vibration only for unchanged layer geometry and resets changed geometry
+ok 337 - recompilation preserves vibration only for unchanged layer geometry and resets changed geometry
+  ---
+  duration_ms: 10.2314
+  type: 'test'
+  ...
+# Subtest: local reciprocal overlap transfers vibration without coupling merely co-binned 96-grid masks
+ok 338 - local reciprocal overlap transfers vibration without coupling merely co-binned 96-grid masks
+  ---
+  duration_ms: 76.9728
+  type: 'test'
+  ...
+# Subtest: 44100 Hz fractional phase and interpolated output are invariant across process quantum splits
+ok 339 - 44100 Hz fractional phase and interpolated output are invariant across process quantum splits
+  ---
+  duration_ms: 10.2548
+  type: 'test'
+  ...
+# Subtest: quiet local nodes sleep after the tail threshold and later local contact wakes them
+ok 340 - quiet local nodes sleep after the tail threshold and later local contact wakes them
+  ---
+  duration_ms: 48.8473
+  type: 'test'
+  ...
+# Subtest: a fresh contact resets an awake node quiet timer before it can be truncated
+ok 341 - a fresh contact resets an awake node quiet timer before it can be truncated
+  ---
+  duration_ms: 3.8838
+  type: 'test'
+  ...
+# Subtest: coupled layers and 12 buried-sphere modes remain finite and dissipate over two seconds
+ok 342 - coupled layers and 12 buried-sphere modes remain finite and dissipate over two seconds
+  ---
+  duration_ms: 1550.2049
+  type: 'test'
+  ...
+# Subtest: limits topology to packed capacity and reports active/sleep/coupling telemetry
+ok 343 - limits topology to packed capacity and reports active/sleep/coupling telemetry
+  ---
+  duration_ms: 44.9195
+  type: 'test'
+  ...
+# Subtest: Plate pickup bypasses Sphere modal normalization before the existing limiter
+ok 344 - Plate pickup bypasses Sphere modal normalization before the existing limiter
+  ---
+  duration_ms: 5.7306
+  type: 'test'
+  ...
+# Subtest: rejects malformed packed topology without replacing active solver state
+ok 345 - rejects malformed packed topology without replacing active solver state
+  ---
+  duration_ms: 2.0947
+  type: 'test'
+  ...
+# Subtest: rejects pickup or stencil indices that cross physical layer boundaries
+ok 346 - rejects pickup or stencil indices that cross physical layer boundaries
+  ---
+  duration_ms: 2.6415
+  type: 'test'
+  ...
+# Subtest: stop clears output and destroy halts integration without replaying queued output
+ok 347 - stop clears output and destroy halts integration without replaying queued output
+  ---
+  duration_ms: 2.1822
+  type: 'test'
+  ...
+# Subtest: an isolated finite half-sine contact spans 18 steps and preserves baseline per-node impulse
+ok 348 - an isolated finite half-sine contact spans 18 steps and preserves baseline per-node impulse
+  ---
+  duration_ms: 8.7728
+  type: 'test'
+  ...
+# Subtest: local compliance attenuates rapid repeated contact, recovers, and leaves a distant contact fresh
+ok 349 - local compliance attenuates rapid repeated contact, recovers, and leaves a distant contact fresh
+  ---
+  duration_ms: 605.6103
+  type: 'test'
+  ...
+# Subtest: every valid overlapping contact is scheduled without a global gate and remains within its impulse budget
+ok 350 - every valid overlapping contact is scheduled without a global gate and remains within its impulse budget
+  ---
+  duration_ms: 98.5077
+  type: 'test'
+  ...
+# Subtest: same-geometry topology recompiles retain pulse phase and local recovery while changed geometry starts fresh
+ok 351 - same-geometry topology recompiles retain pulse phase and local recovery while changed geometry starts fresh
+  ---
+  duration_ms: 5.551
+  type: 'test'
+  ...
+# Subtest: stop removes all pending force and contact compliance without later replay
+ok 352 - stop removes all pending force and contact compliance without later replay
+  ---
+  duration_ms: 1.6843
+  type: 'test'
+  ...
+# Subtest: finite contacts remain sample-rate and quantum-split invariant with no non-finite or clipped output
+ok 353 - finite contacts remain sample-rate and quantum-split invariant with no non-finite or clipped output
+  ---
+  duration_ms: 96.4066
+  type: 'test'
+  ...
+# Subtest: Plate-only damping shortens measured pickup decay while preserving a resonant tail and frozen-material ordering
+ok 354 - Plate-only damping shortens measured pickup decay while preserving a resonant tail and frozen-material ordering
+  ---
+  duration_ms: 11088.3703
+  type: 'test'
+  ...
+# Subtest: Plate damping leaves finite-pulse scheduling, local compliance, and accepted dense event counts unchanged
+ok 355 - Plate damping leaves finite-pulse scheduling, local compliance, and accepted dense event counts unchanged
+  ---
+  duration_ms: 11386.7651
+  type: 'test'
+  ...
+# Subtest: Plate damping is finite and dissipative at 44.1, 48, and 96 kHz
+ok 356 - Plate damping is finite and dissipative at 44.1, 48, and 96 kHz
+  ---
+  duration_ms: 9289.9151
+  type: 'test'
+  ...
+# Subtest: after matching only Plate damping, unforced Plate/Z/Sphere recurrence matches historical baseline
+ok 357 - after matching only Plate damping, unforced Plate/Z/Sphere recurrence matches historical baseline
+  ---
+  duration_ms: 94.1981
+  type: 'test'
+  ...
+# Subtest: local annular chemical plus mechanical ridge births a frozen network after stable persistence
+ok 358 - local annular chemical plus mechanical ridge births a frozen network after stable persistence
+  ---
+  duration_ms: 210.2371
+  type: 'test'
+  ...
+# Subtest: short-lived trail signal cannot become a persistent plate and real fields are read without sensing calls
+ok 359 - short-lived trail signal cannot become a persistent plate and real fields are read without sensing calls
+  ---
+  duration_ms: 36.4776
+  type: 'test'
+  ...
+# Subtest: transverse route support changes ribbon width while retaining bounded physical geometry
+ok 360 - transverse route support changes ribbon width while retaining bounded physical geometry
+  ---
+  duration_ms: 135.3409
+  type: 'test'
+  ...
+# Subtest: distant qualifying branches survive skeleton pruning while short dead-end growth stays out of the plate
+ok 361 - distant qualifying branches survive skeleton pruning while short dead-end growth stays out of the plate
+  ---
+  duration_ms: 139.1586
+  type: 'test'
+  ...
+# Subtest: spawn-center pixels, remote trails, chemical-only ridges, and short paths cannot qualify
+ok 362 - spawn-center pixels, remote trails, chemical-only ridges, and short paths cannot qualify
+  ---
+  duration_ms: 48.4152
+  type: 'test'
+  ...
+# Subtest: real FOOT_CONTACT accumulation, corridor refractory, global spacing, and birth limit are explicit
+ok 363 - real FOOT_CONTACT accumulation, corridor refractory, global spacing, and birth limit are explicit
+  ---
+  duration_ms: 69.8965
+  type: 'test'
+  ...
+# Subtest: birth limit reports full and preserves existing descriptors without eviction
+ok 364 - birth limit reports full and preserves existing descriptors without eviction
+  ---
+  duration_ms: 76.1299
+  type: 'test'
+  ...
+# Subtest: plate worklet keeps pickup independent from strike and resolution changes
+ok 365 - plate worklet keeps pickup independent from strike and resolution changes
+  ---
+  duration_ms: 14.2054
+  type: 'test'
+  ...
+# Subtest: plate worklet renders finite audio at common sample rates and honors zero damping
+ok 366 - plate worklet renders finite audio at common sample rates and honors zero damping
+  ---
+  duration_ms: 72.9115
+  type: 'test'
+  ...
+# Subtest: simultaneous restrained ANT strikes stay bounded by the existing Plate queue and output limiter
+ok 367 - simultaneous restrained ANT strikes stay bounded by the existing Plate queue and output limiter
+  ---
+  duration_ms: 176.9308
+  type: 'test'
+  ...
+# Subtest: stereo Plate pickups observe one shared field and keep centered excitation balanced
+ok 368 - stereo Plate pickups observe one shared field and keep centered excitation balanced
+  ---
+  duration_ms: 26.8628
+  type: 'test'
+  ...
+# Subtest: asymmetric strike yields pickup-dependent stereo from the same Plate resonance history
+ok 369 - asymmetric strike yields pickup-dependent stereo from the same Plate resonance history
+  ---
+  duration_ms: 76.5195
+  type: 'test'
+  ...
+# Subtest: stereo pickup points and resonance history survive Plate grid changes, and stop silences both channels
+ok 370 - stereo pickup points and resonance history survive Plate grid changes, and stop silences both channels
+  ---
+  duration_ms: 20.2229
+  type: 'test'
+  ...
+# Subtest: stereo Plate output stays finite and limited at supported sample rates and grid qualities
+ok 371 - stereo Plate output stays finite and limited at supported sample rates and grid qualities
+  ---
+  duration_ms: 120.578
+  type: 'test'
+  ...
+# Subtest: Plate remains mono when no valid pair of stereo pickups is configured
+ok 372 - Plate remains mono when no valid pair of stereo pickups is configured
+  ---
+  duration_ms: 4.8824
+  type: 'test'
+  ...
+# Subtest: worklet protocol envelopes responses and destroyed processors stop rendering
+ok 373 - worklet protocol envelopes responses and destroyed processors stop rendering
+  ---
+  duration_ms: 5.4927
+  type: 'test'
+  ...
+# Subtest: sphere pickup changes modal output coefficients without resetting modal state
+ok 374 - sphere pickup changes modal output coefficients without resetting modal state
+  ---
+  duration_ms: 3.8814
+  type: 'test'
+  ...
+# Subtest: sphere partial damping configure refreshes modal decay without rebuilding state
+ok 375 - sphere partial damping configure refreshes modal decay without rebuilding state
+  ---
+  duration_ms: 3.0361
+  type: 'test'
+  ...
+# Subtest: sphere setPickup envelope updates coefficients while preserving modal runtime
+ok 376 - sphere setPickup envelope updates coefficients while preserving modal runtime
+  ---
+  duration_ms: 3.2864
+  type: 'test'
+  ...
+# Subtest: sphere zero-strength strike is inert and small positive strength excites modes
+ok 377 - sphere zero-strength strike is inert and small positive strength excites modes
+  ---
+  duration_ms: 4.2507
+  type: 'test'
+  ...
+# Subtest: sphere worklet ignores legacy unwrapped protocol messages
+ok 378 - sphere worklet ignores legacy unwrapped protocol messages
+  ---
+  duration_ms: 4.0699
+  type: 'test'
+  ...
+# Subtest: sphere renders finite nonzero audio at all supported qualities and sample rates
+ok 379 - sphere renders finite nonzero audio at all supported qualities and sample rates
+  ---
+  duration_ms: 110.2939
+  type: 'test'
+  ...
+# Subtest: refactored plate and sphere preserve the original DSP for matching settings
+ok 380 - refactored plate and sphere preserve the original DSP for matching settings
+  ---
+  duration_ms: 29.6371
+  type: 'test'
+  ...
+1..380
+# tests 380
+# suites 0
+# pass 380
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 35378.4607

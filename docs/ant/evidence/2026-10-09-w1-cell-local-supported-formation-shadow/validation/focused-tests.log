@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: actual point-contact age uses only the latest recorded contact at or before the observed endpoint
+ok 1 - actual point-contact age uses only the latest recorded contact at or before the observed endpoint
+  ---
+  duration_ms: 0.9744
+  type: 'test'
+  ...
+# Subtest: EMA carry-over is counted only while q is false and active remains true
+ok 2 - EMA carry-over is counted only while q is false and active remains true
+  ---
+  duration_ms: 0.1539
+  type: 'test'
+  ...
+# Subtest: existing episode summary keeps geometry and observed persistence separate
+ok 3 - existing episode summary keeps geometry and observed persistence separate
+  ---
+  duration_ms: 0.508
+  type: 'test'
+  ...
+# Subtest: milestone map preserves the fixed world extent and renders only observed cell rectangles
+ok 4 - milestone map preserves the fixed world extent and renders only observed cell rectangles
+  ---
+  duration_ms: 10.3852
+  type: 'test'
+  ...
+# Subtest: full timeline ends at the exact final observation time
+ok 5 - full timeline ends at the exact final observation time
+  ---
+  duration_ms: 0.8363
+  type: 'test'
+  ...
+# Subtest: eligible cells closing at one observation form deterministic 8-connected endpoint geometry only
+ok 6 - eligible cells closing at one observation form deterministic 8-connected endpoint geometry only
+  ---
+  duration_ms: 1.5129
+  type: 'test'
+  ...
+# Subtest: 20-second spells retain identity provenance and classify q-off, active-off and both
+ok 7 - 20-second spells retain identity provenance and classify q-off, active-off and both
+  ---
+  duration_ms: 0.374
+  type: 'test'
+  ...
+# Subtest: repeat local materialization records overlap without increasing unique area
+ok 8 - repeat local materialization records overlap without increasing unique area
+  ---
+  duration_ms: 0.3544
+  type: 'test'
+  ...
+# Subtest: right-censored spells do not materialize and prior prefix snapshots do not acquire future events
+ok 9 - right-censored spells do not materialize and prior prefix snapshots do not acquire future events
+  ---
+  duration_ms: 0.3608
+  type: 'test'
+  ...
+# Subtest: rejects invalid masks, ownership and nonsequential observations without using RNG
+ok 10 - rejects invalid masks, ownership and nonsequential observations without using RNG
+  ---
+  duration_ms: 0.9497
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 45.9735
