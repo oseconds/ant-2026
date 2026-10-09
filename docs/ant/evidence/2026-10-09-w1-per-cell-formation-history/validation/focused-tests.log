@@ -1,0 +1,478 @@
+TAP version 13
+# Subtest: straight corridor reports exact area and two skeleton endpoints
+ok 1 - straight corridor reports exact area and two skeleton endpoints
+  ---
+  duration_ms: 2.6473
+  type: 'test'
+  ...
+# Subtest: T corridor reports three endpoints and a junction proxy
+ok 2 - T corridor reports three endpoints and a junction proxy
+  ---
+  duration_ms: 0.2208
+  type: 'test'
+  ...
+# Subtest: closed ring has one true hole and one skeleton graph cycle
+ok 3 - closed ring has one true hole and one skeleton graph cycle
+  ---
+  duration_ms: 0.2277
+  type: 'test'
+  ...
+# Subtest: diagonal contact joins foreground without adding graph cycles
+ok 4 - diagonal contact joins foreground without adding graph cycles
+  ---
+  duration_ms: 0.1485
+  type: 'test'
+  ...
+# Subtest: filled 2x2 patch has no fake hole or skeleton graph cycle
+ok 5 - filled 2x2 patch has no fake hole or skeleton graph cycle
+  ---
+  duration_ms: 0.4339
+  type: 'test'
+  ...
+# Subtest: isolated pixel remains one skeleton node and one graph component
+ok 6 - isolated pixel remains one skeleton node and one graph component
+  ---
+  duration_ms: 0.1434
+  type: 'test'
+  ...
+# Subtest: thin branch adjacent to filled patch stays connected through thinning
+ok 7 - thin branch adjacent to filled patch stays connected through thinning
+  ---
+  duration_ms: 0.2176
+  type: 'test'
+  ...
+# Subtest: thick ring retains one cycle while equally bounded filled blob has none
+ok 8 - thick ring retains one cycle while equally bounded filled blob has none
+  ---
+  duration_ms: 0.9157
+  type: 'test'
+  ...
+# Subtest: separated islands classify annulus adjacency and raster-boundary contact
+ok 9 - separated islands classify annulus adjacency and raster-boundary contact
+  ---
+  duration_ms: 0.4366
+  type: 'test'
+  ...
+# Subtest: background opening to raster edge is not a hole
+ok 10 - background opening to raster edge is not a hole
+  ---
+  duration_ms: 0.4164
+  type: 'test'
+  ...
+# Subtest: rejects malformed dimensions and masks
+ok 11 - rejects malformed dimensions and masks
+  ---
+  duration_ms: 0.3503
+  type: 'test'
+  ...
+# Subtest: W1 novelty and mismatch count exact binary intersections
+ok 12 - W1 novelty and mismatch count exact binary intersections
+  ---
+  duration_ms: 0.1751
+  type: 'test'
+  ...
+# Subtest: W1 geometry helpers reject invalid indices and nonbinary masks
+ok 13 - W1 geometry helpers reject invalid indices and nonbinary masks
+  ---
+  duration_ms: 3.3533
+  type: 'test'
+  ...
+# Subtest: W1 preserves full episode geometry across character gaps and keeps attribution causal
+ok 14 - W1 preserves full episode geometry across character gaps and keeps attribution causal
+  ---
+  duration_ms: 297.8752
+  type: 'test'
+  ...
+# Subtest: baseline normalizer preserves processing IDs, component order and later same-frame redirect
+ok 15 - baseline normalizer preserves processing IDs, component order and later same-frame redirect
+  ---
+  duration_ms: 0.2829
+  type: 'test'
+  ...
+# Subtest: candidate normalizer transfers actual merges only, excluding split provenance
+ok 16 - candidate normalizer transfers actual merges only, excluding split provenance
+  ---
+  duration_ms: 0.0828
+  type: 'test'
+  ...
+# Subtest: representative selection uses recorded largest multi-cell and earliest actual one-cell only
+ok 17 - representative selection uses recorded largest multi-cell and earliest actual one-cell only
+  ---
+  duration_ms: 0.1267
+  type: 'test'
+  ...
+# Subtest: summary separates cell unions from sample denominators and reports unavailable ages
+ok 18 - summary separates cell unions from sample denominators and reports unavailable ages
+  ---
+  duration_ms: 0.5308
+  type: 'test'
+  ...
+# Subtest: actual merge transfers source admissions and owned active samples, without direct-credit leakage
+ok 19 - actual merge transfers source admissions and owned active samples, without direct-credit leakage
+  ---
+  duration_ms: 1.2977
+  type: 'test'
+  ...
+# Subtest: same-frame source admission then transfer preserves operation order and separates direct/import overlap
+ok 20 - same-frame source admission then transfer preserves operation order and separates direct/import overlap
+  ---
+  duration_ms: 0.5266
+  type: 'test'
+  ...
+# Subtest: union overlap records direct plus imported rows while split provenance alone is not transferred
+ok 21 - union overlap records direct plus imported rows while split provenance alone is not transferred
+  ---
+  duration_ms: 0.3622
+  type: 'test'
+  ...
+# Subtest: rejects invalid frame order, duplicate cell owners and invalid grid indices
+ok 22 - rejects invalid frame order, duplicate cell owners and invalid grid indices
+  ---
+  duration_ms: 0.4709
+  type: 'test'
+  ...
+# Subtest: prefix snapshot is identical when future flags and foot events already exist in the input
+ok 23 - prefix snapshot is identical when future flags and foot events already exist in the input
+  ---
+  duration_ms: 0.4238
+  type: 'test'
+  ...
+# Subtest: multi-hop actual transfers preserve earliest admission and do not mark ordinary earlier history ambiguous
+ok 24 - multi-hop actual transfers preserve earliest admission and do not mark ordinary earlier history ambiguous
+  ---
+  duration_ms: 0.4422
+  type: 'test'
+  ...
+# Subtest: owned and global spells use archived timestamps and remain separate under another identity reactivation
+ok 25 - owned and global spells use archived timestamps and remain separate under another identity reactivation
+  ---
+  duration_ms: 0.1703
+  type: 'test'
+  ...
+# Subtest: nematic order is one for reversed travel, zero for perpendicular travel, near zero when isotropic
+ok 26 - nematic order is one for reversed travel, zero for perpendicular travel, near zero when isotropic
+  ---
+  duration_ms: 0.378
+  type: 'test'
+  ...
+# Subtest: consolidation averages each cell fraction, independent of cell area and interval length
+ok 27 - consolidation averages each cell fraction, independent of cell area and interval length
+  ---
+  duration_ms: 0.4044
+  type: 'test'
+  ...
+# Subtest: initial admission and closure observations count in consolidation
+ok 28 - initial admission and closure observations count in consolidation
+  ---
+  duration_ms: 0.0585
+  type: 'test'
+  ...
+# Subtest: duplicate feet in one ant movement segment contribute once and retain source-time evidence
+ok 29 - duplicate feet in one ant movement segment contribute once and retain source-time evidence
+  ---
+  duration_ms: 0.0778
+  type: 'test'
+  ...
+# Subtest: future frames cannot change a closed episode character
+ok 30 - future frames cannot change a closed episode character
+  ---
+  duration_ms: 0.0926
+  type: 'test'
+  ...
+# Subtest: the prior cell 5636 gap is covered by cumulative same-cell contact history
+ok 31 - the prior cell 5636 gap is covered by cumulative same-cell contact history
+  ---
+  duration_ms: 1.2924
+  type: 'test'
+  ...
+# Subtest: cell 7239 early direction contacts remain eligible before admission
+ok 32 - cell 7239 early direction contacts remain eligible before admission
+  ---
+  duration_ms: 1.306
+  type: 'test'
+  ...
+# Subtest: direction contacts use zero through closure, same-cell geometry, and endpoint epsilon
+ok 33 - direction contacts use zero through closure, same-cell geometry, and endpoint epsilon
+  ---
+  duration_ms: 0.0927
+  type: 'test'
+  ...
+# Subtest: deduplication is independent of foot-row order and early contacts leave consolidation unchanged
+ok 34 - deduplication is independent of foot-row order and early contacts leave consolidation unchanged
+  ---
+  duration_ms: 0.1185
+  type: 'test'
+  ...
+# Subtest: direction segments cannot use future samples and cannot span more than one 60 Hz tick
+ok 35 - direction segments cannot use future samples and cannot span more than one 60 Hz tick
+  ---
+  duration_ms: 0.1855
+  type: 'test'
+  ...
+# Subtest: invalid cell indices and nonfinite inputs fail, and missing travel is a typed data gap
+ok 36 - invalid cell indices and nonfinite inputs fail, and missing travel is a typed data gap
+  ---
+  duration_ms: 0.2106
+  type: 'test'
+  ...
+# Subtest: summary and rank correlations report descriptive values without p-values
+ok 37 - summary and rank correlations report descriptive values without p-values
+  ---
+  duration_ms: 0.2326
+  type: 'test'
+  ...
+# Subtest: W1 continuity observer preserves source geometry through a merge then split
+ok 38 - W1 continuity observer preserves source geometry through a merge then split
+  ---
+  duration_ms: 15.3123
+  type: 'test'
+  ...
+# Subtest: W1 component labels resolve aliases created by a later merge in the same frame
+ok 39 - W1 component labels resolve aliases created by a later merge in the same frame
+  ---
+  duration_ms: 0.0877
+  type: 'test'
+  ...
+# Subtest: W1 merge counter distinguishes split siblings from distinct parent episodes
+ok 40 - W1 merge counter distinguishes split siblings from distinct parent episodes
+  ---
+  duration_ms: 0.0543
+  type: 'test'
+  ...
+# Subtest: W1 summary separates raw cohort admissions from canonical first admissions and event classes
+ok 41 - W1 summary separates raw cohort admissions from canonical first admissions and event classes
+  ---
+  duration_ms: 0.8167
+  type: 'test'
+  ...
+# Subtest: W1 persisted frame compaction drops repeated lineage geometry without mutating replay state
+ok 42 - W1 persisted frame compaction drops repeated lineage geometry without mutating replay state
+  ---
+  duration_ms: 0.1737
+  type: 'test'
+  ...
+# Subtest: W1 admission contact lookback is same-cell and never reads a future event
+ok 43 - W1 admission contact lookback is same-cell and never reads a future event
+  ---
+  duration_ms: 0.3664
+  type: 'test'
+  ...
+# Subtest: W1 active-cell q=false rows expose EMA carry-over without changing activation
+ok 44 - W1 active-cell q=false rows expose EMA carry-over without changing activation
+  ---
+  duration_ms: 3.6645
+  type: 'test'
+  ...
+# Subtest: W1 input validation rejects invalid time, flags, and out-of-grid contacts
+ok 45 - W1 input validation rejects invalid time, flags, and out-of-grid contacts
+  ---
+  duration_ms: 0.3524
+  type: 'test'
+  ...
+# Subtest: W1 observer replay is deterministic and consumes no random values
+ok 46 - W1 observer replay is deterministic and consumes no random values
+  ---
+  duration_ms: 0.5738
+  type: 'test'
+  ...
+# Subtest: requires all frozen evidence bits and one q frame cannot activate a cell
+ok 47 - requires all frozen evidence bits and one q frame cannot activate a cell
+  ---
+  duration_ms: 0.1936
+  type: 'test'
+  ...
+# Subtest: constant q forms one finite episode, then closes without horizon eviction
+ok 48 - constant q forms one finite episode, then closes without horizon eviction
+  ---
+  duration_ms: 1.515
+  type: 'test'
+  ...
+# Subtest: short closed candidates report discard reason; a later pulse can rematerialize
+ok 49 - short closed candidates report discard reason; a later pulse can rematerialize
+  ---
+  duration_ms: 0.2772
+  type: 'test'
+  ...
+# Subtest: spatial split and rejoin preserve one historical episode and count events once
+ok 50 - spatial split and rejoin preserve one historical episode and count events once
+  ---
+  duration_ms: 0.3078
+  type: 'test'
+  ...
+# Subtest: merge retains every parent identity and the complete cell union
+ok 51 - merge retains every parent identity and the complete cell union
+  ---
+  duration_ms: 0.2451
+  type: 'test'
+  ...
+# Subtest: split descendants stay on canonical lineage when another branch cross-merges their parent
+ok 52 - split descendants stay on canonical lineage when another branch cross-merges their parent
+  ---
+  duration_ms: 0.677
+  type: 'test'
+  ...
+# Subtest: ring geometry remains the exact admitted union without dilation
+ok 53 - ring geometry remains the exact admitted union without dilation
+  ---
+  duration_ms: 0.148
+  type: 'test'
+  ...
+# Subtest: invalid inputs are rejected atomically before time or state advances
+ok 54 - invalid inputs are rejected atomically before time or state advances
+  ---
+  duration_ms: 0.2558
+  type: 'test'
+  ...
+# Subtest: future perturbations cannot change prior snapshots
+ok 55 - future perturbations cannot change prior snapshots
+  ---
+  duration_ms: 0.2701
+  type: 'test'
+  ...
+# Subtest: all EMA state bounds remain finite and inside [0, 1]
+ok 56 - all EMA state bounds remain finite and inside [0, 1]
+  ---
+  duration_ms: 0.4786
+  type: 'test'
+  ...
+# Subtest: direction uses latest completed consecutive displacement and ignores future frames
+ok 57 - direction uses latest completed consecutive displacement and ignores future frames
+  ---
+  duration_ms: 0.7886
+  type: 'test'
+  ...
+# Subtest: missing direction stays missing at zero displacement and recording edge
+ok 58 - missing direction stays missing at zero displacement and recording edge
+  ---
+  duration_ms: 0.2035
+  type: 'test'
+  ...
+# Subtest: stable-ID lifecycle gap rejects trajectory instead of bridging direction
+ok 59 - stable-ID lifecycle gap rejects trajectory instead of bridging direction
+  ---
+  duration_ms: 0.2699
+  type: 'test'
+  ...
+# Subtest: nematic representation is invariant to reversed direction
+ok 60 - nematic representation is invariant to reversed direction
+  ---
+  duration_ms: 0.179
+  type: 'test'
+  ...
+# Subtest: unordered foot groups sort on a copy and bucket by causal field interval
+ok 61 - unordered foot groups sort on a copy and bucket by causal field interval
+  ---
+  duration_ms: 0.6551
+  type: 'test'
+  ...
+# Subtest: malformed trajectory byte packet fails before indexing
+ok 62 - malformed trajectory byte packet fails before indexing
+  ---
+  duration_ms: 0.6001
+  type: 'test'
+  ...
+# Subtest: archived seed loader verifies packet and committed source hashes
+ok 63 - archived seed loader verifies packet and committed source hashes
+  ---
+  duration_ms: 600.462
+  type: 'test'
+  ...
+# Subtest: shadow adapter preserves the complete old measurement function and rejects source drift
+ok 64 - shadow adapter preserves the complete old measurement function and rejects source drift
+  ---
+  duration_ms: 1.3866
+  type: 'test'
+  ...
+# Subtest: shadow analysis preserves unsplit geometry, attribution windows and character values
+ok 65 - shadow analysis preserves unsplit geometry, attribution windows and character values
+  ---
+  duration_ms: 166.5637
+  type: 'test'
+  ...
+# Subtest: analysis distributions, CSV and finite self-checks handle empty and exceptional values
+ok 66 - analysis distributions, CSV and finite self-checks handle empty and exceptional values
+  ---
+  duration_ms: 0.581
+  type: 'test'
+  ...
+# Subtest: split-child fates distinguish independent closure from later absorption and censoring
+ok 67 - split-child fates distinguish independent closure from later absorption and censoring
+  ---
+  duration_ms: 0.3647
+  type: 'test'
+  ...
+# Subtest: larger exact overlap inherits; losing child gets a fresh fork with no copied state
+ok 68 - larger exact overlap inherits; losing child gets a fresh fork with no copied state
+  ---
+  duration_ms: 0.9167
+  type: 'test'
+  ...
+# Subtest: equal overlap tie routes to lower deterministic current component label
+ok 69 - equal overlap tie routes to lower deterministic current component label
+  ---
+  duration_ms: 0.7095
+  type: 'test'
+  ...
+# Subtest: crossing overlaps route each parent once and leave losing edges as provenance only
+ok 70 - crossing overlaps route each parent once and leave losing edges as provenance only
+  ---
+  duration_ms: 0.1959
+  type: 'test'
+  ...
+# Subtest: crossing split routes each child to one parent and records the other edge as provenance
+ok 71 - crossing split routes each child to one parent and records the other edge as provenance
+  ---
+  duration_ms: 1.8001
+  type: 'test'
+  ...
+# Subtest: split fork closes independently while inherited child remains active
+ok 72 - split fork closes independently while inherited child remains active
+  ---
+  duration_ms: 1.0846
+  type: 'test'
+  ...
+# Subtest: pure merge retains original canonical identity and admitted union
+ok 73 - pure merge retains original canonical identity and admitted union
+  ---
+  duration_ms: 1.2613
+  type: 'test'
+  ...
+# Subtest: later merge uses only routed parents and preserves prior split provenance
+ok 74 - later merge uses only routed parents and preserves prior split provenance
+  ---
+  duration_ms: 1.4066
+  type: 'test'
+  ...
+# Subtest: no-split replay preserves original active masks, EMA bounds and episode recurrence
+ok 75 - no-split replay preserves original active masks, EMA bounds and episode recurrence
+  ---
+  duration_ms: 1.5631
+  type: 'test'
+  ...
+# Subtest: invalid and future frames are atomic and candidate consumes no RNG
+ok 76 - invalid and future frames are atomic and candidate consumes no RNG
+  ---
+  duration_ms: 0.5295
+  type: 'test'
+  ...
+# Subtest: replay is deterministic and all emitted numeric state is finite
+ok 77 - replay is deterministic and all emitted numeric state is finite
+  ---
+  duration_ms: 3.8702
+  type: 'test'
+  ...
+# Subtest: only split routing and provenance metadata differ from original implementation
+ok 78 - only split routing and provenance metadata differ from original implementation
+  ---
+  duration_ms: 0.705
+  type: 'test'
+  ...
+1..78
+# tests 78
+# suites 0
+# pass 78
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1166.7649

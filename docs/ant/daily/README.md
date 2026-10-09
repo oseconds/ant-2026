@@ -14,6 +14,17 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-09 — W1 per-cell formation-history audit
+
+[Chronology](./2026-10-09-w1-per-cell-formation-history.md) · [Evidence](../evidence/2026-10-09-w1-per-cell-formation-history/README.md)
+
+- Read-only original/max-overlap replay preserves all 3,594 condition-frames and complete geometry/character
+- ID 0 unique growth is 71–74% direct first admission; actual merge-first history is 26–29%, with extensive later overlap
+- 62–72% of final root footprint is not currently owned active; global activity is reported separately
+- Broad cell temporal/support variation also occurs within actual frozen episodes; chemical/mechanical duties coincide here
+- 78 focused / 370 full tests, build and 43-file independent byte reproduction pass
+- Historical footprint/material contribution separation is a next hypothesis only; no function, weighted mask or rule change
+
 ### 2026-10-09 — W1 max-overlap split inheritance shadow: Mixed
 
 [Chronology](./2026-10-09-w1-max-overlap-split-shadow.md) · [Evidence](../evidence/2026-10-09-w1-max-overlap-split-shadow/README.md)

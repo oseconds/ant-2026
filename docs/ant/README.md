@@ -295,6 +295,8 @@ SOCIAL OBSERVATION
 
 Production movement, `TrailPlateBirth`, stratigraphy and audio remain unchanged until each new causal link is separately tested and authorized.
 
+The subsequent [per-cell formation-history audit](evidence/2026-10-09-w1-per-cell-formation-history/README.md) is read-only and preserves both W1 conditions exactly. ID 0's unique union growth is mainly direct first admission (71–74% in the split candidate), with 26–29% merge-first entry and extensive later imported overlap. Its cells have broad temporal/support histories; 62–72% of final union is not currently owned active, while some positions are active under other identities. Actual frozen episodes also contain nonuniform cell histories. Chemical/mechanical/joint predicate duties coincide in the analyzed windows and cannot identify separate physical contributions. This supports questioning historical footprint as uniform material geometry, but selects no material contribution function or new geometry rule. [Chronology](daily/2026-10-09-w1-per-cell-formation-history.md) records the next hypothesis only; W1 viability and later links remain gated.
+
 ## Evidence index
 
 ### Behavior / movement
@@ -310,6 +312,7 @@ Production movement, `TrailPlateBirth`, stratigraphy and audio remain unchanged 
 
 ### Material / audio
 
+- [W1 per-cell formation-history audit — heterogeneous history verified; no material contribution function selected](evidence/2026-10-09-w1-per-cell-formation-history/README.md)
 - [W1 max-overlap split inheritance shadow — Mixed; independent closure improves, giant active core and re-inscription remain](evidence/2026-10-09-w1-max-overlap-split-shadow/README.md)
 - [W1 continuity / closure diagnosis — verified overlap retention; stale-contact contribution remains partly unidentified](evidence/2026-10-09-w1-continuity-diagnostic/README.md)
 - [W1 causal-attribution continuation — complete three-seed analysis; coherent formation remains negative](evidence/2026-10-08-w1-causal-character-attribution/README.md)
