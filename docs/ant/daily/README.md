@@ -14,6 +14,18 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-09 — W1 spatiotemporal local-coherence audit: Mixed
+
+[Chronology](./2026-10-09-w1-spatiotemporal-local-coherence-audit.md) · [Evidence](../evidence/2026-10-09-w1-spatiotemporal-local-coherence-audit/README.md)
+
+- Exact shared q-and-active observations on distinct 8-neighbor cells connect terminated eligible spells; no gap rule or future projection
+- Across three causal prefixes the largest component grows from 4.9–8.9% at 120 s to 94.0–96.8% of eligible spells at 599.25 s
+- 98.3–98.6% of earlier same-frame events lie in groups with multiple old events, while 66.9% of final groups remain single-cell
+- Final unique-cell area is exactly unchanged at 17,195 cells; 6,915 still-open spells stay right-censored
+- Mixed result: fragmentation and giant chaining coexist; q/cumulative contact and EMA carry-over remain material-interpretation risks
+- Original/max-overlap/history deep-equality, 1,797 parity frames, 8 focused / 388 full tests, build, and 16-file independent byte reproduction pass
+- No material rule, threshold, production change, natural rerun, merge, or PR
+
 ### 2026-10-09 — W1 cell-local supported-formation shadow: Negative
 
 [Chronology](./2026-10-09-w1-cell-local-supported-formation-shadow.md) · [Evidence](../evidence/2026-10-09-w1-cell-local-supported-formation-shadow/README.md)

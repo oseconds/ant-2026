@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: 8-neighbor grid edges stay within rows and world boundaries
+ok 1 - 8-neighbor grid edges stay within rows and world boundaries
+  ---
+  duration_ms: 0.9622
+  type: 'test'
+  ...
+# Subtest: edge requires distinct neighboring cells and one exact shared supported frame
+ok 2 - edge requires distinct neighboring cells and one exact shared supported frame
+  ---
+  duration_ms: 0.1348
+  type: 'test'
+  ...
+# Subtest: prefix membership waits for the observed spell termination and edge availability frame
+ok 3 - prefix membership waits for the observed spell termination and edge availability frame
+  ---
+  duration_ms: 0.1219
+  type: 'test'
+  ...
+# Subtest: spell span uses its observed start and last-supported frames before termination
+ok 4 - spell span uses its observed start and last-supported frames before termination
+  ---
+  duration_ms: 3.1518
+  type: 'test'
+  ...
+# Subtest: archived CSV parsing preserves quoted commas, escaped quotes and exact cell arrays
+ok 5 - archived CSV parsing preserves quoted commas, escaped quotes and exact cell arrays
+  ---
+  duration_ms: 0.3913
+  type: 'test'
+  ...
+# Subtest: same-frame event reconstruction is deterministic and keeps separate frames apart
+ok 6 - same-frame event reconstruction is deterministic and keeps separate frames apart
+  ---
+  duration_ms: 0.3083
+  type: 'test'
+  ...
+# Subtest: representative group selection uses deterministic size and time tie breaks
+ok 7 - representative group selection uses deterministic size and time tie breaks
+  ---
+  duration_ms: 0.1818
+  type: 'test'
+  ...
+# Subtest: milestone maps render only archived cells on the same 96×96 scale
+ok 8 - milestone maps render only archived cells on the same 96×96 scale
+  ---
+  duration_ms: 10.6633
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 47.0953
