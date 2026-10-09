@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-10",
+  "focusedTest": {
+    "passed": 5,
+    "exitCode": 0,
+    "command": "node --experimental-test-isolation=none --test tests/ant-w1-raw-field-contact-audit.test.js",
+    "failed": 0
+  },
+  "fullNpmTest": {
+    "failed": 0,
+    "passed": 393,
+    "skipped": 0,
+    "command": "npm test",
+    "exitCode": 0,
+    "workerIsolation": "default Node test runner; command run after sandbox child-process permission review",
+    "total": 393
+  },
+  "build": {
+    "modulesTransformed": 408,
+    "exitCode": 0,
+    "command": "npm run build",
+    "existingWarnings": [
+      "Rollup removed a comment annotation in zod/v4/core/util.js",
+      "application chunk exceeds 500 kB: app bundle 1,161.66 kB minified / 341.44 kB gzip"
+    ]
+  },
+  "sandboxDiagnostics": "Default sandbox process creation initially returned EPERM. The no-isolation diagnostic retained under sandbox-* logs fails only where model-contract.test.js launches a nested Node process. The unchanged npm test and build commands both passed after sandbox permission review."
+}
