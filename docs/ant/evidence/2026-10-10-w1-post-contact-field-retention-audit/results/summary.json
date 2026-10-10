@@ -1,0 +1,1028 @@
+{
+  "status": "complete",
+  "startingHead": "eb520969fd88fb8c60deb6b46c96f7afd7dfff3f",
+  "branch": "ant-w1-episodic-material-shadow",
+  "seedOrder": [
+    20261005,
+    20261006,
+    20261007
+  ],
+  "observationsPerSeed": 599,
+  "finalObservedTimeSeconds": 599.2500000000696,
+  "decision": "Informative / Mixed",
+  "decisionRationale": "Observed continuous field states and deltas add temporal detail within unchanged binary q and historical regions. The archived surface is reproduced exactly by the existing per-tick SurfaceField relaxation plus actual FOOT_CONTACT deposits; support is an exact conditional sample of that surface. chemicalMemory continues its existing 20-second EMA update from the pheromone field, but the frozen contact archive does not identify all chemical movement/deposition inputs. The extra state is observable, while an independent material-forming process is not identified.",
+  "scope": "Read-only post-contact field retention audit. No material birth, contribution, threshold, weight, geometry, state, closure, or production change.",
+  "implementationMeaning": {
+    "surface": {
+      "halfLifeSeconds": 1800,
+      "updateOrder": "SurfaceField.relax(dt) at each controller tick, then actual FOOT_CONTACT events are applied point-by-point during that tick.",
+      "deposit": {
+        "radius": 0.012,
+        "dose": 0.025,
+        "spatialFootprint": "exact SurfaceField.depositContact radius and weight over cell centers; no additional distance rule"
+      }
+    },
+    "chemicalMemory": {
+      "update": "TrailPlateBirth.updateChemicalMemory samples the decayed/deposited PheromoneField and approaches the bounded sample with alpha = 1 - exp(-elapsedSeconds / 20).",
+      "pheromoneHalfLifeSeconds": 15,
+      "appliesDirectlyToChemicalMemory": false,
+      "chemicalInputPathFullyReconstructed": false
+    },
+    "support": {
+      "derivedFrom": "SurfaceField.sampleSupport at each 96x96 cell center with the existing 0.025 radius",
+      "sampledOnlyWhen": "chemicalMemory >= 0.3",
+      "unqualifiedStorage": "zero-filled and therefore conditionally unobserved",
+      "surfaceIsDistinctFromSupport": true
+    }
+  },
+  "contactTiming": {
+    "pointCountAndDistinctTimestampCountSeparate": true,
+    "sameCellMapping": "round normalized x and y to 96x96 row-major cell centers, matching existing W1 input audit.",
+    "surfaceNeighborhood": "exact SurfaceField contact deposit footprint derived from source radius and kernel; no hand-selected radius.",
+    "ageBandsSeconds": {
+      "never": "no contact observed",
+      "0-20": "[0,20]",
+      "20-90": "(20,90]",
+      ">90": "(90, final cutoff]"
+    },
+    "finalUnfinishedNoContactIntervals": "right-censored at 599.25 s; never-contacted cells are reported separately."
+  },
+  "matching": {
+    "checkpoints": [
+      120,
+      300,
+      480,
+      599.25
+    ],
+    "startMagnitudeBins": 8,
+    "magnitudeBinRanges": {
+      "chemicalMemory": [
+        0,
+        0.9519418
+      ],
+      "surface": [
+        0,
+        0.9761037
+      ],
+      "support": [
+        0,
+        0.9651266
+      ]
+    },
+    "strata": [
+      "same observed checkpoint",
+      "current q",
+      "current active",
+      "ID 0 historical union membership",
+      "q transition",
+      "common prior-field magnitude bin",
+      "same-cell / exact neighboring surface-footprint-only / no footprint input"
+    ],
+    "binsAreDescriptiveOnly": true,
+    "noInferenceFromCellIntervalsAsIndependentReplicates": true
+  },
+  "fields": {
+    "chemicalMemory": {
+      "unit": "dimensionless model EMA value",
+      "range": [
+        0,
+        0.9519418
+      ]
+    },
+    "surface": {
+      "unit": "SurfaceField normalized compaction/hardness model state [0,1]",
+      "range": [
+        0,
+        0.9761037
+      ]
+    },
+    "support": {
+      "unit": "conditional sampled SurfaceField neighborhood scalar, not calibrated force",
+      "range": [
+        0,
+        0.9651266
+      ]
+    }
+  },
+  "displayScales": {
+    "fixedWorld": [
+      0,
+      96,
+      0,
+      96
+    ],
+    "imshowInterpolation": "nearest",
+    "fieldRanges": {
+      "chemicalMemory": [
+        0,
+        0.9519418
+      ],
+      "surface": [
+        0,
+        0.9761037
+      ],
+      "support": [
+        0,
+        0.9651266
+      ]
+    },
+    "deltaRanges": {
+      "chemicalMemory": [
+        -0.0450722835958004,
+        0.0450722835958004
+      ],
+      "support": [
+        -0.9224969148635864,
+        0.9224969148635864
+      ],
+      "surface": [
+        -0.08816826343536377,
+        0.08816826343536377
+      ]
+    },
+    "contactAgeSeconds": [
+      0,
+      599.25
+    ],
+    "surfacePassiveResidual": [
+      -0.08823442459106445,
+      0.08823442459106445
+    ],
+    "perPanelNormalization": false
+  },
+  "validations": {
+    "frozenInputsAndPriorEvidenceBefore": {
+      "docs/ant/evidence/2026-10-08-interior-endpoint-shadow/data/replay-verification.json": {
+        "path": "docs/ant/evidence/2026-10-08-interior-endpoint-shadow/data/replay-verification.json",
+        "bytes": 54556,
+        "sha256": "39e2a0bb3fb1e4b71e6f823a3852d95c730c4d8fedb35b814775ae90974c377c"
+      },
+      "docs/ant/evidence/2026-10-08-interior-endpoint-shadow/checksums.json": {
+        "path": "docs/ant/evidence/2026-10-08-interior-endpoint-shadow/checksums.json",
+        "bytes": 2981,
+        "sha256": "9af8219b2f07c8b5f639c8f1353929c3fcdc521e4af5f3e14b72c7503430f59b"
+      },
+      "docs/ant/evidence/2026-10-08-w1-episodic-material-shadow/inputs/field-decisions/INPUT-PROVENANCE.md": {
+        "path": "docs/ant/evidence/2026-10-08-w1-episodic-material-shadow/inputs/field-decisions/INPUT-PROVENANCE.md",
+        "bytes": 6846,
+        "sha256": "77889a15a9bf17b20a6e7345a726e2e0a69eac16ee7a5a8e469c752009584577"
+      },
+      "docs/ant/evidence/2026-10-07-social-graph/checksums.json": {
+        "path": "docs/ant/evidence/2026-10-07-social-graph/checksums.json",
+        "bytes": 10968,
+        "sha256": "77bfc7f34174b1853acf6a77e6bdbc2409d69e22271d4ab7e509c26d04343dbb"
+      },
+      "docs/ant/evidence/2026-10-10-w1-raw-field-contact-history-audit/results/checksums.json": {
+        "path": "docs/ant/evidence/2026-10-10-w1-raw-field-contact-history-audit/results/checksums.json",
+        "bytes": 1146,
+        "sha256": "f64fbb55da6c306f201eb7fe7c5af60148e062f3f0ad63f1495d88e19162a3f3"
+      },
+      "docs/ant/evidence/2026-10-09-w1-max-overlap-split-shadow/checksums.json": {
+        "path": "docs/ant/evidence/2026-10-09-w1-max-overlap-split-shadow/checksums.json",
+        "bytes": 5795,
+        "sha256": "813fdc4188dfb6afbb6bd32115ba4c08eb5d5c46e177521f560ab4969f1a5157"
+      },
+      "docs/ant/evidence/2026-10-09-w1-per-cell-formation-history/checksums.json": {
+        "path": "docs/ant/evidence/2026-10-09-w1-per-cell-formation-history/checksums.json",
+        "bytes": 10092,
+        "sha256": "cf17beb86ccd49bede79d2e6f9648a9c186fb4db7e934bda0b2bbe1f6c5ee223"
+      },
+      "docs/ant/evidence/2026-10-09-w1-spatiotemporal-local-coherence-audit/checksums.json": {
+        "path": "docs/ant/evidence/2026-10-09-w1-spatiotemporal-local-coherence-audit/checksums.json",
+        "bytes": 4473,
+        "sha256": "a6f8d251f1ad661e1e32228150b5345df0fae517ddbf830570e5a146be4015f1"
+      },
+      "docs/ant/evidence/2026-10-08-w1-episodic-material-shadow/checksums.json": {
+        "path": "docs/ant/evidence/2026-10-08-w1-episodic-material-shadow/checksums.json",
+        "bytes": 12816,
+        "sha256": "eee8b025c5cc51be911f82c07e63739275b2a3ad641284094a37765367c2f1b3"
+      },
+      "test-results/ant-interior-endpoint-shadow/seed20261005-summary.json": {
+        "path": "test-results/ant-interior-endpoint-shadow/seed20261005-summary.json",
+        "bytes": 225877622,
+        "sha256": "40141611fb8e8e0e25a9ac4c0cd143e687bf94e10c2d4577594f73c7ac812b0a"
+      },
+      "test-results/ant-interior-endpoint-shadow/seed20261005-snapshots.bin.gz": {
+        "path": "test-results/ant-interior-endpoint-shadow/seed20261005-snapshots.bin.gz",
+        "bytes": 42694915,
+        "sha256": "a9eb9cd63ee9fd39271efdf9ea9729507fb3b08990d15d2a5f9aebd7fb992e9f"
+      },
+      "docs/ant/evidence/2026-10-07-social-graph/data/seed20261005-on-raw-events.json.gz": {
+        "path": "docs/ant/evidence/2026-10-07-social-graph/data/seed20261005-on-raw-events.json.gz",
+        "bytes": 4446647,
+        "sha256": "4c0b8728a9dd62067c20734f3a4f7628e480fc7565d41dc27270d994be92e503"
+      },
+      "test-results/ant-interior-endpoint-shadow/seed20261006-summary.json": {
+        "path": "test-results/ant-interior-endpoint-shadow/seed20261006-summary.json",
+        "bytes": 219192262,
+        "sha256": "7139d522adc0886970a44833980aa62373f0c10ae61ab98d3520e8c5a2ca7a39"
+      },
+      "test-results/ant-interior-endpoint-shadow/seed20261006-snapshots.bin.gz": {
+        "path": "test-results/ant-interior-endpoint-shadow/seed20261006-snapshots.bin.gz",
+        "bytes": 43440798,
+        "sha256": "a46fec776dff03833ac0551e601b42b4191360e06135e244ebe149edeef22c3e"
+      },
+      "docs/ant/evidence/2026-10-07-social-graph/data/seed20261006-on-raw-events.json.gz": {
+        "path": "docs/ant/evidence/2026-10-07-social-graph/data/seed20261006-on-raw-events.json.gz",
+        "bytes": 4344559,
+        "sha256": "662fb75f6c5b7a2fc5e84a08628dbc56e0ca26921572ae564a8499e282704ad4"
+      },
+      "test-results/ant-interior-endpoint-shadow/seed20261007-summary.json": {
+        "path": "test-results/ant-interior-endpoint-shadow/seed20261007-summary.json",
+        "bytes": 220055044,
+        "sha256": "6822af6225f211136c58d203203e4e9add2818da26d7fa28c4554e7bc1baa452"
+      },
+      "test-results/ant-interior-endpoint-shadow/seed20261007-snapshots.bin.gz": {
+        "path": "test-results/ant-interior-endpoint-shadow/seed20261007-snapshots.bin.gz",
+        "bytes": 42321540,
+        "sha256": "80e410278f3a732d7d0784fd8c1d775785d923df1e2cb60da8d79bf12dca4350"
+      },
+      "docs/ant/evidence/2026-10-07-social-graph/data/seed20261007-on-raw-events.json.gz": {
+        "path": "docs/ant/evidence/2026-10-07-social-graph/data/seed20261007-on-raw-events.json.gz",
+        "bytes": 4444163,
+        "sha256": "e012b877c53dfb0634db40d97d97af853d4835602e56a4ee0cd1eab8f33689f4"
+      }
+    },
+    "frozenInputsAndPriorEvidenceAfter": {
+      "docs/ant/evidence/2026-10-08-interior-endpoint-shadow/data/replay-verification.json": {
+        "path": "docs/ant/evidence/2026-10-08-interior-endpoint-shadow/data/replay-verification.json",
+        "bytes": 54556,
+        "sha256": "39e2a0bb3fb1e4b71e6f823a3852d95c730c4d8fedb35b814775ae90974c377c"
+      },
+      "docs/ant/evidence/2026-10-08-interior-endpoint-shadow/checksums.json": {
+        "path": "docs/ant/evidence/2026-10-08-interior-endpoint-shadow/checksums.json",
+        "bytes": 2981,
+        "sha256": "9af8219b2f07c8b5f639c8f1353929c3fcdc521e4af5f3e14b72c7503430f59b"
+      },
+      "docs/ant/evidence/2026-10-08-w1-episodic-material-shadow/inputs/field-decisions/INPUT-PROVENANCE.md": {
+        "path": "docs/ant/evidence/2026-10-08-w1-episodic-material-shadow/inputs/field-decisions/INPUT-PROVENANCE.md",
+        "bytes": 6846,
+        "sha256": "77889a15a9bf17b20a6e7345a726e2e0a69eac16ee7a5a8e469c752009584577"
+      },
+      "docs/ant/evidence/2026-10-07-social-graph/checksums.json": {
+        "path": "docs/ant/evidence/2026-10-07-social-graph/checksums.json",
+        "bytes": 10968,
+        "sha256": "77bfc7f34174b1853acf6a77e6bdbc2409d69e22271d4ab7e509c26d04343dbb"
+      },
+      "docs/ant/evidence/2026-10-10-w1-raw-field-contact-history-audit/results/checksums.json": {
+        "path": "docs/ant/evidence/2026-10-10-w1-raw-field-contact-history-audit/results/checksums.json",
+        "bytes": 1146,
+        "sha256": "f64fbb55da6c306f201eb7fe7c5af60148e062f3f0ad63f1495d88e19162a3f3"
+      },
+      "docs/ant/evidence/2026-10-09-w1-max-overlap-split-shadow/checksums.json": {
+        "path": "docs/ant/evidence/2026-10-09-w1-max-overlap-split-shadow/checksums.json",
+        "bytes": 5795,
+        "sha256": "813fdc4188dfb6afbb6bd32115ba4c08eb5d5c46e177521f560ab4969f1a5157"
+      },
+      "docs/ant/evidence/2026-10-09-w1-per-cell-formation-history/checksums.json": {
+        "path": "docs/ant/evidence/2026-10-09-w1-per-cell-formation-history/checksums.json",
+        "bytes": 10092,
+        "sha256": "cf17beb86ccd49bede79d2e6f9648a9c186fb4db7e934bda0b2bbe1f6c5ee223"
+      },
+      "docs/ant/evidence/2026-10-09-w1-spatiotemporal-local-coherence-audit/checksums.json": {
+        "path": "docs/ant/evidence/2026-10-09-w1-spatiotemporal-local-coherence-audit/checksums.json",
+        "bytes": 4473,
+        "sha256": "a6f8d251f1ad661e1e32228150b5345df0fae517ddbf830570e5a146be4015f1"
+      },
+      "docs/ant/evidence/2026-10-08-w1-episodic-material-shadow/checksums.json": {
+        "path": "docs/ant/evidence/2026-10-08-w1-episodic-material-shadow/checksums.json",
+        "bytes": 12816,
+        "sha256": "eee8b025c5cc51be911f82c07e63739275b2a3ad641284094a37765367c2f1b3"
+      },
+      "test-results/ant-interior-endpoint-shadow/seed20261005-summary.json": {
+        "path": "test-results/ant-interior-endpoint-shadow/seed20261005-summary.json",
+        "bytes": 225877622,
+        "sha256": "40141611fb8e8e0e25a9ac4c0cd143e687bf94e10c2d4577594f73c7ac812b0a"
+      },
+      "test-results/ant-interior-endpoint-shadow/seed20261005-snapshots.bin.gz": {
+        "path": "test-results/ant-interior-endpoint-shadow/seed20261005-snapshots.bin.gz",
+        "bytes": 42694915,
+        "sha256": "a9eb9cd63ee9fd39271efdf9ea9729507fb3b08990d15d2a5f9aebd7fb992e9f"
+      },
+      "docs/ant/evidence/2026-10-07-social-graph/data/seed20261005-on-raw-events.json.gz": {
+        "path": "docs/ant/evidence/2026-10-07-social-graph/data/seed20261005-on-raw-events.json.gz",
+        "bytes": 4446647,
+        "sha256": "4c0b8728a9dd62067c20734f3a4f7628e480fc7565d41dc27270d994be92e503"
+      },
+      "test-results/ant-interior-endpoint-shadow/seed20261006-summary.json": {
+        "path": "test-results/ant-interior-endpoint-shadow/seed20261006-summary.json",
+        "bytes": 219192262,
+        "sha256": "7139d522adc0886970a44833980aa62373f0c10ae61ab98d3520e8c5a2ca7a39"
+      },
+      "test-results/ant-interior-endpoint-shadow/seed20261006-snapshots.bin.gz": {
+        "path": "test-results/ant-interior-endpoint-shadow/seed20261006-snapshots.bin.gz",
+        "bytes": 43440798,
+        "sha256": "a46fec776dff03833ac0551e601b42b4191360e06135e244ebe149edeef22c3e"
+      },
+      "docs/ant/evidence/2026-10-07-social-graph/data/seed20261006-on-raw-events.json.gz": {
+        "path": "docs/ant/evidence/2026-10-07-social-graph/data/seed20261006-on-raw-events.json.gz",
+        "bytes": 4344559,
+        "sha256": "662fb75f6c5b7a2fc5e84a08628dbc56e0ca26921572ae564a8499e282704ad4"
+      },
+      "test-results/ant-interior-endpoint-shadow/seed20261007-summary.json": {
+        "path": "test-results/ant-interior-endpoint-shadow/seed20261007-summary.json",
+        "bytes": 220055044,
+        "sha256": "6822af6225f211136c58d203203e4e9add2818da26d7fa28c4554e7bc1baa452"
+      },
+      "test-results/ant-interior-endpoint-shadow/seed20261007-snapshots.bin.gz": {
+        "path": "test-results/ant-interior-endpoint-shadow/seed20261007-snapshots.bin.gz",
+        "bytes": 42321540,
+        "sha256": "80e410278f3a732d7d0784fd8c1d775785d923df1e2cb60da8d79bf12dca4350"
+      },
+      "docs/ant/evidence/2026-10-07-social-graph/data/seed20261007-on-raw-events.json.gz": {
+        "path": "docs/ant/evidence/2026-10-07-social-graph/data/seed20261007-on-raw-events.json.gz",
+        "bytes": 4444163,
+        "sha256": "e012b877c53dfb0634db40d97d97af853d4835602e56a4ee0cd1eab8f33689f4"
+      }
+    },
+    "inputSources": [
+      {
+        "seed": 20261005,
+        "files": [
+          {
+            "path": "test-results/ant-interior-endpoint-shadow/seed20261005-summary.json",
+            "bytes": 225877622,
+            "sha256": "40141611fb8e8e0e25a9ac4c0cd143e687bf94e10c2d4577594f73c7ac812b0a"
+          },
+          {
+            "path": "test-results/ant-interior-endpoint-shadow/seed20261005-snapshots.bin.gz",
+            "bytes": 42694915,
+            "sha256": "a9eb9cd63ee9fd39271efdf9ea9729507fb3b08990d15d2a5f9aebd7fb992e9f"
+          },
+          {
+            "path": "docs/ant/evidence/2026-10-07-social-graph/data/seed20261005-on-raw-events.json.gz",
+            "bytes": 4446647,
+            "sha256": "4c0b8728a9dd62067c20734f3a4f7628e480fc7565d41dc27270d994be92e503"
+          }
+        ],
+        "hashes": {
+          "fieldManifest": "59abc2bf38f7d4c401529348c327317028cfc32423e5eb64c20005c1dce95f3e",
+          "baselineCopies": "16ec67e954688895fb4f660ceb891199ff55d8b5a64fcb2f870a56d90de1135a",
+          "socialChecksums": "77bfc7f34174b1853acf6a77e6bdbc2409d69e22271d4ab7e509c26d04343dbb",
+          "fieldMetadata": "471b80d280cc25532f8fe9f829257262ad72ebda24f321fb192fd4bb91862089",
+          "fieldFlags": "508f93c15eb808c71b0d7c0bccba50b9589041676cd769c40941f9d5427df518",
+          "fieldMilestones": "373ba6448e7d30b16e6748afed2160197c8e4a4f62b23e70564841caee632b6e",
+          "baselineAnalysis": "28e8899eed994431e8b0307bb415d01b6d9c3bfaa3f7b0be8eb926ce3819ca25",
+          "socialSummary": "8f18f24bc0a75506c316cbd70b0cb85073dd57d6c56ef8c3744a072f7f3460ac",
+          "trajectory": "bce5ab225b8a03924f205458c57416fb7f35796ed0940d6d9efafeea9f42b904",
+          "rawContacts": "4c0b8728a9dd62067c20734f3a4f7628e480fc7565d41dc27270d994be92e503"
+        }
+      },
+      {
+        "seed": 20261006,
+        "files": [
+          {
+            "path": "test-results/ant-interior-endpoint-shadow/seed20261006-summary.json",
+            "bytes": 219192262,
+            "sha256": "7139d522adc0886970a44833980aa62373f0c10ae61ab98d3520e8c5a2ca7a39"
+          },
+          {
+            "path": "test-results/ant-interior-endpoint-shadow/seed20261006-snapshots.bin.gz",
+            "bytes": 43440798,
+            "sha256": "a46fec776dff03833ac0551e601b42b4191360e06135e244ebe149edeef22c3e"
+          },
+          {
+            "path": "docs/ant/evidence/2026-10-07-social-graph/data/seed20261006-on-raw-events.json.gz",
+            "bytes": 4344559,
+            "sha256": "662fb75f6c5b7a2fc5e84a08628dbc56e0ca26921572ae564a8499e282704ad4"
+          }
+        ],
+        "hashes": {
+          "fieldManifest": "59abc2bf38f7d4c401529348c327317028cfc32423e5eb64c20005c1dce95f3e",
+          "baselineCopies": "16ec67e954688895fb4f660ceb891199ff55d8b5a64fcb2f870a56d90de1135a",
+          "socialChecksums": "77bfc7f34174b1853acf6a77e6bdbc2409d69e22271d4ab7e509c26d04343dbb",
+          "fieldMetadata": "ecca1623c5a4814032c094447af60b47ce3407fa2f912efc3f14d2aefd1f3ab1",
+          "fieldFlags": "7a051193a902ad0f7fc95d9c4aaaefeded832d20d5e19b569f69a05b1d820e67",
+          "fieldMilestones": "9a6ef1d9cbf34fb63bb3ec706d3e40bdaee85ec7be7075aaf01859d36ec8c070",
+          "baselineAnalysis": "28e8899eed994431e8b0307bb415d01b6d9c3bfaa3f7b0be8eb926ce3819ca25",
+          "socialSummary": "c10a7e485392490baf097e1f5b44b946291b5ad7edc77ef79e9d1af43445e2c0",
+          "trajectory": "f5ddf63e5f9cbab58079197e934ecaffc0d96bec4f285dabd573e5e206aaf064",
+          "rawContacts": "662fb75f6c5b7a2fc5e84a08628dbc56e0ca26921572ae564a8499e282704ad4"
+        }
+      },
+      {
+        "seed": 20261007,
+        "files": [
+          {
+            "path": "test-results/ant-interior-endpoint-shadow/seed20261007-summary.json",
+            "bytes": 220055044,
+            "sha256": "6822af6225f211136c58d203203e4e9add2818da26d7fa28c4554e7bc1baa452"
+          },
+          {
+            "path": "test-results/ant-interior-endpoint-shadow/seed20261007-snapshots.bin.gz",
+            "bytes": 42321540,
+            "sha256": "80e410278f3a732d7d0784fd8c1d775785d923df1e2cb60da8d79bf12dca4350"
+          },
+          {
+            "path": "docs/ant/evidence/2026-10-07-social-graph/data/seed20261007-on-raw-events.json.gz",
+            "bytes": 4444163,
+            "sha256": "e012b877c53dfb0634db40d97d97af853d4835602e56a4ee0cd1eab8f33689f4"
+          }
+        ],
+        "hashes": {
+          "fieldManifest": "59abc2bf38f7d4c401529348c327317028cfc32423e5eb64c20005c1dce95f3e",
+          "baselineCopies": "16ec67e954688895fb4f660ceb891199ff55d8b5a64fcb2f870a56d90de1135a",
+          "socialChecksums": "77bfc7f34174b1853acf6a77e6bdbc2409d69e22271d4ab7e509c26d04343dbb",
+          "fieldMetadata": "90b3be0ba68726730c127c3280db5bb4daa1f92d3b279356b8efa149871ca3bd",
+          "fieldFlags": "30403c6f1a9795fd0fa1910b332e0be6be9fe24e04356087ba03da5464bedb6c",
+          "fieldMilestones": "ab2b75bb4e1afb7522072ba27b3c753cd2bfbc07a71ab29015b812e7f15a6f16",
+          "baselineAnalysis": "28e8899eed994431e8b0307bb415d01b6d9c3bfaa3f7b0be8eb926ce3819ca25",
+          "socialSummary": "85cae5818b5cf4273a16be0c415a300763cf73f90e742febac86c57aa0486007",
+          "trajectory": "b0a660dcbc5bda49b02d3eb625c47fa30e9c786a0576dfb1ccc72e7f4332c31f",
+          "rawContacts": "e012b877c53dfb0634db40d97d97af853d4835602e56a4ee0cd1eab8f33689f4"
+        }
+      }
+    ],
+    "provenanceFingerprint": {
+      "path": "docs/ant/evidence/2026-10-08-w1-episodic-material-shadow/inputs/field-decisions/INPUT-PROVENANCE.md",
+      "bytes": 6846,
+      "sha256": "77889a15a9bf17b20a6e7345a726e2e0a69eac16ee7a5a8e469c752009584577"
+    },
+    "previousRawAuditChecksumsSha256": "f64fbb55da6c306f201eb7fe7c5af60148e062f3f0ad63f1495d88e19162a3f3",
+    "perSeed": [
+      {
+        "seed": 20261005,
+        "observations": 599,
+        "finalTimeSeconds": 599.2500000000696,
+        "finalEventCountThroughCutoff": 35711,
+        "postCutoffContactEvents": 40,
+        "finalId0HistoricalCells": 5960,
+        "finalId0Alive": true,
+        "surfaceReplay": {
+          "exactCellSamples": 5520384,
+          "maxAbsoluteError": 0
+        },
+        "conditionalSupport": {
+          "exactFrames": 4,
+          "samples": 36864,
+          "sampledZeroCells": 0,
+          "unsampledCells": 4125718
+        },
+        "passiveReference": {
+          "maxAbsoluteResidual": 0.07845377549529076,
+          "positiveResidualSamples": 285615,
+          "exactlyZeroResidualSamples": 5234769,
+          "maximumObservedBelowReference": 0
+        },
+        "finalContactCensoring": {
+          "neverContactedRightCensored": 1272,
+          "contactedIntervalRightCensored": 7944,
+          "ages": {
+            "never": 1272,
+            "0-20": 2239,
+            "20-90": 2992,
+            ">90": 2713
+          },
+          "minimumObservedNoContactAgeSeconds": 0.009086672024864129,
+          "medianObservedNoContactAgeSeconds": 49.58067751831686,
+          "maximumObservedNoContactAgeSeconds": 597.683406873945,
+          "cellCount": 9216,
+          "censoringNote": "All last-contact-to-final-observation intervals are right-censored; never-contacted cells are a separate run-start-to-cutoff right-censored group."
+        },
+        "representativeCells": [
+          {
+            "ageBandAtFinal": "0-20",
+            "cellIndex": 98,
+            "x": 2,
+            "y": 1,
+            "selectionRule": "lowest row-major ID 0 historical-union cell in final same-cell contact-age band; selected before viewing field traces"
+          },
+          {
+            "ageBandAtFinal": "20-90",
+            "cellIndex": 17,
+            "x": 17,
+            "y": 0,
+            "selectionRule": "lowest row-major ID 0 historical-union cell in final same-cell contact-age band; selected before viewing field traces"
+          },
+          {
+            "ageBandAtFinal": ">90",
+            "cellIndex": 18,
+            "x": 18,
+            "y": 0,
+            "selectionRule": "lowest row-major ID 0 historical-union cell in final same-cell contact-age band; selected before viewing field traces"
+          }
+        ],
+        "qTransitionsAcrossObservedIntervals": 26689,
+        "finalId0ContactCensoring": {
+          "neverContactedRightCensored": 0,
+          "contactedIntervalRightCensored": 5960,
+          "ages": {
+            "never": 0,
+            "0-20": 2129,
+            "20-90": 2526,
+            ">90": 1305
+          },
+          "minimumObservedNoContactAgeSeconds": 0.009086672024864129,
+          "medianObservedNoContactAgeSeconds": 32.61031732847641,
+          "maximumObservedNoContactAgeSeconds": 527.7292777913559,
+          "cellCount": 5960,
+          "censoringNote": "All last-contact-to-final-observation intervals are right-censored; never-contacted cells are a separate run-start-to-cutoff right-censored group."
+        },
+        "inputSourceHashes": {
+          "fieldManifest": "59abc2bf38f7d4c401529348c327317028cfc32423e5eb64c20005c1dce95f3e",
+          "baselineCopies": "16ec67e954688895fb4f660ceb891199ff55d8b5a64fcb2f870a56d90de1135a",
+          "socialChecksums": "77bfc7f34174b1853acf6a77e6bdbc2409d69e22271d4ab7e509c26d04343dbb",
+          "fieldMetadata": "471b80d280cc25532f8fe9f829257262ad72ebda24f321fb192fd4bb91862089",
+          "fieldFlags": "508f93c15eb808c71b0d7c0bccba50b9589041676cd769c40941f9d5427df518",
+          "fieldMilestones": "373ba6448e7d30b16e6748afed2160197c8e4a4f62b23e70564841caee632b6e",
+          "baselineAnalysis": "28e8899eed994431e8b0307bb415d01b6d9c3bfaa3f7b0be8eb926ce3819ca25",
+          "socialSummary": "8f18f24bc0a75506c316cbd70b0cb85073dd57d6c56ef8c3744a072f7f3460ac",
+          "trajectory": "bce5ab225b8a03924f205458c57416fb7f35796ed0940d6d9efafeea9f42b904",
+          "rawContacts": "4c0b8728a9dd62067c20734f3a4f7628e480fc7565d41dc27270d994be92e503"
+        },
+        "inputPacketFileHashes": {
+          "baselines/local-accretion-analysis.json.gz": "28e8899eed994431e8b0307bb415d01b6d9c3bfaa3f7b0be8eb926ce3819ca25",
+          "field-decisions/INPUT-PROVENANCE.md": "77889a15a9bf17b20a6e7345a726e2e0a69eac16ee7a5a8e469c752009584577",
+          "field-decisions/input-gap.json": "66fa4d170e2b38621674a4add351fa3e429d67e06332617e729128012c197423",
+          "field-decisions/manifest.json": "59abc2bf38f7d4c401529348c327317028cfc32423e5eb64c20005c1dce95f3e",
+          "field-decisions/seed20261005-flags.bin.gz": "508f93c15eb808c71b0d7c0bccba50b9589041676cd769c40941f9d5427df518",
+          "field-decisions/seed20261005-metadata.json": "471b80d280cc25532f8fe9f829257262ad72ebda24f321fb192fd4bb91862089",
+          "field-decisions/seed20261005-milestones.bin.gz": "373ba6448e7d30b16e6748afed2160197c8e4a4f62b23e70564841caee632b6e",
+          "field-decisions/seed20261006-flags.bin.gz": "7a051193a902ad0f7fc95d9c4aaaefeded832d20d5e19b569f69a05b1d820e67",
+          "field-decisions/seed20261006-metadata.json": "ecca1623c5a4814032c094447af60b47ce3407fa2f912efc3f14d2aefd1f3ab1",
+          "field-decisions/seed20261006-milestones.bin.gz": "9a6ef1d9cbf34fb63bb3ec706d3e40bdaee85ec7be7075aaf01859d36ec8c070",
+          "field-decisions/seed20261007-flags.bin.gz": "30403c6f1a9795fd0fa1910b332e0be6be9fe24e04356087ba03da5464bedb6c",
+          "field-decisions/seed20261007-metadata.json": "90b3be0ba68726730c127c3280db5bb4daa1f92d3b279356b8efa149871ca3bd",
+          "field-decisions/seed20261007-milestones.bin.gz": "ab2b75bb4e1afb7522072ba27b3c753cd2bfbc07a71ab29015b812e7f15a6f16",
+          "inputs/baselines/local-accretion-analysis.json.gz": "28e8899eed994431e8b0307bb415d01b6d9c3bfaa3f7b0be8eb926ce3819ca25",
+          "inputs/field-decisions/seed20261005-flags.bin.gz": "508f93c15eb808c71b0d7c0bccba50b9589041676cd769c40941f9d5427df518",
+          "inputs/field-decisions/seed20261005-metadata.json": "471b80d280cc25532f8fe9f829257262ad72ebda24f321fb192fd4bb91862089",
+          "inputs/field-decisions/seed20261005-milestones.bin.gz": "373ba6448e7d30b16e6748afed2160197c8e4a4f62b23e70564841caee632b6e"
+        },
+        "snapshotProvenance": {
+          "path": "test-results/ant-interior-endpoint-shadow/seed20261005-snapshots.bin.gz",
+          "compressedBytes": 42694915,
+          "compressedSha256": "a9eb9cd63ee9fd39271efdf9ea9729507fb3b08990d15d2a5f9aebd7fb992e9f",
+          "decodedBytes": 110407680,
+          "decodedSha256": "9761f3a6ccfee00cf00f78b3958b82185663b0b977bac66f6e5ca5ae9e89d729",
+          "descriptorSha256": "d1aec747431b0250d5efbfca406e20201911fdc50c89453873fdeadf8befe98b",
+          "snapshotCount": 599,
+          "firstDescriptor": {
+            "tick": 1,
+            "timeSeconds": 0.016666666666666666,
+            "arrays": {
+              "chemical": {
+                "offset": 0,
+                "bytes": 36864
+              },
+              "chemicalMemory": {
+                "offset": 36864,
+                "bytes": 36864
+              },
+              "surface": {
+                "offset": 73728,
+                "bytes": 36864
+              },
+              "support": {
+                "offset": 110592,
+                "bytes": 36864
+              },
+              "contactCounts": {
+                "offset": 147456,
+                "bytes": 36864
+              }
+            }
+          },
+          "finalDescriptor": {
+            "tick": 35955,
+            "timeSeconds": 599.2500000000696,
+            "arrays": {
+              "chemical": {
+                "offset": 110223360,
+                "bytes": 36864
+              },
+              "chemicalMemory": {
+                "offset": 110260224,
+                "bytes": 36864
+              },
+              "surface": {
+                "offset": 110297088,
+                "bytes": 36864
+              },
+              "support": {
+                "offset": 110333952,
+                "bytes": 36864
+              },
+              "contactCounts": {
+                "offset": 110370816,
+                "bytes": 36864
+              }
+            }
+          },
+          "arrayOrder": [
+            "chemical",
+            "chemicalMemory",
+            "surface",
+            "support",
+            "contactCounts"
+          ],
+          "bytesPerArrayPerFrame": 36864,
+          "contiguousArrayOffsetsValidated": true
+        }
+      },
+      {
+        "seed": 20261006,
+        "observations": 599,
+        "finalTimeSeconds": 599.2500000000696,
+        "finalEventCountThroughCutoff": 35326,
+        "postCutoffContactEvents": 51,
+        "finalId0HistoricalCells": 5936,
+        "finalId0Alive": true,
+        "surfaceReplay": {
+          "exactCellSamples": 5520384,
+          "maxAbsoluteError": 0
+        },
+        "conditionalSupport": {
+          "exactFrames": 4,
+          "samples": 36864,
+          "sampledZeroCells": 0,
+          "unsampledCells": 4168374
+        },
+        "passiveReference": {
+          "maxAbsoluteResidual": 0.08823442459106445,
+          "positiveResidualSamples": 283785,
+          "exactlyZeroResidualSamples": 5236599,
+          "maximumObservedBelowReference": 0
+        },
+        "finalContactCensoring": {
+          "neverContactedRightCensored": 888,
+          "contactedIntervalRightCensored": 8328,
+          "ages": {
+            "never": 888,
+            "0-20": 1809,
+            "20-90": 3439,
+            ">90": 3080
+          },
+          "minimumObservedNoContactAgeSeconds": 0.0037675757923807396,
+          "medianObservedNoContactAgeSeconds": 62.693281867187125,
+          "maximumObservedNoContactAgeSeconds": 592.9498161994082,
+          "cellCount": 9216,
+          "censoringNote": "All last-contact-to-final-observation intervals are right-censored; never-contacted cells are a separate run-start-to-cutoff right-censored group."
+        },
+        "representativeCells": [
+          {
+            "ageBandAtFinal": "0-20",
+            "cellIndex": 99,
+            "x": 3,
+            "y": 1,
+            "selectionRule": "lowest row-major ID 0 historical-union cell in final same-cell contact-age band; selected before viewing field traces"
+          },
+          {
+            "ageBandAtFinal": "20-90",
+            "cellIndex": 100,
+            "x": 4,
+            "y": 1,
+            "selectionRule": "lowest row-major ID 0 historical-union cell in final same-cell contact-age band; selected before viewing field traces"
+          },
+          {
+            "ageBandAtFinal": ">90",
+            "cellIndex": 101,
+            "x": 5,
+            "y": 1,
+            "selectionRule": "lowest row-major ID 0 historical-union cell in final same-cell contact-age band; selected before viewing field traces"
+          }
+        ],
+        "qTransitionsAcrossObservedIntervals": 26165,
+        "finalId0ContactCensoring": {
+          "neverContactedRightCensored": 0,
+          "contactedIntervalRightCensored": 5936,
+          "ages": {
+            "never": 0,
+            "0-20": 1699,
+            "20-90": 2851,
+            ">90": 1386
+          },
+          "minimumObservedNoContactAgeSeconds": 0.0037675757923807396,
+          "medianObservedNoContactAgeSeconds": 40.06889205201537,
+          "maximumObservedNoContactAgeSeconds": 585.9692004376335,
+          "cellCount": 5936,
+          "censoringNote": "All last-contact-to-final-observation intervals are right-censored; never-contacted cells are a separate run-start-to-cutoff right-censored group."
+        },
+        "inputSourceHashes": {
+          "fieldManifest": "59abc2bf38f7d4c401529348c327317028cfc32423e5eb64c20005c1dce95f3e",
+          "baselineCopies": "16ec67e954688895fb4f660ceb891199ff55d8b5a64fcb2f870a56d90de1135a",
+          "socialChecksums": "77bfc7f34174b1853acf6a77e6bdbc2409d69e22271d4ab7e509c26d04343dbb",
+          "fieldMetadata": "ecca1623c5a4814032c094447af60b47ce3407fa2f912efc3f14d2aefd1f3ab1",
+          "fieldFlags": "7a051193a902ad0f7fc95d9c4aaaefeded832d20d5e19b569f69a05b1d820e67",
+          "fieldMilestones": "9a6ef1d9cbf34fb63bb3ec706d3e40bdaee85ec7be7075aaf01859d36ec8c070",
+          "baselineAnalysis": "28e8899eed994431e8b0307bb415d01b6d9c3bfaa3f7b0be8eb926ce3819ca25",
+          "socialSummary": "c10a7e485392490baf097e1f5b44b946291b5ad7edc77ef79e9d1af43445e2c0",
+          "trajectory": "f5ddf63e5f9cbab58079197e934ecaffc0d96bec4f285dabd573e5e206aaf064",
+          "rawContacts": "662fb75f6c5b7a2fc5e84a08628dbc56e0ca26921572ae564a8499e282704ad4"
+        },
+        "inputPacketFileHashes": {
+          "baselines/local-accretion-analysis.json.gz": "28e8899eed994431e8b0307bb415d01b6d9c3bfaa3f7b0be8eb926ce3819ca25",
+          "field-decisions/INPUT-PROVENANCE.md": "77889a15a9bf17b20a6e7345a726e2e0a69eac16ee7a5a8e469c752009584577",
+          "field-decisions/input-gap.json": "66fa4d170e2b38621674a4add351fa3e429d67e06332617e729128012c197423",
+          "field-decisions/manifest.json": "59abc2bf38f7d4c401529348c327317028cfc32423e5eb64c20005c1dce95f3e",
+          "field-decisions/seed20261005-flags.bin.gz": "508f93c15eb808c71b0d7c0bccba50b9589041676cd769c40941f9d5427df518",
+          "field-decisions/seed20261005-metadata.json": "471b80d280cc25532f8fe9f829257262ad72ebda24f321fb192fd4bb91862089",
+          "field-decisions/seed20261005-milestones.bin.gz": "373ba6448e7d30b16e6748afed2160197c8e4a4f62b23e70564841caee632b6e",
+          "field-decisions/seed20261006-flags.bin.gz": "7a051193a902ad0f7fc95d9c4aaaefeded832d20d5e19b569f69a05b1d820e67",
+          "field-decisions/seed20261006-metadata.json": "ecca1623c5a4814032c094447af60b47ce3407fa2f912efc3f14d2aefd1f3ab1",
+          "field-decisions/seed20261006-milestones.bin.gz": "9a6ef1d9cbf34fb63bb3ec706d3e40bdaee85ec7be7075aaf01859d36ec8c070",
+          "field-decisions/seed20261007-flags.bin.gz": "30403c6f1a9795fd0fa1910b332e0be6be9fe24e04356087ba03da5464bedb6c",
+          "field-decisions/seed20261007-metadata.json": "90b3be0ba68726730c127c3280db5bb4daa1f92d3b279356b8efa149871ca3bd",
+          "field-decisions/seed20261007-milestones.bin.gz": "ab2b75bb4e1afb7522072ba27b3c753cd2bfbc07a71ab29015b812e7f15a6f16",
+          "inputs/baselines/local-accretion-analysis.json.gz": "28e8899eed994431e8b0307bb415d01b6d9c3bfaa3f7b0be8eb926ce3819ca25",
+          "inputs/field-decisions/seed20261006-flags.bin.gz": "7a051193a902ad0f7fc95d9c4aaaefeded832d20d5e19b569f69a05b1d820e67",
+          "inputs/field-decisions/seed20261006-metadata.json": "ecca1623c5a4814032c094447af60b47ce3407fa2f912efc3f14d2aefd1f3ab1",
+          "inputs/field-decisions/seed20261006-milestones.bin.gz": "9a6ef1d9cbf34fb63bb3ec706d3e40bdaee85ec7be7075aaf01859d36ec8c070"
+        },
+        "snapshotProvenance": {
+          "path": "test-results/ant-interior-endpoint-shadow/seed20261006-snapshots.bin.gz",
+          "compressedBytes": 43440798,
+          "compressedSha256": "a46fec776dff03833ac0551e601b42b4191360e06135e244ebe149edeef22c3e",
+          "decodedBytes": 110407680,
+          "decodedSha256": "c8285bd68b2786a3c7c6b7e7bbdddd239bc3718d7dc4505aa14a0742c2f5e545",
+          "descriptorSha256": "d1aec747431b0250d5efbfca406e20201911fdc50c89453873fdeadf8befe98b",
+          "snapshotCount": 599,
+          "firstDescriptor": {
+            "tick": 1,
+            "timeSeconds": 0.016666666666666666,
+            "arrays": {
+              "chemical": {
+                "offset": 0,
+                "bytes": 36864
+              },
+              "chemicalMemory": {
+                "offset": 36864,
+                "bytes": 36864
+              },
+              "surface": {
+                "offset": 73728,
+                "bytes": 36864
+              },
+              "support": {
+                "offset": 110592,
+                "bytes": 36864
+              },
+              "contactCounts": {
+                "offset": 147456,
+                "bytes": 36864
+              }
+            }
+          },
+          "finalDescriptor": {
+            "tick": 35955,
+            "timeSeconds": 599.2500000000696,
+            "arrays": {
+              "chemical": {
+                "offset": 110223360,
+                "bytes": 36864
+              },
+              "chemicalMemory": {
+                "offset": 110260224,
+                "bytes": 36864
+              },
+              "surface": {
+                "offset": 110297088,
+                "bytes": 36864
+              },
+              "support": {
+                "offset": 110333952,
+                "bytes": 36864
+              },
+              "contactCounts": {
+                "offset": 110370816,
+                "bytes": 36864
+              }
+            }
+          },
+          "arrayOrder": [
+            "chemical",
+            "chemicalMemory",
+            "surface",
+            "support",
+            "contactCounts"
+          ],
+          "bytesPerArrayPerFrame": 36864,
+          "contiguousArrayOffsetsValidated": true
+        }
+      },
+      {
+        "seed": 20261007,
+        "observations": 599,
+        "finalTimeSeconds": 599.2500000000696,
+        "finalEventCountThroughCutoff": 35406,
+        "postCutoffContactEvents": 42,
+        "finalId0HistoricalCells": 6031,
+        "finalId0Alive": true,
+        "surfaceReplay": {
+          "exactCellSamples": 5520384,
+          "maxAbsoluteError": 0
+        },
+        "conditionalSupport": {
+          "exactFrames": 4,
+          "samples": 36864,
+          "sampledZeroCells": 0,
+          "unsampledCells": 4156639
+        },
+        "passiveReference": {
+          "maxAbsoluteResidual": 0.08789550140500069,
+          "positiveResidualSamples": 284218,
+          "exactlyZeroResidualSamples": 5236166,
+          "maximumObservedBelowReference": 0
+        },
+        "finalContactCensoring": {
+          "neverContactedRightCensored": 935,
+          "contactedIntervalRightCensored": 8281,
+          "ages": {
+            "never": 935,
+            "0-20": 2038,
+            "20-90": 3318,
+            ">90": 2925
+          },
+          "minimumObservedNoContactAgeSeconds": 0.0131578022044323,
+          "medianObservedNoContactAgeSeconds": 57.0245333704346,
+          "maximumObservedNoContactAgeSeconds": 596.4579122183019,
+          "cellCount": 9216,
+          "censoringNote": "All last-contact-to-final-observation intervals are right-censored; never-contacted cells are a separate run-start-to-cutoff right-censored group."
+        },
+        "representativeCells": [
+          {
+            "ageBandAtFinal": "0-20",
+            "cellIndex": 104,
+            "x": 8,
+            "y": 1,
+            "selectionRule": "lowest row-major ID 0 historical-union cell in final same-cell contact-age band; selected before viewing field traces"
+          },
+          {
+            "ageBandAtFinal": "20-90",
+            "cellIndex": 103,
+            "x": 7,
+            "y": 1,
+            "selectionRule": "lowest row-major ID 0 historical-union cell in final same-cell contact-age band; selected before viewing field traces"
+          },
+          {
+            "ageBandAtFinal": ">90",
+            "cellIndex": 73,
+            "x": 73,
+            "y": 0,
+            "selectionRule": "lowest row-major ID 0 historical-union cell in final same-cell contact-age band; selected before viewing field traces"
+          }
+        ],
+        "qTransitionsAcrossObservedIntervals": 25882,
+        "finalId0ContactCensoring": {
+          "neverContactedRightCensored": 0,
+          "contactedIntervalRightCensored": 6031,
+          "ages": {
+            "never": 0,
+            "0-20": 1858,
+            "20-90": 2838,
+            ">90": 1335
+          },
+          "minimumObservedNoContactAgeSeconds": 0.0131578022044323,
+          "medianObservedNoContactAgeSeconds": 41.134142749047214,
+          "maximumObservedNoContactAgeSeconds": 512.7181876436151,
+          "cellCount": 6031,
+          "censoringNote": "All last-contact-to-final-observation intervals are right-censored; never-contacted cells are a separate run-start-to-cutoff right-censored group."
+        },
+        "inputSourceHashes": {
+          "fieldManifest": "59abc2bf38f7d4c401529348c327317028cfc32423e5eb64c20005c1dce95f3e",
+          "baselineCopies": "16ec67e954688895fb4f660ceb891199ff55d8b5a64fcb2f870a56d90de1135a",
+          "socialChecksums": "77bfc7f34174b1853acf6a77e6bdbc2409d69e22271d4ab7e509c26d04343dbb",
+          "fieldMetadata": "90b3be0ba68726730c127c3280db5bb4daa1f92d3b279356b8efa149871ca3bd",
+          "fieldFlags": "30403c6f1a9795fd0fa1910b332e0be6be9fe24e04356087ba03da5464bedb6c",
+          "fieldMilestones": "ab2b75bb4e1afb7522072ba27b3c753cd2bfbc07a71ab29015b812e7f15a6f16",
+          "baselineAnalysis": "28e8899eed994431e8b0307bb415d01b6d9c3bfaa3f7b0be8eb926ce3819ca25",
+          "socialSummary": "85cae5818b5cf4273a16be0c415a300763cf73f90e742febac86c57aa0486007",
+          "trajectory": "b0a660dcbc5bda49b02d3eb625c47fa30e9c786a0576dfb1ccc72e7f4332c31f",
+          "rawContacts": "e012b877c53dfb0634db40d97d97af853d4835602e56a4ee0cd1eab8f33689f4"
+        },
+        "inputPacketFileHashes": {
+          "baselines/local-accretion-analysis.json.gz": "28e8899eed994431e8b0307bb415d01b6d9c3bfaa3f7b0be8eb926ce3819ca25",
+          "field-decisions/INPUT-PROVENANCE.md": "77889a15a9bf17b20a6e7345a726e2e0a69eac16ee7a5a8e469c752009584577",
+          "field-decisions/input-gap.json": "66fa4d170e2b38621674a4add351fa3e429d67e06332617e729128012c197423",
+          "field-decisions/manifest.json": "59abc2bf38f7d4c401529348c327317028cfc32423e5eb64c20005c1dce95f3e",
+          "field-decisions/seed20261005-flags.bin.gz": "508f93c15eb808c71b0d7c0bccba50b9589041676cd769c40941f9d5427df518",
+          "field-decisions/seed20261005-metadata.json": "471b80d280cc25532f8fe9f829257262ad72ebda24f321fb192fd4bb91862089",
+          "field-decisions/seed20261005-milestones.bin.gz": "373ba6448e7d30b16e6748afed2160197c8e4a4f62b23e70564841caee632b6e",
+          "field-decisions/seed20261006-flags.bin.gz": "7a051193a902ad0f7fc95d9c4aaaefeded832d20d5e19b569f69a05b1d820e67",
+          "field-decisions/seed20261006-metadata.json": "ecca1623c5a4814032c094447af60b47ce3407fa2f912efc3f14d2aefd1f3ab1",
+          "field-decisions/seed20261006-milestones.bin.gz": "9a6ef1d9cbf34fb63bb3ec706d3e40bdaee85ec7be7075aaf01859d36ec8c070",
+          "field-decisions/seed20261007-flags.bin.gz": "30403c6f1a9795fd0fa1910b332e0be6be9fe24e04356087ba03da5464bedb6c",
+          "field-decisions/seed20261007-metadata.json": "90b3be0ba68726730c127c3280db5bb4daa1f92d3b279356b8efa149871ca3bd",
+          "field-decisions/seed20261007-milestones.bin.gz": "ab2b75bb4e1afb7522072ba27b3c753cd2bfbc07a71ab29015b812e7f15a6f16",
+          "inputs/baselines/local-accretion-analysis.json.gz": "28e8899eed994431e8b0307bb415d01b6d9c3bfaa3f7b0be8eb926ce3819ca25",
+          "inputs/field-decisions/seed20261007-flags.bin.gz": "30403c6f1a9795fd0fa1910b332e0be6be9fe24e04356087ba03da5464bedb6c",
+          "inputs/field-decisions/seed20261007-metadata.json": "90b3be0ba68726730c127c3280db5bb4daa1f92d3b279356b8efa149871ca3bd",
+          "inputs/field-decisions/seed20261007-milestones.bin.gz": "ab2b75bb4e1afb7522072ba27b3c753cd2bfbc07a71ab29015b812e7f15a6f16"
+        },
+        "snapshotProvenance": {
+          "path": "test-results/ant-interior-endpoint-shadow/seed20261007-snapshots.bin.gz",
+          "compressedBytes": 42321540,
+          "compressedSha256": "80e410278f3a732d7d0784fd8c1d775785d923df1e2cb60da8d79bf12dca4350",
+          "decodedBytes": 110407680,
+          "decodedSha256": "71bee1ef782524354308efca308fb63d01cbf69f73597fd0b49e08512b9f9ba4",
+          "descriptorSha256": "d1aec747431b0250d5efbfca406e20201911fdc50c89453873fdeadf8befe98b",
+          "snapshotCount": 599,
+          "firstDescriptor": {
+            "tick": 1,
+            "timeSeconds": 0.016666666666666666,
+            "arrays": {
+              "chemical": {
+                "offset": 0,
+                "bytes": 36864
+              },
+              "chemicalMemory": {
+                "offset": 36864,
+                "bytes": 36864
+              },
+              "surface": {
+                "offset": 73728,
+                "bytes": 36864
+              },
+              "support": {
+                "offset": 110592,
+                "bytes": 36864
+              },
+              "contactCounts": {
+                "offset": 147456,
+                "bytes": 36864
+              }
+            }
+          },
+          "finalDescriptor": {
+            "tick": 35955,
+            "timeSeconds": 599.2500000000696,
+            "arrays": {
+              "chemical": {
+                "offset": 110223360,
+                "bytes": 36864
+              },
+              "chemicalMemory": {
+                "offset": 110260224,
+                "bytes": 36864
+              },
+              "surface": {
+                "offset": 110297088,
+                "bytes": 36864
+              },
+              "support": {
+                "offset": 110333952,
+                "bytes": 36864
+              },
+              "contactCounts": {
+                "offset": 110370816,
+                "bytes": 36864
+              }
+            }
+          },
+          "arrayOrder": [
+            "chemical",
+            "chemicalMemory",
+            "surface",
+            "support",
+            "contactCounts"
+          ],
+          "bytesPerArrayPerFrame": 36864,
+          "contiguousArrayOffsetsValidated": true
+        }
+      }
+    ],
+    "rngUsed": false,
+    "noNaturalReplay": true,
+    "sourceSnapshotHashesVerifiedAgainstReplayVerification": true,
+    "outputHashes": {
+      "checkpoint-cells.csv.gz": {
+        "bytes": 6210117,
+        "sha256": "464e681e3962a4f0d10767462cc651d47f603ddade84a119d68eb9f55a5ff918"
+      },
+      "field-cohort-summary.csv.gz": {
+        "bytes": 5876813,
+        "sha256": "b9de68b340fc6616df222e3e114c9cb4a54bc4c45934a99b631b9d5d51593896"
+      },
+      "matched-milestone-deltas.csv": {
+        "bytes": 412355,
+        "sha256": "3016c3a0bf1894000fcba2479c473ad6a05f3e207034ade19cb9016f99f142b3"
+      },
+      "observation-time-series.csv": {
+        "bytes": 343812,
+        "sha256": "7cbb52cf6610ddc8fc4cf050cec51354527c716e124064b3a5fe87c58b6ee45b"
+      },
+      "representative-cell-traces.csv": {
+        "bytes": 613945,
+        "sha256": "2d0dcfe6542bd9cbda8624357f98a4a157b765793e8db24d0b7ff4801ef88f4b"
+      },
+      "source-fingerprints.json": {
+        "bytes": 10527,
+        "sha256": "cad90f62be50b182344d1709997227b811b1916ae4ab027ed3d06b8a60ed4358"
+      }
+    }
+  },
+  "totals": {
+    "postCutoffContactsExcluded": 133,
+    "surfaceReplayExactCellSamples": 16561152,
+    "conditionalSupportExactSamples": 110592,
+    "checkpointCellRows": 110592,
+    "fullTimelineRows": 1797,
+    "ageCohortSummaryRows": 120865,
+    "matchedMilestoneRows": 2680,
+    "representativeTraceRows": 5391
+  },
+  "artifacts": {
+    "representativeSelection": "At the final cutoff, the lowest row-major ID 0 historical-union cell is selected in each available same-cell contact-age band (0-20, >20-90, >90 seconds). Selection uses contact history and cell index only, before inspecting field traces.",
+    "traceSampling": "Archived observation points only; plots use markers without connecting intervals."
+  }
+}

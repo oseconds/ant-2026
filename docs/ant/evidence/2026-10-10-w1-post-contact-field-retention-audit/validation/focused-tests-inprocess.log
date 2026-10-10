@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: contact-age bands have exact non-overlapping boundary semantics and remain causal
+ok 1 - contact-age bands have exact non-overlapping boundary semantics and remain causal
+  ---
+  duration_ms: 1.0245
+  type: 'test'
+  ...
+# Subtest: archived contact tick boundaries and final cutoff are inclusive without future leakage
+ok 2 - archived contact tick boundaries and final cutoff are inclusive without future leakage
+  ---
+  duration_ms: 0.614
+  type: 'test'
+  ...
+# Subtest: same-cell mapping rounds exact grid half-cell boundaries and clamps to valid arena cells
+ok 3 - same-cell mapping rounds exact grid half-cell boundaries and clamps to valid arena cells
+  ---
+  duration_ms: 0.111
+  type: 'test'
+  ...
+# Subtest: SurfaceField footprint cell accounting matches the actual deposit kernel at interior and arena edges
+ok 4 - SurfaceField footprint cell accounting matches the actual deposit kernel at interior and arena edges
+  ---
+  duration_ms: 2.2465
+  type: 'test'
+  ...
+# Subtest: same-cell and neighbor-only exposure use the archived SurfaceField footprint
+ok 5 - same-cell and neighbor-only exposure use the archived SurfaceField footprint
+  ---
+  duration_ms: 0.1128
+  type: 'test'
+  ...
+# Subtest: support reconstruction samples only chemical-qualified cells and preserves conditional zeros
+ok 6 - support reconstruction samples only chemical-qualified cells and preserves conditional zeros
+  ---
+  duration_ms: 0.4198
+  type: 'test'
+  ...
+# Subtest: magnitude bins use one fixed field scale across checkpoint comparisons
+ok 7 - magnitude bins use one fixed field scale across checkpoint comparisons
+  ---
+  duration_ms: 0.1034
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 34.1093
