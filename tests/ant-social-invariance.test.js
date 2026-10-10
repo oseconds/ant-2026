@@ -260,3 +260,80 @@ test('DynamicSocialGraph stays observational across every natural controller tic
     await Promise.all([baseline.destroy(), observed.destroy()]);
   }
 });
+
+test('DynamicSocialGraph and TemporalSocialTopology remain observational when observing live agents directly under dynamic reconfigurations and subscriber callbacks', async () => {
+  const seed = 20261005;
+  const baselineRandom = countedRandom(seed);
+  const observedRandom = countedRandom(seed);
+  const baselineAudio = new RecordingAudioBridge();
+  const observedAudio = new RecordingAudioBridge();
+  const baseline = new AntController({ random: baselineRandom, audioBridge: baselineAudio });
+  const observed = new AntController({ random: observedRandom, audioBridge: observedAudio });
+  let baselineLog = eventLog();
+  let observedLog = eventLog();
+  const unsubscribeBaseline = captureEvents(baseline, baselineLog);
+  const unsubscribeObserved = captureEvents(observed, observedLog);
+
+  const graph = new DynamicSocialGraph();
+  const topologies = createTopologies();
+  let audioCallCursor = 0;
+
+  const unsubscribeObserverSubscriber = observed.subscribe(() => {
+    const timeSec = observed.simulationTimeMs / 1000;
+    if (observed.agents.length > 0) {
+      graph.observe(timeSec, observed.agents);
+      topologies[1].observe(graph.getSnapshot(SOCIAL_WINDOWS[1]));
+    }
+  });
+
+  try {
+    await Promise.all([baseline.init(), observed.init()]);
+    assert.deepEqual(baselineAudio.calls, observedAudio.calls, 'initial audio mode commands');
+    audioCallCursor = baselineAudio.calls.length;
+
+    graph.observe(0, observed.agents);
+    assertGraphInputsMatchPopulation(graph, observed);
+    observeTopologies(graph, topologies, 0);
+    assertControllerParity(baseline, observed, baselineRandom, observedRandom, baselineLog, observedLog);
+
+    for (let tick = 1; tick <= 600; tick += 1) {
+      clearEventLog(baselineLog);
+      clearEventLog(observedLog);
+      baseline.tick(DT);
+      observed.tick(DT);
+
+      if (tick === 150) {
+        baseline.configure({ population: { count: 12 }, pheromone: { depositionMode: 'continuous' } });
+        observed.configure({ population: { count: 12 }, pheromone: { depositionMode: 'continuous' } });
+      } else if (tick === 300) {
+        baseline.configure({ population: { count: 35 }, behavior: { bodyRadius: 0.008 } });
+        observed.configure({ population: { count: 35 }, behavior: { bodyRadius: 0.008 } });
+      } else if (tick === 450) {
+        baseline.stop();
+        observed.stop();
+        baseline.init();
+        observed.init();
+      }
+
+      const timeSec = observed.simulationTimeMs / 1000;
+      graph.observe(timeSec, observed.agents);
+      assertGraphInputsMatchPopulation(graph, observed);
+      if (tick % S1_SAMPLE_EVERY_TICKS === 0) {
+        observeTopologies(graph, topologies, timeSec);
+      }
+
+      assertControllerParity(baseline, observed, baselineRandom, observedRandom, baselineLog, observedLog);
+      assert.deepEqual(baselineAudio.calls.slice(audioCallCursor), observedAudio.calls.slice(audioCallCursor),
+        'audio bridge commands and payloads match after dynamic operations');
+      audioCallCursor = baselineAudio.calls.length;
+    }
+
+    exerciseDetachedGraphOutputs(graph);
+    exerciseDetachedTopologyOutputs(topologies);
+  } finally {
+    unsubscribeObserverSubscriber();
+    unsubscribeBaseline();
+    unsubscribeObserved();
+    await Promise.all([baseline.destroy(), observed.destroy()]);
+  }
+});
