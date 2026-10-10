@@ -14,6 +14,16 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-10 — W1 archived replay runner provenance recovery: Partially Resolved
+
+[Chronology](./2026-10-10-w1-archived-replay-runner-provenance-recovery.md) · [Evidence](../evidence/2026-10-10-w1-archived-replay-runner-provenance-recovery/README.md)
+
+- No reachable or unreachable Git blob, scoped editor-history entry, local runner backup, or saved Codex output matched the manifest's runner SHA-256
+- UTF-8 line-ending and common BOM/encoding variants did not explain the recorded hash
+- The committed `b9e0896` source captures chemical input and post-update memory after the same update, but that source cannot be bound to the archived run
+- The recorded disk hash is computed after ESM module loading; a file change between load and hash is possible but unproven
+- Chemical-memory recurrence remains unrun and blocked; W1 stays Undecided / Research Gap
+
 ### 2026-10-10 — W1 archived chemical-input sufficiency: Inconclusive / blocked
 
 [Chronology](./2026-10-10-w1-chemical-input-sufficiency-audit.md) · [Evidence](../evidence/2026-10-10-w1-chemical-input-sufficiency-audit/README.md)
