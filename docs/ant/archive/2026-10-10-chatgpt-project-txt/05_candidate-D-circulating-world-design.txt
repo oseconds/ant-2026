@@ -1,0 +1,118 @@
+응. 지금은 프로젝트의 “기능 목록”보다 **세계관의 작동 원리**가 먼저 명확해진 것 같아. 그리고 지금까지의 negative result들이 오히려 그걸 많이 정리해줬어.
+
+내가 지금 ANT를 가장 정확하게 설명하면 이거야.
+
+```text id="e4wfuf"
+ANT는 목표를 수행하는 agent simulation이 아니라,
+개체와 환경이 서로의 다음 조건을 만들어내는 순환하는 세계다.
+```
+
+개미에게 목적지는 없어도 돼. 대신 개체는 **상태**를 갖고, 환경은 **기억**을 갖고, 그 둘이 계속 서로를 바꾸는 거지.
+
+```text id="p3psjj"
+            INTERNAL STATE
+              vitality
+                  ↓
+               ACTION
+      movement / hesitation / gait
+                  ↓
+        chemical + mechanical trace
+                  ↓
+         ENVIRONMENTAL MEMORY
+                  ↓
+        material crystallization
+                  ↓
+        stratigraphy / depth
+                  ↓
+      local environmental condition
+             ↙           ↘
+        locomotion      vibration
+            ↓           ↙      ↘
+         vitality    sound   acoustic climate
+            ↑                  ↓
+            └──── colony condition
+```
+
+여기서 **sound도 끝점이 아니고**, material도 끝점이 아니고, ant도 주인공이 아니야. 전부 세계를 이루는 서로 다른 시간척도의 요소고.
+
+관객은 그걸 바깥에서 보면서 “저건 어디로 가는 걸까?”, “왜 여기서 길이 바뀌었지?”, “이 형태는 언제 생긴 거지?”, “왜 지금 이런 소리가 나는 거지?”라고 의미를 추측하게 되는 거고. 시스템 안에 정답을 넣어둘 필요는 없는 거지.
+
+이 방향이면 지금까지의 결과들도 잘 정리돼.
+
+현재 social graph는 **관찰계**로 남는다. S0–S2c에서 독립적인 social causal layer라고 볼 근거가 약했으니까 parked baseline으로 두고, 나중에 실제 relationship/memory를 추가하면 그때 현재 상태와 다시 비교하면 돼.
+
+현재 production Plate selector는 반대쪽 극단이었어. 누적 history를 너무 강하게 `source → boundary path`로 해석해서 tree-like morphology를 만들었고, interior endpoint를 늘리니까 결국 같은 영역을 더 두껍게 재기록했지.
+
+이번 local-accretion shadow는 그 반대 극단을 시험했어. path를 없애니까 초기 topology 자유도는 늘었지만, **절대 누적 field를 계속 material로 바꾸니까 600초에는 세 seed 모두 dense fan/blob으로 수렴**했어. 그러니까 여기서 얻은 핵심은:
+
+```text id="puco25"
+path selection만의 문제가 아니다.
+
+"누적된 상태가 높다"
+        ↓
+"물질이 된다"
+
+이 번역 자체가 장기적으로 형태를 포화시킨다.
+```
+
+그래서 다음 material mechanism은 **state가 아니라 transition을 봐야 한다**고 생각해.
+
+```text id="lnmii3"
+❌ 많이 사용된 곳 → 계속 물질화
+
+✅ 세계의 사용 방식이 변하고 있는 곳
+   → material episode 발생
+```
+
+이게 우리가 말한 **episodic crystallization**이고.
+
+그리고 한 번 생긴 material은 단순 archive가 아니라 다음 세계의 조건이 돼야 해. 다만 “저곳을 피하라” 같은 목적 기반 명령이 아니라, local locomotion cost, surface condition, vitality cost 같은 **가능성의 조건**을 조금 바꾸는 것.
+
+sound도 마찬가지로 특정 ant를 직접 조종하지 않고, physical vibration에서 느린 `acoustic climate`가 생겨서 군집 전체의 상태 조건을 조금 바꾸는 정도가 맞고.
+
+### 그래서 다음 개발 순서는 이렇게 잡는 게 좋아 보여
+
+1. **지금 결과를 baseline으로 닫기.** `ant-local-accretion-shadow`는 production에 merge하지 않고 mixed/negative morphology evidence로 보존해. main에는 decision-only chronology만 남기면 돼. 이 branch가 앞으로 “absolute cumulative accretion은 late blob으로 수렴한다”는 비교 기준이 된다.
+
+2. **World-state 설계 pass.** 아직 코딩하지 않고 `Ant internal state / environmental memory / material / vibration / acoustic climate`의 역할과 연결 방향을 문서로 고정해. 특히 “goal 없음”, “internal states 직접 sonification 금지”, “master speaker output은 feedback source가 아님”, “각 feedback은 target을 명령하지 않고 local condition만 변화시킴”을 invariant로 잡는 게 중요해.
+
+3. **Vitality shadow.** 먼저 기존 natural run에서 vitality를 행동에 연결하지 않고 계산만 해봐. 이동량, hesitation, acceleration, material crossing 같은 실제 state를 입력으로 해서 `소모 ↔ 회복`이 어떤 범위에서 안정되는지 본다. 여기서 모든 ant가 0이나 1에 붙어버리면 설계부터 틀린 거니까 behavior를 건드리기 전에 잡을 수 있어. 이후 작은 별도 pass에서만 vitality → movement dynamics를 약하게 연결한다.
+
+4. **Episodic crystallization shadow.** 기존 frozen 600s archive를 다시 써서 material을 `누적값`이 아니라 **recent change vs established history**에서 생성한다. 한 cell씩 매초 freeze하는 것도 아니고 전체 path를 한 번에 Plate로 만드는 것도 아닌, 공간적으로 연결되고 시간적으로 함께 성장한 **coherent material episode**를 찾는 게 목표야. 여기서 artery/fan/loop/fossil을 만들라는 규칙은 넣지 않고, 실제로 다양한 episode topology가 나오는지만 본다.
+
+5. **Material → organism feedback.** crystallization이 괜찮을 때 처음으로 natural ANT를 다시 돌린다. 처음에는 feedback 하나만 둬. 나는 `material/depth → locomotion cost → vitality consequence` 구조가 가장 논리적이라고 봐. 개미가 material을 “회피”하는 게 아니라 같은 움직임이 다른 환경에서는 다른 energetic consequence를 가지는 식. 그 결과 movement가 실제로 달라지는지는 관찰한다.
+
+6. **Vibration → acoustic climate.** 그 다음에만 sound loop를 닫는다. Plate/substrate의 **pre-master physical vibration energy**에서 느린 shared scalar를 만들고, 이것을 특정 ant가 아니라 colony condition에 아주 약하게 연결한다. 처음에는 하나의 변수만. 예를 들어 arousal이 hesitation/recovery 같은 global tendency 하나에만 영향. 관객용 gain/limiter/master output은 절대 feedback에 쓰지 않는다.
+
+마지막에 이 개별 pass들이 각각 안정적일 때만:
+
+```text id="3fnlok"
+vitality
+→ movement
+→ environmental memory
+→ crystallization
+→ material condition
+→ vibration
+→ acoustic climate
+→ colony condition
+→ vitality / movement
+```
+
+를 한 번에 묶는 **closed-world integration**으로 가는 거야.
+
+중요한 건 이 과정에서도 “재미있는 모양을 만들기 위해 parameter를 조절”하는 식으로 가지 않는 거고. 각 pass에서 질문은 계속 비슷해야 해.
+
+> 이 연결을 추가했을 때 세계가 더 다양한 상태를 지속적으로 만들 수 있는가?  
+> 아니면 하나의 attractor에 더 빨리 고착되는가?
+
+우리가 원하는 건 chaos도 아니고 안정도 아니고, **기억은 남지만 계속 다음 상태가 생길 수 있는 세계**인 것 같아.
+
+그리고 연구/작품 경계도 이렇게 두면 깔끔해.
+
+**Evidence로 말할 수 있는 것:** 어떤 규칙이 어떤 dynamics와 morphology를 실제로 만들었는가, feedback이 다양성을 늘렸는가/줄였는가, history가 장기적으로 읽히는가.
+
+**예술적 해석:** vitality를 생명력처럼 읽기, material을 기억이나 지층으로 읽기, acoustic climate를 세계의 기후처럼 읽기, 관객이 행동에 의미를 부여하는 것.
+
+나는 이제 이게 ANT의 새 청사진이라고 봐. 예전의 **“ant → trail → Plate → sound”**보다 훨씬 근본적인 구조가 됐어.
+
+**`agent simulation`에서 `circulating world`로 넘어가는 것.**
