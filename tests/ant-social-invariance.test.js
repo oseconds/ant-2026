@@ -260,3 +260,39 @@ test('DynamicSocialGraph stays observational across every natural controller tic
     await Promise.all([baseline.destroy(), observed.destroy()]);
   }
 });
+
+test('DynamicSocialGraph and TemporalSocialTopology observe raw controller agents directly without mutation', async t => {
+  const seed = 20261009;
+  const DT = 1 / 60;
+  const TICKS = 300;
+
+  const baselineRandom = countedRandom(seed);
+  const observedRandom = countedRandom(seed);
+
+  const baseline = new AntController({ random: baselineRandom });
+  const observed = new AntController({ random: observedRandom });
+
+  const graph = new DynamicSocialGraph();
+  const topology = new TemporalSocialTopology({ windowSeconds: 1 });
+
+  await Promise.all([baseline.init(), observed.init()]);
+
+  for (let tick = 1; tick <= TICKS; tick += 1) {
+    baseline.tick(DT);
+    observed.tick(DT);
+
+    // EDGE CASE: Pass the raw, un-frozen `agents` array directly to the observer.
+    // If the observer incorrectly mutates agent objects (e.g., coordinates) or sorts the array in-place,
+    // the observed controller's state will diverge from the baseline controller.
+    graph.observe(observed.simulationTimeMs / 1000, observed.agents);
+    topology.observe(graph.getSnapshot(1));
+
+    // Assert full parity to ensure movement, RNG consumption, etc. are unaffected.
+    assert.deepEqual(baseline.agents, observed.agents, 'Raw agent objects must not be mutated');
+    assert.deepEqual(baselineRandom.state(), observedRandom.state(), 'RNG state must be identical');
+    assert.deepEqual(baselineRandom.calls, observedRandom.calls, 'RNG consumption must be identical');
+    assert.deepEqual(baseline.state, observed.state, 'Controller state must be identical');
+    assert.deepEqual(baseline.field, observed.field, 'Pheromone field must be identical');
+  }
+  await Promise.all([baseline.destroy(), observed.destroy()]);
+});
