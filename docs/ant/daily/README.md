@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-10 — W1 material formation design gate: Undecided / Research Gap
+
+[Chronology](./2026-10-10-w1-material-formation-design-gate.md) · [Design decision](../w1-material-formation-design-gate.md)
+
+- Compare existing fields, field regimes, local irreversible conversion, retained relations and historical views
+- Separate activity/provenance from claimed formation; exact surface retention identifies no extra process
+- Propose one archived chemical-memory recurrence test; no execution, new ontology adoption or production change
+- Preserve negative W1 evidence and material-before-vitality ordering; W2 and later links remain gated
+
 ### 2026-10-09 — W1 spatiotemporal local-coherence audit: Mixed
 
 [Chronology](./2026-10-09-w1-spatiotemporal-local-coherence-audit.md) · [Evidence](../evidence/2026-10-09-w1-spatiotemporal-local-coherence-audit/README.md)

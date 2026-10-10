@@ -1,6 +1,6 @@
 # ANT — Current Architecture, Evidence and Research Boundary
 
-**Current repository state: 2026-10-09**
+**Current repository state: 2026-10-10**
 
 이 문서는 ANT의 **현재 verified state**를 위한 GitHub-side hub다. 과정은 [daily logs](daily/README.md), 실험별 원본과 재현 자료는 [evidence packages](evidence/)에 둔다.
 
@@ -35,7 +35,11 @@ af9c417  Record ANT social graph baseline evidence
 
 그 이후 커밋은 daily/documentation을 추가할 수 있으므로 **repository HEAD와 latest implementation baseline을 구분**한다.
 
-### Latest W1 spatiotemporal local-coherence audit — Mixed
+### Latest W1 material formation design gate — Undecided / Research Gap
+
+The [2026-10-10 design gate](w1-material-formation-design-gate.md) separates historical record, activity, environmental memory, material contribution and birth. Existing SurfaceField retention is exactly explained by its production updates; the archives do not identify an independent W1 formation process. Episode closure and activity connectivity are not sufficient formation criteria. The next proposed pass tests archived chemical-input/EMA sufficiency; it is not executed or an ontology-adoption decision. Production `TrailPlateBirth`/stratigraphy remain implemented, and W2/vitality/feedback/audio stay gated. [Chronology](daily/2026-10-10-w1-material-formation-design-gate.md).
+
+### W1 spatiotemporal local-coherence audit — Mixed
 
 The read-only graph connects eligible per-cell spells only when distinct 8-neighbor cells shared an observed `q === 1 && active === 1` frame. It preserves the three frozen seeds, all `1,797` matched q/EMA/active frames, and existing W1/max-overlap outputs. The old same-frame events are substantially joined, but each seed also grows a giant component containing 94.0–96.8% of eligible spells; single-cell groups persist, and unique-cell area is unchanged from the dense local union. This is retrospective activity history, not material formation evidence. [Evidence and fixed-scale plots](evidence/2026-10-09-w1-spatiotemporal-local-coherence-audit/README.md) · [Chronology](daily/2026-10-09-w1-spatiotemporal-local-coherence-audit.md).
 

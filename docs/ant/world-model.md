@@ -186,6 +186,8 @@ The next formation hypothesis should therefore examine **history transitions**, 
 
 ## Material formation principle
 
+**2026-10-10 design gate:** the episode-based proposal below remains a historical working hypothesis, not an adopted formation requirement. The [material formation design decision](w1-material-formation-design-gate.md) keeps the new W1 ontology **Undecided / Research Gap** and separates formation dynamics, provenance and object compilation. A future local state change may occur during a living episode; activity closure/connectivity alone does not identify it. This clarifies the hypothesis without changing the persistent-world contract or production material.
+
 A future material mechanism should move conceptually from:
 
 ```text
@@ -474,6 +476,8 @@ Each stage is separately authorized, measured and reversible.
 A successful stage is not one that merely looks more alive or more varied. It adds a clear causal relation while preserving enough openness for multiple future states to remain possible.
 
 ## Current next step
+
+**Latest decision:** [W1 Material Formation Design Gate](w1-material-formation-design-gate.md), 2026-10-10 — **Undecided / Research Gap**. Existing fields are the explanatory null for their observed evolution. Proposed next pass: exact archived chemical-input/20 s EMA recurrence, using the frozen three seeds; no new pass was executed here. No new material state or production mechanism is adopted. The completed shadow history below remains evidence, not the next implementation instruction.
 
 **W1 analysis is complete; viable coherent material ontology remains unresolved.**
 
