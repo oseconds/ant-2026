@@ -7,7 +7,7 @@
 - For work spanning ANT and shared audio, read the relevant sections of both guides.
 - The root `README.md` is the public project overview. Consult it when project-level context is useful, but do not treat it as the canonical ANT implementation guide.
 - Before resuming work, inspect `git status`, `git diff` and recent commits. Preserve valid partial/untracked work; never absorb unrelated files into a pass.
-- For every ANT implementation or research pass, invoke the `caveman` skill at the start of the task when it is installed. This is mandatory, not optional. If `caveman` is unavailable in the current harness, state that explicitly before proceeding. Keep user-visible progress and decision narration concise and evidence-focused; never expose private chain-of-thought, and do not let narration replace source inspection, tests, verification or explicit evidence/commit boundaries.
+- For every ANT implementation or research pass, the parent invokes the `caveman` skill at the start of the task when it is installed. This is mandatory, not optional. If `caveman` is unavailable in the current harness, state that explicitly before proceeding. Keep user-visible progress and decision narration concise and evidence-focused; never expose private chain-of-thought, and do not let narration replace source inspection, tests, verification or explicit evidence/commit boundaries.
 - Work one ANT experiment at a time and prefer small, falsifiable passes. Do not tune behavior merely to manufacture a desired visual/social pattern.
 - Keep ANT behavior framework-independent. `AntController` coordinates systems; behavior/fields/material logic stay out of the renderer. `AntRenderer` only draws snapshots. Browser/audio resources are not created at module top-level.
 - The founder-refined behavior baseline is frozen at `e38450ce11f99e63f5ab0cb6e8e8ee4281fcadd9`. Preserve movement, steering, gait, collision, pheromone, SurfaceField, recruitment and Plate-birth qualification unless fixing a demonstrated bug.
@@ -33,6 +33,8 @@
 High/Max가 더 깊은 분석·검증에 실질적 도움이 되면 적극 사용한다. 배정마다 작업의 불확실성·결합도·오류의 영향을 보고 수준을 선택하고, 짧게 선택 근거를 남긴다. 한 수준을 모든 작업에 관성적으로 적용하지 않는다. Max는 Medium/High 선행 시도 없이 바로 선택할 수 있다. 테스트 통과 결과만으로 더 깊은 검토가 불필요했다고 판단하지 않는다.
 
 역할(구현 / 실험·증거 수집 / 독립 검토)과 reasoning 수준은 따로 선택한다. 위임마다 `역할 / reasoning / 선택 근거 / 수정 범위 / 완료 기준`을 짧게 명시한다. 역할별 지침은 반복 복사나 경계 누락이 생길 때만 별도 파일로 분리하고, 공통 규칙은 이 파일에 유지한다.
+
+Parent는 작업에 맞춰 subagent의 반환 보고 형식·길이를 정한다. 단순 탐색·검증은 결론·파일 위치·검증 상태를 간결하게, 연구·설계·독립 검토는 근거·반례·불확실성을 충분히 보고하게 한다. Subagent에 대한 `caveman` 적용은 필요할 때만 지시하며 일괄 강제하지 않는다.
 
 ### 재사용과 새 배정
 
