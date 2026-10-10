@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: advance uses initial one second, then elapsed reconstructed from actual tick clock
+ok 1 - advance uses initial one second, then elapsed reconstructed from actual tick clock
+  ---
+  duration_ms: 7.9728
+  type: 'test'
+  ...
+# Subtest: production grid sampler and Float32 in-place storage match every cell byte
+ok 2 - production grid sampler and Float32 in-place storage match every cell byte
+  ---
+  duration_ms: 3.6338
+  type: 'test'
+  ...
+# Subtest: production tick clock reconstructs cumulative tick additions exactly
+ok 3 - production tick clock reconstructs cumulative tick additions exactly
+  ---
+  duration_ms: 0.1781
+  type: 'test'
+  ...
+# Subtest: descriptor timestamps, offsets, array order and row-major byte spans are validated
+ok 4 - descriptor timestamps, offsets, array order and row-major byte spans are validated
+  ---
+  duration_ms: 3.508
+  type: 'test'
+  ...
+# Subtest: reordered or missing update descriptors fail causal coverage
+ok 5 - reordered or missing update descriptors fail causal coverage
+  ---
+  duration_ms: 1.6683
+  type: 'test'
+  ...
+# Subtest: missing, malformed, NaN and infinite Float32 inputs are rejected
+ok 6 - missing, malformed, NaN and infinite Float32 inputs are rejected
+  ---
+  duration_ms: 0.3012
+  type: 'test'
+  ...
+# Subtest: an unverifiable archived capture-source hash creates a typed stop gap
+ok 7 - an unverifiable archived capture-source hash creates a typed stop gap
+  ---
+  duration_ms: 0.3274
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 36.392

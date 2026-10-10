@@ -477,7 +477,7 @@ A successful stage is not one that merely looks more alive or more varied. It ad
 
 ## Current next step
 
-**Latest decision:** [W1 Material Formation Design Gate](w1-material-formation-design-gate.md), 2026-10-10 — **Undecided / Research Gap**. Existing fields are the explanatory null for their observed evolution. Proposed next pass: exact archived chemical-input/20 s EMA recurrence, using the frozen three seeds; no new pass was executed here. No new material state or production mechanism is adopted. The completed shadow history below remains evidence, not the next implementation instruction.
+**Latest decision:** [W1 Material Formation Design Gate](w1-material-formation-design-gate.md), 2026-10-10 — **Undecided / Research Gap**. Existing fields are the explanatory null for their observed evolution. The archived chemical-input sufficiency preflight validated archive descriptors and update-clock coverage, but stopped before recurrence because the recorded replay-runner SHA-256 does not match the available runner. Sufficiency is inconclusive; no recurrence match/mismatch result or material claim follows. No new material state or production mechanism is adopted. The completed shadow history below remains evidence, not an implementation instruction.
 
 **W1 analysis is complete; viable coherent material ontology remains unresolved.**
 

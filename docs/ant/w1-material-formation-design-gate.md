@@ -90,15 +90,15 @@ For an independent material claim, persistence alone is insufficient because slo
 
 Current deterministic simulation cannot reveal an unimplemented hidden physical process through a residual alone. A residual first challenges archive completeness, update timing or the proposed baseline reconstruction. Introducing a new state to make a richer world is still allowed as an explicitly artistic/modeling extension, but it must be evaluated as that extension, not described as a discovery in the old archives.
 
-## 4. Next falsifiable pass — archived chemical-input sufficiency
+## 4. Proposed pass at the gate — archived chemical-input sufficiency
 
 **One hypothesis:** the archived `chemical` arrays at production analysis times, existing sample/bounding arithmetic and 20 s EMA are sufficient to reproduce every archived `chemicalMemory` value. No reconstruction of intervening 60 Hz gaster deposits is required for this narrower recurrence question.
 
-This is proposed, not executed here. It closes a specific explanatory gap before any conversion/bond/phase shadow. Its result would not select a material ontology.
+At the time of this design-gate decision, this was proposed rather than executed. A subsequent preflight stopped before recurrence because the archived runner hash does not match the available source; see the follow-up status below. The hypothesis closes a specific explanatory gap before any conversion/bond/phase shadow, but its result would not select a material ontology.
 
 ### Why this is feasible with existing inputs
 
-[`ant-morphology-replay.js`](../../scripts/ant-morphology-replay.js) captures exact `controller.field.values` and `trailPlateBirth.chemicalMemory` after `controller.tick` whenever the instrumented mask build occurs (capture at lines 145–154; array sources at lines 245–248). [`AntController.tick`](../../src/lib/agents/ant/AntController.js) deposits before calling birth analysis, then only samples pheromone for activation/recruitment. [`TrailPlateBirth.advance`](../../src/lib/agents/ant/TrailPlateBirth.js) updates memory at each analysis before building that mask. These facts make the saved chemical array a candidate exact input to the recorded update, subject to a clock/order audit.
+The available [`ant-morphology-replay.js`](../../scripts/ant-morphology-replay.js) captures `controller.field.values` and `trailPlateBirth.chemicalMemory` after `controller.tick` at the instrumented mask build (capture at lines 145–154; array sources at lines 245–248). However, the archived replay manifest records a different runner SHA-256, so this available source cannot establish what the frozen run captured. [`AntController.tick`](../../src/lib/agents/ant/AntController.js) deposits before birth analysis; [`TrailPlateBirth.advance`](../../src/lib/agents/ant/TrailPlateBirth.js) updates memory at each analysis. These current production facts motivated the candidate comparator, but the archived same-update input/output relation remains unverified.
 
 The existing update is:
 
@@ -129,8 +129,8 @@ The first production update uses elapsed = 1 s even though the first recorded si
 
 ## 5. Implementation boundary and persistent world
 
-- **Decided now:** the separation of observations/provenance from a claimed formation process; no ontology adoption; field-only explanatory null; one proposed input-sufficiency test.
-- **Not implemented here:** recurrence audit tooling, a material contribution function, irreversible variable, phase regime, finite precursor, bonding law, geometry compiler or new character estimator. No new evidence package is created for an unexecuted pass.
+- **Decided now:** the separation of observations/provenance from a claimed formation process; no ontology adoption; field-only explanatory null; the input-sufficiency question received a preflight, but its recurrence remains unverified.
+- **Not implemented here:** a material contribution function, irreversible variable, phase regime, finite precursor, bonding law, geometry compiler or new character estimator. The subsequent evidence package records only the typed preflight stop.
 - **Later shadow authorization:** one specified mechanism plus one discriminating prediction, tested against the preserved baseline. Parameters and output morphology cannot become hidden success targets.
 - **Separate production authorization:** replacement/integration of `TrailPlateBirth`, stratigraphy or material/audio behavior. W2, vitality, feedback, audio, social coupling and runtime optimization remain gated. No merge, PR or force-push.
 
@@ -143,6 +143,10 @@ Formation, relaxation or retained state must remain defined when ants are absent
 - Verified 321 package-owned/daily entries across nine W1 ledgers, plus the source references above: 338 distinct files, zero mismatches. Raw-field result paths are relative to its `results/` ledger; several older package paths are package-relative. The ledgers' declared exclusions remain exclusions. Fifteen external reproduction-source references in the original/post-contact package ledgers were outside this package-owned check; the three latest post-contact tooling/test references were then separately rehashed and matched. The twelve original external references are not asserted unchanged merely because a historical ledger names them. Production source equality and direct source inspection are separate checks.
 - Evidence numeric results above are existing committed results, not rerun measurements. The post-contact audit's analyzed source HEAD is `eb520969fd88fb8c60deb6b46c96f7afd7dfff3f`; the raw-field audit's source HEAD is `aad8c30960a8b8511b855321ecc10450b55057b3`. Current synthesis HEAD does not replace those provenance identities.
 - Independent Luna High reviews checked production/chronology and evidence claims; a Luna Max architecture review tested counterexamples and the proposed recurrence boundary. A fresh final document review is recorded in the daily entry after completion.
-- No numerical audit, shadow prototype, natural simulation, playback or browser run occurred. Documentation/link/scope checks are appropriate to this document-only change; prior full-test counts belong to their historical evidence packages.
+- At the design-gate stage, no numerical recurrence audit, shadow prototype, natural simulation, playback or browser run occurred. The subsequent preflight and validation are recorded in the linked evidence package and daily entry.
 
 Process and final review are recorded in [the daily chronology](daily/2026-10-10-w1-material-formation-design-gate.md).
+
+## 6. Follow-up audit status — 2026-10-10
+
+The [archived chemical-input sufficiency audit](evidence/2026-10-10-w1-chemical-input-sufficiency-audit/README.md) validated the frozen input hashes, 1,797 descriptors, decoded field ranges, production update-tick coverage and reconstructed timestamps. It stopped before recurrence because the replay manifest's runner SHA-256 (`27bd6e…`) differs from the available runner (`1c54bc…`). The stored `chemical` to post-update `chemicalMemory` timing therefore remains unverified, and no values were compared. Record the result as **Inconclusive / blocked**, leave the design decision **Undecided / Research Gap**, and treat no residual as evidence of a new process. The [audit chronology](daily/2026-10-10-w1-chemical-input-sufficiency-audit.md) preserves the full hashes and validation.

@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-10 — W1 archived chemical-input sufficiency: Inconclusive / blocked
+
+[Chronology](./2026-10-10-w1-chemical-input-sufficiency-audit.md) · [Evidence](../evidence/2026-10-10-w1-chemical-input-sufficiency-audit/README.md)
+
+- Verified the three frozen archives, 1,797 descriptors, array offsets/XOR decoding, finite Float32 fields and all production update ticks/timestamps
+- Stopped before the 16,561,152-value recurrence comparison because the replay manifest runner hash differs from the available runner; same-update capture timing is unverified
+- No recurrence sufficiency conclusion; the W1 ontology remains Undecided / Research Gap
+- Seven focused fixtures, full `npm test` (407/407) and `npm run build` pass; no production or material change
+
 ### 2026-10-10 — W1 material formation design gate: Undecided / Research Gap
 
 [Chronology](./2026-10-10-w1-material-formation-design-gate.md) · [Design decision](../w1-material-formation-design-gate.md)
