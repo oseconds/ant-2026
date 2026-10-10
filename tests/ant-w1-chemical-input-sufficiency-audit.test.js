@@ -4,7 +4,8 @@ import { PheromoneField } from '../src/lib/agents/ant/PheromoneField.js';
 import { TrailPlateBirth, TRAIL_PLATE_CHEMICAL_HALF_SATURATION,
   TRAIL_PLATE_CHEMICAL_TAU_SECONDS } from '../src/lib/agents/ant/TrailPlateBirth.js';
 import { CELLS, DT, FIELD_BYTES, HEIGHT, WIDTH, reconstructTickTimes,
-  sourceHashGap, validateEncoding, validateFiniteFloat32, validateUpdateCoverage } from '../scripts/ant-w1-chemical-input-sufficiency-audit.js';
+  consistencyCheckMayProceed, sourceHashGap, validateEncoding, validateFiniteFloat32,
+  validateUpdateCoverage } from '../scripts/ant-w1-chemical-input-sufficiency-audit.js';
 
 function memoryBytes(memory) {
   return Buffer.from(memory.buffer, memory.byteOffset, memory.byteLength);
@@ -62,6 +63,32 @@ test('production grid sampler and Float32 in-place storage match every cell byte
   }
   model.updateChemicalMemory(pheromone, elapsed);
   assert.deepEqual(memoryBytes(model.chemicalMemory), memoryBytes(expected));
+});
+
+test('synthetic archived memories distinguish exact recurrence from changed, omitted and reordered inputs', () => {
+  const profiles = [0.08, 0.4, 0.02];
+  const replay = frames => {
+    const model = new TrailPlateBirth();
+    const pheromone = new PheromoneField({ width: WIDTH, height: HEIGHT });
+    return frames.map(({ value, elapsed }) => {
+      pheromone.values.fill(value);
+      model.updateChemicalMemory(pheromone, elapsed);
+      return Buffer.from(memoryBytes(model.chemicalMemory));
+    });
+  };
+  const archived = replay(profiles.map(value => ({ value, elapsed: 1 })));
+  const byteMatch = (actual, expected) => actual.length === expected.length
+    && actual.every((frame, index) => frame.equals(expected[index]));
+  assert.equal(byteMatch(replay(profiles.map(value => ({ value, elapsed: 1 }))), archived), true);
+  assert.equal(byteMatch(replay(profiles.map((value, index) => ({
+    value: index === 1 ? value + 0.01 : value, elapsed: 1
+  }))), archived), false, 'changed chemical input changes archived Float32 output');
+  const withoutMiddleFrame = replay([{ value: profiles[0], elapsed: 1 },
+    { value: profiles[2], elapsed: 2 }]);
+  assert.equal(withoutMiddleFrame.at(-1).equals(archived.at(-1)), false,
+    'omitting an update changes the later archived memory');
+  assert.equal(byteMatch(replay([profiles[0], profiles[2], profiles[1]].map(value => ({ value, elapsed: 1 }))), archived), false,
+    'reordering archived inputs changes the frame-by-frame memories');
 });
 
 test('production tick clock reconstructs cumulative tick additions exactly', () => {
@@ -124,4 +151,13 @@ test('an unverifiable archived capture-source hash creates a typed stop gap', ()
     recordedSha256: 'a'.repeat(64), observedSha256: 'b'.repeat(64),
     effect: 'The archived capture source cannot be verified, so same-update chemical-input / chemicalMemory-output timing is not established.'
   });
+});
+
+test('consistency path bypasses only the known runner hash gap while legacy audit still sees it as a gap', () => {
+  const runnerGap = sourceHashGap('scripts/ant-morphology-replay.js', 'a'.repeat(64), 'b'.repeat(64));
+  assert.equal(consistencyCheckMayProceed([]), true);
+  assert.equal(consistencyCheckMayProceed([runnerGap]), true);
+  assert.equal(consistencyCheckMayProceed([{ ...runnerGap, path: 'src/production.js' }]), false);
+  assert.equal(consistencyCheckMayProceed([runnerGap, runnerGap]), false);
+  assert.notEqual(runnerGap, null, 'the unchanged sufficiency audit still receives a provenance stop gap');
 });

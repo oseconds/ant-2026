@@ -12,6 +12,8 @@ import { TrailPlateBirth, TRAIL_PLATE_GRID_SIZE } from '../src/lib/agents/ant/Tr
 
 export const PACKAGE = 'docs/ant/evidence/2026-10-10-w1-chemical-input-sufficiency-audit';
 export const STARTING_HEAD = '9eeaa2c1e3254ed7c9bdcac25e79e4d5ee161841';
+export const CONSISTENCY_PACKAGE = 'docs/ant/evidence/2026-10-10-w1-archived-chemical-memory-recurrence-consistency-check';
+export const CONSISTENCY_STARTING_HEAD = '22ead7669af28145e9c6966d4a042a692c905057';
 export const SEEDS = [20261005, 20261006, 20261007];
 export const WIDTH = TRAIL_PLATE_GRID_SIZE, HEIGHT = TRAIL_PLATE_GRID_SIZE;
 export const CELLS = WIDTH * HEIGHT, DT = 1 / 60;
@@ -46,6 +48,12 @@ export function sourceHashGap(path, recordedSha256, observedSha256) {
     recordedSha256: recordedSha256.toLowerCase(), observedSha256: observedSha256.toLowerCase(),
     effect: 'The archived capture source cannot be verified, so same-update chemical-input / chemicalMemory-output timing is not established.'
   };
+}
+
+export function consistencyCheckMayProceed(gaps) {
+  return Array.isArray(gaps) && gaps.length <= 1 && gaps.every(gap =>
+    gap.code === 'ARCHIVED_REPLAY_RUNNER_SOURCE_HASH_MISMATCH'
+    && gap.path === 'scripts/ant-morphology-replay.js');
 }
 
 export function reconstructTickTimes(lastTick, dt = DT) {
@@ -378,15 +386,22 @@ async function analyzeSeed(seed, replay, expectedInputs, root, fieldChecksums, {
   assert.equal(observedElapsed.length, descriptors.length, `all production updates observed seed ${seed}`);
   assert.equal(comparedValues, descriptors.length * CELLS);
   return {
-    seed, frames: descriptors.length, comparedCells: comparedValues, matchingCells: matchingValues,
-    mismatches: comparedValues - matchingValues, mismatchedFrames, maxAbsoluteError, firstMismatch,
+    seed, frames: descriptors.length, comparedFrames: descriptors.length,
+    comparedCells: comparedValues, comparedValues, matchingCells: matchingValues, matchingValues,
+    mismatches: comparedValues - matchingValues,
+    mismatchFraction: (comparedValues - matchingValues) / comparedValues,
+    mismatchedFrames, maxAbsoluteError, firstMismatch,
     firstTick: descriptors[0].tick, firstTimeSeconds: descriptors[0].timeSeconds,
     finalTick: descriptors.at(-1).tick, finalTimeSeconds: descriptors.at(-1).timeSeconds,
+    updateTicks: updateSchedule.map(row => row.tick),
     descriptorSha256, updateIntervals: {
       count: elapsed.length, firstElapsedSeconds: elapsed[0], minElapsedSeconds: Math.min(...elapsed.slice(1)),
       maxElapsedSeconds: Math.max(...elapsed.slice(1)), distinctElapsedSeconds: [...new Set(elapsed.slice(1))].sort((a, b) => a - b)
     }, mismatchPropagation: firstMismatch ? { firstMismatchFrame: firstMismatch.frame,
-      firstMismatchTick: firstMismatch.tick, framesWithMismatch: mismatchedFrames } : null,
+      firstMismatchTick: firstMismatch.tick,
+      lastMismatchFrame: mismatchCounts.findLast(row => row.mismatches > 0)?.frame ?? null,
+      lastMismatchTick: mismatchCounts.findLast(row => row.mismatches > 0)?.tick ?? null,
+      framesWithMismatch: mismatchedFrames } : null,
     mismatchCounts
   };
 }
@@ -470,6 +485,80 @@ export async function run(output = `${PACKAGE}/results`) {
   return summary;
 }
 
+export async function runConsistencyCheck(output = `${CONSISTENCY_PACKAGE}/results`) {
+  const baseline = await loadBaseline(ROOT);
+  const expectedInputs = Object.fromEntries(baseline.protectedInputs.map(row => [row.path, row]));
+  if (!consistencyCheckMayProceed(baseline.gaps)) {
+    const preflight = [];
+    for (const seed of SEEDS) preflight.push(await analyzeSeed(seed, baseline.replay, expectedInputs, ROOT,
+      baseline.fieldChecksums, { preflightOnly: true }));
+    const summary = {
+      schemaVersion: 1, status: 'INCONCLUSIVE', decision: 'Inconclusive',
+      question: 'Are archived chemical and chemicalMemory values numerically consistent with the current production recurrence?',
+      scope: 'Archive-internal numerical consistency only; no archived same-update capture relationship is assumed.',
+      startingHead: CONSISTENCY_STARTING_HEAD, sourceReplayCommit: baseline.replay.replayManifest.commit,
+      runnerProvenanceVerified: false, inputGaps: baseline.gaps, recurrenceExecuted: false,
+      preflight: { archiveFramesPerSeed: 599, archiveSeeds: SEEDS, seedResults: preflight,
+        productionSourceHashes: baseline.productionHashes, frozenSourceFingerprints: baseline.sourceRecords,
+        priorW1Parity: baseline.priorParity },
+      validations: { archiveAndPriorEvidenceHashes: true, metadataAndDescriptors: true,
+        xorOffsetsByteOrderAndFiniteInputs: true, productionUpdateTicksAndClocks: true,
+        archivedCaptureTiming: false, runnerProvenanceVerified: false,
+        recurrenceAnd16_561_152ValueComparison: false, rngUsed: false },
+      limitations: ['A non-runner input/source gap prevents a valid numerical comparison.']
+    };
+    const outputPath = await writeOutputs(output, summary, preflight, baseline.sourceRecords, baseline.productionHashes);
+    process.stdout.write(JSON.stringify({ output: outputPath, status: summary.status,
+      decision: summary.decision, recurrenceExecuted: false }) + '\n');
+    return summary;
+  }
+
+  const results = [];
+  for (const seed of SEEDS) results.push(await analyzeSeed(seed, baseline.replay, expectedInputs, ROOT,
+    baseline.fieldChecksums));
+  const totalComparedValues = results.reduce((sum, row) => sum + row.comparedValues, 0);
+  const totalMismatches = results.reduce((sum, row) => sum + row.mismatches, 0);
+  assert.equal(totalComparedValues, 16_561_152);
+  const summary = {
+    schemaVersion: 1, status: 'COMPLETE',
+    decision: totalMismatches === 0 ? 'Consistent' : 'Inconsistent',
+    question: 'Are archived chemical and chemicalMemory values numerically consistent with the current production recurrence?',
+    scope: 'Archive-internal numerical consistency only. A match does not verify the original replay runner or archived capture timing.',
+    startingHead: CONSISTENCY_STARTING_HEAD,
+    currentMainBaseline: 'a78249fc02fb7990568d62709e9a087489fe632b',
+    sourceReplayCommit: baseline.replay.replayManifest.commit,
+    runnerProvenanceVerified: false,
+    runnerProvenance: { recordedHash: baseline.replay.replayManifest.runnerHash,
+      availableFileHash: baseline.productionHashes['scripts/ant-morphology-replay.js'],
+      matched: !baseline.gaps.some(gap => gap.path === 'scripts/ant-morphology-replay.js'),
+      limitation: 'The original replay runner bytes and capture timing are not verified; this numerical check does not change the prior provenance or sufficiency-audit status.' },
+    clock: 'simulationTimeMs starts at zero and accumulates dt * 1000 once per archived controller tick; the first production update uses elapsedSeconds = 1; subsequent elapsed values use differences between reconstructed simulationTimeMs values.',
+    recurrence: 'TrailPlateBirth.advance -> updateChemicalMemory -> production createPheromoneSampler -> raw=max(0,sampled) -> bounded=raw/(raw+0.04) -> Float32 in-place memory += (bounded-memory)*(1-exp(-max(0,elapsedSeconds)/20)).',
+    archive: { seeds: SEEDS, framesPerSeed: 599, totalFrames: 1797, cellsPerFrame: CELLS,
+      totalComparedValues, totalMismatches, mismatchFraction: totalMismatches / totalComparedValues,
+      arrays: ARRAY_ORDER, decodedEndian: os.endianness(), xorDecodedAndOffsetsVerified: true,
+      clockCoverageExact: true },
+    productionSourceHashes: baseline.productionHashes,
+    frozenSourceFingerprints: baseline.sourceRecords,
+    priorW1ParityChecks: baseline.priorParity,
+    priorRawAndPostContactEvidencePreserved: true,
+    results: results.map(({ mismatchCounts, ...row }) => row),
+    validations: { frozenInputHashesAndDescriptors: true, xorDecodeOffsetsAndByteOrder: true,
+      productionUpdateTicksAndClockCoverage: true, productionUpdaterAndSamplerReused: true,
+      float32InPlaceStorage: true, allFramesCausalAndSequential: true, allCellsCompared: true,
+      priorW1QAndActiveParityVerified: true,
+      runnerProvenanceVerified: false, archivedSameUpdateCaptureTiming: false,
+      previousSufficiencyAuditStatusChanged: false, w1OntologyChanged: false, rngUsed: false }
+  };
+  const outputPath = await writeOutputs(output, summary, results, baseline.sourceRecords, baseline.productionHashes);
+  process.stdout.write(JSON.stringify({ output: outputPath, status: summary.status,
+    decision: summary.decision, comparedValues: totalComparedValues, mismatches: totalMismatches,
+    runnerProvenanceVerified: false }) + '\n');
+  return summary;
+}
+
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  await run(process.argv[2] || `${PACKAGE}/results`);
+  if (process.argv[2] === '--consistency-check') {
+    await runConsistencyCheck(process.argv[3] || `${CONSISTENCY_PACKAGE}/results`);
+  } else await run(process.argv[2] || `${PACKAGE}/results`);
 }
