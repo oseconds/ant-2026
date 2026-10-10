@@ -19,6 +19,11 @@ This directory preserves dated snapshots removed from the ChatGPT ANT_2026 proje
 
 The ChatGPT-upload suffixes `(1)`/`(2)` were removed from filenames for this archive; the underlying historical text was preserved. Any old relative or sandbox links inside the source snapshots may no longer resolve.
 
+
+## Archived ChatGPT TXT conversation / review notes — 2026-10-10
+
+[Seven distinct TXT records and original-name mapping](2026-10-10-chatgpt-project-txt/README.md). Two different attachments had the filename `ANT 시뮬레이션 딥리뷰.txt`; four different attachments had the filename `Candidate D 실행.txt`; the seventh was `발전 방향 제안.txt`. Each was preserved individually and tagged with its source-display name and topic. This is archived assistant/research interpretation, not a current design decision or implementation claim.
+
 ## 2026-10-06 and 2026-10-07 chronology
 
 Date-specific development history already lives in the canonical daily logs and evidence, so it is **not duplicated** into this archive:
