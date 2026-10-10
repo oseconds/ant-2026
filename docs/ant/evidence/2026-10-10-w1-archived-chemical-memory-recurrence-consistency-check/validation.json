@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-10",
+  "consistencyCheck": {
+    "status": "COMPLETE",
+    "decision": "Consistent",
+    "runnerProvenanceVerified": false,
+    "archivedSameUpdateCaptureTimingVerified": false,
+    "comparedFrames": 1797,
+    "comparedFloat32Values": 16561152,
+    "exactMatches": 16561152,
+    "mismatches": 0,
+    "maximumAbsoluteError": 0
+  },
+  "independentProcess": {
+    "runs": 2,
+    "identicalArtifacts": true,
+    "artifacts": [
+      {
+        "path": "summary.json",
+        "bytes": 40316,
+        "sha256": "b2ce53a7067915f075ca8eb07c730746eabafe175429965a928c00d995ba5b6b"
+      },
+      {
+        "path": "frame-mismatch-counts.csv",
+        "bytes": 69873,
+        "sha256": "97603b3ccf4bcc360952de5378c15f66068d4464aac18c757f09cae1091c7019"
+      },
+      {
+        "path": "input-fingerprints.json",
+        "bytes": 5908,
+        "sha256": "c17f2102cd5afc80be5f911319e5a6c2023d4558d657b06e7dd624674a5e5612"
+      },
+      {
+        "path": "checksums.json",
+        "bytes": 509,
+        "sha256": "a815d20d1de930066342a27c987e27365f15c3e4b55b08f061c8400a906490e0"
+      }
+    ]
+  },
+  "focusedTests": {
+    "command": "node --test tests/ant-w1-chemical-input-sufficiency-audit.test.js",
+    "passed": 9,
+    "failed": 0
+  },
+  "fullTests": {
+    "command": "npm test",
+    "passed": 409,
+    "failed": 0
+  },
+  "build": {
+    "command": "npm run build",
+    "passed": true,
+    "modulesTransformed": 408,
+    "warnings": [
+      "Rollup removed third-party @__PURE__ comments it could not interpret.",
+      "Generated chunks exceed the 500 kB advisory size threshold."
+    ]
+  },
+  "legacyAuditRoute": {
+    "status": "BLOCKED",
+    "decision": "Inconclusive",
+    "recurrenceExecuted": false,
+    "gap": "ARCHIVED_REPLAY_RUNNER_SOURCE_HASH_MISMATCH"
+  },
+  "preservedDecisions": {
+    "chemicalInputSufficiencyAudit": "Inconclusive / Blocked",
+    "runnerProvenanceRecovery": "Partially Resolved",
+    "w1Ontology": "Undecided / Research Gap"
+  },
+  "naturalAntReplayRun": false,
+  "productionSourceModified": false,
+  "rngUsed": false
+}
