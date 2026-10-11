@@ -63,7 +63,7 @@ export class AntController {
         gaitController = new GaitController(), bodyPoseController = new BodyPoseController(),
         gasterDeposition = null, surfaceField = new SurfaceField(),
         trailPlateBirth = new TrailPlateBirth(), materialStratigraphy = new MaterialStratigraphy(),
-        audioBridge = null } = {}) {
+        materialLocomotionResistance = false, audioBridge = null } = {}) {
         this.state = normalizeState(state || {});
         this.random = random;
         this.fieldFactory = fieldFactory;
@@ -88,6 +88,7 @@ export class AntController {
         this.surfaceField = surfaceField;
         this.trailPlateBirth = trailPlateBirth;
         this.materialStratigraphy = materialStratigraphy;
+        this.materialLocomotionResistance = materialLocomotionResistance === true;
         this.audioBridge = audioBridge;
         this.audioBridge?.setMode?.(this.state.audioExperiment.mode);
         this.audioBridge?.setBaseSubstrateEnabled?.(this.state.audioExperiment.baseSubstrate);
@@ -291,6 +292,9 @@ export class AntController {
     tick(dt) {
         if (this.destroyed || !this.initialized || !this.running || !Number.isFinite(dt) || dt <= 0) return;
         const current = this.agents;
+        // Read at the causal boundary; contacts and births later in this tick affect the next one.
+        const materialSnapshot = this.materialLocomotionResistance
+            ? this.materialStratigraphy.getSnapshot() : null;
         const materialRevision = this.materialStratigraphy.revision;
         const previousRear = current.map(agent => this.bodyPoseController.getSnapshot(agent)?.gasterRear
             || gasterRearPoint(agent));
@@ -340,6 +344,8 @@ export class AntController {
             // Same-direction traffic caps pace without adding a steering target.
             desiredSpeed = Math.min(desiredSpeed, info.followingSpeedLimit);
             if (agent.hesitationRemaining > 0) desiredSpeed *= HESITATION_SPEED_RATIO;
+            if (materialSnapshot) desiredSpeed *= materialLocomotionMultiplier(
+                materialLayerCountAtSnapshot(materialSnapshot, agent.x, agent.y));
             agent.targetSpeed = desiredSpeed;
             agent.accelerateToward(desiredSpeed, dt);
             agent.vx += info.separationX * SEPARATION_ACCELERATION * dt;
@@ -691,4 +697,18 @@ function minimumSeparation(agents) {
         }
     }
     return Number.isFinite(minimum) ? minimum : null;
+}
+
+export function materialLocomotionMultiplier(layerCount) {
+    return 1 - 0.10 * (1 - Math.exp(-layerCount / 4));
+}
+
+export function materialLayerCountAtSnapshot(snapshot, x, y) {
+    if (!Number.isFinite(x) || !Number.isFinite(y) || x < 0 || x > 1 || y < 0 || y > 1) return 0;
+    const counts = snapshot?.stratigraphy?.layerCountByCell;
+    if (!Number.isInteger(snapshot?.width) || !Number.isInteger(snapshot?.height)
+        || !ArrayBuffer.isView(counts)) return 0;
+    const cell = Math.round(y * (snapshot.height - 1)) * snapshot.width
+        + Math.round(x * (snapshot.width - 1));
+    return counts[cell] || 0;
 }

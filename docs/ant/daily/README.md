@@ -23,6 +23,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 - OFF/ON per-tick parity matched exactly; no production change
 - Decision: **SUPPORTED FOR NEXT CAUSAL A/B** as a narrow opportunity; no feedback parameter or effect selected
 
+### 2026-10-11 — Retained material → locomotion causal A/B
+
+[Process log](./2026-10-11-retained-material-locomotion-ab.md) · [Paired A/B evidence](../evidence/2026-10-11-retained-material-locomotion-ab-final/README.md)
+
+- Fixed exposed-layer-count resistance tested in Control/Treatment at the same three 600 s seeds
+- All three Control hash chains matched the prior shadow baseline; Treatment reduced travel and contact counts consistently
+- Exposure episodes became fewer but longer; Plate birth/coverage direction varied; no stall or collapse
+- Decision: **SUPPORTED** as a bounded production-world-law candidate, not adopted; switch remains Off
+
 ### 2026-10-09 — Material-mediated social dynamics hypothesis (design only)
 
 [Concept note](../material-mediated-social-dynamics.md) · [Process log](./2026-10-09-material-mediated-social-dynamics.md)

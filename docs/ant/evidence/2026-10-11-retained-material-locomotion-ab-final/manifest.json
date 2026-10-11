@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "baselineRef": "f09d67f1eab6f13e7466e1f8ea8c05c08145f995",
+  "baselineCommit": "f09d67f1eab6f13e7466e1f8ea8c05c08145f995",
+  "productionBaselineCommit": "27d2deab8fe0495c740023793820efd3dd8994a4",
+  "passBranch": "ant-retained-material-locomotion-ab",
+  "startHead": "f09d67f1eab6f13e7466e1f8ea8c05c08145f995",
+  "node": "v22.23.2",
+  "seeds": [
+    20261005,
+    20261006,
+    20261007
+  ],
+  "seconds": 600,
+  "dtSeconds": 0.016666666666666666,
+  "fixedHz": 60,
+  "totalTicks": 36000,
+  "conditions": {
+    "control": "AntController default materialLocomotionResistance=false; no audio bridge or state override.",
+    "treatment": "materialLocomotionResistance=true; only current cell public stratigraphy layerCountByCell is read."
+  },
+  "candidate": {
+    "equation": "m(L) = 1 - 0.10 * (1 - exp(-L / 4))",
+    "values": {
+      "L0": 1,
+      "L1": 0.9778800783071405,
+      "L4": 0.9367879441171443,
+      "L10": 0.9082084998623898,
+      "asymptote": 0.9
+    },
+    "integration": "After steering, turning, crowding, following-speed limiting and hesitation; once before targetSpeed assignment and accelerateToward.",
+    "timing": "Treatment captures one public stratigraphy snapshot at tick entry before intention/movement. Same-tick FOOT_CONTACT, Plate birth, nodule birth and topology changes are first visible at the following tick boundary.",
+    "behaviorBoundary": "No material input to heading, steering, target position, attraction/avoidance, or direct pheromone gain."
+  },
+  "rng": "Same counted deterministic LCG used in the prior shadow/replay harness; no audio bridge; fixed 1/60 second tick.",
+  "controlParity": "Each default-off seed SHA-256 hash chain matches every field of the prior shadow baseline chain before any Treatment run starts. Fields cover agents/lifecycle/RNG/pheromone/SurfaceField/gait/pose/deposition/activation/occupancy/contacts/Plate births/stratigraphy.",
+  "observer": "Imported read-only material experience observer samples public snapshots before each tick; observer is outside controller behavior.",
+  "measurements": "Window metrics aggregate pre-tick ant-time and layer counts, post-tick targetSpeed and realized movement, FOOT_CONTACT points, population/recruitment, retained material and environmental fields. Spatial outputs use a fixed 24x24 grid for every seed/condition/window.",
+  "sourceHashes": {
+    "baseline": {
+      "AGENTS.md": "74fe45d664c377e1c1f7566d8f6b00d9cae0f91c7beb91af94d346eb8925fe11",
+      "docs/ant/README.md": "1353b69eef95b32909072003f32a4171520fe2866b14903ee82f5c6425e8feec",
+      "docs/ant/world-model.md": "4bca68131f6cac3335be5da33ec9f96492382feed8aa4ccd466ad3c5e0e7d9d8",
+      "scripts/ant-material-experience-shadow.js": "ddc3384ac65322cbefad386314dc210816fe4ff7428739a4c49d8f0cd6073ebf",
+      "src/lib/agents/ant/AntController.js": "918fd3e721a595fc0cc8dc8a74028caec8cdaad2525f04127f62a885d73c6645",
+      "src/lib/agents/ant/AntAgent.js": "9469ec558da3a74f99ad6088024cdb72350e834484e2d397eab24261b286b4e5",
+      "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+      "src/lib/agents/ant/TrailPlateBirth.js": "cb6c28081264d672d6393b64f0d0dc9fdea017fb1fda261ab8a87d879f031a67",
+      "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7"
+    },
+    "working": {
+      "AGENTS.md": "4f209b55d31ced3c930d483ca0d07a0124df08e240f17e840b97726459592769",
+      "docs/ant/README.md": "f02d6eca49f1f77682e48122c64464a7dea3a4d8b1e58143eaf893d20b3ab575",
+      "docs/ant/world-model.md": "f9a2a00e8c0e35c7040c89a02c8a4c96e5b1a22ea2a2848ab7eb2166b62eec85",
+      "scripts/ant-material-experience-shadow.js": "e0f62977c319397c1617a89a52c2f3d63cbc0325b736218ec70dbdea5e023393",
+      "src/lib/agents/ant/AntController.js": "5b51ad3223c0bac38935a78baeff4c5bd1c7b61350b9b763677281e5b387f732",
+      "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+      "src/lib/agents/ant/SurfaceField.js": "ada41057ba4229f9b50a088a15e79645817731c12aa723778fa6aa7f2f1f71be",
+      "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+      "src/lib/agents/ant/MaterialStratigraphy.js": "d94b251ea08f71740508f345e6f04a67a68a90b0350c39518daeda9fe78f2295",
+      "tests/ant-material-locomotion-resistance.test.js": "7118ae4f09e7af003dd794c55639ca2f7dcb9b057f14d7c30bb4d70d1dd987d1",
+      "scripts/ant-retained-material-locomotion-ab.js": "657695df0e5142ae1df8cbdae34511fba93381b1a011fb988a8da99effaa93f9"
+    }
+  },
+  "outputFiles": [
+    "control-parity.json",
+    "environment-grid-24x24.csv",
+    "manifest.json",
+    "paired-results.json",
+    "paired-windows.csv",
+    "population-recruitment-by-second.csv",
+    "README.md",
+    "seed-20261005-Control-ants.json",
+    "seed-20261005-Control-episodes.csv",
+    "seed-20261005-Control-summary.json",
+    "seed-20261005-Treatment-ants.json",
+    "seed-20261005-Treatment-episodes.csv",
+    "seed-20261005-Treatment-summary.json",
+    "seed-20261006-Control-ants.json",
+    "seed-20261006-Control-episodes.csv",
+    "seed-20261006-Control-summary.json",
+    "seed-20261006-Treatment-ants.json",
+    "seed-20261006-Treatment-episodes.csv",
+    "seed-20261006-Treatment-summary.json",
+    "seed-20261007-Control-ants.json",
+    "seed-20261007-Control-episodes.csv",
+    "seed-20261007-Control-summary.json",
+    "seed-20261007-Treatment-ants.json",
+    "seed-20261007-Treatment-episodes.csv",
+    "seed-20261007-Treatment-summary.json",
+    "source-hashes.json",
+    "spatial-control-treatment-difference.csv",
+    "focused-test.log",
+    "npm-test.log",
+    "npm-build.log",
+    "independent-review.md"
+  ],
+  "reproduction": "node scripts/ant-retained-material-locomotion-ab.js --baseline=f09d67f1eab6f13e7466e1f8ea8c05c08145f995 --seeds=20261005,20261006,20261007 --seconds=600 --output=docs/ant/evidence/2026-10-11-retained-material-locomotion-ab-final",
+  "validation": {
+    "focusedTest": {
+      "command": "node --test tests/ant-material-locomotion-resistance.test.js",
+      "passed": 3,
+      "failed": 0,
+      "log": "focused-test.log"
+    },
+    "fullTest": {
+      "command": "npm test",
+      "passed": 297,
+      "failed": 0,
+      "log": "npm-test.log"
+    },
+    "build": {
+      "command": "npm run build",
+      "result": "passed",
+      "log": "npm-build.log",
+      "warnings": [
+        "Rollup removed two annotation-position comments in the installed zod bundle.",
+        "Vite reported a minified chunk above 500 kB."
+      ]
+    },
+    "independentReview": {
+      "result": "PASS; no blocking findings",
+      "scope": "causal timing, future-state leakage, default-off parity, treatment isolation, evidence aggregation and decision scope",
+      "file": "independent-review.md",
+      "reviewerReranValidation": false
+    }
+  }
+}

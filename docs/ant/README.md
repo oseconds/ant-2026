@@ -1,6 +1,6 @@
 # ANT — Current Architecture, Evidence and Research Boundary
 
-**Current repository state: 2026-10-08**
+**Current repository state: 2026-10-11**
 
 이 문서는 ANT의 **현재 verified state**를 위한 GitHub-side hub다. 과정은 [daily logs](daily/README.md), 실험별 원본과 재현 자료는 [evidence packages](evidence/)에 둔다.
 
@@ -229,6 +229,8 @@ internal state
 There is no prescribed destination or global reward in this design. Agent presence is not the existence condition of the world: zero-ant intervals are valid and slower world state may continue. Future state/feedback links should alter local possibilities and consequences rather than command routes. Internal state is not directly sonified; the world itself is the target sounding body; any future acoustic feedback must derive from pre-master physical vibration rather than speaker/master output. Exceptional entities may occur, but their influence must remain finite and bounded.
 
 The full design contract, implemented-vs-proposed boundary and staged plan are in [`world-model.md`](world-model.md). Current production remains frozen until each new causal link is separately tested and authorized.
+
+The 2026-10-11 retained-material causal A/B supports one fixed local exposed-layer-count to desiredSpeed candidate: matched runs showed lower travel and foot-contact totals, longer exposure episodes, and later history changes without observed trapping. Plate-birth and coverage direction varied by seed. The experiment remains default Off and is not adopted into production. [Paired evidence](evidence/2026-10-11-retained-material-locomotion-ab-final/README.md).
 
 ## Future hypothesis — Material-mediated social dynamics
 
