@@ -28,6 +28,10 @@ The ChatGPT-upload suffixes `(1)`/`(2)` were removed from filenames for this arc
 
 [Individual time, material snapshots, and sedimentary circulation](2026-10-11-individual-time-and-sedimentary-circulation.md) records the clarified original artistic intention: distinct individual times interact through a shared environment; Plate descriptors preserve formation-time snapshots, while later strata, exposure, coupling, and vibration change the present world. It explicitly distinguishes implemented stratigraphy from the unresolved W1 formation law and unimplemented world feedback. **Interpretive archive only, not an adopted mechanism or active roadmap.**
 
+## 2026-10-11 Plate / Deposit / Material terminology follow-up
+
+[Plate, Deposit, and Material: retrospective terminology boundary](2026-10-11-plate-deposit-material-boundary.md) records why the early Plate/Z sedimentation concept was retained while giving the layered composite the provisional name **Deposit**. It separates material formation/character from Plate birth and organism consequences, and leaves the exact Material ontology and any independent Deposit identity for future experiments. **Historical conceptual clarification only; no production change or W1 mechanism selected.**
+
 ## 2026-10-06 and 2026-10-07 chronology
 
 Date-specific development history already lives in the canonical daily logs and evidence, so it is **not duplicated** into this archive:
