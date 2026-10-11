@@ -38,3 +38,15 @@ The shared yielding displacement probe distinguishes a reaction-force/work path,
 - Full production tests/build are not rerun for this documentation-only pass. The future mechanism and its numerical response remain unimplemented and untested.
 
 No evidence package is created. The next executable pass is one detached synthetic law with force/work, reset, frozen-state and subyield comparisons. It requires a new user request; no loading link from FOOT_CONTACT or production response is authorized here. W1 remains unresolved regardless of the selected model's conceptual appeal.
+
+## Follow-up — loading/model compatibility correction
+
+Starting from clean `546b3fd7977d9f92a8ac9ab853a17dbd588cf9b4`, the user challenged the physical compatibility of the selected law with actual ANT inputs. Read GaitController, SurfaceField, the strength-routing audio bridge and finite-pulse worklet path. The code confirms ID-derived gait strength, fixed-dose/saturation field updates that ignore strength, and absence of solved foot force, indentation or tangential contact traction in those event/field paths. Existing modeled audio forces remain implemented; they do not establish measured foot loading.
+
+Correct the earlier advice: loading and constitutive law must be designed together. The displacement-controlled `p` updater cannot simply consume a putative force pulse; the isolated quasistatic perfect-plastic law has indeterminate plastic travel at yield and no equilibrium beyond its force cap. Its signed actuator/reverse probe is also not automatically a unilateral normal-contact test. Repeating an identical H1 displacement cycle leaves `p` unchanged while SurfaceField continues contact deposition, supplying an additional counterexample to compaction/reference-state equivalence.
+
+Retain the standalone mathematical witness and prior evidence. Withhold ANT-specific mechanism selection pending a joint coordinate/forcing/boundary/work contract. No new mechanism, production causal link, experiment or evidence package is introduced. Delegate a fresh read-only Luna Max compatibility review because control mode, unilateral contact and physical interpretation require independent architectural/mathematical scrutiny.
+
+Fetched refs remain at main `a78249fc02fb7990568d62709e9a087489fe632b` and research `546b3fd7977d9f92a8ac9ab853a17dbd588cf9b4` before this correction commit. The entire `src/` still matches main; protected production/static code, scripts/tests, evidence and the earlier formation gate are unchanged. All 149 local links in the five changed documents, including the new compatibility anchor, resolve. No numerical experiment, production test/build or new archive check is performed in this follow-up.
+
+The fresh final reviewer accepts the compatibility reasoning and scope. Applied one wording precision: contact updates need not add a positive increment at saturation or with zero configured dose; the repeated-cycle comparison explicitly uses default positive dose and unsaturated values. This changes neither the constitutive law nor the protected production code. Final commit checks cover whitespace and the exact five-document scope.

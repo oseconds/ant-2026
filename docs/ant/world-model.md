@@ -481,6 +481,8 @@ A successful stage is not one that merely looks more alive or more varied. It ad
 
 **W1 analysis is complete; viable coherent material ontology remains unresolved.**
 
+The response-design follow-up additionally requires **joint loading/constitutive compatibility**. FOOT_CONTACT strength is a gait parameter, SurfaceField deposits dose independently of it, and existing vibration excitation does not establish foot force/indentation. The signed displacement-controlled `p` witness remains a generic model; no ANT loading link or physically compatible formation mechanism is selected. See the [compatibility correction](w1-material-response-discrimination-design.md#follow-up-correction-loading-and-constitutive-compatibility).
+
 Material ontology precedes vitality so that future vitality can respond to properties of the actual world. This pass remains a shadow: no production material or behavior changes, and no feedback or audio mapping.
 
 Test two bounded, continuous axes derived from formation history:

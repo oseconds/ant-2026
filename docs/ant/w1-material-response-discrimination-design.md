@@ -6,11 +6,11 @@
 
 **Production comparison:** fetched `origin/main` at `a78249fc02fb7990568d62709e9a087489fe632b`; the entire `src/` tree is identical
 
-**Status:** one candidate selected for a future synthetic shadow test; **ANT W1 ontology remains Undecided / Research Gap**. No mechanism or experiment is implemented in this pass.
+**Status:** `p` retained only as a standalone displacement-controlled constitutive witness; **ANT loading/model compatibility and W1 ontology remain Undecided / Research Gap**. No mechanism or experiment is implemented in this pass. The follow-up correction below requires a joint loading/constitutive contract before selecting an ANT mechanism.
 
 ## Decision and evidence boundary
 
-Select a **retained local reference configuration**, represented by one signed plastic reference extension `p`, with a declared one-dimensional elastic–perfectly-plastic constitutive law. Its independent response is the reaction-force path and actuator work under a common displacement cycle. The next pass asks whether this particular model has a testable, history-dependent response after all existing environmental inputs are matched. It does not ask whether ANT has already formed this material.
+Retain a **local reference configuration** witness, represented by one signed plastic reference extension `p`, with a declared one-dimensional elastic–perfectly-plastic constitutive law. Its independent response is the reaction-force path and actuator work under a common displacement cycle. The standalone synthetic specification asks whether this particular model has a testable, history-dependent response after all existing environmental inputs are matched. It does not ask whether ANT has already formed this material, and is not a selected ANT mechanism.
 
 This is a deliberately introduced modeling hypothesis. The archives supply no local strain, calibrated stress, plastic offset or independent measurement of this response. A successful synthetic test would establish modeled discrimination and a correct implementation of the declared law; it would not establish natural formation, a coherent Plate, physical plasticity in ANT, or the necessity of this ontology.
 
@@ -66,6 +66,28 @@ With no imposed loading, `p` remains, including when there are no agents. Bounde
 The existing environmental values do not determine `p` in this proposed model: two loading histories may end at the same `x` and identical full environmental state with different `p`. Knowing the entire imposed loading history and the law can reconstruct it. Being reconstructible from history does not make it an instantaneous field summary. The additional state is needed for a Markov description of **this assumed constitutive law**, not yet proven necessary for ANT.
 
 There is no automatic FOOT_CONTACT-to-strain connection. Archived contact/compaction values do not establish local displacement, work, yield force or retained configuration. Connecting them to `p` would require a separately justified loading law and separately authorized shadow pass; it is outside the executable test below.
+
+## Follow-up correction: loading and constitutive compatibility
+
+The user identified a more fundamental gap after the initial decision: defining a loading proxy is insufficient if its control mode and mechanical meaning do not fit the selected law. A source audit at research HEAD `546b3fd7977d9f92a8ac9ab853a17dbd588cf9b4` confirms:
+
+| Implemented quantity | Actual update and supported interpretation |
+| --- | --- |
+| Foot position/time | [GaitController](../../src/lib/agents/ant/GaitController.js) emits individual 2D positions and an interpolated touchdown timestamp from distance-driven phase crossings. It does not solve a foot/surface contact-force problem |
+| `FOOT_CONTACT.strength` | The event copies `gait.contactStrength`, created from the configured base strength and deterministic ant-ID hash. It is not calculated from body load, penetration, contact pressure or shear |
+| SurfaceField compaction | [SurfaceField](../../src/lib/agents/ant/SurfaceField.js) explicitly ignores event strength. Each contact deposits `Delta C = (1-C) * contactDose * spatialWeight`, then the field relaxes. The dose parameter is fixed; the increment depends on current saturation and spatial weight. No displacement or mechanical work is solved |
+| Production excitation | [SurfaceAudioBridge](../../src/lib/audio/SurfaceAudioBridge.js) routes strength to strikes; the [surface worklet](../../static/worklets/surface-plate.worklet.js) turns it into a normalized impulse/velocity increment and finite pulse. These are existing modeled vibration inputs and solver forces, not a measurement or reconstruction of the foot's actual normal/shear load or indentation |
+
+Do not infer `strength = force`, `compaction = x`, in-plane foot travel = material strain, or squared excitation diagnostics = calibrated mechanical work. A new unit convention alone does not supply the missing direction, constitutive geometry, boundary conditions or source/work balance. This is not a statement that all ANT forces or material responses are absent; the production sound solver already has modeled dynamics and remains unchanged.
+
+For the **particular one-element law in this document**, further compatibility checks are necessary:
+
+1. **Displacement versus force control.** The updater takes prescribed `x` and returns reaction `F`. If strength were instead declared an applied force pulse `f(t)`, it would be a different boundary-value problem. With `F = f` and `|F| <= Y`, a subyield quasistatic force fixes the elastic extension for a known `p`; at sustained `|f| = Y`, plastic travel is not determined by force alone; at `|f| > Y`, this isolated perfect-plastic element has no quasistatic equilibrium. This follows from the stipulated force cap, not an ANT observation. Clamping the applied force would change the input and would not solve the missing displacement/work problem. A compliant driver, hardening or dynamic balance could change this conclusion, but would be new assumptions, not automatic fixes in this pass.
+2. **Contact direction and separation.** The witness's actuator can impose signed extension and reversed loading. If `x` were normal compression and `F` its contact force, H1's return to `x = 0` gives `F = -cY`, requiring tension from the actuator. Ordinary nonadhesive normal contact is unilateral and releases rather than pulls. The current event records do not establish adhesion, tangential shear or a separate boundary supporting that signed load. The fixture cannot be identified with a physical foot-contact law without revisiting its contact/boundary problem. This does not rule out plastic deformation inside a properly constrained body. [COMSOL normal-contact theory](https://doc.comsol.com/6.3/doc/com.comsol.help.sme/sme_ug_theory.06.087.html).
+3. **Compaction versus reference change.** `p` is a signed one-dimensional reference extension, not density, void fraction, pressure or irreversible volume loss. Nothing in this model makes the field's normalized compaction value any of those physical variables. For example, after the first H1 preparation, repeating the same `0 -> (1+c)e_y -> 0` cycle with `0 < c < 1` leaves `p = c e_y` unchanged: it reaches yield only at the peak and does not reverse-yield. SurfaceField continues applying its dose update; with default positive dose and unsaturated footprint values, contacts add compaction before relaxation. Equating the two states would contradict this counterexample even before calibration. This is an algebraic prediction, not a performed experiment.
+4. **Conjugate loading and response.** A proposed loading channel must identify a deformation coordinate and its conjugate force (or strain/stress with the appropriate volume/geometry factors), the control mode and work `integral F dx`. It must explain what moves and what holds the boundary. Reusing a contact record or an audio excitation does not by itself establish this pairing.
+
+The previous next-step advice to define loading first was incomplete. The next **ANT-specific design question** is a joint loading/constitutive compatibility contract: identify a mechanically meaningful coordinate, its forcing/boundary problem and the compatible retained-state law together. If this cannot be justified, keep `p` as a generic mathematical witness and do not select it as ANT's formation mechanism. A separately requested standalone synthetic test remains available, but it is not a prerequisite or evidence for making this ANT connection. No replacement mechanism is selected here.
 
 ## Matched-state discrimination and its limit
 
@@ -132,7 +154,7 @@ Three necessary controls use the same candidate, not additional formation mechan
 
 ## Next executable pass: one isolated synthetic witness
 
-**Execution is deferred to a separately requested pass.** Implement only the reference-offset law and the comparisons above, detached from `AntController`, `TrailPlateBirth`, renderer, physical audio and production imports that create resources.
+**Execution is deferred to a separately requested pass.** This is an optional standalone consistency check; the current ANT-specific next question is the joint loading/constitutive contract above. If the standalone test is requested, implement only the reference-offset law and the comparisons above, detached from `AntController`, `TrailPlateBirth`, renderer, physical audio and production imports that create resources.
 
 Suggested scope is one pure shadow module/CLI, `scripts/ant-w1-retained-reference-shadow.js`, and one focused test, `tests/ant-w1-retained-reference-shadow.test.js`. This names proposed files, not existing implementation. Inputs are the piecewise-monotone displacement knots, shared positive `k,Y`, initial `p`, and control mode. Return the reaction trace and work ledger; state diagnostics must not enter the response acceptance calculation. Reject nonfinite inputs, nonpositive coefficients and inadmissible live-candidate initial states (`|k(x-p)| > Y`); an implicit initial projection would introduce an unreported intervention.
 

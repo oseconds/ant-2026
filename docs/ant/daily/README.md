@@ -22,6 +22,7 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 - Specify complete matched inputs, unavoidable prestress difference, reset/frozen-state/subyield controls and energy accounting
 - No mechanism, natural replay or response experiment executed; archives cannot observe the unimplemented state's effect
 - Preserve numerical-consistency/provenance distinction and W1 Undecided / Research Gap; no production adoption or W2 entry
+- Follow-up verifies ID-derived strength and strength-independent SurfaceField dose; require joint loading/constitutive compatibility before selecting an ANT mechanism
 
 ### 2026-10-10 — W1 archived replay runner provenance recovery: Partially Resolved
 
