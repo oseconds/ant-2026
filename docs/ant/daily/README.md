@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-11 — W1 material response discrimination: synthetic candidate selected, ontology unresolved
+
+[Chronology](./2026-10-11-w1-material-response-discrimination-design.md) · [Design and next executable pass](../w1-material-response-discrimination-design.md)
+
+- Select one retained reference configuration and a declared constitutive force/work response for a future synthetic witness
+- Specify complete matched inputs, unavoidable prestress difference, reset/frozen-state/subyield controls and energy accounting
+- No mechanism, natural replay or response experiment executed; archives cannot observe the unimplemented state's effect
+- Preserve numerical-consistency/provenance distinction and W1 Undecided / Research Gap; no production adoption or W2 entry
+
 ### 2026-10-10 — W1 archived replay runner provenance recovery: Partially Resolved
 
 [Chronology](./2026-10-10-w1-archived-replay-runner-provenance-recovery.md) · [Evidence](../evidence/2026-10-10-w1-archived-replay-runner-provenance-recovery/README.md)

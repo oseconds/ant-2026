@@ -1,6 +1,6 @@
 # ANT — Current Architecture, Evidence and Research Boundary
 
-**Current repository state: 2026-10-10**
+**Current repository state: 2026-10-11**
 
 이 문서는 ANT의 **현재 verified state**를 위한 GitHub-side hub다. 과정은 [daily logs](daily/README.md), 실험별 원본과 재현 자료는 [evidence packages](evidence/)에 둔다.
 
@@ -35,7 +35,11 @@ af9c417  Record ANT social graph baseline evidence
 
 그 이후 커밋은 daily/documentation을 추가할 수 있으므로 **repository HEAD와 latest implementation baseline을 구분**한다.
 
-### Latest W1 material formation design gate — Undecided / Research Gap
+### Latest W1 material response design — Synthetic candidate selected, ontology unresolved
+
+The [2026-10-11 response design](w1-material-response-discrimination-design.md) selects one retained reference-extension state with a declared elastic–perfectly-plastic law for a future isolated synthetic witness. Same full environmental inputs and displacement forcing are compared through reaction force and signed work, with reset, frozen-state prestress and subyield controls. This is an uncalibrated modeling hypothesis: no mechanism or response experiment is implemented, no natural loading law is established, and W1 remains **Undecided / Research Gap**. Existing production material/audio and the frozen evidence are preserved. [Design and executable specification](w1-material-response-discrimination-design.md) · [Chronology](daily/2026-10-11-w1-material-response-discrimination-design.md).
+
+### W1 material formation design gate — Undecided / Research Gap
 
 The [2026-10-10 design gate](w1-material-formation-design-gate.md) separates historical record, activity, environmental memory, material contribution and birth. Existing SurfaceField retention is explained by its production updates; the archives do not identify an independent W1 formation process. Episode closure and activity connectivity are not sufficient formation criteria. The archived chemical-input sufficiency preflight verified input descriptors and update-clock coverage, then stopped before recurrence because the archived replay-runner hash differs from every recovered runner candidate. Source inspection confirms that the committed `b9e0896` runner captures the chemical grid and post-update memory after the same `TrailPlateBirth.advance` call, but the manifest's disk hash is read after ESM loading and cannot bind those bytes to the archived execution. Sufficiency remains **inconclusive / blocked**; the W1 decision remains **Undecided / Research Gap**. Production `TrailPlateBirth`/stratigraphy remain implemented, and W2/vitality/feedback/audio stay gated. [Design gate](w1-material-formation-design-gate.md) · [Sufficiency evidence](evidence/2026-10-10-w1-chemical-input-sufficiency-audit/README.md) · [Runner provenance evidence](evidence/2026-10-10-w1-archived-replay-runner-provenance-recovery/README.md) · [Chronology](daily/2026-10-10-w1-archived-replay-runner-provenance-recovery.md).
 
