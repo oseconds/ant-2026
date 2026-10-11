@@ -14,6 +14,16 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-11 — W1 Formation / Plate / Deposit architecture reassessment
+
+[Chronology](./2026-10-11-w1-architecture-reassessment.md) · [Integrated investigation](../w1-formation-plate-deposit-reassessment.md)
+
+- Compare fetched main and research HEAD; full production `src/` and `static/` trees match
+- Keep physical Plate/Z while separating formation, provenance and layer registration; no ontology adoption
+- Deposit remains derived for current observations; Character, conditions and organism consequences remain distinct
+- Preserve W1 negative/mixed/inconclusive results and original runner gap; no new experiment/evidence package
+- Propose one frozen-archive repeat-birth contact-locality audit, with exact comparator, falsification and typed-gap stop
+
 ### 2026-10-11 — W1 material response discrimination: synthetic candidate selected, ontology unresolved
 
 [Chronology](./2026-10-11-w1-material-response-discrimination-design.md) · [Design and next executable pass](../w1-material-response-discrimination-design.md)
