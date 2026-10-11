@@ -14,6 +14,16 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-11 — W1 Plate-native Formation / Retention / Response contract design
+
+[Chronology](./2026-10-11-w1-formation-retention-response-contract.md) · [Contract and single next comparator](../w1-plate-native-formation-retention-response-contract.md)
+
+- Existing Plate state suffices for specified layer response; no independent Material/Deposit state required
+- One supplied, rest-inserted lamina arrival contract is conditional; endogenous formation stays Undecided
+- Separate layer-presence ablation from complete existing-Plate replay and forcing-target changes
+- Live insertion/work, activation/configuration and constitutive loading remain explicit gates
+- Preserve one bounded response-feasibility probe; it is not formation evidence or the complete next comparator
+
 ### 2026-10-11 — W1 Formation / Plate / Deposit architecture reassessment
 
 [Chronology](./2026-10-11-w1-architecture-reassessment.md) · [Integrated investigation](../w1-formation-plate-deposit-reassessment.md)
