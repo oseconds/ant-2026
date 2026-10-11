@@ -249,7 +249,7 @@ async function main() {
   const manifest = {
     schemaVersion: 1, baselineRef, baselineCommit, passBranch: git(['branch', '--show-current']),
     node: process.version, seeds, seconds, dtSeconds: DT, totalTicks: ticks, sourceHashes,
-    conditions: 'Fresh default AntController; injected LCG matching the existing social and morphology replay harness; AudioBridge absent; no state overrides.',
+    conditions: 'Fresh AntController with materialLocomotionResistance=false; injected LCG matching the existing social and morphology replay harness; AudioBridge absent; no other state overrides.',
     observerTiming: 'At each 60 Hz boundary before AntController.tick, read live ant id/position and one MaterialStratigraphy.getSnapshot(). Only that pre-tick state describes the upcoming interval. Contacts, Plate births, nodule births and topology changes in a tick are visible at the next boundary.',
     entryTime: 'First pre-tick observation; current AntController advances material before spawning at tick end, so a new ant first appears at its creation-time boundary.',
     provenanceRule: 'Pre-entry means top Plate bornAtSimulationTimeMs is at or before the ant first-observed time. No age, depth or quality interpretation.',
@@ -263,7 +263,8 @@ async function main() {
 }
 
 async function run({ AntController, seed, seconds, ticks, observe }) {
-  const start = performance.now(), random = rngFor(seed), controller = new AntController({ random });
+  const start = performance.now(), random = rngFor(seed), controller = new AntController({ random,
+    materialLocomotionResistance: false });
   const events = { contacts: [], plates: [], nodules: [], errors: [] };
   const unsubscribe = controller.subscribe(({ type, payload }) => {
     if (type === 'foot-contact') events.contacts.push(structuredClone(payload));

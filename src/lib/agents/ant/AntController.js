@@ -63,7 +63,7 @@ export class AntController {
         gaitController = new GaitController(), bodyPoseController = new BodyPoseController(),
         gasterDeposition = null, surfaceField = new SurfaceField(),
         trailPlateBirth = new TrailPlateBirth(), materialStratigraphy = new MaterialStratigraphy(),
-        materialLocomotionResistance = false, audioBridge = null } = {}) {
+        materialLocomotionResistance = true, audioBridge = null } = {}) {
         this.state = normalizeState(state || {});
         this.random = random;
         this.fieldFactory = fieldFactory;

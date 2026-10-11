@@ -131,8 +131,13 @@ movement
 → pheromone
 → gait / FOOT_CONTACT
 → SurfaceField
-→ TrailPlateBirth
+→ TrailPlateBirth (current authored corridor-to-Plate formation law)
 → MaterialStratigraphy
+→ local stratigraphic column count at current cell
+→ bounded desiredSpeed resistance
+→ later movement / environmental history
+
+MaterialStratigraphy
 → physical Plate vibration
 → audible sound
 ```
@@ -151,12 +156,11 @@ Not currently implemented as production feedback:
 - vitality or another explicit organism-level internal state
 - episodic crystallization based on history transitions
 - history-derived variable material character at birth
-- material/depth → locomotion feedback
 - physical vibration → acoustic-climate feedback
 - acoustic climate → colony or individual behavior
-- a persistent-world closed circulation
+- a fully integrated persistent-world circulation beyond the adopted local material→locomotion link
 
-The current production `TrailPlateBirth` remains the source→boundary selected-path mechanism until a separate production-adoption pass says otherwise.
+The current production `TrailPlateBirth` remains the authored source→boundary corridor formation law. Alternative formation laws remain unadopted and are not prerequisites for the current retained-material locomotion feedback.
 
 The optional Base Substrate implementation remains default Off and its calibration evidence is preserved. The target world model no longer assumes a separate always-present "base plate" that emits a direct sound for every foot event.
 
@@ -427,7 +431,7 @@ Future ANT passes should preserve these rules unless an explicit architecture re
 1. **Persistent world.** Agent presence is not the existence condition of the world; zero-ant intervals are valid.
 2. **No prescribed destination by default.** Do not add food targets, waypoint objectives, global rewards or pathfinding merely to create apparent purpose.
 3. **State, not command.** Internal/environmental variables alter local conditions and propensities, not explicit desired routes.
-4. **Material records history without being only an archive.** It may later condition future activity.
+4. **Material records history and can condition future activity.** The adopted local locomotion law is one bounded example.
 5. **Material character comes from formation history.** Do not assign arbitrary personality presets merely for variety.
 6. **The world is the sounding body.** Do not assume every contact needs a direct audible event.
 7. **No direct internal-state sonification in production.**
@@ -439,53 +443,18 @@ Future ANT passes should preserve these rules unless an explicit architecture re
 13. **Do not tune to desired pictures.** Morphology classes are observations, not objectives.
 14. **Separate evidence from interpretation.** Measured dynamics support implementation claims; concepts such as vitality, climate, fossil, character or world remain modeling/artistic interpretations unless separately researched.
 
-## Planned passes
+## Current production causal link
 
-```text
-W0  PERSISTENT-WORLD CONTRACT                    THIS DOCUMENT
+`TrailPlateBirth` remains the current authored corridor-to-Plate formation law. `MaterialStratigraphy` retains the exposed/buried layer structure produced by that history. The first adopted production feedback reads the current ant cell's public `layerCountByCell` value L: the local stratigraphic column count, including the top and any underlying layers. Only this aggregate scalar enters locomotion; individual buried-Plate identities do not:
 
-W1  vitality shadow
-    compute internal-state dynamics without behavior feedback
+    m(L) = 1 - 0.10 * (1 - exp(-L / 4))
 
-W2  episodic crystallization + character shadow
-    derive coherent material episodes from history transitions
-    and test bounded history-derived material character
+One tick-entry stratigraphy snapshot supplies L before intention and movement. After the existing movement decisions, this multiplier is applied once to final `desiredSpeed` before `targetSpeed` is set and `accelerateToward()` runs. L = 0 gives exactly 1; increasing L approaches a maximum 10% slowdown. Contacts, births and topology changes later in that tick affect locomotion from the next tick. Material does not directly change heading, steering, targets or attraction/avoidance. This aggregate count does not identify or individually sense buried Plates. The law is an authored local-history condition, not a measured physical friction law.
 
-W3  weak material → organism feedback
-    run natural ANT again with one isolated environmental consequence
+The fixed candidate was supported by the three-seed causal A/B and adopted after default-On / explicit-On and explicit-Off conformance checks. The A/B found lower travel and realized speed, longer exposed episodes, and later history differences without observed trapping or collapse; Plate-birth and coverage directions varied by seed. It does not support a claim that retained material increases either. [Causal A/B evidence](evidence/2026-10-11-retained-material-locomotion-ab-final/README.md) · [adoption verification](evidence/2026-10-12-retained-material-locomotion-adoption/README.md).
 
-W4  sounding-world / acoustic-climate shadow
-    derive slow shared state from pre-master physical vibration
+## Future hypotheses
 
-W5  weak acoustic-climate feedback
-    connect one shared state to one organism/colony tendency
+There is no mandatory W1→W2→W3 sequence. Vitality is a separate future hypothesis only if an organism after-effect must persist after an ant leaves material. Alternative formation laws, history-derived material character, C2 and retained relations are not prerequisites for the adopted feedback. Acoustic climate remains future work. Each additional causal link needs separate evidence and authorization; one link is added per pass.
 
-W6  persistent-world integration
-    only after each causal link is independently stable and interpretable
-```
-
-Each stage is separately authorized, measured and reversible.
-
-A successful stage is not one that merely looks more alive or more varied. It adds a clear causal relation while preserving enough openness for multiple future states to remain possible.
-
-## Current next step
-
-**W1 — vitality shadow.**
-
-Do not change ant behavior yet.
-
-First define and replay a candidate internal-state process against frozen natural trajectories to answer:
-
-- does it remain dynamic rather than pinning at a floor/ceiling?
-- does it vary meaningfully within and between individuals?
-- can cost/recovery be derived from existing events without future leakage?
-- can exceptional states occur without unbounded influence?
-- is the state interpretable without directly controlling movement or sound?
-
-Only after that shadow pass should vitality be considered for behavioral feedback.
-
-## Retained-material opportunity gate
-
-The [retained-material exposure shadow](evidence/2026-10-11-retained-material-experience-shadow-final/README.md) was followed by a user-authorized W3 causal A/B of one predeclared candidate: local public exposed-layer-count to desiredSpeed using m(L) = 1 - 0.10 * (1 - exp(-L / 4)). The three matched seeds showed lower travel and FOOT_CONTACT totals and longer exposure episodes; later Plate-birth and coverage directions varied by seed. No trapping or collapse was observed. [Causal A/B evidence](evidence/2026-10-11-retained-material-locomotion-ab-final/README.md).
-
-**Decision: SUPPORTED** for this exact bounded candidate as a production-world-law candidate, not adoption. The experimental switch remains default Off; production movement, TrailPlateBirth, MaterialStratigraphy and audio remain unchanged. This user-authorized W3 test does not reorder the staged W1-to-W3 architecture sequence: W1 remains the current planned next step. It does not complete W1/W2/W3 or authorize another feedback link.
+A successful future pass must preserve enough openness for multiple states to remain possible. It is not defined by looking more alive or more varied.

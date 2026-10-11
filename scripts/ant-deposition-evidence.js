@@ -67,6 +67,7 @@ async function runScenario(seed, mode) {
       population: { activationFeedback: activationFeedbackEnabled }
   };
   const controller = new AntController({
+    materialLocomotionResistance: false,
     state,
     random: seededRandom(seed),
     fieldFactory: settings => {

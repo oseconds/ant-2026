@@ -1,6 +1,6 @@
 # ANT — Current Architecture, Evidence and Research Boundary
 
-**Current repository state: 2026-10-11**
+**Current repository state: 2026-10-12**
 
 이 문서는 ANT의 **현재 verified state**를 위한 GitHub-side hub다. 과정은 [daily logs](daily/README.md), 실험별 원본과 재현 자료는 [evidence packages](evidence/)에 둔다.
 
@@ -11,8 +11,13 @@ equal ants
 → pheromone
 → FOOT_CONTACT
 → SurfaceField
-→ TrailPlateBirth
+→ TrailPlateBirth (current authored corridor-to-Plate formation law)
 → MaterialStratigraphy
+→ current-cell local column layer count (`layerCountByCell`)
+→ bounded desiredSpeed resistance
+→ later ant movement / environmental history
+
+MaterialStratigraphy
 → Plate / Z / buried Sphere
 → physical vibration / audio
 
@@ -22,7 +27,7 @@ current/recent proximity
 (read-only)
 ```
 
-현재 production behavior baseline은 founder refinement commit `e38450ce11f99e63f5ab0cb6e8e8ee4281fcadd9` 이후 동결되어 있다.
+Founder-refined movement baseline is `e38450ce11f99e63f5ab0cb6e8e8ee4281fcadd9`. Retained-history locomotion resistance is a separately tested and explicitly adopted production exception; it was not part of the founder baseline.
 
 S0/S1 read-only social observation pass의 구현/evidence 흐름:
 
@@ -74,9 +79,9 @@ gait
 
 `SurfaceField`는 느린 mechanical compaction memory다. gait와 SurfaceField는 social observer 때문에 변경되지 않았다.
 
-### Frozen material history
+### Retained material history and production condition
 
-`TrailPlateBirth`는 persistent chemical + mechanical corridor만 immutable Plate descriptor로 만든다.
+`TrailPlateBirth`는 현재 authored corridor-to-Plate formation law로 유지되며, persistent chemical + mechanical corridor만 immutable Plate descriptor로 만든다.
 
 `MaterialStratigraphy`가 이후 overlap에 따른 exposed/buried/depth를 관리한다.
 
@@ -88,6 +93,12 @@ gait
 - direct foot strike는 exposed top material 하나에만 전달
 - buried material은 reciprocal coupling으로만 반응
 - technical ceiling은 history eviction semantics가 아님
+
+Production also reads the current cell's public `layerCountByCell` value L at tick entry. This is the local stratigraphic column count, including its top layer and any underlying layers; the controller reads this aggregate scalar and does not use individual buried-Plate identities. It applies the adopted authored local-history condition:
+
+    m(L) = 1 - 0.10 * (1 - exp(-L / 4))
+
+It multiplies the existing final `desiredSpeed` once, after steering/turning/crowding/following/hesitation and before `targetSpeed` / `accelerateToward`. L = 0 is exactly 1; the maximum slowdown approaches 10%. Later contacts, births and topology changes in the same tick apply from the next tick. This is a bounded authored world law, not a measured friction value or a claim of physical sensing of buried Plates. It does not change heading, steering, targets, attraction/avoidance or Plate-birth qualification, and the A/B did not support a consistent Plate-birth or coverage direction. [Adoption conformance](evidence/2026-10-12-retained-material-locomotion-adoption/README.md) · [causal A/B evidence](evidence/2026-10-11-retained-material-locomotion-ab-final/README.md).
 
 ### Physical audio
 
@@ -214,7 +225,7 @@ movement
 
 ## Persistent-world design target
 
-The verified production chain above remains unchanged, but the long-term architecture is now defined as a **persistent circulating world** rather than a one-way agent→material→sound pipeline.
+The production chain above sits inside a **persistent circulating world**, rather than a one-way agent→material→sound pipeline.
 
 ```text
 internal state
@@ -228,13 +239,13 @@ internal state
 
 There is no prescribed destination or global reward in this design. Agent presence is not the existence condition of the world: zero-ant intervals are valid and slower world state may continue. Future state/feedback links should alter local possibilities and consequences rather than command routes. Internal state is not directly sonified; the world itself is the target sounding body; any future acoustic feedback must derive from pre-master physical vibration rather than speaker/master output. Exceptional entities may occur, but their influence must remain finite and bounded.
 
-The full design contract, implemented-vs-proposed boundary and staged plan are in [`world-model.md`](world-model.md). Current production remains frozen until each new causal link is separately tested and authorized.
+The full design contract and implemented-vs-proposed boundary are in [`world-model.md`](world-model.md). Any further causal link needs its own test and authorization.
 
-The 2026-10-11 retained-material causal A/B supports one fixed local exposed-layer-count to desiredSpeed candidate: matched runs showed lower travel and foot-contact totals, longer exposure episodes, and later history changes without observed trapping. Plate-birth and coverage direction varied by seed. The experiment remains default Off and is not adopted into production. [Paired evidence](evidence/2026-10-11-retained-material-locomotion-ab-final/README.md).
+The 2026-10-11 three-seed causal A/B supported the fixed local-column-count resistance candidate: travel and realized speed fell, exposed episodes lengthened, and later history changed without observed trapping or collapse. Plate-birth and coverage directions varied by seed, so no direction is claimed. The candidate was adopted on 2026-10-12 with production default On. [Paired evidence](evidence/2026-10-11-retained-material-locomotion-ab-final/README.md) · [adoption verification](evidence/2026-10-12-retained-material-locomotion-adoption/README.md).
 
 ## Future hypothesis — Material-mediated social dynamics
 
-[**Material-mediated Social Dynamics (2026-10-09 concept note)**](material-mediated-social-dynamics.md) explores a **proposed, not implemented** pathway: fixed history-derived Plate character → temporary organism-state after-effect → possible encounter-mediated influence → later environmental consequences. It explicitly separates changing place conditions from immutable Plate character, and treats “ant paradise / ant hell” as retrospective observational metaphors, not built-in Plate types or success targets. The S0–S2c social baseline remains read-only/parked; the active W1→W2→W3 roadmap is unchanged. [Design discussion chronology](daily/2026-10-09-material-mediated-social-dynamics.md).
+[**Material-mediated Social Dynamics (2026-10-09 concept note)**](material-mediated-social-dynamics.md) remains a **proposed, not implemented** pathway: fixed history-derived Plate character → temporary organism-state after-effect → possible encounter-mediated influence → later environmental consequences. It separates changing place conditions from immutable Plate character, and treats “ant paradise / ant hell” as retrospective observational metaphors, not built-in Plate types or success targets. The adopted local locomotion condition does not depend on this pathway; vitality is a separate future hypothesis only if an organism after-effect after leaving material becomes necessary. The S0–S2c social baseline remains read-only/parked. [Design discussion chronology](daily/2026-10-09-material-mediated-social-dynamics.md).
 
 ## Current research boundary
 
@@ -251,9 +262,13 @@ The 2026-10-11 retained-material causal A/B supports one fixed local exposed-lay
 
 Research evidence와 artistic/modeling interpretation을 구분한다. Graph spectral mode → material excitation은 향후 가능한 artistic/mathematical mapping이지 ant biology의 검증된 mechanism이 아니다.
 
-## Current next work
+## Current production boundary and future hypotheses
 
-**W3 opportunity gate:** the [retained-material exposure shadow](evidence/2026-10-11-retained-material-experience-shadow-final/README.md) supports considering a separate, one-factor A/B of local exposed layer count → `desiredSpeed`. The A/B still needs its own scope and a predeclared sign and gain; this pass selected neither and changed no production behavior. This is an eligible future candidate, not a change to the W1→W3 architecture sequence or completion of W1/W2/W3. The current architecture-design next step remains W1 vitality shadow in the broader [persistent-world contract](world-model.md). The previously planned substrate timbre pass remains a separate artistic/audio side-pass.
+The first production causal link is retained local stratigraphy → bounded locomotion resistance → later movement and environmental history. It is the exact fixed candidate described above. `TrailPlateBirth` remains the current authored formation baseline. The adoption does not claim more Plate births or coverage.
+
+Vitality is a separate future hypothesis only if an organism after-effect needs to persist after an ant leaves a Plate. Alternative formation laws, history-derived material character, C2 and retained relations are not prerequisites for the adopted production link. Acoustic climate remains future work. There is no active W1→W2→W3 mandatory sequence.
+
+The 2026-10-11 retained-material exposure shadow established that later ants encounter exposed stratigraphy in natural runs; it is descriptive evidence, not sensing evidence. [Exposure shadow](evidence/2026-10-11-retained-material-experience-shadow-final/README.md).
 
 ### Research gate
 
@@ -278,30 +293,15 @@ activity
 
 Localized material may develop different resonant character, but **the world itself is the primary sounding body**.
 
-The active architecture sequence is defined in [`world-model.md`](world-model.md):
-
-```text
-W0  persistent-world design contract                 COMPLETE
-W1  vitality shadow                                  NEXT
-W2  episodic crystallization + material character    LATER
-W3  weak material → organism feedback                LATER
-    local layer-count → desiredSpeed opportunity A/B ELIGIBLE / NOT RUN
-W4  sounding-world / acoustic-climate shadow         LATER
-W5  weak acoustic-climate feedback                   LATER
-W6  persistent-world integration                     ONLY AFTER PRIOR GATES
-
-SOCIAL OBSERVATION
-  S0/S1/S2a/S2b/S2c                                  COMPLETE / PARKED
-  spectral diagnostics                               SKIP
-```
-
-Production movement, `TrailPlateBirth`, stratigraphy and audio remain unchanged until each new causal link is separately tested and authorized.
+Current production includes the adopted local locomotion condition. Further movement or acoustic links remain future hypotheses and need separate evidence and authorization. The S0–S2c social observer remains complete and parked; spectral diagnostics remain skipped.
 
 ## Evidence index
 
 ### Behavior / movement
 
 - [Retained material experience shadow — three current-main 600 s runs; observer parity exact; supported as an opportunity for one separate local A/B](evidence/2026-10-11-retained-material-experience-shadow-final/README.md)
+- [Retained-material locomotion causal A/B — fixed candidate supported across three seeds](evidence/2026-10-11-retained-material-locomotion-ab-final/README.md)
+- [Retained-material locomotion production adoption — default-On and explicit-Off conformance](evidence/2026-10-12-retained-material-locomotion-adoption/README.md)
 - [Interior endpoint shadow selector — frozen three-seed diagnostic; production selector unchanged](evidence/2026-10-08-interior-endpoint-shadow/README.md)
 - [Local-accretion shadow — branch-only mixed/negative morphology comparison](https://github.com/oseconds/ant-2026/tree/ant-local-accretion-shadow/docs/ant/evidence/2026-10-08-local-accretion-shadow)
 - [Movement / material morphology diagnosis — frozen three-seed archive/replay, no production intervention](evidence/2026-10-08-movement-material-morphology/README.md)

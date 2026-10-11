@@ -237,7 +237,7 @@ async function captureFreshRun() {
     }, close() {} }, addEventListener() {}, removeEventListener() {} }, gainNode: { gain }, disconnect() {} };
   } };
   const audioBridge = new AntEnvironmentAudioBridge({ audioEngine });
-  const controller = new AntController({ random: () => {
+  const controller = new AntController({ materialLocomotionResistance: false, random: () => {
     rngCalls++; rngState = (Math.imul(rngState, 1664525) + 1013904223) >>> 0; return rngState / 0x100000000;
   }, audioBridge, state: { audioExperiment: { mode: 'bornSurface', baseSubstrate: true } } });
   const unsubscribe = controller.subscribe(({ type, payload }) => {

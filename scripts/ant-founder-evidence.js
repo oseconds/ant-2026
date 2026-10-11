@@ -65,7 +65,7 @@ async function main() {
 async function runScenario(AntController, seed, seconds, output) {
   const started = performance.now();
   let rngState = seed >>> 0, rngCalls = 0;
-  const controller = new AntController({ random: () => {
+  const controller = new AntController({ materialLocomotionResistance: false, random: () => {
     rngCalls += 1;
     rngState = (Math.imul(rngState, 1664525) + 1013904223) >>> 0;
     return rngState / 0x100000000;

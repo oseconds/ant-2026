@@ -58,7 +58,7 @@ try {
       ]);
       let rng = 20261005 >>> 0;
       const random = () => { rng = (Math.imul(rng, 1664525) + 1013904223) >>> 0; return rng / 0x100000000; };
-      app.lab.registry.ant = options => new AntController({ ...options, random,
+      app.lab.registry.ant = options => new AntController({ ...options, materialLocomotionResistance: false, random,
         audioBridge: new AntEnvironmentAudioBridge({ audioEngine: options.audioEngine, workletBaseUrl: options.workletBaseUrl }) });
       await app.selectModel('ant');
       window.__surfaceEvidence = { app, contacts: [], births: [], updates: [], rngSeed: 20261005 };

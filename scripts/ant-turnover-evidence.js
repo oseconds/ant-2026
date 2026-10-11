@@ -109,7 +109,7 @@ function parseDuration(argv) {
 async function run() {
   const durationSeconds = parseDuration(process.argv.slice(2));
   const seed = 61;
-  const controller = new AntController({ random: seededRandom(seed) });
+  const controller = new AntController({ random: seededRandom(seed), materialLocomotionResistance: false });
   await controller.init();
   const targetPopulation = controller.state.population.count;
   const halfLifeSeconds = controller.state.pheromone.halfLifeSeconds;

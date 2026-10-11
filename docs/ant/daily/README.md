@@ -14,6 +14,16 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-12 — Retained material → locomotion production adoption
+
+[Process log](./2026-10-12-retained-material-locomotion-adoption.md) · [Adoption conformance](../evidence/2026-10-12-retained-material-locomotion-adoption/README.md) · [Causal A/B](../evidence/2026-10-11-retained-material-locomotion-ab-final/README.md)
+
+- Fast-forwarded the verified supported A/B branch to `main` before starting the adoption branch
+- Made the fixed exposed-layer-count locomotion law the default production behavior; explicit Off remains for controls and replay
+- Exact 14-field conformance across all three 600-second seeds for default-On, explicit-On, explicit-Off, saved shadow and prior A/B conditions
+- Focused tests, full suite and build passed; fresh independent review recorded with the evidence
+- No gain retuning, formation changes, steering feedback or second causal link
+
 ### 2026-10-11 — Retained material experience shadow
 
 [Process log](./2026-10-11-retained-material-experience-shadow.md) · [Final replay evidence](../evidence/2026-10-11-retained-material-experience-shadow-final/README.md)

@@ -74,6 +74,7 @@ null, 2));
 
 async function runScenario(seed, { birthAnalysis }) {
   const controller = new AntController({
+    materialLocomotionResistance: false,
     random: seededRandom(seed),
     ...(birthAnalysis ? {} : { trailPlateBirth: noOpBirthSystem() })
   });

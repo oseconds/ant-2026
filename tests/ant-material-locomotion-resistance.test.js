@@ -31,6 +31,19 @@ function testStratigraphy() {
   };
 }
 
+function evolvingStratigraphy() {
+  const snapshot = { width: 2, height: 2, plates: [], stratigraphy: {
+    layerCountByCell: new Uint16Array(4)
+  } };
+  return {
+    revision: 0,
+    getSnapshot: () => snapshot,
+    applyFootContact() {},
+    advance() { snapshot.stratigraphy.layerCountByCell.fill(10); return []; },
+    reset() {}
+  };
+}
+
 test('fixed material multiplier follows the selected equation and bound', () => {
   assert.equal(materialLocomotionMultiplier(0), 1);
   assert.equal(materialLocomotionMultiplier(1), 1 - 0.10 * (1 - Math.exp(-1 / 4)));
@@ -49,27 +62,58 @@ test('public snapshot lookup reads only layer count and treats empty/outside cel
   assert.equal(materialLayerCountAtSnapshot(snapshot, -0.01, 1), 0);
 });
 
-test('default is Off; Treatment slows targetSpeed after heading is already resolved', async () => {
-  const baseline = new AntController({ random: countedRandom(20261005), materialStratigraphy: testStratigraphy() });
-  const treatment = new AntController({ random: countedRandom(20261005), materialStratigraphy: testStratigraphy(),
+test('production default enables resistance; explicit Off and On preserve candidate semantics', async () => {
+  const baseline = new AntController({ random: countedRandom(20261005), materialStratigraphy: testStratigraphy(),
+    materialLocomotionResistance: false });
+  const defaultOn = new AntController({ random: countedRandom(20261005), materialStratigraphy: testStratigraphy() });
+  const explicitOn = new AntController({ random: countedRandom(20261005), materialStratigraphy: testStratigraphy(),
     materialLocomotionResistance: true });
   assert.equal(baseline.materialLocomotionResistance, false);
-  assert.equal(new AntController().materialLocomotionResistance, false);
+  assert.equal(defaultOn.materialLocomotionResistance, true);
+  assert.equal(explicitOn.materialLocomotionResistance, true);
+  try {
+    await baseline.init();
+    await defaultOn.init();
+    await explicitOn.init();
+    const layerCount = materialLayerCountAtSnapshot(defaultOn.materialStratigraphy.getSnapshot(),
+      defaultOn.agents[0].x, defaultOn.agents[0].y);
+    baseline.tick(DT);
+    defaultOn.tick(DT);
+    explicitOn.tick(DT);
+    const controlAnt = baseline.agents[0];
+    const defaultAnt = defaultOn.agents[0];
+    const explicitAnt = explicitOn.agents[0];
+    assert.equal(controlAnt.intentHeading, defaultAnt.intentHeading);
+    assert.equal(controlAnt.heading, defaultAnt.heading);
+    assert.equal(controlAnt.angularVelocity, defaultAnt.angularVelocity);
+    assert.equal(defaultAnt.targetSpeed, explicitAnt.targetSpeed);
+    assert.equal(defaultAnt.targetSpeed,
+      controlAnt.targetSpeed * materialLocomotionMultiplier(layerCount));
+    assert.ok(defaultAnt.targetSpeed < controlAnt.targetSpeed);
+  } finally {
+    await baseline.destroy();
+    await defaultOn.destroy();
+    await explicitOn.destroy();
+  }
+});
+
+test('same-tick stratigraphy changes affect locomotion starting with the next tick', async () => {
+  const baseline = new AntController({ random: countedRandom(20261005), materialStratigraphy: testStratigraphy(),
+    materialLocomotionResistance: false });
+  const treatment = new AntController({ random: countedRandom(20261005), materialStratigraphy: evolvingStratigraphy() });
   try {
     await baseline.init();
     await treatment.init();
-    const layerCount = materialLayerCountAtSnapshot(treatment.materialStratigraphy.getSnapshot(),
-      treatment.agents[0].x, treatment.agents[0].y);
     baseline.tick(DT);
     treatment.tick(DT);
-    const controlAnt = baseline.agents[0];
-    const treatmentAnt = treatment.agents[0];
-    assert.equal(controlAnt.intentHeading, treatmentAnt.intentHeading);
-    assert.equal(controlAnt.heading, treatmentAnt.heading);
-    assert.equal(controlAnt.angularVelocity, treatmentAnt.angularVelocity);
-    assert.equal(treatmentAnt.targetSpeed,
-      controlAnt.targetSpeed * materialLocomotionMultiplier(layerCount));
-    assert.ok(treatmentAnt.targetSpeed < controlAnt.targetSpeed);
+    assert.equal(treatment.agents[0].targetSpeed, baseline.agents[0].targetSpeed,
+      'the layer count added by end-of-tick advance must not affect this tick');
+
+    baseline.tick(DT);
+    treatment.tick(DT);
+    assert.equal(treatment.agents[0].targetSpeed,
+      baseline.agents[0].targetSpeed * materialLocomotionMultiplier(10),
+      'the same layer count is read at the following tick boundary');
   } finally {
     await baseline.destroy();
     await treatment.destroy();

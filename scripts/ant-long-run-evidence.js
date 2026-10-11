@@ -50,6 +50,7 @@ console.log(JSON.stringify({ output: outputPath, durationSeconds, snapshotTimes,
 
 async function runScenario(seed, activationFeedback) {
   const controller = new AntController({
+    materialLocomotionResistance: false,
     state: {
       pheromone: { depositionMode },
       population: { activationFeedback }

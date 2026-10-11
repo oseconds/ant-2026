@@ -80,7 +80,7 @@ console.log(JSON.stringify({ output: outputPath, summary: summaryPath,
 
 async function runScenario(seed, seconds, { materialEnabled = true } = {}) {
   const rng = createSeededRandom(seed);
-  const controller = new AntController({ random: rng.random,
+  const controller = new AntController({ random: rng.random, materialLocomotionResistance: false,
     ...(materialEnabled ? {} : { materialStratigraphy: noOpStratigraphy() })
   });
   await controller.init();

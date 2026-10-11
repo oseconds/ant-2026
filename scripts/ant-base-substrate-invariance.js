@@ -98,7 +98,7 @@ async function run(seed, seconds, substrateEnabled, TrailPlateBirthClass = null)
     basePending.push(pending);
     return pending;
   };
-  controller = new AntController({ random, audioBridge, ...(TrailPlateBirthClass ? { trailPlateBirth: new TrailPlateBirthClass() } : {}),
+  controller = new AntController({ materialLocomotionResistance: false, random, audioBridge, ...(TrailPlateBirthClass ? { trailPlateBirth: new TrailPlateBirthClass() } : {}),
     state: { audioExperiment: { mode: 'bornSurface', baseSubstrate: substrateEnabled } } });
   const hashes = Object.fromEntries(['rng', 'trajectoriesGaitPose', 'pheromone', 'surfaceField', 'footContacts',
     'plateBirths', 'stratigraphy', 'bornSurfaceAudio'].map(key => [key, createHash('sha256')]));

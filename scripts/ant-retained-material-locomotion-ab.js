@@ -90,7 +90,7 @@ async function main() {
     controls.push(result);
     if (!parity.exact) {
       await writeJson(out, 'control-parity-failure.json', { seed, parity, expected: expectedParity[seed] });
-      throw new Error('Control/default-off hash chain differs from the verified shadow baseline for seed ' + seed);
+      throw new Error('Control/explicit-Off hash chain differs from the verified shadow baseline for seed ' + seed);
     }
     console.log(JSON.stringify({ seed, condition: 'Control', baselineParity: 'exact',
       wallSeconds: result.summary.wallSeconds }));
@@ -148,7 +148,7 @@ async function main() {
     passBranch: git(['branch', '--show-current']), startHead: git(['rev-parse', 'HEAD']),
     node: process.version, seeds, seconds, dtSeconds: DT, fixedHz: 60, totalTicks: seconds * 60,
     conditions: {
-      control: 'AntController default materialLocomotionResistance=false; no audio bridge or state override.',
+      control: 'materialLocomotionResistance=false explicitly; no audio bridge or state override.',
       treatment: 'materialLocomotionResistance=true; only current cell public stratigraphy layerCountByCell is read.'
     },
     candidate: {
@@ -160,7 +160,7 @@ async function main() {
       behaviorBoundary: 'No material input to heading, steering, target position, attraction/avoidance, or direct pheromone gain.'
     },
     rng: 'Same counted deterministic LCG used in the prior shadow/replay harness; no audio bridge; fixed 1/60 second tick.',
-    controlParity: 'Each default-off seed SHA-256 hash chain matches every field of the prior shadow baseline chain before any Treatment run starts. Fields cover agents/lifecycle/RNG/pheromone/SurfaceField/gait/pose/deposition/activation/occupancy/contacts/Plate births/stratigraphy.',
+    controlParity: 'Each explicit-Off seed SHA-256 hash chain matches every field of the prior shadow baseline chain before any Treatment run starts. Fields cover agents/lifecycle/RNG/pheromone/SurfaceField/gait/pose/deposition/activation/occupancy/contacts/Plate births/stratigraphy.',
     observer: 'Imported read-only material experience observer samples public snapshots before each tick; observer is outside controller behavior.',
     measurements: 'Window metrics aggregate pre-tick ant-time and layer counts, post-tick targetSpeed and realized movement, FOOT_CONTACT points, population/recruitment, retained material and environmental fields. Spatial outputs use a fixed 24x24 grid for every seed/condition/window.',
     sourceHashes: { baseline: baselineHashes, working: workingHashes },
@@ -170,10 +170,11 @@ async function main() {
   await writeJson(out, 'manifest.json', manifest);
 }
 
-async function runOne({ seed, seconds, condition }) {
+export async function runOne({ seed, seconds, condition }) {
   const start = performance.now(), random = rngFor(seed);
-  const treatment = condition === 'Treatment';
-  const controller = new AntController({ random, ...(treatment ? { materialLocomotionResistance: true } : {}) });
+  const treatment = condition === 'Treatment' || condition === 'Default-On';
+  const controller = new AntController({ random,
+    ...(condition === 'Default-On' ? {} : { materialLocomotionResistance: treatment }) });
   const events = { contacts: [], plates: [], nodules: [], errors: [] };
   const birthDetails = { plates: [], nodules: [] };
   const unsubscribe = controller.subscribe(({ type, payload }) => {
@@ -451,7 +452,8 @@ function aggregateLayerMultipliers(windows, condition) {
     const candidateMultiplier = materialLocomotionMultiplier(Number(layer));
     return [layer, {
       ticks: row.ticks, fractionOfActiveAntTicks: total ? row.ticks / total : 0,
-      candidateMultiplier, appliedMultiplier: condition === 'Treatment' ? candidateMultiplier : 1
+      candidateMultiplier, appliedMultiplier: condition === 'Treatment' || condition === 'Default-On'
+        ? candidateMultiplier : 1
     }];
   }));
 }

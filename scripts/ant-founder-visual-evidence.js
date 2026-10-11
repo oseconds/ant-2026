@@ -211,7 +211,7 @@ async function browserRuns(browser) {
           const { AntController } = await import(`/${controllerSource}`);
           const { AntRenderer } = await import('/src/lib/renderers/AntRenderer.js');
           let rngState = seed >>> 0, rngCalls = 0, contacts = 0;
-          const model = new AntController({ random: () => { rngCalls++; rngState = (Math.imul(rngState, 1664525) + 1013904223) >>> 0; return rngState / 0x100000000; } });
+          const model = new AntController({ materialLocomotionResistance: false, random: () => { rngCalls++; rngState = (Math.imul(rngState, 1664525) + 1013904223) >>> 0; return rngState / 0x100000000; } });
           model.subscribe(event => { if (event.type === 'foot-contact') contacts++; });
           await model.init();
           const renderer = new AntRenderer(document.querySelector('#ant-evidence-canvas'));
