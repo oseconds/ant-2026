@@ -24,6 +24,10 @@ The ChatGPT-upload suffixes `(1)`/`(2)` were removed from filenames for this arc
 
 [Seven distinct TXT records and original-name mapping](2026-10-10-chatgpt-project-txt/README.md). Two different attachments had the filename `ANT 시뮬레이션 딥리뷰.txt`; four different attachments had the filename `Candidate D 실행.txt`; the seventh was `발전 방향 제안.txt`. Each was preserved individually and tagged with its source-display name and topic. This is archived assistant/research interpretation, not a current design decision or implementation claim.
 
+## 2026-10-11 retrospective ANT concept clarification
+
+[Individual time, material snapshots, and sedimentary circulation](2026-10-11-individual-time-and-sedimentary-circulation.md) records the clarified original artistic intention: distinct individual times interact through a shared environment; Plate descriptors preserve formation-time snapshots, while later strata, exposure, coupling, and vibration change the present world. It explicitly distinguishes implemented stratigraphy from the unresolved W1 formation law and unimplemented world feedback. **Interpretive archive only, not an adopted mechanism or active roadmap.**
+
 ## 2026-10-06 and 2026-10-07 chronology
 
 Date-specific development history already lives in the canonical daily logs and evidence, so it is **not duplicated** into this archive:
