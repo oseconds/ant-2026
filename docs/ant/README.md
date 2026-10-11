@@ -251,7 +251,7 @@ Research evidence와 artistic/modeling interpretation을 구분한다. Graph spe
 
 ## Current next work
 
-**Current architecture-design next step:** W1 vitality shadow from [the persistent-world contract](world-model.md). This does not yet change production movement, material or audio. The previously planned substrate timbre pass remains a separate artistic/audio side-pass rather than the active world-model research step.
+**W3 opportunity gate:** the [retained-material exposure shadow](evidence/2026-10-11-retained-material-experience-shadow-final/README.md) supports considering a separate, one-factor A/B of local exposed layer count → `desiredSpeed`. The A/B still needs its own scope and a predeclared sign and gain; this pass selected neither and changed no production behavior. This is an eligible future candidate, not a change to the W1→W3 architecture sequence or completion of W1/W2/W3. The current architecture-design next step remains W1 vitality shadow in the broader [persistent-world contract](world-model.md). The previously planned substrate timbre pass remains a separate artistic/audio side-pass.
 
 ### Research gate
 
@@ -283,6 +283,7 @@ W0  persistent-world design contract                 COMPLETE
 W1  vitality shadow                                  NEXT
 W2  episodic crystallization + material character    LATER
 W3  weak material → organism feedback                LATER
+    local layer-count → desiredSpeed opportunity A/B ELIGIBLE / NOT RUN
 W4  sounding-world / acoustic-climate shadow         LATER
 W5  weak acoustic-climate feedback                   LATER
 W6  persistent-world integration                     ONLY AFTER PRIOR GATES
@@ -298,6 +299,7 @@ Production movement, `TrailPlateBirth`, stratigraphy and audio remain unchanged 
 
 ### Behavior / movement
 
+- [Retained material experience shadow — three current-main 600 s runs; observer parity exact; supported as an opportunity for one separate local A/B](evidence/2026-10-11-retained-material-experience-shadow-final/README.md)
 - [Interior endpoint shadow selector — frozen three-seed diagnostic; production selector unchanged](evidence/2026-10-08-interior-endpoint-shadow/README.md)
 - [Local-accretion shadow — branch-only mixed/negative morphology comparison](https://github.com/oseconds/ant-2026/tree/ant-local-accretion-shadow/docs/ant/evidence/2026-10-08-local-accretion-shadow)
 - [Movement / material morphology diagnosis — frozen three-seed archive/replay, no production intervention](evidence/2026-10-08-movement-material-morphology/README.md)

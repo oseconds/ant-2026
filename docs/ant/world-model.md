@@ -483,3 +483,9 @@ First define and replay a candidate internal-state process against frozen natura
 - is the state interpretable without directly controlling movement or sound?
 
 Only after that shadow pass should vitality be considered for behavioral feedback.
+
+## Retained-material opportunity gate
+
+The [retained-material exposure shadow](evidence/2026-10-11-retained-material-experience-shadow-final/README.md) supports considering one separate, narrow W3 candidate: compare a weak local exposed-layer-count → `desiredSpeed` condition with an unmodified control. A future pass must define and predeclare its sign and gain before running. The shadow does not choose either, implement the link, or establish a benefit.
+
+This evidence makes that candidate eligible for future consideration; it does not reorder the W1→W3 architecture sequence, complete W1/W2/W3, or authorize the A/B. No production movement, material or audio behavior changed in this pass.

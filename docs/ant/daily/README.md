@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-11 — Retained material experience shadow
+
+[Process log](./2026-10-11-retained-material-experience-shadow.md) · [Final replay evidence](../evidence/2026-10-11-retained-material-experience-shadow-final/README.md)
+
+- Three matched 600 s seeds; exposed-Plate occupancy was 48.13–57.94% of active ant-time
+- Repeated episodes/top-Plate encounters and pre-entry material exposure appeared across all three seeds
+- OFF/ON per-tick parity matched exactly; no production change
+- Decision: **SUPPORTED FOR NEXT CAUSAL A/B** as a narrow opportunity; no feedback parameter or effect selected
+
 ### 2026-10-09 — Material-mediated social dynamics hypothesis (design only)
 
 [Concept note](../material-mediated-social-dynamics.md) · [Process log](./2026-10-09-material-mediated-social-dynamics.md)
