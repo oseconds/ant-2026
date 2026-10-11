@@ -32,6 +32,10 @@ The ChatGPT-upload suffixes `(1)`/`(2)` were removed from filenames for this arc
 
 [Plate, Deposit, and Material: retrospective terminology boundary](2026-10-11-plate-deposit-material-boundary.md) records why the early Plate/Z sedimentation concept was retained while giving the layered composite the provisional name **Deposit**. It separates material formation/character from Plate birth and organism consequences, and leaves the exact Material ontology and any independent Deposit identity for future experiments. **Historical conceptual clarification only; no production change or W1 mechanism selected.**
 
+## 2026-10-11 Dimensional Formation — 영향과 관계의 생성적 연쇄
+
+[Dimensional Formation: influence, relations, and physical commitment](2026-10-11-dimensional-formation-influence-and-relations.md)는 후속 개념 대화에서 논의한 **점 → 선 → 면 → 적층 → 시간**의 해석을 기록한다. C2의 국소적 형성과 C1의 구조 확정을 분리하고, Trace·Influence·retained Relation 및 단일/복수 개체의 provenance를 구분한다. 차원 상승은 필수가 아니며 개미의 경로나 근접성을 곧바로 물질적 결합으로 간주하지 않는다. **Conversation-derived working hypothesis only; no W1 formation law, new material state, production behavior or next pass adopted.**
+
 ## 2026-10-06 and 2026-10-07 chronology
 
 Date-specific development history already lives in the canonical daily logs and evidence, so it is **not duplicated** into this archive:
