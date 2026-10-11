@@ -1,0 +1,474 @@
+{
+  "schemaVersion": 1,
+  "audit": "ANT W1 repeat-birth contact-locality detached archive diagnostic",
+  "decision": {
+    "status": "Supported",
+    "actualRepeatBirths": 5,
+    "analyzableRepeatBirths": 5,
+    "sourceOrProvenanceGapCount": 0,
+    "sourcePriorMaskGatePassCount": 5,
+    "newMaskAtLeast30Count": 5,
+    "counterexampleBirthIds": [],
+    "interpretation": "Every analyzable actual repeat passed both the existing prior-mask gate and the diagnostic new-footprint count; this describes contact locality only."
+  },
+  "fixtures": {
+    "identicalMaskControl": {
+      "sourceMatch": "prior-identical",
+      "priorCount": 2,
+      "newCount": 2,
+      "passed": true
+    },
+    "oldOnlyContactCounterexample": {
+      "sourceMatch": "prior-branch",
+      "priorMaskCount": 30,
+      "newMaskCount": 0,
+      "pathSimilarity": 1,
+      "passed": true
+    },
+    "gridBoundaryNoWrap": true
+  },
+  "constraints": {
+    "noNaturalReplay": true,
+    "noProductionChanges": true,
+    "noAdvanceCall": true,
+    "sourceGateMinimum": 30,
+    "similarityThreshold": 0.6,
+    "eventTickRule": "first saved trajectory frame at or after raw event simulationTimeMs / 1000; stored seconds are never multiplied back to milliseconds",
+    "contactOrder": "raw row order within verified trajectory tick; all contacts before replayed Plate birth record"
+  },
+  "repositoryReferences": {
+    "researchStartHead": "ffd8fcaf419b51e873c8a591e45c958189e8c8b5",
+    "originMainAtStart": "fbe3959934158f5a05e51926e89287d503804d05",
+    "mainAndResearchSourceTreesEqualAtStart": true
+  },
+  "sourceReferences": {
+    "archivedController": "a6801d609b82f1f1a0b5030b7c6e4b9b5d2ebe72",
+    "archivedTrailPlateBirth": "a6801d609b82f1f1a0b5030b7c6e4b9b5d2ebe72",
+    "archivedGitBlobs": {
+      "AntController": "595a2f1de8e901cc1f427310dd98db08574097f3",
+      "TrailPlateBirth": "c8c429324c38fb2f8e3520aa88939acdf98ff47b"
+    },
+    "archivedSourceSha256": {
+      "AntController": "c3515932e4692399e4ac5928b16513643862a8c987f61f878d347a528a15ba40",
+      "TrailPlateBirth": "3e3e90157879884552232e9b47a5818678b3c302ec4988651e0ba34dcfb94aa2"
+    },
+    "researchControllerAndTrailPlateBirth": "f543531d8e32d5b1479311c31e3605b39ae9e5c8",
+    "researchGitBlobs": {
+      "AntController": "5b7e822ae16b53458174780eff7c762ff3fe51bd",
+      "TrailPlateBirth": "238cc365f2602dc6a22091d69237b88962825a13"
+    },
+    "productionGate": "TrailPlateBirth.findSameCorridorBirth / countFootContacts / observeFootContact"
+  },
+  "inputFingerprints": {
+    "20261005": {
+      "seed20261005-summary.json": {
+        "bytes": 930825,
+        "sha256": "8f18f24bc0a75506c316cbd70b0cb85073dd57d6c56ef8c3744a072f7f3460ac"
+      },
+      "seed20261005-trajectory.f64.gz": {
+        "bytes": 22684913,
+        "sha256": "bce5ab225b8a03924f205458c57416fb7f35796ed0940d6d9efafeea9f42b904"
+      },
+      "seed20261005-on-timeline.json.gz": {
+        "bytes": 1733341,
+        "sha256": "cca30053174262e47e852d5f8e983dd4bf4a0f541914b818c952abacb2828669"
+      },
+      "seed20261005-on-raw-events.json.gz": {
+        "bytes": 4446647,
+        "sha256": "4c0b8728a9dd62067c20734f3a4f7628e480fc7565d41dc27270d994be92e503"
+      },
+      "seed20261005-paired-tick-hashes.bin.gz": {
+        "bytes": 5160103,
+        "sha256": "4b5c23dcc016d3615eb61059162d459d544bd3d669c724816acd247af258168a"
+      }
+    },
+    "20261006": {
+      "seed20261006-summary.json": {
+        "bytes": 893764,
+        "sha256": "c10a7e485392490baf097e1f5b44b946291b5ad7edc77ef79e9d1af43445e2c0"
+      },
+      "seed20261006-trajectory.f64.gz": {
+        "bytes": 22740491,
+        "sha256": "f5ddf63e5f9cbab58079197e934ecaffc0d96bec4f285dabd573e5e206aaf064"
+      },
+      "seed20261006-on-timeline.json.gz": {
+        "bytes": 1712335,
+        "sha256": "29d963f9d5b94d350075f887687ce2c6b4486ac8fc24a4629992bead8d6e3d84"
+      },
+      "seed20261006-on-raw-events.json.gz": {
+        "bytes": 4344559,
+        "sha256": "662fb75f6c5b7a2fc5e84a08628dbc56e0ca26921572ae564a8499e282704ad4"
+      },
+      "seed20261006-paired-tick-hashes.bin.gz": {
+        "bytes": 5150852,
+        "sha256": "1c0cd3d9ab441d1f1bd28f1f4c8cbf8f9353035f26880e0c594dcfcaa4b04130"
+      }
+    },
+    "20261007": {
+      "seed20261007-summary.json": {
+        "bytes": 905118,
+        "sha256": "85cae5818b5cf4273a16be0c415a300763cf73f90e742febac86c57aa0486007"
+      },
+      "seed20261007-trajectory.f64.gz": {
+        "bytes": 22704067,
+        "sha256": "b0a660dcbc5bda49b02d3eb625c47fa30e9c786a0576dfb1ccc72e7f4332c31f"
+      },
+      "seed20261007-on-timeline.json.gz": {
+        "bytes": 1769437,
+        "sha256": "595b888414e97d6238c9b5b192d37f241643d99e612bca3fc7c6968e74117e07"
+      },
+      "seed20261007-on-raw-events.json.gz": {
+        "bytes": 4444163,
+        "sha256": "e012b877c53dfb0634db40d97d97af853d4835602e56a4ee0cd1eab8f33689f4"
+      },
+      "seed20261007-paired-tick-hashes.bin.gz": {
+        "bytes": 5146528,
+        "sha256": "56fa86367d381e1807616976a64535b87f5256adc04b298ba850300ade30cf0a"
+      }
+    },
+    "manifest.json": {
+      "bytes": 4285,
+      "sha256": "8e0a6bbaa83de47420e1451468b6cb3e30b63c09dce37209b155482e34ef4499"
+    },
+    "archive-verification.json": {
+      "bytes": 1041,
+      "sha256": "e4592340fea2930fa6ffd5889495c07c61c3215d75202c9a377f2f6a6688447e"
+    },
+    "candidate-descriptor-identity.json": {
+      "bytes": 447,
+      "sha256": "af9ca4655092db2bad615806b4e6f23e78dd6fdacc44ad52ecd566cca7d60d95"
+    }
+  },
+  "seeds": [
+    {
+      "seed": 20261005,
+      "integrity": {
+        "contactRows": 35751,
+        "rawIndividualFootPoints": 105759,
+        "acceptedIndividualFootPoints": 105759,
+        "rejectedIndividualFootPoints": 0,
+        "plateBirthsSeen": 32,
+        "repeatBirths": 2,
+        "sourceMirrorMatchParity": true,
+        "sourceMirrorCounterParity": true,
+        "priorGateMismatches": [],
+        "localityFailureCount": 0
+      },
+      "reusedEventPointCount": 11052,
+      "digestValidation": {
+        "frames": 36001,
+        "contactTickDigests": 36001,
+        "birthTickDigests": 36001,
+        "contactAggregateDigestMatches": true,
+        "birthAggregateDigestMatches": true,
+        "pairedOnOffContactBirthDigestsMatch": true
+      },
+      "archiveValidation": {
+        "rawContactGroups": 35751,
+        "rawFootPoints": 105759,
+        "rawBirthEvents": 64,
+        "archivedParity": true
+      },
+      "descriptorIdentity": {
+        "seed": 20261005,
+        "births": 32,
+        "principalPathIdentity": true,
+        "networkCellIdentity": true,
+        "ribbonMaskIdentity": true
+      },
+      "repeatBirths": [
+        {
+          "seed": 20261005,
+          "currentPlateId": "trail-plate-20",
+          "priorPlateId": "trail-plate-5",
+          "currentBirthTimeMs": 426016.66666679643,
+          "currentBirthTick": 25561,
+          "priorBirthTimeMs": 224016.66666662783,
+          "priorBirthTick": 13441,
+          "priorAgeMs": 202000.0000001686,
+          "sourceRefractoryMinimumMs": 90000,
+          "sourceRefractoryPass": true,
+          "baselineBoundary": "after all archived FOOT_CONTACT events in the matched prior birth trajectory tick",
+          "baselineTick": 13441,
+          "currentTickContactBoundary": "after all archived FOOT_CONTACT events in the current birth trajectory tick",
+          "similarity": {
+            "threshold": 0.6,
+            "maskIoU": 0.2073529411764706,
+            "tolerantPrincipalPathOverlap": 0.6,
+            "score": 0.6,
+            "channel": "tolerant-principal-path"
+          },
+          "maskRelation": {
+            "priorCells": 1563,
+            "newCells": 1721,
+            "intersectionCells": 564,
+            "priorOnlyCells": 999,
+            "newOnlyCells": 1157
+          },
+          "sourcePriorMaskCountAtBirth": 10099,
+          "sourcePriorMaskPostBaselineCount": 9947,
+          "sourcePriorMaskGateMinimum": 30,
+          "sourcePriorMaskGatePass": true,
+          "sourceMirrorCounterParity": true,
+          "counts": {
+            "priorMask": 9947,
+            "newMask": 13202,
+            "intersection": 4698,
+            "priorOnly": 5249,
+            "newOnly": 8504
+          },
+          "localityHypothesisPass": true
+        },
+        {
+          "seed": 20261005,
+          "currentPlateId": "trail-plate-26",
+          "priorPlateId": "trail-plate-6",
+          "currentBirthTimeMs": 491016.6666668721,
+          "currentBirthTick": 29461,
+          "priorBirthTimeMs": 238016.66666661968,
+          "priorBirthTick": 14281,
+          "priorAgeMs": 253000.00000025242,
+          "sourceRefractoryMinimumMs": 90000,
+          "sourceRefractoryPass": true,
+          "baselineBoundary": "after all archived FOOT_CONTACT events in the matched prior birth trajectory tick",
+          "baselineTick": 14281,
+          "currentTickContactBoundary": "after all archived FOOT_CONTACT events in the current birth trajectory tick",
+          "similarity": {
+            "threshold": 0.6,
+            "maskIoU": 0.17175141242937852,
+            "tolerantPrincipalPathOverlap": 0.6197183098591549,
+            "score": 0.6197183098591549,
+            "channel": "tolerant-principal-path"
+          },
+          "maskRelation": {
+            "priorCells": 1645,
+            "newCells": 1466,
+            "intersectionCells": 456,
+            "priorOnlyCells": 1189,
+            "newOnlyCells": 1010
+          },
+          "sourcePriorMaskCountAtBirth": 11492,
+          "sourcePriorMaskPostBaselineCount": 13055,
+          "sourcePriorMaskGateMinimum": 30,
+          "sourcePriorMaskGatePass": true,
+          "sourceMirrorCounterParity": true,
+          "counts": {
+            "priorMask": 13055,
+            "newMask": 14220,
+            "intersection": 5107,
+            "priorOnly": 7948,
+            "newOnly": 9113
+          },
+          "localityHypothesisPass": true
+        }
+      ]
+    },
+    {
+      "seed": 20261006,
+      "integrity": {
+        "contactRows": 35377,
+        "rawIndividualFootPoints": 104829,
+        "acceptedIndividualFootPoints": 104829,
+        "rejectedIndividualFootPoints": 0,
+        "plateBirthsSeen": 28,
+        "repeatBirths": 2,
+        "sourceMirrorMatchParity": true,
+        "sourceMirrorCounterParity": true,
+        "priorGateMismatches": [],
+        "localityFailureCount": 0
+      },
+      "reusedEventPointCount": 1286,
+      "digestValidation": {
+        "frames": 36001,
+        "contactTickDigests": 36001,
+        "birthTickDigests": 36001,
+        "contactAggregateDigestMatches": true,
+        "birthAggregateDigestMatches": true,
+        "pairedOnOffContactBirthDigestsMatch": true
+      },
+      "archiveValidation": {
+        "rawContactGroups": 35377,
+        "rawFootPoints": 104829,
+        "rawBirthEvents": 60,
+        "archivedParity": true
+      },
+      "descriptorIdentity": {
+        "seed": 20261006,
+        "births": 28,
+        "principalPathIdentity": true,
+        "networkCellIdentity": true,
+        "ribbonMaskIdentity": true
+      },
+      "repeatBirths": [
+        {
+          "seed": 20261006,
+          "currentPlateId": "trail-plate-20",
+          "priorPlateId": "trail-plate-8",
+          "currentBirthTimeMs": 478016.66666685697,
+          "currentBirthTick": 28681,
+          "priorBirthTimeMs": 309016.6666666602,
+          "priorBirthTick": 18541,
+          "priorAgeMs": 169000.00000019674,
+          "sourceRefractoryMinimumMs": 90000,
+          "sourceRefractoryPass": true,
+          "baselineBoundary": "after all archived FOOT_CONTACT events in the matched prior birth trajectory tick",
+          "baselineTick": 18541,
+          "currentTickContactBoundary": "after all archived FOOT_CONTACT events in the current birth trajectory tick",
+          "similarity": {
+            "threshold": 0.6,
+            "maskIoU": 0.18266024453501298,
+            "tolerantPrincipalPathOverlap": 0.6712328767123288,
+            "score": 0.6712328767123288,
+            "channel": "tolerant-principal-path"
+          },
+          "maskRelation": {
+            "priorCells": 1340,
+            "newCells": 1852,
+            "intersectionCells": 493,
+            "priorOnlyCells": 847,
+            "newOnlyCells": 1359
+          },
+          "sourcePriorMaskCountAtBirth": 13616,
+          "sourcePriorMaskPostBaselineCount": 8328,
+          "sourcePriorMaskGateMinimum": 30,
+          "sourcePriorMaskGatePass": true,
+          "sourceMirrorCounterParity": true,
+          "counts": {
+            "priorMask": 8328,
+            "newMask": 11769,
+            "intersection": 3962,
+            "priorOnly": 4366,
+            "newOnly": 7807
+          },
+          "localityHypothesisPass": true
+        },
+        {
+          "seed": 20261006,
+          "currentPlateId": "trail-plate-27",
+          "priorPlateId": "trail-plate-18",
+          "currentBirthTimeMs": 581966.6666667765,
+          "currentBirthTick": 34918,
+          "priorBirthTimeMs": 456016.66666683136,
+          "priorBirthTick": 27361,
+          "priorAgeMs": 125949.99999994517,
+          "sourceRefractoryMinimumMs": 90000,
+          "sourceRefractoryPass": true,
+          "baselineBoundary": "after all archived FOOT_CONTACT events in the matched prior birth trajectory tick",
+          "baselineTick": 27361,
+          "currentTickContactBoundary": "after all archived FOOT_CONTACT events in the current birth trajectory tick",
+          "similarity": {
+            "threshold": 0.6,
+            "maskIoU": 0.22241261137765592,
+            "tolerantPrincipalPathOverlap": 0.6216216216216216,
+            "score": 0.6216216216216216,
+            "channel": "tolerant-principal-path"
+          },
+          "maskRelation": {
+            "priorCells": 1795,
+            "newCells": 1772,
+            "intersectionCells": 649,
+            "priorOnlyCells": 1146,
+            "newOnlyCells": 1123
+          },
+          "sourcePriorMaskCountAtBirth": 22343,
+          "sourcePriorMaskPostBaselineCount": 7234,
+          "sourcePriorMaskGateMinimum": 30,
+          "sourcePriorMaskGatePass": true,
+          "sourceMirrorCounterParity": true,
+          "counts": {
+            "priorMask": 7234,
+            "newMask": 8200,
+            "intersection": 3283,
+            "priorOnly": 3951,
+            "newOnly": 4917
+          },
+          "localityHypothesisPass": true
+        }
+      ]
+    },
+    {
+      "seed": 20261007,
+      "integrity": {
+        "contactRows": 35448,
+        "rawIndividualFootPoints": 105001,
+        "acceptedIndividualFootPoints": 105001,
+        "rejectedIndividualFootPoints": 0,
+        "plateBirthsSeen": 31,
+        "repeatBirths": 1,
+        "sourceMirrorMatchParity": true,
+        "sourceMirrorCounterParity": true,
+        "priorGateMismatches": [],
+        "localityFailureCount": 0
+      },
+      "reusedEventPointCount": 0,
+      "digestValidation": {
+        "frames": 36001,
+        "contactTickDigests": 36001,
+        "birthTickDigests": 36001,
+        "contactAggregateDigestMatches": true,
+        "birthAggregateDigestMatches": true,
+        "pairedOnOffContactBirthDigestsMatch": true
+      },
+      "archiveValidation": {
+        "rawContactGroups": 35448,
+        "rawFootPoints": 105001,
+        "rawBirthEvents": 63,
+        "archivedParity": true
+      },
+      "descriptorIdentity": {
+        "seed": 20261007,
+        "births": 31,
+        "principalPathIdentity": true,
+        "networkCellIdentity": true,
+        "ribbonMaskIdentity": true
+      },
+      "repeatBirths": [
+        {
+          "seed": 20261007,
+          "currentPlateId": "trail-plate-22",
+          "priorPlateId": "trail-plate-16",
+          "currentBirthTimeMs": 485016.6666668651,
+          "currentBirthTick": 29101,
+          "priorBirthTimeMs": 378016.66666674055,
+          "priorBirthTick": 22681,
+          "priorAgeMs": 107000.00000012456,
+          "sourceRefractoryMinimumMs": 90000,
+          "sourceRefractoryPass": true,
+          "baselineBoundary": "after all archived FOOT_CONTACT events in the matched prior birth trajectory tick",
+          "baselineTick": 22681,
+          "currentTickContactBoundary": "after all archived FOOT_CONTACT events in the current birth trajectory tick",
+          "similarity": {
+            "threshold": 0.6,
+            "maskIoU": 0.21469497809234916,
+            "tolerantPrincipalPathOverlap": 0.6904761904761905,
+            "score": 0.6904761904761905,
+            "channel": "tolerant-principal-path"
+          },
+          "maskRelation": {
+            "priorCells": 1809,
+            "newCells": 1795,
+            "intersectionCells": 637,
+            "priorOnlyCells": 1172,
+            "newOnlyCells": 1158
+          },
+          "sourcePriorMaskCountAtBirth": 20935,
+          "sourcePriorMaskPostBaselineCount": 6461,
+          "sourcePriorMaskGateMinimum": 30,
+          "sourcePriorMaskGatePass": true,
+          "sourceMirrorCounterParity": true,
+          "counts": {
+            "priorMask": 6461,
+            "newMask": 7827,
+            "intersection": 3325,
+            "priorOnly": 3136,
+            "newOnly": 4502
+          },
+          "localityHypothesisPass": true
+        }
+      ]
+    }
+  ],
+  "toolSourceSha256": "725cac37a915851c45c220bcdbfa9d670e46bf87b2ba90e801a3fd12767d6bc9",
+  "productionSourceSha256": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+  "controllerSourceSha256": "7c69aedfbd96d8fe3d3b2c4464f5cd5056651b2ecbae274eb71cee8053283633"
+}

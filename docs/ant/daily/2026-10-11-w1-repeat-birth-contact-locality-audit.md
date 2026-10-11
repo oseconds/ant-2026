@@ -1,0 +1,11 @@
+# W1 repeat-birth contact-locality audit — 2026-10-11
+
+The frozen archive diagnostic proposed in the architecture reassessment was completed from the existing 600-second records for seeds 20261005, 20261006, and 20261007. Starting research HEAD was `ffd8fcaf419b51e873c8a591e45c958189e8c8b5`; `origin/main` was fetched at `fbe3959934158f5a05e51926e89287d503804d05`. The worktree was clean before this pass. No production or frozen archive file was changed.
+
+The audit verified 36,001 trajectory frames per seed and reproduced all archived per-tick contact/birth hashes against the raw event rows and paired OFF/ON digest arrays. It retained source row order, mapped each event from milliseconds divided by 1,000 to the first saved trajectory time at or after that event, and applied all contacts in a tick before recording a Plate birth baseline. Archived and research source versions were inspected for contact count, grid rounding, max-overlap match, newest-prior selection, repeat gate, and controller execution order.
+
+The existing birth-time identity evidence covers all 91 actual Plate descriptors. Source-rule replay found five same-corridor repeats: two in seed 20261005, two in 20261006, and one in 20261007. Source/mirror prior identity and cumulative counter results matched for every repeat. Each prior-mask count passed the production `>=30` condition, and each new frozen mask also contained at least 30 post-baseline individual FOOT_CONTACT points. The result is **Supported** for this contact-locality hypothesis only. Overlapping repeated intervals are reported: 11,052 reused event-point keys in seed 20261005, 1,286 in 20261006, and none in 20261007.
+
+The isolated prior-only fixture also demonstrated that the source gate can pass while the new-mask count fails; it validates diagnostic sensitivity, not natural evidence. No natural replay, candidate generation, plot, full npm suite, or build was run. The production sources, movement, birth behavior, material/audio systems, and W1 ontology remain unchanged; W1 stays **Undecided / Research Gap**.
+
+Evidence, per-birth JSON/CSV, input fingerprints, and reproduction instructions: [W1 Repeat-birth Contact-locality Audit](../evidence/2026-10-11-w1-repeat-birth-contact-locality-audit/README.md).

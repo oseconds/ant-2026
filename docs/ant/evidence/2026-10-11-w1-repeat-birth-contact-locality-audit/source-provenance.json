@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-10-11",
+  "repository": "oseconds/ant-2026",
+  "branch": "ant-w1-episodic-material-shadow",
+  "startingResearchHead": "ffd8fcaf419b51e873c8a591e45c958189e8c8b5",
+  "originMainAtStart": "fbe3959934158f5a05e51926e89287d503804d05",
+  "startingInputWorkingTreeMatchesHead": true,
+  "archiveAndCurrentResearchSourceTreeIds": {
+    "originMain": "c29389fd91a9e5503b8becba75d23edccf6a3a3c",
+    "researchHead": "c29389fd91a9e5503b8becba75d23edccf6a3a3c",
+    "researchSourceCommit": "c29389fd91a9e5503b8becba75d23edccf6a3a3c"
+  },
+  "archiveInputFilesVerifiedUnchangedAtStartingHead": 18,
+  "sourceVersions": {
+    "archived": {
+      "commit": "a6801d609b82f1f1a0b5030b7c6e4b9b5d2ebe72",
+      "files": {
+        "src/lib/agents/ant/AntController.js": {
+          "gitBlobSha1": "595a2f1de8e901cc1f427310dd98db08574097f3",
+          "sha256": "c3515932e4692399e4ac5928b16513643862a8c987f61f878d347a528a15ba40"
+        },
+        "src/lib/agents/ant/TrailPlateBirth.js": {
+          "gitBlobSha1": "c8c429324c38fb2f8e3520aa88939acdf98ff47b",
+          "sha256": "3e3e90157879884552232e9b47a5818678b3c302ec4988651e0ba34dcfb94aa2"
+        }
+      }
+    },
+    "researchAndCurrentWorkingSource": {
+      "commit": "f543531d8e32d5b1479311c31e3605b39ae9e5c8",
+      "files": {
+        "src/lib/agents/ant/AntController.js": {
+          "gitBlobSha1": "5b7e822ae16b53458174780eff7c762ff3fe51bd",
+          "sha256": "7c69aedfbd96d8fe3d3b2c4464f5cd5056651b2ecbae274eb71cee8053283633"
+        },
+        "src/lib/agents/ant/TrailPlateBirth.js": {
+          "gitBlobSha1": "238cc365f2602dc6a22091d69237b88962825a13",
+          "sha256": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860"
+        }
+      }
+    }
+  },
+  "checkedSourceSemantics": [
+    "observeFootContact accepts valid individual normalized FOOT_CONTACT positions and maps each to round(x * 95), round(y * 95) on the 96x96 grid.",
+    "countFootContacts sums the cumulative uint32 contact counters only over truthy cells in the supplied mask.",
+    "findSameCorridorBirth uses max(mask IoU, tolerant 8-neighbor principal-path overlap), threshold 0.6, and the newest matching birth time.",
+    "The repeat counter subtracts the matched prior record's private footContactsAtBirth; a repeat birth also observes the 90 second refractory.",
+    "AntController processes returned FOOT_CONTACT events through observeFootContact before incrementing simulation time and calling TrailPlateBirth.advance."
+  ],
+  "executionBoundary": {
+    "productionAdvanceCalledByAudit": false,
+    "naturalReplayRun": false,
+    "productionSourceChanged": false,
+    "archiveSourceFilesChanged": false
+  }
+}
