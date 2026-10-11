@@ -35,9 +35,9 @@ af9c417  Record ANT social graph baseline evidence
 
 그 이후 커밋은 daily/documentation을 추가할 수 있으므로 **repository HEAD와 latest implementation baseline을 구분**한다.
 
-### Latest W1 Formation / Retention / Response contract — Conditional arrival, endogenous gap
+### Latest W1 Formation / Retention / Response — Supplied-layer attribution supported; endogenous gap remains
 
-The [Plate-native contract design](w1-plate-native-formation-retention-response-contract.md) finds existing Plate/Z/solver state sufficient for a specified added-layer response. One explicitly supplied, rest-inserted lamina arrival contract is operationally specifiable, but its supply/configuration and activation are authored inputs; it does not close endogenous formation from ANT activity/memory. Live insertion/work and compatible loading remain gates. No independent Material field or Deposit identity is required by current evidence. A [bounded response-feasibility probe](evidence/2026-10-11-w1-supplied-layer-response-feasibility/README.md) resolves fixture waking/divergence only. The next single option is a controlled response-attribution comparator; deterministic replay is a harness check, not an ontology discriminator. **W1 remains Undecided / Research Gap.** [Chronology and verification](daily/2026-10-11-w1-formation-retention-response-contract.md).
+The [Plate-native contract](w1-plate-native-formation-retention-response-contract.md) and [controlled response-attribution audit](evidence/2026-10-11-w1-supplied-layer-response-attribution/README.md) show that, in the fixed all-rest normalized-solver fixture, the first inherited-node Float32 differences are compatible with and reproduced by the added local Z-link update terms. State/pulse matching, reinstall, no-probe, disjoint-layer, and deterministic-replay controls pass. This attributes the supplied-layer response inside the existing authored solver only; it does not establish ANT formation, physical deposition work, supply generation, or organism consequence. The earlier [bounded feasibility probe](evidence/2026-10-11-w1-supplied-layer-response-feasibility/README.md) remains preserved. **W1 remains Undecided / Research Gap.** [Chronology](daily/2026-10-11-w1-supplied-layer-response-attribution.md).
 
 ### Prior W1 architecture reassessment — Physical Plate/Z retained, formation unresolved
 

@@ -14,6 +14,16 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-11 — W1 supplied-layer response attribution: Supported within the normalized solver
+
+[Chronology](./2026-10-11-w1-supplied-layer-response-attribution.md) · [Evidence and exact traces](../evidence/2026-10-11-w1-supplied-layer-response-attribution/README.md) · [Formation/response contract](../w1-plate-native-formation-retention-response-contract.md)
+
+- Validated matched old-node state and contact pulse, 21 overlap Z links, and the strike's old-layer graph reachability
+- Reinstall, no-probe, disjoint-layer, and deterministic replay controls pass; all 3,000-step traces are preserved
+- Three old cells first diverge at step 2; local source arithmetic and Float32 rounding reproduce each difference
+- Supports only the added-layer response inside the existing authored solver; W1 formation remains Undecided / Research Gap
+- No production source, natural simulation, formation rule, merge, or PR
+
 ### 2026-10-11 — W1 Plate-native Formation / Retention / Response contract design
 
 [Chronology](./2026-10-11-w1-formation-retention-response-contract.md) · [Contract and single next comparator](../w1-plate-native-formation-retention-response-contract.md)
