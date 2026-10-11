@@ -14,6 +14,16 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-11 — W1 endogenous formation: contribution and spatial extent remain unselected
+
+[Chronology](./2026-10-11-w1-endogenous-formation-contribution-spatial-extent.md) · [Design, source/evidence ledger, unresolved gate and conditional executable specification](../w1-endogenous-formation-contribution-spatial-extent-design.md)
+
+- Current birth is computationally endogenous; environmental dose, retained configuration and provenance remain distinct
+- Plate partition changes physical connections even at equal spatial union; event identity is a formation-law responsibility
+- Plate-native is specifiable with authored assumptions, but no contribution/extent/repeat law is selected
+- Existing Plate/Z response and derived Deposit retained; W1 Undecided / Research Gap, no new experiment or evidence package
+- Preserve negative/mixed evidence and completed attribution; no production adoption or W2 entry
+
 ### 2026-10-11 — W1 supplied-layer response attribution: Supported within the normalized solver
 
 [Chronology](./2026-10-11-w1-supplied-layer-response-attribution.md) · [Evidence and exact traces](../evidence/2026-10-11-w1-supplied-layer-response-attribution/README.md) · [Formation/response contract](../w1-plate-native-formation-retention-response-contract.md)
