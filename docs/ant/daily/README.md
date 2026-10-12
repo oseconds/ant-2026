@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-12 — Production material locomotion causal tail
+
+[Process log](./2026-10-12-material-causal-tail.md) · [Causal evidence and independent review](../evidence/2026-10-12-material-causal-tail/README.md)
+
+- One-tick focal resistance removal inside the current default-On world; three seeds, nine prospective gates, 600 s
+- Five observed joint-L=0 exits carry movement differences through existing state; four are retirement-censored
+- Mobile and small pheromone-state responses, later contact/material history and descendant-world divergence; exact complete-state restore
+- Decision: **SUFFICIENT CURRENTLY**; temporary organism after-effect / vitality **PARK**; production unchanged
+
 ### 2026-10-12 — Retained material → locomotion production adoption
 
 [Process log](./2026-10-12-retained-material-locomotion-adoption.md) · [Adoption conformance](../evidence/2026-10-12-retained-material-locomotion-adoption/README.md) · [Causal A/B](../evidence/2026-10-11-retained-material-locomotion-ab-final/README.md)

@@ -268,6 +268,8 @@ The first production causal link is retained local stratigraphy → bounded loco
 
 Vitality is a separate future hypothesis only if an organism after-effect needs to persist after an ant leaves a Plate. Alternative formation laws, history-derived material character, C2 and retained relations are not prerequisites for the adopted production link. Acoustic climate remains future work. There is no active W1→W2→W3 mandatory sequence.
 
+The 2026-10-12 one-tick causal-tail pass found post-exit consequences carried by existing movement and environmental state, with no demonstrated need for a separate organism state: **SUFFICIENT CURRENTLY; temporary after-effect / vitality PARK**. This is a bounded current-world decision, not a hidden-memory claim. [Causal-tail evidence](evidence/2026-10-12-material-causal-tail/README.md).
+
 The 2026-10-11 retained-material exposure shadow established that later ants encounter exposed stratigraphy in natural runs; it is descriptive evidence, not sensing evidence. [Exposure shadow](evidence/2026-10-11-retained-material-experience-shadow-final/README.md).
 
 ### Research gate

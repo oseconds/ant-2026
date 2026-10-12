@@ -457,4 +457,6 @@ The fixed candidate was supported by the three-seed causal A/B and adopted after
 
 There is no mandatory W1→W2→W3 sequence. Vitality is a separate future hypothesis only if an organism after-effect must persist after an ant leaves material. Alternative formation laws, history-derived material character, C2 and retained relations are not prerequisites for the adopted feedback. Acoustic climate remains future work. Each additional causal link needs separate evidence and authorization; one link is added per pass.
 
+The 2026-10-12 causal-tail investigation judged the existing movement/environment state **SUFFICIENT CURRENTLY** for carrying local material consequences beyond center-cell exposure. Temporary organism after-effect / vitality is **PARK**; a future proposal must name a temporal responsibility that identical current production state cannot supply. [Evidence and limits](evidence/2026-10-12-material-causal-tail/README.md).
+
 A successful future pass must preserve enough openness for multiple states to remain possible. It is not defined by looking more alive or more varied.
