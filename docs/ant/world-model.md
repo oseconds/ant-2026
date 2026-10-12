@@ -453,6 +453,8 @@ One tick-entry stratigraphy snapshot supplies L before intention and movement. A
 
 The fixed candidate was supported by the three-seed causal A/B and adopted after default-On / explicit-On and explicit-Off conformance checks. The A/B found lower travel and realized speed, longer exposed episodes, and later history differences without observed trapping or collapse; Plate-birth and coverage directions varied by seed. It does not support a claim that retained material increases either. [Causal A/B evidence](evidence/2026-10-11-retained-material-locomotion-ab-final/README.md) · [adoption verification](evidence/2026-10-12-retained-material-locomotion-adoption/README.md).
 
+A separate three-seed, 600 s pre-cohort diagnostic found that layers born before every currently live ant repeatedly remained in the columns of later ants, contributing through aggregate `L` in 46.07% of active ant-time overall. This verifies cross-cohort material history under the current law; it does not identify a creator or show direct sensing of buried layers. [Pre-cohort evidence](evidence/2026-10-12-pre-cohort-retained-history/README.md).
+
 ## Future hypotheses
 
 There is no mandatory W1→W2→W3 sequence. Vitality is a separate future hypothesis only if an organism after-effect must persist after an ant leaves material. Alternative formation laws, history-derived material character, C2 and retained relations are not prerequisites for the adopted feedback. Acoustic climate remains future work. Each additional causal link needs separate evidence and authorization; one link is added per pass.

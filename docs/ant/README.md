@@ -100,6 +100,8 @@ Production also reads the current cell's public `layerCountByCell` value L at ti
 
 It multiplies the existing final `desiredSpeed` once, after steering/turning/crowding/following/hesitation and before `targetSpeed` / `accelerateToward`. L = 0 is exactly 1; the maximum slowdown approaches 10%. Later contacts, births and topology changes in the same tick apply from the next tick. This is a bounded authored world law, not a measured friction value or a claim of physical sensing of buried Plates. It does not change heading, steering, targets, attraction/avoidance or Plate-birth qualification, and the A/B did not support a consistent Plate-birth or coverage direction. [Adoption conformance](evidence/2026-10-12-retained-material-locomotion-adoption/README.md) · [causal A/B evidence](evidence/2026-10-11-retained-material-locomotion-ab-final/README.md).
 
+A three-seed, 600 s pre-cohort diagnostic found that layers born before every currently live ant remained in later ants' occupied columns and contributed through the same aggregate `L` law (46.07% of active ant-time overall; 42.38–50.21% by seed). This is a current-state cross-cohort observation, not attribution to a particular retired ant or evidence of buried-layer sensing. [Pre-cohort evidence](evidence/2026-10-12-pre-cohort-retained-history/README.md).
+
 ### Physical audio
 
 현재 production sonic baseline:
