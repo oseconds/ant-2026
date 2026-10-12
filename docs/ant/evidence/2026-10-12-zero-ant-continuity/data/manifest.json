@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "214c59cbc31684aa5c1f3fd70dd1d21533c48ab2",
+  "naturalReplayBaselineCommit": "37131e0c408a9692ecc364ef7298a71c5e7182ad",
+  "branch": "research/ant-zero-ant-continuity-20261012",
+  "node": "v22.23.2",
+  "seeds": [
+    20261005,
+    20261006,
+    20261007
+  ],
+  "durationSeconds": 600,
+  "hz": 60,
+  "gap": {
+    "startTick": 24000,
+    "endTick": 27600,
+    "durationTicks": 3600,
+    "startBoundarySeconds": 400,
+    "endBoundarySeconds": 460,
+    "durationSeconds": 60
+  },
+  "productionConditions": "Fresh default AntController; default-On material locomotion law; counted production LCG; no audio bridge; no state overrides.",
+  "intervention": "At the 400 s tick boundary, retire all current ants using the existing gaster retirement flush, clear per-ant gait/body-pose/deposition maps, set nextSpawnTimeMs to Infinity, then run production tick(dt) for exactly 3600 ticks. At 460 s set nextSpawnTimeMs to the current simulation clock; the production scheduler spawns on the next tick if recruitment allows.",
+  "gapSuppression": "No living ant, movement, FOOT_CONTACT, post-boundary pheromone deposition, or spawn. A defensive harness-only spawn wrapper counts and refuses any unexpected gap spawn before RNG use. The production controller tick remains active; no production source is patched.",
+  "gapBoundaryRemoval": "Forced removal is research-only. Existing gaster partial doses are flushed at the 400 s boundary with the same retire/applyDeposits path used by controller retirement, before the zero-ant clock interval begins. Forced removals are counted separately in the intervention record.",
+  "continuingWorldProcesses": [
+    "PheromoneField.decay",
+    "SurfaceField.relax",
+    "TrailPlateBirth.advance",
+    "MaterialStratigraphy.advance",
+    "ColonyActivation.advance",
+    "controller simulation clock"
+  ],
+  "entryTime": "A research-only wrapper records successful post-gap spawnNextAnt calls at the existing controller simulation clock; it adds no AntAgent state and consumes no RNG.",
+  "preGapMaterialDefinition": "A layer is pre-gap iff descriptor.bornAtSimulationTimeMs < 400000. Material born exactly at the 400 s boundary is separately counted, not classified as pre-gap.",
+  "postGapObserverTiming": "At each fixed tick entry before AntController.tick, read public stratigraphy snapshot for production L and public getColumnAt descriptors for G. Same-tick births/topology changes first appear at the next sample.",
+  "counterfactual": "m(L-G) and deltaGap = m(L-G)-m(L) are arithmetic diagnostics only; no material removal or behavior counterfactual is run.",
+  "observer": "Only detached/public environment snapshots and public columns are read. Reader purity is checked around captured boundary/second samples; no callbacks into production systems.",
+  "naturalReplay": {
+    "source": "docs/ant/evidence/2026-10-12-material-causal-tail/unobserved-natural-replay.mjs",
+    "currentOutput": "docs/ant/evidence/2026-10-12-zero-ant-continuity/data/unobserved-natural-replay-current.json",
+    "currentOutputSha256": "7852733ca7bba6208dec9743ac9d752d1167bf6e5ea6f28f7ddf0fb9895f9fb4",
+    "exactBaselineMatch": true
+  },
+  "productionSourceDiffFromBaseline": "",
+  "reproduction": "node docs/ant/evidence/2026-10-12-material-causal-tail/unobserved-natural-replay.mjs test-results/zero-ant-natural-replay.json; node scripts/ant-zero-ant-continuity-shadow.js --natural-replay=test-results/zero-ant-natural-replay.json --output=test-results/zero-ant-continuity-replay",
+  "sourceHashes": {
+    "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+    "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+    "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+    "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+    "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+    "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+    "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+    "src/lib/agents/ant/BodyPoseController.js": "2ec4cc12c12ae301ea07056889c3be9255b1b1e155b7724cd3366278d60ace8e",
+    "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+    "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd",
+    "package.json": "3eacd5e73b2fb76a26b39ee7e8e9d35e7803059e3132d810625415002f56672e",
+    "package-lock.json": "a8ec4335c4334ace1b25a0133f78dfcbe8cc2f057c7f0910a7ea7779f3b32959",
+    "scripts/ant-zero-ant-continuity-shadow.js": "4f4784f60dd62a3b1708b4c5ba9d55b0da64398ad39f75395894296af2f3f3a2",
+    "tests/ant-zero-ant-continuity.test.js": "1be53e56c955f1611be9fa74d4c2b2552cf51172dd74b440432b086590b5fa11",
+    "docs/ant/evidence/2026-10-12-material-causal-tail/unobserved-natural-replay.mjs": "3c5a5a81d496d10eda5c593643ad96bfb846fc86cb7a16cb57f12dfc57ebbca3"
+  },
+  "outputFiles": [
+    "aggregate-summary.json",
+    "manifest.json",
+    "natural-control-final.json",
+    "natural-prefix-observer-state-chains.json",
+    "post-gap-episodes.csv",
+    "post-gap-population-by-second.csv",
+    "seed-20261005-post-gap-ants.json",
+    "seed-20261005-post-gap-episodes.json",
+    "seed-20261005-summary.json",
+    "seed-20261006-post-gap-ants.json",
+    "seed-20261006-post-gap-episodes.json",
+    "seed-20261006-summary.json",
+    "seed-20261007-post-gap-ants.json",
+    "seed-20261007-post-gap-episodes.json",
+    "seed-20261007-summary.json",
+    "world-gap-by-second.csv",
+    "zero-ant-gap-world-state.json"
+  ]
+}

@@ -274,6 +274,8 @@ The 2026-10-12 one-tick causal-tail pass found post-exit consequences carried by
 
 The 2026-10-11 retained-material exposure shadow established that later ants encounter exposed stratigraphy in natural runs; it is descriptive evidence, not sensing evidence. [Exposure shadow](evidence/2026-10-11-retained-material-experience-shadow-final/README.md).
 
+A 2026-10-12 research-only shadow imposed one 60 s zero-ant interval at 400 s. The unchanged world clocks advanced, pre-gap column placement persisted in all three seeds, and later entrants encountered pre-gap material on 81.76% of post-gap active ant-time; this does not establish that production lifecycle naturally reaches zero ants or test audio continuity. [Zero-ant continuity evidence](evidence/2026-10-12-zero-ant-continuity/README.md).
+
 ### Research gate
 
 S2a synchrony null, S2b exact-spatial identity null and S2c incremental predictive-value check are complete. S2a/S2b retain their recruitment/seam and remap/turnover limitations. S2c found no consistent held-out gain from the selected simple temporal graph summaries beyond the compact current-frame baseline.

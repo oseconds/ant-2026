@@ -56,6 +56,8 @@ world state      continues
 
 A new ant therefore does not enter a reset simulation. It enters a world that may already contain history.
 
+**Current implementation evidence is narrower than this design target.** A 2026-10-12 research-only shadow imposed one 60 s zero-ant interval at 400 s. In all three seeds, world clocks advanced, pheromone decayed, SurfaceField relaxed, TrailPlateBirth and MaterialStratigraphy advanced, and the pre-gap material column placement persisted. Later entrants encountered pre-gap layers under the current aggregate-layer locomotion law. This does not show that production lifecycle naturally reaches zero ants or that audio/vibration continues across such an interval. [Zero-ant continuity evidence](evidence/2026-10-12-zero-ant-continuity/README.md).
+
 ```text
 new ant ≠ new world
 

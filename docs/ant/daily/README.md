@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-12 — Zero-ant retained-world continuity shadow
+
+[Process log](./2026-10-12-zero-ant-continuity.md) · [Shadow evidence](../evidence/2026-10-12-zero-ant-continuity/README.md)
+
+- Research-only intervention removed all live ants at 400 s, advanced the unchanged world for 3,600 ticks / 60 s, and resumed recruitment at 460 s
+- All three seeds kept world clocks moving; retained pre-gap columns persisted and post-gap ants encountered them under the existing production law
+- Decision: **SHADOW ZERO-ANT CONTINUITY SUPPORTED**; no production lifecycle change
+
 ### 2026-10-12 — Production material locomotion causal tail
 
 [Process log](./2026-10-12-material-causal-tail.md) · [Causal evidence and independent review](../evidence/2026-10-12-material-causal-tail/README.md)
