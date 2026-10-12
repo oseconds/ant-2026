@@ -278,6 +278,8 @@ A 2026-10-12 research-only shadow imposed one 60 s zero-ant interval at 400 s. T
 
 A 2026-10-13 TrailPlateBirth-only follow-up found mixed natural lineages: 4 of 8 gap births continued a pre-gap candidate in seed `20261006`, while 4 followed post-gap candidates. Clearing only the pending candidate still produced 7 post-gap Plate births across all three matched seeds. This supports regeneration by the retained input set during the forced shadow, not a natural zero-ant lifecycle or an individual-input necessity claim. [Candidate-lineage evidence](evidence/2026-10-13-trail-plate-zero-gap-lineage/README.md).
 
+A 2026-10-13 Nodule-only follow-up found 14 natural gap births: 11 completed pre-gap persistence and 3 restarted after a gap-born Plate reset the cell timer. Clearing only Nodule timers still yielded 13 births from cells already qualified at gap entry. Gap Plates enabled qualification at 32 other cells, none of which birthed a Nodule during the interval. This is mixed lineage evidence from a forced shadow, not a natural zero-ant lifecycle. [Nodule lineage evidence](evidence/2026-10-13-nodule-zero-gap-lineage/README.md).
+
 ### Research gate
 
 S2a synchrony null, S2b exact-spatial identity null and S2c incremental predictive-value check are complete. S2a/S2b retain their recruitment/seam and remap/turnover limitations. S2c found no consistent held-out gain from the selected simple temporal graph summaries beyond the compact current-frame baseline.
@@ -311,6 +313,7 @@ Current production includes the adopted local locomotion condition. Further move
 - [Retained-material locomotion causal A/B — fixed candidate supported across three seeds](evidence/2026-10-11-retained-material-locomotion-ab-final/README.md)
 - [Retained-material locomotion production adoption — default-On and explicit-Off conformance](evidence/2026-10-12-retained-material-locomotion-adoption/README.md)
 - [TrailPlateBirth zero-ant gap candidate lineage — mixed natural completion and retained-input regeneration](evidence/2026-10-13-trail-plate-zero-gap-lineage/README.md)
+- [MaterialStratigraphy Nodule zero-ant gap lineage — latent timers, retained qualification and Plate-reset cases](evidence/2026-10-13-nodule-zero-gap-lineage/README.md)
 - [Interior endpoint shadow selector — frozen three-seed diagnostic; production selector unchanged](evidence/2026-10-08-interior-endpoint-shadow/README.md)
 - [Local-accretion shadow — branch-only mixed/negative morphology comparison](https://github.com/oseconds/ant-2026/tree/ant-local-accretion-shadow/docs/ant/evidence/2026-10-08-local-accretion-shadow)
 - [Movement / material morphology diagnosis — frozen three-seed archive/replay, no production intervention](evidence/2026-10-08-movement-material-morphology/README.md)

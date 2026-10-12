@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-13 — MaterialStratigraphy Nodule zero-ant gap lineage
+
+[Process log](./2026-10-13-nodule-zero-gap-lineage.md) · [Nodule lineage evidence](../evidence/2026-10-13-nodule-zero-gap-lineage/README.md)
+
+- Natural arm: 14 gap-born Nodules, including 11 pre-gap timer completions and 3 Plate-reset lineages
+- Candidate-timer-clear arm: 13 births; each birth cell was already qualified at gap entry
+- Decision: **MIXED**; gap Plates enabled other qualified cells, but none birthed a Nodule during this gap
+
 ### 2026-10-13 — TrailPlateBirth zero-ant gap lineage
 
 [Process log](./2026-10-13-trail-plate-zero-gap-lineage.md) · [Candidate-lineage evidence](../evidence/2026-10-13-trail-plate-zero-gap-lineage/README.md)
