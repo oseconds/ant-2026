@@ -1,0 +1,110 @@
+{
+  "title": "TrailPlateBirth zero-ant gap candidate-lineage audit",
+  "baseline": {
+    "commit": "d729072b16dd44c1c4d8b245394d02c278556da8",
+    "branchAtRun": "research/ant-plate-gap-birth-lineage-20261013",
+    "headAtRun": "d729072b16dd44c1c4d8b245394d02c278556da8"
+  },
+  "conditions": {
+    "seeds": [
+      20261005,
+      20261006,
+      20261007
+    ],
+    "hz": 60,
+    "naturalUntilSeconds": 400,
+    "zeroAntStartSeconds": 400,
+    "zeroAntEndSeconds": 460,
+    "zeroAntTicks": 3600,
+    "audioBridge": false,
+    "productionMaterialLaw": "default On"
+  },
+  "naturalReplay": {
+    "path": "test-results/ant-plate-gap-lineage-natural-replay-repro-20261013.json",
+    "sha256": "7852733ca7bba6208dec9743ac9d752d1167bf6e5ea6f28f7ddf0fb9895f9fb4",
+    "exactCanonicalMatch": true,
+    "canonicalPath": "docs/ant/evidence/2026-10-12-material-causal-tail/unobserved-natural-replay.json",
+    "canonicalSha256": "7852733ca7bba6208dec9743ac9d752d1167bf6e5ea6f28f7ddf0fb9895f9fb4"
+  },
+  "timing": "AntController.tick(1/60) remains unchanged. The 400 s arrival tick completes before agent removal; the gap begins after that tick and each subsequent 1 s TrailPlateBirth analysis boundary is sampled after production advance.",
+  "pairedPrefixCheck": "At tick 0 and every 60 ticks through 400 s, both controllers are deeply compared across all controller-owned values with callback/listener/factory references normalized and RNG state/call count included. The fresh isolated 600 s natural replay exactly matches its canonical output. V8 whole-object hashes are used only for before/after purity on one instance; across two live instances those hashes differed despite value-deep-equal state, so they are not used as cross-arm equality evidence.",
+  "candidateContinuity": "Lineage continuity uses production TrailPlateBirth.startedAtMs, which is retained only when adjacent selected corridors meet the implementation similarity threshold (mask/path max similarity >= 0.6). Candidate geometry hashes and birth descriptor mask/path are recorded; unmatched identity remains AMBIGUOUS.",
+  "counterfactual": "Matched controller fork; after the existing zero-ant boundary removal/flush, only candidate is set to null in candidateReset. All other controller and TrailPlateBirth fields, including environmental memory, Plates, birthRecords, clocks and RNG, are compared before the gap.",
+  "gapSemantics": "Research-only forced removal via beginZeroAntIntervention; nextSpawnTimeMs is set to Infinity. Production tick continues for exactly 3,600 fixed ticks. No production code is modified.",
+  "decision": "MIXED",
+  "productionSourceDiffFromBaseline": "",
+  "sourceHashes": {
+    "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+    "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+    "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+    "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+    "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+    "scripts/ant-zero-ant-continuity-shadow.js": "43ed4fca499ab12ea186994f54d858fa14764c7f9e53f0ae138b21ba0e4a599d",
+    "scripts/ant-zero-ant-plate-gap-lineage.js": "b7e1bfde519f84ad9c9fc93d391d36376a3c6883e43328d983ba09c9078d5dbf",
+    "docs/ant/evidence/2026-10-12-material-causal-tail/unobserved-natural-replay.mjs": "3c5a5a81d496d10eda5c593643ad96bfb846fc86cb7a16cb57f12dfc57ebbca3"
+  },
+  "results": [
+    {
+      "seed": 20261005,
+      "pairedPrefixCheckpoints": 401,
+      "gapValidity": {
+        "allGapTicksZeroAnt": true,
+        "gapTicks": 3600,
+        "clockDeltaMs": [
+          60000.00000006985,
+          60000.00000006985
+        ],
+        "noSpawn": true,
+        "noPheromoneDeposition": true,
+        "noFootContact": true,
+        "noPerAntStateAtExit": true,
+        "noRngConsumption": true,
+        "noContactCountGrowth": true
+      },
+      "naturalBirths": 3,
+      "candidateResetBirths": 3
+    },
+    {
+      "seed": 20261006,
+      "pairedPrefixCheckpoints": 401,
+      "gapValidity": {
+        "allGapTicksZeroAnt": true,
+        "gapTicks": 3600,
+        "clockDeltaMs": [
+          60000.00000006985,
+          60000.00000006985
+        ],
+        "noSpawn": true,
+        "noPheromoneDeposition": true,
+        "noFootContact": true,
+        "noPerAntStateAtExit": true,
+        "noRngConsumption": true,
+        "noContactCountGrowth": true
+      },
+      "naturalBirths": 4,
+      "candidateResetBirths": 3
+    },
+    {
+      "seed": 20261007,
+      "pairedPrefixCheckpoints": 401,
+      "gapValidity": {
+        "allGapTicksZeroAnt": true,
+        "gapTicks": 3600,
+        "clockDeltaMs": [
+          60000.00000006985,
+          60000.00000006985
+        ],
+        "noSpawn": true,
+        "noPheromoneDeposition": true,
+        "noFootContact": true,
+        "noPerAntStateAtExit": true,
+        "noRngConsumption": true,
+        "noContactCountGrowth": true
+      },
+      "naturalBirths": 1,
+      "candidateResetBirths": 1
+    }
+  ],
+  "reproduction": "node docs/ant/evidence/2026-10-12-material-causal-tail/unobserved-natural-replay.mjs test-results/ant-plate-gap-lineage-natural-replay-repro-20261013.json; node scripts/ant-zero-ant-plate-gap-lineage.js --natural-replay=test-results/ant-plate-gap-lineage-natural-replay-repro-20261013.json --output=test-results/ant-plate-gap-lineage-repro-20261013",
+  "wallSeconds": 61.8541578
+}

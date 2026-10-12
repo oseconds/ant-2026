@@ -276,6 +276,8 @@ The 2026-10-11 retained-material exposure shadow established that later ants enc
 
 A 2026-10-12 research-only shadow imposed one 60 s zero-ant interval at 400 s. The unchanged world clocks advanced, pre-gap column placement persisted in all three seeds, and later entrants encountered pre-gap material on 81.76% of post-gap active ant-time; this does not establish that production lifecycle naturally reaches zero ants or test audio continuity. [Zero-ant continuity evidence](evidence/2026-10-12-zero-ant-continuity/README.md).
 
+A 2026-10-13 TrailPlateBirth-only follow-up found mixed natural lineages: 4 of 8 gap births continued a pre-gap candidate in seed `20261006`, while 4 followed post-gap candidates. Clearing only the pending candidate still produced 7 post-gap Plate births across all three matched seeds. This supports regeneration by the retained input set during the forced shadow, not a natural zero-ant lifecycle or an individual-input necessity claim. [Candidate-lineage evidence](evidence/2026-10-13-trail-plate-zero-gap-lineage/README.md).
+
 ### Research gate
 
 S2a synchrony null, S2b exact-spatial identity null and S2c incremental predictive-value check are complete. S2a/S2b retain their recruitment/seam and remap/turnover limitations. S2c found no consistent held-out gain from the selected simple temporal graph summaries beyond the compact current-frame baseline.
@@ -308,6 +310,7 @@ Current production includes the adopted local locomotion condition. Further move
 - [Retained material experience shadow — three current-main 600 s runs; observer parity exact; supported as an opportunity for one separate local A/B](evidence/2026-10-11-retained-material-experience-shadow-final/README.md)
 - [Retained-material locomotion causal A/B — fixed candidate supported across three seeds](evidence/2026-10-11-retained-material-locomotion-ab-final/README.md)
 - [Retained-material locomotion production adoption — default-On and explicit-Off conformance](evidence/2026-10-12-retained-material-locomotion-adoption/README.md)
+- [TrailPlateBirth zero-ant gap candidate lineage — mixed natural completion and retained-input regeneration](evidence/2026-10-13-trail-plate-zero-gap-lineage/README.md)
 - [Interior endpoint shadow selector — frozen three-seed diagnostic; production selector unchanged](evidence/2026-10-08-interior-endpoint-shadow/README.md)
 - [Local-accretion shadow — branch-only mixed/negative morphology comparison](https://github.com/oseconds/ant-2026/tree/ant-local-accretion-shadow/docs/ant/evidence/2026-10-08-local-accretion-shadow)
 - [Movement / material morphology diagnosis — frozen three-seed archive/replay, no production intervention](evidence/2026-10-08-movement-material-morphology/README.md)

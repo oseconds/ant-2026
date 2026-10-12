@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-13 — TrailPlateBirth zero-ant gap lineage
+
+[Process log](./2026-10-13-trail-plate-zero-gap-lineage.md) · [Candidate-lineage evidence](../evidence/2026-10-13-trail-plate-zero-gap-lineage/README.md)
+
+- Natural zero-ant shadow births were mixed: four continued a pre-gap candidate; four followed post-gap candidates
+- Clearing only the in-progress candidate still produced seven post-gap Plate births across all three seeds
+- Decision: **MIXED**; no production lifecycle or formation changes
+
 ### 2026-10-12 — Zero-ant retained-world continuity shadow
 
 [Process log](./2026-10-12-zero-ant-continuity.md) · [Shadow evidence](../evidence/2026-10-12-zero-ant-continuity/README.md)
