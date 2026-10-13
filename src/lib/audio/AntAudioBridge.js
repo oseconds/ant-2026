@@ -40,7 +40,7 @@ export class AntAudioBridge {
   setVolume(value) {
     const volume = Number(value);
     if (this.destroyed || !Number.isFinite(volume)) return this._volume;
-    this._volume = Math.max(0, Math.min(1, volume));
+    this._volume = Math.max(0, Math.min(2, volume));
     this.applyVolume();
     return this._volume;
   }
