@@ -59,6 +59,10 @@ test('Plate debug overlays are opt-in and do not mutate detached snapshots', asy
   const calls = [];
   const canvas = makeCanvas(makeParent());
   const renderer = new AntRenderer(canvas, { loadP5: async () => ({ default: makeP5(calls) }) });
+  assert.deepEqual(renderer.debugOptions, {
+    pheromone: true, material: true, surface: false, candidate: false, source: false,
+    exposure: false, plateIds: false, plateOutlines: false, plateCenterlines: false, platePickups: false
+  }, 'only pheromone and material overlays start enabled');
   await renderer.init({ width: 120, height: 120 });
   const snapshot = {
     agents: [],

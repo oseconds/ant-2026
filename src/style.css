@@ -31,6 +31,40 @@ canvas { display: block; max-width: 100%; }
 #simulation-canvas { width: 100%; aspect-ratio: 1; touch-action: none; }
 figcaption { margin-top: .5rem; font-size: .9rem; }
 
+.ant-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; align-items: start; }
+.ant-canvas-column, #ant-observation { min-width: 0; }
+#ant-observation-controls { padding: .65rem; border: 1px solid #ddd; }
+.ant-transport-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+.ant-transport-controls select { min-width: 5rem; }
+#ant-speed-note, #ant-audio-arm-status { display: block; margin-top: .4rem; color: #666; font-size: .8rem; }
+#ant-audio-arm-status { min-height: 2.5em; }
+.ant-audio-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin: .5rem 0 0; }
+.ant-audio-controls input[type="range"] { width: 10rem; max-width: 100%; }
+#ant-diagnostics { margin: .25rem 0; color: #555; font-size: .9rem; font-variant-numeric: tabular-nums; }
+.ant-observation-groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem 1rem; margin-top: .75rem; }
+.ant-observation-group { min-width: 0; border-top: 1px solid #ddd; }
+.ant-observation-group h3 { margin: .5rem 0 .25rem; font-size: .95rem; }
+.ant-observation-group dl { display: grid; gap: .25rem; margin: 0; font-size: .82rem; font-variant-numeric: tabular-nums; }
+.ant-observation-group dl > div { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; min-width: 0; }
+.ant-observation-group dt, .ant-observation-group dd { overflow-wrap: anywhere; }
+.ant-observation-group dd { margin: 0; text-align: right; }
+.ant-audio-observation { grid-column: 1 / -1; }
+#ant-plate-debug { margin-top: .75rem; }
+#ant-advanced-debug { margin: .75rem 0; }
+.ant-debug-note { color: #666; font-size: .85rem; }
+.ant-debug-overlays { margin: .75rem 0; padding: .4rem .75rem .65rem; display: flex; flex-wrap: wrap; gap: .35rem 1rem; }
+.ant-debug-overlays label { white-space: nowrap; }
+.ant-debug-table { width: 100%; font-size: .85rem; font-variant-numeric: tabular-nums; }
+.ant-debug-table th { width: 16rem; }
+
+@media (min-width: 68rem) {
+  main[data-model-view="ant"] { max-width: 64rem; }
+  .ant-layout { grid-template-columns: 640px minmax(260px, 1fr); gap: 1rem; }
+  #ant-observation { border-left: 1px solid #ddd; padding-left: 1rem; }
+  .ant-observation-groups { grid-template-columns: 1fr; }
+  .ant-audio-observation { grid-column: auto; }
+}
+
 fieldset {
   min-width: 0;
   margin: 1.5rem 0;
@@ -60,16 +94,6 @@ thead th { font-weight: bold; }
 #status[data-status="error"] { color: #9b1c1c; font-weight: bold; }
 #state-details { color: #6b6b6b; font-size: .875rem; }
 #state-json { font-size: .8rem; }
-.ant-audio-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin: .5rem 0; }
-.ant-audio-controls input[type="range"] { width: 10rem; max-width: 100%; }
-#ant-diagnostics { margin: .25rem 0; color: #555; font-size: .9rem; font-variant-numeric: tabular-nums; }
-#ant-plate-debug { max-width: 40rem; }
-.ant-debug-note { color: #666; font-size: .85rem; }
-.ant-debug-overlays { margin: .75rem 0; padding: .4rem .75rem .65rem; display: flex; flex-wrap: wrap; gap: .35rem 1rem; }
-.ant-debug-overlays label { white-space: nowrap; }
-.ant-debug-table { width: 100%; font-size: .85rem; font-variant-numeric: tabular-nums; }
-.ant-debug-table th { width: 16rem; }
-
 #buffer-detail { width: 100%; height: 190px; }
 #buffer-overview { width: 100%; height: 170px; }
 .sample-current { color: #b00000; }
@@ -85,6 +109,8 @@ footer { margin-top: 1.5rem; }
 @media (max-width: 480px) {
   main { margin: 1rem auto; }
   fieldset { padding: .5rem .75rem .75rem; }
+  .ant-observation-groups { grid-template-columns: minmax(0, 1fr); }
+  .ant-audio-observation { grid-column: auto; }
   .control label { flex-basis: 100%; }
   .control input[type="range"] { flex: 1; min-width: 0; }
   #analysis th, #buffer-metrics th { min-width: 0; }

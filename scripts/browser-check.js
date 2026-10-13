@@ -233,7 +233,9 @@ async function readState(page) {
 }
 
 async function waitForModel(page, name) {
-  await page.locator(`[data-model="${name}"]`).click();
+  if (await page.locator('#experiment').getAttribute('data-model-view') !== name) {
+    await page.locator(`[data-model="${name}"]`).click();
+  }
   await page.waitForFunction(model => document.querySelector('#state-json').textContent.includes(`"model": "${model}"`), name);
   await page.locator('#simulation-canvas').waitFor({ state: 'attached' });
   await page.locator(`#experiment[data-model-view="${name}"]`).waitFor({ state: 'visible' });
@@ -284,6 +286,45 @@ async function verifyDocumentPresentation(page) {
   assert.ok(presentation.controls.every(control => control.associatedLabel), 'every parameter has a native label');
   assert.ok(presentation.controls.every(control => control.tag === 'input' || control.tag === 'select'),
     'parameters use native form controls');
+  if (presentation.modelName !== 'ant') {
+    assert.equal(await page.locator('#scene').evaluate(scene => getComputedStyle(scene).maxWidth), '480px',
+      'String, Plate, and Sphere keep their existing canvas width');
+  }
+}
+
+async function verifyAntLayout(page) {
+  const read = () => page.evaluate(() => {
+    const canvas = document.querySelector('#simulation-canvas').getBoundingClientRect();
+    const rail = document.querySelector('#ant-observation').getBoundingClientRect();
+    const group = document.querySelector('.ant-observation-groups');
+    return {
+      canvas: { x: canvas.x, y: canvas.y, right: canvas.right, bottom: canvas.bottom, width: canvas.width, height: canvas.height },
+      rail: { x: rail.x, y: rail.y, width: rail.width },
+      groupColumns: getComputedStyle(group).gridTemplateColumns.split(' ').length,
+      overflow: document.documentElement.scrollWidth > innerWidth
+    };
+  });
+  await page.setViewportSize({ width: 1280, height: 900 });
+  let layout = await read();
+  assert.equal(layout.canvas.width, 640, 'wide desktop keeps the 640 px canvas');
+  assert.equal(layout.canvas.height, 640, 'wide desktop keeps the 640 px canvas height');
+  assert.ok(layout.rail.x >= layout.canvas.right, 'wide desktop places the observation rail beside the canvas');
+  assert.ok(layout.rail.width >= 260 && layout.rail.width <= 400, `desktop rail stays narrow (${layout.rail.width}px)`);
+  assert.equal(layout.groupColumns, 1, 'the desktop rail keeps metric groups in one column');
+  assert.equal(layout.overflow, false, 'wide desktop has no horizontal overflow');
+
+  await page.setViewportSize({ width: 1024, height: 900 });
+  layout = await read();
+  assert.equal(layout.canvas.width, 640, 'tablet layout keeps the full canvas width');
+  assert.ok(layout.rail.y >= layout.canvas.bottom, 'the rail moves below the canvas when the viewport narrows');
+  assert.equal(layout.groupColumns, 2, 'the stacked observation rail uses two metric columns when space allows');
+  assert.equal(layout.overflow, false, 'tablet layout has no horizontal overflow');
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  layout = await read();
+  assert.equal(layout.groupColumns, 1, 'mobile observation groups collapse to one column');
+  assert.equal(layout.overflow, false, 'mobile ANT layout has no horizontal overflow');
+  await page.setViewportSize({ width: 1280, height: 900 });
 }
 
 async function verifyModelSemantics(page, name) {
@@ -732,6 +773,7 @@ async function verifyAnt(page, requestedUrls) {
   await waitForModel(page, 'ant');
   await verifyDocumentPresentation(page);
   await verifyModelSemantics(page, 'ant');
+  await verifyAntLayout(page);
 
   const state = await readState(page);
   assert.equal(state.model, 'ant');
@@ -778,6 +820,22 @@ async function verifyAnt(page, requestedUrls) {
   assert.equal(await page.locator('#ant-plate-debug').evaluate(details => details.open), false,
     'Plate debug stays collapsed in the normal view');
   await verifyPlateDebugUI(page);
+  assert.deepEqual(await page.locator('[data-ant-observation]').evaluateAll(nodes =>
+    nodes.map(node => node.dataset.antObservation)), [
+    'plate-count', 'plate-exposure', 'nodule-count', 'latest-birth', 'audio-layers',
+    'audio-wall', 'active-nodes', 'coupling-links', 'max-output-abs', 'clipped',
+    'non-finite', 'processor-errors'
+  ], 'material and audio diagnostics remain outside the collapsed debug section');
+  assert.equal(await page.locator('[data-ant-observation]').evaluateAll(nodes =>
+    nodes.every(node => node.closest('details') === null)), true,
+  'always-visible diagnostics are not hidden in details');
+  assert.equal(await page.locator('[data-action="ant-pause"]').textContent(), 'Pause');
+  assert.equal(await page.locator('#ant-speed').inputValue(), '1');
+  assert.deepEqual(await page.locator('#ant-speed option').evaluateAll(options => options.map(option => option.value)),
+    ['0.25', '0.5', '1', '2', '4'], 'transport exposes the requested speed presets');
+  assert.equal(await page.locator('#ant-speed-note').isVisible(), false, '1x does not show the realtime comparison note');
+  assert.equal(await page.locator('#ant-audio-arm-status').isVisible(), !useProduction,
+    'only the dev build shows the armed audio status before a gesture');
   assert.match(await audioButton.textContent(), /Audio Off/i);
   const volumeSlider = page.locator('#ant-volume');
   assert.equal(await volumeSlider.count(), 1, 'ANT exposes one dedicated volume range');
@@ -1298,13 +1356,12 @@ async function verifyAnt(page, requestedUrls) {
 
 async function verifyPlateDebugUI(page) {
   const panel = page.locator('#ant-plate-debug');
-  const summary = panel.locator('summary');
-  await summary.click();
+  const summary = panel.locator(':scope > summary');
+  await summary.evaluate(node => node.click());
   assert.equal(await panel.evaluate(details => details.open), true, 'Plate Debug opens on demand');
 
   const diagnosticNames = [
-    'plate-count', 'plate-exposure', 'nodule-count', 'birth-times', 'substrate-events',
-    'audio-layers', 'audio-wall', 'candidate-chemical', 'candidate-support',
+    'substrate-events', 'candidate-chemical', 'candidate-support',
     'candidate-persistence', 'candidate-length', 'candidate-contacts',
     'candidate-refractory', 'candidate-gap', 'candidate-ready'
   ];
@@ -1314,6 +1371,12 @@ async function verifyPlateDebugUI(page) {
   assert.equal(await panel.locator('[data-ant-debug]').evaluateAll(nodes =>
     nodes.every(node => node.textContent.trim().length > 0)), true,
   'every diagnostic cell is populated, including unavailable values');
+  const candidateDetails = page.locator('#ant-birth-candidate-debug');
+  assert.equal(await candidateDetails.evaluate(details => details.open), false,
+    'birth-candidate details stay collapsed by default');
+  await candidateDetails.locator('summary').evaluate(node => node.click());
+  assert.equal(await candidateDetails.evaluate(details => details.open), true);
+  await candidateDetails.locator('summary').evaluate(node => node.click());
 
   const defaults = { surface: false, candidate: false, source: false, exposure: false,
     plateIds: false, plateOutlines: false, plateCenterlines: false, platePickups: false,
@@ -1324,17 +1387,24 @@ async function verifyPlateDebugUI(page) {
   for (const [name, checked] of Object.entries(defaults)) {
     const input = panel.locator(`input[data-ant-overlay="${name}"]`);
     assert.equal(await input.isChecked(), checked, `${name} overlay starts at its documented default`);
-    await input.setChecked(!checked);
+    await input.evaluate((node, value) => {
+      node.checked = value;
+      node.dispatchEvent(new Event('input', { bubbles: true }));
+    }, !checked);
     assert.equal(await input.isChecked(), !checked, `${name} overlay toggles on`);
-    await input.setChecked(checked);
+    await input.evaluate((node, value) => {
+      node.checked = value;
+      node.dispatchEvent(new Event('input', { bubbles: true }));
+    }, checked);
     assert.equal(await input.isChecked(), checked, `${name} overlay restores its default`);
   }
-  await summary.click();
+  await summary.evaluate(node => node.click());
   assert.equal(await panel.evaluate(details => details.open), false, 'Plate Debug can be collapsed again');
 }
 
 async function verifyAntAudioToggle(page, audioButton) {
   await verifyBornSurfaceAudioLifecycle(page, audioButton);
+  await verifyAntTransport(page);
   if (useProduction) return;
   await page.evaluate(async () => {
     const { app } = await import('/src/main.js');
@@ -1541,6 +1611,132 @@ async function verifyAntAudioToggle(page, audioButton) {
   assert.ok(reenabled.plateWorklets[0].portCloses > 0, 'the prior Plate worklet was closed before re-enabling');
   assert.ok(reenabled.plateWorklets[1].portCloses === 0);
   await verifyBaseSubstrateAB(page, audioButton);
+}
+
+async function readAntSimulationState(page) {
+  return page.evaluate(async () => {
+    const { app } = await import('/src/main.js');
+    const model = app.lab.model;
+    const snapshot = model.getSnapshot();
+    const hash = values => {
+      let result = 2166136261;
+      for (const value of values || []) result = Math.imul(result ^ Math.round(value * 1e6), 16777619);
+      return result >>> 0;
+    };
+    return {
+      time: model.simulationTimeMs,
+      agents: snapshot.agents.map(agent => [agent.id, agent.x, agent.y, agent.vx, agent.vy, agent.heading]),
+      pheromone: hash(snapshot.pheromone.values),
+      surface: hash(snapshot.surface.values),
+      material: {
+        revision: snapshot.stratigraphy?.stratigraphy?.revision,
+        counts: hash(snapshot.stratigraphy?.stratigraphy?.layerCountByCell),
+        plates: snapshot.stratigraphy?.stratigraphy?.plateHistory?.map(plate => [plate.id, plate.exposedCellCount])
+      }
+    };
+  });
+}
+
+async function verifyAntTransport(page) {
+  const speed = page.locator('#ant-speed');
+  const pause = page.locator('[data-action="ant-pause"]');
+  assert.deepEqual(await speed.locator('option').evaluateAll(options => options.map(option => option.value)),
+    ['0.25', '0.5', '1', '2', '4']);
+  assert.equal(await speed.inputValue(), '1');
+  assert.equal(await pause.getAttribute('aria-pressed'), 'false');
+  assert.equal(await page.locator('[data-action="ant-audio"]').getAttribute('aria-pressed'), 'true',
+    'transport starts while the existing born audio remains on');
+  assert.equal(await page.locator('[data-action="ant-substrate"]').getAttribute('aria-pressed'), 'false');
+  assert.equal(await page.locator('#ant-plate-debug').evaluate(details => details.open), false);
+  await page.waitForFunction(() => document.querySelector('[data-ant-observation="active-nodes"]')?.textContent.trim() !== '—',
+    null, { timeout: 6000 });
+  assert.equal(await page.locator('[data-ant-observation]').evaluateAll(nodes =>
+    nodes.every(node => node.textContent.trim().length > 0)), true,
+  'always-visible observation values update while Plate Debug stays collapsed');
+
+  if (!useProduction) {
+    const measureRate = async value => {
+      await speed.selectOption(String(value));
+      assert.equal(await page.locator('#ant-speed-note').isVisible(), value !== 1,
+        'non-1x speed explains that realtime audio values are not directly comparable');
+      return page.evaluate(async wallInterval => {
+        const { app } = await import('/src/main.js');
+        const startTime = performance.now();
+        const startSimulation = app.lab.model.simulationTimeMs;
+        await new Promise(resolve => setTimeout(resolve, wallInterval));
+        return { wallMs: performance.now() - startTime, simulationMs: app.lab.model.simulationTimeMs - startSimulation };
+      }, 900);
+    };
+    for (const rate of [0.5, 1, 2]) {
+      const measured = await measureRate(rate);
+      const actualRate = measured.simulationMs / measured.wallMs;
+      assert.ok(Math.abs(actualRate - rate) < Math.max(.15, rate * .12),
+        `${rate}x advances simulation at the requested wall-time ratio (${actualRate.toFixed(2)}x)`);
+    }
+    await speed.selectOption('1');
+    assert.equal(await page.locator('#ant-speed-note').isVisible(), false);
+
+    await pause.click();
+    assert.equal(await pause.textContent(), 'Resume');
+    assert.equal(await pause.getAttribute('aria-pressed'), 'true');
+    const pausedState = await readAntSimulationState(page);
+    await page.waitForTimeout(600);
+    const afterPause = await readAntSimulationState(page);
+    assert.deepEqual(afterPause, pausedState, 'pause freezes simulation time, agents, pheromone, surface, and material');
+    const pausedAudio = await page.evaluate(() => {
+      const probe = window.__physicalAudioProbe;
+      const activeIndex = probe.worklets.map((item, index) => item.name === 'surface-plate-processor' && item.portCloses === 0 ? index : -1)
+        .filter(index => index >= 0).at(-1);
+      return {
+        audioOn: document.querySelector('[data-action="ant-audio"]')?.getAttribute('aria-pressed'),
+        substrateOn: document.querySelector('[data-action="ant-substrate"]')?.getAttribute('aria-pressed'),
+        contextState: probe.audioContexts.at(-1)?.state,
+        portCloses: probe.worklets[activeIndex]?.portCloses,
+        stopMessages: probe.workletMessages.filter(item => item.index === activeIndex && item.message?.type === 'stop').length
+      };
+    });
+    assert.equal(pausedAudio.audioOn, 'true');
+    assert.equal(pausedAudio.substrateOn, 'false');
+    assert.equal(pausedAudio.contextState, 'running', 'pause does not suspend the audio context');
+    assert.equal(pausedAudio.portCloses, 0, 'pause leaves the current born-surface worklet open');
+    assert.equal(pausedAudio.stopMessages, 0, 'pause sends no forced audio stop/reset');
+
+    const beforeResume = await page.evaluate(async () => {
+      const { app } = await import('/src/main.js');
+      const model = app.lab.model;
+      const probe = window.__resumeProbe = { start: model.simulationTimeMs, firstUpdate: null };
+      model.subscribe(event => {
+        if (event.type === 'update' && probe.firstUpdate === null) probe.firstUpdate = model.simulationTimeMs;
+      });
+      document.querySelector('[data-action="ant-pause"]').click();
+      return probe.start;
+    });
+    await page.waitForFunction(() => window.__resumeProbe?.firstUpdate !== null);
+    const firstResumeStep = await page.evaluate(() => window.__resumeProbe.firstUpdate - window.__resumeProbe.start);
+    assert.ok(firstResumeStep > 0 && firstResumeStep <= 2 * 1000 / 60 + 1e-6,
+      `resume advances only the next scheduled tick(s), without a catch-up burst (${firstResumeStep} ms)`);
+    assert.ok((await page.evaluate(async () => {
+      const { app } = await import('/src/main.js');
+      return app.lab.model.simulationTimeMs;
+    })) > beforeResume, 'simulation resumes after the next scheduled frames');
+    assert.equal(await pause.textContent(), 'Pause');
+  } else {
+    await pause.click();
+    assert.equal(await pause.textContent(), 'Resume');
+    await pause.click();
+  }
+
+  assert.equal(await page.locator('[data-action="ant-audio"]').getAttribute('aria-pressed'), 'true',
+    'pause, resume, and speed changes leave born audio enabled');
+  assert.equal(await page.locator('[data-action="ant-substrate"]').getAttribute('aria-pressed'), 'false',
+    'pause, resume, and speed changes leave Base Substrate off');
+  assert.deepEqual(await page.locator('input[data-ant-overlay]').evaluateAll(nodes =>
+    nodes.map(node => [node.dataset.antOverlay, node.checked])), [
+    ['surface', false], ['candidate', false], ['source', false], ['exposure', false],
+    ['plateIds', false], ['plateOutlines', false], ['plateCenterlines', false],
+    ['platePickups', false], ['pheromone', true], ['material', true]
+  ], 'transport controls do not change overlay defaults or choices');
+  assert.equal(await page.locator('#ant-speed').inputValue(), '1');
 }
 
 async function verifyBaseSubstrateAB(page, audioButton) {
@@ -1759,6 +1955,139 @@ async function clickCanvas(page, xRatio, yRatio) {
   await page.mouse.click(bounds.x + bounds.width * xRatio, bounds.y + bounds.height * yRatio);
 }
 
+async function openFreshAntPage(baseUrl) {
+  const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  await page.addInitScript(probeSource);
+  await page.goto(baseUrl, { waitUntil: 'networkidle' });
+  if (useProduction) {
+    await page.waitForFunction(() => document.querySelector('#state-json')?.textContent.includes('"model": "ant"'));
+  } else {
+    await page.evaluate(async () => { const { app } = await import('/src/main.js'); await app.ready; });
+  }
+  await page.locator('#simulation-canvas').waitFor({ state: 'visible' });
+  return page;
+}
+
+async function verifyAudioArmBehavior(baseUrl) {
+  const page = await openFreshAntPage(baseUrl);
+  try {
+    assert.equal(await page.locator('[data-action="ant-audio"]').getAttribute('aria-pressed'), 'false');
+    assert.equal(await page.locator('[data-action="ant-substrate"]').getAttribute('aria-pressed'), 'false');
+    assert.equal(await page.evaluate(() => window.__physicalAudioProbe.audioContexts.length), 0,
+      'ANT creates no AudioContext before the first gesture');
+    assert.equal(await page.evaluate(() => window.__physicalAudioProbe.workletModules.length), 0,
+      'ANT loads no audio worklet before the first gesture');
+    assert.equal(await page.locator('#ant-audio-arm-status').isVisible(), !useProduction);
+
+    if (useProduction) {
+      await page.locator('#ant-diagnostics').click();
+      await page.waitForTimeout(100);
+      assert.equal(await page.locator('[data-action="ant-audio"]').getAttribute('aria-pressed'), 'false',
+        'production keeps audio off after a non-audio gesture');
+      assert.equal(await page.evaluate(() => window.__physicalAudioProbe.audioContexts.length), 0,
+        'production does not auto-create audio resources');
+      await page.locator('[data-action="ant-audio"]').click();
+      await page.waitForFunction(() => document.querySelector('[data-action="ant-audio"]')?.getAttribute('aria-pressed') === 'true'
+        && window.__physicalAudioProbe.worklets.some(item => item.name === 'surface-plate-processor'));
+      assert.equal(await page.locator('[data-action="ant-substrate"]').getAttribute('aria-pressed'), 'false',
+        'manual production Audio On leaves Base Substrate off');
+      return;
+    }
+
+    await page.evaluate(async () => {
+      const { app } = await import('/src/main.js');
+      window.__autoArmContacts = 0;
+      window.__autoArmEnableCalls = 0;
+      app.lab.model.subscribe(event => { if (event.type === 'foot-contact') window.__autoArmContacts += 1; });
+      const controller = app.lab.model;
+      window.__autoArmController = controller;
+      const setAudioEnabled = controller.setAudioEnabled.bind(controller);
+      controller.setAudioEnabled = enabled => {
+        if (enabled) window.__autoArmEnableCalls += 1;
+        return setAudioEnabled(enabled);
+      };
+    });
+    await page.waitForFunction(() => window.__autoArmContacts > 0, null, { timeout: 6000 });
+    assert.equal(await page.evaluate(() => window.__physicalAudioProbe.audioContexts.length), 0,
+      'the armed dev state has no pre-gesture AudioContext');
+    await page.locator('#ant-diagnostics').click();
+    await page.waitForFunction(() => document.querySelector('[data-action="ant-audio"]')?.getAttribute('aria-pressed') === 'true'
+      && window.__physicalAudioProbe.worklets.some(item => item.name === 'surface-plate-processor'), null, { timeout: 10000 });
+    await page.waitForTimeout(120);
+    const enabled = await page.evaluate(() => ({
+      calls: window.__autoArmEnableCalls,
+      contactsBeforeAudio: window.__autoArmContacts,
+      audioModules: window.__physicalAudioProbe.workletModules.map(module => new URL(module.url, location.href).pathname.split('/').at(-1)),
+      worklets: window.__physicalAudioProbe.worklets.map(item => item.name),
+      strikes: window.__physicalAudioProbe.workletMessages.filter(item => item.message?.type === 'strike').length,
+      plates: window.__autoArmController.getSnapshot().surfacePlates.plates.length,
+      substrate: document.querySelector('[data-action="ant-substrate"]')?.getAttribute('aria-pressed'),
+      armedVisible: getComputedStyle(document.querySelector('#ant-audio-arm-status')).visibility === 'visible'
+    }));
+    assert.equal(enabled.calls, 1, 'the first eligible gesture calls setAudioEnabled(true) once');
+    assert.ok(enabled.contactsBeforeAudio > 0, 'natural FOOT_CONTACT events occurred before audio activation');
+    assert.equal(enabled.plates, 0, 'the early run has no historical Plate to replay');
+    assert.ok(enabled.worklets.includes('surface-plate-processor'), 'dev gesture enables born-surface audio');
+    assert.equal(enabled.worklets.includes('plate-processor'), false, 'auto-arm does not enable Base Substrate');
+    assert.equal(enabled.audioModules.includes('plate.worklet.js'), false, 'auto-arm does not load the legacy Plate worklet');
+    assert.equal(enabled.strikes, 0, 'auto-arm does not replay historical FOOT_CONTACT events');
+    assert.equal(enabled.substrate, 'false');
+    assert.equal(enabled.armedVisible, false, 'the armed label clears after activation');
+
+    await page.locator('#ant-diagnostics').click();
+    assert.equal(await page.evaluate(() => window.__autoArmEnableCalls), 1,
+      'later gestures do not reactivate or duplicate the auto-arm call');
+    await page.locator('[data-action="ant-audio"]').click();
+    await page.waitForFunction(() => document.querySelector('[data-action="ant-audio"]')?.getAttribute('aria-pressed') === 'false');
+    await page.locator('#ant-diagnostics').click();
+    assert.equal(await page.locator('[data-action="ant-audio"]').getAttribute('aria-pressed'), 'false',
+      'a user-disabled audio state is not automatically re-enabled');
+    assert.equal(await page.evaluate(() => window.__autoArmEnableCalls), 1);
+  } finally {
+    await page.close();
+  }
+
+  if (!useProduction) {
+    const audioButtonPage = await openFreshAntPage(baseUrl);
+    try {
+      await audioButtonPage.evaluate(async () => {
+        const { app } = await import('/src/main.js');
+        const controller = app.lab.model;
+        window.__firstAudioButtonCalls = 0;
+        const setAudioEnabled = controller.setAudioEnabled.bind(controller);
+        controller.setAudioEnabled = enabled => {
+          if (enabled) window.__firstAudioButtonCalls += 1;
+          return setAudioEnabled(enabled);
+        };
+      });
+      await audioButtonPage.locator('[data-action="ant-audio"]').click();
+      await audioButtonPage.waitForFunction(() => document.querySelector('[data-action="ant-audio"]')?.getAttribute('aria-pressed') === 'true'
+        && window.__physicalAudioProbe.worklets.some(item => item.name === 'surface-plate-processor'), null, { timeout: 10000 });
+      assert.equal(await audioButtonPage.evaluate(() => window.__firstAudioButtonCalls), 1,
+        'an Audio button as the first gesture still enables audio once');
+      assert.equal(await audioButtonPage.locator('[data-action="ant-substrate"]').getAttribute('aria-pressed'), 'false',
+        'the first Audio button gesture leaves Base Substrate off');
+    } finally {
+      await audioButtonPage.close();
+    }
+
+    const switchedModelPage = await openFreshAntPage(baseUrl);
+    try {
+      await switchedModelPage.locator('[data-model="string"]').click();
+      await switchedModelPage.waitForFunction(() => document.querySelector('#state-json')?.textContent.includes('"model": "string"'));
+      await switchedModelPage.locator('[data-model="ant"]').click();
+      await switchedModelPage.waitForFunction(() => document.querySelector('#state-json')?.textContent.includes('"model": "ant"'));
+      await switchedModelPage.locator('#ant-diagnostics').click();
+      assert.equal(await switchedModelPage.locator('[data-action="ant-audio"]').getAttribute('aria-pressed'), 'false',
+        'changing models before the first gesture disables future dev auto-arm');
+      assert.equal(await switchedModelPage.evaluate(() => window.__physicalAudioProbe.audioContexts.length), 0,
+        'returning to ANT after a model change does not create audio resources');
+    } finally {
+      await switchedModelPage.close();
+    }
+  }
+}
+
 async function verifyBrowser(baseUrl) {
   const chromePath = process.env.BROWSER_EXECUTABLE_PATH
     || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
@@ -1781,6 +2110,7 @@ async function verifyBrowser(baseUrl) {
   await page.locator('#simulation-canvas').waitFor({ state: 'visible' });
 
   assert.equal((await readState(page)).model, 'ant', 'the demo opens directly on ANT');
+  await verifyAudioArmBehavior(baseUrl);
   const initialNav = await page.locator('nav button[data-model]').evaluateAll(buttons => buttons.map(button => button.textContent.trim()));
   assert.deepEqual(initialNav, ['ANT', 'String', 'Plate', 'Sphere']);
   assert.equal(await page.evaluate(() => window.__physicalAudioProbe.audioContexts.length), 0,

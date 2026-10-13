@@ -2,6 +2,7 @@ import './style.css';
 import { formatSimulationTime } from './lib/utils/simulationTime.js';
 import { Lab, StringInspectorRenderer, SPHERE_MATERIALS } from './lib/index.js';
 import { CanvasInteraction } from './demo/CanvasInteraction.js';
+import { advanceAntClock } from './demo/antClock.js';
 import { demoDefinitions, readPath, patchPath } from './demo/definitions.js';
 import { documentViews } from './demo/documentViews.js';
 
@@ -29,6 +30,9 @@ export function mountLab(root) {
   let renderer = null, interaction = null, inspectorRenderer = null, resizeObserver = null;
   let frameId = null, selectionVersion = 0, disposed = false, errorMessage = null;
   let lastAntAudioDiagnosticsRequest = -Infinity;
+  let antPaused = false, antSpeed = 1;
+  const antClock = { wallTimeMs: null, simulationTimeMs: null };
+  let devAudioAutoArmPending = import.meta.env.DEV;
   let definition = null;
 
   for (const name of ['ant', 'string', 'plate', 'sphere']) {
@@ -62,6 +66,32 @@ export function mountLab(root) {
     const size = canvasSize(canvas, height);
     canvas.width = Math.round(size.width * size.pixelRatio);
     canvas.height = Math.round(size.height * size.pixelRatio);
+  }
+  function refreshAntTransport() {
+    const pause = query('[data-action="ant-pause"]');
+    if (pause) {
+      pause.setAttribute('aria-pressed', String(antPaused));
+      pause.textContent = antPaused ? 'Resume' : 'Pause';
+    }
+    const speed = query('#ant-speed');
+    if (speed) speed.value = String(antSpeed);
+    const note = query('#ant-speed-note');
+    if (note) note.hidden = antSpeed === 1;
+    const armed = query('#ant-audio-arm-status');
+    if (armed) {
+      if (import.meta.env.DEV) {
+        armed.hidden = false;
+        armed.style.visibility = devAudioAutoArmPending && !lab.getSnapshot()?.audio?.enabled ? 'visible' : 'hidden';
+      } else {
+        armed.hidden = true;
+      }
+    }
+  }
+  function updateAntSimulation(wallTime) {
+    if (lab.modelName !== 'ant' || lab.switching) return;
+    for (const timestamp of advanceAntClock(antClock, wallTime, antSpeed, antPaused)) {
+      demoDefinitions.ant.update?.(lab.model, timestamp);
+    }
   }
   function unmountScene() {
     if (frameId !== null) cancelAnimationFrame(frameId);
@@ -118,11 +148,16 @@ export function mountLab(root) {
     resize();
     const draw = (time) => {
       if (disposed || version !== selectionVersion || renderer !== mountedRenderer) return;
-      item.update?.(lab.model, time);
-      if (name === 'ant' && query('#ant-plate-debug')?.open
-        && time - lastAntAudioDiagnosticsRequest >= 500) {
-        lab.model?.requestAudioDiagnostics?.();
-        lastAntAudioDiagnosticsRequest = time;
+      if (name === 'ant') {
+        updateAntSimulation(time);
+        const audio = lab.getSnapshot()?.audio;
+        if (audio?.enabled && audio.mode === 'bornSurface' && time - lastAntAudioDiagnosticsRequest >= 500) {
+          lab.model?.requestAudioDiagnostics?.();
+          lastAntAudioDiagnosticsRequest = time;
+          refresh();
+        }
+      } else {
+        item.update?.(lab.model, time);
       }
       const snapshot = renderSnapshot();
       if (snapshot) mountedRenderer.render(snapshot, { time, view: interaction?.getView() });
@@ -209,6 +244,7 @@ export function mountLab(root) {
         substrate.textContent = snapshot.audio.baseSubstrateEnabled ? 'Base Substrate On' : 'Base Substrate Off';
       }
     }
+    refreshAntTransport();
     query('#audio-info').hidden = definition.audio === false;
     query('#audio-info').textContent = definition.audio === false ? '' : lab.audio.context ? `${lab.audio.context.sampleRate.toLocaleString()} Hz / ${lab.audio.context.state}` : '첫 타격에서 오디오 시작';
     query('#state-json').textContent = JSON.stringify(state, null, 2);
@@ -264,6 +300,10 @@ export function mountLab(root) {
     } else if (state.model === 'ant') {
       const diagnostics = query('#ant-diagnostics');
       if (diagnostics) diagnostics.textContent = `${formatSimulationTime(analysis.simulationTimeMs)} · ${analysis.population} ants / mean speed ${analysis.meanSpeed.toFixed(3)} / pheromone ${analysis.pheromoneMass.toFixed(1)}`;
+      const setObservation = (name, value) => {
+        const node = query(`[data-ant-observation="${name}"]`);
+        if (node) node.textContent = value;
+      };
       const setDebug = (name, value) => {
         const node = query(`[data-ant-debug="${name}"]`);
         if (node) node.textContent = value;
@@ -272,24 +312,30 @@ export function mountLab(root) {
       const history = material?.stratigraphy?.plateHistory || [];
       const exposedPlates = history.filter((plate) => (plate.exposedCellCount || 0) > 0).length;
       const fullyBuriedPlates = history.length - exposedPlates;
-      setDebug('plate-count', String(material?.layers?.plateCount ?? history.length));
-      setDebug('plate-exposure', `${exposedPlates} / ${fullyBuriedPlates}`);
-      setDebug('nodule-count', String(material?.layers?.noduleCount ?? material?.nodules?.length ?? 0));
-      const firstBirth = history[0]?.bornAtSimulationTimeMs;
+      setObservation('plate-count', String(material?.layers?.plateCount ?? history.length));
+      setObservation('plate-exposure', `${exposedPlates} / ${fullyBuriedPlates}`);
+      setObservation('nodule-count', String(material?.layers?.noduleCount ?? material?.nodules?.length ?? 0));
       const latestBirth = history.at(-1)?.bornAtSimulationTimeMs;
-      setDebug('birth-times', Number.isFinite(firstBirth)
-        ? `${formatSimulationTime(firstBirth)} / ${formatSimulationTime(latestBirth)}` : '—');
+      setObservation('latest-birth', Number.isFinite(latestBirth) ? formatSimulationTime(latestBirth) : '—');
 
       const audioDiagnostics = snapshot.audio.diagnostics;
       const substrate = audioDiagnostics?.baseSubstrate;
       setDebug('substrate-events', substrate
         ? `${substrate.inputGroups} / ${substrate.deliveredGroups}` : '—');
       const processor = audioDiagnostics?.surface?.processor;
-      setDebug('audio-layers', processor
+      setObservation('audio-layers', processor
         ? `${processor.awakeLayers} / ${processor.sleepingLayers}` : '—');
       const audioWallRatio = audioDiagnostics?.surface?.audioWallRatio;
-      setDebug('audio-wall', Number.isFinite(audioWallRatio)
+      setObservation('audio-wall', Number.isFinite(audioWallRatio)
         ? `${(audioWallRatio * 100).toFixed(1)}%` : '—');
+      const metricCount = (value) => Number.isFinite(value) ? value.toLocaleString() : '—';
+      setObservation('active-nodes', metricCount(processor?.activeNodes));
+      setObservation('coupling-links', metricCount(processor?.couplingLinks));
+      setObservation('max-output-abs', Number.isFinite(processor?.maxOutputAbs)
+        ? processor.maxOutputAbs.toExponential(2) : '—');
+      setObservation('clipped', metricCount(processor?.clipped));
+      setObservation('non-finite', metricCount(processor?.nonFinite));
+      setObservation('processor-errors', metricCount(audioDiagnostics?.surface?.bridge?.processorErrors));
 
       const birth = snapshot.surfacePlates;
       const candidate = birth?.candidate;
@@ -325,6 +371,12 @@ export function mountLab(root) {
   }
 
   async function selectModel(name) {
+    if (selectionVersion > 0) devAudioAutoArmPending = false;
+    antPaused = false;
+    antSpeed = 1;
+    antClock.wallTimeMs = null;
+    antClock.simulationTimeMs = null;
+    lastAntAudioDiagnosticsRequest = -Infinity;
     const version = ++selectionVersion;
     if (lab.modelName && !lab.switching) savedStates.set(lab.modelName, lab.getState());
     unmountScene();
@@ -342,6 +394,7 @@ export function mountLab(root) {
       if (!model || disposed || version !== selectionVersion) return;
       definition = demoDefinitions[name];
       query('#experiment').dataset.modelView = name;
+      query('main').dataset.modelView = name;
       query('#experiment').innerHTML = documentViews[name];
       query('[data-audio-status]').append(audioStatus);
       query('#model-title').textContent = definition.title;
@@ -381,6 +434,11 @@ export function mountLab(root) {
     if (!lab.model || lab.switching) return;
     run(() => {
       switch (target.dataset.action) {
+        case 'ant-pause':
+          updateAntSimulation(performance.now());
+          antPaused = !antPaused;
+          refreshAntTransport();
+          return;
         case 'ant-audio': return lab.model.setAudioEnabled(!lab.getSnapshot().audio.enabled);
         case 'ant-substrate': return lab.model.setBaseSubstrateEnabled(!lab.getSnapshot().audio.baseSubstrateEnabled);
         case 'strike': return lab.strike({ position: interaction?.center() });
@@ -401,6 +459,45 @@ export function mountLab(root) {
       }
     });
   }, { signal: events.signal });
+  root.addEventListener('input', (event) => {
+    if (event.target.id !== 'ant-speed') return;
+    const speed = Number(event.target.value);
+    if ([0.25, 0.5, 1, 2, 4].includes(speed)) {
+      updateAntSimulation(performance.now());
+      antSpeed = speed;
+    }
+    refreshAntTransport();
+  }, { signal: events.signal });
+  if (import.meta.env.DEV) {
+    const armFromGesture = (event) => {
+      if (!devAudioAutoArmPending || !event.isTrusted || event.isComposing
+        || (event.type === 'keydown' && (event.repeat || event.ctrlKey || event.metaKey || event.altKey))) return;
+      const target = event.target instanceof Element ? event.target : null;
+      if (target?.closest('[data-action="ant-audio"]')) {
+        devAudioAutoArmPending = false;
+        refreshAntTransport();
+        return;
+      }
+      const modelButton = target?.closest('[data-model]');
+      if (modelButton) {
+        if (modelButton.dataset.model !== 'ant') devAudioAutoArmPending = false;
+        refreshAntTransport();
+        return;
+      }
+      if (lab.modelName !== 'ant' || lab.switching) return;
+      const audio = lab.getSnapshot()?.audio;
+      if (!audio || audio.enabled || audio.mode !== 'bornSurface') {
+        devAudioAutoArmPending = false;
+        refreshAntTransport();
+        return;
+      }
+      devAudioAutoArmPending = false;
+      refreshAntTransport();
+      run(() => lab.model.setAudioEnabled(true));
+    };
+    document.addEventListener('pointerdown', armFromGesture, { capture: true, signal: events.signal });
+    document.addEventListener('keydown', armFromGesture, { capture: true, signal: events.signal });
+  }
   const destroy = async () => {
     if (disposed) return;
     disposed = true; selectionVersion++;
