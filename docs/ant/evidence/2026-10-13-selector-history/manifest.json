@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "taskBaseline": "92d5917bc12baca48e936332ec05d22297cb1276",
+  "productionMain": "d45823d40c9a87c1b333fa9872f3c897ee9ab01b",
+  "gridSize": 96,
+  "sourceOrigin": {
+    "x": 0.5,
+    "y": 0.72
+  },
+  "sourceBoundaryDistance": 0.05,
+  "minimumGeodesicLength": 0.3,
+  "halfWidthRange": [
+    0.012,
+    0.03
+  ],
+  "inputEvidence": {
+    "path": "docs/ant/evidence/2026-10-13-morphology-attribution",
+    "manifestSha256": "9835a769f95866469d8184a89fe611292a080e9ea83f7d0e578bf60da834354c",
+    "birthMeasurementsSha256": "00dc21f84f77a318b34e0aec80a4f181a3a71b3a18c110e711062833b92b9ed3",
+    "files": [
+      {
+        "path": "docs/ant/evidence/2026-10-13-morphology-attribution/manifest.json",
+        "sha256": "9835a769f95866469d8184a89fe611292a080e9ea83f7d0e578bf60da834354c",
+        "bytes": 26835
+      },
+      {
+        "path": "docs/ant/evidence/2026-10-13-morphology-attribution/data/birth-measurements.json",
+        "sha256": "00dc21f84f77a318b34e0aec80a4f181a3a71b3a18c110e711062833b92b9ed3",
+        "bytes": 16523131
+      },
+      {
+        "path": "docs/ant/evidence/2026-10-13-morphology-attribution/data/seed20261005-birth-inputs.xor.gz",
+        "sha256": "1eb70175ce3258764db28149059c2082492b548b15944ce195b3ce2e8f838d55",
+        "bytes": 2821244
+      },
+      {
+        "path": "docs/ant/evidence/2026-10-13-morphology-attribution/data/seed20261005-replay-provenance.json",
+        "sha256": "293faba01ef9cc83f159b52033683bd10800872c2241960f8c68d5f7b6e68f7f",
+        "bytes": 53655
+      },
+      {
+        "path": "docs/ant/evidence/2026-10-13-morphology-attribution/data/seed20261006-birth-inputs.xor.gz",
+        "sha256": "3ff7c038d0335419f458ff003fa0f83327409cbddb0df53af7a34945606a18b5",
+        "bytes": 3270684
+      },
+      {
+        "path": "docs/ant/evidence/2026-10-13-morphology-attribution/data/seed20261006-replay-provenance.json",
+        "sha256": "d9402f4ad16db924f71bb15a433a1d7128c637576d6c19e0f81f2c92a1b46976",
+        "bytes": 56085
+      },
+      {
+        "path": "docs/ant/evidence/2026-10-13-morphology-attribution/data/seed20261007-birth-inputs.xor.gz",
+        "sha256": "1054411e935d0d559be6d3a8ea25fd1e7e6196677842092d4195d7fe82caf8f6",
+        "bytes": 3614448
+      },
+      {
+        "path": "docs/ant/evidence/2026-10-13-morphology-attribution/data/seed20261007-replay-provenance.json",
+        "sha256": "81dd74db7dfe3d4fa60cd685528f568d7c7f6c9677cd5d1a397e5d0d2f471737",
+        "bytes": 57424
+      }
+    ],
+    "seedBirthCounts": [
+      {
+        "seed": 20261005,
+        "birthCount": 29
+      },
+      {
+        "seed": 20261006,
+        "birthCount": 33
+      },
+      {
+        "seed": 20261007,
+        "birthCount": 38
+      }
+    ]
+  },
+  "productionSourceHashes": {
+    "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+    "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+    "src/lib/agents/ant/LocalOccupancy.js": "df22dd38e9af8078ebcb1d225ca2a5eaf579e994d2d4a00ce9ceeefa2403ff16",
+    "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+    "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+    "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+    "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+    "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+    "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+    "src/lib/agents/ant/BodyPoseController.js": "2ec4cc12c12ae301ea07056889c3be9255b1b1e155b7724cd3366278d60ace8e",
+    "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd"
+  },
+  "diagnosticToolHashes": {
+    "scripts/ant-morphology-replay.js": "6064c4fd39d0b470987d7616c9f312e4af5951dfb4d2e6cd0ac5c3d2da38cd43",
+    "scripts/ant-selector-history-analysis.js": "550d6bda3d4a2186f2e1b638abad535c2d2ad15b31a7122b4e9b48cd1cf21dac",
+    "scripts/ant-selector-history.js": "51a7609c499f3de28541d80d346ca0774e743105e3213274db48a2abe25e305a",
+    "tests/ant-selector-history.test.js": "e358dd2a34a4cb03f9027ac33f68544c7fcf9069f1c7364abd8265f71e23d686"
+  },
+  "visualScales": {
+    "worldGrid": "fixed 96×96 cells in normalized [0,1]×[0,1] coordinates",
+    "distributionFractions": [
+      0,
+      1
+    ],
+    "simulationTimeSeconds": [
+      0,
+      600
+    ],
+    "discardedCellCount": [
+      0,
+      1320
+    ],
+    "perBirthNormalization": false
+  },
+  "integrity": {
+    "exactBirthInputsDecoded": 100,
+    "c0GeometryExactMatches": 100,
+    "frozenDescriptorExactMatches": 100,
+    "priorUnionExcludesCurrentBirth": 100,
+    "finiteValuesChecked": true,
+    "overlapAccountingConserved": true,
+    "productionSourceChanges": 0,
+    "rngCalls": 0,
+    "naturalSimulationReplayed": false
+  },
+  "outputFiles": [
+    "data/birth-measurements.json.gz",
+    "data/discarded-segments.json.gz",
+    "data/summary.json",
+    "visuals/representative-births.svg",
+    "visuals/all-birth-distributions.svg",
+    "visuals/novelty-over-time.svg"
+  ]
+}
