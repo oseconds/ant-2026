@@ -28,15 +28,15 @@ test('snapshot byte copies stay fixed after live typed arrays change', () => {
 test('XOR snapshot stream keeps exact arrays and offsets', () => {
   const first = Buffer.from([1, 2, 3, 4]), second = Buffer.from([1, 7, 3, 9]);
   const archive = serializeSnapshots([
-    { tick: 60, chemical: first, chemicalMemory: first, surface: first, support: first, contactCounts: first },
-    { tick: 120, chemical: second, chemicalMemory: first, surface: second, support: first, contactCounts: second }
+    { tick: 60, chemical: first, chemicalMemory: first, surface: first, support: first, supportedMask: first, contactCounts: first },
+    { tick: 120, chemical: second, chemicalMemory: first, surface: second, support: first, supportedMask: first, contactCounts: second }
   ]);
   const row = archive.encoding.descriptors[1];
-  assert.equal(row.arrays.chemical.offset, 20);
+  assert.equal(row.arrays.chemical.offset, 24);
   const encoded = archive.bytes.subarray(row.arrays.chemical.offset,
     row.arrays.chemical.offset + row.arrays.chemical.bytes);
   assert.deepEqual(xorBytes(encoded, first), second);
-  assert.deepEqual(archive.encoding.arrayOrder, ['chemical', 'chemicalMemory', 'surface', 'support', 'contactCounts']);
+  assert.deepEqual(archive.encoding.arrayOrder, ['chemical', 'chemicalMemory', 'surface', 'support', 'supportedMask', 'contactCounts']);
 });
 
 test('diagnostic selector reports eligibility, pruning, and longest candidate from the copied production algorithm', async () => {
@@ -63,8 +63,16 @@ test('diagnostic selector reports eligibility, pruning, and longest candidate fr
   assert.ok(funnel.components.some(row => row.rejection === 'missing-boundary-target'));
   assert.ok(funnel.components.some(row => row.rejection === 'missing-source'));
   assert.ok(funnel.components.some(row => row.rejection === 'missing-source' && row.boundaryCount > 0));
+  assert.ok(funnel.components.every(row => Array.isArray(row.sourceIndices) && Array.isArray(row.boundaryIndices)));
   assert.ok(funnel.components.some(row => row.unretainedSkeletonPixels > 0));
   assert.ok(candidate.source.x === 48 / 95 && candidate.target.y === 0);
   assert.equal(funnel.winner, 0);
   assert.equal(funnel.candidates.length, 2);
+});
+
+test('natural attribution instrumentation can omit the interior-endpoint shadow selector', async () => {
+  const source = await readFile(new URL('../src/lib/agents/ant/TrailPlateBirth.js', import.meta.url), 'utf8');
+  const selectors = await makeDiagnosticSelector(source, { includeShadow: false });
+  assert.equal(typeof selectors.selectCandidateDiagnostic, 'function');
+  assert.equal(selectors.selectCandidateShadowDiagnostic, undefined);
 });

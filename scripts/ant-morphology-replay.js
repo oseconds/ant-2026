@@ -70,44 +70,51 @@ async function main() {
 }
 
 async function runPair({ AntController, seed, seconds, output, selectCandidateDiagnostic,
-  selectCandidateShadowDiagnostic, corridorSimilarityDiagnostic, distanceToCorridorEdgeDiagnostic }) {
-  const baseline = await runScenario({ AntController, seed, seconds, instrument: false, selectCandidateDiagnostic,
-    selectCandidateShadowDiagnostic, corridorSimilarityDiagnostic, distanceToCorridorEdgeDiagnostic });
-  const instrumented = await runScenario({ AntController, seed, seconds, instrument: true, selectCandidateDiagnostic,
-    selectCandidateShadowDiagnostic, corridorSimilarityDiagnostic, distanceToCorridorEdgeDiagnostic });
+  selectCandidateShadowDiagnostic, corridorSimilarityDiagnostic, distanceToCorridorEdgeDiagnostic,
+  materialLocomotionResistance = false, includeShadow = true, captureBirthsOnly = false, saveDiagnostics = true }) {
+  const baseline = await runScenario({ AntController, seed, seconds, instrument: false, materialLocomotionResistance,
+    selectCandidateDiagnostic, selectCandidateShadowDiagnostic, corridorSimilarityDiagnostic, distanceToCorridorEdgeDiagnostic });
+  const instrumented = await runScenario({ AntController, seed, seconds, instrument: true, materialLocomotionResistance,
+    includeShadow, captureBirthsOnly, selectCandidateDiagnostic, selectCandidateShadowDiagnostic,
+    corridorSimilarityDiagnostic, distanceToCorridorEdgeDiagnostic });
   const parity = compareRows(baseline.rows, instrumented.rows);
   assert.deepEqual(parity.firstMismatch, {}, `Instrumented replay mismatch for seed ${seed}`);
   assert.equal(baseline.trajectoryHash, instrumented.trajectoryHash, 'Trajectory bytes match');
+  assert.equal(baseline.finalWorldStateSha256, instrumented.finalWorldStateSha256, 'Final complete world snapshots match');
   assert.deepEqual(baseline.contacts, instrumented.contacts, 'All raw contact records match');
   assert.deepEqual(baseline.births, instrumented.births, 'All raw birth descriptor records match');
   const payload = { schemaVersion: 1, seed, seconds, parity: { everyTick: true, comparedTicks: parity.comparedTicks,
     fields: parity.fieldChains, trajectory: true, behavior: true, rng: true, chemical: true, surface: true,
-    chemicalMemory: true, contactCounts: true, contacts: true, births: true },
+    chemicalMemory: true, contactCounts: true, contacts: true, births: true, finalWorldSnapshot: true },
     runs: { baseline: baseline.provenance, instrumented: instrumented.provenance },
     checkpoints: instrumented.checkpoints, morphology: instrumented.morphology,
-    rawArchive: { path: `docs/ant/evidence/2026-10-07-social-graph/data/seed${seed}-on-raw-events.json.gz`,
+    rawArchive: materialLocomotionResistance ? null : { path: `docs/ant/evidence/2026-10-07-social-graph/data/seed${seed}-on-raw-events.json.gz`,
       contacts: instrumented.contacts.length, births: instrumented.births.length } };
   const diagnostic = serializeSnapshots(instrumented.snapshots);
   const summary = { ...payload, snapshotEncoding: diagnostic.encoding };
-  const files = { summary: `seed${seed}-summary.json`, snapshots: `seed${seed}-snapshots.bin.gz`, bytes: {} };
-  await writeFile(resolve(output, files.snapshots), gzipSync(diagnostic.bytes, { level: 6 }));
-  files.bytes = { snapshots: (await stat(resolve(output, files.snapshots))).size };
-  await writeFile(resolve(output, files.summary), `${JSON.stringify(summary, null, 2)}\n`);
-  return { summary, files, trajectory: instrumented.trajectory, contacts: instrumented.contacts, births: instrumented.births };
+  const files = saveDiagnostics ? { summary: `seed${seed}-summary.json`, snapshots: `seed${seed}-snapshots.bin.gz`, bytes: {} } : {};
+  if (saveDiagnostics) {
+    await writeFile(resolve(output, files.snapshots), gzipSync(diagnostic.bytes, { level: 6 }));
+    files.bytes = { snapshots: (await stat(resolve(output, files.snapshots))).size };
+    await writeFile(resolve(output, files.summary), `${JSON.stringify(summary, null, 2)}\n`);
+  }
+  return { summary, files, trajectory: instrumented.trajectory, snapshots: instrumented.snapshots,
+    contacts: instrumented.contacts, births: instrumented.births };
 }
 
-async function runScenario({ AntController, seed, seconds, instrument, selectCandidateDiagnostic,
+async function runScenario({ AntController, seed, seconds, instrument, materialLocomotionResistance = false,
+  includeShadow = true, captureBirthsOnly = false, selectCandidateDiagnostic,
   selectCandidateShadowDiagnostic, corridorSimilarityDiagnostic, distanceToCorridorEdgeDiagnostic }) {
   const started = performance.now();
   let rngState = seed >>> 0, rngCalls = 0;
-  const controller = new AntController({ materialLocomotionResistance: false, random: () => {
+  const controller = new AntController({ materialLocomotionResistance, random: () => {
     rngCalls += 1;
     rngState = (Math.imul(rngState, 1664525) + 1013904223) >>> 0;
     return rngState / 0x100000000;
   } });
   const rows = [], contacts = [], births = [], trajectoryChunks = [];
   const snapshots = [], morphology = [], checkpoints = [];
-  const shadowTemporal = instrument ? createShadowTemporalQualifier(corridorSimilarityDiagnostic) : null;
+  const shadowTemporal = instrument && includeShadow ? createShadowTemporalQualifier(corridorSimilarityDiagnostic) : null;
   const productionPlateUnion = new Set();
   let unionPlateCount = 0;
   let pendingContacts = [], pendingBirths = [], pendingLifecycle = [];
@@ -145,10 +152,13 @@ async function runScenario({ AntController, seed, seconds, instrument, selectCan
           const mask = birthSystem.plates[unionPlateCount++].mask;
           for (let index = 0; index < mask.length; index += 1) if (mask[index]) productionPlateUnion.add(index);
         }
-        morphology.push(captureMorphology({ controller, build: lastMaskBuild, timeSeconds, tick, bornThisTick,
-          selectCandidateDiagnostic, selectCandidateShadowDiagnostic, shadowTemporal,
-          distanceToCorridorEdgeDiagnostic, productionPlateUnion }));
-        snapshots.push(captureSnapshot(controller, lastMaskBuild, tick, timeSeconds));
+        if (!captureBirthsOnly || bornThisTick) {
+          morphology.push(captureMorphology({ controller, build: lastMaskBuild, timeSeconds, tick, bornThisTick,
+            birthEvents: pendingBirths.filter(event => event.type === 'plate-birth'), selectCandidateDiagnostic,
+            selectCandidateShadowDiagnostic: includeShadow ? selectCandidateShadowDiagnostic : undefined,
+            shadowTemporal, distanceToCorridorEdgeDiagnostic, productionPlateUnion }));
+          snapshots.push(captureSnapshot(controller, lastMaskBuild, tick, timeSeconds));
+        }
         lastMaskBuild = null;
       }
       record(tick, controller, frame);
@@ -162,11 +172,13 @@ async function runScenario({ AntController, seed, seconds, instrument, selectCan
         seconds: timeSeconds, wallSeconds: (performance.now() - started) / 1000, population: controller.agents.length }));
     }
     const trajectory = Buffer.concat(trajectoryChunks);
-    const provenance = { seed, instrumented: instrument, rngState, rngCalls, simulationTimeMs: controller.simulationTimeMs,
+    const finalWorldStateSha256 = sha256(JSON.stringify(controller.getSnapshot()));
+    const provenance = { seed, instrumented: instrument, materialLocomotionResistance, rngState, rngCalls,
+      simulationTimeMs: controller.simulationTimeMs, finalWorldStateSha256,
       initialState: controller.getState(), stateSha256: sha256(JSON.stringify(controller.getState())),
       finalActiveAgents: controller.agents.length, tickCount: totalTicks, frameCount: rows.length,
       trajectoryHash: sha256(trajectory), wallSeconds: (performance.now() - started) / 1000 };
-    return { rows, contacts, births, trajectory, trajectoryHash: provenance.trajectoryHash,
+    return { rows, contacts, births, trajectory, trajectoryHash: provenance.trajectoryHash, finalWorldStateSha256,
       snapshots, morphology, checkpoints, provenance };
   } finally {
     await controller.destroy();
@@ -188,13 +200,14 @@ async function runScenario({ AntController, seed, seconds, instrument, selectCan
   }
 }
 
-function captureMorphology({ controller, build, timeSeconds, tick, bornThisTick, selectCandidateDiagnostic,
+function captureMorphology({ controller, build, timeSeconds, tick, bornThisTick, birthEvents = [], selectCandidateDiagnostic,
   selectCandidateShadowDiagnostic, shadowTemporal, distanceToCorridorEdgeDiagnostic, productionPlateUnion }) {
   const birth = controller.trailPlateBirth;
   const funnel = {};
   const candidate = selectCandidateDiagnostic(build.mask, build.supports, birth.chemicalMemory, funnel);
-  const shadowFunnel = {};
-  const shadowCandidate = selectCandidateShadowDiagnostic(build.mask, build.supports, birth.chemicalMemory, shadowFunnel);
+  const shadowFunnel = selectCandidateShadowDiagnostic ? {} : null;
+  const shadowCandidate = selectCandidateShadowDiagnostic
+    ? selectCandidateShadowDiagnostic(build.mask, build.supports, birth.chemicalMemory, shadowFunnel) : null;
   for (const row of funnel.components) {
     const bbox = { minX: 96, maxX: -1, minY: 96, maxY: -1 };
     for (const index of row.skeletonIndices) {
@@ -210,13 +223,13 @@ function captureMorphology({ controller, build, timeSeconds, tick, bornThisTick,
     birth.candidate ? serializeComparableCandidate(birth.candidate, funnel) : null,
     'Diagnostic selector geometry matches live production candidate');
   const live = birth.getSnapshot();
-  const shadowTemporalResult = shadowTemporal.advance(shadowCandidate, timeSeconds * 1000, birth.footContactCounts);
+  const shadowTemporalResult = shadowTemporal?.advance(shadowCandidate, timeSeconds * 1000, birth.footContactCounts) || null;
   const productionComponent = funnel.components.find(row => row.candidateSourceIndex === candidate?.source.index);
-  const shadowComponent = shadowFunnel.components.find(row => row.candidateSourceIndex === shadowCandidate?.source.index);
+  const shadowComponent = shadowFunnel?.components.find(row => row.candidateSourceIndex === shadowCandidate?.source.index);
   const productionMeasures = measureShadowCandidate(candidate, { tick, distanceToCorridorEdgeDiagnostic,
     productionPlateUnion, sourceConnectedSkeleton: productionComponent?.skeletonIndices || [] });
-  const shadowMeasures = measureShadowCandidate(shadowCandidate, { tick, distanceToCorridorEdgeDiagnostic,
-    productionPlateUnion, sourceConnectedSkeleton: shadowComponent?.skeletonIndices || [] });
+  const shadowMeasures = shadowCandidate ? measureShadowCandidate(shadowCandidate, { tick, distanceToCorridorEdgeDiagnostic,
+    productionPlateUnion, sourceConnectedSkeleton: shadowComponent?.skeletonIndices || [] }) : null;
   const previousCandidate = birth.candidate;
   const qualified = Boolean(candidate);
   const stableSeconds = previousCandidate?.stableSeconds ?? null;
@@ -234,18 +247,21 @@ function captureMorphology({ controller, build, timeSeconds, tick, bornThisTick,
     : !checks.globalGapOpen ? 'global-gap' : !checks.sameCorridorRefractoryOpen ? 'same-corridor-refractory'
       : !checks.enoughNewFootContacts ? 'new-foot-contacts' : !checks.belowBirthCap ? 'birth-cap' : null;
   return { tick, timeSeconds, inputDiagnostics: live.inputDiagnostics, funnel, shadowFunnel,
+    requirements: live.requirements,
     candidate: candidate ? serializeCandidate(candidate, funnel) : null,
     shadowCandidate: shadowCandidate ? serializeCandidate(shadowCandidate, shadowFunnel) : null,
     candidateState: live.candidate, shadowTemporal: shadowTemporalResult,
-    geometryComparison: compareCandidateGeometry(candidate, shadowCandidate),
+    geometryComparison: shadowCandidate ? compareCandidateGeometry(candidate, shadowCandidate) : null,
     productionMeasures, shadowMeasures, checks, firstFailedGate,
-    bornThisTick, birthCount: birth.plates.length, birthRecordCount: birth.birthRecords.length };
+    bornThisTick, birthCount: birth.plates.length, birthRecordCount: birth.birthRecords.length,
+    birthDescriptor: birthEvents[0]?.payload ?? null };
 }
 
 function captureSnapshot(controller, build, tick, timeSeconds) {
   return { tick, timeSeconds, chemical: u32Bytes(controller.field.values),
     chemicalMemory: u32Bytes(controller.trailPlateBirth.chemicalMemory), surface: u32Bytes(controller.surfaceField.values),
-    support: u32Bytes(build.supports), contactCounts: u32Bytes(controller.trailPlateBirth.footContactCounts) };
+    support: u32Bytes(build.supports), supportedMask: u32Bytes(build.mask),
+    contactCounts: u32Bytes(controller.trailPlateBirth.footContactCounts) };
 }
 
 function serializeCandidate(candidate, funnel) {
@@ -314,7 +330,7 @@ async function compareArchive(seed, result, archive, seconds) {
     archivedContactGroups: archivedContacts.length, archivedBirthEvents: archivedBirths.length };
 }
 
-async function makeDiagnosticSelector(source) {
+async function makeDiagnosticSelector(source, { includeShadow = true } = {}) {
   let code = source.replace(/\r\n/g, '\n');
   code = replaceOnce(code, 'function selectCandidate(mask, supports, chemicalMemory) {',
     "function selectCandidate(mask, supports, chemicalMemory, funnel = null, endpointMode = 'boundary') {");
@@ -336,8 +352,15 @@ async function makeDiagnosticSelector(source) {
     '      skeletonIndices: networkIndices,\n      component: networkComponent,\n      selectedEndpointIndices: selectionTargetIndices.filter(index => network[index]),\n      selectedInteriorEndpointIndices: interiorEndpointIndices.filter(index => network[index]),');
   code = replaceOnce(code, '    if (!best || candidate.geodesicLength > best.geodesicLength\n      || (candidate.geodesicLength === best.geodesicLength && source < best.source.index)) best = candidate;\n  }\n  return best;\n}',
     '    candidateRows.push({ source: candidate.source, target: candidate.target, geodesicLength: candidate.geodesicLength, path: candidate.path, networkIndices: candidate.skeletonIndices, ribbonCells: candidate.mask.reduce((sum, value) => sum + value, 0), corridorSupportedCells: supportCells, selectedInteriorEndpointIndices: candidate.selectedInteriorEndpointIndices, ribbonMask: candidate.mask, supportedMask: candidate.supportedMask, component: candidate.component });\n    if (!best || candidate.geodesicLength > best.geodesicLength\n      || (candidate.geodesicLength === best.geodesicLength && source < best.source.index)) best = candidate;\n  }\n  if (funnel) { const winner = candidateRows.indexOf(candidateRows.find(row => row.source.index === best?.source.index)); funnel.skeletonPixels = skeleton.reduce((sum, value) => sum + value, 0); funnel.componentCount = components.length; funnel.components = componentRows; funnel.candidateComponentCount = candidateRows.length; funnel.candidates = candidateRows.map(({ source, target, geodesicLength, path, networkIndices, ribbonCells, corridorSupportedCells, selectedInteriorEndpointIndices }) => ({ source, target, geodesicLength, path, networkIndices, ribbonCells, corridorSupportedCells, selectedInteriorEndpointIndices })); funnel.winner = winner; funnel.losers = candidateRows.length - (best ? 1 : 0); }\n  return best;\n}');
-  code += "\nconst selectCandidateShadowDiagnostic = (mask, supports, chemicalMemory, funnel = null) =>\n  selectCandidate(mask, supports, chemicalMemory, funnel, 'shadow');\n";
-  code += '\nexport { selectCandidate as selectCandidateDiagnostic, selectCandidateShadowDiagnostic, maskComponent, corridorSimilarity, distanceToCorridorEdge };\n';
+  code = replaceOnce(code, 'row.sourceCount = sourceIndices.length; row.boundaryCount = targetIndices.length;',
+    'row.sourceCount = sourceIndices.length; row.boundaryCount = targetIndices.length; row.sourceIndices = sourceIndices; row.boundaryIndices = targetIndices;');
+  if (!includeShadow) code = replaceOnce(code,
+    'const interiorGraphEndpointIndices = component.filter(index => !nearObservationBoundary(gridPoint(index))\n      && neighbors(index).filter(adjacent => componentSet[adjacent]).length === 1);',
+    'const interiorGraphEndpointIndices = [];');
+  if (includeShadow) code += "\nconst selectCandidateShadowDiagnostic = (mask, supports, chemicalMemory, funnel = null) =>\n  selectCandidate(mask, supports, chemicalMemory, funnel, 'shadow');\n";
+  code += includeShadow
+    ? '\nexport { selectCandidate as selectCandidateDiagnostic, selectCandidateShadowDiagnostic, maskComponent, corridorSimilarity, distanceToCorridorEdge };\n'
+    : '\nexport { selectCandidate as selectCandidateDiagnostic, maskComponent, corridorSimilarity, distanceToCorridorEdge };\n';
   const encoded = Buffer.from(code).toString('base64');
   const module = await import(`data:text/javascript;base64,${encoded}`);
   return { selectCandidateDiagnostic: module.selectCandidateDiagnostic,
@@ -353,7 +376,7 @@ function serializeSnapshots(snapshots) {
   let offset = 0;
   for (const snapshot of snapshots) {
     const entries = {};
-    for (const key of ['chemical', 'chemicalMemory', 'surface', 'support', 'contactCounts']) {
+    for (const key of ['chemical', 'chemicalMemory', 'surface', 'support', 'supportedMask', 'contactCounts']) {
       const bytes = snapshot[key], prior = previous.get(key);
       const encoded = xorBytes(bytes, prior);
       entries[key] = { offset, bytes: encoded.length };
@@ -364,7 +387,7 @@ function serializeSnapshots(snapshots) {
   }
   const bytes = Buffer.concat(chunks);
   return { bytes, encoding: { type: 'per-array XOR delta of exact Float32/Uint32 bytes, concatenated in snapshot order',
-    arrayOrder: ['chemical', 'chemicalMemory', 'surface', 'support', 'contactCounts'], descriptors } };
+    arrayOrder: ['chemical', 'chemicalMemory', 'surface', 'support', 'supportedMask', 'contactCounts'], descriptors } };
 }
 
 function xorBytes(bytes, prior) {
@@ -467,12 +490,13 @@ function selfcheck() {
   const input = Buffer.from([1, 2, 3, 4]), next = Buffer.from([1, 4, 3, 9]);
   const delta = xorBytes(next, input);
   assert.deepEqual(xorBytes(delta, input), next);
-  const encoded = serializeSnapshots([{ tick: 60, chemical: input, chemicalMemory: input, surface: input, support: next, contactCounts: next },
-    { tick: 120, chemical: next, chemicalMemory: next, surface: input, support: next, contactCounts: input }]);
+  const encoded = serializeSnapshots([{ tick: 60, chemical: input, chemicalMemory: input, surface: input, support: next,
+    supportedMask: next, contactCounts: next },
+    { tick: 120, chemical: next, chemicalMemory: next, surface: input, support: next, supportedMask: input, contactCounts: input }]);
   assert.equal(encoded.encoding.descriptors[0].arrays.chemical.offset, 0);
   assert.equal(encoded.encoding.descriptors[0].arrays.chemicalMemory.offset, input.length);
   assert.equal(encoded.encoding.descriptors[0].arrays.surface.offset, input.length * 2);
-  assert.equal(encoded.encoding.descriptors[1].arrays.chemical.offset, input.length * 5);
+  assert.equal(encoded.encoding.descriptors[1].arrays.chemical.offset, input.length * 6);
   const descriptor = encoded.encoding.descriptors[1].arrays.chemical;
   assert.deepEqual(xorBytes(encoded.bytes.subarray(descriptor.offset, descriptor.offset + descriptor.bytes), input), next);
   assert.equal(compareRows([Buffer.alloc(320)], [Buffer.alloc(320)]).comparedTicks, 1);
@@ -483,4 +507,4 @@ function selfcheck() {
   console.log('ANT morphology replay parity and lossless snapshot selfchecks passed.');
 }
 
-export { compareRows, hasPlateBirth, makeDiagnosticSelector, serializeSnapshots, u32Bytes, xorBytes };
+export { compareRows, hasPlateBirth, makeDiagnosticSelector, runPair, runScenario, serializeSnapshots, sha256, u32Bytes, xorBytes };

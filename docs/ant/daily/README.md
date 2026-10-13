@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-13 — Natural Plate morphology funnel attribution
+
+[Process log](./2026-10-13-morphology-attribution.md) · [Evidence package](../evidence/2026-10-13-morphology-attribution/README.md)
+
+- Three current default-On natural runs, 600 s each: 29 / 33 / 38 births; per-tick observer parity, RNG, trajectory, events and complete final world snapshots matched
+- Movement was locally radial, while mechanical qualification removed almost no chemistry-qualified cells
+- Source-annulus-to-boundary selection retained 29–32% of the chosen skeleton-component pixels; no ablation or production change
+- Decision: selector is the strongest observed funnel compression; next pass should remain selector-only and read-only
+
 ### 2026-10-13 — Pre-Astra canonical consolidation
 
 [Process log](./2026-10-13-pre-astra-consolidation.md) · [Architecture synthesis](../2026-10-13-persistent-world-reassessment.md) · [Repository recheck and 13-file inventory](../2026-10-13-repo-hygiene-map.md)
