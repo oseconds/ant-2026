@@ -134,9 +134,9 @@ Implemented now:
 
 ```text
 movement
-→ pheromone
-→ gait / FOOT_CONTACT
-→ SurfaceField
+├─→ pheromone → movement / recruitment + TrailPlate chemical memory
+└─→ gait / FOOT_CONTACT → SurfaceField + retained contact counts
+chemical memory + mechanical support / repeat gates
 → TrailPlateBirth (current authored corridor-to-Plate formation law)
 → MaterialStratigraphy
 → local stratigraphic column count at current cell
@@ -159,14 +159,16 @@ current/recent proximity
 
 Not currently implemented as production feedback:
 
-- vitality or another explicit organism-level internal state
+- a separate material-induced organism after-effect / vitality state beyond the existing movement, sensing and decision state
 - episodic crystallization based on history transitions
-- history-derived variable material character at birth
+- richer episode/order/transition-sensitive material character beyond the existing aggregate-derived birth properties
 - physical vibration → acoustic-climate feedback
 - acoustic climate → colony or individual behavior
 - a fully integrated persistent-world circulation beyond the adopted local material→locomotion link
 
 The current production `TrailPlateBirth` remains the authored source→boundary corridor formation law. Alternative formation laws remain unadopted and are not prerequisites for the current retained-material locomotion feedback.
+
+Production already freezes bounded Plate stiffness/damping from candidate mean chemical memory and density from mean mechanical support. Nodule material/radius/coupling likewise derive from compaction, retained local foot load, column count and foundation properties. The audio compiler uses these authored values. This is aggregate-derived material character, not calibrated natural mechanics or an episode-sensitive history law. The [2026-10-13 reassessment](2026-10-13-persistent-world-reassessment.md) proposes checking its effective natural range and controlled response contribution before adding richer state; the existing synthetic damping-range check already establishes limited solver sensitivity.
 
 The optional Base Substrate implementation remains default Off and its calibration evidence is preserved. The target world model no longer assumes a separate always-present "base plate" that emits a direct sound for every foot event.
 
@@ -192,7 +194,7 @@ This shadow is not production. It is retained as a negative/mixed comparison sho
 
 > removing path selection is not sufficient if absolute accumulated state is still translated directly into permanent material.
 
-The next formation hypothesis should therefore examine **history transitions**, not only high accumulated values.
+These earlier morphology comparisons motivated a **history-transition** hypothesis. They do not prescribe the next pass. The 2026-10-13 current-state reassessment parks alternative formation and episodic crystallization until a specific responsibility of the current law is shown insufficient.
 
 ## Material formation principle
 
@@ -212,7 +214,7 @@ relative to established history
 → freeze
 ```
 
-Working name: **episodic crystallization**.
+Working name: **episodic crystallization**. This remains an optional, unadopted hypothesis; the following principle is not a current roadmap or a prerequisite for persistent-world behavior.
 
 The desired unit is neither:
 
@@ -227,7 +229,7 @@ Material geometry and future acoustic topology remain separate concerns. A mater
 
 ## Material character principle
 
-A material episode should eventually be able to inherit a **character from its formation history**.
+Production already inherits bounded aggregate-derived properties from formation conditions. A future material episode may encode richer **character from its formation history** only if that adds a specified responsibility beyond the current mappings.
 
 Do not assign fixed moral or categorical types such as good/bad, safe/dangerous, type A/type B.
 

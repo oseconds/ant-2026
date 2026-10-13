@@ -1,16 +1,16 @@
 # ANT — Current Architecture, Evidence and Research Boundary
 
-**Current repository state: 2026-10-12**
+**Current repository state: 2026-10-13**
 
 이 문서는 ANT의 **현재 verified state**를 위한 GitHub-side hub다. 과정은 [daily logs](daily/README.md), 실험별 원본과 재현 자료는 [evidence packages](evidence/)에 둔다.
 
 ## Current status
 
 ```text
-equal ants
-→ pheromone
-→ FOOT_CONTACT
-→ SurfaceField
+movement / realized travel
+├─→ pheromone → movement / recruitment + TrailPlate chemical memory
+└─→ gait / FOOT_CONTACT → SurfaceField + retained contact counts
+chemical memory + mechanical support / repeat gates
 → TrailPlateBirth (current authored corridor-to-Plate formation law)
 → MaterialStratigraphy
 → current-cell local column layer count (`layerCountByCell`)
@@ -280,6 +280,10 @@ A 2026-10-13 TrailPlateBirth-only follow-up found mixed natural lineages: 4 of 8
 
 A 2026-10-13 Nodule-only follow-up found 14 natural gap births: 11 completed pre-gap persistence and 3 restarted after a gap-born Plate reset the cell timer. Clearing only Nodule timers still yielded 13 births from cells already qualified at gap entry. Gap Plates enabled qualification at 32 other cells, none of which birthed a Nodule during the interval. This is mixed lineage evidence from a forced shadow, not a natural zero-ant lifecycle. [Nodule lineage evidence](evidence/2026-10-13-nodule-zero-gap-lineage/README.md).
 
+The fixed-window timer/blocker instrumentation resolved all 32 target cells per arm: 20 right-censored, 7 Plate-reset censored, and 5 compaction losses. Six earlier mature proximity rejections were followed by restarted sub-30 s timers, so they are secondary events rather than additional final failures. **WINDOW CENSORING DOMINANT** describes the 400–460 s forced shadow and does not predict later births. [Instrumentation](evidence/2026-10-13-nodule-gap-censoring-instrumentation/README.md).
+
+The [2026-10-13 architecture reassessment](2026-10-13-persistent-world-reassessment.md) found an existing bounded material-character path: Plate chemical/support aggregates and Nodule compaction/layer/load aggregates already set frozen solver properties. Richer episode/order-sensitive character remains unimplemented. The next proposed discriminator is the effective natural range and response contribution of those existing properties; no new causal link was selected. Vitality/social/natural-vacancy mechanisms and Nodule extension remain parked. [Branch/worktree hygiene inventory](2026-10-13-repo-hygiene-map.md).
+
 ### Research gate
 
 S2a synchrony null, S2b exact-spatial identity null and S2c incremental predictive-value check are complete. S2a/S2b retain their recruitment/seam and remap/turnover limitations. S2c found no consistent held-out gain from the selected simple temporal graph summaries beyond the compact current-frame baseline.
@@ -314,6 +318,8 @@ Current production includes the adopted local locomotion condition. Further move
 - [Retained-material locomotion production adoption — default-On and explicit-Off conformance](evidence/2026-10-12-retained-material-locomotion-adoption/README.md)
 - [TrailPlateBirth zero-ant gap candidate lineage — mixed natural completion and retained-input regeneration](evidence/2026-10-13-trail-plate-zero-gap-lineage/README.md)
 - [MaterialStratigraphy Nodule zero-ant gap lineage — latent timers, retained qualification and Plate-reset cases](evidence/2026-10-13-nodule-zero-gap-lineage/README.md)
+- [Nodule censoring audit — prior saved-data limitation](evidence/2026-10-13-nodule-lineage-censoring/README.md)
+- [Nodule timer/blocker instrumentation — 27 window-censored vs 5 compaction losses](evidence/2026-10-13-nodule-gap-censoring-instrumentation/README.md)
 - [Interior endpoint shadow selector — frozen three-seed diagnostic; production selector unchanged](evidence/2026-10-08-interior-endpoint-shadow/README.md)
 - [Local-accretion shadow — branch-only mixed/negative morphology comparison](https://github.com/oseconds/ant-2026/tree/ant-local-accretion-shadow/docs/ant/evidence/2026-10-08-local-accretion-shadow)
 - [Movement / material morphology diagnosis — frozen three-seed archive/replay, no production intervention](evidence/2026-10-08-movement-material-morphology/README.md)

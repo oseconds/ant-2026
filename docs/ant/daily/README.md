@@ -14,6 +14,23 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-13 — Current persistent-world architecture reassessment
+
+[Process log](./2026-10-13-persistent-world-reassessment.md) · [Synthesis](../2026-10-13-persistent-world-reassessment.md) · [Git hygiene map](../2026-10-13-repo-hygiene-map.md)
+
+- 현재 production/evidence를 바탕으로 causal map과 timescale을 재구성하고, forced-zero와 natural lifecycle을 구분
+- Plate/Nodule의 aggregate-derived material character가 이미 존재하는 source path를 확인하고, canonical의 과도하게 넓은 미구현 설명을 수정
+- 새 causal link를 선택하지 않고, existing native character의 effective range와 response attribution을 다음 판별 후보로 선정
+- Inventory만 수행. Branch/worktree 삭제, Nodule extension, production tuning은 없음
+
+### 2026-10-13 — Nodule timer/blocker instrumentation and prior censoring audit
+
+[Instrumentation log](./2026-10-13-nodule-gap-censoring-instrumentation.md) · [Prior audit log](./2026-10-13-nodule-lineage-censoring-audit.md) · [Instrumentation evidence](../evidence/2026-10-13-nodule-gap-censoring-instrumentation/README.md)
+
+- 고정 400–460 s shadow, arm당 32개 대상: 최종 27개 window-censored / 5개 compaction-loss barriers
+- 앞서 발생한 mature proximity block 6건은 restart 뒤 다시 censored됨. 최종 분류와 이력을 구분
+- 결정: **WINDOW CENSORING DOMINANT**. 더 긴 gap의 결과는 예측하지 않음
+
 ### 2026-10-13 — MaterialStratigraphy Nodule zero-ant gap lineage
 
 [Process log](./2026-10-13-nodule-zero-gap-lineage.md) · [Nodule lineage evidence](../evidence/2026-10-13-nodule-zero-gap-lineage/README.md)
