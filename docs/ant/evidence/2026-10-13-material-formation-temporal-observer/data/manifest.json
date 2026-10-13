@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "seed": 20261006,
+  "seconds": 600,
+  "dtSeconds": 0.016666666666666666,
+  "ticks": 36000,
+  "analysisCount": 599,
+  "baselineCommit": "ca0aaac4e1994078758d88bf72511f0203a6c70c",
+  "productionRef": {
+    "name": "origin/main",
+    "commit": "d45823d40c9a87c1b333fa9872f3c897ee9ab01b"
+  },
+  "startCommit": "ca0aaac4e1994078758d88bf72511f0203a6c70c",
+  "passBranch": "codex/ant-material-formation-responsibility-20261013",
+  "node": "v22.23.2",
+  "sampling": "Captured only when TrailPlateBirth.lastAnalysisTimeMs changes during the existing 60 Hz controller tick. The first analysis is the production first tick at 16.666... ms; no formation analysis is synthesized at the run boundary.",
+  "causalOrdering": "Each row carries a detached interval-start material snapshot from immediately after the previous analysis tick. Foot-contact counter deltas are measured through the current analysis tick. A Plate born at that ending tick is listed separately in birthsAtEndBoundary and excluded from intervalStart. Same-tick and between-sample nodule births are separately recorded as material events.",
+  "mechanicalSupport": "The exact production buildSupportedMask result is sampled read-only after the controller tick. Its support values are retained for chemical-qualified cells; SurfaceField.sampleSupport fills the remaining cells without changing state. The combined mask is asserted equal to the production mask at every analysis.",
+  "cellEligibility": "The per-cell eligibility axis is the production combined supported mask. Candidate lineage and cell transitions are classified independently. A local loss-to-return is counted only when both its eligible-to-ineligible and ineligible-to-eligible transitions fall within the previous/current candidate-or-prior territory union for their intervals. First-sample and run-end boundaries are censored; subsecond absence is not inferred.",
+  "rng": "Observer run uses the same counted LCG and fresh default AntController as the plain run; no materialLocomotionResistance override or audio bridge is supplied.",
+  "parity": "Exact SHA-256 chained per-tick comparisons cover full agents, lifecycle/spawn state, counted RNG state/calls, pheromone, SurfaceField, gait, body pose, deposition, activation, occupancy, FOOT_CONTACT and birth event sequences, TrailPlateBirth internal arrays/candidate/descriptors, and MaterialStratigraphy internal arrays/history. Each observer capture is also bracketed by equal complete production-state hashes.",
+  "outputFiles": [
+    "analysis-rows.csv",
+    "class-lineage-summary.json",
+    "final-world-snapshot.json.gz",
+    "parity.json",
+    "source-tool-hashes.json",
+    "temporal-records.jsonl.gz"
+  ],
+  "preflightEnforcedByRunner": false,
+  "preflight": [
+    "git ls-remote origin refs/heads/main must resolve to d45823d40c9a87c1b333fa9872f3c897ee9ab01b",
+    "git diff --exit-code ca0aaac4e1994078758d88bf72511f0203a6c70c -- AGENTS.md docs/ant/README.md docs/ant/evidence/2026-10-13-material-formation-responsibility/README.md docs/ant/daily/2026-10-13-material-formation-responsibility.md src/lib/agents/ant/AntController.js src/lib/agents/ant/TrailPlateBirth.js src/lib/agents/ant/SurfaceField.js src/lib/agents/ant/PheromoneField.js src/lib/agents/ant/MaterialStratigraphy.js",
+    "git diff --exit-code d45823d40c9a87c1b333fa9872f3c897ee9ab01b -- src/lib/agents/ant"
+  ],
+  "reproduction": "node scripts/run-ant-material-formation-temporal-observer.js --seed=20261006 --seconds=600 --baseline=ca0aaac4e1994078758d88bf72511f0203a6c70c --production=origin/main --production-commit=d45823d40c9a87c1b333fa9872f3c897ee9ab01b --start-commit=ca0aaac4e1994078758d88bf72511f0203a6c70c --branch=codex/ant-material-formation-responsibility-20261013 --output=docs/ant/evidence/2026-10-13-material-formation-temporal-observer/data"
+}

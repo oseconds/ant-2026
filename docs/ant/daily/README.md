@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-13 — Material formation temporal observer
+
+[Process log](./2026-10-13-material-formation-temporal-observer.md) · [Evidence package](../evidence/2026-10-13-material-formation-temporal-observer/README.md)
+
+- Read-only 600 s run at seed `20261006`; plain/observer parity exact and production unchanged
+- One matched restart had no continued comparator with the same candidate geometry and prior Plate
+- Decision: **INSUFFICIENT NATURAL CASES**; no second seed or implementation
+
 ### 2026-10-13 — Material-formation responsibility reassessment
 
 [Process log](./2026-10-13-material-formation-responsibility.md) · [Investigation package](../evidence/2026-10-13-material-formation-responsibility/README.md)

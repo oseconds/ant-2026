@@ -318,6 +318,7 @@ Current production includes the adopted local locomotion condition. Further move
 - [Retained material experience shadow — three current-main 600 s runs; observer parity exact; supported as an opportunity for one separate local A/B](evidence/2026-10-11-retained-material-experience-shadow-final/README.md)
 - [Retained-material locomotion causal A/B — fixed candidate supported across three seeds](evidence/2026-10-11-retained-material-locomotion-ab-final/README.md)
 - [Retained-material locomotion production adoption — default-On and explicit-Off conformance](evidence/2026-10-12-retained-material-locomotion-adoption/README.md)
+- [Material formation temporal observer — one-seed run had no matched continued/restarted geometry-prior comparator](evidence/2026-10-13-material-formation-temporal-observer/README.md)
 - [TrailPlateBirth zero-ant gap candidate lineage — mixed natural completion and retained-input regeneration](evidence/2026-10-13-trail-plate-zero-gap-lineage/README.md)
 - [MaterialStratigraphy Nodule zero-ant gap lineage — latent timers, retained qualification and Plate-reset cases](evidence/2026-10-13-nodule-zero-gap-lineage/README.md)
 - [Nodule censoring audit — prior saved-data limitation](evidence/2026-10-13-nodule-lineage-censoring/README.md)
