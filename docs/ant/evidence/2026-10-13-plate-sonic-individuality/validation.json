@@ -1,0 +1,96 @@
+{
+  "baseline": "d45823d40c9a87c1b333fa9872f3c897ee9ab01b",
+  "branch": "codex/ant-plate-sonic-individuality-20261013",
+  "productionCodeChanged": false,
+  "tools": {
+    "node": "v22.23.2",
+    "python": "Python 3.12.14",
+    "numpy": "2.3.5",
+    "chrome": "155.0.8059.40"
+  },
+  "checks": [
+    {
+      "command": "node --check scripts/ant-plate-sonic-individuality.js",
+      "exitCode": 0
+    },
+    {
+      "command": "node --check scripts/ant-sonic-individuality-report.js",
+      "exitCode": 0
+    },
+    {
+      "command": "node --check scripts/ant-sonic-shadow-render.js",
+      "exitCode": 0
+    },
+    {
+      "command": "python scripts/ant-sonic-response-metrics.py --self-check",
+      "exitCode": 0
+    },
+    {
+      "command": "python scripts/ant-sonic-modal-transfer.py --self-check",
+      "exitCode": 0
+    },
+    {
+      "command": "node --test tests/ant-sonic-shadow-render.test.js tests/surface-plate-worklet.test.js tests/compile-surface-topology.test.js tests/surface-audio-bridge.test.js",
+      "exitCode": 0,
+      "tests": 43,
+      "passed": 43,
+      "failed": 0
+    },
+    {
+      "command": "git diff --exit-code d45823d40c9a87c1b333fa9872f3c897ee9ab01b -- src static tests/fixtures package.json package-lock.json",
+      "exitCode": 0
+    }
+  ],
+  "artifactAudit": {
+    "manifestEntriesVerified": 311,
+    "uniquePathsVerified": 297,
+    "uniqueBytesVerified": 817948612,
+    "omittedRawFiles": 285,
+    "omittedRawBytes": 815353681,
+    "ignoredOutputVerified": true,
+    "unmanifestedOutputFiles": [],
+    "frozenInputBytes": 384481,
+    "frozenInputSha256": "f600eb768df2721c98cc607ea8b4b4d4fc64ae74cda6b5bf3f9297e8b0865a2d",
+    "hashMethod": "Exact byte size and SHA-256 freshly recomputed for every render/analysis/listening manifest entry."
+  },
+  "sourceToolHashes": {
+    "scripts/ant-plate-sonic-individuality.js": "0222c5116522a98ea2c620f9f72f1c9b30353789fafdd3477073bbbaf089c57c",
+    "scripts/ant-sonic-shadow-render.js": "60be57e66ed88e73f50a22ebea801adcba1c2efb27df4c634628b93faada9c68",
+    "scripts/ant-sonic-individuality-report.js": "61c3ec1c2b2b5f44cc1c55c10bf9fac2c060bc2898f36c01ff0762e400396262",
+    "scripts/ant-sonic-response-metrics.py": "42e0af85fa0034b4d8c1d3e01123d591b5ee15a98c769ba89894d429d6bc2ca2",
+    "scripts/ant-sonic-modal-transfer.py": "c579c87af84a43e519890a4b1ccdfa0151b445c5395c42aa51f019fd9d780e17",
+    "tests/ant-sonic-shadow-render.test.js": "b5ce1c5ac99a440445a07d11e11b2b1c141d62a846c288fe0404d8a31f3d0331",
+    "static/worklets/surface-plate.worklet.js": "14c7461f1412f0d6897a6683d46e582dbb80711f2ba74e8ea53e026895eeea5e",
+    "static/worklets/plate.worklet.js": "43295646dca949d676ebebb80ba57ee6cac9043ecd914ab313ff26329e438dfb",
+    "src/lib/audio/compileSurfaceTopology.js": "b28b15158441a9cc24d8d3e22fbf10342962555de6ca6e6bf4f649985a5ba2fd",
+    "src/lib/audio/SurfaceAudioBridge.js": "ef87c14015067f7cad512e0675716239b1707e441eb28cfd9175d28b0ef28215"
+  },
+  "captureHashChanges": {
+    "files": [
+      "scripts/ant-sonic-response-metrics.py"
+    ],
+    "explanation": "Render capture manifest preserves its historical tool snapshot. Final descriptive-analysis hashes and Parseval corrections are recorded in analysis-manifest.json; no worklet, topology, scheduler or PCM change."
+  },
+  "audioChecks": {
+    "renderCount": 97,
+    "finitePcmAndState": true,
+    "nonFinite": 0,
+    "solverClippedSteps": 0,
+    "droppedRoutes": 0,
+    "maxPreLimiterAbs": 0.08666481337784691,
+    "maxSoftLimiterPeakReductionDb": 0.7219120933374185,
+    "limiterNote": "Soft x/(1+abs(x)) applies to all nonzero samples. Zero solver clipping does not mean zero limiter effect. Value above is the largest pointwise peak compression, before interpolation.",
+    "exactEventScheduleHashesVerified": true,
+    "chromeVmExactPcmCases": 3,
+    "listeningSheetPathsVerified": 24,
+    "subjectiveListeningAssessment": false,
+    "genericRandomness": "No new generic render. Historical per-node Math.random realization was unrecorded; inherited bounds retained."
+  },
+  "notRun": [
+    "Full application test/build: production, fixtures, dependencies and configuration unchanged.",
+    "Natural simulation replay: existing current-law frozen inputs used.",
+    "Human audible discrimination or preference assessment.",
+    "Dense simultaneous coupled-world and adequately excited Nodule comparison."
+  ],
+  "cleanup": "Removed only the stale regenerable ignored response-metrics copy from this investigation; final committed metrics retained."
+}

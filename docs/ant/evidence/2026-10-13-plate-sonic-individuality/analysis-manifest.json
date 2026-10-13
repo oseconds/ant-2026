@@ -1,0 +1,69 @@
+{
+  "tools": {
+    "node": "v22.23.2",
+    "python": "Python 3 with numpy; exact environment version in validation.json"
+  },
+  "commands": [
+    "python scripts/ant-sonic-response-metrics.py test-results/ant-plate-sonic-individuality-20261013/render-index.json docs/ant/evidence/2026-10-13-plate-sonic-individuality/response-metrics.json",
+    "python scripts/ant-sonic-modal-transfer.py",
+    "node scripts/ant-sonic-individuality-report.js"
+  ],
+  "scope": "Final analysis provenance; render-manifest records the source snapshot at audio capture, before later descriptive-analysis additions.",
+  "artifacts": [
+    {
+      "path": "scripts/ant-sonic-response-metrics.py",
+      "bytes": 21069,
+      "sha256": "42e0af85fa0034b4d8c1d3e01123d591b5ee15a98c769ba89894d429d6bc2ca2"
+    },
+    {
+      "path": "scripts/ant-sonic-modal-transfer.py",
+      "bytes": 19481,
+      "sha256": "c579c87af84a43e519890a4b1ccdfa0151b445c5395c42aa51f019fd9d780e17"
+    },
+    {
+      "path": "scripts/ant-sonic-individuality-report.js",
+      "bytes": 10813,
+      "sha256": "61c3ec1c2b2b5f44cc1c55c10bf9fac2c060bc2898f36c01ff0762e400396262"
+    },
+    {
+      "path": "test-results/ant-plate-sonic-individuality-20261013/render-index.json",
+      "bytes": 292837,
+      "sha256": "8b32411e311810da560b05e096d5e01c747fc915dd8e43ccd54a148d05ea6e7f"
+    },
+    {
+      "path": "test-results/ant-plate-sonic-individuality-20261013/modal-topologies.json",
+      "bytes": 55788,
+      "sha256": "a13d25decdf329e7d7c99e1a333f377cff9b5e43a4e033eef3d4c0b70eb75780"
+    },
+    {
+      "path": "docs/ant/evidence/2026-10-13-plate-sonic-individuality/response-metrics.json",
+      "bytes": 2277254,
+      "sha256": "ce2176bf9b0415aa38228b0847f36cdc1ee8276f00fdbc32e2ddd25fad791591"
+    },
+    {
+      "path": "docs/ant/evidence/2026-10-13-plate-sonic-individuality/measurement-summary.json",
+      "bytes": 22278,
+      "sha256": "6eda28792a9ed1b911265d7dac18a16d0987379786a161533e43f963b994ad8c"
+    },
+    {
+      "path": "docs/ant/evidence/2026-10-13-plate-sonic-individuality/modal-transfer.json",
+      "bytes": 57322,
+      "sha256": "e1759b9ab4e89545652949e8dd3a40a9e5bdd4005ad8234367d0b9626e655ebd"
+    },
+    {
+      "path": "docs/ant/evidence/2026-10-13-plate-sonic-individuality/prior-transfer-verification.json",
+      "bytes": 2061,
+      "sha256": "af6155c4bc24d8bf230de10daf9cf65d4e54556214f2e6036967d1675dbcda3a"
+    },
+    {
+      "path": "docs/ant/evidence/2026-10-13-plate-sonic-individuality/listening-manifest.json",
+      "bytes": 11537,
+      "sha256": "9ff71a8d41c569a3d3de536c50cbcf3c051013768dffb04adf2d95036a3328e4"
+    },
+    {
+      "path": "docs/ant/evidence/2026-10-13-plate-sonic-individuality/listening.html",
+      "bytes": 5691,
+      "sha256": "d9ea8c63bdf8dd6631b57ba8b8bbb66a89ccc569c5419120c5f9b2eefe2c9345"
+    }
+  ]
+}

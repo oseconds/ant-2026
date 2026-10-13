@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-13 — Plate sonic individuality
+
+[Process log](./2026-10-13-plate-sonic-individuality.md) · [Evidence and next hypothesis](../evidence/2026-10-13-plate-sonic-individuality/README.md)
+
+- Twelve current-law Plates from a 100-birth corpus retain isolated measured spectral identity, including common-material controls
+- Four frozen-world Z probes largely preserve their responses; dense mixing and human audible discrimination remain untested
+- Production unchanged; one unimplemented next shadow hypothesis tests normalized contact-pulse duration only
+
 ### 2026-10-13 — Pre-Astra canonical consolidation
 
 [Process log](./2026-10-13-pre-astra-consolidation.md) · [Architecture synthesis](../2026-10-13-persistent-world-reassessment.md) · [Repository recheck and 13-file inventory](../2026-10-13-repo-hygiene-map.md)

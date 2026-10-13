@@ -124,6 +124,8 @@ The full 48-node P1 map found strong channel-matched distance response plus near
 
 mature 20–30 Plate의 AudioWorklet realtime collapse는 unresolved known issue다. Audio/runtime, sleep/wake, ROM optimization은 현재 연구 본선에서 보류한다.
 
+The 2026-10-13 sonic-individuality diagnosis found distinct isolated measured responses in twelve current-law natural Plates, including shared-material controls. Four frozen-world Z probes largely retained those responses; dense mixing and human audible discrimination remain unresolved. Production audio is unchanged. One unimplemented next shadow hypothesis tests direct-contact duration only, with formation/behavior and runtime work parked. [Evidence, listening sheet and bounded hypothesis](evidence/2026-10-13-plate-sonic-individuality/README.md).
+
 ### Read-only social observation
 
 `DynamicSocialGraph`:
