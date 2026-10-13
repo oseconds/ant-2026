@@ -1,6 +1,6 @@
 # ANT — Current Architecture, Evidence and Research Boundary
 
-**Current repository state: 2026-10-13**
+**Current repository state: 2026-10-14**
 
 이 문서는 ANT의 **현재 verified state**를 위한 GitHub-side hub다. 과정은 [daily logs](daily/README.md), 실험별 원본과 재현 자료는 [evidence packages](evidence/)에 둔다.
 
@@ -124,7 +124,9 @@ The full 48-node P1 map found strong channel-matched distance response plus near
 
 mature 20–30 Plate의 AudioWorklet realtime collapse는 unresolved known issue다. Audio/runtime, sleep/wake, ROM optimization은 현재 연구 본선에서 보류한다.
 
-The 2026-10-13 sonic-individuality diagnosis found distinct isolated measured responses in twelve current-law natural Plates, including shared-material controls. Four frozen-world Z probes largely retained those responses; dense mixing and human audible discrimination remain unresolved. Production audio is unchanged. One unimplemented next shadow hypothesis tests direct-contact duration only, with formation/behavior and runtime work parked. [Evidence, listening sheet and bounded hypothesis](evidence/2026-10-13-plate-sonic-individuality/README.md).
+The 2026-10-13 sonic-individuality diagnosis found distinct isolated measured responses in twelve current-law natural Plates, including shared-material controls. Four frozen-world Z probes largely retained those responses; dense mixing and human audible discrimination remain unresolved. Production audio is unchanged. [Individuality evidence and listening sheet](evidence/2026-10-13-plate-sonic-individuality/README.md).
+
+The 2026-10-14 Base/Born decomposition on three systematic frozen geometries separates excitation weighting, elastic modal law and loss. A rate-aware control is close to Born; one pulse–elastic interaction is demonstrated, but no unique transferable Base character or listening preference is established. The single next unimplemented shadow compares frequency loss with a q=4-matched uniform-loss control. Formation/behavior, Z/Nodule redesign and runtime optimization remain parked. [Causal evidence, listening sheet and bounded hypothesis](evidence/2026-10-14-base-born-causal-decomposition/README.md).
 
 ### Read-only social observation
 

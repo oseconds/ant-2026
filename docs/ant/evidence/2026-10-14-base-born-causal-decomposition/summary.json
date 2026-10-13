@@ -1,0 +1,2687 @@
+{
+  "method": "response coordinates and declared A/B comparisons, not a Base similarity score",
+  "cases": [
+    {
+      "id": "20261005-trail-plate-1-baseline",
+      "plateKey": "20261005-trail-plate-1",
+      "condition": "baseline",
+      "nodes": 48,
+      "physicsRate": 6000,
+      "pairBaseline": null,
+      "outputRms": 0.0012566743208273802,
+      "outputRmsDbfs": -58.01554518603912,
+      "outputPeak": 0.008793617598712444,
+      "outputCentroidHz": 225.1213683035442,
+      "outputBandShares": {
+        "0-100Hz": 0.000001580542928358611,
+        "100-300Hz": 0.9258101578649803,
+        "300-1000Hz": 0.07418100904733442,
+        "1000-3000Hz": 7.881641032133808e-8,
+        "3000-24000Hz": 0.000007173728346890458
+      },
+      "outputStereoRatio": 1.0506590419913797,
+      "fieldCentroidHz": 167.25170964138252,
+      "fieldBandShares": {
+        "0-100Hz": 0.003664291107927672,
+        "100-300Hz": 0.9829076288563531,
+        "300-1000Hz": 0.013427935691927177,
+        "1000-3000Hz": 1.443437920065631e-7,
+        "3000-24000Hz": 1.276387955178575e-11
+      },
+      "fieldRms": 0.0039048749416641967,
+      "fieldT90Ms": 498.8333333333333,
+      "fieldTailAfter500ms": 0.0998525098100997,
+      "fieldPowerAbove3kFraction": 1.27640120695105e-11,
+      "limiterRmsDeltaDb": -0.029339672789582494,
+      "forwardQueueResidualL2": 3.253605229588808e-8,
+      "differenceFromDeclaredBaseline": null,
+      "readoutGain8": {
+        "comparison": {
+          "frames": 71520,
+          "relativeL2": 6.817615517803211,
+          "rmsDeltaDb": 17.861393506790023,
+          "zeroLagCorrelation": 0.9999272859566389,
+          "powerSpectrumCosine": 0.9999824955065243,
+          "powerCosine50HzBins": 0.9999991129912892,
+          "envelope25msRmsCosine": 0.9999660256325882,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": -0.06903959161249418,
+          "t90ShiftMs": 3.4791666666666856,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.057476067134105066
+        },
+        "limiterCompression": {
+          "frames": 8940,
+          "relativeL2": 0.029510726214064066,
+          "rmsDeltaDb": -0.2297719934944098,
+          "zeroLagCorrelation": 0.9999027995300444,
+          "powerSpectrumCosine": 0.999976951309813,
+          "powerCosine50HzBins": 0.999998810853891,
+          "envelope25msRmsCosine": 0.9999553531608858,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": -0.08101838783301218,
+          "t90ShiftMs": 4,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.0047033613911639655
+        }
+      }
+    },
+    {
+      "id": "20261005-trail-plate-1-instant",
+      "plateKey": "20261005-trail-plate-1",
+      "condition": "instant",
+      "nodes": 48,
+      "physicsRate": 6000,
+      "pairBaseline": "20261005-trail-plate-1-baseline",
+      "outputRms": 0.0023807058090004993,
+      "outputRmsDbfs": -52.46588536717808,
+      "outputPeak": 0.019827840849757195,
+      "outputCentroidHz": 283.2411559618702,
+      "outputBandShares": {
+        "0-100Hz": 0.000001497609981355142,
+        "100-300Hz": 0.6613988839155226,
+        "300-1000Hz": 0.3385776728385806,
+        "1000-3000Hz": 6.751342109443548e-7,
+        "3000-24000Hz": 0.00002127050170456882
+      },
+      "outputStereoRatio": 0.7970074460669879,
+      "fieldCentroidHz": 204.36504309042104,
+      "fieldBandShares": {
+        "0-100Hz": 0.0021587990072564596,
+        "100-300Hz": 0.8721494177426763,
+        "300-1000Hz": 0.12567926702360918,
+        "1000-3000Hz": 0.000012516226458163084,
+        "3000-24000Hz": 5.056861236322215e-10
+      },
+      "fieldRms": 0.0053992931734747505,
+      "fieldT90Ms": 498.3333333333333,
+      "fieldTailAfter500ms": 0.09910888817835876,
+      "fieldPowerAbove3kFraction": 5.056861596131057e-10,
+      "limiterRmsDeltaDb": -0.0618346573291646,
+      "forwardQueueResidualL2": 3.301778332262643e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 2.4909938812640045,
+          "rmsDeltaDb": 5.549659818861038,
+          "zeroLagCorrelation": -0.42653880642430814,
+          "powerSpectrumCosine": 0.8239347562909521,
+          "powerCosine50HzBins": 0.880107935869959,
+          "envelope25msRmsCosine": 0.9964388561016624,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": 58.11978765832603,
+          "t90ShiftMs": 0.4375,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.0256815692409873
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9933900388960021,
+            "fractionOfTotalPowerOutsideRangeA": 1.27640120695105e-11,
+            "fractionOfTotalPowerOutsideRangeB": 5.056861596131057e-10,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": 37.11333344903852,
+          "envelope25msRmsCosine": 0.999799233039333,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 1.676463481721306,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261005-trail-plate-1-spatial-grid",
+      "plateKey": "20261005-trail-plate-1",
+      "condition": "spatial-grid",
+      "nodes": 48,
+      "physicsRate": 6000,
+      "pairBaseline": "20261005-trail-plate-1-baseline",
+      "outputRms": 0.0014488656141992873,
+      "outputRmsDbfs": -56.77943789055259,
+      "outputPeak": 0.0105410385876894,
+      "outputCentroidHz": 207.3299928890917,
+      "outputBandShares": {
+        "0-100Hz": 0.0000022049949626810744,
+        "100-300Hz": 0.9754732987870548,
+        "300-1000Hz": 0.02451944507542708,
+        "1000-3000Hz": 1.299475895360026e-7,
+        "3000-24000Hz": 0.000004921194965856606
+      },
+      "outputStereoRatio": 1.2357495530553386,
+      "fieldCentroidHz": 161.82101752285888,
+      "fieldBandShares": {
+        "0-100Hz": 0.0036963679266426995,
+        "100-300Hz": 0.9926520380305375,
+        "300-1000Hz": 0.003651458791317093,
+        "1000-3000Hz": 1.3525150288513934e-7,
+        "3000-24000Hz": 1.2066054706655388e-11
+      },
+      "fieldRms": 0.005224385597766788,
+      "fieldT90Ms": 498.8333333333333,
+      "fieldTailAfter500ms": 0.09988544325416544,
+      "fieldPowerAbove3kFraction": 1.2065903831626201e-11,
+      "limiterRmsDeltaDb": -0.033684966993362764,
+      "forwardQueueResidualL2": 3.2544040943232064e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 0.26193675885669915,
+          "rmsDeltaDb": 1.2361072954865264,
+          "zeroLagCorrelation": 0.9803886362026181,
+          "powerSpectrumCosine": 0.9629657055624993,
+          "powerCosine50HzBins": 0.9757897794713035,
+          "envelope25msRmsCosine": 0.9990235534442142,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": -17.79137541445249,
+          "t90ShiftMs": -1.2916666666666288,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.0023880619555711746
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9993295024917694,
+            "fractionOfTotalPowerOutsideRangeA": 1.27640120695105e-11,
+            "fractionOfTotalPowerOutsideRangeB": 1.2065903831626201e-11,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": -5.430692118523638,
+          "envelope25msRmsCosine": 0.9999997728298977,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 0.3577926898817215,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261005-trail-plate-1-spatial-world-width",
+      "plateKey": "20261005-trail-plate-1",
+      "condition": "spatial-world-width",
+      "nodes": 48,
+      "physicsRate": 6000,
+      "pairBaseline": "20261005-trail-plate-1-baseline",
+      "outputRms": 0.0014555280718043123,
+      "outputRmsDbfs": -56.73958828389681,
+      "outputPeak": 0.009573521092534065,
+      "outputCentroidHz": 174.8164643158508,
+      "outputBandShares": {
+        "0-100Hz": 0.0028170315598497952,
+        "100-300Hz": 0.9968765860979787,
+        "300-1000Hz": 0.0003042806179274326,
+        "1000-3000Hz": 4.233755150206373e-8,
+        "3000-24000Hz": 0.0000020593866929995714
+      },
+      "outputStereoRatio": 0.6530285182894364,
+      "fieldCentroidHz": 156.7754298092803,
+      "fieldBandShares": {
+        "0-100Hz": 0.003772977303750292,
+        "100-300Hz": 0.9961533785358531,
+        "300-1000Hz": 0.00007351215689935528,
+        "1000-3000Hz": 1.3200349746862415e-7,
+        "3000-24000Hz": 1.1681816968888676e-11
+      },
+      "fieldRms": 0.006018471927305978,
+      "fieldT90Ms": 499,
+      "fieldTailAfter500ms": 0.09991284444114107,
+      "fieldPowerAbove3kFraction": 1.1681544620500972e-11,
+      "limiterRmsDeltaDb": -0.0332760891870052,
+      "forwardQueueResidualL2": 3.3019742661242356e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 1.3126676102138344,
+          "rmsDeltaDb": 1.2759569021423118,
+          "zeroLagCorrelation": 0.2669655026290923,
+          "powerSpectrumCosine": 0.20341812246671184,
+          "powerCosine50HzBins": 0.6735954972387431,
+          "envelope25msRmsCosine": 0.9895842071904052,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": -50.30490398769339,
+          "t90ShiftMs": -2.375,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.014017109293490648
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9976359057401964,
+            "fractionOfTotalPowerOutsideRangeA": 1.27640120695105e-11,
+            "fractionOfTotalPowerOutsideRangeB": 1.1681544620500972e-11,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": -10.476279832102222,
+          "envelope25msRmsCosine": 0.9999993420061404,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 0.7902072025866336,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261005-trail-plate-1-jitter",
+      "plateKey": "20261005-trail-plate-1",
+      "condition": "jitter",
+      "nodes": 48,
+      "physicsRate": 6000,
+      "pairBaseline": "20261005-trail-plate-1-baseline",
+      "outputRms": 0.0012560115948569066,
+      "outputRmsDbfs": -58.02012702791387,
+      "outputPeak": 0.0087895467877388,
+      "outputCentroidHz": 225.0987531070494,
+      "outputBandShares": {
+        "0-100Hz": 0.0000015813584764311937,
+        "100-300Hz": 0.9258357613147419,
+        "300-1000Hz": 0.07415540665358811,
+        "1000-3000Hz": 7.885801410830688e-8,
+        "3000-24000Hz": 0.000007171815179520501
+      },
+      "outputStereoRatio": 1.05099094389939,
+      "fieldCentroidHz": 167.24260690609967,
+      "fieldBandShares": {
+        "0-100Hz": 0.0036644519436259313,
+        "100-300Hz": 0.9829097358751394,
+        "300-1000Hz": 0.01342566784807007,
+        "1000-3000Hz": 1.443331645772096e-7,
+        "3000-24000Hz": 1.2762394027811984e-11
+      },
+      "fieldRms": 0.003903982863010445,
+      "fieldT90Ms": 498.8333333333333,
+      "fieldTailAfter500ms": 0.09985234089223244,
+      "fieldPowerAbove3kFraction": 1.2762124690368637e-11,
+      "limiterRmsDeltaDb": -0.029323939880022465,
+      "forwardQueueResidualL2": 3.308254476784046e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 0.0006677873210930944,
+          "rmsDeltaDb": -0.004581841874752968,
+          "zeroLagCorrelation": 0.9999999160426588,
+          "powerSpectrumCosine": 0.9999998951869904,
+          "powerCosine50HzBins": 0.9999999087177314,
+          "envelope25msRmsCosine": 0.9999999975042039,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": -0.022615196494797374,
+          "t90ShiftMs": 0,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.000006631482392549515
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9999999966093235,
+            "fractionOfTotalPowerOutsideRangeA": 1.27640120695105e-11,
+            "fractionOfTotalPowerOutsideRangeB": 1.2762124690368637e-11,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": -0.009102735282851881,
+          "envelope25msRmsCosine": 0.9999999999992206,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 0.0003629116171194756,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261005-trail-plate-1-loss-frequency",
+      "plateKey": "20261005-trail-plate-1",
+      "condition": "loss-frequency",
+      "nodes": 48,
+      "physicsRate": 6000,
+      "pairBaseline": "20261005-trail-plate-1-baseline",
+      "outputRms": 0.0007829216927971687,
+      "outputRmsDbfs": -62.12563347114693,
+      "outputPeak": 0.007414991967380047,
+      "outputCentroidHz": 217.8932314266559,
+      "outputBandShares": {
+        "0-100Hz": 0.0000010820273741759965,
+        "100-300Hz": 0.9434181529759766,
+        "300-1000Hz": 0.05657450845166376,
+        "1000-3000Hz": 7.59869406540148e-9,
+        "3000-24000Hz": 0.000006248946291416381
+      },
+      "outputStereoRatio": 1.1388403126971982,
+      "fieldCentroidHz": 163.65493604239273,
+      "fieldBandShares": {
+        "0-100Hz": 0.008133913436970413,
+        "100-300Hz": 0.9830790003897418,
+        "300-1000Hz": 0.008787076475896369,
+        "1000-3000Hz": 9.697391243961767e-9,
+        "3000-24000Hz": 2.5577911274127985e-14
+      },
+      "fieldRms": 0.00265862480298437,
+      "fieldT90Ms": 235.16666666666666,
+      "fieldTailAfter500ms": 0.0075938036736997745,
+      "fieldPowerAbove3kFraction": 2.55351295663786e-14,
+      "limiterRmsDeltaDb": -0.028444603370061827,
+      "forwardQueueResidualL2": 3.257748186518039e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 0.5202080931113041,
+          "rmsDeltaDb": -4.110088285107807,
+          "zeroLagCorrelation": 0.896875293788673,
+          "powerSpectrumCosine": 0.8701374632040279,
+          "powerCosine50HzBins": 0.9947579430770066,
+          "envelope25msRmsCosine": 0.9083007026623874,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": -7.2281368768883,
+          "t90ShiftMs": -293.1458333333333,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.00360305851791054
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.999357593913182,
+            "fractionOfTotalPowerOutsideRangeA": 1.27640120695105e-11,
+            "fractionOfTotalPowerOutsideRangeB": 2.55351295663786e-14,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": -3.5967735989897847,
+          "envelope25msRmsCosine": 0.9324586410706754,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 0.4469413017124047,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261005-trail-plate-1-loss-uniform",
+      "plateKey": "20261005-trail-plate-1",
+      "condition": "loss-uniform",
+      "nodes": 48,
+      "physicsRate": 6000,
+      "pairBaseline": "20261005-trail-plate-1-baseline",
+      "outputRms": 0.000917724044882174,
+      "outputRmsDbfs": -60.74575778777557,
+      "outputPeak": 0.007969601079821587,
+      "outputCentroidHz": 225.60751732034086,
+      "outputBandShares": {
+        "0-100Hz": 7.104159658646296e-7,
+        "100-300Hz": 0.9244796643474372,
+        "300-1000Hz": 0.07551242418608753,
+        "1000-3000Hz": 9.071691188782749e-9,
+        "3000-24000Hz": 0.000007191978818152124
+      },
+      "outputStereoRatio": 1.0476104593896542,
+      "fieldCentroidHz": 166.81325211836142,
+      "fieldBandShares": {
+        "0-100Hz": 0.006991865419730948,
+        "100-300Hz": 0.979457486424262,
+        "300-1000Hz": 0.013550638287382078,
+        "1000-3000Hz": 9.868625153544837e-9,
+        "3000-24000Hz": 1.1354707993815486e-13
+      },
+      "fieldRms": 0.0028672236541811714,
+      "fieldT90Ms": 270.8333333333333,
+      "fieldTailAfter500ms": 0.01411409769221828,
+      "fieldPowerAbove3kFraction": 1.1357581541915351e-13,
+      "limiterRmsDeltaDb": -0.028991935680963365,
+      "forwardQueueResidualL2": 3.2224539992970915e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 0.3744728478882857,
+          "rmsDeltaDb": -2.730212601736447,
+          "zeroLagCorrelation": 0.953797853144101,
+          "powerSpectrumCosine": 0.9433132681448428,
+          "powerCosine50HzBins": 0.9999752280088527,
+          "envelope25msRmsCosine": 0.955110479147706,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": 0.48614901679667355,
+          "t90ShiftMs": -227.89583333333331,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.002280330052599311
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9997093283148359,
+            "fractionOfTotalPowerOutsideRangeA": 1.27640120695105e-11,
+            "fractionOfTotalPowerOutsideRangeB": 1.1357581541915351e-13,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": -0.43845752302109986,
+          "envelope25msRmsCosine": 0.9545407827870901,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 0.372114504360176,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261005-trail-plate-1-base-reference",
+      "plateKey": "20261005-trail-plate-1",
+      "condition": "base-reference",
+      "nodes": 177,
+      "physicsRate": 48000,
+      "pairBaseline": null,
+      "outputRms": 0.07952410366161373,
+      "outputRmsDbfs": -21.990024344948637,
+      "outputPeak": 0.455108106136322,
+      "outputCentroidHz": 161.45164252416126,
+      "outputBandShares": {
+        "0-100Hz": 0.02253456941997154,
+        "100-300Hz": 0.9045149304376706,
+        "300-1000Hz": 0.06478000489183315,
+        "1000-3000Hz": 0.008107337807226977,
+        "3000-24000Hz": 0.0000631574432978746
+      },
+      "outputStereoRatio": 0.932810389053133,
+      "fieldCentroidHz": 180.24498834943475,
+      "fieldBandShares": {
+        "0-100Hz": 0.0212158400053968,
+        "100-300Hz": 0.8842338410877355,
+        "300-1000Hz": 0.08351578734591153,
+        "1000-3000Hz": 0.010818542952087692,
+        "3000-24000Hz": 0.00021598860886819647
+      },
+      "fieldRms": 0.008465984145203439,
+      "fieldT90Ms": 254.45833333333334,
+      "fieldTailAfter500ms": 0.011163718114841388,
+      "fieldPowerAbove3kFraction": 0.00021598860886840043,
+      "limiterRmsDeltaDb": -2.3368095089543033,
+      "forwardQueueResidualL2": 2.563241897189079e-8,
+      "differenceFromDeclaredBaseline": null,
+      "readoutGain8": null
+    },
+    {
+      "id": "20261005-trail-plate-24-baseline",
+      "plateKey": "20261005-trail-plate-24",
+      "condition": "baseline",
+      "nodes": 277,
+      "physicsRate": 6000,
+      "pairBaseline": null,
+      "outputRms": 0.004127928875284803,
+      "outputRmsDbfs": -47.68535588525957,
+      "outputPeak": 0.030071744695305824,
+      "outputCentroidHz": 114.35509268500134,
+      "outputBandShares": {
+        "0-100Hz": 0.4481665632423571,
+        "100-300Hz": 0.5493365676382527,
+        "300-1000Hz": 0.002495957002242621,
+        "1000-3000Hz": 2.0479490160498946e-7,
+        "3000-24000Hz": 7.073222460994308e-7
+      },
+      "outputStereoRatio": 0.22090840416892324,
+      "fieldCentroidHz": 119.82704912877573,
+      "fieldBandShares": {
+        "0-100Hz": 0.26726635033813206,
+        "100-300Hz": 0.7294902442796367,
+        "300-1000Hz": 0.00324316933194987,
+        "1000-3000Hz": 2.3605028136550227e-7,
+        "3000-24000Hz": 2.3652899774265446e-11
+      },
+      "fieldRms": 0.0023884213127393795,
+      "fieldT90Ms": 499.1666666666667,
+      "fieldTailAfter500ms": 0.09946589980871884,
+      "fieldPowerAbove3kFraction": 2.365285745042911e-11,
+      "limiterRmsDeltaDb": -0.12219664266209662,
+      "forwardQueueResidualL2": 3.2247723400809466e-8,
+      "differenceFromDeclaredBaseline": null,
+      "readoutGain8": {
+        "comparison": {
+          "frames": 71520,
+          "relativeL2": 6.3149718614571695,
+          "rmsDeltaDb": 17.282830597521738,
+          "zeroLagCorrelation": 0.9989657293553145,
+          "powerSpectrumCosine": 0.999727577414638,
+          "powerCosine50HzBins": 0.9998918197485577,
+          "envelope25msRmsCosine": 0.9994416179538648,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": 0.5696917244355575,
+          "t90ShiftMs": 12.708333333333371,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.16866722030219955
+        },
+        "limiterCompression": {
+          "frames": 8940,
+          "relativeL2": 0.1105802869895667,
+          "rmsDeltaDb": -0.9009939516711789,
+          "zeroLagCorrelation": 0.9986025905444168,
+          "powerSpectrumCosine": 0.9996333154891832,
+          "powerCosine50HzBins": 0.9998537557806388,
+          "envelope25msRmsCosine": 0.9992417368297571,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": 0.6474177188135428,
+          "t90ShiftMs": 13.333333333333371,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.049293768800521665
+        }
+      }
+    },
+    {
+      "id": "20261005-trail-plate-24-instant",
+      "plateKey": "20261005-trail-plate-24",
+      "condition": "instant",
+      "nodes": 277,
+      "physicsRate": 6000,
+      "pairBaseline": "20261005-trail-plate-24-baseline",
+      "outputRms": 0.004766274968294791,
+      "outputRmsDbfs": -46.43641813291569,
+      "outputPeak": 0.040056101977825165,
+      "outputCentroidHz": 130.8354791298925,
+      "outputBandShares": {
+        "0-100Hz": 0.39619817217547426,
+        "100-300Hz": 0.5678872139021678,
+        "300-1000Hz": 0.03591034401503903,
+        "1000-3000Hz": 4.083509316620494e-7,
+        "3000-24000Hz": 0.000003861556387364342
+      },
+      "outputStereoRatio": 0.3045023040490554,
+      "fieldCentroidHz": 150.58707250373956,
+      "fieldBandShares": {
+        "0-100Hz": 0.21656438488306273,
+        "100-300Hz": 0.7226266077115444,
+        "300-1000Hz": 0.06080105197234004,
+        "1000-3000Hz": 0.000007955433052749155,
+        "3000-24000Hz": 3.64659950998402e-10
+      },
+      "fieldRms": 0.0028796225485742616,
+      "fieldT90Ms": 497.8333333333333,
+      "fieldTailAfter500ms": 0.09872169353002869,
+      "fieldPowerAbove3kFraction": 3.6465996888779273e-10,
+      "limiterRmsDeltaDb": -0.13700541838605318,
+      "forwardQueueResidualL2": 3.2589709854917175e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 1.1085513635162325,
+          "rmsDeltaDb": 1.2489377523438776,
+          "zeroLagCorrelation": 0.47820465406481133,
+          "powerSpectrumCosine": 0.998667315503142,
+          "powerCosine50HzBins": 0.9978383308712544,
+          "envelope25msRmsCosine": 0.9988584589744575,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": 16.480386444891153,
+          "t90ShiftMs": -1.2291666666666856,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.04110846482217312
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9930406910072423,
+            "fractionOfTotalPowerOutsideRangeA": 2.365285745042911e-11,
+            "fractionOfTotalPowerOutsideRangeB": 3.6465996888779273e-10,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": 30.760023374963836,
+          "envelope25msRmsCosine": 0.9998877692304128,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 1.216049599183258,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261005-trail-plate-24-spatial-grid",
+      "plateKey": "20261005-trail-plate-24",
+      "condition": "spatial-grid",
+      "nodes": 277,
+      "physicsRate": 6000,
+      "pairBaseline": "20261005-trail-plate-24-baseline",
+      "outputRms": 0.005773354533864272,
+      "outputRmsDbfs": -44.77143544495828,
+      "outputPeak": 0.041304655373096466,
+      "outputCentroidHz": 110.73410962132714,
+      "outputBandShares": {
+        "0-100Hz": 0.4865912513451146,
+        "100-300Hz": 0.5126846962489758,
+        "300-1000Hz": 0.0007232901371650012,
+        "1000-3000Hz": 2.1668135691508365e-7,
+        "3000-24000Hz": 5.455873875070962e-7
+      },
+      "outputStereoRatio": 0.19053899648951536,
+      "fieldCentroidHz": 113.77065232100453,
+      "fieldBandShares": {
+        "0-100Hz": 0.2964838052684,
+        "100-300Hz": 0.7027859771426145,
+        "300-1000Hz": 0.0007299874796520458,
+        "1000-3000Hz": 2.301093333149036e-7,
+        "3000-24000Hz": 2.3209973131147793e-11
+      },
+      "fieldRms": 0.003316975751093284,
+      "fieldT90Ms": 499.1666666666667,
+      "fieldTailAfter500ms": 0.09947259193244729,
+      "fieldPowerAbove3kFraction": 2.3209989485906135e-11,
+      "limiterRmsDeltaDb": -0.17251039341960706,
+      "forwardQueueResidualL2": 3.2830953687441166e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 0.408491586538714,
+          "rmsDeltaDb": 2.9139204403012897,
+          "zeroLagCorrelation": 0.9971482350539713,
+          "powerSpectrumCosine": 0.998127735261226,
+          "powerCosine50HzBins": 0.9980870369150583,
+          "envelope25msRmsCosine": 0.9998644726148442,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": -3.6209830636742026,
+          "t90ShiftMs": 0.75,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.012366082519292831
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9989318554473628,
+            "fractionOfTotalPowerOutsideRangeA": 2.365285745042911e-11,
+            "fractionOfTotalPowerOutsideRangeB": 2.3209989485906135e-11,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": -6.056396807771193,
+          "envelope25msRmsCosine": 0.9999997444093889,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 0.40590120594228274,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261005-trail-plate-24-spatial-world-width",
+      "plateKey": "20261005-trail-plate-24",
+      "condition": "spatial-world-width",
+      "nodes": 277,
+      "physicsRate": 6000,
+      "pairBaseline": "20261005-trail-plate-24-baseline",
+      "outputRms": 0.007962424593658755,
+      "outputRmsDbfs": -41.97909335049569,
+      "outputPeak": 0.05428798496723175,
+      "outputCentroidHz": 100.96686184900231,
+      "outputBandShares": {
+        "0-100Hz": 0.6936591883189301,
+        "100-300Hz": 0.3063038637065947,
+        "300-1000Hz": 0.00003633035138135424,
+        "1000-3000Hz": 2.7444825958413283e-7,
+        "3000-24000Hz": 3.4317483409811715e-7
+      },
+      "outputStereoRatio": 0.07958114365592452,
+      "fieldCentroidHz": 102.52522907188894,
+      "fieldBandShares": {
+        "0-100Hz": 0.48424873728727147,
+        "100-300Hz": 0.5157104838995866,
+        "300-1000Hz": 0.000040530573377781696,
+        "1000-3000Hz": 2.482397643670856e-7,
+        "3000-24000Hz": 2.5529859630891265e-11
+      },
+      "fieldRms": 0.0043444096737079736,
+      "fieldT90Ms": 499.1666666666667,
+      "fieldTailAfter500ms": 0.09942719099273849,
+      "fieldPowerAbove3kFraction": 2.5529578451255475e-11,
+      "limiterRmsDeltaDb": -0.2344430272031346,
+      "forwardQueueResidualL2": 3.2377611511418865e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 1.0847119863831505,
+          "rmsDeltaDb": 5.70626253476388,
+          "zeroLagCorrelation": 0.9186805303463473,
+          "powerSpectrumCosine": 0.9474873674565305,
+          "powerCosine50HzBins": 0.9146209755260624,
+          "envelope25msRmsCosine": 0.9974887578881995,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": -13.388230835999025,
+          "t90ShiftMs": 2.9583333333333144,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.0314595578238368
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9341062573711068,
+            "fractionOfTotalPowerOutsideRangeA": 2.365285745042911e-11,
+            "fractionOfTotalPowerOutsideRangeB": 2.5529578451255475e-11,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": -17.301820056886783,
+          "envelope25msRmsCosine": 0.9999949504957242,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 1.0265280323989843,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261005-trail-plate-24-jitter",
+      "plateKey": "20261005-trail-plate-24",
+      "condition": "jitter",
+      "nodes": 277,
+      "physicsRate": 6000,
+      "pairBaseline": "20261005-trail-plate-24-baseline",
+      "outputRms": 0.004071293483771717,
+      "outputRmsDbfs": -47.80535179771546,
+      "outputPeak": 0.02968515269458294,
+      "outputCentroidHz": 114.35601217742806,
+      "outputBandShares": {
+        "0-100Hz": 0.4480846108942838,
+        "100-300Hz": 0.5493918572179144,
+        "300-1000Hz": 0.0025226160163340327,
+        "1000-3000Hz": 2.0599710084558503e-7,
+        "3000-24000Hz": 7.098743668094007e-7
+      },
+      "outputStereoRatio": 0.22078684378305077,
+      "fieldCentroidHz": 120.02293338839527,
+      "fieldBandShares": {
+        "0-100Hz": 0.26692393334753484,
+        "100-300Hz": 0.729724083587327,
+        "300-1000Hz": 0.0033517468263096644,
+        "1000-3000Hz": 2.3623882894004364e-7,
+        "3000-24000Hz": 2.3672041638357392e-11
+      },
+      "fieldRms": 0.0023565646913601135,
+      "fieldT90Ms": 499.1666666666667,
+      "fieldTailAfter500ms": 0.09946500606539047,
+      "fieldPowerAbove3kFraction": 2.3671731241847738e-11,
+      "limiterRmsDeltaDb": -0.120530182544897,
+      "forwardQueueResidualL2": 3.2397901455106794e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 0.014193015069229436,
+          "rmsDeltaDb": -0.11999591245589158,
+          "zeroLagCorrelation": 0.999993307225574,
+          "powerSpectrumCosine": 0.9999999288976227,
+          "powerCosine50HzBins": 0.9999999537021254,
+          "envelope25msRmsCosine": 0.9999999827064979,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": 0.0009194924267177385,
+          "t90ShiftMs": 0,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.00040496885776519775
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9999987215712566,
+            "fractionOfTotalPowerOutsideRangeA": 2.365285745042911e-11,
+            "fractionOfTotalPowerOutsideRangeB": 2.3671731241847738e-11,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": 0.1958842596195467,
+          "envelope25msRmsCosine": 0.9999999998833486,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 0.014422682713258155,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261005-trail-plate-24-loss-frequency",
+      "plateKey": "20261005-trail-plate-24",
+      "condition": "loss-frequency",
+      "nodes": 277,
+      "physicsRate": 6000,
+      "pairBaseline": "20261005-trail-plate-24-baseline",
+      "outputRms": 0.0030905857871274985,
+      "outputRmsDbfs": -50.199183938974215,
+      "outputPeak": 0.02775447443127632,
+      "outputCentroidHz": 112.40169411152195,
+      "outputBandShares": {
+        "0-100Hz": 0.4408193349306635,
+        "100-300Hz": 0.55735137442818,
+        "300-1000Hz": 0.0018287551425696616,
+        "1000-3000Hz": 7.705719133624445e-9,
+        "3000-24000Hz": 5.277928675701442e-7
+      },
+      "outputStereoRatio": 0.20331020400697913,
+      "fieldCentroidHz": 115.35401156783391,
+      "fieldBandShares": {
+        "0-100Hz": 0.28453420565595355,
+        "100-300Hz": 0.7136569431283234,
+        "300-1000Hz": 0.0018088461364862863,
+        "1000-3000Hz": 5.079236710194271e-9,
+        "3000-24000Hz": 2.306023720282153e-13
+      },
+      "fieldRms": 0.0017742865224863505,
+      "fieldT90Ms": 280.1666666666667,
+      "fieldTailAfter500ms": 0.016835229514071896,
+      "fieldPowerAbove3kFraction": 2.3070434451710753e-13,
+      "limiterRmsDeltaDb": -0.11974796968247858,
+      "forwardQueueResidualL2": 3.239310526315193e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 0.35327172888106667,
+          "rmsDeltaDb": -2.513828053714647,
+          "zeroLagCorrelation": 0.9588287845070451,
+          "powerSpectrumCosine": 0.9592320349306834,
+          "powerCosine50HzBins": 0.9995612300902297,
+          "envelope25msRmsCosine": 0.9621375247386447,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": -1.9533985734793902,
+          "t90ShiftMs": -216.625,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.00846318993717432
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9996317885786472,
+            "fractionOfTotalPowerOutsideRangeA": 2.365285745042911e-11,
+            "fractionOfTotalPowerOutsideRangeB": 2.3070434451710753e-13,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": -4.473037560941819,
+          "envelope25msRmsCosine": 0.9597241399241244,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 0.3655397026889692,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261005-trail-plate-24-loss-uniform",
+      "plateKey": "20261005-trail-plate-24",
+      "condition": "loss-uniform",
+      "nodes": 277,
+      "physicsRate": 6000,
+      "pairBaseline": "20261005-trail-plate-24-baseline",
+      "outputRms": 0.0030248364802880636,
+      "outputRmsDbfs": -50.38596195826702,
+      "outputPeak": 0.027610665187239647,
+      "outputCentroidHz": 115.08527750341703,
+      "outputBandShares": {
+        "0-100Hz": 0.4102292324474998,
+        "100-300Hz": 0.5868296908554412,
+        "300-1000Hz": 0.0029404232173882443,
+        "1000-3000Hz": 6.708482197271799e-9,
+        "3000-24000Hz": 6.46771188391571e-7
+      },
+      "outputStereoRatio": 0.23057937957845334,
+      "fieldCentroidHz": 119.50529639736907,
+      "fieldBandShares": {
+        "0-100Hz": 0.2636689879710942,
+        "100-300Hz": 0.7330136701771229,
+        "300-1000Hz": 0.0033173375762451,
+        "1000-3000Hz": 4.27553776244921e-9,
+        "3000-24000Hz": 1.1000511659151422e-13
+      },
+      "fieldRms": 0.0017543895882930706,
+      "fieldT90Ms": 270.5,
+      "fieldTailAfter500ms": 0.014077597609382266,
+      "fieldPowerAbove3kFraction": 1.1013412404281553e-13,
+      "limiterRmsDeltaDb": -0.11881281831019663,
+      "forwardQueueResidualL2": 3.238406037633142e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 0.37089597405361846,
+          "rmsDeltaDb": -2.7006060730074495,
+          "zeroLagCorrelation": 0.9548606921415841,
+          "powerSpectrumCosine": 0.9454340640537119,
+          "powerCosine50HzBins": 0.9971977870662554,
+          "envelope25msRmsCosine": 0.9552373679178935,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": 0.7301848184156938,
+          "t90ShiftMs": -225.95833333333331,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.008329865522682667
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9999473807921804,
+            "fractionOfTotalPowerOutsideRangeA": 2.365285745042911e-11,
+            "fractionOfTotalPowerOutsideRangeB": 1.1013412404281553e-13,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": -0.3217527314066615,
+          "envelope25msRmsCosine": 0.9547162862267844,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 0.37100628712530337,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261005-trail-plate-24-base-reference",
+      "plateKey": "20261005-trail-plate-24",
+      "condition": "base-reference",
+      "nodes": 177,
+      "physicsRate": 48000,
+      "pairBaseline": null,
+      "outputRms": 0.0816097182705462,
+      "outputRmsDbfs": -21.765162427873005,
+      "outputPeak": 0.4265473186969757,
+      "outputCentroidHz": 145.7848311353311,
+      "outputBandShares": {
+        "0-100Hz": 0.023340422725362728,
+        "100-300Hz": 0.9134128306473945,
+        "300-1000Hz": 0.05784512175248364,
+        "1000-3000Hz": 0.005240817534033969,
+        "3000-24000Hz": 0.00016080734072494295
+      },
+      "outputStereoRatio": 1.0452264626583874,
+      "fieldCentroidHz": 175.18017756706254,
+      "fieldBandShares": {
+        "0-100Hz": 0.022367350391184045,
+        "100-300Hz": 0.8787708573638742,
+        "300-1000Hz": 0.08737941632121313,
+        "1000-3000Hz": 0.011260146425105116,
+        "3000-24000Hz": 0.00022222949862408812
+      },
+      "fieldRms": 0.00871460157437036,
+      "fieldT90Ms": 254.85416666666666,
+      "fieldTailAfter500ms": 0.011260404667578732,
+      "fieldPowerAbove3kFraction": 0.0002222294986237161,
+      "limiterRmsDeltaDb": -2.296426215861217,
+      "forwardQueueResidualL2": 2.568805651887379e-8,
+      "differenceFromDeclaredBaseline": null,
+      "readoutGain8": null
+    },
+    {
+      "id": "20261007-trail-plate-26-baseline",
+      "plateKey": "20261007-trail-plate-26",
+      "condition": "baseline",
+      "nodes": 350,
+      "physicsRate": 6000,
+      "pairBaseline": null,
+      "outputRms": 0.003163099460181227,
+      "outputRmsDbfs": -49.9977430391515,
+      "outputPeak": 0.02996634691953659,
+      "outputCentroidHz": 71.47023380092983,
+      "outputBandShares": {
+        "0-100Hz": 0.8243284104878957,
+        "100-300Hz": 0.17227184262378217,
+        "300-1000Hz": 0.003399255558592036,
+        "1000-3000Hz": 4.1367113726091944e-8,
+        "3000-24000Hz": 4.499626167628589e-7
+      },
+      "outputStereoRatio": 0.16149237702550176,
+      "fieldCentroidHz": 71.02183637445933,
+      "fieldBandShares": {
+        "0-100Hz": 0.8446801677643384,
+        "100-300Hz": 0.15267637507115092,
+        "300-1000Hz": 0.0026431943861950705,
+        "1000-3000Hz": 2.62778315377984e-7,
+        "3000-24000Hz": 2.6444463647792476e-11
+      },
+      "fieldRms": 0.0033815603373142356,
+      "fieldT90Ms": 496.3333333333333,
+      "fieldTailAfter500ms": 0.09854717747606342,
+      "fieldPowerAbove3kFraction": 2.644473529045399e-11,
+      "limiterRmsDeltaDb": -0.1066317990827983,
+      "forwardQueueResidualL2": 3.225104934855765e-8,
+      "differenceFromDeclaredBaseline": null,
+      "readoutGain8": {
+        "comparison": {
+          "frames": 71520,
+          "relativeL2": 6.400904923974558,
+          "rmsDeltaDb": 17.38419653478399,
+          "zeroLagCorrelation": 0.9988946424827455,
+          "powerSpectrumCosine": 0.9997985567188623,
+          "powerCosine50HzBins": 0.9999964751616571,
+          "envelope25msRmsCosine": 0.9993672402497051,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": 0.15246558449403835,
+          "t90ShiftMs": 16.85416666666663,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.16819683619447634
+        },
+        "limiterCompression": {
+          "frames": 8940,
+          "relativeL2": 0.10092903589067943,
+          "rmsDeltaDb": -0.7841867205053603,
+          "zeroLagCorrelation": 0.9985036911834667,
+          "powerSpectrumCosine": 0.9997270023169406,
+          "powerCosine50HzBins": 0.9999952627881251,
+          "envelope25msRmsCosine": 0.9991413973771697,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": 0.15601616818857167,
+          "t90ShiftMs": 29.833333333333314,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.04897336504749372
+        }
+      }
+    },
+    {
+      "id": "20261007-trail-plate-26-instant",
+      "plateKey": "20261007-trail-plate-26",
+      "condition": "instant",
+      "nodes": 350,
+      "physicsRate": 6000,
+      "pairBaseline": "20261007-trail-plate-26-baseline",
+      "outputRms": 0.0034916352389841934,
+      "outputRmsDbfs": -49.13942264165811,
+      "outputPeak": 0.03487003967165947,
+      "outputCentroidHz": 97.54234439980937,
+      "outputBandShares": {
+        "0-100Hz": 0.7173433142639338,
+        "100-300Hz": 0.2322658136865817,
+        "300-1000Hz": 0.050387313804573355,
+        "1000-3000Hz": 1.5093362004328105e-7,
+        "3000-24000Hz": 0.0000034073112910084233
+      },
+      "outputStereoRatio": 0.2433524835890882,
+      "fieldCentroidHz": 91.08485047232399,
+      "fieldBandShares": {
+        "0-100Hz": 0.757167681113167,
+        "100-300Hz": 0.20380639763883618,
+        "300-1000Hz": 0.03902174998801291,
+        "1000-3000Hz": 0.000004171259983995554,
+        "3000-24000Hz": 2.1624386797778061e-10
+      },
+      "fieldRms": 0.0036874205446254167,
+      "fieldT90Ms": 495.1666666666667,
+      "fieldTailAfter500ms": 0.09819945725370423,
+      "fieldPowerAbove3kFraction": 2.162439116659698e-10,
+      "limiterRmsDeltaDb": -0.11559052837436923,
+      "forwardQueueResidualL2": 3.316816904854635e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 0.8438032636944408,
+          "rmsDeltaDb": 0.8583203974933937,
+          "zeroLagCorrelation": 0.6823815010110885,
+          "powerSpectrumCosine": 0.9953195410094087,
+          "powerCosine50HzBins": 0.9942629725306754,
+          "envelope25msRmsCosine": 0.9977281895872768,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": 26.072110598879533,
+          "t90ShiftMs": -6.8125,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.022832189686596394
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.996847861383233,
+            "fractionOfTotalPowerOutsideRangeA": 2.644473529045399e-11,
+            "fractionOfTotalPowerOutsideRangeB": 2.162439116659698e-10,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": 20.063014097864666,
+          "envelope25msRmsCosine": 0.9999439443744409,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 0.7998795053217626,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261007-trail-plate-26-spatial-grid",
+      "plateKey": "20261007-trail-plate-26",
+      "condition": "spatial-grid",
+      "nodes": 350,
+      "physicsRate": 6000,
+      "pairBaseline": "20261007-trail-plate-26-baseline",
+      "outputRms": 0.004481194206460106,
+      "outputRmsDbfs": -46.972124683594444,
+      "outputPeak": 0.04083149880170822,
+      "outputCentroidHz": 63.851421588325984,
+      "outputBandShares": {
+        "0-100Hz": 0.8689418224503886,
+        "100-300Hz": 0.13045982363419248,
+        "300-1000Hz": 0.0005981010299765906,
+        "1000-3000Hz": 2.2796834625318244e-8,
+        "3000-24000Hz": 2.3008860754181357e-7
+      },
+      "outputStereoRatio": 0.1318022486217199,
+      "fieldCentroidHz": 64.69019790562497,
+      "fieldBandShares": {
+        "0-100Hz": 0.8855868787339598,
+        "100-300Hz": 0.11395265994624823,
+        "300-1000Hz": 0.00046019893786738823,
+        "1000-3000Hz": 2.6238192453130823e-7,
+        "3000-24000Hz": 2.6455272972461713e-11
+      },
+      "fieldRms": 0.004802448862704153,
+      "fieldT90Ms": 496.3333333333333,
+      "fieldTailAfter500ms": 0.0985327532141005,
+      "fieldPowerAbove3kFraction": 2.6455393431490393e-11,
+      "limiterRmsDeltaDb": -0.15082817267774118,
+      "forwardQueueResidualL2": 3.3227484110778297e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 0.43021969878368094,
+          "rmsDeltaDb": 3.0256183555570573,
+          "zeroLagCorrelation": 0.9959618131246382,
+          "powerSpectrumCosine": 0.9967895667825671,
+          "powerCosine50HzBins": 0.9967814501918832,
+          "envelope25msRmsCosine": 0.9998686079322028,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": -7.618812212603849,
+          "t90ShiftMs": 0.9166666666666288,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.01123436726629734
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9977887073985388,
+            "fractionOfTotalPowerOutsideRangeA": 2.644473529045399e-11,
+            "fractionOfTotalPowerOutsideRangeB": 2.6455393431490393e-11,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": -6.331638468834356,
+          "envelope25msRmsCosine": 0.9999978507434081,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 0.4314765484586497,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261007-trail-plate-26-spatial-world-width",
+      "plateKey": "20261007-trail-plate-26",
+      "condition": "spatial-world-width",
+      "nodes": 350,
+      "physicsRate": 6000,
+      "pairBaseline": "20261007-trail-plate-26-baseline",
+      "outputRms": 0.00964901791796713,
+      "outputRmsDbfs": -40.31033774247598,
+      "outputPeak": 0.0702933818101883,
+      "outputCentroidHz": 35.32075543044044,
+      "outputBandShares": {
+        "0-100Hz": 0.9869871647347741,
+        "100-300Hz": 0.012993481731137202,
+        "300-1000Hz": 0.00001920537620050866,
+        "1000-3000Hz": 8.099591553438756e-8,
+        "3000-24000Hz": 6.716197270059462e-8
+      },
+      "outputStereoRatio": 0.16352854169916597,
+      "fieldCentroidHz": 38.56009356070319,
+      "fieldBandShares": {
+        "0-100Hz": 0.9891525925335023,
+        "100-300Hz": 0.010827712172821071,
+        "300-1000Hz": 0.000019445657340053864,
+        "1000-3000Hz": 2.4963633652899235e-7,
+        "3000-24000Hz": 2.5333387187850228e-11
+      },
+      "fieldRms": 0.009382803539604237,
+      "fieldT90Ms": 495.5,
+      "fieldTailAfter500ms": 0.0981800739045588,
+      "fieldPowerAbove3kFraction": 2.5333291020501747e-11,
+      "limiterRmsDeltaDb": -0.28154248115433944,
+      "forwardQueueResidualL2": 3.336530535409079e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 2.282432022051785,
+          "rmsDeltaDb": 9.687405296675522,
+          "zeroLagCorrelation": 0.8352779091946071,
+          "powerSpectrumCosine": 0.831071368555226,
+          "powerCosine50HzBins": 0.8177661781368621,
+          "envelope25msRmsCosine": 0.9944072437812722,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": -36.14947837048939,
+          "t90ShiftMs": 1.3541666666666288,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.045702848583459854
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.7603320262464922,
+            "fractionOfTotalPowerOutsideRangeA": 2.644473529045399e-11,
+            "fractionOfTotalPowerOutsideRangeB": 2.5333291020501747e-11,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": -32.46174281375614,
+          "envelope25msRmsCosine": 0.9995845424173578,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 2.008059187366966,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261007-trail-plate-26-jitter",
+      "plateKey": "20261007-trail-plate-26",
+      "condition": "jitter",
+      "nodes": 350,
+      "physicsRate": 6000,
+      "pairBaseline": "20261007-trail-plate-26-baseline",
+      "outputRms": 0.003155690914404984,
+      "outputRmsDbfs": -50.0181108110391,
+      "outputPeak": 0.02993941120803356,
+      "outputCentroidHz": 71.25477789722171,
+      "outputBandShares": {
+        "0-100Hz": 0.8259118174018787,
+        "100-300Hz": 0.17066814741768602,
+        "300-1000Hz": 0.0034195443842043117,
+        "1000-3000Hz": 4.15518758510009e-8,
+        "3000-24000Hz": 4.492443551422809e-7
+      },
+      "outputStereoRatio": 0.16072418716280643,
+      "fieldCentroidHz": 70.88617352425273,
+      "fieldBandShares": {
+        "0-100Hz": 0.8457050947946054,
+        "100-300Hz": 0.1516186211643593,
+        "300-1000Hz": 0.002676021169702821,
+        "1000-3000Hz": 2.6287133240448125e-7,
+        "3000-24000Hz": 2.645677573084463e-11
+      },
+      "fieldRms": 0.0033740982064093747,
+      "fieldT90Ms": 496.3333333333333,
+      "fieldTailAfter500ms": 0.09854658767768695,
+      "fieldPowerAbove3kFraction": 2.6456725699119943e-11,
+      "limiterRmsDeltaDb": -0.10637249285329631,
+      "forwardQueueResidualL2": 3.206406149742748e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 0.004996247945659766,
+          "rmsDeltaDb": -0.020367771887599417,
+          "zeroLagCorrelation": 0.9999902387924485,
+          "powerSpectrumCosine": 0.9999925934302026,
+          "powerCosine50HzBins": 0.9999946436834553,
+          "envelope25msRmsCosine": 0.9999998177885064,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": -0.2154559037081185,
+          "t90ShiftMs": 0,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.00014927424490451813
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9999977220893158,
+            "fractionOfTotalPowerOutsideRangeA": 2.644473529045399e-11,
+            "fractionOfTotalPowerOutsideRangeB": 2.6456725699119943e-11,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": -0.13566285020660018,
+          "envelope25msRmsCosine": 0.9999999979481944,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 0.004067024269196047,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261007-trail-plate-26-loss-frequency",
+      "plateKey": "20261007-trail-plate-26",
+      "condition": "loss-frequency",
+      "nodes": 350,
+      "physicsRate": 6000,
+      "pairBaseline": "20261007-trail-plate-26-baseline",
+      "outputRms": 0.00264230591497437,
+      "outputRmsDbfs": -51.56033806074185,
+      "outputPeak": 0.028828280046582222,
+      "outputCentroidHz": 62.71871518871923,
+      "outputBandShares": {
+        "0-100Hz": 0.8747111525492531,
+        "100-300Hz": 0.12385140562419066,
+        "300-1000Hz": 0.0014371569261255558,
+        "1000-3000Hz": 8.017698132183716e-9,
+        "3000-24000Hz": 2.7688273269883695e-7
+      },
+      "outputStereoRatio": 0.1287748506254264,
+      "fieldCentroidHz": 63.62698671464633,
+      "fieldBandShares": {
+        "0-100Hz": 0.8895606649433982,
+        "100-300Hz": 0.10932042007039453,
+        "300-1000Hz": 0.0011188794864062635,
+        "1000-3000Hz": 3.5499801309557064e-8,
+        "3000-24000Hz": 3.497853718193724e-12
+      },
+      "fieldRms": 0.0028158969227560196,
+      "fieldT90Ms": 357.8333333333333,
+      "fieldTailAfter500ms": 0.04102958521651033,
+      "fieldPowerAbove3kFraction": 3.497646616779093e-12,
+      "limiterRmsDeltaDb": -0.10647058630515716,
+      "forwardQueueResidualL2": 3.224752509881428e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 0.2600030735175446,
+          "rmsDeltaDb": -1.5625950215903472,
+          "zeroLagCorrelation": 0.9757628940706606,
+          "powerSpectrumCosine": 0.9757006834948927,
+          "powerCosine50HzBins": 0.9914748598874702,
+          "envelope25msRmsCosine": 0.9872938562786214,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": -8.751518612210603,
+          "t90ShiftMs": -140.16666666666669,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.004410395398736
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9943931029068968,
+            "fractionOfTotalPowerOutsideRangeA": 2.644473529045399e-11,
+            "fractionOfTotalPowerOutsideRangeB": 3.497646616779093e-12,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": -7.394849659812998,
+          "envelope25msRmsCosine": 0.9862959058236673,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 0.2594417128862741,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261007-trail-plate-26-loss-uniform",
+      "plateKey": "20261007-trail-plate-26",
+      "condition": "loss-uniform",
+      "nodes": 350,
+      "physicsRate": 6000,
+      "pairBaseline": "20261007-trail-plate-26-baseline",
+      "outputRms": 0.0023158612991043583,
+      "outputRmsDbfs": -52.70574909610641,
+      "outputPeak": 0.02824641391634941,
+      "outputCentroidHz": 72.06393018822412,
+      "outputBandShares": {
+        "0-100Hz": 0.8185958500422769,
+        "100-300Hz": 0.1779450424942855,
+        "300-1000Hz": 0.003458648384833991,
+        "1000-3000Hz": 6.942873615814562e-10,
+        "3000-24000Hz": 4.5838431614842986e-7
+      },
+      "outputStereoRatio": 0.16063533996983942,
+      "fieldCentroidHz": 70.78080033039352,
+      "fieldBandShares": {
+        "0-100Hz": 0.8430954593454241,
+        "100-300Hz": 0.15426583491965437,
+        "300-1000Hz": 0.0026387030583241706,
+        "1000-3000Hz": 2.676597492262349e-9,
+        "3000-24000Hz": 1.4408884873837386e-13
+      },
+      "fieldRms": 0.0024877761649323435,
+      "fieldT90Ms": 270.5,
+      "fieldTailAfter500ms": 0.014047035117523568,
+      "fieldPowerAbove3kFraction": 1.4421797089880783e-13,
+      "limiterRmsDeltaDb": -0.10855421337240756,
+      "forwardQueueResidualL2": 3.156631753143819e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 0.36991275928127526,
+          "rmsDeltaDb": -2.7080060569549076,
+          "zeroLagCorrelation": 0.9555476687719457,
+          "powerSpectrumCosine": 0.9620896208943307,
+          "powerCosine50HzBins": 0.9999136791491021,
+          "envelope25msRmsCosine": 0.9557795361152085,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": 0.5936963872942869,
+          "t90ShiftMs": -253.08333333333331,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.006530512124300003
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9999638220525306,
+            "fractionOfTotalPowerOutsideRangeA": 2.644473529045399e-11,
+            "fractionOfTotalPowerOutsideRangeB": 1.4421797089880783e-13,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": -0.24103604406580814,
+          "envelope25msRmsCosine": 0.9552054016638506,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 0.368958594775894,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261007-trail-plate-26-base-reference",
+      "plateKey": "20261007-trail-plate-26",
+      "condition": "base-reference",
+      "nodes": 177,
+      "physicsRate": 48000,
+      "pairBaseline": null,
+      "outputRms": 0.07961939481284941,
+      "outputRmsDbfs": -21.97962255624889,
+      "outputPeak": 0.44959214329719543,
+      "outputCentroidHz": 171.3982309621832,
+      "outputBandShares": {
+        "0-100Hz": 0.02135618515949583,
+        "100-300Hz": 0.8992710200060902,
+        "300-1000Hz": 0.07066596934997131,
+        "1000-3000Hz": 0.008533844116294317,
+        "3000-24000Hz": 0.0001729813681482216
+      },
+      "outputStereoRatio": 0.9457235913474414,
+      "fieldCentroidHz": 184.09555767308217,
+      "fieldBandShares": {
+        "0-100Hz": 0.020521617497302438,
+        "100-300Hz": 0.8842125679027087,
+        "300-1000Hz": 0.0844670139986223,
+        "1000-3000Hz": 0.01055674944143181,
+        "3000-24000Hz": 0.00024205115993461575
+      },
+      "fieldRms": 0.008418407198931806,
+      "fieldT90Ms": 254.25,
+      "fieldTailAfter500ms": 0.011098924635314757,
+      "fieldPowerAbove3kFraction": 0.0002420511599346975,
+      "limiterRmsDeltaDb": -2.4155673681364007,
+      "forwardQueueResidualL2": 2.5784569479747782e-8,
+      "differenceFromDeclaredBaseline": null,
+      "readoutGain8": null
+    },
+    {
+      "id": "20261005-trail-plate-1-rate-aware-48",
+      "plateKey": "20261005-trail-plate-1",
+      "condition": "rate-aware-48",
+      "nodes": 48,
+      "physicsRate": 48000,
+      "pairBaseline": "20261005-trail-plate-1-baseline",
+      "outputRms": 0.0012618646544348825,
+      "outputRmsDbfs": -57.979744486374656,
+      "outputPeak": 0.009028177708387375,
+      "outputCentroidHz": 224.92572857858295,
+      "outputBandShares": {
+        "0-100Hz": 5.217921675839324e-7,
+        "100-300Hz": 0.9236414930298891,
+        "300-1000Hz": 0.0763576529194324,
+        "1000-3000Hz": 2.2909405968093916e-7,
+        "3000-24000Hz": 1.0316445161215308e-7
+      },
+      "outputStereoRatio": 1.0472860883459718,
+      "fieldCentroidHz": 167.00636779631174,
+      "fieldBandShares": {
+        "0-100Hz": 0.0037345319885185493,
+        "100-300Hz": 0.9827077901997096,
+        "300-1000Hz": 0.013557215021326969,
+        "1000-3000Hz": 3.147786579051008e-7,
+        "3000-24000Hz": 1.4801178696412435e-7
+      },
+      "fieldRms": 0.0039010866028247365,
+      "fieldT90Ms": 499.1458333333333,
+      "fieldTailAfter500ms": 0.09964251179217826,
+      "fieldPowerAbove3kFraction": 1.4801178693790717e-7,
+      "limiterRmsDeltaDb": -0.02927828027752355,
+      "forwardQueueResidualL2": 3.564838006134381e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 0.8174244120394889,
+          "rmsDeltaDb": 0.03580069966446331,
+          "zeroLagCorrelation": 0.66729135247746,
+          "powerSpectrumCosine": 0.6201901123743846,
+          "powerCosine50HzBins": 0.9999919464224792,
+          "envelope25msRmsCosine": 0.9992259600833256,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": -0.19563972496123938,
+          "t90ShiftMs": 0.5416666666666856,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.006466503953561187
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9999995055672393,
+            "fractionOfTotalPowerOutsideRangeA": 1.27640120695105e-11,
+            "fractionOfTotalPowerOutsideRangeB": 1.4801178693790717e-7,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": -0.24534184507078294,
+          "envelope25msRmsCosine": 0.9999674821807778,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": null,
+            "phaseL2Eligible": false,
+            "reason": "requires equal field rate, node ordering/count, frames, phase, and declared geometryKey"
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261005-trail-plate-1-base-elastic-48",
+      "plateKey": "20261005-trail-plate-1",
+      "condition": "base-elastic-48",
+      "nodes": 48,
+      "physicsRate": 48000,
+      "pairBaseline": "20261005-trail-plate-1-rate-aware-48",
+      "outputRms": 0.000001982050381575316,
+      "outputRmsDbfs": -114.05770620829583,
+      "outputPeak": 0.000016967785995802842,
+      "outputCentroidHz": 1569.646519530506,
+      "outputBandShares": {
+        "0-100Hz": 0.0000010119787037853547,
+        "100-300Hz": 0.000006032466736289547,
+        "300-1000Hz": 0.44143548641753044,
+        "1000-3000Hz": 0.46097960987721215,
+        "3000-24000Hz": 0.09757785925981738
+      },
+      "outputStereoRatio": 2.709137839729401,
+      "fieldCentroidHz": 1096.5859696787063,
+      "fieldBandShares": {
+        "0-100Hz": 0.09960655307858761,
+        "100-300Hz": 0.10923314298593571,
+        "300-1000Hz": 0.04186686058671405,
+        "1000-3000Hz": 0.7457049384711864,
+        "3000-24000Hz": 0.003588504877576567
+      },
+      "fieldRms": 0.000008325019048999537,
+      "fieldT90Ms": 446.2291666666667,
+      "fieldTailAfter500ms": 0.07791739418066938,
+      "fieldPowerAbove3kFraction": 0.0035885048775761152,
+      "limiterRmsDeltaDb": -0.000054711340538915465,
+      "forwardQueueResidualL2": 3.5740213124516443e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 1.0000013105285495,
+          "rmsDeltaDb": -56.07796172192117,
+          "zeroLagCorrelation": -0.000048977763867240866,
+          "powerSpectrumCosine": 3.504957376356158e-7,
+          "powerCosine50HzBins": 0.000004647794151107482,
+          "envelope25msRmsCosine": 0.9938042946666744,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": 1344.7207909519232,
+          "t90ShiftMs": 4.979166666666686,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.00903109453020079
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.04842552668600944,
+            "fractionOfTotalPowerOutsideRangeA": 1.4801178693790717e-7,
+            "fractionOfTotalPowerOutsideRangeB": 0.0035885048775761152,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": 929.5796018823946,
+          "envelope25msRmsCosine": 0.9677441795196386,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 0.9999462640878559,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261005-trail-plate-1-base-elastic-instant-48",
+      "plateKey": "20261005-trail-plate-1",
+      "condition": "base-elastic-instant-48",
+      "nodes": 48,
+      "physicsRate": 48000,
+      "pairBaseline": "20261005-trail-plate-1-base-elastic-48",
+      "outputRms": 0.00027667640259089617,
+      "outputRmsDbfs": -71.16055759503266,
+      "outputPeak": 0.002525591989979148,
+      "outputCentroidHz": 2489.768614795095,
+      "outputBandShares": {
+        "0-100Hz": 3.6923623498276736e-8,
+        "100-300Hz": 7.359280290794891e-8,
+        "300-1000Hz": 0.00027288527699280727,
+        "1000-3000Hz": 0.7146002726488028,
+        "3000-24000Hz": 0.285126731557778
+      },
+      "outputStereoRatio": 0.7844276057519413,
+      "fieldCentroidHz": 1807.281537576479,
+      "fieldBandShares": {
+        "0-100Hz": 0.00002017023705514178,
+        "100-300Hz": 0.00004214055332029849,
+        "300-1000Hz": 0.00033186886863091554,
+        "1000-3000Hz": 0.9096615867363103,
+        "3000-24000Hz": 0.08994423360468343
+      },
+      "fieldRms": 0.0006151130414594195,
+      "fieldT90Ms": 498.2708333333333,
+      "fieldTailAfter500ms": 0.09923393417738538,
+      "fieldPowerAbove3kFraction": 0.08994423360468351,
+      "limiterRmsDeltaDb": -0.006759521993501494,
+      "forwardQueueResidualL2": 3.535105388057945e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 139.63888433286223,
+          "rmsDeltaDb": 42.89714861326317,
+          "zeroLagCorrelation": -0.04430672833686236,
+          "powerSpectrumCosine": 0.03191430357759102,
+          "powerCosine50HzBins": 0.16681215755426587,
+          "envelope25msRmsCosine": 0.9985375352687482,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": 920.1220952645888,
+          "t90ShiftMs": -7.5625,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.002525591989979148
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9836384872016047,
+            "fractionOfTotalPowerOutsideRangeA": 0.0035885048775761152,
+            "fractionOfTotalPowerOutsideRangeB": 0.08994423360468351,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": 710.6955678977727,
+          "envelope25msRmsCosine": 0.9704118450308771,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 74.5729383182084,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261005-trail-plate-1-pulse-1ms",
+      "plateKey": "20261005-trail-plate-1",
+      "condition": "pulse-1ms",
+      "nodes": 48,
+      "physicsRate": 6000,
+      "pairBaseline": "20261005-trail-plate-1-baseline",
+      "outputRms": 0.002189616936539323,
+      "outputRmsDbfs": -53.1926371269283,
+      "outputPeak": 0.017650283873081207,
+      "outputCentroidHz": 274.49208558775496,
+      "outputBandShares": {
+        "0-100Hz": 9.078010393088631e-7,
+        "100-300Hz": 0.701656432564573,
+        "300-1000Hz": 0.2983231668808667,
+        "1000-3000Hz": 8.223226331561469e-7,
+        "3000-24000Hz": 0.000018670430887643998
+      },
+      "outputStereoRatio": 0.8178630010553729,
+      "fieldCentroidHz": 195.02440995754307,
+      "fieldBandShares": {
+        "0-100Hz": 0.0023087432007120614,
+        "100-300Hz": 0.9002924318609137,
+        "300-1000Hz": 0.09739789470708078,
+        "1000-3000Hz": 9.302312934394098e-7,
+        "3000-24000Hz": 3.882813819879595e-11
+      },
+      "fieldRms": 0.005151007788971864,
+      "fieldT90Ms": 498.8333333333333,
+      "fieldTailAfter500ms": 0.0994243534622318,
+      "fieldPowerAbove3kFraction": 3.882816290712299e-11,
+      "limiterRmsDeltaDb": -0.056022006752016296,
+      "forwardQueueResidualL2": 3.268704494150198e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 1.9667745889459718,
+          "rmsDeltaDb": 4.822908059110823,
+          "zeroLagCorrelation": 0.048129602958133164,
+          "powerSpectrumCosine": 0.864628391320024,
+          "powerCosine50HzBins": 0.9099204601376132,
+          "envelope25msRmsCosine": 0.9970379898109865,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": 49.37071728421077,
+          "t90ShiftMs": 0.5833333333333712,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.020920986076816916
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9956401220839594,
+            "fractionOfTotalPowerOutsideRangeA": 1.27640120695105e-11,
+            "fractionOfTotalPowerOutsideRangeB": 3.882816290712299e-11,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": 27.772700316160552,
+          "envelope25msRmsCosine": 0.9998594797283532,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 1.2603052736261489,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261005-trail-plate-24-rate-aware-48",
+      "plateKey": "20261005-trail-plate-24",
+      "condition": "rate-aware-48",
+      "nodes": 277,
+      "physicsRate": 48000,
+      "pairBaseline": "20261005-trail-plate-24-baseline",
+      "outputRms": 0.004132038507850781,
+      "outputRmsDbfs": -47.67671279595649,
+      "outputPeak": 0.029272357001900673,
+      "outputCentroidHz": 114.30307328666727,
+      "outputBandShares": {
+        "0-100Hz": 0.4489817056507648,
+        "100-300Hz": 0.5484122804964698,
+        "300-1000Hz": 0.0026058690220644902,
+        "1000-3000Hz": 1.007790291479771e-7,
+        "3000-24000Hz": 4.405167197739067e-8
+      },
+      "outputStereoRatio": 0.22137445171073128,
+      "fieldCentroidHz": 119.69835686463945,
+      "fieldBandShares": {
+        "0-100Hz": 0.26759748087965446,
+        "100-300Hz": 0.7291156159855983,
+        "300-1000Hz": 0.0032865986547127614,
+        "1000-3000Hz": 2.0614402171522678e-7,
+        "3000-24000Hz": 9.833601296340463e-8
+      },
+      "fieldRms": 0.0023873200685146307,
+      "fieldT90Ms": 499.375,
+      "fieldTailAfter500ms": 0.09963794219347986,
+      "fieldPowerAbove3kFraction": 9.833601288811167e-8,
+      "limiterRmsDeltaDb": -0.12158018890015398,
+      "forwardQueueResidualL2": 3.504370434775186e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 0.21342722391646,
+          "rmsDeltaDb": 0.008643089303078,
+          "zeroLagCorrelation": 0.9772475572197906,
+          "powerSpectrumCosine": 0.9927197212496395,
+          "powerCosine50HzBins": 0.9999976953537882,
+          "envelope25msRmsCosine": 0.9999357033896166,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": -0.052019398334067546,
+          "t90ShiftMs": 0.7083333333333144,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.0052855287212878466
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9999998455030626,
+            "fractionOfTotalPowerOutsideRangeA": 2.365285745042911e-11,
+            "fractionOfTotalPowerOutsideRangeB": 9.833601288811167e-8,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": -0.12869226413627644,
+          "envelope25msRmsCosine": 0.9999919279718681,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": null,
+            "phaseL2Eligible": false,
+            "reason": "requires equal field rate, node ordering/count, frames, phase, and declared geometryKey"
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261005-trail-plate-24-base-elastic-48",
+      "plateKey": "20261005-trail-plate-24",
+      "condition": "base-elastic-48",
+      "nodes": 277,
+      "physicsRate": 48000,
+      "pairBaseline": "20261005-trail-plate-24-rate-aware-48",
+      "outputRms": 0.000009692761352656023,
+      "outputRmsDbfs": -100.2710495995828,
+      "outputPeak": 0.000082751976151485,
+      "outputCentroidHz": 936.1912131282996,
+      "outputBandShares": {
+        "0-100Hz": 0.000955919094166707,
+        "100-300Hz": 0.0012420012263662202,
+        "300-1000Hz": 0.9620065339951029,
+        "1000-3000Hz": 0.033189934606982684,
+        "3000-24000Hz": 0.0026056110773814254
+      },
+      "outputStereoRatio": 0.22540048594077688,
+      "fieldCentroidHz": 780.7568732835433,
+      "fieldBandShares": {
+        "0-100Hz": 0.0841943911498047,
+        "100-300Hz": 0.09590979057301952,
+        "300-1000Hz": 0.8033148831907325,
+        "1000-3000Hz": 0.014872973089911066,
+        "3000-24000Hz": 0.0017079619965319865
+      },
+      "fieldRms": 0.000006931604610112366,
+      "fieldT90Ms": 453.4583333333333,
+      "fieldTailAfter500ms": 0.08056316512336097,
+      "fieldPowerAbove3kFraction": 0.0017079619965321147,
+      "limiterRmsDeltaDb": -0.0002840175077096774,
+      "forwardQueueResidualL2": 3.5579308642649836e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 1.000003065013601,
+          "rmsDeltaDb": -52.594336803626305,
+          "zeroLagCorrelation": -0.0001337429611225484,
+          "powerSpectrumCosine": 0.00005116888033168125,
+          "powerCosine50HzBins": 0.0010179488285152814,
+          "envelope25msRmsCosine": 0.970059323476837,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": 821.8881398416323,
+          "t90ShiftMs": -11.4375,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.02927382470079465
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.0840574968003607,
+            "fractionOfTotalPowerOutsideRangeA": 9.833601288811167e-8,
+            "fractionOfTotalPowerOutsideRangeB": 0.0017079619965321147,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": 661.0585164189039,
+          "envelope25msRmsCosine": 0.9748889414676611,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 0.9999555671877366,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261005-trail-plate-24-base-elastic-instant-48",
+      "plateKey": "20261005-trail-plate-24",
+      "condition": "base-elastic-instant-48",
+      "nodes": 277,
+      "physicsRate": 48000,
+      "pairBaseline": "20261005-trail-plate-24-base-elastic-48",
+      "outputRms": 0.0005435022212179189,
+      "outputRmsDbfs": -65.29597353345937,
+      "outputPeak": 0.005237261764705181,
+      "outputCentroidHz": 1158.304411083977,
+      "outputBandShares": {
+        "0-100Hz": 4.912847755452658e-8,
+        "100-300Hz": 1.68348549316111e-7,
+        "300-1000Hz": 0.6523952769392022,
+        "1000-3000Hz": 0.3215348277954817,
+        "3000-24000Hz": 0.02606967778828909
+      },
+      "outputStereoRatio": 0.2987293353631367,
+      "fieldCentroidHz": 1348.0068081717038,
+      "fieldBandShares": {
+        "0-100Hz": 0.000040954531316934996,
+        "100-300Hz": 0.00008993871429998069,
+        "300-1000Hz": 0.5868637701203879,
+        "1000-3000Hz": 0.3614845707599589,
+        "3000-24000Hz": 0.051520765874036235
+      },
+      "fieldRms": 0.0003249471655353422,
+      "fieldT90Ms": 497.75,
+      "fieldTailAfter500ms": 0.09895688607196755,
+      "fieldPowerAbove3kFraction": 0.05152076587403642,
+      "limiterRmsDeltaDb": -0.015751067696740506,
+      "forwardQueueResidualL2": 3.532235271204474e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 56.53625629696261,
+          "rmsDeltaDb": 34.97507606612342,
+          "zeroLagCorrelation": -0.4562515386613611,
+          "powerSpectrumCosine": 0.8226788301529531,
+          "powerCosine50HzBins": 0.8228433058025153,
+          "envelope25msRmsCosine": 0.9998822085811826,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": 222.11319795567726,
+          "t90ShiftMs": 2.2916666666666856,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.005275091873045312
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.8677779296337464,
+            "fractionOfTotalPowerOutsideRangeA": 0.0017079619965321147,
+            "fractionOfTotalPowerOutsideRangeB": 0.05152076587403642,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": 567.2499348881605,
+          "envelope25msRmsCosine": 0.9769184118649099,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 47.37273255718569,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261005-trail-plate-24-pulse-1ms",
+      "plateKey": "20261005-trail-plate-24",
+      "condition": "pulse-1ms",
+      "nodes": 277,
+      "physicsRate": 6000,
+      "pairBaseline": "20261005-trail-plate-24-baseline",
+      "outputRms": 0.004669443294329937,
+      "outputRmsDbfs": -46.61469788594765,
+      "outputPeak": 0.0378791019320488,
+      "outputCentroidHz": 126.83617766080071,
+      "outputBandShares": {
+        "0-100Hz": 0.404051656628677,
+        "100-300Hz": 0.5695256127768276,
+        "300-1000Hz": 0.026419545271125274,
+        "1000-3000Hz": 4.450479967995172e-7,
+        "3000-24000Hz": 0.000002740275373437225
+      },
+      "outputStereoRatio": 0.29241458629900097,
+      "fieldCentroidHz": 143.6891229321161,
+      "fieldBandShares": {
+        "0-100Hz": 0.22447238056506466,
+        "100-300Hz": 0.7305151374557399,
+        "300-1000Hz": 0.04501208545164158,
+        "1000-3000Hz": 3.9652755373702394e-7,
+        "3000-24000Hz": 1.511309814243441e-11
+      },
+      "fieldRms": 0.0027982020167977586,
+      "fieldT90Ms": 498.1666666666667,
+      "fieldTailAfter500ms": 0.09890864869763616,
+      "fieldPowerAbove3kFraction": 1.511324398961733e-11,
+      "limiterRmsDeltaDb": -0.13450040671972374,
+      "forwardQueueResidualL2": 3.220220954685086e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 0.813188292924668,
+          "rmsDeltaDb": 1.0706579993119192,
+          "zeroLagCorrelation": 0.7153130153583148,
+          "powerSpectrumCosine": 0.9989620590457734,
+          "powerCosine50HzBins": 0.9983902350366778,
+          "envelope25msRmsCosine": 0.9992326127675805,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": 12.481084975799376,
+          "t90ShiftMs": -0.8541666666666856,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.030345371924340725
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9953302538120741,
+            "fractionOfTotalPowerOutsideRangeA": 2.365285745042911e-11,
+            "fractionOfTotalPowerOutsideRangeB": 1.511324398961733e-11,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": 23.86207380334038,
+          "envelope25msRmsCosine": 0.9999357011532963,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 0.9065609187507035,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261007-trail-plate-26-rate-aware-48",
+      "plateKey": "20261007-trail-plate-26",
+      "condition": "rate-aware-48",
+      "nodes": 350,
+      "physicsRate": 48000,
+      "pairBaseline": "20261007-trail-plate-26-baseline",
+      "outputRms": 0.003165661751039068,
+      "outputRmsDbfs": -49.99070982172235,
+      "outputPeak": 0.0297828521579504,
+      "outputCentroidHz": 71.48059467413539,
+      "outputBandShares": {
+        "0-100Hz": 0.8239116042596955,
+        "100-300Hz": 0.17256326635364183,
+        "300-1000Hz": 0.003525107781680824,
+        "1000-3000Hz": 1.4876591579297046e-8,
+        "3000-24000Hz": 6.728390399201401e-9
+      },
+      "outputStereoRatio": 0.16190659378649327,
+      "fieldCentroidHz": 70.93220860092757,
+      "fieldBandShares": {
+        "0-100Hz": 0.844970910310374,
+        "100-300Hz": 0.15240044626524696,
+        "300-1000Hz": 0.002628359883198936,
+        "1000-3000Hz": 1.9081594338600423e-7,
+        "3000-24000Hz": 9.272523685339083e-8
+      },
+      "fieldRms": 0.0033818852444320244,
+      "fieldT90Ms": 496.5416666666667,
+      "fieldTailAfter500ms": 0.09858068915809756,
+      "fieldPowerAbove3kFraction": 9.272523693315549e-8,
+      "limiterRmsDeltaDb": -0.10694297442053369,
+      "forwardQueueResidualL2": 3.4984805261129815e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 0.18622640446031755,
+          "rmsDeltaDb": 0.007033217429153638,
+          "zeroLagCorrelation": 0.982674226101482,
+          "powerSpectrumCosine": 0.9970635041389457,
+          "powerCosine50HzBins": 0.9999998182358023,
+          "envelope25msRmsCosine": 0.999946282303611,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": 0.010360873205556231,
+          "t90ShiftMs": -0.29166666666662877,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.003358076501172036
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9999998084119394,
+            "fractionOfTotalPowerOutsideRangeA": 2.644473529045399e-11,
+            "fractionOfTotalPowerOutsideRangeB": 9.272523693315549e-8,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": -0.08962777353175966,
+          "envelope25msRmsCosine": 0.9999984754925679,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": null,
+            "phaseL2Eligible": false,
+            "reason": "requires equal field rate, node ordering/count, frames, phase, and declared geometryKey"
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261007-trail-plate-26-base-elastic-48",
+      "plateKey": "20261007-trail-plate-26",
+      "condition": "base-elastic-48",
+      "nodes": 350,
+      "physicsRate": 48000,
+      "pairBaseline": "20261007-trail-plate-26-rate-aware-48",
+      "outputRms": 0.00010395001861552436,
+      "outputRmsDbfs": -79.66350857116802,
+      "outputPeak": 0.0006337660597637296,
+      "outputCentroidHz": 264.2712969900948,
+      "outputBandShares": {
+        "0-100Hz": 0.0008168017986285249,
+        "100-300Hz": 0.9653938046778321,
+        "300-1000Hz": 0.033322151652084166,
+        "1000-3000Hz": 0.000429104688134781,
+        "3000-24000Hz": 0.00003813718332036318
+      },
+      "outputStereoRatio": 0.03177579312765614,
+      "fieldCentroidHz": 266.87957619625627,
+      "fieldBandShares": {
+        "0-100Hz": 0.004266557415990222,
+        "100-300Hz": 0.9434841337329705,
+        "300-1000Hz": 0.05166984966647,
+        "1000-3000Hz": 0.0005600737327238069,
+        "3000-24000Hz": 0.000019385451845422374
+      },
+      "fieldRms": 0.00009039615178130087,
+      "fieldT90Ms": 495.7708333333333,
+      "fieldTailAfter500ms": 0.09804866190009504,
+      "fieldPowerAbove3kFraction": 0.000019385451845654877,
+      "limiterRmsDeltaDb": -0.0027377478704693203,
+      "forwardQueueResidualL2": 3.602189905741614e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 1.000872136899219,
+          "rmsDeltaDb": -29.672798749445676,
+          "zeroLagCorrelation": -0.010152998494109125,
+          "powerSpectrumCosine": 0.0008721201034613113,
+          "powerCosine50HzBins": 0.014273119055172683,
+          "envelope25msRmsCosine": 0.9768645069727983,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": 192.79070231595944,
+          "t90ShiftMs": -14.583333333333371,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.029825012432411313
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.010437296422916346,
+            "fractionOfTotalPowerOutsideRangeA": 9.272523693315549e-8,
+            "fractionOfTotalPowerOutsideRangeB": 0.000019385451845654877,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": 195.9473675953287,
+          "envelope25msRmsCosine": 0.99980778932834,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 1.000320488527816,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261007-trail-plate-26-base-elastic-instant-48",
+      "plateKey": "20261007-trail-plate-26",
+      "condition": "base-elastic-instant-48",
+      "nodes": 350,
+      "physicsRate": 48000,
+      "pairBaseline": "20261007-trail-plate-26-base-elastic-48",
+      "outputRms": 0.000385764987044767,
+      "outputRmsDbfs": -68.27354385023955,
+      "outputPeak": 0.003855158109217882,
+      "outputCentroidHz": 912.3399187434811,
+      "outputBandShares": {
+        "0-100Hz": 0.000042443931217433236,
+        "100-300Hz": 0.20884177828827608,
+        "300-1000Hz": 0.5138147455901938,
+        "1000-3000Hz": 0.23421170317036877,
+        "3000-24000Hz": 0.04308932901994397
+      },
+      "outputStereoRatio": 0.25623842524557644,
+      "fieldCentroidHz": 855.4170827043193,
+      "fieldBandShares": {
+        "0-100Hz": 0.00020603742484891826,
+        "100-300Hz": 0.140520137605838,
+        "300-1000Hz": 0.6034737133350914,
+        "1000-3000Hz": 0.22393306978429525,
+        "3000-24000Hz": 0.03186704184992665
+      },
+      "fieldRms": 0.0004040185325085424,
+      "fieldT90Ms": 496.0625,
+      "fieldTailAfter500ms": 0.09816440124684336,
+      "fieldPowerAbove3kFraction": 0.0318670418499265,
+      "limiterRmsDeltaDb": -0.011833111782294736,
+      "forwardQueueResidualL2": 3.596279357953114e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 4.18279936079617,
+          "rmsDeltaDb": 11.389964720928475,
+          "zeroLagCorrelation": -0.36698760562274424,
+          "powerSpectrumCosine": 0.6770739002802814,
+          "powerCosine50HzBins": 0.6638113180821706,
+          "envelope25msRmsCosine": 0.9996524549292644,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": 648.0686217533863,
+          "t90ShiftMs": -1.0416666666666856,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.004451652872376144
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.4258163018890385,
+            "fractionOfTotalPowerOutsideRangeA": 0.000019385451845654877,
+            "fractionOfTotalPowerOutsideRangeB": 0.0318670418499265,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": 588.5375065080631,
+          "envelope25msRmsCosine": 0.9999911753454437,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 4.884047657864472,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261007-trail-plate-26-pulse-1ms",
+      "plateKey": "20261007-trail-plate-26",
+      "condition": "pulse-1ms",
+      "nodes": 350,
+      "physicsRate": 6000,
+      "pairBaseline": "20261007-trail-plate-26-baseline",
+      "outputRms": 0.00343487325802405,
+      "outputRmsDbfs": -49.281785663245984,
+      "outputPeak": 0.03397178649902344,
+      "outputCentroidHz": 92.08286970883601,
+      "outputBandShares": {
+        "0-100Hz": 0.7354207338093555,
+        "100-300Hz": 0.22630688927828607,
+        "300-1000Hz": 0.03826980604309904,
+        "1000-3000Hz": 6.024503650203989e-8,
+        "3000-24000Hz": 0.000002510624223238543
+      },
+      "outputStereoRatio": 0.2298026667545944,
+      "fieldCentroidHz": 86.83340746574295,
+      "fieldBandShares": {
+        "0-100Hz": 0.7719893947022336,
+        "100-300Hz": 0.198467894622154,
+        "300-1000Hz": 0.029542357932136592,
+        "1000-3000Hz": 3.5274347585333326e-7,
+        "3000-24000Hz": 2.65314880495194e-11
+      },
+      "fieldRms": 0.003636413972774144,
+      "fieldT90Ms": 495.5,
+      "fieldTailAfter500ms": 0.09831471800146205,
+      "fieldPowerAbove3kFraction": 2.653122166407229e-11,
+      "limiterRmsDeltaDb": -0.11416391774886847,
+      "forwardQueueResidualL2": 3.2755718648605164e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 0.6297827831492349,
+          "rmsDeltaDb": 0.7159573759055178,
+          "zeroLagCorrelation": 0.8207768258432969,
+          "powerSpectrumCosine": 0.9965799750562466,
+          "powerCosine50HzBins": 0.9959198207687086,
+          "envelope25msRmsCosine": 0.9987054818814766,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": 20.61263590790618,
+          "t90ShiftMs": -5.958333333333314,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.017527103424072266
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9977248286864095,
+            "fractionOfTotalPowerOutsideRangeA": 2.644473529045399e-11,
+            "fractionOfTotalPowerOutsideRangeB": 2.653122166407229e-11,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": 15.811571091283625,
+          "envelope25msRmsCosine": 0.9999711133703014,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 0.5923035930572619,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261005-trail-plate-1-instant-48",
+      "plateKey": "20261005-trail-plate-1",
+      "condition": "instant-48",
+      "nodes": 48,
+      "physicsRate": 48000,
+      "pairBaseline": "20261005-trail-plate-1-rate-aware-48",
+      "outputRms": 0.0023720150770727127,
+      "outputRmsDbfs": -52.497651096470236,
+      "outputPeak": 0.01986156962811947,
+      "outputCentroidHz": 281.2570565247142,
+      "outputBandShares": {
+        "0-100Hz": 0.0000013009901166102267,
+        "100-300Hz": 0.663807323669915,
+        "300-1000Hz": 0.3361904723434129,
+        "1000-3000Hz": 8.594052531137993e-7,
+        "3000-24000Hz": 4.3591302269587274e-8
+      },
+      "outputStereoRatio": 0.797843672302408,
+      "fieldCentroidHz": 202.22466980367196,
+      "fieldBandShares": {
+        "0-100Hz": 0.002029889812134518,
+        "100-300Hz": 0.8768284020437443,
+        "300-1000Hz": 0.12113268592167363,
+        "1000-3000Hz": 0.000008700882316501874,
+        "3000-24000Hz": 3.213401308958762e-7
+      },
+      "fieldRms": 0.005365334146061151,
+      "fieldT90Ms": 497.9791666666667,
+      "fieldTailAfter500ms": 0.09935510590252465,
+      "fieldPowerAbove3kFraction": 3.2134013105977743e-7,
+      "limiterRmsDeltaDb": -0.06328682044056677,
+      "forwardQueueResidualL2": 3.632806155502799e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 2.522152412740211,
+          "rmsDeltaDb": 5.482093389904421,
+          "zeroLagCorrelation": -0.48615481059979904,
+          "powerSpectrumCosine": 0.8503258419043558,
+          "powerCosine50HzBins": 0.8837195434554002,
+          "envelope25msRmsCosine": 0.9964491541743062,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": 56.33132794613124,
+          "t90ShiftMs": 0.16666666666668561,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.025969823356717825
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9937626929160834,
+            "fractionOfTotalPowerOutsideRangeA": 1.4801178693790717e-7,
+            "fractionOfTotalPowerOutsideRangeB": 3.2134013105977743e-7,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": 35.21830200736022,
+          "envelope25msRmsCosine": 0.9997795436015544,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 1.7223605161852724,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261005-trail-plate-24-instant-48",
+      "plateKey": "20261005-trail-plate-24",
+      "condition": "instant-48",
+      "nodes": 277,
+      "physicsRate": 48000,
+      "pairBaseline": "20261005-trail-plate-24-rate-aware-48",
+      "outputRms": 0.004763097344946004,
+      "outputRmsDbfs": -46.44221085164566,
+      "outputPeak": 0.03497453033924103,
+      "outputCentroidHz": 130.4611794803246,
+      "outputBandShares": {
+        "0-100Hz": 0.39619060021505187,
+        "100-300Hz": 0.5683674114102895,
+        "300-1000Hz": 0.03544121909601965,
+        "1000-3000Hz": 5.614648758664668e-7,
+        "3000-24000Hz": 2.0781376302104435e-7
+      },
+      "outputStereoRatio": 0.3044528131929111,
+      "fieldCentroidHz": 149.19975479767965,
+      "fieldBandShares": {
+        "0-100Hz": 0.2171303522050359,
+        "100-300Hz": 0.724638129289241,
+        "300-1000Hz": 0.058225918507747394,
+        "1000-3000Hz": 0.000005337917634419197,
+        "3000-24000Hz": 2.6208034120105613e-7
+      },
+      "fieldRms": 0.0028682137149741685,
+      "fieldT90Ms": 497.9791666666667,
+      "fieldTailAfter500ms": 0.0987675464192765,
+      "fieldPowerAbove3kFraction": 2.620803410957606e-7,
+      "limiterRmsDeltaDb": -0.13504170566009321,
+      "forwardQueueResidualL2": 3.557146670928128e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 1.151574845557229,
+          "rmsDeltaDb": 1.2345019443108285,
+          "zeroLagCorrelation": 0.43490336270738306,
+          "powerSpectrumCosine": 0.998435107844873,
+          "powerCosine50HzBins": 0.9977695426343027,
+          "envelope25msRmsCosine": 0.9989121155701044,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": 16.158106193657332,
+          "t90ShiftMs": -0.41666666666662877,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.04231931082904339
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9932050748674878,
+            "fractionOfTotalPowerOutsideRangeA": 9.833601288811167e-8,
+            "fractionOfTotalPowerOutsideRangeB": 2.620803410957606e-7,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": 29.501397933040195,
+          "envelope25msRmsCosine": 0.9998797175891349,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 1.2543914323473488,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    },
+    {
+      "id": "20261007-trail-plate-26-instant-48",
+      "plateKey": "20261007-trail-plate-26",
+      "condition": "instant-48",
+      "nodes": 350,
+      "physicsRate": 48000,
+      "pairBaseline": "20261007-trail-plate-26-rate-aware-48",
+      "outputRms": 0.003488738709321489,
+      "outputRmsDbfs": -49.146631120348204,
+      "outputPeak": 0.03439360857009888,
+      "outputCentroidHz": 97.15136345854374,
+      "outputBandShares": {
+        "0-100Hz": 0.717343025668848,
+        "100-300Hz": 0.2328668924725239,
+        "300-1000Hz": 0.049790030351830064,
+        "1000-3000Hz": 4.3399436650152716e-8,
+        "3000-24000Hz": 8.10736146090705e-9
+      },
+      "outputStereoRatio": 0.24299914988781368,
+      "fieldCentroidHz": 90.32841974559469,
+      "fieldBandShares": {
+        "0-100Hz": 0.7588301696314883,
+        "100-300Hz": 0.2038624128297606,
+        "300-1000Hz": 0.037304606959887326,
+        "1000-3000Hz": 0.00000263326270254888,
+        "3000-24000Hz": 1.773161613049154e-7
+      },
+      "fieldRms": 0.00367960116770779,
+      "fieldT90Ms": 495.2708333333333,
+      "fieldTailAfter500ms": 0.09817581437275394,
+      "fieldPowerAbove3kFraction": 1.7731616130944872e-7,
+      "limiterRmsDeltaDb": -0.11501643862436595,
+      "forwardQueueResidualL2": 3.614562984762879e-8,
+      "differenceFromDeclaredBaseline": {
+        "output": {
+          "frames": 71520,
+          "relativeL2": 0.8727899553799067,
+          "rmsDeltaDb": 0.8440787013741442,
+          "zeroLagCorrelation": 0.6591161119348877,
+          "powerSpectrumCosine": 0.9946059192783028,
+          "powerCosine50HzBins": 0.9942739888566959,
+          "envelope25msRmsCosine": 0.9975295086756941,
+          "envelope25msWindows": 59,
+          "centroidShiftHz": 25.670768784408352,
+          "t90ShiftMs": -6.395833333333371,
+          "exactPCMMatch": false,
+          "maxAbsDifference": 0.022960169473662972
+        },
+        "field": {
+          "coarseSpectra": {
+            "analysisRangeHz": [
+              0,
+              3000
+            ],
+            "binWidthHz": 50,
+            "powerCosineWithinRange": 0.9968875763302887,
+            "fractionOfTotalPowerOutsideRangeA": 9.272523693315549e-8,
+            "fractionOfTotalPowerOutsideRangeB": 1.7731616130944872e-7,
+            "note": "outside-range power is reported separately; it is not silently discarded"
+          },
+          "centroidShiftHz": 19.39621114466712,
+          "envelope25msRmsCosine": 0.9999371793514089,
+          "envelope25msWindows": 59,
+          "envelopeComparison": "25 ms field RMS windows; different sample rates use equal-duration bins and truncate to common window count",
+          "sameGeometryField": {
+            "relativeL2": 0.8271348068866454,
+            "phaseL2Eligible": true
+          }
+        }
+      },
+      "readoutGain8": null
+    }
+  ]
+}

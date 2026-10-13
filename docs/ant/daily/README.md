@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-14 — Base/Born causal decomposition
+
+[Process log](./2026-10-14-base-born-causal-decomposition.md) · [Evidence and next hypothesis](../evidence/2026-10-14-base-born-causal-decomposition/README.md)
+
+- Same frozen Born geometries separate excitation, loss, elastic law and rate; one pulse–elastic interaction is demonstrated
+- No unique transferable Base character or human listening preference established
+- Production unchanged; next unimplemented shadow compares frequency loss with a q=4-matched uniform-loss control
+
 ### 2026-10-13 — Plate sonic individuality
 
 [Process log](./2026-10-13-plate-sonic-individuality.md) · [Evidence and next hypothesis](../evidence/2026-10-13-plate-sonic-individuality/README.md)

@@ -1,0 +1,48 @@
+{
+  "command": "python scripts/ant-base-born-metrics.py test-results/ant-base-born-causal-decomposition-20261014/render-index.json test-results/ant-base-born-causal-decomposition-20261014/metrics.json; node scripts/ant-base-born-report.js",
+  "sourceToolHashes": {
+    "scripts/ant-base-born-report.js": "6e63b3bbaf5fed54f0d5b38e909c7ccd1a55d9123004ca96aa2fc06ff353e249",
+    "scripts/ant-base-born-metrics.py": "0582b2458ec48787f582e70e0b67415ac61c2ca06c0aea597896c9adb88f13de",
+    "scripts/ant-sonic-response-metrics.py": "42e0af85fa0034b4d8c1d3e01123d591b5ee15a98c769ba89894d429d6bc2ca2",
+    "scripts/ant-base-born-modal.py": "09a7b9f4d81f591dd8ff27b13c8def8c5770b904ffccf216dda4efa3df36ba3b"
+  },
+  "indexSha256": "1bf5abcb89991eedf02b8a6bdadeebb0ee773454e6d9dd6ddca28c804affd369",
+  "metricsSha256": "06dd446a2a922ae16045a68e3e2d0725096560c9c723470c1c05241760de017c",
+  "artifacts": [
+    {
+      "path": "docs/ant/evidence/2026-10-14-base-born-causal-decomposition/response-metrics.json.gz",
+      "role": "complete response metrics with field/output/limiter and pair comparisons; compressed JSON",
+      "bytes": 534257,
+      "sha256": "ef9b196550f416f1907527a7cb317aadfc4515d7551f1de4e27c9f5f50e282f7",
+      "generationCommand": "node scripts/ant-base-born-report.js"
+    },
+    {
+      "path": "docs/ant/evidence/2026-10-14-base-born-causal-decomposition/experiment-index.json.gz",
+      "role": "exact frozen conditions, event receipts, coefficient and source hashes; compressed JSON",
+      "bytes": 8667,
+      "sha256": "1a109e8aa20e333d11d790c3c2c0c96c2e48942270dbab03fb3cccc6cf0fdcfe",
+      "generationCommand": "node scripts/ant-base-born-report.js"
+    },
+    {
+      "path": "docs/ant/evidence/2026-10-14-base-born-causal-decomposition/summary.json",
+      "role": "compact interpretable coordinates for each condition",
+      "bytes": 106185,
+      "sha256": "77b8509e7ffc79b4a86df453fffd97c40e90041f5991220ef19f46112aa85e9c",
+      "generationCommand": "node scripts/ant-base-born-report.js"
+    },
+    {
+      "path": "docs/ant/evidence/2026-10-14-base-born-causal-decomposition/summary.csv",
+      "role": "human readable response table",
+      "bytes": 7466,
+      "sha256": "2c5dd78db1ee6b42cf4c997902e69fa9d858656adfdc72f663cd55260a9aba8a",
+      "generationCommand": "node scripts/ant-base-born-report.js"
+    },
+    {
+      "path": "docs/ant/evidence/2026-10-14-base-born-causal-decomposition/fixed-scale-field.svg",
+      "role": "fixed displacement power/RMS scale; 0..3k spectral interval with outside mass labeled",
+      "bytes": 17260,
+      "sha256": "4c90fcb71099f032e5062f93e9a2121cdf92c0ba5c2154852961d616d4939042",
+      "generationCommand": "node scripts/ant-base-born-report.js"
+    }
+  ]
+}
