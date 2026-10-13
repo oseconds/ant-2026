@@ -45,7 +45,7 @@ export class SurfaceAudioBridge {
 
   setVolume(value) {
     if (!Number.isFinite(Number(value)) || this.destroyed) return this._volume;
-    this._volume = Math.max(0, Math.min(1, Number(value)));
+    this._volume = Math.max(0, Math.min(2, Number(value)));
     this.applyVolume();
     return this._volume;
   }
