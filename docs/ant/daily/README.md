@@ -14,6 +14,13 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-13 — Material-formation responsibility reassessment
+
+[Process log](./2026-10-13-material-formation-responsibility.md) · [Investigation package](../evidence/2026-10-13-material-formation-responsibility/README.md)
+
+- Current formation already retains persistence/repeat gates and ordered material depth; cadence and support-transition histories remain compressed
+- Decision: **MIXED / UNRESOLVED**; one existing-state temporal observer is the smallest next discriminator, with no production change
+
 ### 2026-10-13 — Natural Plate morphology funnel attribution
 
 [Process log](./2026-10-13-morphology-attribution.md) · [Evidence package](../evidence/2026-10-13-morphology-attribution/README.md)
