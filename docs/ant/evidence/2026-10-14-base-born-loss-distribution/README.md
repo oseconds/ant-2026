@@ -22,6 +22,8 @@ For the real-valued recurrence, the `q=4` pole coefficient and input gain match 
 
 The renderer asserts that the paired schedule and all topology arrays, including geometry, elastic/material coefficients other than damping, and pickup indices, are unchanged. The new flat arm repeated bit-identically for PCM, full field, and raw pickup on every plate. The frequency arm reproduces the prior causal-decomposition render byte-for-byte.
 
+Parity boundary: prior frequency-arm PCM/field/pickup were byte-compared to the existing causal-decomposition outputs. The new flat arm was checked for exact repeatability in the same offline shadow renderer; no separate browser `OfflineAudioWorklet` parity run was made for the new flat topology. This evidence therefore validates the matched response within the shadow renderer and does not claim a fresh browser parity result for that arm.
+
 ## Field and pickup measurements
 
 Field modes use the symmetric masked four-neighbor Laplacian eigenbasis of each frozen geometry. We report mean-square projected displacement, divided by node count, in three exhaustive groups (`q<4`, `q=4`, `q>4`). These are descriptive displacement measures, not joules. Slopes are linear fits to 25 ms mean-square windows from the end of the 18-step contact pulse through the remaining 1.5 s render. More-negative values mean faster power decay. Each arm's onset and first post-pulse energy are retained separately in the machine data.
