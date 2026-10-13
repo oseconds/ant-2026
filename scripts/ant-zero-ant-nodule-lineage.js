@@ -11,8 +11,8 @@ import { MATERIAL_STRATIGRAPHY_NODULE_QUALIFICATION as Q } from '../src/lib/agen
 import { beginZeroAntIntervention } from './ant-zero-ant-continuity-shadow.js';
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
-const BASELINE = 'e21d68597808f8b0c64ff360d0382d6b96971921';
-const BRANCH = 'research/ant-zero-ant-nodule-continuity-20261013';
+const BASELINE = 'b14de91b91db5e818a8128090e7c442259ddd257';
+const BRANCH = 'research/ant-zero-ant-nodule-instrumentation-20261013';
 const SEEDS = [20261005, 20261006, 20261007];
 const DT = 1 / 60;
 const PREFIX_TICKS = 400 * 60;
@@ -42,6 +42,16 @@ export function clearCandidatePersistence(material) {
   assert.equal(material.candidateSinceMs, timers, 'timer clear must preserve the production array');
   assert.ok(timers.every(value => value === -1), 'all in-progress persistence timers must be cleared');
   return { clearedCount, length: timers.length, sha256After: hash(timers) };
+}
+
+export function coverageCellsFromMask(mask) {
+  assert.ok(Array.isArray(mask) || ArrayBuffer.isView(mask), 'plate mask must be an indexed sequence');
+  const cells = [];
+  for (let cell = 0; cell < mask.length; cell += 1) {
+    assert.ok(mask[cell] === 0 || mask[cell] === 1, 'plate mask must contain only zero and one');
+    if (mask[cell] === 1) cells.push(cell);
+  }
+  return cells;
 }
 
 export function classifyNoduleLineage({ entryTimerMs, birthTimerMs, gapStartMs = GAP_START_MS,
@@ -87,6 +97,32 @@ export function qualificationAtCell(material, surface, cell, layerCounts = mater
   };
 }
 
+export function classifyTargetHistory(events, finalState) {
+  if (events.some(event => event.type === 'NODULE_BIRTH')) return 'NODULE BIRTH';
+  const interruptions = events.filter(event => ['BLOCKED_BY_NEARBY_NODULE', 'BLOCKED_BY_MAX_COUNT',
+    'TIMER_CLEARED_QUALIFICATION_LOST', 'TIMER_RESET_BY_PLATE', 'TIMER_RESET_OTHER'].includes(event.type))
+    .sort((a, b) => a.timeMs - b.timeMs);
+  const latestTimerStart = [...events].reverse().find(event => event.type === 'TIMER_STARTED'
+    && event.candidateSinceMs === finalState.candidateSinceMs);
+  const latestInterruptionBeforeFinalTimer = latestTimerStart
+    ? [...interruptions].reverse().find(event => event.timeMs <= latestTimerStart.timeMs) : null;
+  const lastInterruption = interruptions.at(-1);
+  const finalCause = finalState.candidateSinceMs >= 0 ? latestInterruptionBeforeFinalTimer : lastInterruption;
+  const persistenceAgeMs = finalState.persistenceAgeMs ?? finalState.timerAgeMs;
+  if (finalState.qualified && finalState.candidateSinceMs >= 0
+    && persistenceAgeMs < Q.persistenceMs) {
+    return finalCause?.type === 'TIMER_RESET_BY_PLATE' ? 'PLATE-RESET CENSORED' : 'RIGHT-CENSORED';
+  }
+  if (finalCause?.type === 'BLOCKED_BY_MAX_COUNT') return 'MAX-COUNT BLOCKED';
+  if (finalCause?.type === 'BLOCKED_BY_NEARBY_NODULE') return 'NEARBY-NODULE BLOCKED';
+  if (finalCause?.type === 'TIMER_CLEARED_QUALIFICATION_LOST') {
+    return `QUALIFICATION LOST - ${finalCause.failedGates.join(', ').toUpperCase()}`;
+  }
+  if (finalCause?.type === 'TIMER_RESET_BY_PLATE') return 'PLATE-RESET CENSORED';
+  if (finalCause?.type === 'TIMER_RESET_OTHER') return `OTHER EXPLAINED - ${finalCause.reason}`;
+  return 'DATA INSUFFICIENT';
+}
+
 async function main() {
   assert.equal(git(`merge-base ${BASELINE} HEAD`), BASELINE,
     'the verified production/evidence baseline must be an ancestor of the research commit');
@@ -105,7 +141,10 @@ async function main() {
   const naturalReplay = JSON.parse(await readFile(replayPath, 'utf8'));
   const canonicalReplayPath = resolve(ROOT,
     'docs/ant/evidence/2026-10-12-material-causal-tail/unobserved-natural-replay.json');
+  const priorAuditPath = resolve(ROOT,
+    'docs/ant/evidence/2026-10-13-nodule-lineage-censoring/data/censoring-ledger.json');
   const canonicalReplay = JSON.parse(await readFile(canonicalReplayPath, 'utf8'));
+  const priorAudit = JSON.parse(await readFile(priorAuditPath, 'utf8'));
   assert.deepEqual(naturalReplay.results, canonicalReplay.results,
     'untouched 600 s natural replay must match the committed production baseline');
 
@@ -113,16 +152,22 @@ async function main() {
   const seeds = [];
   for (const seed of SEEDS) {
     const result = await runSeed(seed);
+    reconcilePreviousAudit(result, priorAudit);
     seeds.push(result);
     await writeJson(output, `seed-${seed}.json`, result);
     console.log(JSON.stringify({ seed, naturalBirths: result.arms.natural.births.length,
       timerClearBirths: result.arms.timerClear.births.length,
       gapPlates: result.gapPlateDescriptors.length,
+      targets: { natural: result.arms.natural.targetCellCount, timerClear: result.arms.timerClear.targetCellCount },
+      naturalClassification: result.arms.natural.targetClassificationCounts,
+      timerClearClassification: result.arms.timerClear.targetClassificationCounts,
       wallSeconds: (performance.now() - started) / 1000 }));
   }
-  const decision = classifyDecision(seeds);
+  const decision = classifyCensoringDecision(seeds, 'natural');
+  const pairedComparison = summarizePairedTargetDifferences(seeds);
+  const previousAuditReconciliation = summarizePreviousAuditReconciliation(seeds);
   const manifest = {
-    title: 'Zero-ant Nodule lineage and timer-clear audit',
+    title: 'Zero-ant Nodule target-cell instrumentation reproduction',
     baseline: { commit: BASELINE, branch: git('branch --show-current'), head: git('rev-parse HEAD') },
     conditions: { seeds: SEEDS, hz: 60, naturalUntilSeconds: 400, zeroAntStartSeconds: 400,
       zeroAntEndSeconds: 460, zeroAntTicks: GAP_TICKS, productionMaterialLocomotion: 'default On', audioBridge: false },
@@ -134,9 +179,13 @@ async function main() {
       advanceOrder: 'AntController.tick: TrailPlateBirth.advance -> MaterialStratigraphy.addPlate for births -> MaterialStratigraphy.advance -> sphere-birth events',
       surfaceField: { halfLifeSeconds: 1800, gapCompactionChange: 'relax only; no FOOT_CONTACT during the gap' },
       footLoad: 'MaterialStratigraphy.applyFootContact is the only source; retained footLoadByCell does not increase in the gap.' },
-    observation: 'At each MaterialStratigraphy nodule evaluation boundary, qualification gates are recomputed read-only from the public layer-count snapshot, SurfaceField.sample(), and the exact production _localFootLoad() helper. candidateSinceMs and timers are read-only except for the single timer-clear arm. Full columns are read only for Nodule birth cells.',
+    observation: 'The research runner dynamically adds each cell when a gap Plate causes qualification false-to-true. From that exact Plate addition through the 459900 ms final evaluation, it stores every per-target MaterialStratigraphy evaluation row, timer event, actual proximity-gate call/blocker, and every gap Plate mask coverage relation. Diagnostic qualification reads use the public layer-count snapshot, SurfaceField.sample(), and exact production _localFootLoad() helper. No production state is written by instrumentation.',
     counterfactual: 'Matched fork after the 400 s removal/retirement flush. Only candidateSinceMs is filled with -1 in timerClear; no reset() and no other MaterialStratigraphy state is changed.',
     decision,
+    priorCensoringAudit: { commit: 'b14de91b91db5e818a8128090e7c442259ddd257',
+      path: relativeToRoot(priorAuditPath), reconciliation: previousAuditReconciliation },
+    naturalVsTimerClear: pairedComparison,
+    previousGapBirthLineageDecision: classifyDecision(seeds),
     productionSourceDiffFromBaseline: git('diff --name-only ' + BASELINE + ' HEAD -- src package.json package-lock.json'),
     sourceHashes: await sourceHashes(),
     results: seeds.map(seed => ({ seed: seed.seed, gapValidity: seed.validity,
@@ -145,8 +194,9 @@ async function main() {
       naturalNoduleBirths: seed.arms.natural.births.length,
       timerClearNoduleBirths: seed.arms.timerClear.births.length,
       gapPlateBirths: seed.gapPlateDescriptors.length,
-      plateEnabledQualificationCells: seed.arms.natural.plateEffects.qualificationEnabledCellCount })),
-    reproduction: 'node docs/ant/evidence/2026-10-12-material-causal-tail/unobserved-natural-replay.mjs test-results/ant-nodule-lineage-natural-replay-20261013.json; node scripts/ant-zero-ant-nodule-lineage.js --natural-replay=test-results/ant-nodule-lineage-natural-replay-20261013.json --output=test-results/ant-zero-ant-nodule-lineage-20261013',
+      plateEnabledQualificationCells: seed.arms.natural.plateEffects.qualificationEnabledCellCount,
+      targets: { natural: seed.arms.natural.targetSummary, timerClear: seed.arms.timerClear.targetSummary } })),
+    reproduction: 'node docs/ant/evidence/2026-10-12-material-causal-tail/unobserved-natural-replay.mjs test-results/ant-nodule-instrumentation-natural-replay-20261013.json; node scripts/ant-zero-ant-nodule-lineage.js --natural-replay=test-results/ant-nodule-instrumentation-natural-replay-20261013.json --output=test-results/ant-nodule-instrumentation-20261013',
     wallSeconds: (performance.now() - started) / 1000
   };
   await writeJson(output, 'manifest.json', manifest);
@@ -157,39 +207,69 @@ async function runSeed(seed) {
   const arms = ['natural', 'timerClear'].map(name => {
     const random = countedLcg(seed);
     const controller = new AntController({ random });
-    return { name, random, controller };
+    return { name, random, controller, observerEnabled: true };
   });
-  for (const arm of arms) {
+  const controls = ['natural', 'timerClear'].map(name => {
+    const random = countedLcg(seed);
+    const controller = new AntController({ random });
+    return { name, random, controller, observerEnabled: false };
+  });
+  const allArms = arms.flatMap((arm, index) => [arm, controls[index]]);
+  for (const arm of allArms) {
     await arm.controller.init();
     assert.equal(arm.controller.materialLocomotionResistance, true);
     assert.equal(arm.controller.audioBridge, null);
+  }
+  for (let index = 0; index < arms.length; index += 1) {
+    assert.deepEqual(controllerComparableState(arms[index].controller, arms[index].random),
+      controllerComparableState(controls[index].controller, controls[index].random),
+      `${arms[index].name} observer ON/OFF controllers differ at tick 0`);
   }
   assert.deepEqual(controllerComparableState(arms[0].controller, arms[0].random),
     controllerComparableState(arms[1].controller, arms[1].random), 'paired controllers differ at tick 0');
   let prefixCheckpoints = 0;
   for (let tick = 0; tick < PREFIX_TICKS; tick += 1) {
-    for (const arm of arms) arm.controller.tick(DT);
+    for (const arm of allArms) arm.controller.tick(DT);
     if ((tick + 1) % 60 === 0) {
       assert.deepEqual(controllerComparableState(arms[0].controller, arms[0].random),
         controllerComparableState(arms[1].controller, arms[1].random), `paired prefix diverged at tick ${tick + 1}`);
+      for (let index = 0; index < arms.length; index += 1) {
+        assert.deepEqual(controllerComparableState(arms[index].controller, arms[index].random),
+          controllerComparableState(controls[index].controller, controls[index].random),
+          `${arms[index].name} observer ON/OFF diverged at prefix tick ${tick + 1}`);
+      }
       prefixCheckpoints += 1;
     }
   }
   assert.equal(prefixCheckpoints, 400);
   assert.ok(Math.abs(arms[0].controller.simulationTimeMs - GAP_START_MS) < 1e-5);
 
-  const preRemoval = arms.map(({ controller }) => captureEntryState(controller));
-  assert.deepEqual(preRemoval[0], preRemoval[1]);
-  const interventions = arms.map(({ controller }) => beginZeroAntIntervention(controller));
-  assert.deepEqual(interventionBrief(interventions[0]), interventionBrief(interventions[1]));
-  arms.forEach(({ controller }) => assertZeroAntState(controller));
+  const preRemoval = allArms.map(({ controller }) => captureEntryState(controller));
+  for (let index = 0; index < arms.length; index += 1) {
+    assert.deepEqual(preRemoval[index * 2], preRemoval[index * 2 + 1]);
+  }
+  assert.deepEqual(preRemoval[0], preRemoval[2]);
+  const interventions = allArms.map(({ controller }) => beginZeroAntIntervention(controller));
+  assert.ok(interventions.every(value => JSON.stringify(interventionBrief(value))
+    === JSON.stringify(interventionBrief(interventions[0]))));
+  allArms.forEach(({ controller }) => assertZeroAntState(controller));
   assert.deepEqual(controllerComparableState(arms[0].controller, arms[0].random),
     controllerComparableState(arms[1].controller, arms[1].random), 'matched arms differ before timer clear');
+  for (let index = 0; index < arms.length; index += 1) {
+    assert.deepEqual(controllerComparableState(arms[index].controller, arms[index].random),
+      controllerComparableState(controls[index].controller, controls[index].random),
+      `${arms[index].name} observer ON/OFF differs before timer clear`);
+  }
 
   const entryState = arms.map(({ controller }) => captureGapEntry(controller));
   assert.deepEqual(entryState[0].nonTimerState, entryState[1].nonTimerState);
   assert.deepEqual(entryState[0].candidateSinceMs, entryState[1].candidateSinceMs);
   assert.deepEqual(entryState[0].qualifiedGatesByCell, entryState[1].qualifiedGatesByCell);
+  for (let index = 0; index < arms.length; index += 1) {
+    const observed = captureGapEntry(arms[index].controller);
+    const unobserved = captureGapEntry(controls[index].controller);
+    assert.deepEqual(observed, unobserved, `${arms[index].name} observer ON/OFF gap-entry state differs`);
+  }
   const timerClear = clearCandidatePersistence(arms[1].controller.materialStratigraphy);
   timerClear.activeBeforeClear = entryState[1].activeCandidateTimers.length;
   assert.equal(timerClear.clearedCount, timerClear.activeBeforeClear,
@@ -199,30 +279,39 @@ async function runSeed(seed) {
   timerClear.matchedNonTimerStateExact = true;
   timerClear.onlyCandidateSinceMsChanged = true;
   assertOnlyCandidateTimersDiffer(arms[0].controller, arms[1].controller, arms[0].random, arms[1].random);
+  const controlTimerClear = clearCandidatePersistence(controls[1].controller.materialStratigraphy);
+  assert.equal(controlTimerClear.clearedCount, timerClear.clearedCount);
+  assert.deepEqual([...controls[1].controller.materialStratigraphy.candidateSinceMs],
+    [...arms[1].controller.materialStratigraphy.candidateSinceMs]);
   assert.deepEqual(captureGapEntry(arms[0].controller).nonTimerState,
     captureGapEntry(arms[1].controller).nonTimerState, 'timer clear changed retained non-timer state');
   assert.ok(arms[1].controller.materialStratigraphy.candidateSinceMs.every(value => value === -1));
+  for (let index = 0; index < arms.length; index += 1) {
+    assert.deepEqual(controllerComparableState(arms[index].controller, arms[index].random),
+      controllerComparableState(controls[index].controller, controls[index].random),
+      `${arms[index].name} observer ON/OFF differs after timer-clear intervention`);
+  }
 
   const trackers = arms.map(({ controller, random }, index) => createGapTracker(controller, random,
     index === 0 ? 'natural' : 'timerClear', entryState[index]));
-  const watchers = arms.map(({ controller }) => watchGap(controller));
+  const watchers = allArms.map(({ controller }) => watchGap(controller));
   const gapStartClock = arms[0].controller.simulationTimeMs;
-  const rngAtEntry = arms.map(({ random }) => [random.state(), random.calls]);
-  const countsAtEntry = arms.map(({ controller }) => [controller.totalSpawned, controller.totalRetired]);
-  const contactsAtEntry = arms.map(({ controller }) => ({
+  const rngAtEntry = allArms.map(({ random }) => [random.state(), random.calls]);
+  const countsAtEntry = allArms.map(({ controller }) => [controller.totalSpawned, controller.totalRetired]);
+  const contactsAtEntry = allArms.map(({ controller }) => ({
     materialAccepted: controller.materialStratigraphy.totalAcceptedFootContacts,
     surface: controller.surfaceField.totalFootContacts,
     footLoadSha256: hash(controller.materialStratigraphy.footLoadByCell)
   }));
 
   for (let tick = 0; tick < GAP_TICKS; tick += 1) {
-    for (let index = 0; index < arms.length; index += 1) {
-      const { controller, random } = arms[index];
+    for (let index = 0; index < allArms.length; index += 1) {
+      const { controller, random } = allArms[index];
       assertZeroAntState(controller);
       watchers[index].clearTick();
       const clockBefore = controller.simulationTimeMs;
       controller.tick(DT);
-      assert.equal(controller.agents.length, 0, `ant appeared in ${arms[index].name} gap at tick ${tick}`);
+      assert.equal(controller.agents.length, 0, `ant appeared in ${allArms[index].name} gap at tick ${tick}`);
       assert.deepEqual([controller.totalSpawned, controller.totalRetired], countsAtEntry[index]);
       assert.ok(controller.simulationTimeMs > clockBefore);
       assert.deepEqual([random.state(), random.calls], rngAtEntry[index], 'RNG changed during zero-ant gap');
@@ -239,29 +328,45 @@ async function runSeed(seed) {
         'SurfaceField contact count changed during gap');
       assert.equal(hash(controller.materialStratigraphy.footLoadByCell), contactsAtEntry[index].footLoadSha256,
         'retained foot-load map changed during gap');
+      if (index % 2 === 1) {
+        const observed = arms[Math.floor(index / 2)];
+        assert.deepEqual(controllerComparableState(observed.controller, observed.random),
+          controllerComparableState(controller, random),
+          `${observed.name} observer ON/OFF diverged at gap tick ${tick + 1}`);
+      }
     }
   }
 
-  const gapDelta = arms.map(({ controller }) => controller.simulationTimeMs - gapStartClock);
+  const gapDelta = allArms.map(({ controller }) => controller.simulationTimeMs - gapStartClock);
   assert.equal(GAP_TICKS, 3600);
   gapDelta.forEach(value => assert.ok(Math.abs(value - 60000) < 1e-5));
-  arms.forEach(({ controller }) => assertZeroAntState(controller));
+  allArms.forEach(({ controller }) => assertZeroAntState(controller));
   trackers.forEach((tracker, index) => {
     assert.equal(tracker.boundaries.length, 60, 'expected one Nodule evaluation per simulated second');
-    assert.equal(watchers[index].plateBirthEvents, tracker.gapPlateEvents.length,
+    assert.equal(watchers[index * 2].plateBirthEvents, tracker.gapPlateEvents.length,
       'every gap Plate birth event must have a matching MaterialStratigraphy addition');
-    assert.equal(watchers[index].sphereBirthEvents, tracker.births.length,
+    assert.equal(watchers[index * 2].sphereBirthEvents, tracker.births.length,
       'every gap Nodule birth must match its controller sphere-birth event');
   });
-  watchers.forEach((watcher, index) => watcher.restore(arms[index].controller));
+  watchers.forEach((watcher, index) => watcher.restore(allArms[index].controller));
   for (const tracker of trackers) tracker.restore();
 
-  const results = arms.map((arm, index) => finalizeArm(arm.controller, arm.random, trackers[index], watchers[index]));
+  const results = arms.map((arm, index) => finalizeArm(arm.controller, arm.random, trackers[index], watchers[index * 2]));
+  const expectedTargets = { 20261005: 12, 20261006: 18, 20261007: 2 }[seed];
+  for (const result of results) {
+    assert.equal(result.arm.targetCellCount, expectedTargets, `${result.arm.arm} target count changed for seed ${seed}`);
+    assert.equal(new Set(result.arm.targetCells.map(target => target.cell)).size, expectedTargets,
+      `${result.arm.arm} target set contains duplicate cells for seed ${seed}`);
+    assert.equal(result.arm.qualificationEnabledTransitions.length, expectedTargets,
+      `${result.arm.arm} Plate-enabled qualification transitions changed for seed ${seed}`);
+  }
   assert.deepEqual(results[0].gapPlateDescriptors.map(plateComparable),
     results[1].gapPlateDescriptors.map(plateComparable), 'timer clear changed TrailPlateBirth Plate additions');
   const validity = {
     prefixCheckpoints: prefixCheckpoints + 1,
     pairedProductionValueDeepCompare: true,
+    observerOnOffExact: { exact: true, prefixCheckpoints: prefixCheckpoints + 1,
+      gapTicksPerArm: GAP_TICKS, matchedPairs: ['natural', 'timerClear'] },
     gapTicks: GAP_TICKS,
     gapClockDeltaMs: gapDelta,
     allTicksZeroAnt: true,
@@ -270,17 +375,17 @@ async function runSeed(seed) {
     noDeposition: watchers.every(value => value.depositCalls === 0),
     noFootContact: watchers.every(value => value.totalFootContactEvents === 0),
     noAntOriginOrUnknownEvents: watchers.every(value => value.totalUnexpectedEvents === 0),
-    noRngConsumption: arms.every(({ random }, index) => random.state() === rngAtEntry[index][0]
+    noRngConsumption: allArms.every(({ random }, index) => random.state() === rngAtEntry[index][0]
       && random.calls === rngAtEntry[index][1]),
     retainedFootLoadUnchanged: contactsAtEntry.every((value, index) =>
-      value.footLoadSha256 === hash(arms[index].controller.materialStratigraphy.footLoadByCell)),
+      value.footLoadSha256 === hash(allArms[index].controller.materialStratigraphy.footLoadByCell)),
     identicalGapPlateBirthsAcrossArms: true,
     timerClear: { ...timerClear, changedOnlyCandidateSinceMs: true }
   };
   const enriched = results.map(result => enrichArmBirths(result));
   const decisionInput = { seed, validity, gapPlateDescriptors: enriched[0].gapPlateDescriptors,
     arms: { natural: enriched[0].arm, timerClear: enriched[1].arm } };
-  for (const { controller } of arms) await controller.destroy();
+  for (const { controller } of allArms) await controller.destroy();
   return decisionInput;
 }
 
@@ -292,6 +397,7 @@ function createGapTracker(controller, random, arm, entryState) {
       newlyQualifiedAtGapEntry: 0, afterGapPlateAtCell: 0 },
     cellQualificationTransitions: new Map(),
     candidateTimelineByCell: new Map(), cellTimerEvents: new Map(), gapPlateEvents: [], plateInteractionsByCell: new Map(),
+    targetCellsByCell: new Map(), nearbyGateCalls: [], observerPurityChecks: { addPlate: 0, advance: 0, proximity: 0 },
     qualificationEnabledTransitions: [], entryQualifiedGatesByCell: entryState.qualifiedGatesByCell,
     originalEntryTimers: Float64Array.from(entryState.candidateSinceMs),
     entryQualifiedFlags: entryState.qualifiedFlags.slice(),
@@ -300,15 +406,20 @@ function createGapTracker(controller, random, arm, entryState) {
     rngStateAtEntry: random.state(), rngCallsAtEntry: random.calls,
     plateEffects: { count: 0, coveredCells: 0, timerResetCellCount: 0,
       foundationThresholdCrossingCount: 0, qualificationEnabledCellCount: 0 },
-    originalAdvance: material.advance, originalAddPlate: material.addPlate
+    originalAdvance: material.advance, originalAddPlate: material.addPlate,
+    originalNearDescriptor: Object.getOwnPropertyDescriptor(material, '_nearExistingNodule'),
+    originalNearExistingNodule: material._nearExistingNodule
   };
   material.addPlate = function (descriptor) {
     return observePlateAddition(tracker, controller, random, descriptor);
   };
   material.advance = function (args) { return observeNoduleAdvance(tracker, controller, random, args); };
+  Object.defineProperty(material, '_nearExistingNodule', { configurable: true, enumerable: false, writable: true,
+    value: function (x, y, radius) { return observeNearbyNoduleGate(tracker, controller, random, x, y, radius); } });
   tracker.restore = () => {
     material.advance = tracker.originalAdvance;
     material.addPlate = tracker.originalAddPlate;
+    restoreMethod(material, '_nearExistingNodule', tracker.originalNearDescriptor);
   };
   return tracker;
 }
@@ -337,6 +448,7 @@ function observePlateAddition(tracker, controller, random, descriptor) {
     sourceDescriptor: descriptor,
     descriptorSha256: createHash('sha256').update(JSON.stringify({ ...descriptor, mask: Array.from(mask) })).digest('hex'),
     maskSha256: hash(mask), coveredCellCount: mask.reduce((sum, value) => sum + Number(value === 1), 0),
+    coverageCells: coverageCellsFromMask(mask),
     timerResetCellCount: 0, foundationThresholdCrossingCount: 0,
     qualificationEnabledCellCount: 0, mask };
   tracker.gapPlateEvents.push(event);
@@ -379,13 +491,69 @@ function observePlateAddition(tracker, controller, random, descriptor) {
       footLoadValueMetAfter: afterGates.footLoadValueMet,
       sampledCompaction: afterGates.sampledCompaction, retainedFootLoad: afterGates.retainedFootLoad,
       localFootLoadUsedBefore: item.gates.footLoadUsed, localFootLoadUsedAfter: afterGates.footLoadUsed };
-    if (enabled) tracker.qualificationEnabledTransitions.push(row);
+    if (enabled) {
+      tracker.qualificationEnabledTransitions.push(row);
+      let target = tracker.targetCellsByCell.get(item.cell);
+      if (!target) {
+        target = { cell: item.cell, firstEnabledAtMs: descriptor.bornAtSimulationTimeMs,
+          enablingPlateId: descriptor.id, events: [], evaluations: [], plateCoverage: [], lastQualified: true };
+        tracker.targetCellsByCell.set(item.cell, target);
+      }
+      target.events.push({ type: 'QUALIFICATION_ENABLED', timeMs: descriptor.bornAtSimulationTimeMs,
+        enablingPlateId: descriptor.id, cell: item.cell, layerCountBefore: item.layerCount,
+        layerCountAfter: afterLayerCount, compaction: afterGates.sampledCompaction,
+        localFootLoad: afterGates.retainedFootLoad, nearbyNoduleStatusBefore: nearbyNodulesAtCell(material, item.cell),
+        nearbyNoduleStatusAfter: nearbyNodulesAtCell(material, item.cell),
+        maxCountStatusBefore: { count: material.nodules.length, maximum: material.maxNodules,
+          reached: item.gates.maxNodulesReached },
+        maxCountStatusAfter: { count: material.nodules.length, maximum: material.maxNodules,
+          reached: afterGates.maxNodulesReached }, ...row });
+    }
+    const target = tracker.targetCellsByCell.get(item.cell);
+    if (target && reset) target.events.push({ type: 'TIMER_RESET_BY_PLATE', timeMs: descriptor.bornAtSimulationTimeMs,
+      plateId: descriptor.id, cell: item.cell, plateCoveredCell: true,
+      timerBeforeMs: item.timerBefore, timerAfterMs: timerAfter,
+      layerCountBefore: item.layerCount, layerCountAfter: afterLayerCount });
     const history = tracker.plateInteractionsByCell.get(item.cell) || [];
     history.push(row);
     tracker.plateInteractionsByCell.set(item.cell, history);
   });
   assert.equal(controllerStateHash(controller, random), stateAfterBirth,
     'read-only Plate-addition observer changed state beyond production addPlate');
+  tracker.observerPurityChecks.addPlate += 1;
+  return result;
+}
+
+function observeNearbyNoduleGate(tracker, controller, random, x, y, radius) {
+  const material = controller.materialStratigraphy;
+  const cell = cellFromPosition(material, { x, y });
+  const timerBeforeMs = material.candidateSinceMs[cell];
+  const beforeHash = controllerStateHash(controller, random);
+  const result = tracker.originalNearExistingNodule.call(material, x, y, radius);
+  const afterHash = controllerStateHash(controller, random);
+  assert.equal(afterHash, beforeHash, 'proximity observer changed state around the production gate');
+  const blocker = material.nodules.find(nodule => {
+    const distance = Math.hypot(nodule.position.x - x, nodule.position.y - y);
+    return distance < nodule.radius + radius;
+  }) ?? null;
+  assert.equal(Boolean(blocker), result, 'diagnostic blocker must match the production proximity result');
+  const call = { timeMs: material.simulationTimeMs, cell, x, y, radius, blocked: result,
+    timerBeforeMs, blockingNodule: blocker ? { id: blocker.id, position: blocker.position,
+      distance: Math.hypot(blocker.position.x - x, blocker.position.y - y),
+      exclusionDistance: blocker.radius + radius } : null };
+  if (tracker.targetCellsByCell.has(cell)) {
+    tracker.nearbyGateCalls.push(call);
+    const target = tracker.targetCellsByCell.get(cell);
+    assert.ok(call.timeMs - timerBeforeMs >= Q.persistenceMs,
+      'production proximity gate is called only after the full persistence interval');
+    const key = `${cell}:${timerBeforeMs}`;
+    if (!target.events.some(event => event.type === 'TIMER_MATURED' && event.timerKey === key)) {
+      target.events.push({ type: 'TIMER_MATURED', timeMs: call.timeMs, cell,
+        candidateSinceMs: timerBeforeMs, persistenceAgeMs: call.timeMs - timerBeforeMs, timerKey: key });
+    }
+    if (result) target.pendingNearbyBlocks = [...(target.pendingNearbyBlocks || []), call];
+  }
+  tracker.observerPurityChecks.proximity += 1;
   return result;
 }
 
@@ -397,22 +565,44 @@ function observeNoduleAdvance(tracker, controller, random, args) {
     || nowMs - beforeEvaluation >= Q.minimumSampleIntervalMs;
   const timersBefore = due ? material.candidateSinceMs.slice() : null;
   const nodulesBefore = due ? material.nodules.slice() : null;
+  const lastAdvanceBefore = material.lastAdvanceTimeMs;
+  const surfaceAvailable = typeof args.surface?.sample === 'function';
+  const earlyExitReason = !surfaceAvailable ? 'NO_SURFACE'
+    : !material.plates.length ? 'NO_PLATES'
+      : material.maxNodules === 0 ? 'MAXIMUM_DISABLED'
+        : material.nodules.length >= material.maxNodules ? 'MAX_NODULE_COUNT' : null;
+  const gapReset = material.lastAdvanceTimeMs !== null
+    && nowMs - material.lastAdvanceTimeMs > Q.maximumGapForPersistenceMs;
+  const nearbyCallStart = tracker.nearbyGateCalls.length;
   const born = tracker.originalAdvance.call(material, args);
   const evaluated = material.lastNoduleEvaluationTimeMs !== beforeEvaluation;
   if (!evaluated) return born;
   assert.ok(timersBefore && nodulesBefore);
   const productionStateHash = controllerStateHash(controller, random);
-  const boundary = observeEvaluationBoundary(tracker, controller, args, timersBefore, born, nodulesBefore);
+  const nearbyCalls = tracker.nearbyGateCalls.slice(nearbyCallStart);
+  for (const call of nearbyCalls.filter(value => value.blocked)) {
+    const target = tracker.targetCellsByCell.get(call.cell);
+    if (!target) continue;
+    const timerAfterMs = material.candidateSinceMs[call.cell];
+    assert.ok(timerAfterMs < 0, 'a production proximity rejection must clear its candidate timer');
+    target.events.push({ type: 'BLOCKED_BY_NEARBY_NODULE', timeMs: call.timeMs, cell: call.cell,
+      blockingNoduleId: call.blockingNodule.id, blockingNodulePosition: call.blockingNodule.position,
+      distance: call.blockingNodule.distance, exclusionDistance: call.blockingNodule.exclusionDistance,
+      timerBeforeMs: call.timerBeforeMs, timerAfterMs, timerResetConfirmed: true });
+  }
+  const boundary = observeEvaluationBoundary(tracker, controller, args, timersBefore, born, nodulesBefore,
+    { lastAdvanceBefore, earlyExitReason, gapReset, nearbyCalls });
   tracker.boundaries.push(boundary.summary);
   tracker.births.push(...boundary.births);
   tracker.previousQualified = boundary.qualifiedFlags;
   tracker.previousEvaluationTimeMs = material.lastNoduleEvaluationTimeMs;
   assert.equal(controllerStateHash(controller, random), productionStateHash,
     'read-only Nodule boundary observer changed state beyond production advance');
+  tracker.observerPurityChecks.advance += 1;
   return born;
 }
 
-function observeEvaluationBoundary(tracker, controller, args, timersBefore, born, nodulesBefore) {
+function observeEvaluationBoundary(tracker, controller, args, timersBefore, born, nodulesBefore, advanceMeta) {
   const material = controller.materialStratigraphy;
   const surface = controller.surfaceField;
   const nowMs = args.simulationTimeMs;
@@ -464,19 +654,90 @@ function observeEvaluationBoundary(tracker, controller, args, timersBefore, born
       tracker.cellTimerEvents.set(cell, events);
     }
     if (timerBeforeMs >= 0 && timerAfterMs < 0) {
+      const nearbyCall = advanceMeta.nearbyCalls.find(call => call.cell === cell && call.blocked);
       const reason = birthCells.has(cell) ? 'nodule-birth'
-        : material.nodules.length >= material.maxNodules ? 'maximum-nodule-count'
+        : advanceMeta.earlyExitReason === 'MAX_NODULE_COUNT' ? 'maximum-nodule-count'
           : !qualified ? 'qualification-lost'
-            : nowMs - timerBeforeMs >= Q.persistenceMs
-              && material._nearExistingNodule((cell % material.width) / (material.width - 1),
-                Math.floor(cell / material.width) / (material.height - 1), Q.radiusRange[1])
-                ? 'nearby-existing-nodule' : 'other-production-reset';
+            : nearbyCall ? 'nearby-existing-nodule' : advanceMeta.gapReset
+              ? 'persistence-sample-gap' : 'other-production-reset';
       const reset = { cell, timeMs: nowMs, timerBeforeMs, reason,
         qualification: gates, gapBornPlateIdsCoveringCell: coveringPlateEvents(tracker, cell, nowMs).map(event => event.id) };
       timerResets.push(reset);
       const events = tracker.cellTimerEvents.get(cell) || [];
       events.push({ type: 'reset', ...reset });
       tracker.cellTimerEvents.set(cell, events);
+    }
+    const target = tracker.targetCellsByCell.get(cell);
+    if (target) {
+      const nearbyBefore = nearbyNodulesFromList(material, cell, nodulesBefore);
+      const nearbyAfter = nearbyNodulesAtCell(material, cell);
+      const nearbyCall = advanceMeta.nearbyCalls.find(call => call.cell === cell);
+      const noduleAtCellBefore = nodulesBefore.find(nodule => cellFromPosition(material, nodule.position) === cell);
+      const noduleAtCellAfter = material.noduleByCell.get(cell);
+      const failedGates = [];
+      if (!gates.hasFoundation) failedGates.push('FOUNDATION');
+      if (!gates.compactionValueMet) failedGates.push('COMPACTION');
+      if (!gates.footLoadValueMet) failedGates.push('FOOT LOAD');
+      const maxBefore = nodulesBefore.length >= material.maxNodules;
+      const timerAfterAtCell = material.candidateSinceMs[cell];
+      if (advanceMeta.gapReset && timerBeforeMs >= 0) {
+        target.events.push({ type: 'TIMER_RESET_OTHER', timeMs: nowMs, cell,
+          reason: 'PERSISTENCE_SAMPLE_GAP', timerBeforeMs,
+          timerAfterResetMs: gates.qualified ? nowMs : -1,
+          restartedAtSameEvaluation: gates.qualified });
+      }
+      if (advanceMeta.earlyExitReason === 'MAX_NODULE_COUNT' && !birthCells.has(cell)) {
+        if (timerBeforeMs >= 0) assert.ok(timerAfterAtCell < 0, 'max-count early exit must clear active target timers');
+        target.events.push({ type: 'BLOCKED_BY_MAX_COUNT', timeMs: nowMs, cell,
+          noduleCount: nodulesBefore.length, maxNodules: material.maxNodules,
+          timerBeforeMs, timerAfterMs: timerAfterAtCell, timerResetConfirmed: timerBeforeMs < 0 || timerAfterAtCell < 0 });
+      } else if (timerBeforeMs >= 0 && timerAfterAtCell < 0 && !birthCells.has(cell)
+        && !nearbyCall?.blocked && advanceMeta.earlyExitReason) {
+        target.events.push({ type: 'TIMER_RESET_OTHER', timeMs: nowMs, cell,
+          reason: advanceMeta.earlyExitReason, timerBeforeMs, timerAfterMs: timerAfterAtCell });
+      } else if (timerBeforeMs >= 0 && timerAfterAtCell < 0 && !gates.qualified
+        && !birthCells.has(cell) && !nearbyCall?.blocked && !advanceMeta.gapReset) {
+        target.events.push({ type: 'TIMER_CLEARED_QUALIFICATION_LOST', timeMs: nowMs, cell,
+          failedGates, layerCount: gates.layerCount, buriedLayerCount: gates.buriedLayerCount,
+          compaction: gates.sampledCompaction, minimumCompaction: Q.minimumCompaction,
+          localFootLoad: gates.retainedFootLoad, minimumLocalFootLoad: Q.minimumLocalFootLoad,
+          timerBeforeMs, timerAfterMs: timerAfterAtCell });
+      }
+      if (timerBeforeMs < 0 && timerAfterAtCell >= 0) {
+        target.events.push({ type: 'TIMER_STARTED', timeMs: nowMs, cell,
+          candidateSinceMs: timerAfterAtCell, layerCount: gates.layerCount,
+          compaction: gates.sampledCompaction, localFootLoad: gates.retainedFootLoad,
+          nearbyNoduleIds: nearbyBefore.map(value => value.id), maxCountStatus: {
+            count: nodulesBefore.length, maximum: material.maxNodules, reached: maxBefore } });
+      }
+      const evaluation = { timeMs: nowMs, cell, layerCount: gates.layerCount,
+        buriedLayerCount: gates.buriedLayerCount, topPlateId: gates.topPlateId,
+        compaction: gates.sampledCompaction, localFootLoad: gates.retainedFootLoad,
+        qualified: gates.qualified, candidateSinceMsBefore: timerBeforeMs,
+        candidateSinceMs: timerAfterAtCell,
+        timerAgeMs: timerAfterAtCell >= 0 ? nowMs - timerAfterAtCell : null,
+        nearbyExistingNodule: nearbyBefore.length > 0,
+        nearbyNoduleIds: nearbyBefore.map(value => value.id),
+        blockingNoduleId: nearbyCall?.blockingNodule?.id ?? null,
+        maxNodulesReached: maxBefore, noduleCount: nodulesBefore.length,
+        noduleExistsAtCellBefore: Boolean(noduleAtCellBefore),
+        noduleAtCellIdBefore: noduleAtCellBefore?.id ?? null,
+        noduleExistsAtCellAfter: Boolean(noduleAtCellAfter),
+        noduleAtCellIdAfter: noduleAtCellAfter?.id ?? null,
+        noduleExistsNearCellBefore: nearbyBefore.length > 0,
+        noduleExistsNearCellAfter: nearbyAfter.length > 0,
+        nearbyNoduleIdsAfter: nearbyAfter.map(value => value.id),
+        noduleCountAfter: material.nodules.length,
+        maxNodulesReachedAfter: material.nodules.length >= material.maxNodules,
+        productionEarlyExitReason: advanceMeta.earlyExitReason,
+        timerMaturedAtEvaluation: Boolean(nearbyCall) };
+      target.evaluations.push(evaluation);
+      if (target.lastQualified === true && !gates.qualified) {
+        target.events.push({ type: 'QUALIFICATION_LOST', timeMs: nowMs, cell, failedGates,
+          layerCount: gates.layerCount, compaction: gates.sampledCompaction,
+          localFootLoad: gates.retainedFootLoad });
+      }
+      target.lastQualified = gates.qualified;
     }
     if (timerAfterMs >= 0) {
       activeTimerCount += 1;
@@ -519,6 +780,7 @@ function observeEvaluationBoundary(tracker, controller, args, timersBefore, born
         || event.layerCountBefore !== event.layerCountAfter));
     return {
       id: nodule.id, cell, bornAtSimulationTimeMs: birthTimeMs,
+    descriptor: nodule,
       candidateSinceMsAtBirth: candidateSinceAtBirthMs,
       persistenceAgeMs: birthTimeMs - candidateSinceAtBirthMs,
       gateAtGapEntry: tracker.entryQualifiedGatesByCell[cell] ?? null,
@@ -553,6 +815,13 @@ function observeEvaluationBoundary(tracker, controller, args, timersBefore, born
       descriptorSha256: hash(nodule)
     };
   });
+  for (const birth of birthRows) {
+    const target = tracker.targetCellsByCell.get(birth.cell);
+    if (target) target.events.push({ type: 'NODULE_BIRTH', timeMs: birth.bornAtSimulationTimeMs,
+      cell: birth.cell, noduleId: birth.id, descriptor: birth.descriptor,
+      candidateSinceMs: birth.candidateSinceMsAtBirth, persistenceAgeMs: birth.persistenceAgeMs,
+      lineage: birth.lineage });
+  }
   const boundary = {
     timeMs: nowMs, materialLastAdvanceTimeMs: material.lastAdvanceTimeMs,
     noduleCount: material.nodules.length, plateCount: material.plates.length,
@@ -646,7 +915,44 @@ function finalizeArm(controller, random, tracker, watcher) {
     .filter(([cell]) => birthCells.has(cell)).map(([cell, rows]) => [cell, rows]));
   const qualificationTransitions = Object.fromEntries([...tracker.cellQualificationTransitions]
     .filter(([cell]) => birthCells.has(cell)).map(([cell, rows]) => [cell, rows]));
-  const gapPlateDescriptors = tracker.gapPlateEvents.map(({ mask, sourceDescriptor, ...plate }) => plate);
+  const targetCells = [...tracker.targetCellsByCell.values()].sort((a, b) => a.cell - b.cell).map(target => {
+    const lastEvaluation = target.evaluations.at(-1);
+    assert.ok(lastEvaluation, `target cell ${target.cell} needs at least one evaluation row`);
+    assert.ok(Math.abs(lastEvaluation.timeMs - 459900) < 0.01,
+      `target cell ${target.cell} must end at the final in-gap evaluation boundary`);
+    const gateAtClockEnd = qualificationAtCell(material, controller.surfaceField, target.cell);
+    const timerAtClockEnd = material.candidateSinceMs[target.cell];
+    const clockEndState = { timeMs: controller.simulationTimeMs, cell: target.cell,
+      qualified: gateAtClockEnd.qualified, layerCount: gateAtClockEnd.layerCount,
+      buriedLayerCount: gateAtClockEnd.buriedLayerCount, compaction: gateAtClockEnd.sampledCompaction,
+      localFootLoad: gateAtClockEnd.retainedFootLoad, candidateSinceMs: timerAtClockEnd,
+      persistenceAgeMs: timerAtClockEnd >= 0 ? controller.simulationTimeMs - timerAtClockEnd : null,
+      nearbyExistingNodule: nearbyNodulesAtCell(material, target.cell).length > 0,
+      nearbyNoduleIds: nearbyNodulesAtCell(material, target.cell).map(value => value.id),
+      noduleCount: material.nodules.length, maxNodules: material.maxNodules,
+      maxNodulesReached: material.nodules.length >= material.maxNodules };
+    target.events.push({ type: 'GAP_END_CENSORED', timeMs: lastEvaluation.timeMs, ...lastEvaluation });
+    target.events.push({ type: 'GAP_CLOCK_END_STATE', ...clockEndState });
+    target.nominalNoResetOpportunityMs = lastEvaluation.timeMs - target.evaluations[0].timeMs;
+    target.nominalAtLeast30Seconds = target.nominalNoResetOpportunityMs >= Q.persistenceMs;
+    target.plateCoverage = tracker.gapPlateEvents.map(plate => ({ plateId: plate.id,
+      bornAtSimulationTimeMs: plate.bornAtSimulationTimeMs, covered: plate.mask[target.cell] === 1,
+      maskSha256: plate.maskSha256 }));
+    target.classification = classifyTargetHistory(target.events, {
+      ...lastEvaluation, persistenceAgeMs: lastEvaluation.timerAgeMs,
+      maxNodulesReached: lastEvaluation.maxNodulesReachedAfter });
+    target.gapClockEndState = clockEndState;
+    delete target.lastQualified;
+    delete target.pendingNearbyBlocks;
+    return target;
+  });
+  const gapPlateDescriptors = tracker.gapPlateEvents.map(({ mask, sourceDescriptor, ...plate }) => {
+    const { mask: _mask, ...descriptor } = sourceDescriptor;
+    return { ...plate, sourceDescriptor: descriptor, cellCount: material.cellCount,
+      maskWidth: material.width, maskHeight: material.height,
+      coverageEncoding: 'coverageCells is the exact list of set mask indices; all other cells are zero',
+      targetCellCoverage: targetCells.map(target => ({ cell: target.cell, covered: mask[target.cell] === 1 })) };
+  });
   const result = {
     arm: tracker.arm,
     gapStartTimeMs: tracker.gapStartTimeMs,
@@ -659,6 +965,11 @@ function finalizeArm(controller, random, tracker, watcher) {
     qualificationEnabledTransitions: tracker.qualificationEnabledTransitions,
     plateEffects: tracker.plateEffects,
     gapPlateDescriptors,
+    targetCellCount: targetCells.length,
+    targetCells,
+    targetClassificationCounts: countBy(targetCells, 'classification'),
+    targetSummary: summarizeTargets(targetCells),
+    observerPurityChecks: tracker.observerPurityChecks,
     births: tracker.births,
     gapValidity: { spawnCalls: watcher.spawnCalls, depositCalls: watcher.depositCalls,
       totalEvents: watcher.totalEvents, footContactEvents: watcher.totalFootContactEvents,
@@ -666,7 +977,22 @@ function finalizeArm(controller, random, tracker, watcher) {
       allTicksZeroAnt: true, rngUnchanged: random.calls === tracker.rngCallsAtEntry
         && random.state() === tracker.rngStateAtEntry }
   };
+  reclassifyTargetCells(result);
   return { arm: result, births: tracker.births, gapPlateDescriptors: tracker.gapPlateEvents };
+}
+
+export function reclassifyTargetCells(arm) {
+  for (const target of arm.targetCells) {
+    const finalEvaluation = target.events.findLast(event => event.type === 'GAP_END_CENSORED');
+    assert.ok(finalEvaluation, `target cell ${target.cell} is missing GAP_END_CENSORED`);
+    target.classification = classifyTargetHistory(target.events, {
+      ...finalEvaluation, persistenceAgeMs: finalEvaluation.timerAgeMs,
+      maxNodulesReached: finalEvaluation.maxNodulesReachedAfter
+    });
+  }
+  arm.targetClassificationCounts = countBy(arm.targetCells, 'classification');
+  arm.targetSummary = summarizeTargets(arm.targetCells);
+  return arm;
 }
 
 function enrichArmBirths(result) {
@@ -701,6 +1027,51 @@ function coveringPlateEventsFrom(events, cell) {
   return events.filter(event => event.mask[cell] === 1);
 }
 
+function nearbyNodulesAtCell(material, cell) {
+  return nearbyNodulesFromList(material, cell, material.nodules);
+}
+
+function nearbyNodulesFromList(material, cell, nodules) {
+  const x = (cell % material.width) / (material.width - 1);
+  const y = Math.floor(cell / material.width) / (material.height - 1);
+  const radius = Q.radiusRange[1];
+  return nodules.flatMap(nodule => {
+    const distance = Math.hypot(nodule.position.x - x, nodule.position.y - y);
+    return distance < nodule.radius + radius
+      ? [{ id: nodule.id, position: nodule.position, distance, exclusionDistance: nodule.radius + radius }]
+      : [];
+  });
+}
+
+export function summarizeTargets(targets) {
+  const typeCount = type => targets.reduce((sum, target) => sum
+    + target.events.filter(event => event.type === type).length, 0);
+  const anyType = type => targets.filter(target => target.events.some(event => event.type === type)).length;
+  const qualificationLosses = targets.flatMap(target => target.events
+    .filter(event => event.type === 'TIMER_CLEARED_QUALIFICATION_LOST'));
+  return {
+    targetCells: targets.length,
+    classificationCounts: countBy(targets, 'classification'),
+    nominalNoResetOpportunityAtLeast30Seconds: targets.filter(target => target.nominalAtLeast30Seconds).length,
+    uninterruptedPersistenceAtLeast30Seconds: anyType('TIMER_MATURED'),
+    timerMaturedEventCount: typeCount('TIMER_MATURED'),
+    plateResetCellCount: anyType('TIMER_RESET_BY_PLATE'),
+    plateResetEventCount: typeCount('TIMER_RESET_BY_PLATE'),
+    qualificationLossCellCount: anyType('TIMER_CLEARED_QUALIFICATION_LOST'),
+    qualificationLossEventCount: typeCount('TIMER_CLEARED_QUALIFICATION_LOST'),
+    qualificationLossCountsByGate: Object.fromEntries(['FOUNDATION', 'COMPACTION', 'FOOT LOAD'].map(gate =>
+      [gate, qualificationLosses.filter(event => event.failedGates.includes(gate)).length])),
+    nearbyBlockedCellCount: anyType('BLOCKED_BY_NEARBY_NODULE'),
+    nearbyBlockEventCount: typeCount('BLOCKED_BY_NEARBY_NODULE'),
+    maxCountBlockedCellCount: anyType('BLOCKED_BY_MAX_COUNT'),
+    maxCountBlockEventCount: typeCount('BLOCKED_BY_MAX_COUNT'),
+    activeTimerAtFinalEvaluation: targets.filter(target => target.events.findLast(event =>
+      event.type === 'GAP_END_CENSORED')?.candidateSinceMs >= 0).length,
+    activeTimerAt460Seconds: targets.filter(target => target.gapClockEndState.candidateSinceMs >= 0).length,
+    qualifiedAt460Seconds: targets.filter(target => target.gapClockEndState.qualified).length
+  };
+}
+
 function classifyDecision(seeds) {
   const natural = seeds.flatMap(seed => seed.arms.natural.births);
   const cleared = seeds.flatMap(seed => seed.arms.timerClear.births);
@@ -725,6 +1096,105 @@ function classifyDecision(seeds) {
   if (natural.length > 0 && natural.every(birth => birth.lineage === 'PRE-GAP TIMER LINEAGE')
     && cleared.length === 0) return 'LATENT COMPLETION ONLY';
   return 'INCONCLUSIVE';
+}
+
+function reconcilePreviousAudit(seedResult, priorAudit) {
+  const prior = new Map(priorAudit.cells.map(row => [`${row.seed}:${row.arm}:${row.cell}`, row]));
+  for (const armName of ['natural', 'timerClear']) {
+    const arm = seedResult.arms[armName];
+    const seen = new Set();
+    for (const target of arm.targetCells) {
+      const key = `${seedResult.seed}:${armName}:${target.cell}`;
+      assert.ok(!seen.has(target.cell), `duplicate target cell ${key}`);
+      seen.add(target.cell);
+      const previous = prior.get(key);
+      assert.ok(previous, `target ${key} is missing from the committed censoring audit`);
+      assert.ok(Math.abs(previous.nominalNoResetOpportunityMs - target.nominalNoResetOpportunityMs) < 0.01,
+        `target ${key} nominal opportunity no longer matches the prior audit`);
+      target.previousAuditClassification = previous.primaryClassification;
+      target.previousNominalNoResetOpportunityMs = previous.nominalNoResetOpportunityMs;
+      target.previousAuditCellMatched = true;
+    }
+    const expected = priorAudit.cells.filter(row => row.seed === seedResult.seed && row.arm === armName).length;
+    assert.equal(seen.size, expected, `${armName} target set changed from the saved 32-cell audit`);
+  }
+  assert.deepEqual(seedResult.arms.natural.targetCells.map(target => target.cell),
+    seedResult.arms.timerClear.targetCells.map(target => target.cell),
+    'natural and timer-clear target cells must match exactly');
+}
+
+export function summarizePreviousAuditReconciliation(seeds) {
+  return Object.fromEntries(['natural', 'timerClear'].map(armName => {
+    const targets = seeds.flatMap(seed => seed.arms[armName].targetCells);
+    const unresolved = targets.filter(target => target.previousAuditClassification === 'DATA INSUFFICIENT');
+    return [armName, {
+      previousClassificationCounts: countBy(targets, 'previousAuditClassification'),
+      previousNominalAtLeast30Seconds: targets.filter(target => target.previousNominalNoResetOpportunityMs >= Q.persistenceMs).length,
+      previousUnresolvedCells: unresolved.length,
+      unresolvedCellsWithActualPlateReset: unresolved.filter(target => target.events.some(event =>
+        event.type === 'TIMER_RESET_BY_PLATE')).length,
+      unresolvedCellsWithActualQualificationLoss: unresolved.filter(target => target.events.some(event =>
+        event.type === 'TIMER_CLEARED_QUALIFICATION_LOST')).length,
+      unresolvedCellsWithActualNearbyBlock: unresolved.filter(target => target.events.some(event =>
+        event.type === 'BLOCKED_BY_NEARBY_NODULE')).length,
+      unresolvedCellsWithActualMaxCountBlock: unresolved.filter(target => target.events.some(event =>
+        event.type === 'BLOCKED_BY_MAX_COUNT')).length
+    }];
+  }));
+}
+
+export function summarizePairedTargetDifferences(seeds) {
+  return seeds.map(seed => {
+    const natural = new Map(seed.arms.natural.targetCells.map(target => [target.cell, target]));
+    const timerClear = new Map(seed.arms.timerClear.targetCells.map(target => [target.cell, target]));
+    assert.deepEqual([...natural.keys()].sort((a, b) => a - b), [...timerClear.keys()].sort((a, b) => a - b));
+    const classificationDifferences = [];
+    for (const [cell, left] of natural) {
+      const right = timerClear.get(cell);
+      if (left.classification !== right.classification) classificationDifferences.push({ cell,
+        natural: left.classification, timerClear: right.classification });
+    }
+    return { seed: seed.seed, targetCellCount: natural.size,
+      classificationDifferenceCount: classificationDifferences.length,
+      classificationDifferences,
+      natural: seed.arms.natural.targetSummary,
+      timerClear: seed.arms.timerClear.targetSummary };
+  });
+}
+
+export function classifyCensoringDecision(seeds, armName) {
+  const targets = seeds.flatMap(seed => seed.arms[armName].targetCells);
+  const categories = targets.reduce((counts, target) => {
+    const category = target.classification.startsWith('QUALIFICATION LOST') ? 'QUALIFICATION LOST'
+      : target.classification.startsWith('OTHER EXPLAINED') ? 'OTHER EXPLAINED' : target.classification;
+    counts[category] = (counts[category] || 0) + 1;
+    return counts;
+  }, {});
+  const windowCensored = (categories['RIGHT-CENSORED'] || 0) + (categories['PLATE-RESET CENSORED'] || 0);
+  const formationBarriers = (categories['QUALIFICATION LOST'] || 0) + (categories['NEARBY-NODULE BLOCKED'] || 0)
+    + (categories['MAX-COUNT BLOCKED'] || 0) + (categories['OTHER EXPLAINED'] || 0);
+  let label = 'MIXED';
+  if ((categories['DATA INSUFFICIENT'] || 0) > 0) label = 'DATA INSUFFICIENT';
+  else if (windowCensored > formationBarriers) label = 'WINDOW CENSORING DOMINANT';
+  else if (formationBarriers > windowCensored) label = 'FORMATION BARRIERS DOMINANT';
+  return { label, primaryArm: armName, targetCellCount: targets.length,
+    classificationCounts: categories, windowCensored, formationBarriers,
+    nominalAtLeast30Seconds: targets.filter(target => target.previousNominalNoResetOpportunityMs >= Q.persistenceMs).length,
+    nominalLongCellsWithActualUninterrupted30Seconds: targets.filter(target =>
+      target.previousNominalNoResetOpportunityMs >= Q.persistenceMs
+      && target.events.some(event => event.type === 'TIMER_MATURED')).length,
+    activeTimersAtFinalEvaluation: targets.filter(target => target.evaluations.at(-1)?.candidateSinceMs >= 0).length,
+    activeTimersAt460Seconds: targets.filter(target => target.gapClockEndState.candidateSinceMs >= 0).length,
+    exactQualificationLossCountsByGate: targets.reduce((counts, target) => {
+      for (const event of target.events.filter(value => value.type === 'TIMER_CLEARED_QUALIFICATION_LOST')) {
+        for (const gate of event.failedGates) counts[gate] = (counts[gate] || 0) + 1;
+      }
+      return counts;
+    }, {}),
+    actualPlateResetCells: targets.filter(target => target.events.some(event => event.type === 'TIMER_RESET_BY_PLATE')).length,
+    actualNearbyBlockedCells: targets.filter(target => target.events.some(event => event.type === 'BLOCKED_BY_NEARBY_NODULE')).length,
+    actualMaxCountBlockedCells: targets.filter(target => target.events.some(event => event.type === 'BLOCKED_BY_MAX_COUNT')).length
+  };
 }
 
 function assertOnlyCandidateTimersDiffer(natural, cleared, randomNatural, randomCleared) {

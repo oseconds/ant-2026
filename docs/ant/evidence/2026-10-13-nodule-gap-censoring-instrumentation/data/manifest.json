@@ -1,0 +1,657 @@
+{
+  "title": "Zero-ant Nodule target-cell instrumentation reproduction",
+  "baseline": {
+    "commit": "b14de91b91db5e818a8128090e7c442259ddd257",
+    "branch": "research/ant-zero-ant-nodule-instrumentation-20261013",
+    "head": "b14de91b91db5e818a8128090e7c442259ddd257"
+  },
+  "conditions": {
+    "seeds": [
+      20261005,
+      20261006,
+      20261007
+    ],
+    "hz": 60,
+    "naturalUntilSeconds": 400,
+    "zeroAntStartSeconds": 400,
+    "zeroAntEndSeconds": 460,
+    "zeroAntTicks": 3600,
+    "productionMaterialLocomotion": "default On",
+    "audioBridge": false
+  },
+  "naturalReplay": {
+    "path": "test-results/ant-nodule-instrumentation-natural-replay-20261013.json",
+    "sha256": "7852733ca7bba6208dec9743ac9d752d1167bf6e5ea6f28f7ddf0fb9895f9fb4",
+    "exactCanonicalMatch": true,
+    "canonicalPath": "docs/ant/evidence/2026-10-12-material-causal-tail/unobserved-natural-replay.json",
+    "canonicalSha256": "7852733ca7bba6208dec9743ac9d752d1167bf6e5ea6f28f7ddf0fb9895f9fb4"
+  },
+  "productionLaw": {
+    "qualification": {
+      "minimumOverlappingPlates": 4,
+      "minimumBuriedLayers": 3,
+      "minimumCompaction": 0.55,
+      "minimumLocalFootLoad": 200,
+      "persistenceMs": 30000,
+      "radiusRange": [
+        0.018,
+        0.028
+      ],
+      "minimumSampleIntervalMs": 1000,
+      "maximumGapForPersistenceMs": 2000
+    },
+    "persistenceMaximumSampleGapMs": 2000,
+    "timerField": "MaterialStratigraphy.candidateSinceMs",
+    "clear": "candidateSinceMs.fill(-1) only",
+    "addPlateTimerSemantics": "addPlate resets candidateSinceMs[cell] to -1 for each covered cell before the same tick MaterialStratigraphy.advance()",
+    "advanceOrder": "AntController.tick: TrailPlateBirth.advance -> MaterialStratigraphy.addPlate for births -> MaterialStratigraphy.advance -> sphere-birth events",
+    "surfaceField": {
+      "halfLifeSeconds": 1800,
+      "gapCompactionChange": "relax only; no FOOT_CONTACT during the gap"
+    },
+    "footLoad": "MaterialStratigraphy.applyFootContact is the only source; retained footLoadByCell does not increase in the gap."
+  },
+  "observation": "The research runner dynamically adds each cell when a gap Plate causes qualification false-to-true. From that exact Plate addition through the 459900 ms final evaluation, it stores every per-target MaterialStratigraphy evaluation row, timer event, actual proximity-gate call/blocker, and every gap Plate mask coverage relation. Diagnostic qualification reads use the public layer-count snapshot, SurfaceField.sample(), and exact production _localFootLoad() helper. No production state is written by instrumentation.",
+  "counterfactual": "Matched fork after the 400 s removal/retirement flush. Only candidateSinceMs is filled with -1 in timerClear; no reset() and no other MaterialStratigraphy state is changed.",
+  "decision": {
+    "label": "WINDOW CENSORING DOMINANT",
+    "primaryArm": "natural",
+    "targetCellCount": 32,
+    "classificationCounts": {
+      "RIGHT-CENSORED": 20,
+      "QUALIFICATION LOST": 5,
+      "PLATE-RESET CENSORED": 7
+    },
+    "windowCensored": 27,
+    "formationBarriers": 5,
+    "nominalAtLeast30Seconds": 17,
+    "nominalLongCellsWithActualUninterrupted30Seconds": 6,
+    "activeTimersAtFinalEvaluation": 27,
+    "activeTimersAt460Seconds": 27,
+    "exactQualificationLossCountsByGate": {
+      "COMPACTION": 5
+    },
+    "actualPlateResetCells": 10,
+    "actualNearbyBlockedCells": 6,
+    "actualMaxCountBlockedCells": 0
+  },
+  "priorCensoringAudit": {
+    "commit": "b14de91b91db5e818a8128090e7c442259ddd257",
+    "path": "docs/ant/evidence/2026-10-13-nodule-lineage-censoring/data/censoring-ledger.json",
+    "reconciliation": {
+      "natural": {
+        "previousClassificationCounts": {
+          "DATA INSUFFICIENT": 20,
+          "NEARBY-NODULE BLOCKED": 1,
+          "QUALIFICATION LOST": 3,
+          "RIGHT-CENSORED": 8
+        },
+        "previousNominalAtLeast30Seconds": 17,
+        "previousUnresolvedCells": 20,
+        "unresolvedCellsWithActualPlateReset": 10,
+        "unresolvedCellsWithActualQualificationLoss": 2,
+        "unresolvedCellsWithActualNearbyBlock": 5,
+        "unresolvedCellsWithActualMaxCountBlock": 0
+      },
+      "timerClear": {
+        "previousClassificationCounts": {
+          "DATA INSUFFICIENT": 20,
+          "NEARBY-NODULE BLOCKED": 1,
+          "QUALIFICATION LOST": 3,
+          "RIGHT-CENSORED": 8
+        },
+        "previousNominalAtLeast30Seconds": 17,
+        "previousUnresolvedCells": 20,
+        "unresolvedCellsWithActualPlateReset": 10,
+        "unresolvedCellsWithActualQualificationLoss": 2,
+        "unresolvedCellsWithActualNearbyBlock": 5,
+        "unresolvedCellsWithActualMaxCountBlock": 0
+      }
+    }
+  },
+  "naturalVsTimerClear": [
+    {
+      "seed": 20261005,
+      "targetCellCount": 12,
+      "classificationDifferenceCount": 0,
+      "classificationDifferences": [],
+      "natural": {
+        "targetCells": 12,
+        "classificationCounts": {
+          "PLATE-RESET CENSORED": 3,
+          "QUALIFICATION LOST - COMPACTION": 2,
+          "RIGHT-CENSORED": 7
+        },
+        "nominalNoResetOpportunityAtLeast30Seconds": 4,
+        "uninterruptedPersistenceAtLeast30Seconds": 0,
+        "timerMaturedEventCount": 0,
+        "plateResetCellCount": 4,
+        "plateResetEventCount": 5,
+        "qualificationLossCellCount": 2,
+        "qualificationLossEventCount": 2,
+        "qualificationLossCountsByGate": {
+          "FOUNDATION": 0,
+          "COMPACTION": 2,
+          "FOOT LOAD": 0
+        },
+        "nearbyBlockedCellCount": 0,
+        "nearbyBlockEventCount": 0,
+        "maxCountBlockedCellCount": 0,
+        "maxCountBlockEventCount": 0,
+        "activeTimerAtFinalEvaluation": 10,
+        "activeTimerAt460Seconds": 10,
+        "qualifiedAt460Seconds": 10
+      },
+      "timerClear": {
+        "targetCells": 12,
+        "classificationCounts": {
+          "PLATE-RESET CENSORED": 3,
+          "QUALIFICATION LOST - COMPACTION": 2,
+          "RIGHT-CENSORED": 7
+        },
+        "nominalNoResetOpportunityAtLeast30Seconds": 4,
+        "uninterruptedPersistenceAtLeast30Seconds": 0,
+        "timerMaturedEventCount": 0,
+        "plateResetCellCount": 4,
+        "plateResetEventCount": 5,
+        "qualificationLossCellCount": 2,
+        "qualificationLossEventCount": 2,
+        "qualificationLossCountsByGate": {
+          "FOUNDATION": 0,
+          "COMPACTION": 2,
+          "FOOT LOAD": 0
+        },
+        "nearbyBlockedCellCount": 0,
+        "nearbyBlockEventCount": 0,
+        "maxCountBlockedCellCount": 0,
+        "maxCountBlockEventCount": 0,
+        "activeTimerAtFinalEvaluation": 10,
+        "activeTimerAt460Seconds": 10,
+        "qualifiedAt460Seconds": 10
+      }
+    },
+    {
+      "seed": 20261006,
+      "targetCellCount": 18,
+      "classificationDifferenceCount": 0,
+      "classificationDifferences": [],
+      "natural": {
+        "targetCells": 18,
+        "classificationCounts": {
+          "PLATE-RESET CENSORED": 4,
+          "QUALIFICATION LOST - COMPACTION": 2,
+          "RIGHT-CENSORED": 12
+        },
+        "nominalNoResetOpportunityAtLeast30Seconds": 11,
+        "uninterruptedPersistenceAtLeast30Seconds": 5,
+        "timerMaturedEventCount": 5,
+        "plateResetCellCount": 6,
+        "plateResetEventCount": 8,
+        "qualificationLossCellCount": 2,
+        "qualificationLossEventCount": 2,
+        "qualificationLossCountsByGate": {
+          "FOUNDATION": 0,
+          "COMPACTION": 2,
+          "FOOT LOAD": 0
+        },
+        "nearbyBlockedCellCount": 5,
+        "nearbyBlockEventCount": 5,
+        "maxCountBlockedCellCount": 0,
+        "maxCountBlockEventCount": 0,
+        "activeTimerAtFinalEvaluation": 16,
+        "activeTimerAt460Seconds": 16,
+        "qualifiedAt460Seconds": 16
+      },
+      "timerClear": {
+        "targetCells": 18,
+        "classificationCounts": {
+          "PLATE-RESET CENSORED": 4,
+          "QUALIFICATION LOST - COMPACTION": 2,
+          "RIGHT-CENSORED": 12
+        },
+        "nominalNoResetOpportunityAtLeast30Seconds": 11,
+        "uninterruptedPersistenceAtLeast30Seconds": 5,
+        "timerMaturedEventCount": 5,
+        "plateResetCellCount": 6,
+        "plateResetEventCount": 8,
+        "qualificationLossCellCount": 2,
+        "qualificationLossEventCount": 2,
+        "qualificationLossCountsByGate": {
+          "FOUNDATION": 0,
+          "COMPACTION": 2,
+          "FOOT LOAD": 0
+        },
+        "nearbyBlockedCellCount": 5,
+        "nearbyBlockEventCount": 5,
+        "maxCountBlockedCellCount": 0,
+        "maxCountBlockEventCount": 0,
+        "activeTimerAtFinalEvaluation": 16,
+        "activeTimerAt460Seconds": 16,
+        "qualifiedAt460Seconds": 16
+      }
+    },
+    {
+      "seed": 20261007,
+      "targetCellCount": 2,
+      "classificationDifferenceCount": 0,
+      "classificationDifferences": [],
+      "natural": {
+        "targetCells": 2,
+        "classificationCounts": {
+          "QUALIFICATION LOST - COMPACTION": 1,
+          "RIGHT-CENSORED": 1
+        },
+        "nominalNoResetOpportunityAtLeast30Seconds": 2,
+        "uninterruptedPersistenceAtLeast30Seconds": 1,
+        "timerMaturedEventCount": 1,
+        "plateResetCellCount": 0,
+        "plateResetEventCount": 0,
+        "qualificationLossCellCount": 1,
+        "qualificationLossEventCount": 1,
+        "qualificationLossCountsByGate": {
+          "FOUNDATION": 0,
+          "COMPACTION": 1,
+          "FOOT LOAD": 0
+        },
+        "nearbyBlockedCellCount": 1,
+        "nearbyBlockEventCount": 1,
+        "maxCountBlockedCellCount": 0,
+        "maxCountBlockEventCount": 0,
+        "activeTimerAtFinalEvaluation": 1,
+        "activeTimerAt460Seconds": 1,
+        "qualifiedAt460Seconds": 1
+      },
+      "timerClear": {
+        "targetCells": 2,
+        "classificationCounts": {
+          "QUALIFICATION LOST - COMPACTION": 1,
+          "RIGHT-CENSORED": 1
+        },
+        "nominalNoResetOpportunityAtLeast30Seconds": 2,
+        "uninterruptedPersistenceAtLeast30Seconds": 1,
+        "timerMaturedEventCount": 1,
+        "plateResetCellCount": 0,
+        "plateResetEventCount": 0,
+        "qualificationLossCellCount": 1,
+        "qualificationLossEventCount": 1,
+        "qualificationLossCountsByGate": {
+          "FOUNDATION": 0,
+          "COMPACTION": 1,
+          "FOOT LOAD": 0
+        },
+        "nearbyBlockedCellCount": 1,
+        "nearbyBlockEventCount": 1,
+        "maxCountBlockedCellCount": 0,
+        "maxCountBlockEventCount": 0,
+        "activeTimerAtFinalEvaluation": 1,
+        "activeTimerAt460Seconds": 1,
+        "qualifiedAt460Seconds": 1
+      }
+    }
+  ],
+  "previousGapBirthLineageDecision": "MIXED",
+  "productionSourceDiffFromBaseline": "",
+  "sourceHashes": {
+    "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+    "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+    "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+    "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+    "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+    "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+    "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+    "src/lib/agents/ant/BodyPoseController.js": "2ec4cc12c12ae301ea07056889c3be9255b1b1e155b7724cd3366278d60ace8e",
+    "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+    "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd",
+    "package.json": "3eacd5e73b2fb76a26b39ee7e8e9d35e7803059e3132d810625415002f56672e",
+    "package-lock.json": "a8ec4335c4334ace1b25a0133f78dfcbe8cc2f057c7f0910a7ea7779f3b32959",
+    "scripts/ant-zero-ant-continuity-shadow.js": "43ed4fca499ab12ea186994f54d858fa14764c7f9e53f0ae138b21ba0e4a599d",
+    "scripts/ant-zero-ant-nodule-lineage.js": "3c0d683163340f5a0ad5d95523bd41ba57aeff094d1f4801c7bdbc99e308c3be",
+    "docs/ant/evidence/2026-10-12-material-causal-tail/unobserved-natural-replay.mjs": "3c5a5a81d496d10eda5c593643ad96bfb846fc86cb7a16cb57f12dfc57ebbca3",
+    "scripts/finalize-ant-nodule-instrumentation.js": "57507fe258737abfc54e6e2c7c254bdde849ba02ecab7b73ab1e3d2fdb277007"
+  },
+  "results": [
+    {
+      "seed": 20261005,
+      "gapValidity": {
+        "prefixCheckpoints": 401,
+        "pairedProductionValueDeepCompare": true,
+        "observerOnOffExact": {
+          "exact": true,
+          "prefixCheckpoints": 401,
+          "gapTicksPerArm": 3600,
+          "matchedPairs": [
+            "natural",
+            "timerClear"
+          ]
+        },
+        "gapTicks": 3600,
+        "gapClockDeltaMs": [
+          60000.00000006985,
+          60000.00000006985,
+          60000.00000006985,
+          60000.00000006985
+        ],
+        "allTicksZeroAnt": true,
+        "noSpawn": true,
+        "noMovementOrPerAntState": true,
+        "noDeposition": true,
+        "noFootContact": true,
+        "noAntOriginOrUnknownEvents": true,
+        "noRngConsumption": true,
+        "retainedFootLoadUnchanged": true,
+        "identicalGapPlateBirthsAcrossArms": true,
+        "timerClear": {
+          "clearedCount": 383,
+          "length": 9216,
+          "sha256After": "9ad34829b6185fd326e4c357869f8b692f38bf30c9fa4901e487114cad80cb99",
+          "activeBeforeClear": 383,
+          "beforeTimerSha256": "220901e6364b60c8aa21a36869f22f545798de5d96856fb30002837593f0146b",
+          "afterTimerSha256": "9ad34829b6185fd326e4c357869f8b692f38bf30c9fa4901e487114cad80cb99",
+          "matchedNonTimerStateExact": true,
+          "onlyCandidateSinceMsChanged": true,
+          "changedOnlyCandidateSinceMs": true
+        }
+      },
+      "naturalLineages": {
+        "PRE-GAP TIMER LINEAGE": 5
+      },
+      "timerClearLineages": {
+        "POST-GAP TIMER LINEAGE": 5
+      },
+      "naturalNoduleBirths": 5,
+      "timerClearNoduleBirths": 5,
+      "gapPlateBirths": 3,
+      "plateEnabledQualificationCells": 12,
+      "targets": {
+        "natural": {
+          "targetCells": 12,
+          "classificationCounts": {
+            "PLATE-RESET CENSORED": 3,
+            "QUALIFICATION LOST - COMPACTION": 2,
+            "RIGHT-CENSORED": 7
+          },
+          "nominalNoResetOpportunityAtLeast30Seconds": 4,
+          "uninterruptedPersistenceAtLeast30Seconds": 0,
+          "timerMaturedEventCount": 0,
+          "plateResetCellCount": 4,
+          "plateResetEventCount": 5,
+          "qualificationLossCellCount": 2,
+          "qualificationLossEventCount": 2,
+          "qualificationLossCountsByGate": {
+            "FOUNDATION": 0,
+            "COMPACTION": 2,
+            "FOOT LOAD": 0
+          },
+          "nearbyBlockedCellCount": 0,
+          "nearbyBlockEventCount": 0,
+          "maxCountBlockedCellCount": 0,
+          "maxCountBlockEventCount": 0,
+          "activeTimerAtFinalEvaluation": 10,
+          "activeTimerAt460Seconds": 10,
+          "qualifiedAt460Seconds": 10
+        },
+        "timerClear": {
+          "targetCells": 12,
+          "classificationCounts": {
+            "PLATE-RESET CENSORED": 3,
+            "QUALIFICATION LOST - COMPACTION": 2,
+            "RIGHT-CENSORED": 7
+          },
+          "nominalNoResetOpportunityAtLeast30Seconds": 4,
+          "uninterruptedPersistenceAtLeast30Seconds": 0,
+          "timerMaturedEventCount": 0,
+          "plateResetCellCount": 4,
+          "plateResetEventCount": 5,
+          "qualificationLossCellCount": 2,
+          "qualificationLossEventCount": 2,
+          "qualificationLossCountsByGate": {
+            "FOUNDATION": 0,
+            "COMPACTION": 2,
+            "FOOT LOAD": 0
+          },
+          "nearbyBlockedCellCount": 0,
+          "nearbyBlockEventCount": 0,
+          "maxCountBlockedCellCount": 0,
+          "maxCountBlockEventCount": 0,
+          "activeTimerAtFinalEvaluation": 10,
+          "activeTimerAt460Seconds": 10,
+          "qualifiedAt460Seconds": 10
+        }
+      }
+    },
+    {
+      "seed": 20261006,
+      "gapValidity": {
+        "prefixCheckpoints": 401,
+        "pairedProductionValueDeepCompare": true,
+        "observerOnOffExact": {
+          "exact": true,
+          "prefixCheckpoints": 401,
+          "gapTicksPerArm": 3600,
+          "matchedPairs": [
+            "natural",
+            "timerClear"
+          ]
+        },
+        "gapTicks": 3600,
+        "gapClockDeltaMs": [
+          60000.00000006985,
+          60000.00000006985,
+          60000.00000006985,
+          60000.00000006985
+        ],
+        "allTicksZeroAnt": true,
+        "noSpawn": true,
+        "noMovementOrPerAntState": true,
+        "noDeposition": true,
+        "noFootContact": true,
+        "noAntOriginOrUnknownEvents": true,
+        "noRngConsumption": true,
+        "retainedFootLoadUnchanged": true,
+        "identicalGapPlateBirthsAcrossArms": true,
+        "timerClear": {
+          "clearedCount": 313,
+          "length": 9216,
+          "sha256After": "9ad34829b6185fd326e4c357869f8b692f38bf30c9fa4901e487114cad80cb99",
+          "activeBeforeClear": 313,
+          "beforeTimerSha256": "5441e2c28bd10081a74c424fe1a1b48b034cfcb7f69d897c370d8d5b2427a852",
+          "afterTimerSha256": "9ad34829b6185fd326e4c357869f8b692f38bf30c9fa4901e487114cad80cb99",
+          "matchedNonTimerStateExact": true,
+          "onlyCandidateSinceMsChanged": true,
+          "changedOnlyCandidateSinceMs": true
+        }
+      },
+      "naturalLineages": {
+        "PRE-GAP TIMER LINEAGE": 3,
+        "RESET/STACK-CHANGED LINEAGE": 2
+      },
+      "timerClearLineages": {
+        "POST-GAP TIMER LINEAGE": 2,
+        "RESET/STACK-CHANGED LINEAGE": 2
+      },
+      "naturalNoduleBirths": 5,
+      "timerClearNoduleBirths": 4,
+      "gapPlateBirths": 4,
+      "plateEnabledQualificationCells": 18,
+      "targets": {
+        "natural": {
+          "targetCells": 18,
+          "classificationCounts": {
+            "PLATE-RESET CENSORED": 4,
+            "QUALIFICATION LOST - COMPACTION": 2,
+            "RIGHT-CENSORED": 12
+          },
+          "nominalNoResetOpportunityAtLeast30Seconds": 11,
+          "uninterruptedPersistenceAtLeast30Seconds": 5,
+          "timerMaturedEventCount": 5,
+          "plateResetCellCount": 6,
+          "plateResetEventCount": 8,
+          "qualificationLossCellCount": 2,
+          "qualificationLossEventCount": 2,
+          "qualificationLossCountsByGate": {
+            "FOUNDATION": 0,
+            "COMPACTION": 2,
+            "FOOT LOAD": 0
+          },
+          "nearbyBlockedCellCount": 5,
+          "nearbyBlockEventCount": 5,
+          "maxCountBlockedCellCount": 0,
+          "maxCountBlockEventCount": 0,
+          "activeTimerAtFinalEvaluation": 16,
+          "activeTimerAt460Seconds": 16,
+          "qualifiedAt460Seconds": 16
+        },
+        "timerClear": {
+          "targetCells": 18,
+          "classificationCounts": {
+            "PLATE-RESET CENSORED": 4,
+            "QUALIFICATION LOST - COMPACTION": 2,
+            "RIGHT-CENSORED": 12
+          },
+          "nominalNoResetOpportunityAtLeast30Seconds": 11,
+          "uninterruptedPersistenceAtLeast30Seconds": 5,
+          "timerMaturedEventCount": 5,
+          "plateResetCellCount": 6,
+          "plateResetEventCount": 8,
+          "qualificationLossCellCount": 2,
+          "qualificationLossEventCount": 2,
+          "qualificationLossCountsByGate": {
+            "FOUNDATION": 0,
+            "COMPACTION": 2,
+            "FOOT LOAD": 0
+          },
+          "nearbyBlockedCellCount": 5,
+          "nearbyBlockEventCount": 5,
+          "maxCountBlockedCellCount": 0,
+          "maxCountBlockEventCount": 0,
+          "activeTimerAtFinalEvaluation": 16,
+          "activeTimerAt460Seconds": 16,
+          "qualifiedAt460Seconds": 16
+        }
+      }
+    },
+    {
+      "seed": 20261007,
+      "gapValidity": {
+        "prefixCheckpoints": 401,
+        "pairedProductionValueDeepCompare": true,
+        "observerOnOffExact": {
+          "exact": true,
+          "prefixCheckpoints": 401,
+          "gapTicksPerArm": 3600,
+          "matchedPairs": [
+            "natural",
+            "timerClear"
+          ]
+        },
+        "gapTicks": 3600,
+        "gapClockDeltaMs": [
+          60000.00000006985,
+          60000.00000006985,
+          60000.00000006985,
+          60000.00000006985
+        ],
+        "allTicksZeroAnt": true,
+        "noSpawn": true,
+        "noMovementOrPerAntState": true,
+        "noDeposition": true,
+        "noFootContact": true,
+        "noAntOriginOrUnknownEvents": true,
+        "noRngConsumption": true,
+        "retainedFootLoadUnchanged": true,
+        "identicalGapPlateBirthsAcrossArms": true,
+        "timerClear": {
+          "clearedCount": 353,
+          "length": 9216,
+          "sha256After": "9ad34829b6185fd326e4c357869f8b692f38bf30c9fa4901e487114cad80cb99",
+          "activeBeforeClear": 353,
+          "beforeTimerSha256": "545ea0afb61e7996cd50fbfdcc0ca10ac38a132a5a0f1803789ca67ea45d36ca",
+          "afterTimerSha256": "9ad34829b6185fd326e4c357869f8b692f38bf30c9fa4901e487114cad80cb99",
+          "matchedNonTimerStateExact": true,
+          "onlyCandidateSinceMsChanged": true,
+          "changedOnlyCandidateSinceMs": true
+        }
+      },
+      "naturalLineages": {
+        "PRE-GAP TIMER LINEAGE": 3,
+        "RESET/STACK-CHANGED LINEAGE": 1
+      },
+      "timerClearLineages": {
+        "POST-GAP TIMER LINEAGE": 3,
+        "RESET/STACK-CHANGED LINEAGE": 1
+      },
+      "naturalNoduleBirths": 4,
+      "timerClearNoduleBirths": 4,
+      "gapPlateBirths": 1,
+      "plateEnabledQualificationCells": 2,
+      "targets": {
+        "natural": {
+          "targetCells": 2,
+          "classificationCounts": {
+            "QUALIFICATION LOST - COMPACTION": 1,
+            "RIGHT-CENSORED": 1
+          },
+          "nominalNoResetOpportunityAtLeast30Seconds": 2,
+          "uninterruptedPersistenceAtLeast30Seconds": 1,
+          "timerMaturedEventCount": 1,
+          "plateResetCellCount": 0,
+          "plateResetEventCount": 0,
+          "qualificationLossCellCount": 1,
+          "qualificationLossEventCount": 1,
+          "qualificationLossCountsByGate": {
+            "FOUNDATION": 0,
+            "COMPACTION": 1,
+            "FOOT LOAD": 0
+          },
+          "nearbyBlockedCellCount": 1,
+          "nearbyBlockEventCount": 1,
+          "maxCountBlockedCellCount": 0,
+          "maxCountBlockEventCount": 0,
+          "activeTimerAtFinalEvaluation": 1,
+          "activeTimerAt460Seconds": 1,
+          "qualifiedAt460Seconds": 1
+        },
+        "timerClear": {
+          "targetCells": 2,
+          "classificationCounts": {
+            "QUALIFICATION LOST - COMPACTION": 1,
+            "RIGHT-CENSORED": 1
+          },
+          "nominalNoResetOpportunityAtLeast30Seconds": 2,
+          "uninterruptedPersistenceAtLeast30Seconds": 1,
+          "timerMaturedEventCount": 1,
+          "plateResetCellCount": 0,
+          "plateResetEventCount": 0,
+          "qualificationLossCellCount": 1,
+          "qualificationLossEventCount": 1,
+          "qualificationLossCountsByGate": {
+            "FOUNDATION": 0,
+            "COMPACTION": 1,
+            "FOOT LOAD": 0
+          },
+          "nearbyBlockedCellCount": 1,
+          "nearbyBlockEventCount": 1,
+          "maxCountBlockedCellCount": 0,
+          "maxCountBlockEventCount": 0,
+          "activeTimerAtFinalEvaluation": 1,
+          "activeTimerAt460Seconds": 1,
+          "qualifiedAt460Seconds": 1
+        }
+      }
+    }
+  ],
+  "reproduction": "node docs/ant/evidence/2026-10-12-material-causal-tail/unobserved-natural-replay.mjs test-results/ant-nodule-instrumentation-natural-replay-20261013.json; node scripts/ant-zero-ant-nodule-lineage.js --natural-replay=test-results/ant-nodule-instrumentation-natural-replay-20261013.json --output=test-results/ant-nodule-instrumentation-20261013",
+  "wallSeconds": 884.7516426,
+  "rawReconciliation": {
+    "inputDirectory": "test-results/ant-nodule-instrumentation-final-20261013",
+    "rawManifestSha256": "de04c324140f15a1e3a42bb2cfc69e4ebbdec6ef09eb0f2b1c0dae14d94a014e",
+    "rawSeedSha256": {
+      "seed-20261005.json": "5aee28d0adf75f7021502df65b6c839eff10df3e137ea4eeb9e25e50e24962c5",
+      "seed-20261006.json": "5d864002d6b775416300111f44c168d31302a43d475c9130b398aacdb84edf3d",
+      "seed-20261007.json": "820df2d701a1b35c476183d0b1a077f29ef4595d8206d60cb581c4df5202f236"
+    },
+    "analysisOnly": true,
+    "eventHistoriesPreserved": true,
+    "classificationRule": "A previously blocked timer that restarted is right-censored at the final evaluation if that current qualified timer is active and under persistence; the historical block remains an event and is counted separately."
+  }
+}
