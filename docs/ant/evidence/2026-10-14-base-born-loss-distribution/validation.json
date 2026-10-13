@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "branch": "codex/ant-base-born-causal-decomposition-20261014",
+  "researchInputCommit": "7761c4b10d77c657bc23c1691c95c04ea78bb739",
+  "productionMain": "d45823d40c9a87c1b333fa9872f3c897ee9ab01b",
+  "classification": "SUPPORTED",
+  "classificationScope": "response responsibility only; no human audibility, preference, or production adoption claim",
+  "productionWorkletSha256": "14c7461f1412f0d6897a6683d46e582dbb80711f2ba74e8ea53e026895eeea5e",
+  "frozenInputSha256": "f600eb768df2721c98cc607ea8b4b4d4fc64ae74cda6b5bf3f9297e8b0865a2d",
+  "manipulation": {
+    "gammaBase48": 0.0000616140594288357,
+    "gammaStar": 0.0004929124754306856,
+    "flat": "gamma=0; d=dBorn+4*gammaStar",
+    "frequency": "gamma=gammaStar; d=dBorn",
+    "realValuedQ4PoleResidual": 0,
+    "realValuedQ4InputGainResidual": 0,
+    "storedFloat32Residuals": {
+      "P1": { "d": -8.444436642995878e-11, "a": 8.444445143140911e-11, "inputGain": 8.444434040910664e-11, "poleRadius": 4.2280068335287524e-11 },
+      "P24": { "d": 6.50510374733404e-12, "a": -6.505018745883717e-12, "inputGain": -6.50512976818618e-12, "poleRadius": -3.2570612873428217e-12 },
+      "P26": { "d": 6.50510374733404e-12, "a": -6.505018745883717e-12, "inputGain": -6.50512976818618e-12, "poleRadius": -3.2570612873428217e-12 }
+    }
+  },
+  "pairAssertions": {
+    "sameScheduleGeometryElasticCoefficientsPickupsAndReadout": true,
+    "lossCoefficientIsOnlyTopologyChange": true,
+    "oldFrequencyArmPcmFieldAndPickupByteExact": true,
+    "flatRepeatPcmFieldAndPickupBitExactForAllThreePlates": true
+  },
+  "interpretationBoundary": {
+    "offQ4InputGainAlsoDiffers": true,
+    "pickupDeltaIsDecayOnly": false
+  },
+  "erbSelfCheck": {
+    "passed": true,
+    "bands": 30,
+    "silenceFinite": true,
+    "known250HzAnd4000HzTonesOrdered": true,
+    "sameInputDifferenceDb": 0,
+    "doubleAmplitudePowerRatio": 4,
+    "boundariesFiniteMonotonic": true
+  },
+  "focusedTests": {
+    "runner": "direct ESM imports because node --test attempted a child process blocked with spawn EPERM in this sandbox",
+    "files": [
+      "tests/ant-base-born-shadow.test.js",
+      "tests/ant-sonic-shadow-render.test.js",
+      "tests/compile-surface-topology.test.js",
+      "tests/surface-plate-worklet.test.js",
+      "tests/surface-audio-bridge.test.js",
+      "tests/audio-snapshot-renderer.test.js"
+    ],
+    "passed": 60,
+    "failed": 0
+  },
+  "productionSourceChanged": false,
+  "humanListeningAssessment": false,
+  "commonP25P50P75SensitivityRun": false
+}

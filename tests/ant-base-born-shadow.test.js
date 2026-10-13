@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import { compileSurfaceTopology } from '../src/lib/audio/compileSurfaceTopology.js';
-import { loadGenericPlateSource, rateAwareSurface, renderGenericReference, transformSurface } from '../scripts/ant-base-born-shadow.js';
+import { loadGenericPlateSource, q4MatchedFlatLossTopology, rateAwareSurface, renderGenericReference, transformSurface } from '../scripts/ant-base-born-shadow.js';
 
 const bornSource = readFileSync(new URL('../static/worklets/surface-plate.worklet.js', import.meta.url), 'utf8');
 const genericSource = readFileSync(new URL('../static/worklets/plate.worklet.js', import.meta.url), 'utf8');
@@ -130,6 +130,38 @@ test('Born frequency-loss term uses the prior four-neighbor Laplacian and coeffi
   const measuredDelta = b.processor.current[n] - a.processor.current[n];
   assert.ok(Math.abs(measuredDelta - .125 * (currentLap - previousLap)) < 1e-7,
     `measured ${measuredDelta}, predicted ${.125 * (currentLap - previousLap)}`);
+});
+
+test('q=4 flat-loss control preserves the Born topology and matches frequency-loss pole and input gain', () => {
+  const topology = compileSurfaceTopology({ plates: [plate()], stratigraphy: { layerOrder: ['p'] } });
+  const gamma = 8 * .0000616140594288357;
+  const flat = q4MatchedFlatLossTopology(topology, gamma);
+  const frequency = transformSurface(bornSource, { frequencyLoss: gamma });
+  assert.equal(frequency.definition.frequencyLoss, gamma);
+  assert.equal(frequency.source.includes(`${gamma} * (lap[node] - previousLap)`), true);
+  assert.notEqual(flat, topology);
+  assert.notEqual(flat.materialCoefficients, topology.materialCoefficients);
+  for (const key of ['nodeOffsets', 'nodeGridIndices', 'neighborIndices', 'pickupNodeIndices', 'layerIds'])
+    assert.equal(flat[key], topology[key], `${key} stays identical`);
+  assert.deepEqual(topology.materialCoefficients, compileSurfaceTopology({ plates: [plate()], stratigraphy: { layerOrder: ['p'] } }).materialCoefficients,
+    'the source topology remains unchanged');
+
+  const dBorn = 50 * topology.materialCoefficients[3];
+  const dFlatReal = dBorn + 4 * gamma;
+  const dFlatStored = 50 * flat.materialCoefficients[3];
+  const q = 4, b = topology.materialCoefficients[0], tau = topology.materialCoefficients[1] / topology.materialCoefficients[2];
+  const flatAReal = 2 - dFlatReal - b * q * q - tau * q;
+  const frequencyAReal = 2 - dBorn - gamma * q - b * q * q - tau * q;
+  const flatGainReal = 1 - dFlatReal;
+  const frequencyGainReal = 1 - dBorn - gamma * q;
+  assert.ok(Math.abs(flatAReal - frequencyAReal) <= Number.EPSILON);
+  assert.ok(Math.abs(flatGainReal - frequencyGainReal) <= Number.EPSILON);
+  assert.ok(Math.abs((1 - dFlatStored) - frequencyGainReal) < 1e-8,
+    'Float32 coefficient storage leaves only a small q=4 input-gain residual');
+  assert.ok(Math.abs((2 - dFlatStored - b * q * q - tau * q) - frequencyAReal) < 1e-8,
+    'Float32 coefficient storage leaves only a small q=4 pole residual');
+  assert.throws(() => q4MatchedFlatLossTopology(topology, -1), /finite and nonnegative/);
+  assert.throws(() => q4MatchedFlatLossTopology({ ...topology, solverRateHz: 48000 }, gamma), /compiled 6 kHz/);
 });
 
 test('48 kHz rate mapping scales the solver, coefficients, contact input and compliance reference on a copied topology', () => {

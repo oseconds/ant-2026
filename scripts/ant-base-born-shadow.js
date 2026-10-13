@@ -49,6 +49,21 @@ export function transformSurface(source, { pulseSteps = 18, spatial = 'productio
   return { source: transformed, patches, definition: { pulseSteps, spatial, jitterSeed: jitterSeed ?? null, frequencyLoss: frequencyLoss ?? 0 } };
 }
 
+export function q4MatchedFlatLossTopology(topology, gamma) {
+  if (!topology || topology.solverRateHz !== 6000 || !Array.isArray(topology.layerIds)
+    || !(topology.materialCoefficients instanceof Float32Array)
+    || topology.materialCoefficients.length !== topology.layerIds.length * 4)
+    throw new TypeError('topology must be a compiled 6 kHz ANT surface topology');
+  if (!Number.isFinite(gamma) || gamma < 0) throw new RangeError('gamma must be finite and nonnegative');
+  const materialCoefficients = topology.materialCoefficients.slice();
+  for (let offset = 3; offset < materialCoefficients.length; offset += 4) {
+    const flatLoss = 50 * topology.materialCoefficients[offset] + 4 * gamma;
+    if (!(flatLoss >= 0 && flatLoss < 1)) throw new RangeError('q=4 matched flat loss is outside the stable domain');
+    materialCoefficients[offset] = flatLoss / 50;
+  }
+  return { ...topology, materialCoefficients };
+}
+
 export function rateAwareSurface(source, topology, { baseElastic = false, instant = false } = {}) {
   if (typeof source !== 'string' || !source.includes('class SurfacePlateProcessor'))
     throw new TypeError('source must be the ANT surface worklet');

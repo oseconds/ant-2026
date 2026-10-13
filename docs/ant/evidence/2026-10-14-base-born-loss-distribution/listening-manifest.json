@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "comparison": "P24 q=4-matched flat vs frequency-loss; p50 single contact",
+  "assessment": "No human listening assessment performed.",
+  "normalization": {
+    "type": "shared target RMS for listening-only files",
+    "targetRms": 0.02,
+    "clipCount": 2,
+    "maximumPeak": 0.217200231940672
+  },
+  "measurement": {
+    "type": "stereo 32-bit float, fixed gain 1",
+    "clipCount": 2
+  },
+  "artifacts": [
+    {
+      "path": "listening/p24-flat-fixed-gain.wav",
+      "role": "32-bit float fixed gain 1 measurement WAV",
+      "bytes": 576044,
+      "sha256": "b2e68750f4702e5d2437e777b8a4dc63f64ddc41d445da273368ff07c98aa515",
+      "sourcePcmSha256": "9713a711dd9e40cdaf307b5c1e6ced3e987c0d5c30ba140ff3f8941009bd0845",
+      "rms": 0.0021401736984941484,
+      "peak": 0.023243635892868042,
+      "gain": 1
+    },
+    {
+      "path": "listening/p24-flat-rms-matched.wav",
+      "role": "16-bit common-RMS listening-only WAV",
+      "bytes": 288044,
+      "sha256": "a0ba6b1a4885ad4f50d82360b96688d3df9450a903f867982e10bf29f475b5f3",
+      "sourcePcmSha256": "9713a711dd9e40cdaf307b5c1e6ced3e987c0d5c30ba140ff3f8941009bd0845",
+      "appliedGain": 9.345035879130856,
+      "rms": 0.019999990714919834,
+      "peak": 0.217200231940672,
+      "targetRms": 0.02
+    },
+    {
+      "path": "listening/p24-frequency-fixed-gain.wav",
+      "role": "32-bit float fixed gain 1 measurement WAV",
+      "bytes": 576044,
+      "sha256": "a4f639843ff8b2e6124c28654ae8badc1e3762ebe749cb7a071d5dbea03ea5cb",
+      "sourcePcmSha256": "7bd3ff7b0c65fd0a525cabf8f65a47b4aa669c3b6bff92ee651a95b61ae7c817",
+      "rms": 0.0030802666071100522,
+      "peak": 0.02775447443127632,
+      "gain": 1
+    },
+    {
+      "path": "listening/p24-frequency-rms-matched.wav",
+      "role": "16-bit common-RMS listening-only WAV",
+      "bytes": 288044,
+      "sha256": "375489157cd8eecc27b5d1ab42feb317157393f86db0938cbe3b57c6548058f0",
+      "sourcePcmSha256": "7bd3ff7b0c65fd0a525cabf8f65a47b4aa669c3b6bff92ee651a95b61ae7c817",
+      "appliedGain": 6.4929444593642724,
+      "rms": 0.020000006522498514,
+      "peak": 0.18021179845576343,
+      "targetRms": 0.02
+    }
+  ]
+}
