@@ -142,6 +142,12 @@ Nodule의 production gates는 Plate 수>=4 / buried layers>=3, compaction>=0.55,
 
 이미 already-qualified cells에서 Nodule 완료가 관측되었고 candidate 재생성도 뒷받침되었다. Extension은 persistent-world의 성립 조건을 바꾸지 않으며 vitality, social, character, acoustic feedback의 필요성을 보이지 않는다. Negative 결과도 기존 world를 부정하지 않고 reset/exclusion/compaction과의 경쟁만 제한한다. 475 s는 임의 cutoff이며 모든 timer의 완료를 보장하지 않는다. 이후 이 제한적 claim이 필요해지면 같은 gap을 이어서 event ledger를 보존하고 cutoff를 먼저 고정한다. 이번에는 실행하지 않는다.
 
+## Follow-up note — natural 600 s Nodule opportunity census (2026-10-13)
+
+A later three-seed default-On natural census found that all runs reached `maxNodules=32` while spatially unblocked qualified cells remained: pre-birth Q/A at cap were 765/21, 599/6, and 765/15. A remained at every post-cap census and at the separate 600 s clock-end census, while 93.2–93.4% of repeated Q-cell evaluation visits were spatially blocked. This adds a bounded **MIXED** cap interpretation: both spatial exclusion and the existing cap constrain these observed runs. It does not support cap removal or imply that a post-cap A cell would birth without the cap.
+
+The fixed 400–460 s **WINDOW CENSORING DOMINANT** classification above remains unchanged. A separate source-and-saved-data recheck found all 27 active timers nearby at that cutoff, so those timers do not imply eventual births under a simple gap extension. The extension remains an optional measurement, not the current architecture priority. [Natural opportunity evidence](evidence/2026-10-13-natural-nodule-opportunity/README.md) includes the per-cell ledger and independent review.
+
 ## Actual state and timescale inventory
 
 고정 연구 tick은 60 Hz다. Production tick은 전달된 dt를 사용한다. 시간 단계의 순서는 이름만으로 정해지지 않는다. Nodule 30 s gate는 SurfaceField 1800 s decay보다 짧고, gait는 distance-driven이며, Plate/foot-load에는 기한이 없고 audio는 별도 solver clock을 사용한다.

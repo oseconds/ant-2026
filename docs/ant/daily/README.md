@@ -40,6 +40,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 - 앞서 발생한 mature proximity block 6건은 restart 뒤 다시 censored됨. 최종 분류와 이력을 구분
 - 결정: **WINDOW CENSORING DOMINANT**. 더 긴 gap의 결과는 예측하지 않음
 
+### 2026-10-13 — Natural 600 s Nodule opportunity census
+
+[Process log](./2026-10-13-natural-nodule-opportunity.md) · [Evidence](../evidence/2026-10-13-natural-nodule-opportunity/README.md) · [Independent review](../evidence/2026-10-13-natural-nodule-opportunity/independent-review.md)
+
+- Three default-On natural seeds reached the 32-Nodule cap with A cells still present; A remained at every post-cap census and at the 600 s endpoint
+- Spatial exclusion still covered about 93.2–93.4% of repeated Q cell-evaluation visits
+- Rechecked the prior fixed-gap geometry: all 27 active timers were nearby at cutoff, so they do not imply eventual birth
+- Decision: **MIXED**; keep the cap, do not infer cap-free births, and do not automatically run another Nodule experiment
+
 ### 2026-10-13 — MaterialStratigraphy Nodule zero-ant gap lineage
 
 [Process log](./2026-10-13-nodule-zero-gap-lineage.md) · [Nodule lineage evidence](../evidence/2026-10-13-nodule-zero-gap-lineage/README.md)
