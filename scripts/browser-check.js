@@ -783,7 +783,7 @@ async function verifyAnt(page, requestedUrls) {
   assert.equal(await volumeSlider.count(), 1, 'ANT exposes one dedicated volume range');
   assert.equal(await volumeSlider.getAttribute('type'), 'range');
   assert.equal(await volumeSlider.getAttribute('min'), '0');
-  assert.equal(await volumeSlider.getAttribute('max'), '100');
+  assert.equal(await volumeSlider.getAttribute('max'), '200');
   assert.equal(await volumeSlider.getAttribute('step'), '1');
   assert.equal(await page.locator('label[for="ant-volume"]').textContent().then(text => text.trim()), 'Volume');
   assert.equal(await volumeSlider.inputValue(), '100', 'ANT volume defaults to 100 percent');
