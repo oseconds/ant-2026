@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createTemporalObserver, differenceCounters } from '../scripts/ant-material-formation-temporal-observer.js';
-import { comparableLineageGroups } from '../scripts/run-ant-material-formation-temporal-observer.js';
+import { compactParityEvidence, comparableLineageGroups, comparatorGroupEvidence, finalizePairedDecision }
+  from '../scripts/run-ant-material-formation-temporal-observer.js';
 
 function makeInput(timeMs, options = {}) {
   const size = options.size || 3;
@@ -109,6 +110,63 @@ test('lineage comparators use exact candidate geometry and prior identity, not m
   const groups = comparableLineageGroups(rows);
   assert.equal(groups.length, 1);
   assert.deepEqual(groups[0].map(row => row.candidateTransition), ['CONTINUED', 'RESTARTED']);
+});
+
+test('compact parity retains per-domain digests and parity facts without embedding run snapshots', () => {
+  const plain = { rngState: 11, rngCalls: 42, finalSnapshotSha256: 'world',
+    finalFieldHashes: { pheromone: 'field' }, eventTotals: { contacts: 7 },
+    initialState: { large: new Uint8Array(1000) } };
+  const observer = { ...plain, readOnlyObservationChecks: 599,
+    initialState: { large: new Uint8Array(2000) } };
+  const parity = { comparedTicks: 36001, firstMismatch: null, fields: {
+    rng: { plainSha256: 'rng-a', observerSha256: 'rng-a', match: true },
+    agents: { plainSha256: 'agents-a', observerSha256: 'agents-a', match: true }
+  } };
+  const result = compactParityEvidence(20261007, 600, plain, observer, parity);
+  assert.equal(result.match, true);
+  assert.equal(result.ticksCompared, 36001);
+  assert.deepEqual(result.domains, parity.fields);
+  assert.deepEqual(result.rng, { plainState: 11, observerState: 11, plainCalls: 42,
+    observerCalls: 42, stateMatch: true, callsMatch: true });
+  assert.deepEqual(result.finalWorld, { plainSha256: 'world', observerSha256: 'world', match: true });
+  assert.equal(result.observerNonmutationChecks, 599);
+  assert.equal(Object.hasOwn(result, 'initialState'), false);
+  assert.equal(Object.hasOwn(result, 'perTick'), false);
+});
+
+test('compact comparator evidence includes only exact matched geometry and prior lineage pairs', () => {
+  const groupRows = [
+    { ordinal: 1, candidateTransition: 'CONTINUED', candidateIdentity: 'geometry',
+      priorMatch: { id: 'plate-1' }, contactIncrements: Uint32Array.from([2]) },
+    { ordinal: 2, candidateTransition: 'RESTARTED', candidateIdentity: 'geometry',
+      priorMatch: { id: 'plate-1' }, contactIncrements: Uint32Array.from([3]) }
+  ];
+  const evidence = comparatorGroupEvidence([...groupRows,
+    { ordinal: 3, candidateTransition: 'RESTARTED', candidateIdentity: 'other-geometry',
+      priorMatch: { id: 'plate-1' } }]);
+  assert.equal(evidence.schemaVersion, 1);
+  assert.equal(evidence.comparatorGroupCount, 1);
+  assert.equal(evidence.groups[0].priorPlateId, 'plate-1');
+  assert.equal(evidence.groups[0].continuedObservationCount, 1);
+  assert.equal(evidence.groups[0].restartedObservationCount, 1);
+  assert.deepEqual(evidence.groups[0].observations, groupRows);
+});
+
+test('bounded seed pair parks temporal history only when seed two lacks the strict comparator', () => {
+  const localInsufficient = { seed: 20261007, decision: 'INSUFFICIENT NATURAL CASES',
+    comparableContinuedRestartedGeometryPriorGroups: 0 };
+  const parked = finalizePairedDecision(localInsufficient, 20261006,
+    '5edc906326bbf01f27dba0dbc264df49f061f95f');
+  assert.equal(parked.withinSeedDecision, 'INSUFFICIENT NATURAL CASES');
+  assert.equal(parked.decision, 'TEMPORAL HISTORY PARK — CURRENT PRIORITY');
+  assert.match(parked.decisionBasis, /no strict same-prior, same-geometry/);
+  assert.match(parked.nextPass, /sonic-individuality\/audio/);
+  assert.equal(localInsufficient.decision, 'INSUFFICIENT NATURAL CASES');
+
+  const comparatorExists = finalizePairedDecision({ ...localInsufficient,
+    comparableContinuedRestartedGeometryPriorGroups: 1 }, 20261006,
+  '5edc906326bbf01f27dba0dbc264df49f061f95f');
+  assert.equal(comparatorExists.decision, 'INSUFFICIENT NATURAL CASES');
 });
 
 test('finish reports right-censored sampled loss and candidate state at the run boundary', () => {

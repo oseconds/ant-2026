@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 2,
+  "seed": 20261007,
+  "seconds": 600,
+  "dtSeconds": 0.016666666666666666,
+  "ticks": 36000,
+  "analysisCount": 599,
+  "baselineCommit": "5edc906326bbf01f27dba0dbc264df49f061f95f",
+  "productionRef": {
+    "name": "origin/main",
+    "commit": "d45823d40c9a87c1b333fa9872f3c897ee9ab01b"
+  },
+  "startCommit": "5edc906326bbf01f27dba0dbc264df49f061f95f",
+  "passBranch": "codex/ant-material-formation-temporal-seed07-20261013",
+  "node": "v22.23.2",
+  "sampling": "Captured only when TrailPlateBirth.lastAnalysisTimeMs changes during the existing 60 Hz controller tick. The first analysis is the production first tick at 16.666... ms; no formation analysis is synthesized at the run boundary.",
+  "causalOrdering": "Each row carries a detached interval-start material snapshot from immediately after the previous analysis tick. Foot-contact counter deltas are measured through the current analysis tick. A Plate born at that ending tick is listed separately in birthsAtEndBoundary and excluded from intervalStart. Same-tick and between-sample nodule births are separately recorded as material events.",
+  "mechanicalSupport": "The exact production buildSupportedMask result is sampled read-only after the controller tick. Its support values are retained for chemical-qualified cells; SurfaceField.sampleSupport fills the remaining cells without changing state. The combined mask is asserted equal to the production mask at every analysis.",
+  "cellEligibility": "The per-cell eligibility axis is the production combined supported mask. Candidate lineage and cell transitions are classified independently. A local loss-to-return is counted only when both its eligible-to-ineligible and ineligible-to-eligible transitions fall within the previous/current candidate-or-prior territory union for their intervals. First-sample and run-end boundaries are censored; subsecond absence is not inferred.",
+  "rng": "Observer run uses the same counted LCG and fresh default AntController as the plain run; no materialLocomotionResistance override or audio bridge is supplied.",
+  "parity": "Exact SHA-256 chained per-tick comparisons cover full agents, lifecycle/spawn state, counted RNG state/calls, pheromone, SurfaceField, gait, body pose, deposition, activation, occupancy, FOOT_CONTACT and birth event sequences, TrailPlateBirth internal arrays/candidate/descriptors, and MaterialStratigraphy internal arrays/history. Each observer capture is also bracketed by equal complete production-state hashes.",
+  "outputFiles": [
+    "analysis-rows.csv",
+    "class-lineage-summary.json",
+    "parity-summary.json",
+    "strict-comparator-groups.json",
+    "source-tool-hashes.json",
+    "manifest.json"
+  ],
+  "rawOutput": "test-results/ant-material-formation-temporal-seed07-20261013/raw",
+  "pairedSeedResult": {
+    "seed": 20261006,
+    "commit": "5edc906326bbf01f27dba0dbc264df49f061f95f"
+  },
+  "omittedRawArtifacts": [
+    {
+      "fileName": "temporal-records.jsonl.gz",
+      "role": "lossless full-cell temporal observations",
+      "sizeBytes": 71499474,
+      "sha256": "43dd229b2f55d000faf32da428a0e662fb62f0ecdc5eb6bcca8b9a353015867b",
+      "schemaVersion": 1,
+      "seed": 20261007,
+      "seconds": 600,
+      "generationCommand": "node scripts/run-ant-material-formation-temporal-observer.js --seed=20261007 --seconds=600 --baseline=5edc906326bbf01f27dba0dbc264df49f061f95f --production=origin/main --production-commit=d45823d40c9a87c1b333fa9872f3c897ee9ab01b --start-commit=5edc906326bbf01f27dba0dbc264df49f061f95f --branch=codex/ant-material-formation-temporal-seed07-20261013 --compact --output=docs/ant/evidence/2026-10-13-material-formation-temporal-seed07/data --raw-output=test-results/ant-material-formation-temporal-seed07-20261013/raw",
+      "sourceCommit": "5edc906326bbf01f27dba0dbc264df49f061f95f",
+      "sourceHashes": {
+        "AGENTS.md": "4b52f47484b16de6debea4343128ac68873ad4205006f8953b22a9c875c89620",
+        "docs/ant/README.md": "b846670a512a29fef45ce5ae46d91dabfc39ed3022ff1ffa8764e006bab0d201",
+        "docs/ant/evidence/2026-10-13-material-formation-responsibility/README.md": "69f9c6d6a3e0386466cfd9369f3844395ad7e546d617fa403ec7e11844559b3b",
+        "docs/ant/daily/2026-10-13-material-formation-responsibility.md": "58627dd1bcea72e64521add82c415619678e8b722500b441ba62908277626578",
+        "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+        "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+        "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+        "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+        "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7"
+      },
+      "toolHashes": {
+        "scripts/ant-material-formation-temporal-observer.js": "22273f860de9e72036d5d590a05c4b27906a613a0e9f7fe720a3df5ff607042c",
+        "scripts/run-ant-material-formation-temporal-observer.js": "546508bac19c231bfc998ede8ad49d43061994717b64fa6156ce0c1a7314d202",
+        "tests/ant-material-formation-temporal-observer.test.js": "a7afb61a838e83cd96892d464e7135db80c280cecd5ade1e406aa75c46e1087e"
+      }
+    },
+    {
+      "fileName": "final-world-snapshot.json.gz",
+      "role": "unabridged final observer-run world snapshot",
+      "sizeBytes": 1360273,
+      "sha256": "7e044576b55bcfb47697c2cfec953a7f42870b5273c551fadfaad404d3022dc1",
+      "schemaVersion": 1,
+      "seed": 20261007,
+      "seconds": 600,
+      "generationCommand": "node scripts/run-ant-material-formation-temporal-observer.js --seed=20261007 --seconds=600 --baseline=5edc906326bbf01f27dba0dbc264df49f061f95f --production=origin/main --production-commit=d45823d40c9a87c1b333fa9872f3c897ee9ab01b --start-commit=5edc906326bbf01f27dba0dbc264df49f061f95f --branch=codex/ant-material-formation-temporal-seed07-20261013 --compact --output=docs/ant/evidence/2026-10-13-material-formation-temporal-seed07/data --raw-output=test-results/ant-material-formation-temporal-seed07-20261013/raw",
+      "sourceCommit": "5edc906326bbf01f27dba0dbc264df49f061f95f",
+      "sourceHashes": {
+        "AGENTS.md": "4b52f47484b16de6debea4343128ac68873ad4205006f8953b22a9c875c89620",
+        "docs/ant/README.md": "b846670a512a29fef45ce5ae46d91dabfc39ed3022ff1ffa8764e006bab0d201",
+        "docs/ant/evidence/2026-10-13-material-formation-responsibility/README.md": "69f9c6d6a3e0386466cfd9369f3844395ad7e546d617fa403ec7e11844559b3b",
+        "docs/ant/daily/2026-10-13-material-formation-responsibility.md": "58627dd1bcea72e64521add82c415619678e8b722500b441ba62908277626578",
+        "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+        "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+        "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+        "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+        "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7"
+      },
+      "toolHashes": {
+        "scripts/ant-material-formation-temporal-observer.js": "22273f860de9e72036d5d590a05c4b27906a613a0e9f7fe720a3df5ff607042c",
+        "scripts/run-ant-material-formation-temporal-observer.js": "546508bac19c231bfc998ede8ad49d43061994717b64fa6156ce0c1a7314d202",
+        "tests/ant-material-formation-temporal-observer.test.js": "a7afb61a838e83cd96892d464e7135db80c280cecd5ade1e406aa75c46e1087e"
+      }
+    }
+  ],
+  "preflightEnforcedByRunner": false,
+  "preflight": [
+    "git ls-remote origin refs/heads/main must resolve to d45823d40c9a87c1b333fa9872f3c897ee9ab01b",
+    "git diff --exit-code 5edc906326bbf01f27dba0dbc264df49f061f95f -- AGENTS.md docs/ant/README.md docs/ant/evidence/2026-10-13-material-formation-responsibility/README.md docs/ant/daily/2026-10-13-material-formation-responsibility.md src/lib/agents/ant/AntController.js src/lib/agents/ant/TrailPlateBirth.js src/lib/agents/ant/SurfaceField.js src/lib/agents/ant/PheromoneField.js src/lib/agents/ant/MaterialStratigraphy.js",
+    "git diff --exit-code d45823d40c9a87c1b333fa9872f3c897ee9ab01b -- src/lib/agents/ant"
+  ],
+  "reproduction": "node scripts/run-ant-material-formation-temporal-observer.js --seed=20261007 --seconds=600 --baseline=5edc906326bbf01f27dba0dbc264df49f061f95f --production=origin/main --production-commit=d45823d40c9a87c1b333fa9872f3c897ee9ab01b --start-commit=5edc906326bbf01f27dba0dbc264df49f061f95f --branch=codex/ant-material-formation-temporal-seed07-20261013 --pair-seed=20261006 --pair-result-commit=5edc906326bbf01f27dba0dbc264df49f061f95f --compact --output=docs/ant/evidence/2026-10-13-material-formation-temporal-seed07/data --raw-output=test-results/ant-material-formation-temporal-seed07-20261013/raw"
+}
