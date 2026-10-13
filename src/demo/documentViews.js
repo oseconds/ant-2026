@@ -128,7 +128,7 @@ export const documentViews = {
     <div data-audio-status></div>
     <p class="ant-audio-controls"><button type="button" data-action="ant-audio" aria-pressed="false">Audio Off</button>
       <label for="ant-volume">Volume</label>
-      <input id="ant-volume" type="range" data-action="ant-volume" min="0" max="100" step="1" value="100">
+      <input id="ant-volume" type="range" data-action="ant-volume" min="0" max="200" step="1" value="100">
       <output id="ant-volume-value" for="ant-volume">100%</output>
       <button type="button" data-action="ant-substrate" aria-pressed="false">Base Substrate Off</button></p>
     <p id="ant-diagnostics" aria-label="Live ANT diagnostics"></p>
