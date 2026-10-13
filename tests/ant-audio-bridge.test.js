@@ -63,8 +63,12 @@ test('volume uses the existing output gain, retains Off/On settings and leaves S
   await bridge.setEnabled(true);
   assert.equal(bridge.volume, 0.25);
   assert.equal(audio.handles[1].gainNode.gain.value, 0.175);
-  assert.equal(bridge.setVolume(2), 1);
+  assert.equal(bridge.setVolume(1), 1);
   assert.equal(audio.handles[1].gainNode.gain.value, 0.7, '100% retains the original Plate output level');
+  assert.equal(bridge.setVolume(2), 2);
+  assert.equal(audio.handles[1].gainNode.gain.value, 1.4, '200% provides +6 dB output headroom');
+  assert.equal(bridge.setVolume(3), 2);
+  assert.equal(audio.handles[1].gainNode.gain.value, 1.4, 'values above 200% stay clamped');
   assert.equal(bridge.setVolume(-1), 0);
   assert.equal(bridge.setVolume(NaN), 0);
   assert.equal(bridge.setVolume(Infinity), 0);
