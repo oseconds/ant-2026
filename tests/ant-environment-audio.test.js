@@ -21,6 +21,11 @@ test('ANT experiment selection retains volume and historical descriptors while r
   await bridge.setEnabled(true);
   assert.deepEqual(calls, ['surface-plate-processor']);
   assert.equal(bridge.surface.plates.size, 0, 'no universal born plate');
+  assert.equal(bridge.setVolume(1), 1);
+  assert.equal(handles[0].gainNode.gain.value, 0.7, '100% keeps the existing born-surface reference');
+  assert.equal(bridge.setVolume(2), 2);
+  assert.equal(handles[0].gainNode.gain.value, 1.4, '200% doubles the born-surface output gain');
+  bridge.setVolume(0.35);
   bridge.setMode('legacy');
   assert.equal(handles[0].disconnected, 1);
   assert.equal(bridge.enabled, false, 'a mode change needs a fresh explicit Audio On');
