@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-13 — Pre-Astra canonical consolidation
+
+[Process log](./2026-10-13-pre-astra-consolidation.md) · [Architecture synthesis](../2026-10-13-persistent-world-reassessment.md) · [Repository recheck and 13-file inventory](../2026-10-13-repo-hygiene-map.md)
+
+- `8a06d91` was verified as the direct child of `75e53df`, documentation-only, then guarded-fast-forwarded to remote and local `main`
+- Corrected broad current wording to distinguish existing aggregate-derived properties from richer episode/order-sensitive character; refreshed the PARK boundary and historical concept-note status
+- Audited all 13 untracked shadow-worktree files by SHA-256 and semantic diff; preserved files in place
+- No causal experiment, simulation, test, build, branch deletion, worktree removal or prune
+
 ### 2026-10-13 — Current persistent-world architecture reassessment
 
 [Process log](./2026-10-13-persistent-world-reassessment.md) · [Synthesis](../2026-10-13-persistent-world-reassessment.md) · [Git hygiene map](../2026-10-13-repo-hygiene-map.md)

@@ -101,6 +101,42 @@ The blocked shadow worktree has three top-level untracked entries: `docs/ant/evi
 
 All candidate labels are recommendations only. This inventory performed no pruning, branch deletion, worktree removal, merge, reset, rebase, or cherry-pick. Parent performed the fetch/live remote verification noted above.
 
+## Post-fast-forward consolidation recheck — 2026-10-13
+
+The current recheck supersedes the earlier snapshot statements above for main and the synthesis branch. GitHub compare reported remote `main` at `75e53df2ec0d025b4337e360e48829f5c58809ab` and synthesis at `8a06d916ba937c57a236ce021c61b399b59cc1ae`, exactly one commit ahead and zero behind. That commit changes six Markdown files only; production/source paths are unchanged. A guarded expected-old ref update advanced remote `main` to `8a06d91`; local `main` then fast-forwarded with `--ff-only`. The final consolidation commit is added on top of `8a06d91`; the synthesis refs remain at their already-canonicalized commit, with no unique content, and are held through Astra review. No PR, merge commit, rebase, delete, prune or worktree removal occurred.
+
+The earlier pre-fast-forward **SAFE DELETE CANDIDATE** refs remain reachable from the newer main. The local and remote `codex/ant-persistent-world-reassessment-20261013` refs are now redundant at `8a06d91`; hold both through Astra review, then treat them as cleanup candidates. Recheck live remote tips immediately before any later deletion.
+
+### Dirty shadow worktree: 13-file content/hash inventory
+
+Read-only comparison of `C:/Users/5dudt/.codex/worktrees/ant-material-experience-shadow/ant-2026` against current main's `2026-10-11-retained-material-experience-shadow-final` package and corresponding runner/test. SHA-256 is listed as `shadow / main`. Byte hashes differ for every pair, so JSON values and CSV rows were compared structurally as well.
+
+| Untracked path | Class | SHA-256: shadow / main | Content comparison |
+|---|---|---|---|
+| `docs/ant/evidence/2026-10-11-retained-material-experience-shadow/aggregate-summary.json` | A | `141A80CD52C4AA7A6AFC557F760F58C2F5D99C70F886650279E51504942EF011` / `270C040364186D59B38EF0EE95805128777FA8BB5EF23A6E74088F5F9996DE02` | Parsed JSON values equal. |
+| `docs/ant/evidence/2026-10-11-retained-material-experience-shadow/episode-durations.csv` | A | `B9B66B911BC72E8657B962FBB84EADA19449FBAFEB7B78D5E8D87E52AA9BAA2B` / `01CDF21D20CC075F662B110B7A25AFB32E1BB52090C939F0C42EF0967A572522` | All 6,584 parsed rows equal. |
+| `docs/ant/evidence/2026-10-11-retained-material-experience-shadow/manifest.json` | B | `C421E17D8023AED64A9F27DFF89486FD471D07CA6F009ACCDBD8EF28CB08DB4C` / `7CAC8A84795A96655B7CA7A0963B223DF06B8A33585DAFBD35FE415EF1BD691B` | Unique first-run baseline/branch/runner provenance; current final manifest records a later explicit-baseline replay. |
+| `docs/ant/evidence/2026-10-11-retained-material-experience-shadow/population-exposure-by-second.csv` | A | `220D1E2F76233AD1C7591F1541156634662522FC0D084642D51789D5F04E1F35` / `599B79EE3B6B34D6AED9859FAE90ABB01EC066F8DD26CFE863D9B76967544FA0` | All 1,801 parsed rows equal. |
+| `docs/ant/evidence/2026-10-11-retained-material-experience-shadow/seed-20261005-ants.json` | A | `6427A3969C796FF6F283FA72B15D229A5142DFDD2CB2F6C0C3F81430A983E906` / `1E9FDD23BC9E5402C2C25A2D4F7CDE617BE70CEBB4C2E3566DCB4C8DCB727CFA` | Parsed JSON values equal. |
+| `docs/ant/evidence/2026-10-11-retained-material-experience-shadow/seed-20261005-summary.json` | A | `14574E8A506D48F89C420830E4ED3A4F055CDC971907D3441FF13A28947F44AA` / `0A941E997F7EA2011FACD40C16980122FAADE002DB28F2B795E74F734E66E479` | Simulation summary equal; only volatile `wallSeconds` differs. |
+| `docs/ant/evidence/2026-10-11-retained-material-experience-shadow/seed-20261006-ants.json` | A | `0FB271F9F052B45825FC69D78C2B5DFFD1AB5B3056291A0660C7F75DBB5D35C4` / `865A736E4F1FFCE19154687D3C28FA93DB8D93B6ACA0614FEC61411D6BB21DC1` | Parsed JSON values equal. |
+| `docs/ant/evidence/2026-10-11-retained-material-experience-shadow/seed-20261006-summary.json` | A | `8794492C90121BD131FB4E62B1022ADB485F6E7944442A5DB723637A4A644B54` / `3DE5184CCB9761CB7BD273EE98B42D1A7CFD0163B9BE34B7FD5D21B765517FDF` | Simulation summary equal; only volatile `wallSeconds` differs. |
+| `docs/ant/evidence/2026-10-11-retained-material-experience-shadow/seed-20261007-ants.json` | A | `31F2C3DA95C7E8F92D76ABEA736E00AA90861ED0D07E84FF915724B6EBCB157E` / `AEE0CA4A1B139B5AA8C5A9691B56D69EB2CE1212EB9ECB27B6386A352ADB4DF9` | Parsed JSON values equal. |
+| `docs/ant/evidence/2026-10-11-retained-material-experience-shadow/seed-20261007-summary.json` | A | `33D3D3E6DCB4685B271AB2050521A454BADBC1487A775BFE8716EA61F518141C` / `CBEFC4CE63C46B7BCB538792AA49D3DA1E65267ACC0D668821D003C1F77548C2` | Simulation summary equal; only volatile `wallSeconds` differs. |
+| `docs/ant/evidence/2026-10-11-retained-material-experience-shadow/source-hashes.json` | B | `680A8E00D770B730D3B9E18D9A8BE87C58FB0A0A71B2456041D935150544F4E2` / `33719D7E6D7614CA29105A7EF0C69A088A6BB1B10D88A3C5ABB18FFAFDF08B13` | Unique first-run source baseline hashes; later canonical replay has a different source set. |
+| `scripts/ant-material-experience-shadow.js` | B | `7018B2139E382458A2AC38D07210D8EEC2C23EA6235951103DDF57E82AEA0158` / `0EB9A0010676AF4A7FC5209F595F177F4F9277232B5AF5CB80653055A2C7FA5E` | Historical runner differs; current main adds explicit baseline/source guards, disables adopted resistance for the replay, and fixes out-of-domain validation. Keep with its matching provenance if retained. |
+| `tests/ant-material-experience-shadow.test.js` | A | `514A29A8232A8A324D5D6EEB9B487634CDF25AA6BE9BCE6B20C8709A42F0F999` / `3F990752D19F081D00E2696AD3805AB4EDB550D5268A1375F18BE9383E0C5356` | Current test contains the existing assertions plus an out-of-domain regression case. |
+
+Classification totals: **A 10, B 3, C 0, D 0**. The worktree remains **BLOCKED / preserve** because the original runner and its baseline/source-hash provenance are unique historical records. Do not merge its runner into current main or place its manifest beside the later replay as if they shared provenance. No file was changed, moved, committed or deleted during this inventory.
+
+### Updated cleanup set after canonicalization
+
+**Local SAFE DELETE CANDIDATE after Astra (12):** `ant-base-substrate-debug`, `ant-interior-endpoint-shadow-selector`, `ant-movement-material-morphology-audit`, `ant-small-dead-code-cleanup-20261008`, `research/ant-material-causal-tail-20261012`, `research/ant-nodule-lineage-censoring-20261013`, `research/ant-plate-gap-birth-lineage-20261013`, `research/ant-pre-cohort-retained-history-20261012`, `research/ant-zero-ant-continuity-20261012`, `research/ant-zero-ant-nodule-continuity-20261013`, `research/ant-zero-ant-nodule-instrumentation-20261013`, and `codex/ant-persistent-world-reassessment-20261013` (hold through review).
+
+**Remote SAFE DELETE CANDIDATE after Astra (14):** the same 12 names under `origin/`, plus `origin/agent/jules-eval` and `origin/agent/jules-eval-31pro`. The duplicate-tip pair still needs the existing remote-tip check before either deletion.
+
+**Preserve/review:** `ant-retained-material-experience-shadow` and its worktree remain DO NOT TOUCH / BLOCKED; `ant-w1-episodic-material-shadow`, `ant-interior-endpoint-production-candidate`, `ant-local-accretion-shadow`, `origin/ant-s2b-identity-null-design`, `origin/agent/jules-eval-31pro-13765390673869617607`, and `origin/agent/jules-eval-7931340460051171177` remain outside the deletion set. The three clean completed worktrees—`ant-material-experience-current-main`, `retained-material-locomotion-ab`, and `retained-material-locomotion-adoption`—remain REMOVAL CANDIDATES, not ready-to-remove: ignored content is present. The current-main worktree has `dist/` and `test-results/`; locomotion-ab has `dist/` and three ignored evidence logs (`focused-test.log`, `npm-build.log`, `npm-test.log`); adoption has `dist/` and `node_modules/`. Preserve or explicitly re-dispose those ignored artifacts before any later removal. Remove eligible worktrees before their checked-out local branches, then consider merged branch refs, and remote refs last. Reconfirm exact remote heads at execution time.
+
 
 ## Ref identity, dates, and local/remote crosswalk
 

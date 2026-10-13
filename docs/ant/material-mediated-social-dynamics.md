@@ -6,6 +6,8 @@
 **Source of implementation truth:** [ANT hub](./README.md) · [world-model contract](./world-model.md)  
 **Process chronology:** [2026-10-09 design note](./daily/2026-10-09-material-mediated-social-dynamics.md)
 
+> **Current status (2026-10-13):** This is a historical proposal, not an active roadmap. Production already has authored bounded aggregate-derived Plate/Nodule properties, not calibrated natural mechanics; richer episode/order-sensitive character remains unimplemented. The current reassessment parks organism/social feedback and names native material-character attribution as the conditional primary investigation.
+
 ## Central hypothesis
 
 > A Plate retains its formation-derived character. Ants can carry *temporary consequences* of encountering that material beyond the Plate itself. Subsequent ant–ant encounters may mediate some of those consequences into new activity elsewhere, which can in turn change the environment.
@@ -29,7 +31,7 @@ past movement / FOOT_CONTACT history
 
 | Layer | Interpretation | Lifetime / status |
 | --- | --- | --- |
-| **Plate character** | 형성 당시의 사용 이력에서 유도된 bounded material properties. compactness, porosity/roughness, directionality/anisotropy, stiffness, damping, resonance tendency는 **후보 차원** | **Birth 후 고정**을 유지하는 설계 선택. history-derived variable character 자체는 아직 계획 |
+| **Plate character** | Production already freezes bounded Plate stiffness/damping from mean chemical memory and density from mean mechanical support; Nodule properties also use compaction, layers, load and foundation. The listed extra dimensions remain hypotheses. | Birth 이후 frozen; richer episode/order-sensitive character remains a future hypothesis |
 | **Local condition** | 현재의 pheromone, 개체 밀도, 표면 노출·매몰, 주변 material, vibration 등 | 시간에 따라 변화. 물성이 고정돼도 장소의 상황은 달라진다 |
 | **Organism state** | 해당 개체의 이전 상태 및 물질·접촉을 경험한 결과 | 잠시 유지되다가 변화·회복·감쇠할 수 있는 **미래 가설** |
 | **Collective consequence** | 방문·체류·이탈·재방문·충돌·조우·흔적 축적 등의 관찰 가능한 결과 | 생기는 형태를 목표로 강제하지 않고 실험 후 해석 |
@@ -145,4 +147,4 @@ A의 임의 내부 scalar를 B에 그대로 복사하거나, 접촉하는 순간
 - 같은 고정 Plate가 시간·밀도·개체 turnover에 따라 유리/불리한 **결과**를 바꾸는지 검출할 수 있는가?
 - 현재 movement/pheromone/collision만으로 설명되는 현상 이상을 추가하는가?
 
-**Decision at this date:** Save the hypothesis; do **not** modify production behavior, Plate semantics, social-graph feedback, audio, or the W1-first active roadmap.
+**Decision at this date (2026-10-09):** Save the hypothesis; do **not** modify production behavior, Plate semantics, social-graph feedback or audio. W1 was the stated next investigation at that time; the current priority is recorded above.

@@ -247,7 +247,7 @@ The 2026-10-11 three-seed causal A/B supported the fixed local-column-count resi
 
 ## Future hypothesis — Material-mediated social dynamics
 
-[**Material-mediated Social Dynamics (2026-10-09 concept note)**](material-mediated-social-dynamics.md) remains a **proposed, not implemented** pathway: fixed history-derived Plate character → temporary organism-state after-effect → possible encounter-mediated influence → later environmental consequences. It separates changing place conditions from immutable Plate character, and treats “ant paradise / ant hell” as retrospective observational metaphors, not built-in Plate types or success targets. The adopted local locomotion condition does not depend on this pathway; vitality is a separate future hypothesis only if an organism after-effect after leaving material becomes necessary. The S0–S2c social baseline remains read-only/parked. [Design discussion chronology](daily/2026-10-09-material-mediated-social-dynamics.md).
+[**Material-mediated Social Dynamics (2026-10-09 concept note)**](material-mediated-social-dynamics.md) remains a **proposed, not implemented** pathway: richer episode/order-sensitive Plate character → temporary organism-state after-effect → possible encounter-mediated influence → later environmental consequences. It separates changing place conditions from immutable Plate character, and treats “ant paradise / ant hell” as retrospective observational metaphors, not built-in Plate types or success targets. The adopted local locomotion condition does not depend on this pathway; vitality is a separate future hypothesis only if an organism after-effect after leaving material becomes necessary. The S0–S2c social baseline remains read-only/parked. [Design discussion chronology](daily/2026-10-09-material-mediated-social-dynamics.md).
 
 ## Current research boundary
 
@@ -268,7 +268,7 @@ Research evidence와 artistic/modeling interpretation을 구분한다. Graph spe
 
 The first production causal link is retained local stratigraphy → bounded locomotion resistance → later movement and environmental history. It is the exact fixed candidate described above. `TrailPlateBirth` remains the current authored formation baseline. The adoption does not claim more Plate births or coverage.
 
-Vitality is a separate future hypothesis only if an organism after-effect needs to persist after an ant leaves a Plate. Alternative formation laws, history-derived material character, C2 and retained relations are not prerequisites for the adopted production link. Acoustic climate remains future work. There is no active W1→W2→W3 mandatory sequence.
+Vitality is a separate future hypothesis only if an organism after-effect needs to persist after an ant leaves a Plate. Alternative formation laws, richer episode/order-sensitive material character, C2 and retained relations are not prerequisites for the adopted production link. Acoustic climate remains future work. There is no active W1→W2→W3 mandatory sequence.
 
 The 2026-10-12 one-tick causal-tail pass found post-exit consequences carried by existing movement and environmental state, with no demonstrated need for a separate organism state: **SUFFICIENT CURRENTLY; temporary after-effect / vitality PARK**. This is a bounded current-world decision, not a hidden-memory claim. [Causal-tail evidence](evidence/2026-10-12-material-causal-tail/README.md).
 
@@ -282,7 +282,7 @@ A 2026-10-13 Nodule-only follow-up found 14 natural gap births: 11 completed pre
 
 The fixed-window timer/blocker instrumentation resolved all 32 target cells per arm: 20 right-censored, 7 Plate-reset censored, and 5 compaction losses. Six earlier mature proximity rejections were followed by restarted sub-30 s timers, so they are secondary events rather than additional final failures. **WINDOW CENSORING DOMINANT** describes the 400–460 s forced shadow and does not predict later births. [Instrumentation](evidence/2026-10-13-nodule-gap-censoring-instrumentation/README.md).
 
-The [2026-10-13 architecture reassessment](2026-10-13-persistent-world-reassessment.md) found an existing bounded material-character path: Plate chemical/support aggregates and Nodule compaction/layer/load aggregates already set frozen solver properties. Richer episode/order-sensitive character remains unimplemented. The next proposed discriminator is the effective natural range and response contribution of those existing properties; no new causal link was selected. Vitality/social/natural-vacancy mechanisms and Nodule extension remain parked. [Branch/worktree hygiene inventory](2026-10-13-repo-hygiene-map.md).
+The [2026-10-13 architecture reassessment](2026-10-13-persistent-world-reassessment.md) found an existing bounded material-character path: Plate chemical/support aggregates and Nodule compaction/layer/load aggregates already set frozen solver properties. Richer episode/order-sensitive character remains unimplemented. The next proposed discriminator is the effective natural range and response contribution of those existing properties; no new causal link was selected. Vitality/social/natural-vacancy mechanisms remain PARK; the technically justified Nodule extension is secondary/PARK. [Branch/worktree hygiene inventory](2026-10-13-repo-hygiene-map.md).
 
 ### Research gate
 
