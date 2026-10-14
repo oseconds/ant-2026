@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-14 — Reusable static A/B audio evidence viewer
+
+[Process log](./2026-10-14-audio-evidence-viewer.md) · [Viewer schema](../audio-evidence-viewer.md) · [Natural-event integration](../evidence/2026-10-14-base-born-natural-event-erb/README.md)
+
+- Added a reusable static A/B viewer; natural-event q25/q50/q75 use the existing 12 WAVs
+- Fixed-gain WAVs feed the existing 30-band ERB helper and shared display scales; notes remain browser-local until export
+- No new audio render or human listening result; the scientific MIXED decision and production remain unchanged
+
 ### 2026-10-14 — Plate ERB response under frozen-world Z coupling
 
 [Process log](./2026-10-14-plate-erb-z-coupling.md) · [Evidence](../evidence/2026-10-14-plate-erb-z-coupling/README.md)

@@ -338,6 +338,7 @@ Current production includes the adopted local locomotion condition. Further move
 
 ### Material / audio
 
+- [Reusable static A/B audio evidence viewer schema and usage](audio-evidence-viewer.md)
 - [Surface Plates](evidence/2026-10-05-surface-plates/README.md)
 - [Contact sonic baseline](evidence/2026-10-06-contact-sonic-baseline/README.md)
 - [Plate decay](evidence/2026-10-06-plate-decay/README.md)

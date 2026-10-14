@@ -58,6 +58,8 @@ Taken together, the native streams differ strongly in level and retain additiona
 
 ## Visual and listening artifacts
 
+[`listening.html`](listening.html) is the reusable static A/B viewer for the existing q25/q50/q75 clips. It uses the 12 WAVs and their recorded metadata from [`listening-manifest.json`](listening-manifest.json); no audio was rendered again. RMS-matched playback is the default listening-only character comparison. Fixed-gain playback preserves amplitude / transfer context. ERB panels remain closed until revealed and use only the fixed-gain clips. [`viewer-config.json`](viewer-config.json) is the declarative input, and [`viewer-validation.json`](viewer-validation.json) records the WAV receipts, reused ERB helper, fixed scales, and generated HTML hash. No human listening assessment or scientific result was added.
+
 ![Event-aligned 500 ms fixed-gain ERB-time and envelope comparison](event-aligned-500ms.png)
 
 ![Chronological parent-group ERB difference and overlap counts](event-overlap-groups.png)

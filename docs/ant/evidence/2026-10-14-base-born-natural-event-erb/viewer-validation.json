@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "viewerId": "ant-base-born-natural-event-erb",
+  "evidenceId": "2026-10-14-base-born-natural-event-erb",
+  "generator": {
+    "path": "scripts/ant-audio-evidence-viewer.py",
+    "sha256": "15b5b13b1f74d99753ea18a3919ac6803ab549282338e24fba2d3bb1ca0cc28a",
+    "python": "3.12.14"
+  },
+  "config": {
+    "path": "viewer-config.json",
+    "bytes": 2043,
+    "sha256": "618706401dabe9f11357100908a40f4cfa43e0179e5af611379cdb99ec1616c5"
+  },
+  "listeningManifest": {
+    "path": "listening-manifest.json",
+    "bytes": 7275,
+    "sha256": "b06f0e73d4fd90680711b553adef28a0d4b8c2b809de8ebcbb91bc602132dd75"
+  },
+  "analysis": {
+    "path": "analysis.json",
+    "bytes": 1360805,
+    "sha256": "37a4f0f7e486ddb2ab5495b317a5438233c3ee404f5510811471ad23b7d399d3"
+  },
+  "erbHelper": {
+    "path": "scripts/ant-base-born-loss-analysis.py",
+    "sha256": "ec253f00b99617b0f834fa3c2a5958bde08651642c7b7488e394d845645ea83c",
+    "selfCheck": {
+      "passed": true,
+      "erbBands": 30,
+      "lowToneHz": 250,
+      "highToneHz": 4000,
+      "sameInputDifferenceDb": 0.0,
+      "doubleAmplitudePowerRatio": 4.0,
+      "silenceFinite": true,
+      "bandBoundariesMonotonic": true
+    }
+  },
+  "fixedGainOnlyErbAnalysis": true,
+  "validatedAudioFiles": [
+    {
+      "path": "listening/q25-base-fixed-gain.wav",
+      "bytes": 192044,
+      "sha256": "fbb2ba73ce2c79f9624b313127ff8eae8079a66a835e6aab39c0ab8691c022db"
+    },
+    {
+      "path": "listening/q25-base-rms-matched-listening-only.wav",
+      "bytes": 192044,
+      "sha256": "78fc0e9180d0510fc8b95383441329f655eadf90c74c7e8a357fc6eee343096c"
+    },
+    {
+      "path": "listening/q25-born-fixed-gain.wav",
+      "bytes": 192044,
+      "sha256": "e43823bf46a8c95442877d8f6a7c9e683d3e6fd9f630f468b1110c4dd33192e5"
+    },
+    {
+      "path": "listening/q25-born-rms-matched-listening-only.wav",
+      "bytes": 192044,
+      "sha256": "e43823bf46a8c95442877d8f6a7c9e683d3e6fd9f630f468b1110c4dd33192e5"
+    },
+    {
+      "path": "listening/q50-base-fixed-gain.wav",
+      "bytes": 192044,
+      "sha256": "1e3aacad01347b851adabcf5d74d80b1f7eee500689bc7b45941c12c5497aa6d"
+    },
+    {
+      "path": "listening/q50-base-rms-matched-listening-only.wav",
+      "bytes": 192044,
+      "sha256": "dba2174d1f9f2426b4221228722181bfa661f6487438afd8c5fb178464b23b1e"
+    },
+    {
+      "path": "listening/q50-born-fixed-gain.wav",
+      "bytes": 192044,
+      "sha256": "45830f3fdb074c90af9122bd0839e6a6a963c353c0a2751d269305f6cc231bcb"
+    },
+    {
+      "path": "listening/q50-born-rms-matched-listening-only.wav",
+      "bytes": 192044,
+      "sha256": "45830f3fdb074c90af9122bd0839e6a6a963c353c0a2751d269305f6cc231bcb"
+    },
+    {
+      "path": "listening/q75-base-fixed-gain.wav",
+      "bytes": 192044,
+      "sha256": "fd891c0a852c0531658c8026d0698bbb4973b1d780990c18b0e3eb4137db1e0b"
+    },
+    {
+      "path": "listening/q75-base-rms-matched-listening-only.wav",
+      "bytes": 192044,
+      "sha256": "931478b546f9e7ed4746330fbc400bd8a2fea0e7f5f18ecafef02e46aad5654b"
+    },
+    {
+      "path": "listening/q75-born-fixed-gain.wav",
+      "bytes": 192044,
+      "sha256": "eae0eebef07d65ad8bd4dbc0b2a06561dcea946beef6380befd79faa6c059d21"
+    },
+    {
+      "path": "listening/q75-born-rms-matched-listening-only.wav",
+      "bytes": 192044,
+      "sha256": "eae0eebef07d65ad8bd4dbc0b2a06561dcea946beef6380befd79faa6c059d21"
+    }
+  ],
+  "erbAnalysisParity": [
+    {
+      "pairId": "q25",
+      "contactIndex": 4392,
+      "metric": "integratedBandBornMinusBaseDb",
+      "maxAbsoluteErrorDb": 0.0,
+      "passed": true
+    },
+    {
+      "pairId": "q50",
+      "contactIndex": 4475,
+      "metric": "integratedBandBornMinusBaseDb",
+      "maxAbsoluteErrorDb": 0.0,
+      "passed": true
+    },
+    {
+      "pairId": "q75",
+      "contactIndex": 4573,
+      "metric": "integratedBandBornMinusBaseDb",
+      "maxAbsoluteErrorDb": 0.0,
+      "passed": true
+    }
+  ],
+  "erbDisplay": {
+    "specification": {
+      "sampleRate": 48000,
+      "fftSize": 1024,
+      "hopSize": 256,
+      "maxHz": 8000,
+      "bands": 30
+    },
+    "absolutePowerDbScale": [
+      -180.0,
+      0.0
+    ],
+    "differenceDbScale": [
+      -120.0,
+      120.0
+    ],
+    "perPairAutoscale": false
+  },
+  "html": {
+    "path": "listening.html",
+    "bytes": 676075,
+    "sha256": "a22a89d0c2e0de0b5542d216e60a35e7d3b38901cf446c461cee3ae7799da016"
+  },
+  "noAudioRenderOrSourceModification": true
+}
