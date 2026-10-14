@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-14 — Plate ERB identity across contact position
+
+[Process log](./2026-10-14-plate-erb-position-identity.md) · [Evidence](../evidence/2026-10-14-plate-erb-position-identity/README.md)
+
+- Reused and hash-verified the 36 frozen native p25/p50/p75 one-shot responses
+- Full ERB-time identity was not consistent across positions; time-integrated and late-tail profiles showed partial same-Plate grouping
+- Decision: **MIXED**; no human identification claim and no production change
+
 ### 2026-10-14 — Base/Born causal decomposition
 
 [Process log](./2026-10-14-base-born-causal-decomposition.md) · [Evidence and next hypothesis](../evidence/2026-10-14-base-born-causal-decomposition/README.md)
