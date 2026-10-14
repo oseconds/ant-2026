@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-14 — Plate material contribution at ERB scale
+
+[Process log](./2026-10-14-plate-erb-material-contribution.md) · [Evidence](../evidence/2026-10-14-plate-erb-material-contribution/README.md)
+
+- Reused 78 hash-verified frozen PCM files: 36 native/median pairs and three existing p50 low/high controls; no simulation or render
+- Primary ERB shapes and fixed-gain levels were nearly unchanged; a few low FFT-bin differences repeated in the observed-range controls
+- Decision: **NEGATIVE** for broad ERB-scale natural-material response; no human listening or production change
+
 ### 2026-10-14 — Plate ERB identity across contact position
 
 [Process log](./2026-10-14-plate-erb-position-identity.md) · [Evidence](../evidence/2026-10-14-plate-erb-position-identity/README.md)
