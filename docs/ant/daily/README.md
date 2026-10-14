@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-14 — Plate ERB response under frozen-world Z coupling
+
+[Process log](./2026-10-14-plate-erb-z-coupling.md) · [Evidence](../evidence/2026-10-14-plate-erb-z-coupling/README.md)
+
+- Reused 16 hash-verified frozen-world PCM files for four `world-none` / `world-z` pairs; exact isolated/none and Z/ZN controls passed
+- ERB-time difference patterns partly repeated, while integrated and late profiles and fixed-gain energy remained nearly unchanged
+- Decision: **MIXED**; no human listening, new render, or production change
+
 ### 2026-10-14 — Plate material contribution at ERB scale
 
 [Process log](./2026-10-14-plate-erb-material-contribution.md) · [Evidence](../evidence/2026-10-14-plate-erb-material-contribution/README.md)
