@@ -58,7 +58,11 @@ The ERB implementation self-check passed: silence stays finite, 250 Hz and 4 kHz
 
 ## Listening and visuals
 
-- [`p24-time-frequency.html`](p24-time-frequency.html) is the single primary visual artifact: P24 L/R fixed-scale STFT, ERB-time view, and flat/frequency/difference panels. P1/P26 detailed measurements stay machine-readable; no extra plate visual sheets were generated.
+![P24 fixed-scale STFT and ERB-binned STFT comparison](p24-time-frequency.png)
+
+- [`p24-time-frequency.png`](p24-time-frequency.png) is the representative static evidence snapshot shown above. It captures the P24 flat, frequency-loss, and frequency − flat panels for both pickup channels, using the same chart data and fixed scales as the HTML.
+- [`p24-time-frequency.html`](p24-time-frequency.html) is the exploratory/listening view. It embeds the same STFT and ERB arrays and retains the listening-only controls.
+- `analysis.json` and `erb-time-series.json.gz` remain the machine-readable measurement/data sources. The PNG is a static snapshot, not a replacement source of truth. P1/P26 detailed measurements stay machine-readable; no extra plate visual sheets were generated.
 - [`listening/p24-flat-fixed-gain.wav`](listening/p24-flat-fixed-gain.wav) and [`listening/p24-frequency-fixed-gain.wav`](listening/p24-frequency-fixed-gain.wav) are 32-bit float measurement exports at fixed gain 1.
 - [`listening/p24-flat-rms-matched.wav`](listening/p24-flat-rms-matched.wav) and [`listening/p24-frequency-rms-matched.wav`](listening/p24-frequency-rms-matched.wav) share target RMS `0.02`; these 16-bit exports are listening-only character-comparison artifacts.
 - [`listening-manifest.json`](listening-manifest.json) has WAV hashes, source PCM hashes, levels, and the explicit status: **No human listening assessment performed.** No automatic audible/preferred judgment was made.
@@ -68,7 +72,7 @@ The ERB implementation self-check passed: silence stays finite, 250 Hz and 4 kHz
 - [`analysis.json`](analysis.json): complete machine-readable mode slopes/curves, pickup RMS/peak/envelopes, stereo response, limiter contribution, fixed-scale STFT metrics, ERB definitions and band tails.
 - [`erb-time-series.json.gz`](erb-time-series.json.gz): compact native fixed-gain ERB-time arrays for all three geometries.
 - [`render-manifest.json`](render-manifest.json): all six isolated render rows, artifact sizes/SHA-256, exact condition metadata, old frequency-arm byte parity, and source-tool hashes. The 52,488,000 bytes of raw renders are under ignored `test-results/ant-base-born-loss-distribution-20261014/`.
-- [`report-manifest.json`](report-manifest.json): analysis, ERB series, visual, and listening artifact hashes.
+- [`report-manifest.json`](report-manifest.json): analysis, ERB series, HTML/PNG and listening artifact hashes, plus the PNG export tool/browser version and pixel dimensions.
 - [`validation.json`](validation.json): branch/baseline provenance, coefficient match, pair assertions, determinism, and focused validation status.
 - [`../2026-10-14-base-born-causal-decomposition/README.md`](../2026-10-14-base-born-causal-decomposition/README.md) and [`responsibility-map.md`](../2026-10-14-base-born-causal-decomposition/responsibility-map.md): prior-pass setup and responsibilities.
 - [`../../daily/2026-10-14-base-born-loss-distribution.md`](../../daily/2026-10-14-base-born-loss-distribution.md): decision chronology.

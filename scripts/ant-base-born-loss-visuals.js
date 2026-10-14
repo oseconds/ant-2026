@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { gunzipSync } from 'node:zlib';
+import { chromium } from 'playwright';
 import { buildAudioSnapshot } from './audio-snapshot-renderer.js';
 import { encodeStereoFloatWav, sha256 } from './ant-sonic-shadow-render.js';
 
@@ -83,10 +84,11 @@ h1{font-size:1.5rem;margin:.2rem 0}.note{background:#f3f5f7;padding:.8rem 1rem;m
 table{border-collapse:collapse;margin:1rem 0;width:100%}td,th{border:1px solid #ccc;padding:.45rem;text-align:left}audio{width:18rem;max-width:100%}
 @media(max-width:800px){.grid{grid-template-columns:1fr}.grid canvas{height:220px}}
 </style>
-<h1>P24 · Base/Born matched-loss response</h1>
+<div id="evidence-figure"><h1>P24 · Base/Born matched-loss response</h1>
 <p class="note">Frozen single p50 contact; fixed-gain PCM, native geometry, Born elastic law, 6 kHz physics, 3 ms pulse, 75 ms recovery and ×50 damping baseline. Columns show flat control, frequency loss and frequency − flat. No per-clip normalization. STFT uses the existing 1024 Hann / 256 hop renderer at fixed −100…0 dBFS. ERB panels aggregate linear STFT power before 10 log10; they are an ERB-binned STFT sidecar, not gammatone or cochleogram output. Difference panels display ±24 dB; metrics retain unclipped values.</p>
 <p>STFT time axis is 279 left-aligned frames at 5.333 ms hop over the 1.5 s render. Frequency bins are 46.875 Hz apart; the last displayed bin is 7,968.75 Hz. ERB centers and boundaries are in <a href="analysis.json">analysis.json</a>. The loss comparison and field modal curves are in the machine-readable report.</p>
 <div class="grid">${cards}</div>
+</div>
 <h2>Listening-only level-matched pair</h2>
 <p class="note">These 16-bit clips share one RMS target for character comparison. Use fixed-gain measurement WAVs linked below for level comparison. No human assessment is recorded.</p>
 <table><thead><tr><th>Arm</th><th>Listening-only, common RMS</th><th>Measurement, fixed gain 1</th></tr></thead><tbody>
@@ -118,6 +120,7 @@ for(const canvas of document.querySelectorAll('canvas')){
  }
  ctx.putImageData(img,0,0);const target=canvas.getContext('2d');target.imageSmoothingEnabled=false;target.drawImage(scratch,0,0,canvas.width,canvas.height);
 }
+document.documentElement.dataset.chartsReady='true';
 </script>`;
 
 const listing = `${evidence}/listening`;
@@ -175,11 +178,36 @@ const listenBytes = Buffer.from(JSON.stringify(listeningManifest, null, 2) + '\n
 await writeFile(`${evidence}/listening-manifest.json`, listenBytes);
 const htmlBytes = Buffer.from(html + '\n');
 await writeFile(`${evidence}/p24-time-frequency.html`, htmlBytes);
+const browser = await chromium.launch({ headless: true });
+let pngBytes, pngDimensions, browserVersion;
+try {
+  const page = await browser.newPage({ viewport: { width: 1312, height: 900 }, deviceScaleFactor: 2 });
+  const pageErrors = [];
+  page.on('pageerror', error => pageErrors.push(error.message));
+  await page.setContent(html, { waitUntil: 'load' });
+  await page.waitForFunction(() => document.documentElement.dataset.chartsReady === 'true');
+  assert.equal(await page.locator('#evidence-figure canvas').count(), 12, 'P24 export contains all STFT and ERB comparison panels');
+  const figure = page.locator('#evidence-figure');
+  const bounds = await figure.boundingBox();
+  assert.ok(bounds && bounds.width >= 1280, 'P24 static figure keeps the HTML desktop layout');
+  pngBytes = await figure.screenshot({ type: 'png', scale: 'device' });
+  assert.deepEqual(pageErrors, [], 'P24 chart rendering has no browser errors');
+  assert.equal(pngBytes.subarray(0, 8).toString('hex'), '89504e470d0a1a0a', 'static visual is a PNG');
+  pngDimensions = { width: pngBytes.readUInt32BE(16), height: pngBytes.readUInt32BE(20) };
+  assert.equal(pngDimensions.width, Math.round(bounds.width * 2), 'PNG width matches the captured HTML figure at 2x');
+  assert.equal(pngDimensions.height, Math.round(bounds.height * 2), 'PNG height matches the captured HTML figure at 2x');
+  assert.ok(pngDimensions.width > 0 && pngDimensions.height > 0 && pngBytes.length > 1000, 'static visual is non-empty');
+  browserVersion = browser.version();
+} finally {
+  await browser.close();
+}
+await writeFile(`${evidence}/p24-time-frequency.png`, pngBytes);
 const artifacts = [];
 for (const path of ['docs/ant/evidence/2026-10-14-base-born-loss-distribution/analysis.json',
   'docs/ant/evidence/2026-10-14-base-born-loss-distribution/erb-time-series.json.gz',
   'docs/ant/evidence/2026-10-14-base-born-loss-distribution/listening-manifest.json',
   'docs/ant/evidence/2026-10-14-base-born-loss-distribution/p24-time-frequency.html',
+  'docs/ant/evidence/2026-10-14-base-born-loss-distribution/p24-time-frequency.png',
   ...listeningArtifacts.map(item => `docs/ant/evidence/2026-10-14-base-born-loss-distribution/${item.path}`)]) {
   const bytes = await readFile(path);
   artifacts.push({ path: path.replace(`${evidence}/`, ''), bytes: bytes.length, sha256: sha256(bytes) });
@@ -194,7 +222,10 @@ await writeFile(`${evidence}/report-manifest.json`, JSON.stringify({
   fixedGainMetricsSha256: sha256(await readFile(`${root}/metrics.json`)),
   analysisSha256: sha256(await readFile(`${evidence}/analysis.json`)),
   erbTimeSeriesSha256: sha256(await readFile(`${evidence}/erb-time-series.json.gz`)),
+  visualExport: { path: 'p24-time-frequency.png', tool: 'Playwright Chromium locator screenshot', browserVersion,
+    viewport: { width: 1312, height: 900 }, deviceScaleFactor: 2, capturedCssTarget: '#evidence-figure',
+    sharedSource: 'same chartData object embedded in p24-time-frequency.html', dimensions: pngDimensions },
   sourceToolHashes: toolHashes, artifacts }, null, 2) + '\n');
 console.log(JSON.stringify({ p24Frames: chartData.dimensions.frames, stftBins: chartData.dimensions.stftBins,
   erbBands: chartData.dimensions.erbBands, listeningTargetRms: targetRms, artifacts: artifacts.length,
-  pageBytes: htmlBytes.length, report: `${evidence}/report-manifest.json` }, null, 2));
+  pageBytes: htmlBytes.length, pngBytes: pngBytes.length, pngDimensions, report: `${evidence}/report-manifest.json` }, null, 2));
