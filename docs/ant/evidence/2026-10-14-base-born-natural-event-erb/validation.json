@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "branchAtPassStart": "codex/ant-base-born-causal-decomposition-20261014",
+  "researchHeadAtPassStart": "83bcfba64f4b1760d8072488a20c8cc3d1ea9c90",
+  "productionMain": "d45823d40c9a87c1b333fa9872f3c897ee9ab01b",
+  "sourceAndMapping": {
+    "passed": true,
+    "sourcePathSizeSha256Verified": true,
+    "frozenInputGzipSha256": "25bf05aab8bbbb142be11b79f37a5988898d6069e24cae31bf721348b0bf7ff3",
+    "bornRawPcmSha256": "19a02ff15c625d1bfc6d9a59244ce6d041d3d9944888300dcaf74d5d823c88b9",
+    "baseRawPcmSha256": "5b79c9b8514cf022f8c6d9ea62b8d296e730a5f3a5ea8af88d80348196f49784",
+    "pcmFormat": {
+      "base": {
+        "audioFormat": "IEEE_FLOAT",
+        "channels": 2,
+        "sampleRate": 48000,
+        "framesPerChannel": 480000,
+        "bitsPerSample": 32,
+        "dataBytes": 3840000
+      },
+      "born": {
+        "audioFormat": "IEEE_FLOAT",
+        "channels": 2,
+        "sampleRate": 48000,
+        "framesPerChannel": 480000,
+        "bitsPerSample": 32,
+        "dataBytes": 3840000
+      }
+    },
+    "mapping": {
+      "sourceAcceptedBornP1Strikes": 63,
+      "uniqueParentFootContactGroups": 44,
+      "baseSubstrateEvents": 44,
+      "groupMultiplicity": {
+        "1": 27,
+        "2": 15,
+        "3": 2
+      },
+      "sourceMappingRevalidatedAgainstFrozenContactsAndBornStrikes": true
+    },
+    "eligibleCompleteWindowCounts": {
+      "100": 43,
+      "250": 43,
+      "500": 42
+    },
+    "windowPolicy": "whole windows only; no truncation; aligned at common parent requestedFrame; actual Base 128-frame dispatch offset is separately retained",
+    "erbSelfCheck": {
+      "passed": true,
+      "erbBands": 30,
+      "lowToneHz": 250,
+      "highToneHz": 4000,
+      "sameInputDifferenceDb": 0.0,
+      "doubleAmplitudePowerRatio": 4.0,
+      "silenceFinite": true,
+      "bandBoundariesMonotonic": true,
+      "silenceDifferenceZero": true,
+      "identicalToneDifferenceZero": true,
+      "bandBoundariesFiniteMonotonic": true,
+      "emptyBandIndices": [
+        3
+      ]
+    },
+    "stereoPooling": "mean of left and right linear ERB power per time-band cell",
+    "fixedGainNormalization": "none; unit-sum normalization appears only in explicitly named shape-only metrics",
+    "noPerClipOrPerPanelDisplayNormalization": true,
+    "noSimulationOrAudioRender": true
+  },
+  "deterministicInputsOnly": true,
+  "analysisGenerationDoesNotInvokeSimulationOrAudioRenderer": true,
+  "productionSourceModification": false
+}
