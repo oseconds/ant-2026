@@ -1,6 +1,6 @@
 # ANT — Current Architecture, Evidence and Research Boundary
 
-**Current repository state: 2026-10-14**
+**Current repository state: 2026-10-15**
 
 이 문서는 ANT의 **현재 verified state**를 위한 GitHub-side hub다. 과정은 [daily logs](daily/README.md), 실험별 원본과 재현 자료는 [evidence packages](evidence/)에 둔다.
 
@@ -124,9 +124,13 @@ The full 48-node P1 map found strong channel-matched distance response plus near
 
 mature 20–30 Plate의 AudioWorklet realtime collapse는 unresolved known issue다. Audio/runtime, sleep/wake, ROM optimization은 현재 연구 본선에서 보류한다.
 
-The 2026-10-13 sonic-individuality diagnosis found distinct isolated measured responses in twelve current-law natural Plates, including shared-material controls. A follow-up found **mixed** auditory-band consistency across contact position: time-integrated and late-tail profiles retained some same-Plate similarity, but full ERB-time responses did not group consistently. Dense mixing and human audible discrimination remain unresolved. Production audio is unchanged. [Individuality evidence and listening sheet](evidence/2026-10-13-plate-sonic-individuality/README.md) · [ERB position-identity evidence](evidence/2026-10-14-plate-erb-position-identity/README.md).
+These 2026-10-13–15 research passes are diagnostic only: production `src/` and `static/` are unchanged, and the production sonic baseline above remains in force.
 
-The 2026-10-14 Base/Born decomposition on three systematic frozen geometries separates excitation weighting, elastic modal law and loss. Its q=4-matched flat-vs-frequency-loss follow-up supports a distinct response responsibility: low modes decay more slowly and high modes faster, with the difference retained in fixed-gain Born pickups across all three frozen geometries. This is a response result, not a human audibility/preference finding or production adoption. Formation/behavior, Z/Nodule redesign and runtime optimization remain parked. [Causal evidence](evidence/2026-10-14-base-born-causal-decomposition/README.md) and [matched loss-distribution evidence](evidence/2026-10-14-base-born-loss-distribution/README.md).
+Isolated Plate response depends strongly on contact position. Across the observed natural material range, changes are nearly absent at broad ERB scale; Z coupling gives a weak, structured perturbation. Under the q=4-matched comparison, frequency-selective loss redistributes modal decay across low and high modes.
+
+**P24 modal-participation result: SUPPORTED.** Frozen p25/p50/p75 cases share poles and eigenspaces, while contact changes mode participation. Pickup observability stays fixed; modal residue sums explain verified autonomous raw-pickup differences after the exact recurrence begins. This does not cover the earlier active-set expansion.
+
+A reusable static A/B audio evidence viewer and blind first-listen workflow now exist. The workflow supports anonymous A/B, a hidden A/A catch, first notes before reveal, and separate post-reveal notes. **No human listening result has been collected for these 2026-10-13–15 passes.** These measurements do not establish audibility or preference.
 
 ### Read-only social observation
 
@@ -339,6 +343,15 @@ Current production includes the adopted local locomotion condition. Further move
 ### Material / audio
 
 - [Reusable static A/B audio evidence viewer schema and usage](audio-evidence-viewer.md)
+- [Plate sonic individuality](evidence/2026-10-13-plate-sonic-individuality/README.md)
+- [Plate contact-position ERB identity](evidence/2026-10-14-plate-erb-position-identity/README.md)
+- [Observed-range material contribution](evidence/2026-10-14-plate-erb-material-contribution/README.md)
+- [Z-coupling ERB perturbation](evidence/2026-10-14-plate-erb-z-coupling/README.md)
+- [Base/Born causal decomposition](evidence/2026-10-14-base-born-causal-decomposition/README.md)
+- [q=4-matched loss distribution](evidence/2026-10-14-base-born-loss-distribution/README.md)
+- [Natural Base/Born ERB events](evidence/2026-10-14-base-born-natural-event-erb/README.md)
+- [P24 modal participation — SUPPORTED](evidence/2026-10-15-plate-modal-participation/README.md)
+- [Blind first-listen viewer workflow](daily/2026-10-15-audio-evidence-viewer-blind-workflow.md)
 - [Surface Plates](evidence/2026-10-05-surface-plates/README.md)
 - [Contact sonic baseline](evidence/2026-10-06-contact-sonic-baseline/README.md)
 - [Plate decay](evidence/2026-10-06-plate-decay/README.md)
