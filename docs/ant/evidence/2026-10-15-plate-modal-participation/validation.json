@@ -1,0 +1,386 @@
+{
+  "checks": {
+    "degenerateBasisInvariance": "passed",
+    "eigenDecompositionReconstruction": true,
+    "eigenspaceProjectorCompleteness": true,
+    "finiteAllModesAndSignals": true,
+    "frozenRawRenderGeneratorHashes": true,
+    "fullBasisHeldOutPrediction": true,
+    "lossArtifactManifestBytesAndHashes": true,
+    "lossGeometryContactPickupIdentity": true,
+    "positionArtifactManifestBytesAndHashes": true,
+    "positionContactOnlyScheduleDifference": true,
+    "positionMaterialAndTopologyIdentity": true,
+    "productionSrcStaticEqualMain": true,
+    "pulseEndStateRoundTripAndPickupProjection": true,
+    "workletContactEnvelopeAndFloat32ForceRings": true
+  },
+  "eigenspaceBasisInvariance": {
+    "basisRotationRadians": 0.37,
+    "degenerateEigenspaces": 1,
+    "maximumAbsoluteDifference": 2.7755575615628914e-17,
+    "maximumMultiplicity": 21,
+    "maximumRelativeDifference": 1.1201040781372044e-16,
+    "status": "passed"
+  },
+  "exactRecurrenceWindow": {
+    "flat": {
+      "exactAutonomousTransitionCount": 8786,
+      "firstExactAutonomousTargetRow": 214,
+      "postPulseTransitionsChecked": 8922,
+      "pulseEndFieldRow": 77
+    },
+    "frequency": {
+      "exactAutonomousTransitionCount": 8786,
+      "firstExactAutonomousTargetRow": 214,
+      "postPulseTransitionsChecked": 8922,
+      "pulseEndFieldRow": 77
+    },
+    "p25": {
+      "exactAutonomousTransitionCount": 8820,
+      "firstExactAutonomousTargetRow": 180,
+      "postPulseTransitionsChecked": 8922,
+      "pulseEndFieldRow": 77
+    },
+    "p50": {
+      "exactAutonomousTransitionCount": 8786,
+      "firstExactAutonomousTargetRow": 214,
+      "postPulseTransitionsChecked": 8922,
+      "pulseEndFieldRow": 77
+    },
+    "p75": {
+      "exactAutonomousTransitionCount": 8766,
+      "firstExactAutonomousTargetRow": 234,
+      "postPulseTransitionsChecked": 8922,
+      "pulseEndFieldRow": 77
+    }
+  },
+  "generatedArtifacts": [
+    {
+      "bytes": 41581,
+      "kind": "generatedAnalysis",
+      "path": "docs/ant/evidence/2026-10-15-plate-modal-participation/modal-participation.json",
+      "sha256": "746654fae43a2718164946d9f7d31a268abe9b61d0ffe68aab3e3b2a21bf99c0"
+    },
+    {
+      "bytes": 955815,
+      "kind": "generatedEigenspaceCsv",
+      "path": "docs/ant/evidence/2026-10-15-plate-modal-participation/eigenspace-residues.csv",
+      "sha256": "2e0f55b10af4058d76f6ee13cf7f01813f6757d821ae7fb6bc2f03d3f2a6b7c3"
+    },
+    {
+      "bytes": 90657,
+      "kind": "generatedVisual",
+      "path": "docs/ant/evidence/2026-10-15-plate-modal-participation/p24-contact-modal-participation.png",
+      "sha256": "6f8554719d5bf9532cf9209c0e7eb2dbfd87c9ab24c6a2d64ce7c0d96c0a83d2"
+    },
+    {
+      "bytes": 99399,
+      "kind": "generatedVisual",
+      "path": "docs/ant/evidence/2026-10-15-plate-modal-participation/p24-modal-prediction-and-loss-control.png",
+      "sha256": "fb318a70c422016b1cd14f4627dd88ef4063e506fbc939c29239250c10b60fae"
+    }
+  ],
+  "noRender": true,
+  "productionSource": {
+    "equalToMain": true,
+    "gitDiffMainSrcStaticExitCode": 0
+  },
+  "pulseEndStateRoundTripMaximumAbsoluteResidual": 8.326672684688674e-17,
+  "schemaVersion": 1,
+  "status": "PASS",
+  "toolVersions": {
+    "node": "v22.23.2",
+    "numpy": "2.3.5",
+    "pillow": "12.3.0",
+    "python": "3.12.14"
+  },
+  "unmatchedFrozenSourceTools": {
+    "loss": [],
+    "position": [
+      "scripts/ant-sonic-response-metrics.py"
+    ]
+  },
+  "verifiedInputArtifacts": [
+    {
+      "bytes": 107101,
+      "kind": "committedRenderManifest",
+      "path": "docs/ant/evidence/2026-10-13-plate-sonic-individuality/render-manifest.json",
+      "sha256": "da9f1614605f2e4c5b581da0d2d870de17c2c1a03772a18ba6af59793e94e9a9"
+    },
+    {
+      "bytes": 8559,
+      "kind": "committedRenderManifest",
+      "path": "docs/ant/evidence/2026-10-14-base-born-loss-distribution/render-manifest.json",
+      "sha256": "b6c04e0fd9490a2d6ab4dc297423de34db024145d089f6e48b8e46997b0a8804"
+    },
+    {
+      "bytes": 2758,
+      "kind": "priorLossControlValidation",
+      "path": "docs/ant/evidence/2026-10-14-base-born-loss-distribution/validation.json",
+      "sha256": "090141ed42ecd04ea7d940be8a936f241ff737295b24610e4e228e740a9bace7"
+    },
+    {
+      "bytes": 384481,
+      "kind": "frozenDescriptorArchive",
+      "path": "docs/ant/evidence/2026-10-13-plate-sonic-individuality/frozen-inputs.json.gz",
+      "sha256": "f600eb768df2721c98cc607ea8b4b4d4fc64ae74cda6b5bf3f9297e8b0865a2d"
+    },
+    {
+      "bytes": 57322,
+      "kind": "priorModalTransferReport",
+      "path": "docs/ant/evidence/2026-10-13-plate-sonic-individuality/modal-transfer.json",
+      "sha256": "e1759b9ab4e89545652949e8dd3a40a9e5bdd4005ad8234367d0b9626e655ebd"
+    },
+    {
+      "bytes": 19791,
+      "canonicalTextSha256": "c579c87af84a43e519890a4b1ccdfa0151b445c5395c42aa51f019fd9d780e17",
+      "kind": "priorModalAuditHelper",
+      "matchesPriorModalTransferReport": true,
+      "path": "scripts/ant-sonic-modal-transfer.py",
+      "sha256": "30cd50c6565da4f560a5eb836e370a2bb467581c816ae1f4d345a054262a0cf6"
+    },
+    {
+      "bytes": 292837,
+      "kind": "positionRenderIndex",
+      "path": "test-results/ant-plate-sonic-individuality-20261013/render-index.json",
+      "sha256": "8b32411e311810da560b05e096d5e01c747fc915dd8e43ccd54a148d05ea6e7f"
+    },
+    {
+      "bytes": 56506,
+      "canonicalTextSha256": "14c7461f1412f0d6897a6683d46e582dbb80711f2ba74e8ea53e026895eeea5e",
+      "expectedFrozenSha256": "14c7461f1412f0d6897a6683d46e582dbb80711f2ba74e8ea53e026895eeea5e",
+      "kind": "positionSourceTool",
+      "matchesFrozenManifest": true,
+      "path": "static/worklets/surface-plate.worklet.js",
+      "sha256": "14c7461f1412f0d6897a6683d46e582dbb80711f2ba74e8ea53e026895eeea5e"
+    },
+    {
+      "bytes": 11696,
+      "canonicalTextSha256": "24b99301ede1e56aac139f817dc86428bd086ff5a910658d1b269a30c0db817b",
+      "expectedFrozenSha256": "43295646dca949d676ebebb80ba57ee6cac9043ecd914ab313ff26329e438dfb",
+      "kind": "positionSourceTool",
+      "matchesFrozenManifest": true,
+      "path": "static/worklets/plate.worklet.js",
+      "sha256": "43295646dca949d676ebebb80ba57ee6cac9043ecd914ab313ff26329e438dfb"
+    },
+    {
+      "bytes": 20600,
+      "canonicalTextSha256": "b28b15158441a9cc24d8d3e22fbf10342962555de6ca6e6bf4f649985a5ba2fd",
+      "expectedFrozenSha256": "b28b15158441a9cc24d8d3e22fbf10342962555de6ca6e6bf4f649985a5ba2fd",
+      "kind": "positionSourceTool",
+      "matchesFrozenManifest": true,
+      "path": "src/lib/audio/compileSurfaceTopology.js",
+      "sha256": "b28b15158441a9cc24d8d3e22fbf10342962555de6ca6e6bf4f649985a5ba2fd"
+    },
+    {
+      "bytes": 16639,
+      "canonicalTextSha256": "f809cbecd9131f487f4f4aec1875ab9ab42d32db07d396ab5f0479df97ca5b3c",
+      "expectedFrozenSha256": "ef87c14015067f7cad512e0675716239b1707e441eb28cfd9175d28b0ef28215",
+      "kind": "positionSourceTool",
+      "matchesFrozenManifest": true,
+      "path": "src/lib/audio/SurfaceAudioBridge.js",
+      "sha256": "ef87c14015067f7cad512e0675716239b1707e441eb28cfd9175d28b0ef28215"
+    },
+    {
+      "bytes": 30879,
+      "canonicalTextSha256": "cb6c28081264d672d6393b64f0d0dc9fdea017fb1fda261ab8a87d879f031a67",
+      "expectedFrozenSha256": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+      "kind": "positionSourceTool",
+      "matchesFrozenManifest": true,
+      "path": "src/lib/agents/ant/TrailPlateBirth.js",
+      "sha256": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860"
+    },
+    {
+      "bytes": 8398,
+      "canonicalTextSha256": "60be57e66ed88e73f50a22ebea801adcba1c2efb27df4c634628b93faada9c68",
+      "expectedFrozenSha256": "60be57e66ed88e73f50a22ebea801adcba1c2efb27df4c634628b93faada9c68",
+      "kind": "positionSourceTool",
+      "matchesFrozenManifest": true,
+      "path": "scripts/ant-sonic-shadow-render.js",
+      "sha256": "3ea7d13dc3dd594a55dc5c58c7076c7c78088de1432d7a4e0c912d758fd62c87"
+    },
+    {
+      "bytes": 21478,
+      "canonicalTextSha256": "42e0af85fa0034b4d8c1d3e01123d591b5ee15a98c769ba89894d429d6bc2ca2",
+      "expectedFrozenSha256": "c0dd411fb752dffdaff97745140980f41568d372ff6f3a16d9cc2d5241cdcd9c",
+      "kind": "positionSourceTool",
+      "matchesFrozenManifest": false,
+      "path": "scripts/ant-sonic-response-metrics.py",
+      "sha256": "0e85de95af2f986d03de321157b2500be92186cb1d688ed6c8f13630c96e395e"
+    },
+    {
+      "bytes": 18166,
+      "canonicalTextSha256": "0222c5116522a98ea2c620f9f72f1c9b30353789fafdd3477073bbbaf089c57c",
+      "expectedFrozenSha256": "0222c5116522a98ea2c620f9f72f1c9b30353789fafdd3477073bbbaf089c57c",
+      "kind": "positionSourceTool",
+      "matchesFrozenManifest": true,
+      "path": "scripts/ant-plate-sonic-individuality.js",
+      "sha256": "7d0d5591e6904160dfeb65c7fce30bf40e3a7821eadc6bcec6ed2a7640315047"
+    },
+    {
+      "bytes": 21742,
+      "canonicalTextSha256": "7c70b069b2bdf160dcb7a70ae63eb31a703fd6344d6a03e766d740fda84c16bc",
+      "expectedFrozenSha256": "7c70b069b2bdf160dcb7a70ae63eb31a703fd6344d6a03e766d740fda84c16bc",
+      "kind": "positionSourceTool",
+      "matchesFrozenManifest": true,
+      "path": "scripts/audio-snapshot-renderer.js",
+      "sha256": "7c70b069b2bdf160dcb7a70ae63eb31a703fd6344d6a03e766d740fda84c16bc"
+    },
+    {
+      "bytes": 55788,
+      "kind": "packedCompilerTopology",
+      "path": "test-results/ant-plate-sonic-individuality-20261013/modal-topologies.json",
+      "sha256": "a13d25decdf329e7d7c99e1a333f377cff9b5e43a4e033eef3d4c0b70eb75780"
+    },
+    {
+      "bytes": 9972000,
+      "kind": "position_fields",
+      "path": "test-results/ant-plate-sonic-individuality-20261013/20261005-trail-plate-24-p25-native.field.f32le",
+      "sha256": "fba69c8f13b9b16521935d19dee50980f56e055fba879ef5d7182aa553a624b1"
+    },
+    {
+      "bytes": 72000,
+      "kind": "position_rawPickup",
+      "path": "test-results/ant-plate-sonic-individuality-20261013/20261005-trail-plate-24-p25-native.pickup.f32le",
+      "sha256": "7256a0e38546ecf66684d27fa6318258335dca385cc737fe969fe7e2dda96bc5"
+    },
+    {
+      "bytes": 576000,
+      "kind": "position_pcm",
+      "path": "test-results/ant-plate-sonic-individuality-20261013/20261005-trail-plate-24-p25-native.pcm.f32le",
+      "sha256": "14b243e7cedbef37e543455c3d05d9f79cf35e598bba9e772cefe1848e5c4c4d"
+    },
+    {
+      "bytes": 9972000,
+      "kind": "position_fields",
+      "path": "test-results/ant-plate-sonic-individuality-20261013/20261005-trail-plate-24-p50-native.field.f32le",
+      "sha256": "52196ecd6ec403926e2cb4a14f7dac07343337d7b5b02fb7b0f537b1a6ac4315"
+    },
+    {
+      "bytes": 72000,
+      "kind": "position_rawPickup",
+      "path": "test-results/ant-plate-sonic-individuality-20261013/20261005-trail-plate-24-p50-native.pickup.f32le",
+      "sha256": "ca43b0865800c14db9cbdd3b739c280c83630e5f591910a90775130c73938b6b"
+    },
+    {
+      "bytes": 576000,
+      "kind": "position_pcm",
+      "path": "test-results/ant-plate-sonic-individuality-20261013/20261005-trail-plate-24-p50-native.pcm.f32le",
+      "sha256": "1c6e7e68108ffa7ff375f9e8afc1b975775226b4b17f771624502c58c22779ac"
+    },
+    {
+      "bytes": 9972000,
+      "kind": "position_fields",
+      "path": "test-results/ant-plate-sonic-individuality-20261013/20261005-trail-plate-24-p75-native.field.f32le",
+      "sha256": "d095a09d9dd15ad3c0a0f84c18ec2bda74e7cfe9d16c077cc565d7c2d853a5ae"
+    },
+    {
+      "bytes": 72000,
+      "kind": "position_rawPickup",
+      "path": "test-results/ant-plate-sonic-individuality-20261013/20261005-trail-plate-24-p75-native.pickup.f32le",
+      "sha256": "d9c91f9208b1720f59ec8df4e2f6c5d87cdbdd5e90e4a515d23bd59be2543b84"
+    },
+    {
+      "bytes": 576000,
+      "kind": "position_pcm",
+      "path": "test-results/ant-plate-sonic-individuality-20261013/20261005-trail-plate-24-p75-native.pcm.f32le",
+      "sha256": "3fe6c665acc80c035e68fcdcc95f4d6eaa10887cfd6e3ee37a226552325eca14"
+    },
+    {
+      "bytes": 70185,
+      "kind": "lossRenderIndex",
+      "path": "test-results/ant-base-born-loss-distribution-20261014/render-index.json",
+      "sha256": "e84638ab2e5210fc8fe0d459c2ebfd9cb8f76ffe9bab1033c21fa626343af5ab"
+    },
+    {
+      "bytes": 13438,
+      "canonicalTextSha256": "98cbcba27828ee50e81db926fe465b9877c374242157f6933ee0fe9d7ae22165",
+      "expectedFrozenSha256": "98cbcba27828ee50e81db926fe465b9877c374242157f6933ee0fe9d7ae22165",
+      "kind": "lossSourceTool",
+      "matchesFrozenManifest": true,
+      "path": "scripts/ant-base-born-loss-distribution.js",
+      "sha256": "33df3f7c735e2971beea36033989c3db58b1139526e77642cb5de3d55d23a6cf"
+    },
+    {
+      "bytes": 16328,
+      "canonicalTextSha256": "e42568b479918bb68cd67a4dfb848dcf8506d3f2a94be0f733cb88a019f46cd7",
+      "expectedFrozenSha256": "e42568b479918bb68cd67a4dfb848dcf8506d3f2a94be0f733cb88a019f46cd7",
+      "kind": "lossSourceTool",
+      "matchesFrozenManifest": true,
+      "path": "scripts/ant-base-born-shadow.js",
+      "sha256": "3602f03f40a61ab876fa62ddf56a5ee8caee7a92304fbc375ca9ceb4fb5c4691"
+    },
+    {
+      "bytes": 8398,
+      "canonicalTextSha256": "60be57e66ed88e73f50a22ebea801adcba1c2efb27df4c634628b93faada9c68",
+      "expectedFrozenSha256": "60be57e66ed88e73f50a22ebea801adcba1c2efb27df4c634628b93faada9c68",
+      "kind": "lossSourceTool",
+      "matchesFrozenManifest": true,
+      "path": "scripts/ant-sonic-shadow-render.js",
+      "sha256": "3ea7d13dc3dd594a55dc5c58c7076c7c78088de1432d7a4e0c912d758fd62c87"
+    },
+    {
+      "bytes": 20600,
+      "canonicalTextSha256": "b28b15158441a9cc24d8d3e22fbf10342962555de6ca6e6bf4f649985a5ba2fd",
+      "expectedFrozenSha256": "b28b15158441a9cc24d8d3e22fbf10342962555de6ca6e6bf4f649985a5ba2fd",
+      "kind": "lossSourceTool",
+      "matchesFrozenManifest": true,
+      "path": "src/lib/audio/compileSurfaceTopology.js",
+      "sha256": "b28b15158441a9cc24d8d3e22fbf10342962555de6ca6e6bf4f649985a5ba2fd"
+    },
+    {
+      "bytes": 56506,
+      "canonicalTextSha256": "14c7461f1412f0d6897a6683d46e582dbb80711f2ba74e8ea53e026895eeea5e",
+      "expectedFrozenSha256": "14c7461f1412f0d6897a6683d46e582dbb80711f2ba74e8ea53e026895eeea5e",
+      "kind": "lossSourceTool",
+      "matchesFrozenManifest": true,
+      "path": "static/worklets/surface-plate.worklet.js",
+      "sha256": "14c7461f1412f0d6897a6683d46e582dbb80711f2ba74e8ea53e026895eeea5e"
+    },
+    {
+      "bytes": 9972000,
+      "kind": "loss_flat_fields",
+      "path": "test-results/ant-base-born-loss-distribution-20261014/20261005-trail-plate-24-flat.field.f32le",
+      "sha256": "d3b4dc631f14d08a6b697f109ffb06983aa0aac1c8518a849099e2351fc233bb"
+    },
+    {
+      "bytes": 72000,
+      "kind": "loss_flat_rawPickup",
+      "path": "test-results/ant-base-born-loss-distribution-20261014/20261005-trail-plate-24-flat.pickup.f32le",
+      "sha256": "ba44a33734a23c3983a69cd0fb11cd7b5c63b1b2b3885001d9486cfb6ff2897e"
+    },
+    {
+      "bytes": 576000,
+      "kind": "loss_flat_pcm",
+      "path": "test-results/ant-base-born-loss-distribution-20261014/20261005-trail-plate-24-flat.pcm.f32le",
+      "sha256": "9713a711dd9e40cdaf307b5c1e6ced3e987c0d5c30ba140ff3f8941009bd0845"
+    },
+    {
+      "bytes": 9972000,
+      "kind": "loss_frequency_fields",
+      "path": "test-results/ant-base-born-loss-distribution-20261014/20261005-trail-plate-24-frequency.field.f32le",
+      "sha256": "e9d5cb92d0f206bf67be42ccd79ecb7a077c01fc81c6aa2e5bfe97d8c70ea015"
+    },
+    {
+      "bytes": 72000,
+      "kind": "loss_frequency_rawPickup",
+      "path": "test-results/ant-base-born-loss-distribution-20261014/20261005-trail-plate-24-frequency.pickup.f32le",
+      "sha256": "b7719078ee0ce98dae9b6a8d6e02a04439373d161a8af8591d2102f67f57ac07"
+    },
+    {
+      "bytes": 576000,
+      "kind": "loss_frequency_pcm",
+      "path": "test-results/ant-base-born-loss-distribution-20261014/20261005-trail-plate-24-frequency.pcm.f32le",
+      "sha256": "7bd3ff7b0c65fd0a525cabf8f65a47b4aa669c3b6bff92ee651a95b61ae7c817"
+    }
+  ],
+  "verifiedRawAudioArtifactCount": 15,
+  "workletContactEnvelope": {
+    "allReconstructedPositionForceRingsIdentical": true,
+    "nodeVersion": "v22.23.2",
+    "physicsSteps": 18,
+    "pythonAndWorkletFloat32EnvelopeIdentical": true,
+    "sum": 1.0
+  }
+}

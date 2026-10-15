@@ -1,0 +1,1094 @@
+{
+  "analysisBoundary": {
+    "control": "same P24 p50 q=4-matched flat/frequency existing loss renders",
+    "heldOut": "the saved all-node state immediately before the first exact full masked recurrence projects directly to the orthonormal modal basis; later raw 6 kHz point pickup is not fitted",
+    "humanListeningPerformed": false,
+    "limiterOr48kInterpolationInPrediction": false,
+    "matrixPencilOrModeFitUsed": false,
+    "modeSelection": "all 277 eigenmodes; no selection",
+    "newRenderPerformed": false,
+    "positionSources": "20261005-trail-plate-24 p25, p50, p75 frozen native isolated one-shots",
+    "productionChanged": false,
+    "pulseEnd": "pulse-end state is separately projected and round-trip checked; exact full-operator prediction is not extended across the observed active-set wake interval"
+  },
+  "classification": "SUPPORTED",
+  "classificationReason": "Across positions, the exact finite-pulse source-to-eigenspace residues match the pulse-end field residues with at most 0.324% relative complex-vector error, and the shared full modal basis predicts held-out raw-pickup differences from the first exact autonomous interval. The q=4 loss control preserves spatial participation while shifting off-q dynamics and also predicts its held-out raw difference.",
+  "classificationStatus": "supported for frozen P24 one-shots and the verified autonomous intervals; the initial active-set wake window is excluded from the raw-pickup prediction",
+  "csv": {
+    "basis": "one row per numerically declared eigenspace and condition; all 277 modes represented",
+    "bytes": 955815,
+    "path": "docs/ant/evidence/2026-10-15-plate-modal-participation/eigenspace-residues.csv",
+    "rows": 1285,
+    "sha256": "2e0f55b10af4058d76f6ee13cf7f01813f6757d821ae7fb6bc2f03d3f2a6b7c3"
+  },
+  "eigensystem": {
+    "degenerateGroupingTolerance": {
+      "definition": "64 * float64_epsilon * node_count * max(spectral_norm(-L), 1)",
+      "value": 2.9554726628458347e-11
+    },
+    "eigendecompositionReconstructionRelativeFrobenius": 2.3321493943529147e-15,
+    "eigenspaceCount": 257,
+    "eigenspaceProjectorCompletenessFrobenius": 3.353280632815175e-14,
+    "eigenspaceProjectorCompletenessMaxAbs": 1.3322676295501878e-15,
+    "eigenvalueCount": 277,
+    "eigenvectorOrthogonalityFrobenius": 3.2936008125153043e-14,
+    "fourNeighborBipartiteMedianQResidual": 4.440892098500626e-16,
+    "multiplicityHistogram": {
+      "1": 256,
+      "21": 1
+    },
+    "nodeCount": 277,
+    "qMedian": 3.9999999999999996,
+    "qRange": [
+      0.4919530781271503,
+      7.508046921872851
+    ],
+    "symmetricOperatorResidualMaxAbs": 0.0
+  },
+  "erBPositionIdentityReference": {
+    "context": "Full ERB-time within-Plate similarity across p25/p50/p75 did not consistently exceed between-Plate same-position similarity; this modal pass attributes the frozen P24 raw-pickup differences and does not fit modal metrics to ERB cosine.",
+    "path": "docs/ant/evidence/2026-10-14-plate-erb-position-identity/README.md",
+    "priorDecision": "MIXED"
+  },
+  "generatedVisuals": [
+    {
+      "bytes": 90657,
+      "path": "docs/ant/evidence/2026-10-15-plate-modal-participation/p24-contact-modal-participation.png",
+      "sha256": "6f8554719d5bf9532cf9209c0e7eb2dbfd87c9ab24c6a2d64ce7c0d96c0a83d2"
+    },
+    {
+      "bytes": 99399,
+      "path": "docs/ant/evidence/2026-10-15-plate-modal-participation/p24-modal-prediction-and-loss-control.png",
+      "sha256": "fb318a70c422016b1cd14f4627dd88ef4063e506fbc939c29239250c10b60fae"
+    }
+  ],
+  "lossControlHeldOutDifferencePrediction": {
+    "actualAndPredictedDifferenceMetrics": {
+      "L": {
+        "actualRms": 0.00022540107814453792,
+        "maxAbsoluteResidual": 2.1041124696101823e-08,
+        "pearsonCorrelation": 0.9999999999143725,
+        "predictedRms": 0.00022540126401156922,
+        "relativeL2Error": 1.3112370703157716e-05,
+        "residualRms": 2.9555424935226024e-09,
+        "samples": 8786
+      },
+      "R": {
+        "actualRms": 0.0018443399763296733,
+        "maxAbsoluteResidual": 4.591859206846266e-08,
+        "pearsonCorrelation": 0.9999999999924551,
+        "predictedRms": 0.0018443394987293566,
+        "relativeL2Error": 3.8933264544527045e-06,
+        "residualRms": 7.1806176208489935e-09,
+        "samples": 8786
+      },
+      "pooled": {
+        "maxAbsoluteResidual": 4.591859206846266e-08,
+        "pearsonCorrelation": 0.9999999999912975,
+        "relativeL2Error": 4.179129197684458e-06,
+        "residualRms": 5.490742247085764e-09
+      }
+    },
+    "actualDifferenceRmsL": 0.00022540107602253556,
+    "actualDifferenceRmsR": 0.001844339887611568,
+    "heldOutTargetRows": [
+      214,
+      8999
+    ],
+    "heldOutTimeMsAfterPulseEnd": [
+      22.833333333333332,
+      1487.0
+    ]
+  },
+  "lossControlQ4Comparison": {
+    "deltaFrequencyHz": -5.946958481217735e-10,
+    "deltaInputGain": 6.50512976818618e-12,
+    "deltaRadius": 3.2570612873428217e-12,
+    "flat": {
+      "a": 1.8514284684131725,
+      "decayTauSeconds": 0.12152006613702696,
+      "frequencyHz": 367.1739150179662,
+      "inputGain": 0.9972607274685288,
+      "pole": {
+        "imaginary": 0.3745849490514032,
+        "real": 0.9257142342065863
+      },
+      "product": 0.9972607274685288,
+      "radius": 0.9986294244956578
+    },
+    "frequency": {
+      "a": 1.8514284684196776,
+      "decayTauSeconds": 0.12152006642600764,
+      "frequencyHz": 367.1739150173715,
+      "inputGain": 0.9972607274750339,
+      "pole": {
+        "imaginary": 0.3745849490520485,
+        "real": 0.9257142342098388
+      },
+      "product": 0.9972607274750339,
+      "radius": 0.9986294244989149
+    },
+    "q4EigenspaceMultiplicity": 21
+  },
+  "lossControlResponsibility": {
+    "dynamicDecayTauMaxAbsoluteDeltaMs": 208.30950737682505,
+    "dynamicInputGainMaxAbsoluteDelta": 0.001729160098692395,
+    "dynamicLargestAbsoluteDeltaByMetric": {
+      "decayTauMs": {
+        "absoluteDelta": 208.30950737682505,
+        "flat": 121.52006613702696,
+        "frequency": 329.829573513852,
+        "qMean": 0.4919530781271503,
+        "signedDelta": 208.30950737682505
+      },
+      "frequencyHz": {
+        "absoluteDelta": 0.3158030154189646,
+        "flat": 699.7761009808586,
+        "frequency": 700.0919039962776,
+        "qMean": 7.508046921872851,
+        "signedDelta": 0.3158030154189646
+      },
+      "inputGain": {
+        "absoluteDelta": 0.001729160098692395,
+        "flat": 0.9972607274685288,
+        "frequency": 0.9989898875672212,
+        "qMean": 0.4919530781271503,
+        "signedDelta": 0.001729160098692395
+      },
+      "poleRadius": {
+        "absoluteDelta": 0.0008661422574074429,
+        "flat": 0.9986294244956578,
+        "frequency": 0.9977632822382504,
+        "qMean": 7.508046921872851,
+        "signedDelta": -0.0008661422574074429
+      }
+    },
+    "dynamicPoleFrequencyMaxAbsoluteDeltaHz": 0.3158030154189646,
+    "dynamicPoleRadiusMaxAbsoluteDelta": 0.0008661422574074429,
+    "flatFrequencyPickupObservabilityIdentical": true,
+    "flatFrequencySourceParticipationIdentical": true,
+    "pickupNodes": [
+      143,
+      33
+    ],
+    "positionContactVectorsSameAsFlatAndFrequency": true,
+    "spatialBasisSame": true
+  },
+  "positionHeldOutDifferencePrediction": {
+    "p25-p50": {
+      "actualAndPredictedDifferenceMetrics": {
+        "L": {
+          "actualRms": 0.003763762661449597,
+          "maxAbsoluteResidual": 4.383860330130218e-08,
+          "pearsonCorrelation": 0.9999999999968417,
+          "predictedRms": 0.0037637616885966706,
+          "relativeL2Error": 2.5267112231898985e-06,
+          "residualRms": 9.509941358107779e-09,
+          "samples": 8766
+        },
+        "R": {
+          "actualRms": 0.005699632539318508,
+          "maxAbsoluteResidual": 7.369027627684988e-08,
+          "pearsonCorrelation": 0.9999999999967372,
+          "predictedRms": 0.00569962533942586,
+          "relativeL2Error": 2.8499394711056497e-06,
+          "residualRms": 1.624360774460195e-08,
+          "samples": 8766
+        },
+        "pooled": {
+          "maxAbsoluteResidual": 7.369027627684988e-08,
+          "pearsonCorrelation": 0.9999999999966619,
+          "relativeL2Error": 2.7558014387136603e-06,
+          "residualRms": 1.330965396235269e-08
+        }
+      },
+      "actualDifferenceRmsL": 0.003763762768357992,
+      "actualDifferenceRmsR": 0.005699632223695517,
+      "heldOutTargetRows": [
+        234,
+        8999
+      ],
+      "heldOutTimeMsAfterPulseEnd": [
+        26.166666666666668,
+        1487.0
+      ]
+    },
+    "p25-p75": {
+      "actualAndPredictedDifferenceMetrics": {
+        "L": {
+          "actualRms": 0.003327719569931433,
+          "maxAbsoluteResidual": 3.870499521926862e-08,
+          "pearsonCorrelation": 0.9999999999964659,
+          "predictedRms": 0.0033277199083477293,
+          "relativeL2Error": 2.660378057914469e-06,
+          "residualRms": 8.852992126738159e-09,
+          "samples": 8766
+        },
+        "R": {
+          "actualRms": 0.005999865107349787,
+          "maxAbsoluteResidual": 6.400630820149744e-08,
+          "pearsonCorrelation": 0.9999999999964897,
+          "predictedRms": 0.005999865385644642,
+          "relativeL2Error": 2.6496981923968926e-06,
+          "residualRms": 1.589783172956993e-08,
+          "samples": 8766
+        },
+        "pooled": {
+          "maxAbsoluteResidual": 6.400630820149744e-08,
+          "pearsonCorrelation": 0.9999999999964843,
+          "relativeL2Error": 2.652214342202229e-06,
+          "residualRms": 1.2866944534305886e-08
+        }
+      },
+      "actualDifferenceRmsL": 0.003327719634398818,
+      "actualDifferenceRmsR": 0.005999865010380745,
+      "heldOutTargetRows": [
+        234,
+        8999
+      ],
+      "heldOutTimeMsAfterPulseEnd": [
+        26.166666666666668,
+        1487.0
+      ]
+    },
+    "p50-p75": {
+      "actualAndPredictedDifferenceMetrics": {
+        "L": {
+          "actualRms": 0.0018513872380733702,
+          "maxAbsoluteResidual": 4.2692002349530717e-08,
+          "pearsonCorrelation": 0.9999999999901665,
+          "predictedRms": 0.0018513865620142411,
+          "relativeL2Error": 4.449660927172419e-06,
+          "residualRms": 8.238045454320736e-09,
+          "samples": 8766
+        },
+        "R": {
+          "actualRms": 0.0067703564453262905,
+          "maxAbsoluteResidual": 1.178058398748627e-07,
+          "pearsonCorrelation": 0.9999999999947919,
+          "predictedRms": 0.006770353272354847,
+          "relativeL2Error": 3.261006423355484e-06,
+          "residualRms": 2.207817585661525e-08,
+          "samples": 8766
+        },
+        "pooled": {
+          "maxAbsoluteResidual": 1.178058398748627e-07,
+          "pearsonCorrelation": 0.9999999999944702,
+          "relativeL2Error": 3.357355605905852e-06,
+          "residualRms": 1.6663001561289657e-08
+        }
+      },
+      "actualDifferenceRmsL": 0.0018513872055336833,
+      "actualDifferenceRmsR": 0.006770356558263302,
+      "heldOutTargetRows": [
+        234,
+        8999
+      ],
+      "heldOutTimeMsAfterPulseEnd": [
+        26.166666666666668,
+        1487.0
+      ]
+    }
+  },
+  "positionPairwiseModePowerCosines": {
+    "p25-p50": {
+      "LResiduePowerCosine": 0.5264980468970639,
+      "RResiduePowerCosine": 0.034890483749819595,
+      "sourceProjectionPowerCosine": 0.1089783680899598
+    },
+    "p25-p75": {
+      "LResiduePowerCosine": 0.6032852286476458,
+      "RResiduePowerCosine": 0.1628080004747647,
+      "sourceProjectionPowerCosine": 0.4096302859973056
+    },
+    "p50-p75": {
+      "LResiduePowerCosine": 0.19176061835307218,
+      "RResiduePowerCosine": 0.7664353263389642,
+      "sourceProjectionPowerCosine": 0.32896990751361527
+    }
+  },
+  "positionResponsibility": {
+    "pickupObservabilityExactlyIdenticalAcrossPositions": true,
+    "pickupObservabilityMaximumAbsoluteDelta": 0.0,
+    "pickupWeightedResiduePowerCosines": {
+      "p25-p50": {
+        "L": 0.5264980468970639,
+        "R": 0.034890483749819595
+      },
+      "p25-p75": {
+        "L": 0.6032852286476458,
+        "R": 0.1628080004747647
+      },
+      "p50-p75": {
+        "L": 0.19176061835307218,
+        "R": 0.7664353263389642
+      }
+    },
+    "positionPoleSetsExactlyIdentical": true,
+    "sourceProjectionL2NormByPosition": {
+      "p25": 0.031950481886335015,
+      "p50": 0.03195048188248073,
+      "p75": 0.03195048188619437
+    },
+    "sourceProjectionPowerByPosition": {
+      "p25": 0.0010208332927690216,
+      "p50": 0.0010208332925227294,
+      "p75": 0.0010208332927600348
+    },
+    "sourceProjectionPowerCosines": {
+      "p25-p50": 0.1089783680899598,
+      "p25-p75": 0.4096302859973056,
+      "p50-p75": 0.32896990751361527
+    },
+    "wakeBoundary": {
+      "p25": {
+        "firstExactAutonomousTargetRow": 180,
+        "millisecondsAfterPulseEnd": 17.166666666666668,
+        "recordedActiveNodesAtEnd": 277,
+        "recordedSleeps": 0,
+        "totalRecordedWakes": 277
+      },
+      "p50": {
+        "firstExactAutonomousTargetRow": 214,
+        "millisecondsAfterPulseEnd": 22.833333333333332,
+        "recordedActiveNodesAtEnd": 277,
+        "recordedSleeps": 0,
+        "totalRecordedWakes": 277
+      },
+      "p75": {
+        "firstExactAutonomousTargetRow": 234,
+        "millisecondsAfterPulseEnd": 26.166666666666668,
+        "recordedActiveNodesAtEnd": 277,
+        "recordedSleeps": 0,
+        "totalRecordedWakes": 277
+      }
+    }
+  },
+  "priorLossControlManipulationEvidence": {
+    "classification": "SUPPORTED",
+    "manipulation": {
+      "flat": "gamma=0; d=dBorn+4*gammaStar",
+      "frequency": "gamma=gammaStar; d=dBorn",
+      "gammaBase48": 6.16140594288357e-05,
+      "gammaStar": 0.0004929124754306856,
+      "realValuedQ4InputGainResidual": 0,
+      "realValuedQ4PoleResidual": 0,
+      "storedFloat32Residuals": {
+        "P1": {
+          "a": 8.444445143140911e-11,
+          "d": -8.444436642995878e-11,
+          "inputGain": 8.444434040910664e-11,
+          "poleRadius": 4.2280068335287524e-11
+        },
+        "P24": {
+          "a": -6.505018745883717e-12,
+          "d": 6.50510374733404e-12,
+          "inputGain": -6.50512976818618e-12,
+          "poleRadius": -3.2570612873428217e-12
+        },
+        "P26": {
+          "a": -6.505018745883717e-12,
+          "d": 6.50510374733404e-12,
+          "inputGain": -6.50512976818618e-12,
+          "poleRadius": -3.2570612873428217e-12
+        }
+      }
+    },
+    "pairAssertions": {
+      "flatRepeatPcmFieldAndPickupBitExactForAllThreePlates": true,
+      "lossCoefficientIsOnlyTopologyChange": true,
+      "oldFrequencyArmPcmFieldAndPickupByteExact": true,
+      "sameScheduleGeometryElasticCoefficientsPickupsAndReadout": true
+    },
+    "parityBoundary": {
+      "flatArmSameShadowRendererRepeat": true,
+      "newFlatArmBrowserOfflineAudioWorkletParityRun": false,
+      "priorFrequencyArmByteExact": true
+    }
+  },
+  "provenance": {
+    "baseline": "d45823d40c9a87c1b333fa9872f3c897ee9ab01b",
+    "frozenInputSha256": "f600eb768df2721c98cc607ea8b4b4d4fc64ae74cda6b5bf3f9297e8b0865a2d",
+    "lossFrozenSourceToolChecks": {
+      "scripts/ant-base-born-loss-distribution.js": {
+        "canonicalTextSha256": "98cbcba27828ee50e81db926fe465b9877c374242157f6933ee0fe9d7ae22165",
+        "expectedFrozenSha256": "98cbcba27828ee50e81db926fe465b9877c374242157f6933ee0fe9d7ae22165",
+        "matchesFrozenManifest": true,
+        "workingTreeSha256": "33df3f7c735e2971beea36033989c3db58b1139526e77642cb5de3d55d23a6cf"
+      },
+      "scripts/ant-base-born-shadow.js": {
+        "canonicalTextSha256": "e42568b479918bb68cd67a4dfb848dcf8506d3f2a94be0f733cb88a019f46cd7",
+        "expectedFrozenSha256": "e42568b479918bb68cd67a4dfb848dcf8506d3f2a94be0f733cb88a019f46cd7",
+        "matchesFrozenManifest": true,
+        "workingTreeSha256": "3602f03f40a61ab876fa62ddf56a5ee8caee7a92304fbc375ca9ceb4fb5c4691"
+      },
+      "scripts/ant-sonic-shadow-render.js": {
+        "canonicalTextSha256": "60be57e66ed88e73f50a22ebea801adcba1c2efb27df4c634628b93faada9c68",
+        "expectedFrozenSha256": "60be57e66ed88e73f50a22ebea801adcba1c2efb27df4c634628b93faada9c68",
+        "matchesFrozenManifest": true,
+        "workingTreeSha256": "3ea7d13dc3dd594a55dc5c58c7076c7c78088de1432d7a4e0c912d758fd62c87"
+      },
+      "src/lib/audio/compileSurfaceTopology.js": {
+        "canonicalTextSha256": "b28b15158441a9cc24d8d3e22fbf10342962555de6ca6e6bf4f649985a5ba2fd",
+        "expectedFrozenSha256": "b28b15158441a9cc24d8d3e22fbf10342962555de6ca6e6bf4f649985a5ba2fd",
+        "matchesFrozenManifest": true,
+        "workingTreeSha256": "b28b15158441a9cc24d8d3e22fbf10342962555de6ca6e6bf4f649985a5ba2fd"
+      },
+      "static/worklets/surface-plate.worklet.js": {
+        "canonicalTextSha256": "14c7461f1412f0d6897a6683d46e582dbb80711f2ba74e8ea53e026895eeea5e",
+        "expectedFrozenSha256": "14c7461f1412f0d6897a6683d46e582dbb80711f2ba74e8ea53e026895eeea5e",
+        "matchesFrozenManifest": true,
+        "workingTreeSha256": "14c7461f1412f0d6897a6683d46e582dbb80711f2ba74e8ea53e026895eeea5e"
+      }
+    },
+    "lossRenderIndexSha256": "e84638ab2e5210fc8fe0d459c2ebfd9cb8f76ffe9bab1033c21fa626343af5ab",
+    "lossRenderManifestSha256": "b6c04e0fd9490a2d6ab4dc297423de34db024145d089f6e48b8e46997b0a8804",
+    "nodeVersion": "v22.23.2",
+    "positionFrozenSourceToolChecks": {
+      "scripts/ant-plate-sonic-individuality.js": {
+        "canonicalTextSha256": "0222c5116522a98ea2c620f9f72f1c9b30353789fafdd3477073bbbaf089c57c",
+        "expectedFrozenSha256": "0222c5116522a98ea2c620f9f72f1c9b30353789fafdd3477073bbbaf089c57c",
+        "matchesFrozenManifest": true,
+        "workingTreeSha256": "7d0d5591e6904160dfeb65c7fce30bf40e3a7821eadc6bcec6ed2a7640315047"
+      },
+      "scripts/ant-sonic-response-metrics.py": {
+        "canonicalTextSha256": "42e0af85fa0034b4d8c1d3e01123d591b5ee15a98c769ba89894d429d6bc2ca2",
+        "expectedFrozenSha256": "c0dd411fb752dffdaff97745140980f41568d372ff6f3a16d9cc2d5241cdcd9c",
+        "matchesFrozenManifest": false,
+        "workingTreeSha256": "0e85de95af2f986d03de321157b2500be92186cb1d688ed6c8f13630c96e395e"
+      },
+      "scripts/ant-sonic-shadow-render.js": {
+        "canonicalTextSha256": "60be57e66ed88e73f50a22ebea801adcba1c2efb27df4c634628b93faada9c68",
+        "expectedFrozenSha256": "60be57e66ed88e73f50a22ebea801adcba1c2efb27df4c634628b93faada9c68",
+        "matchesFrozenManifest": true,
+        "workingTreeSha256": "3ea7d13dc3dd594a55dc5c58c7076c7c78088de1432d7a4e0c912d758fd62c87"
+      },
+      "scripts/audio-snapshot-renderer.js": {
+        "canonicalTextSha256": "7c70b069b2bdf160dcb7a70ae63eb31a703fd6344d6a03e766d740fda84c16bc",
+        "expectedFrozenSha256": "7c70b069b2bdf160dcb7a70ae63eb31a703fd6344d6a03e766d740fda84c16bc",
+        "matchesFrozenManifest": true,
+        "workingTreeSha256": "7c70b069b2bdf160dcb7a70ae63eb31a703fd6344d6a03e766d740fda84c16bc"
+      },
+      "src/lib/agents/ant/TrailPlateBirth.js": {
+        "canonicalTextSha256": "cb6c28081264d672d6393b64f0d0dc9fdea017fb1fda261ab8a87d879f031a67",
+        "expectedFrozenSha256": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+        "matchesFrozenManifest": true,
+        "workingTreeSha256": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860"
+      },
+      "src/lib/audio/SurfaceAudioBridge.js": {
+        "canonicalTextSha256": "f809cbecd9131f487f4f4aec1875ab9ab42d32db07d396ab5f0479df97ca5b3c",
+        "expectedFrozenSha256": "ef87c14015067f7cad512e0675716239b1707e441eb28cfd9175d28b0ef28215",
+        "matchesFrozenManifest": true,
+        "workingTreeSha256": "ef87c14015067f7cad512e0675716239b1707e441eb28cfd9175d28b0ef28215"
+      },
+      "src/lib/audio/compileSurfaceTopology.js": {
+        "canonicalTextSha256": "b28b15158441a9cc24d8d3e22fbf10342962555de6ca6e6bf4f649985a5ba2fd",
+        "expectedFrozenSha256": "b28b15158441a9cc24d8d3e22fbf10342962555de6ca6e6bf4f649985a5ba2fd",
+        "matchesFrozenManifest": true,
+        "workingTreeSha256": "b28b15158441a9cc24d8d3e22fbf10342962555de6ca6e6bf4f649985a5ba2fd"
+      },
+      "static/worklets/plate.worklet.js": {
+        "canonicalTextSha256": "24b99301ede1e56aac139f817dc86428bd086ff5a910658d1b269a30c0db817b",
+        "expectedFrozenSha256": "43295646dca949d676ebebb80ba57ee6cac9043ecd914ab313ff26329e438dfb",
+        "matchesFrozenManifest": true,
+        "workingTreeSha256": "43295646dca949d676ebebb80ba57ee6cac9043ecd914ab313ff26329e438dfb"
+      },
+      "static/worklets/surface-plate.worklet.js": {
+        "canonicalTextSha256": "14c7461f1412f0d6897a6683d46e582dbb80711f2ba74e8ea53e026895eeea5e",
+        "expectedFrozenSha256": "14c7461f1412f0d6897a6683d46e582dbb80711f2ba74e8ea53e026895eeea5e",
+        "matchesFrozenManifest": true,
+        "workingTreeSha256": "14c7461f1412f0d6897a6683d46e582dbb80711f2ba74e8ea53e026895eeea5e"
+      }
+    },
+    "positionRenderIndexSha256": "8b32411e311810da560b05e096d5e01c747fc915dd8e43ccd54a148d05ea6e7f",
+    "positionRenderManifestSha256": "da9f1614605f2e4c5b581da0d2d870de17c2c1a03772a18ba6af59793e94e9a9",
+    "priorLossValidationSha256": "090141ed42ecd04ea7d940be8a936f241ff737295b24610e4e228e740a9bace7",
+    "researchBranchAtRun": "codex/ant-base-born-causal-decomposition-20261014",
+    "sourceHashes": {
+      "scripts/ant-base-born-shadow.js": {
+        "canonicalTextSha256": "e42568b479918bb68cd67a4dfb848dcf8506d3f2a94be0f733cb88a019f46cd7",
+        "workingTreeSha256": "3602f03f40a61ab876fa62ddf56a5ee8caee7a92304fbc375ca9ceb4fb5c4691"
+      },
+      "scripts/ant-plate-modal-participation.py": {
+        "canonicalTextSha256": "a7ec05ccee1eacec704e43f7008056368dda178e1c9b00ffaeea48687a81e603",
+        "workingTreeSha256": "a7ec05ccee1eacec704e43f7008056368dda178e1c9b00ffaeea48687a81e603"
+      },
+      "scripts/ant-sonic-modal-transfer.py": {
+        "canonicalTextSha256": "c579c87af84a43e519890a4b1ccdfa0151b445c5395c42aa51f019fd9d780e17",
+        "workingTreeSha256": "30cd50c6565da4f560a5eb836e370a2bb467581c816ae1f4d345a054262a0cf6"
+      },
+      "src/lib/audio/compileSurfaceTopology.js": {
+        "canonicalTextSha256": "b28b15158441a9cc24d8d3e22fbf10342962555de6ca6e6bf4f649985a5ba2fd",
+        "workingTreeSha256": "b28b15158441a9cc24d8d3e22fbf10342962555de6ca6e6bf4f649985a5ba2fd"
+      },
+      "static/worklets/surface-plate.worklet.js": {
+        "canonicalTextSha256": "14c7461f1412f0d6897a6683d46e582dbb80711f2ba74e8ea53e026895eeea5e",
+        "workingTreeSha256": "14c7461f1412f0d6897a6683d46e582dbb80711f2ba74e8ea53e026895eeea5e"
+      }
+    }
+  },
+  "pulseEndDirectFinitePulseTransferComparison": {
+    "flat": {
+      "L": {
+        "actualL2": 0.0022303535640842364,
+        "complexNormalizedInnerProduct": {
+          "imaginary": 0.00027451153725619885,
+          "real": 0.9999948370865351
+        },
+        "directFinitePulseL2": 0.0022309347512281807,
+        "eigenspaces": 257,
+        "relativeL2Error": 0.0032243479890434667,
+        "residualL2": 7.191436029210936e-06
+      },
+      "R": {
+        "actualL2": 0.010593676717582509,
+        "complexNormalizedInnerProduct": {
+          "imaginary": -0.0001484659698194884,
+          "real": 0.9999996486388536
+        },
+        "directFinitePulseL2": 0.010595095699627785,
+        "eigenspaces": 257,
+        "relativeL2Error": 0.0008489746678984181,
+        "residualL2": 8.993763173132813e-06
+      }
+    },
+    "frequency": {
+      "L": {
+        "actualL2": 0.0022418556676384316,
+        "complexNormalizedInnerProduct": {
+          "imaginary": 0.00027349450694484227,
+          "real": 0.9999948758289234
+        },
+        "directFinitePulseL2": 0.0022424421027273326,
+        "eigenspaces": 257,
+        "relativeL2Error": 0.003212389998966789,
+        "residualL2": 7.201714725848712e-06
+      },
+      "R": {
+        "actualL2": 0.010674462568271221,
+        "complexNormalizedInnerProduct": {
+          "imaginary": -0.00014895657059642924,
+          "real": 0.9999996504928528
+        },
+        "directFinitePulseL2": 0.010675892248034564,
+        "eigenspaces": 257,
+        "relativeL2Error": 0.0008467859182338113,
+        "residualL2": 9.038984587525993e-06
+      }
+    },
+    "p25": {
+      "L": {
+        "actualL2": 0.006842523917632807,
+        "complexNormalizedInnerProduct": {
+          "imaginary": -6.253027377738572e-06,
+          "real": 0.999999745533699
+        },
+        "directFinitePulseL2": 0.00684211595408818,
+        "eigenspaces": 257,
+        "relativeL2Error": 0.000715861031863012,
+        "residualL2": 4.898296232223961e-06
+      },
+      "R": {
+        "actualL2": 0.0038662090630552696,
+        "complexNormalizedInnerProduct": {
+          "imaginary": -2.9020304036466572e-05,
+          "real": 0.999999248963868
+        },
+        "directFinitePulseL2": 0.003866014414919683,
+        "eigenspaces": 257,
+        "relativeL2Error": 0.0012265933962469326,
+        "residualL2": 4.742266505253634e-06
+      }
+    },
+    "p50": {
+      "L": {
+        "actualL2": 0.00225546026162296,
+        "complexNormalizedInnerProduct": {
+          "imaginary": 0.00027514963160478603,
+          "real": 0.9999948080410477
+        },
+        "directFinitePulseL2": 0.0022560529104189357,
+        "eigenspaces": 257,
+        "relativeL2Error": 0.0032335259646610937,
+        "residualL2": 7.293089318219145e-06
+      },
+      "R": {
+        "actualL2": 0.010709499667682539,
+        "complexNormalizedInnerProduct": {
+          "imaginary": -0.00014940959204301951,
+          "real": 0.9999996463106245
+        },
+        "directFinitePulseL2": 0.010710933360454969,
+        "eigenspaces": 257,
+        "relativeL2Error": 0.0008517011955507355,
+        "residualL2": 9.121293670715422e-06
+      }
+    },
+    "p75": {
+      "L": {
+        "actualL2": 0.0034815240773624257,
+        "complexNormalizedInnerProduct": {
+          "imaginary": 0.0004683416968858505,
+          "real": 0.9999994160513243
+        },
+        "directFinitePulseL2": 0.00348271682871,
+        "eigenspaces": 257,
+        "relativeL2Error": 0.0011338732410818382,
+        "residualL2": 3.94760698950339e-06
+      },
+      "R": {
+        "actualL2": 0.011186783761977837,
+        "complexNormalizedInnerProduct": {
+          "imaginary": -0.00012157521222514551,
+          "real": 0.9999998264991823
+        },
+        "directFinitePulseL2": 0.011184444292576935,
+        "eigenspaces": 257,
+        "relativeL2Error": 0.0006250308603070015,
+        "residualL2": 6.992085078817402e-06
+      }
+    }
+  },
+  "question": "Do P24 position-dependent pickup differences follow different fit-free modal residues over an identical pole set, while the q=4 loss control changes dynamics with spatial participation held fixed?",
+  "recordedConditionSummary": {
+    "flat": {
+      "autonomousStartMsAfterPulseEnd": 22.833333333333332,
+      "autonomousStartTargetRow": 214,
+      "eventPosition": {
+        "x": 0.4105263157894737,
+        "y": 0.3157894736842105
+      },
+      "frequencyRangeHz": [
+        45.59188228989923,
+        699.7761009808586
+      ],
+      "gamma": 0.0,
+      "heldOutPrediction": {
+        "metrics": {
+          "L": {
+            "actualRms": 0.0006076732458370253,
+            "maxAbsoluteResidual": 1.0542009101603689e-08,
+            "pearsonCorrelation": 0.999999999997235,
+            "predictedRms": 0.0006076733463010955,
+            "relativeL2Error": 2.357242385008919e-06,
+            "residualRms": 1.4324331313229807e-09,
+            "samples": 8786
+          },
+          "R": {
+            "actualRms": 0.002702918870160754,
+            "maxAbsoluteResidual": 2.663527119695086e-08,
+            "pearsonCorrelation": 0.9999999999990813,
+            "predictedRms": 0.002702918749542384,
+            "relativeL2Error": 1.3561339468017122e-06,
+            "residualRms": 3.6655200352759287e-09,
+            "samples": 8786
+          },
+          "pooled": {
+            "maxAbsoluteResidual": 2.663527119695086e-08,
+            "pearsonCorrelation": 0.9999999999989911,
+            "relativeL2Error": 1.4205490248390073e-06,
+            "residualRms": 2.782795519322342e-09
+          }
+        },
+        "targetRows": [
+          214,
+          8999
+        ],
+        "timeMsAfterPulseEnd": [
+          22.833333333333332,
+          1487.0
+        ]
+      },
+      "inputGainRange": [
+        0.9972607274685288,
+        0.9972607274685288
+      ],
+      "materialCoefficients": [
+        0.009072849527001381,
+        0.00019999999494757503,
+        1.2000000476837158,
+        5.4785450629424304e-05
+      ],
+      "pulseEndStateRoundTrip": {
+        "actualPointPickup": [
+          -0.00041708117350935936,
+          5.352260996005498e-05
+        ],
+        "pickupProjectionMaxAbsResidual": 7.575862680242462e-18,
+        "projectedPointPickup": [
+          -0.0004170811735093546,
+          5.3522609960062555e-05
+        ],
+        "residueSumPickupMaxAbsResidual": 5.9156781036240336e-18,
+        "residueSumPointPickup": [
+          -0.00041708117350935464,
+          5.3522609960060894e-05
+        ],
+        "stateCurrentMaxAbsResidual": 7.488279961208e-17,
+        "stateCurrentRelativeL2Residual": 1.5785673843329055e-15,
+        "statePreviousMaxAbsResidual": 8.326672684688674e-17,
+        "statePreviousRelativeL2Residual": 1.6261752945689733e-15
+      },
+      "radiusRange": [
+        0.9986294244956578,
+        0.9986294244956578
+      ],
+      "stateResiduePowerTotalL": 3.428873429615601e-06,
+      "stateResiduePowerTotalR": 7.728295739375013e-05
+    },
+    "frequency": {
+      "autonomousStartMsAfterPulseEnd": 22.833333333333332,
+      "autonomousStartTargetRow": 214,
+      "eventPosition": {
+        "x": 0.4105263157894737,
+        "y": 0.3157894736842105
+      },
+      "frequencyRangeHz": [
+        45.58838900323242,
+        700.0919039962776
+      ],
+      "gamma": 0.0004929124754306856,
+      "heldOutPrediction": {
+        "metrics": {
+          "L": {
+            "actualRms": 0.0007737539192653374,
+            "maxAbsoluteResidual": 1.507231249617963e-08,
+            "pearsonCorrelation": 0.9999999999952819,
+            "predictedRms": 0.00077375406744344,
+            "relativeL2Error": 3.0777473455866253e-06,
+            "residualRms": 2.38141907115614e-09,
+            "samples": 8786
+          },
+          "R": {
+            "actualRms": 0.004152151210601458,
+            "maxAbsoluteResidual": 3.362451538339514e-08,
+            "pearsonCorrelation": 0.9999999999989476,
+            "predictedRms": 0.004152150505174604,
+            "relativeL2Error": 1.4608828162176747e-06,
+            "residualRms": 6.065806353905087e-09,
+            "samples": 8786
+          },
+          "pooled": {
+            "maxAbsoluteResidual": 3.362451538339514e-08,
+            "pearsonCorrelation": 0.9999999999988237,
+            "relativeL2Error": 1.5428740494744328e-06,
+            "residualRms": 4.607882567706207e-09
+          }
+        },
+        "targetRows": [
+          214,
+          8999
+        ],
+        "timeMsAfterPulseEnd": [
+          22.833333333333332,
+          1487.0
+        ]
+      },
+      "inputGainRange": [
+        0.9955315673828465,
+        0.9989898875672212
+      ],
+      "materialCoefficients": [
+        0.009072849527001381,
+        0.00019999999494757503,
+        1.2000000476837158,
+        1.5352452464867383e-05
+      ],
+      "pulseEndStateRoundTrip": {
+        "actualPointPickup": [
+          -0.00042049511102959514,
+          5.048010280006565e-05
+        ],
+        "pickupProjectionMaxAbsResidual": 3.3068166260807885e-18,
+        "projectedPointPickup": [
+          -0.00042049511102959183,
+          5.048010280006686e-05
+        ],
+        "residueSumPickupMaxAbsResidual": 2.3310346708438345e-18,
+        "residueSumPointPickup": [
+          -0.0004204951110295928,
+          5.048010280006778e-05
+        ],
+        "stateCurrentMaxAbsResidual": 6.938893903907228e-17,
+        "stateCurrentRelativeL2Residual": 1.58232975682273e-15,
+        "statePreviousMaxAbsResidual": 6.39107842837312e-17,
+        "statePreviousRelativeL2Residual": 1.5744164138034097e-15
+      },
+      "radiusRange": [
+        0.9977632822382504,
+        0.9994948161782637
+      ],
+      "stateResiduePowerTotalL": 3.925841725733254e-06,
+      "stateResiduePowerTotalR": 9.471763731365848e-05
+    },
+    "p25": {
+      "autonomousStartMsAfterPulseEnd": 17.166666666666668,
+      "autonomousStartTargetRow": 180,
+      "eventPosition": {
+        "x": 0.42105263157894735,
+        "y": 0.47368421052631576
+      },
+      "frequencyRangeHz": [
+        45.58670187527868,
+        699.4155648918575
+      ],
+      "gamma": 0.0,
+      "heldOutPrediction": {
+        "metrics": {
+          "L": {
+            "actualRms": 0.003349501721416145,
+            "maxAbsoluteResidual": 2.9739505081108862e-08,
+            "pearsonCorrelation": 0.9999999999980639,
+            "predictedRms": 0.003349501437867074,
+            "relativeL2Error": 1.969688489774187e-06,
+            "residualRms": 6.597474987152206e-09,
+            "samples": 8820
+          },
+          "R": {
+            "actualRms": 0.002022617341476627,
+            "maxAbsoluteResidual": 2.5709205495180396e-08,
+            "pearsonCorrelation": 0.9999999999972513,
+            "predictedRms": 0.0020226167475714146,
+            "relativeL2Error": 2.3630320894176575e-06,
+            "residualRms": 4.779509682521902e-09,
+            "samples": 8820
+          },
+          "pooled": {
+            "maxAbsoluteResidual": 2.9739505081108862e-08,
+            "pearsonCorrelation": 0.9999999999978435,
+            "relativeL2Error": 2.0820808110099458e-06,
+            "residualRms": 5.760659207565555e-09
+          }
+        },
+        "targetRows": [
+          180,
+          8999
+        ],
+        "timeMsAfterPulseEnd": [
+          17.166666666666668,
+          1487.0
+        ]
+      },
+      "inputGainRange": [
+        0.9992323773767566,
+        0.9992323773767566
+      ],
+      "materialCoefficients": [
+        0.009072849527001381,
+        0.00019999999494757503,
+        1.2000000476837158,
+        1.5352452464867383e-05
+      ],
+      "pulseEndStateRoundTrip": {
+        "actualPointPickup": [
+          0.05044516548514366,
+          0.0
+        ],
+        "pickupProjectionMaxAbsResidual": 4.3072771061458124e-17,
+        "projectedPointPickup": [
+          0.05044516548514367,
+          4.3072771061458124e-17
+        ],
+        "residueSumPickupMaxAbsResidual": 4.422713650462246e-17,
+        "residueSumPointPickup": [
+          0.05044516548514367,
+          4.422713650462246e-17
+        ],
+        "stateCurrentMaxAbsResidual": 4.59837825916129e-17,
+        "stateCurrentRelativeL2Residual": 1.7170634361584124e-15,
+        "statePreviousMaxAbsResidual": 4.4394431437924006e-17,
+        "statePreviousRelativeL2Residual": 1.6811321178318408e-15
+      },
+      "radiusRange": [
+        0.9996161150045334,
+        0.9996161150045334
+      ],
+      "stateResiduePowerTotalL": 4.328927437389313e-05,
+      "stateResiduePowerTotalR": 1.3814756250551216e-05
+    },
+    "p50": {
+      "autonomousStartMsAfterPulseEnd": 22.833333333333332,
+      "autonomousStartTargetRow": 214,
+      "eventPosition": {
+        "x": 0.4105263157894737,
+        "y": 0.3157894736842105
+      },
+      "frequencyRangeHz": [
+        45.58670187527868,
+        699.4155648918575
+      ],
+      "gamma": 0.0,
+      "heldOutPrediction": {
+        "metrics": {
+          "L": {
+            "actualRms": 0.0012006663615160497,
+            "maxAbsoluteResidual": 3.384173893092139e-08,
+            "pearsonCorrelation": 0.9999999999879913,
+            "predictedRms": 0.0012006659214668148,
+            "relativeL2Error": 4.914427475590118e-06,
+            "residualRms": 5.900587756051291e-09,
+            "samples": 8786
+          },
+          "R": {
+            "actualRms": 0.00565751390818118,
+            "maxAbsoluteResidual": 8.002116467370479e-08,
+            "pearsonCorrelation": 0.999999999997123,
+            "predictedRms": 0.005657505099635134,
+            "relativeL2Error": 2.8597172315193526e-06,
+            "residualRms": 1.6178890010786124e-08,
+            "samples": 8786
+          },
+          "pooled": {
+            "maxAbsoluteResidual": 8.002116467370479e-08,
+            "pearsonCorrelation": 0.9999999999966993,
+            "relativeL2Error": 2.9776539432410806e-06,
+            "residualRms": 1.2177303023411575e-08
+          }
+        },
+        "targetRows": [
+          214,
+          8999
+        ],
+        "timeMsAfterPulseEnd": [
+          22.833333333333332,
+          1487.0
+        ]
+      },
+      "inputGainRange": [
+        0.9992323773767566,
+        0.9992323773767566
+      ],
+      "materialCoefficients": [
+        0.009072849527001381,
+        0.00019999999494757503,
+        1.2000000476837158,
+        1.5352452464867383e-05
+      ],
+      "pulseEndStateRoundTrip": {
+        "actualPointPickup": [
+          -0.00042288796976208687,
+          5.437251820694655e-05
+        ],
+        "pickupProjectionMaxAbsResidual": 5.800481622797449e-18,
+        "projectedPointPickup": [
+          -0.00042288796976208107,
+          5.437251820695099e-05
+        ],
+        "residueSumPickupMaxAbsResidual": 9.778148343103643e-18,
+        "residueSumPointPickup": [
+          -0.00042288796976208204,
+          5.437251820695633e-05
+        ],
+        "stateCurrentMaxAbsResidual": 6.748973015088333e-17,
+        "stateCurrentRelativeL2Residual": 1.6555835348298109e-15,
+        "statePreviousMaxAbsResidual": 7.632783294297951e-17,
+        "statePreviousRelativeL2Residual": 1.5725900985254403e-15
+      },
+      "radiusRange": [
+        0.9996161150045334,
+        0.9996161150045334
+      ],
+      "stateResiduePowerTotalL": 4.585232630868912e-06,
+      "stateResiduePowerTotalR": 0.00010332208335447158
+    },
+    "p75": {
+      "autonomousStartMsAfterPulseEnd": 26.166666666666668,
+      "autonomousStartTargetRow": 234,
+      "eventPosition": {
+        "x": 0.35789473684210527,
+        "y": 0.15789473684210525
+      },
+      "frequencyRangeHz": [
+        45.58670187527868,
+        699.4155648918575
+      ],
+      "gamma": 0.0,
+      "heldOutPrediction": {
+        "metrics": {
+          "L": {
+            "actualRms": 0.0017575258302658314,
+            "maxAbsoluteResidual": 3.275225311013402e-08,
+            "pearsonCorrelation": 0.9999999999947038,
+            "predictedRms": 0.0017575255930679585,
+            "relativeL2Error": 3.2573131222456257e-06,
+            "residualRms": 5.724811949610532e-09,
+            "samples": 8766
+          },
+          "R": {
+            "actualRms": 0.0057794596207998376,
+            "maxAbsoluteResidual": 6.472984776049323e-08,
+            "pearsonCorrelation": 0.9999999999970438,
+            "predictedRms": 0.00577945936619327,
+            "relativeL2Error": 2.431502596511149e-06,
+            "residualRms": 1.4052771074406148e-08,
+            "samples": 8766
+          },
+          "pooled": {
+            "maxAbsoluteResidual": 6.472984776049323e-08,
+            "pearsonCorrelation": 0.9999999999968467,
+            "relativeL2Error": 2.511945545042428e-06,
+            "residualRms": 1.072972149517567e-08
+          }
+        },
+        "targetRows": [
+          234,
+          8999
+        ],
+        "timeMsAfterPulseEnd": [
+          26.166666666666668,
+          1487.0
+        ]
+      },
+      "inputGainRange": [
+        0.9992323773767566,
+        0.9992323773767566
+      ],
+      "materialCoefficients": [
+        0.009072849527001381,
+        0.00019999999494757503,
+        1.2000000476837158,
+        1.5352452464867383e-05
+      ],
+      "pulseEndStateRoundTrip": {
+        "actualPointPickup": [
+          0.0,
+          0.04783445596694946
+        ],
+        "pickupProjectionMaxAbsResidual": 6.245004513516506e-17,
+        "projectedPointPickup": [
+          3.175002063890335e-17,
+          0.047834455966949525
+        ],
+        "residueSumPickupMaxAbsResidual": 6.245004513516506e-17,
+        "residueSumPointPickup": [
+          3.122387358951062e-17,
+          0.047834455966949525
+        ],
+        "stateCurrentMaxAbsResidual": 5.551115123125783e-17,
+        "stateCurrentRelativeL2Residual": 1.6617512387485564e-15,
+        "statePreviousMaxAbsResidual": 7.632783294297951e-17,
+        "statePreviousRelativeL2Residual": 1.7721911805236789e-15
+      },
+      "radiusRange": [
+        0.9996161150045334,
+        0.9996161150045334
+      ],
+      "stateResiduePowerTotalL": 1.0739550153451512e-05,
+      "stateResiduePowerTotalR": 0.00011101681312644235
+    }
+  },
+  "schemaVersion": 1,
+  "sourceEquations": {
+    "finitePulse": "the source projection uses the worklet's 18 Float32 force-ring samples; the all-node saved field carries actual pulse and active-set history into the fit-free autonomous residue.",
+    "finitePulseTransfer": "H(p)=sum(k=0..17, e[k]*p^(-k)); state coefficient after the 18th force update is B*s*p^18*H(p)/(p-conjugate(p)).",
+    "lossControlRecurrence": "x[n+1]=(2-d-(t/rho+gamma)*q-b*q^2)*x[n]-(1-d-gamma*q)*x[n-1]+(1-d-gamma*q)*f[n].",
+    "operator": "K=-L=4I-A for the compiler's masked four-neighbor node graph; missing neighbors remain zero.",
+    "productionRecurrence": "x[n+1]=(2-d-b*q^2-t*q/rho)*x[n]-(1-d)*x[n-1]+(1-d)*f[n], d=50*cD.",
+    "readout": "the worklet/compiler's L/R one-hot point-pickup nodes; raw pickup is captured at 6 kHz before limiter and 48 kHz interpolation.",
+    "stateResidue": "C=(p*y0-B*yPrevious)/(p-conjugate(p)); L/R residue is the eigenspace sum of point-pickup projection times C."
+  },
+  "visuals": [
+    "p24-contact-modal-participation.png",
+    "p24-modal-prediction-and-loss-control.png"
+  ]
+}

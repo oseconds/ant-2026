@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-15 — P24 contact-position modal participation
+
+[Process log](./2026-10-15-plate-modal-participation.md) · [Evidence package](../evidence/2026-10-15-plate-modal-participation/README.md)
+
+- Reused the frozen native P24 p25/p50/p75 fields, raw pickups and PCM plus the q=4 flat/frequency-loss control; no new render
+- Shared poles with strongly different contact-mode power maps and fixed L/R pickup observability; full modal sums predict held-out position and loss-control raw-pickup differences
+- Decision: **SUPPORTED** for verified autonomous intervals; early active-set wake remains outside the raw-pickup prediction, with production unchanged
+
 ### 2026-10-14 — Reusable static A/B audio evidence viewer
 
 [Process log](./2026-10-14-audio-evidence-viewer.md) · [Viewer schema](../audio-evidence-viewer.md) · [Natural-event integration](../evidence/2026-10-14-base-born-natural-event-erb/README.md)
