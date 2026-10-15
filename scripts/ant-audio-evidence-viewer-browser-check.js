@@ -12,12 +12,27 @@ const playwrightVersion = require('playwright/package.json').version;
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const evidence = path.join(root, 'docs/ant/evidence/2026-10-14-base-born-natural-event-erb');
 const htmlPath = path.join(evidence, 'listening.html');
-const checkScriptPath = fileURLToPath(import.meta.url);
+const manifest = JSON.parse(await readFile(path.join(evidence, 'listening-manifest.json'), 'utf8'));
+const viewerValidation = JSON.parse(await readFile(path.join(evidence, 'viewer-validation.json'), 'utf8'));
 const htmlBytes = await readFile(htmlPath);
-const checkScriptBytes = await readFile(checkScriptPath);
-const remoteRequests = [];
-const pageErrors = [];
-const localServerRequests = [];
+const checkScriptBytes = await readFile(fileURLToPath(import.meta.url));
+const remoteRequests = [], pageErrors = [], localServerRequests = [];
+const wavReceipts = new Map();
+for (const pair of manifest.pairs) for (const record of Object.values(pair.files)) wavReceipts.set(record.path, record);
+assert.equal(wavReceipts.size, 12, 'natural-event manifest retains exactly 12 WAV files');
+for (const [relativePath, receipt] of wavReceipts) {
+  const bytes = await readFile(path.join(root, relativePath));
+  assert.equal(bytes.length, receipt.bytes, relativePath + ' byte length matches manifest');
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), receipt.sha256, relativePath + ' SHA-256 matches manifest');
+}
+assert.equal(viewerValidation.validatedAudioFiles.length, 12, 'viewer receipt list covers all 12 WAVs');
+assert.equal(viewerValidation.fixedGainOnlyErbAnalysis, true, 'ERB input remains fixed gain only');
+assert.equal(viewerValidation.blindSession.sameBytesAndSha256ForBothSides, true, 'generator verified exact A/A source identity');
+assert.deepEqual(viewerValidation.erbDisplay.absolutePowerDbScale, [-180, 0]);
+assert.deepEqual(viewerValidation.erbDisplay.differenceDbScale, [-120, 120]);
+assert.ok(viewerValidation.erbAnalysisParity.every(item => item.passed && item.maxAbsoluteErrorDb === 0),
+  'existing q25/q50/q75 ERB measurements retain exact parity');
+
 const server = createServer(async (request, response) => {
   try {
     const pathname = decodeURIComponent(new URL(request.url, 'http://127.0.0.1').pathname);
@@ -28,127 +43,254 @@ const server = createServer(async (request, response) => {
     const contentType = ext === '.html' ? 'text/html; charset=utf-8' : ext === '.wav' ? 'audio/wav' : 'application/octet-stream';
     localServerRequests.push(pathname);
     response.writeHead(200, { 'Content-Type': contentType }); response.end(bytes);
-  } catch {
-    response.writeHead(404).end();
-  }
+  } catch { response.writeHead(404).end(); }
 });
 const browser = await chromium.launch({ headless: true });
-try {
-  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
-  const localUrl = 'http://127.0.0.1:' + server.address().port;
-  const page = await browser.newPage({ acceptDownloads: true });
+function observe(page) {
   page.on('request', request => {
     if (/^https?:/i.test(request.url()) && !/^http:\/\/(127\.0\.0\.1|localhost)(:|\/)/i.test(request.url()))
       remoteRequests.push(request.url());
   });
   page.on('pageerror', error => pageErrors.push(error.message));
+}
+async function freshBlindPage(seed) {
+  const context = await browser.newContext({ acceptDownloads: true });
+  const page = await context.newPage(); observe(page);
+  await page.addInitScript(testSeed => {
+    let state = 0x811c9dc5;
+    for (let index = 0; index < testSeed.length; index++) state = Math.imul(state ^ testSeed.charCodeAt(index), 0x01000193);
+    state = state >>> 0 || 0x9e3779b9;
+    Object.defineProperty(window.crypto, 'getRandomValues', { configurable: true, value: values => {
+      for (let index = 0; index < values.length; index++) {
+        state ^= state << 13; state ^= state >>> 17; state ^= state << 5;
+        values[index] = state >>> 0;
+      }
+      return values;
+    }});
+  }, seed);
+  await page.addInitScript(() => {
+    window.__fetchCalls = 0;
+    const original = window.fetch;
+    window.fetch = (...args) => { window.__fetchCalls++; return original(...args); };
+  });
   await page.goto(pathToFileURL(htmlPath).href, { waitUntil: 'load' });
-  assert.equal(await page.locator('.pair-card').count(), 3, 'three natural-event pairs load');
+  assert.equal(await page.title(), 'Natural-event listening session');
   assert.equal(await page.locator('input[name="listening-mode"][value="rms-matched-listening-only"]').isChecked(), true,
-    'RMS-matched listening mode is default');
+    'RMS-matched listening mode is the first-listen default');
+  assert.equal(await page.locator('#session-seed').count(), 0, 'seed is not exposed before first-listen trials');
+  await page.locator('#start-session').click();
+  assert.equal(await page.locator('.blind-card').isVisible(), true, 'blind trial starts after session creation');
+  return { context, page };
+}
+async function assertBlindText(page) {
+  const text = await page.locator('body').evaluate(node => node.innerText);
+  assert.doesNotMatch(text, /\bBase\b|\bBorn\b|A\/A catch/i, 'condition and catch identity stay out of pre-reveal DOM text');
+  assert.equal(await page.locator('.pair-card').count(), 0, 'legacy named pairs are not rendered in blind mode');
+  assert.equal(await page.locator('.erb-details').count(), 0, 'ERB panels do not exist before Reveal');
+}
+async function revealCurrent(page, values = {}) {
+  await assertBlindText(page);
+  await page.locator('[data-field="different"]').selectOption(values.different || 'unsure');
+  await page.locator('[data-field="confidence"]').selectOption(String(values.confidence || 3));
+  if (values.note) await page.locator('[data-field="pre-note"]').fill(values.note);
+  await page.locator('[data-action="reveal"]').click();
+  assert.equal(await page.locator('.revealed-analysis').isVisible(), true, 'Reveal opens analysis and identity');
+  assert.equal(await page.locator('.erb-details').count(), 1, 'Reveal displays one fixed-scale A/B/difference ERB view');
+  assert.equal(await page.locator('.erb-details').evaluate(node => node.open), true, 'ERB is expanded by Reveal');
+  assert.equal(await page.locator('.measurement-details').evaluate(node => node.open), true,
+    'existing measurement metadata is expanded by Reveal');
+  const erbLabels = await page.locator('.erb-details figcaption').allTextContents();
+  assert.equal(erbLabels.length, 3, 'ERB contains A, B, and difference panels');
+  assert.match(erbLabels[0], /^A — /);
+  assert.match(erbLabels[1], /^B — /);
+  assert.match(erbLabels[2], /^B − A difference$/);
+  assert.match(await page.locator('.erb-details').textContent(), /Fixed-gain WAVs only/);
+  assert.match(await page.locator('.erb-details').textContent(), /No per-pair autoscale/);
+}
 
-  const first = page.locator('.pair-card').first();
-  const a = first.locator('audio').nth(0), b = first.locator('audio').nth(1);
-  assert.equal(await first.locator('.erb-details').evaluate(node => node.open), false, 'ERB starts hidden');
-  assert.equal(await first.locator('.measurement-details').evaluate(node => node.open), false,
-    'measurement metadata starts hidden');
-  await first.locator('[data-testid="restart-a"]').click();
-  await page.waitForFunction(() => {
-    const audio = document.querySelector('.pair-card audio');
-    return audio && !audio.paused && audio.currentTime > 0.02;
-  }, null, { timeout: 5000 });
-  assert.match(await a.getAttribute('src'), /rms-matched-listening-only\.wav$/,
-    'A starts from the RMS-matched listening-only file');
-  const aTimeBeforeRestart = await a.evaluate(audio => audio.currentTime);
-  await first.locator('[data-testid="restart-a"]').click();
-  const aTimeAfterRestart = await a.evaluate(audio => audio.currentTime);
-  assert.ok(aTimeBeforeRestart > 0.02 && aTimeAfterRestart < 0.1,
-    'pressing A again restarts the clip from its beginning');
+try {
+  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  const firstSeed = 'blind-browser-check-20261015';
+  const { context, page } = await freshBlindPage(firstSeed);
+  try {
+    await assertBlindText(page);
+    assert.match(await page.locator('#mode-status').textContent(), /not audibility evidence/);
+    assert.match(await page.locator('#session-meta').textContent(), /Trial 1 of 4/);
+    assert.equal(await page.locator('.blind-card audio').count(), 2, 'only anonymous A/B playbacks are shown');
+    assert.deepEqual(await page.locator('[data-field="different"] option').evaluateAll(nodes => nodes.map(node => node.value)),
+      ['', 'yes', 'unsure', 'no'], 'pre-reveal response scale has only the requested three choices');
+    assert.deepEqual(await page.locator('[data-field="confidence"] option').evaluateAll(nodes => nodes.map(node => node.value)),
+      ['', '1', '2', '3', '4', '5'], 'confidence scale is bounded from 1 to 5');
 
-  await first.locator('[data-testid="restart-b"]').click();
-  await page.waitForFunction(() => {
-    const audio = document.querySelectorAll('.pair-card audio');
-    return audio.length >= 2 && audio[0].paused && !audio[1].paused && audio[1].currentTime > 0.02;
-  }, null, { timeout: 5000 });
-  assert.match(await b.getAttribute('src'), /rms-matched-listening-only\.wav$/,
-    'B starts in the same RMS-matched mode');
-  assert.equal(await a.evaluate(audio => audio.paused), true, 'playing B pauses A in the same pair');
+    const a = page.locator('.blind-card audio').nth(0), b = page.locator('.blind-card audio').nth(1);
+    await page.locator('[data-testid="restart-a"]').click();
+    await page.waitForFunction(() => {
+      const audio = document.querySelector('.blind-card audio');
+      return audio && !audio.paused && audio.currentTime > 0.02;
+    }, null, { timeout: 5000 });
+    assert.match(await a.getAttribute('src'), /rms-matched-listening-only\.wav$/, 'A uses the selected RMS-matched file');
+    const beforeReplay = await a.evaluate(audio => audio.currentTime);
+    await page.locator('[data-testid="restart-a"]').click();
+    assert.ok(beforeReplay > 0.02 && await a.evaluate(audio => audio.currentTime) < 0.1,
+      'A restarts from time zero');
+    await page.locator('[data-testid="restart-b"]').click();
+    await page.waitForFunction(() => {
+      const audio = document.querySelectorAll('.blind-card audio');
+      return audio[0].paused && !audio[1].paused && audio[1].currentTime > 0.02;
+    }, null, { timeout: 5000 });
+    assert.equal(await a.evaluate(audio => audio.paused), true, 'A and B remain exclusive');
+    assert.match(await b.getAttribute('src'), /rms-matched-listening-only\.wav$/);
+    await page.locator('input[name="listening-mode"][value="fixed-gain"]').check();
+    await page.locator('[data-testid="restart-a"]').click();
+    assert.match(await a.getAttribute('src'), /fixed-gain\.wav$/, 'selected fixed-gain mode loads its own WAV');
+    await page.locator('input[name="listening-mode"][value="rms-matched-listening-only"]').check();
+    await page.locator('[data-testid="restart-a"]').click();
+    assert.match(await a.getAttribute('src'), /rms-matched-listening-only\.wav$/, 'selected RMS mode loads its own WAV');
 
-  await page.locator('input[name="listening-mode"][value="fixed-gain"]').check();
-  assert.match(await page.locator('#mode-status').textContent(), /amplitude \/ transfer context/);
-  await first.locator('[data-testid="restart-a"]').click();
-  await page.waitForFunction(() => {
-    const audio = document.querySelector('.pair-card audio');
-    return audio && !audio.paused && audio.currentTime > 0.02;
-  }, null, { timeout: 5000 });
-  assert.match(await a.getAttribute('src'), /fixed-gain\.wav$/, 'fixed-gain mode selects the fixed-gain WAV');
+    await page.locator('[data-field="different"]').selectOption('yes');
+    await page.locator('[data-field="confidence"]').selectOption('4');
+    await page.locator('[data-field="pre-note"]').fill('first RMS judgment');
+    await page.locator('[data-action="save-judgment"]').click();
+    await page.locator('[data-field="different"]').selectOption('no');
+    await page.locator('[data-field="confidence"]').selectOption('3');
+    await page.locator('[data-field="pre-note"]').fill('latest RMS pre-reveal revision');
+    await page.locator('[data-action="save-judgment"]').click();
+    await page.locator('input[name="listening-mode"][value="fixed-gain"]').check();
+    assert.equal(await page.locator('[data-field="different"]').inputValue(), '', 'mode switch starts a separate judgment draft');
+    await page.locator('[data-field="different"]').selectOption('unsure');
+    await page.locator('[data-field="confidence"]').selectOption('2');
+    await page.locator('[data-field="pre-note"]').fill('first fixed-gain judgment');
+    await page.locator('[data-action="save-judgment"]').click();
+    await page.locator('input[name="listening-mode"][value="rms-matched-listening-only"]').check();
+    assert.equal(await page.locator('[data-field="different"]').inputValue(), 'no', 'RMS draft restores independently');
+    await page.locator('[data-action="reveal"]').click();
+    assert.equal(await page.locator('.revealed-analysis').isVisible(), true);
+    assert.match(await page.locator('.revealed-identity').textContent(), /Base|Born|A\/A catch/,
+      'condition identity appears only after Reveal');
+    assert.equal(await page.locator('#reveal-mode-status .current-listening-mode').textContent(), 'Listening: RMS matched');
+    assert.equal(await page.locator('#reveal-mode-status .analysis-view').textContent(), 'Analysis view: fixed gain');
+    assert.match(await page.locator('.pre-reveal-summary').textContent(), /first RMS judgment/);
+    assert.match(await page.locator('.pre-reveal-summary').textContent(), /latest RMS pre-reveal revision/);
+    assert.match(await page.locator('.pre-reveal-summary').textContent(), /first fixed-gain judgment/);
+    await page.locator('[data-field="post-note"]').fill('RMS post-reveal interpretation');
+    await page.locator('input[name="listening-mode"][value="fixed-gain"]').check();
+    assert.equal(await page.locator('#reveal-mode-status .current-listening-mode').textContent(), 'Listening: fixed gain');
+    assert.equal(await page.locator('#reveal-mode-status .analysis-view').textContent(), 'Analysis view: fixed gain');
+    assert.equal(await page.locator('[data-field="post-note"]').inputValue(), '', 'post-reveal notes are mode-specific');
+    await page.locator('[data-field="post-note"]').fill('fixed-gain post-reveal interpretation');
+    await page.locator('input[name="listening-mode"][value="rms-matched-listening-only"]').check();
+    assert.equal(await page.locator('[data-field="post-note"]').inputValue(), 'RMS post-reveal interpretation',
+      'switching modes restores, rather than replaces, the other post-reveal note');
 
-  const erb = first.locator('.erb-details');
-  await erb.locator('summary').click();
-  assert.equal(await erb.evaluate(node => node.open), true, 'ERB details expand');
-  assert.match(await erb.textContent(), /30 equal ERB-rate bands over 0–8 kHz/);
-  assert.match(await erb.textContent(), /No per-pair autoscale/);
-  assert.equal(await erb.locator('canvas').count(), 3, 'A, B and difference share one revealed region');
-  const plotted = await erb.locator('canvas').first().evaluate(canvas => {
-    const pixels = canvas.getContext('2d').getImageData(36, 12, 1, 1).data;
-    return pixels.some((value, index) => index < 3 && value !== 255);
-  });
-  assert.equal(plotted, true, 'revealed ERB canvas contains plotted cells');
-  await erb.locator('summary').click();
-  assert.equal(await erb.evaluate(node => node.open), false, 'ERB details collapse');
+    await page.reload({ waitUntil: 'load' });
+    assert.equal(await page.locator('.revealed-analysis').isVisible(), true, 'revealed trial state survives reload');
+    assert.match(await page.locator('.pre-reveal-summary').textContent(), /first RMS judgment/,
+      'first pre-reveal judgment survives reload');
+    await page.locator('#next-trial').click();
+    for (let index = 1; index < 4; index++) {
+      await revealCurrent(page, { different: index % 2 ? 'no' : 'unsure', confidence: index + 1, note: 'blind note ' + index });
+      if ((await page.locator('.revealed-identity').textContent()).includes('A/A catch trial')) {
+        assert.match(await page.locator('.revealed-identity').textContent(), /exact same .* source/,
+          'A/A identity appears only in revealed analysis');
+      }
+      await page.locator('#next-trial').click();
+    }
+    assert.equal(await page.locator('#blind-complete').isVisible(), true, 'four randomized trials complete');
+    assert.equal(await page.locator('#export-notes').isEnabled(), true, 'full mapping export unlocks after all Reveals');
+    assert.equal(await page.evaluate(() => window.__fetchCalls), 0, 'standalone page performs no runtime fetch');
 
-  await page.locator('input[name="listening-mode"][value="fixed-gain"]').check();
-  await first.locator('[data-field="different"]').selectOption('yes');
-  await first.locator('[data-field="note"]').fill('Local-only browser test note');
-  await first.locator('[data-action="save-note"]').click();
-  assert.match(await first.locator('.save-status').textContent(), /Saved locally/);
-  await page.reload({ waitUntil: 'load' });
-  const reloaded = page.locator('.pair-card').first();
-  assert.equal(await reloaded.locator('[data-field="different"]').inputValue(), 'yes', 'judgment reloads from localStorage');
-  assert.equal(await reloaded.locator('[data-field="note"]').inputValue(), 'Local-only browser test note',
-    'free note reloads from localStorage');
+    await page.locator('[data-action="review-last"]').click();
+    await page.locator('[data-field="post-note"]').evaluate(node => { node.value = 'unsaved visible edit included in export'; });
+    const downloadPromise = page.waitForEvent('download');
+    await page.locator('#export-notes').click();
+    const download = await downloadPromise;
+    const payload = JSON.parse(await readFile(await download.path(), 'utf8'));
+    assert.equal(payload.schemaVersion, 2);
+    assert.equal(payload.viewerId, 'ant-base-born-natural-event-erb');
+    assert.equal(payload.evidenceId, '2026-10-14-base-born-natural-event-erb');
+    assert.equal(payload.sessions.length, 1);
+    const session = payload.sessions[0];
+    assert.match(session.seed, /^[0-9a-f]{16}$/, 'export carries a browser-random reproducibility seed');
+    assert.match(session.randomizationAlgorithm, /fisher-yates-v1/);
+    assert.equal(session.trialOrder.length, 4);
+    assert.equal(new Set(session.trialOrder).size, 4, 'trial order contains each normal/catch trial once');
+    assert.deepEqual(session.trials.map(item => item.trialSequence), [1, 2, 3, 4]);
+    assert.ok(session.trials.every(item => item.revealed && item.sideMapping && item.audioFileHashes),
+      'revealed condition mapping, audio hashes, and Reveal status are exported');
+    assert.deepEqual(new Set(session.trials.filter(item => !item.isCatch).map(item => item.trialId)), new Set(['q25', 'q50', 'q75']));
+    const firstTrial = session.trials.find(item => item.trialSequence === 1);
+    const rmsJudgment = firstTrial.preRevealJudgmentsByMode['rms-matched-listening-only'];
+    const fixedJudgment = firstTrial.preRevealJudgmentsByMode['fixed-gain'];
+    assert.equal(rmsJudgment.first.different, 'yes', 'first pre-reveal value is immutable');
+    assert.equal(rmsJudgment.first.confidence, 4);
+    assert.equal(rmsJudgment.first.freeNote, 'first RMS judgment');
+    assert.equal(rmsJudgment.latest.different, 'no', 'latest pre-reveal revision is separate from first');
+    assert.equal(rmsJudgment.latest.freeNote, 'latest RMS pre-reveal revision');
+    assert.equal(fixedJudgment.first.different, 'unsure', 'fixed-gain judgment is stored separately');
+    assert.equal(fixedJudgment.first.confidence, 2);
+    assert.equal(firstTrial.postRevealNotesByMode['rms-matched-listening-only'].note, 'RMS post-reveal interpretation');
+    assert.equal(firstTrial.postRevealNotesByMode['fixed-gain'].note, 'fixed-gain post-reveal interpretation');
+    const finalTrial = session.trials.find(item => item.trialSequence === 4);
+    assert.equal(finalTrial.postRevealNotesByMode['rms-matched-listening-only'].note,
+      'unsaved visible edit included in export', 'export synchronizes the current UI value');
+    const catchTrial = session.trials.find(item => item.isCatch);
+    assert.ok(catchTrial, 'exactly one revealed A/A catch is exported');
+    for (const mode of ['fixedGain', 'rmsMatchedListeningOnly']) {
+      assert.deepEqual(catchTrial.audioFileHashes.A[mode], catchTrial.audioFileHashes.B[mode],
+        'A/A catch uses identical ' + mode + ' path, bytes, and SHA-256');
+    }
+    assert.ok(session.events.some(event => event.type === 'analysis_revealed' && event.timestamp));
 
-  const downloadPromise = page.waitForEvent('download');
-  await page.locator('#export-notes').click();
-  const download = await downloadPromise;
-  const exportPayload = JSON.parse(await readFile(await download.path(), 'utf8'));
-  assert.equal(exportPayload.viewerId, 'ant-base-born-natural-event-erb');
-  assert.equal(exportPayload.evidenceId, '2026-10-14-base-born-natural-event-erb');
-  assert.deepEqual(exportPayload.pairs[0], { pairId: 'q25', listeningMode: 'fixed-gain', different: 'yes',
-    note: 'Local-only browser test note' });
-  assert.equal(exportPayload.pairs.length, 3, 'export contains all pair records');
-  assert.deepEqual(remoteRequests, [], 'page and playback use no remote network requests');
-  assert.deepEqual(pageErrors, [], 'page has no uncaught browser errors');
+    const deterministic = await freshBlindPage(firstSeed);
+    try {
+      for (let index = 0; index < 4; index++) {
+        await revealCurrent(deterministic.page, { different: 'yes', confidence: 4 });
+        await deterministic.page.locator('#next-trial').click();
+      }
+      const repeatDownloadPromise = deterministic.page.waitForEvent('download');
+      await deterministic.page.locator('#export-notes').click();
+      const repeatDownload = await repeatDownloadPromise;
+      const repeated = JSON.parse(await readFile(await repeatDownload.path(), 'utf8')).sessions[0];
+      assert.equal(repeated.seed, session.seed, 'test fixture repeats the same generated session seed');
+      assert.deepEqual(repeated.trialOrder, session.trialOrder, 'same seed reproduces trial order');
+      assert.deepEqual(repeated.trials.map(item => item.sideMapping), session.trials.map(item => item.sideMapping),
+        'same seed reproduces anonymous side mapping');
+    } finally { await deterministic.context.close(); }
+  } finally { await context.close(); }
 
-  const serverPage = await browser.newPage();
-  serverPage.on('request', request => {
-    if (/^https?:/i.test(request.url()) && !/^http:\/\/(127\.0\.0\.1|localhost)(:|\/)/i.test(request.url()))
-      remoteRequests.push(request.url());
-  });
-  await serverPage.goto(localUrl + '/listening.html', { waitUntil: 'load' });
-  assert.equal(await serverPage.locator('.pair-card').count(), 3, 'viewer also loads from a simple local server');
-  await serverPage.locator('.pair-card').first().locator('[data-testid="restart-a"]').click();
-  await serverPage.waitForFunction(() => {
-    const audio = document.querySelector('.pair-card audio');
-    return audio && !audio.paused && audio.currentTime > 0.02;
-  }, null, { timeout: 5000 });
-  assert.ok(localServerRequests.includes('/listening.html'), 'local server serves the HTML');
-  assert.ok(localServerRequests.some(url => url.endsWith('q25-base-rms-matched-listening-only.wav')),
-    'local server serves the evidence-relative WAV path');
-  assert.deepEqual(remoteRequests, [], 'local server mode has no remote network requests');
-
-  const browserValidation = {
-    browser: 'Chromium', browserVersion: browser.version(), playwrightVersion, headless: true,
-    pageProtocol: 'file:// and local http://127.0.0.1', htmlSha256: createHash('sha256').update(htmlBytes).digest('hex'),
+  const serverPageContext = await browser.newContext();
+  const serverPage = await serverPageContext.newPage(); observe(serverPage);
+  try {
+    await serverPage.goto('http://127.0.0.1:' + server.address().port + '/listening.html', { waitUntil: 'load' });
+    assert.equal(await serverPage.title(), 'Natural-event listening session');
+    assert.equal(await serverPage.locator('.blind-card').count(), 1, 'standalone viewer also loads from local HTTP');
+    await serverPage.locator('#start-session').click();
+    await assertBlindText(serverPage);
+    await serverPage.locator('[data-testid="restart-a"]').click();
+    await serverPage.waitForFunction(() => {
+      const audio = document.querySelector('.blind-card audio');
+      return audio && !audio.paused && audio.currentTime > 0.02;
+    }, null, { timeout: 5000 });
+    assert.ok(localServerRequests.includes('/listening.html'), 'local server serves viewer HTML');
+    assert.ok(localServerRequests.some(url => /listening\/q(25|50|75)-(base|born)-(fixed-gain|rms-matched-listening-only)\.wav$/.test(url)),
+      'local server serves one of the existing relative WAVs');
+  } finally { await serverPageContext.close(); }
+  assert.deepEqual(remoteRequests, [], 'file and local-server modes make no remote requests');
+  assert.deepEqual(pageErrors, [], 'headless Chromium reports no uncaught page errors');
+  console.log(JSON.stringify({ browser: 'Chromium', browserVersion: browser.version(), playwrightVersion, headless: true,
+    protocols: ['file://', 'http://127.0.0.1'], htmlBytes: htmlBytes.length,
+    htmlSha256: createHash('sha256').update(htmlBytes).digest('hex'),
     checkScriptSha256: createHash('sha256').update(checkScriptBytes).digest('hex'),
-    checks: { pageLoad: true, defaultRmsMatchedPlaybackA: true, defaultRmsMatchedPlaybackB: true,
-      replayStartsFromBeginning: true,
-      localServerPageAndAudio: true,
-      fixedGainToggleAndPlayback: true, samePairExclusivePlayback: true, erbRevealAndCollapse: true,
-      noteLocalStorageSaveAndReload: true, subjectiveJsonExportPayload: true, remoteNetworkRequests: 0,
-      uncaughtPageErrors: 0 }, localServerRequests: localServerRequests.length
-  };
-  console.log(JSON.stringify(browserValidation, null, 2));
+    receipts: { existingWavFiles: wavReceipts.size, allManifestHashesMatch: true,
+      aaCatchSideHashesAndBytesMatch: true },
+    checks: { blindedDomUntilReveal: true, randomizedTrialOrderAndSideMapping: true,
+      seededSessionReproducibility: true, firstAndLatestPreRevealJudgmentsPreserved: true,
+      modeSpecificJudgmentsAndPostNotes: true, catchOnlyNamedAfterReveal: true,
+      fixedGainOnlyErbScalesAndReveal: true, modeSpecificPlaybackSources: true, samePairExclusivePlayback: true,
+      replayStartsAtZero: true, currentUnsavedUiValueExported: true,
+      sessionOrderMappingHashesAndTimestampsExported: true, localStorageResume: true,
+      noRuntimeFetch: true, remoteNetworkRequests: 0, uncaughtPageErrors: 0 },
+    localServerRequests: localServerRequests.length }, null, 2));
 } finally {
   await browser.close();
   await new Promise(resolve => server.close(resolve));

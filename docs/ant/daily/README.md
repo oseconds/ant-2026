@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-15 — Blind first-listen workflow for the static audio viewer
+
+[Process log](./2026-10-15-audio-evidence-viewer-blind-workflow.md) · [Viewer guide](../audio-evidence-viewer.md) · [Natural-event integration](../evidence/2026-10-14-base-born-natural-event-erb/README.md)
+
+- Added seeded anonymous trial order/side mapping, immutable first pre-reveal judgments, separate mode-specific notes, and JSON export to the reusable viewer
+- Added one hidden A/A catch using byte-identical q50 Base files already in the frozen 12-WAV set; no audio render or scientific evidence change
+- Headless Chromium verified the static viewer, receipts, and export workflow; no human listening assessment was performed
+
 ### 2026-10-15 — P24 contact-position modal participation
 
 [Process log](./2026-10-15-plate-modal-participation.md) · [Evidence package](../evidence/2026-10-15-plate-modal-participation/README.md)

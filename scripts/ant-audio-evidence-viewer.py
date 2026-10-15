@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Generate a self-contained ANT A/B audio evidence viewer from a small config."""
 import argparse
+import base64
 import hashlib
 import json
 import math
@@ -160,6 +161,8 @@ def build_data(config, config_path, package, helper):
         raise ValueError("viewerId and evidenceId must use letters, digits, dot, underscore, or hyphen")
     if not isinstance(config["title"], str) or not config["title"].strip():
         raise ValueError("title must be non-empty text")
+    if not isinstance(config.get("metadata", ""), str):
+        raise ValueError("metadata must be text")
     manifest_path = package_file(package, config["sourceListeningManifest"], "sourceListeningManifest")
     manifest_bytes = manifest_path.read_bytes()
     listening_manifest = json.loads(manifest_bytes)
@@ -241,21 +244,80 @@ def build_data(config, config_path, package, helper):
                 record.pop("absolutePath", None)
                 record.pop("path", None)
         pair_data.append(pair)
+    blind_session_cfg = config.get("blindSession")
+    blind_session = None
+    blind_validation = None
+    if blind_session_cfg is not None:
+        if not isinstance(blind_session_cfg, dict) or type(blind_session_cfg.get("enabled")) is not bool:
+            raise ValueError("blindSession must declare a boolean enabled field")
+        if blind_session_cfg["enabled"]:
+            if erb is None:
+                raise ValueError("blindSession requires the fixed-gain ERB analysis")
+            public_text = (config["title"] + " " + config.get("metadata", "")).casefold()
+            condition_names = {pair[arm]["label"].casefold() for pair in pair_data for arm in ("a", "b")}
+            if any(re.search(r"\b" + re.escape(name) + r"\b", public_text) for name in condition_names):
+                raise ValueError("blindSession title and metadata must not reveal condition names")
+            catch_spec = blind_session_cfg.get("catchTrial")
+            if not isinstance(catch_spec, dict):
+                raise ValueError("blindSession.catchTrial must be an object")
+            catch_id = catch_spec.get("id")
+            source_pair_id = catch_spec.get("sourcePairId")
+            source_arm = catch_spec.get("sourceArm")
+            if (not isinstance(catch_id, str) or not ID_PATTERN.fullmatch(catch_id) or
+                    catch_id in seen_ids or source_arm not in ("a", "b")):
+                raise ValueError("blindSession.catchTrial has an invalid id or sourceArm")
+            source_pair = next((pair for pair in pair_data if pair["id"] == source_pair_id), None)
+            if source_pair is None:
+                raise ValueError(f"blindSession.catchTrial source pair is missing: {source_pair_id}")
+            source = source_pair[source_arm]
+            fixed_record = dict(source["audio"]["fixedGain"])
+            fixed_record["absolutePath"] = str(package_file(package, fixed_record["relativePath"], "catch fixedGain source"))
+            catch_erb_pair = {"id": catch_id,
+                "a": {"audio": {"fixedGain": fixed_record}},
+                "b": {"audio": {"fixedGain": fixed_record}}}
+            catch_erb, _ = analyze_pair(catch_erb_pair, helper, absolute_scale, difference_scale)
+            catch_pair = {
+                "id": catch_id, "label": "A/A catch trial", "isCatch": True,
+                "sourcePairId": source_pair_id, "sourceArm": source_arm,
+                "a": {"label": source["label"], "audio": source["audio"]},
+                "b": {"label": source["label"], "audio": source["audio"]},
+                "measurement": {"type": "exploratory A/A catch", "sourcePairId": source_pair_id,
+                                "sourceArm": source_arm, "sameSourceForBothSides": True},
+                "analysisSummary": None, "erbData": catch_erb,
+            }
+            catch_audio_equal = all(
+                catch_pair["a"]["audio"][mode]["sha256"] == catch_pair["b"]["audio"][mode]["sha256"]
+                and catch_pair["a"]["audio"][mode]["bytes"] == catch_pair["b"]["audio"][mode]["bytes"]
+                for mode in ("fixedGain", "rmsMatchedListeningOnly")
+            )
+            if not catch_audio_equal:
+                raise ValueError("A/A catch sides must use byte-identical source files in both listening modes")
+            blind_session = {"enabled": True, "randomizationAlgorithm": "fnv1a32-xorshift32-fisher-yates-v1",
+                             "trialIds": [pair["id"] for pair in pair_data] + [catch_id], "catchTrial": catch_pair}
+            blind_validation = {"catchTrialId": catch_id, "sourcePairId": source_pair_id,
+                                "sourceArm": source_arm, "sameBytesAndSha256ForBothSides": catch_audio_equal,
+                                "fixedGainReceipt": {key: source["audio"]["fixedGain"][key]
+                                                     for key in ("relativePath", "bytes", "sha256")},
+                                "rmsMatchedReceipt": {key: source["audio"]["rmsMatchedListeningOnly"][key]
+                                                       for key in ("relativePath", "bytes", "sha256")}}
     erb_helper_check = helper.self_check()
     if not erb_helper_check.get("passed"):
         raise ValueError("reused ERB helper self-check failed")
     data = {"viewerId": config["viewerId"], "evidenceId": config["evidenceId"], "title": config["title"],
-            "metadata": config.get("metadata", ""), "pairs": pair_data, "erb": erb}
+            "metadata": config.get("metadata", ""), "pairs": pair_data, "erb": erb,
+            "blindSession": blind_session}
     return data, {"config": file_receipt(config_path, package),
                   "sourceListeningManifest": file_receipt(manifest_path, package),
                   "sourceAnalysis": file_receipt(analysis_path, package) if analysis_path else None,
                   "validatedAudio": validated_files, "erbAnalysisParity": parity_checks,
                   "erbHelper": {"path": ERB_HELPER.relative_to(ROOT).as_posix(),
-                                "sha256": sha256(ERB_HELPER.read_bytes()), "selfCheck": erb_helper_check}}
+                                "sha256": sha256(ERB_HELPER.read_bytes()), "selfCheck": erb_helper_check},
+                  "blindSession": blind_validation}
 
 
 HTML_SCRIPT = r"""
-const DATA = JSON.parse(document.getElementById('viewer-data').textContent);
+const encodedData = atob(document.getElementById('viewer-data').textContent.trim());
+const DATA = JSON.parse(new TextDecoder().decode(Uint8Array.from(encodedData, char => char.charCodeAt(0))));
 document.title = DATA.title;
 document.getElementById('page-title').textContent = DATA.title;
 document.getElementById('evidence-meta').textContent = DATA.metadata || '';
@@ -267,6 +329,10 @@ const modeText = {
 };
 const modeInputs = Array.from(document.querySelectorAll('input[name="listening-mode"]'));
 function selectedMode() { return document.querySelector('input[name="listening-mode"]:checked').value; }
+function updateRevealModeStatus() {
+  const current = document.querySelector('#reveal-mode-status .current-listening-mode');
+  if (current) current.textContent = 'Listening: ' + (selectedMode() === 'fixed-gain' ? 'fixed gain' : 'RMS matched');
+}
 function make(tag, className, text) {
   const node = document.createElement(tag);
   if (className) node.className = className;
@@ -311,9 +377,10 @@ function drawPanel(canvas, matrix, scale, difference, emptyBands, durationMs) {
 function updateAudioMode() {
   const mode = selectedMode();
   modeStatus.textContent = modeText[mode];
-  document.querySelectorAll('.pair-card').forEach(card => card.querySelectorAll('audio').forEach(audio => {
+  document.querySelectorAll('.pair-card,.blind-card').forEach(card => card.querySelectorAll('audio').forEach(audio => {
     audio.pause(); audio.removeAttribute('src'); audio.load();
   }));
+  updateRevealModeStatus();
 }
 function addPair(pair) {
   const card = make('article', 'pair-card'); card.dataset.pairId = pair.id;
@@ -381,10 +448,367 @@ function addPair(pair) {
   }, null, 2));
   measure.append(pre); disclosures.append(measure); pairRoot.append(card);
 }
-DATA.pairs.forEach(addPair);
-modeInputs.forEach(input => input.addEventListener('change', updateAudioMode));
-updateAudioMode();
-document.getElementById('export-notes').addEventListener('click', () => {
+function initializeBlindSession() {
+  const app = document.getElementById('blind-app'), setup = document.getElementById('session-setup');
+  const card = document.getElementById('blind-card'), complete = document.getElementById('blind-complete');
+  const exportButton = document.getElementById('export-notes'), exportStatus = document.getElementById('export-status');
+  const trialIds = DATA.blindSession.trialIds;
+  const catchId = DATA.blindSession.catchTrial.id, stateKey = 'ant-audio-evidence-viewer:v2:' + DATA.viewerId;
+  const algorithm = DATA.blindSession.randomizationAlgorithm;
+  const modeNames = { 'rms-matched-listening-only': 'RMS matched', 'fixed-gain': 'fixed gain' };
+  const emptyStore = () => ({ schemaVersion: 2, sessions: [], activeSessionId: null });
+  function loadStore() {
+    try {
+      const stored = JSON.parse(localStorage.getItem(stateKey) || 'null');
+      return stored && stored.schemaVersion === 2 && Array.isArray(stored.sessions) ? stored : emptyStore();
+    } catch (error) { return emptyStore(); }
+  }
+  let store = loadStore();
+  function activeSession() { return store.sessions.find(item => item.sessionId === store.activeSessionId) || null; }
+  function timestamp() { return new Date().toISOString(); }
+  function logEvent(session, type, trialId = null) {
+    session.eventSequence = (session.eventSequence || 0) + 1;
+    session.events.push({ sequence: session.eventSequence, timestamp: timestamp(), type, trialId });
+  }
+  function persist() {
+    try { localStorage.setItem(stateKey, JSON.stringify(store)); }
+    catch (error) { exportStatus.textContent = 'Browser storage is unavailable; export before closing this page.'; }
+  }
+  function seedHash(seed) {
+    let hash = 0x811c9dc5;
+    for (let i = 0; i < seed.length; i++) hash = Math.imul(hash ^ seed.charCodeAt(i), 0x01000193);
+    return hash >>> 0 || 0x9e3779b9;
+  }
+  function seededRandom(seed) {
+    let value = seedHash(seed);
+    return () => {
+      value ^= value << 13; value ^= value >>> 17; value ^= value << 5;
+      return (value >>> 0) / 4294967296;
+    };
+  }
+  function randomSeed() {
+    if (window.crypto && window.crypto.getRandomValues) {
+      const values = new Uint32Array(2); window.crypto.getRandomValues(values);
+      return Array.from(values, value => value.toString(16).padStart(8, '0')).join('');
+    }
+    return Date.now().toString(16) + Math.floor(Math.random() * 0xffffffff).toString(16);
+  }
+  function shuffled(ids, random) {
+    const result = ids.slice();
+    for (let i = result.length - 1; i > 0; i--) {
+      const j = Math.floor(random() * (i + 1)); [result[i], result[j]] = [result[j], result[i]];
+    }
+    return result;
+  }
+  function definition(id) {
+    if (id === catchId) return DATA.blindSession.catchTrial;
+    return DATA.pairs.find(pair => pair.id === id);
+  }
+  function makeSession(seed) {
+    const random = seededRandom(seed), order = shuffled(trialIds, random), trials = {};
+    for (const [index, id] of order.entries()) {
+      const item = definition(id), isCatch = id === catchId;
+      let sideMapping;
+      if (isCatch) {
+        const sameSource = { sourcePairId: item.sourcePairId, sourceArm: item.sourceArm };
+        sideMapping = { A: { ...sameSource }, B: { ...sameSource } };
+      } else {
+        const firstArm = random() < 0.5 ? 'a' : 'b';
+        sideMapping = { A: { sourcePairId: id, sourceArm: firstArm },
+          B: { sourcePairId: id, sourceArm: firstArm === 'a' ? 'b' : 'a' } };
+      }
+      trials[id] = { trialSequence: index + 1, sideMapping, isCatch, revealed: false, revealedAt: null,
+        openedAt: null, preRevealDraftsByMode: {}, preRevealJudgmentsByMode: {}, postRevealNotesByMode: {} };
+    }
+    const session = { sessionId: 'aev-' + Date.now().toString(36) + '-' + randomSeed().slice(0, 8), seed,
+      randomizationAlgorithm: algorithm, createdAt: timestamp(), trialOrder: order, currentIndex: 0,
+      trials, events: [], eventSequence: 0 };
+    return session;
+  }
+  function sessionComplete(session) {
+    return !!session && session.trialOrder.every(id => session.trials[id] && session.trials[id].revealed);
+  }
+  function allSessionsComplete() { return store.sessions.length > 0 && store.sessions.every(sessionComplete); }
+  function updateExportState() {
+    exportButton.disabled = !allSessionsComplete();
+    exportStatus.textContent = exportButton.disabled ? 'Export unlocks after every trial in the session has been revealed.' :
+      'Complete sessions export with seed, order, side mapping, audio hashes, and separate mode-specific judgments.';
+  }
+  function sourceForSide(trialState, side) {
+    const ref = trialState.sideMapping[side], pair = DATA.pairs.find(item => item.id === ref.sourcePairId);
+    return { ref, pair, arm: pair[ref.sourceArm] };
+  }
+  function audioRecord(trialState, side, mode) {
+    const { arm } = sourceForSide(trialState, side);
+    return arm.audio[mode === 'fixed-gain' ? 'fixedGain' : 'rmsMatchedListeningOnly'];
+  }
+  function copyReceipt(record) {
+    return { path: record.relativePath, bytes: record.bytes, sha256: record.sha256 };
+  }
+  function recordSnapshot(trialState, mode) {
+    const different = card.querySelector('[data-field="different"]');
+    const confidence = card.querySelector('[data-field="confidence"]');
+    const note = card.querySelector('[data-field="pre-note"]');
+    return { listeningMode: mode, different: different.value,
+      confidence: confidence.value ? Number(confidence.value) : null, freeNote: note.value,
+      timestamp: timestamp(), trialSequence: trialState.trialSequence };
+  }
+  function validSnapshot(snapshot) {
+    return !!snapshot && ['yes', 'unsure', 'no'].includes(snapshot.different) &&
+      Number.isInteger(snapshot.confidence) && snapshot.confidence >= 1 && snapshot.confidence <= 5;
+  }
+  function draftForMode(trialState, mode) {
+    return trialState.preRevealDraftsByMode[mode] ||
+      (trialState.preRevealJudgmentsByMode[mode] || {}).latest ||
+      (trialState.preRevealJudgmentsByMode[mode] || {}).first || null;
+  }
+  function populatePreReveal(trialState) {
+    const mode = selectedMode(), draft = draftForMode(trialState, mode) || {};
+    card.querySelector('[data-field="different"]').value = draft.different || '';
+    card.querySelector('[data-field="confidence"]').value = draft.confidence ? String(draft.confidence) : '';
+    card.querySelector('[data-field="pre-note"]').value = draft.freeNote || '';
+    const recorded = (trialState.preRevealJudgmentsByMode[mode] || {}).first;
+    card.querySelector('[data-action="save-judgment"]').textContent = recorded ? 'Save another pre-reveal revision' : 'Save blind judgment';
+    updatePreRevealButtons();
+  }
+  function updatePreRevealButtons() {
+    const valid = card.querySelector('[data-field="different"]').value &&
+      card.querySelector('[data-field="confidence"]').value;
+    card.querySelector('[data-action="save-judgment"]').disabled = !valid;
+    card.querySelector('[data-action="reveal"]').disabled = !valid;
+  }
+  function syncDraft(trialState) {
+    if (trialState.revealed) return;
+    const mode = selectedMode(), snapshot = recordSnapshot(trialState, mode);
+    trialState.preRevealDraftsByMode[mode] = { different: snapshot.different, confidence: snapshot.confidence,
+      freeNote: snapshot.freeNote, updatedAt: snapshot.timestamp };
+    persist(); updatePreRevealButtons();
+  }
+  function saveBlindJudgment(session, trialId, trialState) {
+    const mode = selectedMode(), snapshot = recordSnapshot(trialState, mode);
+    if (!validSnapshot(snapshot)) return false;
+    const entry = trialState.preRevealJudgmentsByMode[mode] || { first: null, latest: null };
+    if (!entry.first) entry.first = snapshot;
+    entry.latest = snapshot;
+    trialState.preRevealJudgmentsByMode[mode] = entry;
+    trialState.preRevealDraftsByMode[mode] = { different: snapshot.different, confidence: snapshot.confidence,
+      freeNote: snapshot.freeNote, updatedAt: snapshot.timestamp };
+    logEvent(session, 'pre_reveal_judgment_saved', trialId); persist();
+    card.querySelector('.save-status').textContent = entry.first === entry.latest ?
+      'Blind judgment saved.' : 'Latest saved; first judgment remains preserved.';
+    return true;
+  }
+  function postNoteForMode(trialState, mode) {
+    return trialState.postRevealNotesByMode[mode] || { note: '', updatedAt: null };
+  }
+  function syncPostNote(trialState, session, trialId, mode = selectedMode()) {
+    if (!trialState.revealed) return;
+    const field = card.querySelector('[data-field="post-note"]');
+    const old = postNoteForMode(trialState, mode);
+    if (old.note === field.value) return;
+    trialState.postRevealNotesByMode[mode] = { listeningMode: mode, note: field.value,
+      updatedAt: timestamp(), trialSequence: trialState.trialSequence };
+    logEvent(session, 'post_reveal_note_updated', trialId); persist();
+  }
+  function renderPreRevealSummary(trialState) {
+    const target = card.querySelector('.pre-reveal-summary'); target.replaceChildren();
+    for (const mode of ['rms-matched-listening-only', 'fixed-gain']) {
+      const entry = trialState.preRevealJudgmentsByMode[mode];
+      if (!entry || !entry.first) continue;
+      const box = make('section', 'judgment-record');
+      box.append(make('strong', '', modeNames[mode] + ' — first pre-reveal judgment'));
+      box.append(make('p', '', 'Different: ' + entry.first.different + '; confidence: ' + entry.first.confidence + '/5'));
+      if (entry.first.freeNote) box.append(make('p', '', 'First note: ' + entry.first.freeNote));
+      if (entry.latest && (entry.latest.different !== entry.first.different ||
+          entry.latest.confidence !== entry.first.confidence || entry.latest.freeNote !== entry.first.freeNote)) {
+        box.append(make('p', '', 'Latest pre-reveal revision: ' + entry.latest.different + '; confidence: ' +
+          entry.latest.confidence + '/5; note: ' + entry.latest.freeNote));
+      }
+      box.append(make('p', 'save-status', 'Recorded ' + entry.first.timestamp)); target.append(box);
+    }
+    if (!target.childElementCount) target.textContent = 'No blind judgment was recorded for this trial.';
+  }
+  function renderErb(pair, trialState) {
+    const details = make('details', 'erb-details'); details.open = true;
+    details.append(make('summary', '', 'Fixed-gain A / B / difference ERB'));
+    const panels = make('div', 'erb-panels');
+    let aData, bData, difference = pair.erbData.differenceDb;
+    if (pair.isCatch) { aData = pair.erbData.aDb; bData = pair.erbData.bDb; }
+    else {
+      aData = trialState.sideMapping.A.sourceArm === 'a' ? pair.erbData.aDb : pair.erbData.bDb;
+      bData = trialState.sideMapping.B.sourceArm === 'a' ? pair.erbData.aDb : pair.erbData.bDb;
+      if (trialState.sideMapping.A.sourceArm === 'b') difference = difference.map(row => row.map(value => -value));
+    }
+    const armA = sourceForSide(trialState, 'A').arm, armB = sourceForSide(trialState, 'B').arm;
+    const specs = [['A — ' + armA.label, aData, DATA.erb.absolutePowerDbScale, false],
+      ['B — ' + armB.label, bData, DATA.erb.absolutePowerDbScale, false],
+      ['B − A difference', difference, DATA.erb.differenceDbScale, true]];
+    for (const [captionText, matrix, scale, isDifference] of specs) {
+      const figure = document.createElement('figure'), canvas = document.createElement('canvas');
+      canvas.width = 440; canvas.height = 210; canvas.setAttribute('role', 'img');
+      canvas.setAttribute('aria-label', captionText + ' ERB-time view');
+      figure.append(make('figcaption', '', captionText), canvas); panels.append(figure);
+      drawPanel(canvas, matrix, scale, isDifference, pair.erbData.emptyBandIndices, pair.erbData.durationMs);
+    }
+    details.append(panels, make('p', 'scale-note', 'Analysis view: fixed gain. 48 kHz; symmetric Hann FFT 1024; hop 256; 30 equal ERB-rate bands over 0–8 kHz. Fixed-gain WAVs only; left/right linear power is averaged. A/B fixed scale: ' + DATA.erb.absolutePowerDbScale[0] + ' to ' + DATA.erb.absolutePowerDbScale[1] + ' dB power. Difference fixed symmetric scale: ' + DATA.erb.differenceDbScale[0] + ' to +' + DATA.erb.differenceDbScale[1] + ' dB. No per-pair autoscale.'));
+    return details;
+  }
+  function mappingForExport(trialState, side) {
+    const { ref, pair, arm } = sourceForSide(trialState, side);
+    return { condition: arm.label, sourcePairId: ref.sourcePairId, sourceArm: ref.sourceArm,
+      audioFileHashes: { fixedGain: copyReceipt(arm.audio.fixedGain),
+        rmsMatchedListeningOnly: copyReceipt(arm.audio.rmsMatchedListeningOnly) } };
+  }
+  function revealTrial(pair, trialState, trialId) {
+    const sideA = sourceForSide(trialState, 'A'), sideB = sourceForSide(trialState, 'B');
+    const identity = card.querySelector('.revealed-identity');
+    if (pair.isCatch) {
+      identity.textContent = 'A/A catch trial — A and B use the exact same ' + sideA.arm.label + ' source from ' +
+        pair.sourcePairId + '. Exploratory difference-seeking control; not a formal psychophysical test.';
+    } else identity.textContent = pair.label + ' — A: ' + sideA.arm.label + '; B: ' + sideB.arm.label + '.';
+    updateRevealModeStatus();
+    const analysis = card.querySelector('.revealed-analysis-content');
+    analysis.replaceChildren(renderErb(pair, trialState));
+    const measure = make('details', 'measurement-details'); measure.open = true;
+    measure.append(make('summary', '', 'Inspect measurement metadata'));
+    measure.append(make('pre', 'measurement-json', JSON.stringify({
+      listeningModeAtReveal: selectedMode(), analysisView: 'fixed gain', isExploratoryAaCatch: pair.isCatch,
+      sideMapping: { A: mappingForExport(trialState, 'A'), B: mappingForExport(trialState, 'B') },
+      measurementMetadata: pair.measurement || null, analysisSummary: pair.analysisSummary || null
+    }, null, 2)));
+    analysis.append(measure);
+    renderPreRevealSummary(trialState);
+    const post = card.querySelector('[data-field="post-note"]');
+    post.value = postNoteForMode(trialState, selectedMode()).note || '';
+    post.disabled = false;
+    post.addEventListener('input', () => syncPostNote(trialState, activeSession(), trialId));
+  }
+  function renderTrial(session) {
+    const id = session.trialOrder[session.currentIndex], pair = definition(id), trialState = session.trials[id];
+    if (!trialState.openedAt) { trialState.openedAt = timestamp(); logEvent(session, 'trial_opened', id); persist(); }
+    complete.hidden = true; card.hidden = false;
+    card.innerHTML = '<h2 class="pair-title"></h2><div class="audio-controls"></div><section class="pre-reveal"><h3>Before reveal</h3><p>Choose whether A and B sound different, rate confidence, and add an optional note. No sound descriptors are suggested.</p><label>Different? <select data-field="different"><option value="">Choose one</option><option value="yes">Yes</option><option value="unsure">Unsure</option><option value="no">No</option></select></label><label>Confidence (1–5) <select data-field="confidence"><option value="">Choose one</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label><label>Free note <textarea data-field="pre-note" rows="3"></textarea></label><button type="button" data-action="save-judgment">Save blind judgment</button> <button type="button" data-action="reveal">Reveal analysis</button><p class="save-status" role="status"></p></section><section class="revealed-analysis" hidden><h3>Revealed identity</h3><p class="revealed-identity"></p><div id="reveal-mode-status" class="mode-status"><p class="current-listening-mode"></p><p class="analysis-view">Analysis view: fixed gain</p></div><section class="pre-reveal-records"><h4>Preserved pre-reveal judgments</h4><div class="pre-reveal-summary"></div></section><label>Post-reveal note <textarea data-field="post-note" rows="3" placeholder="Optional interpretation after analysis"></textarea></label><div class="revealed-analysis-content"></div></section>';
+    card.querySelector('.pair-title').textContent = 'Trial ' + (session.currentIndex + 1) + ' of ' + session.trialOrder.length;
+    for (const side of ['A', 'B']) {
+      const row = make('div', 'audio-row'), label = make('strong', '', side);
+      const restart = make('button', '', 'Play ' + side + ' from start'); restart.type = 'button';
+      restart.dataset.testid = 'restart-' + side.toLowerCase();
+      const audio = document.createElement('audio'); audio.controls = true; audio.preload = 'none'; audio.setAttribute('aria-label', side + ' playback');
+      audio.addEventListener('play', () => card.querySelectorAll('audio').forEach(other => { if (other !== audio) other.pause(); }));
+      restart.addEventListener('click', () => {
+        const record = audioRecord(trialState, side, selectedMode());
+        audio.pause(); audio.src = record.relativePath; audio.load(); audio.currentTime = 0;
+        audio.play().catch(error => { card.querySelector('.save-status').textContent = 'Playback failed: ' + error.message; });
+      });
+      row.append(label, restart, audio); card.querySelector('.audio-controls').append(row);
+    }
+    for (const field of ['different', 'confidence', 'pre-note']) {
+      card.querySelector('[data-field="' + field + '"]').addEventListener('input', () => syncDraft(trialState));
+      card.querySelector('[data-field="' + field + '"]').addEventListener('change', () => syncDraft(trialState));
+    }
+    card.querySelector('[data-action="save-judgment"]').addEventListener('click', () => saveBlindJudgment(session, id, trialState));
+    card.querySelector('[data-action="reveal"]').addEventListener('click', () => {
+      if (!saveBlindJudgment(session, id, trialState)) return;
+      trialState.revealed = true; trialState.revealedAt = timestamp();
+      trialState.listeningModeAtReveal = selectedMode(); logEvent(session, 'analysis_revealed', id); persist();
+      renderBlindSession();
+    });
+    populatePreReveal(trialState);
+    const nav = document.getElementById('trial-navigation'); nav.hidden = false;
+    const previous = document.getElementById('previous-trial'), next = document.getElementById('next-trial');
+    previous.disabled = session.currentIndex === 0;
+    next.disabled = !trialState.revealed; next.textContent = session.currentIndex === session.trialOrder.length - 1 ? 'Finish session' : 'Next trial';
+    previous.onclick = () => { syncPostNoteIfShown(); session.currentIndex--; logEvent(session, 'trial_reviewed', session.trialOrder[session.currentIndex]); persist(); renderBlindSession(); };
+    next.onclick = () => { syncPostNoteIfShown(); session.currentIndex++; logEvent(session, 'trial_advanced', id); persist(); renderBlindSession(); };
+    if (trialState.revealed) {
+      card.querySelector('.pre-reveal').hidden = true;
+      card.querySelector('.revealed-analysis').hidden = false;
+      revealTrial(pair, trialState, id);
+      updateRevealModeStatus();
+    }
+    document.getElementById('session-meta').textContent = 'Session ' + session.sessionId + ' · Trial ' +
+      (session.currentIndex + 1) + ' of ' + session.trialOrder.length;
+    updateExportState();
+  }
+  function syncPostNoteIfShown() {
+    const session = activeSession();
+    if (!session || session.currentIndex >= session.trialOrder.length) return;
+    const trialId = session.trialOrder[session.currentIndex], trialState = session.trials[trialId];
+    if (trialState.revealed) syncPostNote(trialState, session, trialId);
+  }
+  function renderBlindSession() {
+    const session = activeSession();
+    setup.hidden = !!session; app.hidden = false;
+    document.getElementById('trial-navigation').hidden = true;
+    if (!session) { card.hidden = true; complete.hidden = true; document.getElementById('session-meta').textContent = 'Start a randomized session to begin.'; updateExportState(); return; }
+    if (session.currentIndex >= session.trialOrder.length) {
+      card.hidden = true; complete.hidden = false; document.getElementById('trial-navigation').hidden = true;
+      complete.querySelector('.completion-summary').textContent = 'Session complete. Seed for reproduction: ' + session.seed +
+        ' (' + session.randomizationAlgorithm + '). Earlier sessions remain in local history.';
+      complete.querySelector('[data-action="review-last"]').onclick = () => { session.currentIndex = session.trialOrder.length - 1; persist(); renderBlindSession(); };
+      document.getElementById('session-meta').textContent = 'Session ' + session.sessionId + ' · Complete';
+      updateExportState(); return;
+    }
+    renderTrial(session);
+  }
+  function exportReceipt(record) { return copyReceipt(record); }
+  function exportTrial(session, id) {
+    const item = definition(id), trialState = session.trials[id];
+    const mapping = trialState.revealed ? { A: mappingForExport(trialState, 'A'), B: mappingForExport(trialState, 'B') } : null;
+    return { trialId: id, trialSequence: trialState.trialSequence, isCatch: trialState.revealed ? trialState.isCatch : null,
+      revealed: trialState.revealed, openedAt: trialState.openedAt, revealedAt: trialState.revealedAt,
+      listeningModeAtReveal: trialState.listeningModeAtReveal || null, sideMapping: mapping,
+      audioFileHashes: mapping ? { A: mapping.A.audioFileHashes, B: mapping.B.audioFileHashes } : null,
+      preRevealJudgmentsByMode: trialState.preRevealJudgmentsByMode,
+      postRevealNotesByMode: trialState.postRevealNotesByMode };
+  }
+  function exportPayload() {
+    syncPostNoteIfShown();
+    return { schemaVersion: 2, viewerId: DATA.viewerId, evidenceId: DATA.evidenceId, exportedAt: timestamp(),
+      sessions: store.sessions.map(session => ({ sessionId: session.sessionId, seed: session.seed,
+        randomizationAlgorithm: session.randomizationAlgorithm, startedAt: session.createdAt,
+        completed: sessionComplete(session), trialOrder: session.trialOrder.slice(),
+        trials: session.trialOrder.map(id => exportTrial(session, id)), events: session.events.slice() })) };
+  }
+  function exportSession() {
+    if (!allSessionsComplete()) return;
+    const session = activeSession(); logEvent(session, 'session_exported'); persist();
+    const payload = exportPayload(), url = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' }));
+    const link = make('a'); link.href = url; link.download = DATA.evidenceId + '-subjective-listening.json';
+    document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+  document.getElementById('start-session').addEventListener('click', () => {
+    const session = makeSession(randomSeed());
+    store.sessions.push(session); store.activeSessionId = session.sessionId;
+    logEvent(session, 'session_started'); persist(); renderBlindSession();
+  });
+  document.getElementById('new-session').addEventListener('click', () => {
+    setup.hidden = false; complete.hidden = true; card.hidden = true;
+    document.getElementById('session-meta').textContent = 'Previous sessions remain saved.';
+  });
+  exportButton.textContent = 'Export subjective listening JSON';
+  exportButton.addEventListener('click', exportSession);
+  let currentListeningMode = selectedMode();
+  modeInputs.forEach(input => input.addEventListener('change', () => {
+    const nextMode = selectedMode();
+    const session = activeSession();
+    if (!session || session.currentIndex >= session.trialOrder.length) { currentListeningMode = nextMode; return; }
+    const trialState = session.trials[session.trialOrder[session.currentIndex]];
+    if (trialState.revealed) {
+      syncPostNote(trialState, session, session.trialOrder[session.currentIndex], currentListeningMode);
+      const field = card.querySelector('[data-field="post-note"]');
+      if (field) field.value = postNoteForMode(trialState, nextMode).note || '';
+    } else populatePreReveal(trialState);
+    currentListeningMode = nextMode;
+  }));
+  renderBlindSession();
+}
+if (DATA.blindSession && DATA.blindSession.enabled) {
+  document.getElementById('pairs').hidden = true;
+  initializeBlindSession();
+} else {
+  DATA.pairs.forEach(addPair);
+  document.getElementById('export-notes').addEventListener('click', () => {
   const payload = { schemaVersion: 1, viewerId: DATA.viewerId, evidenceId: DATA.evidenceId,
     pairs: DATA.pairs.map(pair => {
       const saved = savedNote(pair) || {};
@@ -396,18 +820,22 @@ document.getElementById('export-notes').addEventListener('click', () => {
   const url = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' }));
   const link = make('a'); link.href = url; link.download = DATA.evidenceId + '-subjective-notes.json';
   document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
-});
+  });
+}
+modeInputs.forEach(input => input.addEventListener('change', updateAudioMode));
+updateAudioMode();
 """
 
 
 def render_html(data):
-    embedded = json.dumps(data, ensure_ascii=False, indent=1, allow_nan=False)
-    embedded = embedded.replace("&", "\\u0026").replace("<", "\\u003c").replace(">", "\\u003e")
+    embedded = base64.b64encode(json.dumps(data, ensure_ascii=False, separators=(",", ":"),
+                                              allow_nan=False).encode("utf-8")).decode("ascii")
     return """<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<script id="viewer-data" type="application/octet-stream">__VIEWER_DATA__</script>
 <title></title><style>
-:root{color-scheme:light;font:16px/1.5 system-ui,sans-serif;color:#202a33;background:#f4f6f8}body{max-width:1100px;margin:2rem auto;padding:0 1rem}h1{font-size:1.7rem}.intro,.pair-card{background:white;border:1px solid #ccd3da;border-radius:8px;padding:1rem;margin:1rem 0}.intro p{margin:.45rem 0}.pair-card h2{font-size:1.2rem;margin:0 0 .8rem}.audio-row{display:grid;grid-template-columns:minmax(7rem,1fr) auto minmax(16rem,2fr);gap:.7rem;align-items:center;padding:.55rem 0;border-top:1px solid #e3e7eb}.audio-row audio{width:100%}button,select,textarea{font:inherit}button{padding:.4rem .65rem}fieldset{border:1px solid #ccd3da;border-radius:6px;margin:.8rem 0;padding:.7rem}.mode-option{display:block}.mode-status,.scale-note,.save-status{color:#52606d;font-size:.92rem}.notes{border-top:1px solid #dce1e6;margin-top:1rem;padding-top:.7rem}.notes h3{font-size:1rem;margin:.25rem 0}.notes label{display:block;margin:.55rem 0}.notes textarea{display:block;width:min(100%,44rem);box-sizing:border-box;margin-top:.25rem}.disclosures{margin-top:.7rem}details{border-top:1px solid #e3e7eb;padding:.7rem 0}summary{cursor:pointer;font-weight:600}.erb-panels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.7rem}.erb-panels figure{margin:.3rem 0;min-width:0}.erb-panels figcaption{font-weight:600;margin-bottom:.25rem}.erb-panels canvas{display:block;width:100%;height:auto;border:1px solid #aeb6bf}.measurement-json{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f7f9;padding:.65rem;font-size:.8rem}#export-notes{margin:1rem 0}.footer{font-size:.85rem;color:#52606d}@media(max-width:760px){.audio-row{grid-template-columns:1fr}.erb-panels{grid-template-columns:1fr}}
-</style></head><body><main><h1 id="page-title"></h1><section class="intro"><p id="evidence-meta"></p><fieldset><legend>Listening mode</legend><label class="mode-option"><input type="radio" name="listening-mode" value="rms-matched-listening-only" checked> RMS matched — listening-only character comparison</label><label class="mode-option"><input type="radio" name="listening-mode" value="fixed-gain"> Fixed gain — amplitude / transfer context</label><p id="mode-status" class="mode-status"></p></fieldset></section><section id="pairs" aria-label="A/B listening pairs"></section><button id="export-notes" type="button">Export subjective notes JSON</button><p class="footer">Notes stay in this browser until exported. They are subjective observations, separate from measurement evidence. No human listening result is inferred or written into the evidence package.</p></main><script id="viewer-data" type="application/json">__VIEWER_DATA__</script><script>__VIEWER_SCRIPT__</script></body></html>
+:root{color-scheme:light;font:16px/1.5 system-ui,sans-serif;color:#202a33;background:#f4f6f8}body{max-width:1100px;margin:2rem auto;padding:0 1rem}h1{font-size:1.7rem}.intro,.pair-card,.blind-card,#blind-complete{background:white;border:1px solid #ccd3da;border-radius:8px;padding:1rem;margin:1rem 0}.intro p{margin:.45rem 0}.pair-card h2,.blind-card h2{font-size:1.2rem;margin:0 0 .8rem}.audio-row{display:grid;grid-template-columns:minmax(4rem,1fr) auto minmax(16rem,2fr);gap:.7rem;align-items:center;padding:.55rem 0;border-top:1px solid #e3e7eb}.audio-row audio{width:100%}button,select,textarea,input{font:inherit}button{padding:.4rem .65rem}fieldset{border:1px solid #ccd3da;border-radius:6px;margin:.8rem 0;padding:.7rem}.mode-option{display:block}.mode-status,.scale-note,.save-status,.footer{color:#52606d;font-size:.92rem}.notes{border-top:1px solid #dce1e6;margin-top:1rem;padding-top:.7rem}.notes h3{font-size:1rem;margin:.25rem 0}.notes label,.blind-card label{display:block;margin:.55rem 0}.notes textarea,.blind-card textarea{display:block;width:min(100%,44rem);box-sizing:border-box;margin-top:.25rem}details{border-top:1px solid #e3e7eb;padding:.7rem 0}summary{cursor:pointer;font-weight:600}.erb-panels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.7rem}.erb-panels figure{margin:.3rem 0;min-width:0}.erb-panels figcaption{font-weight:600;margin-bottom:.25rem}.erb-panels canvas{display:block;width:100%;height:auto;border:1px solid #aeb6bf}.measurement-json{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f7f9;padding:.65rem;font-size:.8rem}.judgment-record{border:1px solid #e3e7eb;border-radius:5px;margin:.5rem 0;padding:.5rem}.session-setup{border-top:1px solid #e3e7eb;margin-top:.8rem;padding-top:.8rem}#trial-navigation{display:flex;gap:.6rem;margin:1rem 0}#export-notes{margin:1rem 0}.footer{font-size:.85rem}@media(max-width:760px){.audio-row{grid-template-columns:1fr}.erb-panels{grid-template-columns:1fr}}
+</style></head><body><main><h1 id="page-title"></h1><section class="intro"><p id="evidence-meta"></p><fieldset><legend>Listening mode</legend><label class="mode-option"><input type="radio" name="listening-mode" value="rms-matched-listening-only" checked> RMS matched — listening-only character comparison</label><label class="mode-option"><input type="radio" name="listening-mode" value="fixed-gain"> Fixed gain — amplitude / transfer context</label><p id="mode-status" class="mode-status"></p></fieldset><section id="session-setup" class="session-setup"><button id="start-session" type="button">Start randomized blind session</button></section><p id="session-meta" class="mode-status"></p></section><section id="blind-app" hidden aria-label="Blind audio evidence session"><article id="blind-card" class="blind-card" hidden></article><nav id="trial-navigation" hidden aria-label="Trial navigation"><button id="previous-trial" type="button">Previous trial</button><button id="next-trial" type="button">Next trial</button></nav><section id="blind-complete" hidden><h2>Session complete</h2><p class="completion-summary"></p><button data-action="review-last" type="button">Review last trial</button> <button id="new-session" type="button">Start another randomized session</button></section></section><section id="pairs" aria-label="A/B listening pairs"></section><button id="export-notes" type="button">Export subjective notes JSON</button><p id="export-status" class="mode-status"></p><p class="footer">Subjective notes stay in this browser until explicit export and remain separate from measurement evidence. RMS-matched playback is not audibility evidence. ERB analysis always uses fixed-gain source files only.</p></main><script>__VIEWER_SCRIPT__</script></body></html>
 """.replace("__VIEWER_SCRIPT__", HTML_SCRIPT).replace("__VIEWER_DATA__", embedded)
 
 
@@ -459,6 +887,7 @@ def main():
         "analysis": inputs["sourceAnalysis"], "erbHelper": inputs["erbHelper"],
         "fixedGainOnlyErbAnalysis": True, "validatedAudioFiles": inputs["validatedAudio"],
         "erbAnalysisParity": inputs["erbAnalysisParity"],
+        "blindSession": inputs["blindSession"],
         "erbDisplay": {"specification": ERB_SPEC, "absolutePowerDbScale": data["erb"]["absolutePowerDbScale"] if data["erb"] else None,
                         "differenceDbScale": data["erb"]["differenceDbScale"] if data["erb"] else None,
                         "perPairAutoscale": False if data["erb"] else None},
