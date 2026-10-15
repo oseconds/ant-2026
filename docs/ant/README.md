@@ -350,6 +350,7 @@ Current production includes the adopted local locomotion condition. Further move
 - [Base/Born causal decomposition](evidence/2026-10-14-base-born-causal-decomposition/README.md)
 - [q=4-matched loss distribution](evidence/2026-10-14-base-born-loss-distribution/README.md)
 - [Natural Base/Born ERB events](evidence/2026-10-14-base-born-natural-event-erb/README.md)
+- [Natural-event ERB boundary sensitivity — aggregate shape separation survives; individual windows remain context-sensitive](evidence/2026-10-15-erb-window-boundary/README.md)
 - [P24 modal participation — SUPPORTED](evidence/2026-10-15-plate-modal-participation/README.md)
 - [Blind first-listen viewer workflow](daily/2026-10-15-audio-evidence-viewer-blind-workflow.md)
 - [Surface Plates](evidence/2026-10-05-surface-plates/README.md)

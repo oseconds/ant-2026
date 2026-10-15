@@ -14,6 +14,13 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-15 — Frozen natural-event ERB crop-boundary sensitivity
+
+[Process log](./2026-10-15-erb-window-boundary.md) · [Evidence](../evidence/2026-10-15-erb-window-boundary/README.md)
+
+- Reproduced 128 prior windows and compared legacy, covered-crop and real-context Hann framing on unchanged PCM
+- Broad shape separation survives; some short-window results are context-sensitive. Prior MIXED causal verdict retained; no production/helper/audio change
+
 ### 2026-10-15 — Blind first-listen workflow for the static audio viewer
 
 [Process log](./2026-10-15-audio-evidence-viewer-blind-workflow.md) · [Viewer guide](../audio-evidence-viewer.md) · [Natural-event integration](../evidence/2026-10-14-base-born-natural-event-erb/README.md)
