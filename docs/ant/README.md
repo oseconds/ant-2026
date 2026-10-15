@@ -130,7 +130,7 @@ Isolated Plate response depends strongly on contact position. Across the observe
 
 **P24 modal-participation result: SUPPORTED.** Frozen p25/p50/p75 cases share poles and eigenspaces, while contact changes mode participation. Pickup observability stays fixed; modal residue sums explain verified autonomous raw-pickup differences after the exact recurrence begins. This does not cover the earlier active-set expansion.
 
-A reusable static A/B audio evidence viewer and blind first-listen workflow now exist. The workflow supports anonymous A/B, a hidden A/A catch, first notes before reveal, and separate post-reveal notes. **No human listening result has been collected for these 2026-10-13–15 passes.** These measurements do not establish audibility or preference.
+A reusable static A/B audio evidence viewer and blind first-listen workflow now exist. The workflow supports anonymous A/B, a hidden A/A catch, first notes before reveal, and separate post-reveal notes. One exploratory single-listener Base/Born session was collected on 2026-10-15: the hidden Base/Base A/A catch was judged no-difference, while the q25 and q75 RMS-matched Base/Born pairs were judged different before reveal; the q50 fixed-gain comparison was level-limited and is not used as character evidence. This is not formal perceptual validation and does not establish preference; the measurement decisions above remain unchanged.
 
 ### Read-only social observation
 
