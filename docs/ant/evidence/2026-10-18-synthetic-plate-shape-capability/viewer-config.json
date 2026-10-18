@@ -1,0 +1,1078 @@
+{
+  "schemaVersion": 1,
+  "viewerId": "ant-synthetic-plate-shape-capability",
+  "evidenceId": "2026-10-18-synthetic-plate-shape-capability",
+  "title": "Synthetic Plate shape capability blind session",
+  "metadata": "Complete and export the natural cross-Plate blind session before opening this session; revealed synthetic geometry and audio associations may bias natural Plate judgments. Matched playback target 0.08 is digital RMS, not calibrated SPL. No human synthetic-shape listening assessment collected yet.",
+  "sourceListeningManifest": "listening-manifest.json",
+  "output": "synthetic-shape-listening.html",
+  "validationOutput": "viewer-validation.json",
+  "listeningPostGainTargetRms": 0.08,
+  "blindSession": {
+    "enabled": true,
+    "preRevealMode": "matched-only",
+    "catchTrial": {
+      "id": "shape-catch-aa",
+      "sourcePairId": "shape-pair-01",
+      "sourceArm": "a"
+    }
+  },
+  "pairs": [
+    {
+      "id": "shape-pair-01",
+      "label": "Comparison 1",
+      "a": {
+        "label": "compact",
+        "sourcePairLabel": "shape-01",
+        "fixedGainPath": "listening/case-01-fixed.wav",
+        "rmsMatchedPath": "listening/case-01-matched.wav",
+        "measurementMetadata": {
+          "morphology": "compact",
+          "geometryRecipe": {
+            "description": "Closed ellipse on the 32-grid.",
+            "parameters": {
+              "center": [
+                16,
+                18.5
+              ],
+              "radius": [
+                9.5,
+                10.5
+              ]
+            }
+          },
+          "sourceGrid": {
+            "dimensions": [
+              96,
+              96
+            ],
+            "width": 96,
+            "height": 96,
+            "occupiedCells": 2826,
+            "boundingBox": {
+              "minX": 21,
+              "minY": 24,
+              "maxX": 77,
+              "maxY": 89,
+              "width": 57,
+              "height": 66
+            },
+            "areaResidualFromMedianCells": 4.5
+          },
+          "solverGrid": {
+            "dimensions": [
+              32,
+              32
+            ],
+            "width": 32,
+            "height": 32,
+            "occupiedNodes": 314,
+            "boundingBox": {
+              "minX": 7,
+              "minY": 8,
+              "maxX": 25,
+              "maxY": 29,
+              "width": 19,
+              "height": 22
+            },
+            "nodeResidualFromMedian": 0.5
+          },
+          "pickupNodeIndices": [
+            305,
+            311
+          ],
+          "pickupSolverCells": [
+            909,
+            915
+          ],
+          "contactRoute": {
+            "sourceGridCell": [
+              48,
+              86
+            ],
+            "sourceCellIndex": 8304,
+            "routedLayerIndex": 0,
+            "routedPlateId": "compact"
+          },
+          "material": {
+            "stiffness": 0.9124881966538272,
+            "density": 1.2,
+            "damping": 0.35499527866153086
+          },
+          "maskSha256": "8ca94a6aa021655e7b6e12fdb5d7800cb0293a1be9586ed1645614be42187f10",
+          "topologySha256": "b62708ac13f9427f47ed1438cef26add8f4956192bf76719e4c00aa55e475001"
+        }
+      },
+      "b": {
+        "label": "elongated",
+        "sourcePairLabel": "shape-02",
+        "fixedGainPath": "listening/case-02-fixed.wav",
+        "rmsMatchedPath": "listening/case-02-matched.wav",
+        "measurementMetadata": {
+          "morphology": "elongated",
+          "geometryRecipe": {
+            "description": "Horizontal ellipse on the 32-grid.",
+            "parameters": {
+              "center": [
+                16,
+                22
+              ],
+              "radius": [
+                15,
+                7
+              ]
+            }
+          },
+          "sourceGrid": {
+            "dimensions": [
+              96,
+              96
+            ],
+            "width": 96,
+            "height": 96,
+            "occupiedCells": 2925,
+            "boundingBox": {
+              "minX": 3,
+              "minY": 45,
+              "maxX": 95,
+              "maxY": 89,
+              "width": 93,
+              "height": 45
+            },
+            "areaResidualFromMedianCells": 103.5
+          },
+          "solverGrid": {
+            "dimensions": [
+              32,
+              32
+            ],
+            "width": 32,
+            "height": 32,
+            "occupiedNodes": 325,
+            "boundingBox": {
+              "minX": 1,
+              "minY": 15,
+              "maxX": 31,
+              "maxY": 29,
+              "width": 31,
+              "height": 15
+            },
+            "nodeResidualFromMedian": 11.5
+          },
+          "pickupNodeIndices": [
+            313,
+            319
+          ],
+          "pickupSolverCells": [
+            909,
+            915
+          ],
+          "contactRoute": {
+            "sourceGridCell": [
+              48,
+              86
+            ],
+            "sourceCellIndex": 8304,
+            "routedLayerIndex": 0,
+            "routedPlateId": "elongated"
+          },
+          "material": {
+            "stiffness": 0.9124881966538272,
+            "density": 1.2,
+            "damping": 0.35499527866153086
+          },
+          "maskSha256": "f99e8d561cea8f52c9f90017617fa257e36d881b3da527a4e5fd1ab8b8c28f5b",
+          "topologySha256": "57e3547b27d0c1bccfd51b108ef6c2e9af1f3479b69774a7841ddf157576a592"
+        }
+      }
+    },
+    {
+      "id": "shape-pair-02",
+      "label": "Comparison 2",
+      "a": {
+        "label": "elongated",
+        "sourcePairLabel": "shape-02",
+        "fixedGainPath": "listening/case-02-fixed.wav",
+        "rmsMatchedPath": "listening/case-02-matched.wav",
+        "measurementMetadata": {
+          "morphology": "elongated",
+          "geometryRecipe": {
+            "description": "Horizontal ellipse on the 32-grid.",
+            "parameters": {
+              "center": [
+                16,
+                22
+              ],
+              "radius": [
+                15,
+                7
+              ]
+            }
+          },
+          "sourceGrid": {
+            "dimensions": [
+              96,
+              96
+            ],
+            "width": 96,
+            "height": 96,
+            "occupiedCells": 2925,
+            "boundingBox": {
+              "minX": 3,
+              "minY": 45,
+              "maxX": 95,
+              "maxY": 89,
+              "width": 93,
+              "height": 45
+            },
+            "areaResidualFromMedianCells": 103.5
+          },
+          "solverGrid": {
+            "dimensions": [
+              32,
+              32
+            ],
+            "width": 32,
+            "height": 32,
+            "occupiedNodes": 325,
+            "boundingBox": {
+              "minX": 1,
+              "minY": 15,
+              "maxX": 31,
+              "maxY": 29,
+              "width": 31,
+              "height": 15
+            },
+            "nodeResidualFromMedian": 11.5
+          },
+          "pickupNodeIndices": [
+            313,
+            319
+          ],
+          "pickupSolverCells": [
+            909,
+            915
+          ],
+          "contactRoute": {
+            "sourceGridCell": [
+              48,
+              86
+            ],
+            "sourceCellIndex": 8304,
+            "routedLayerIndex": 0,
+            "routedPlateId": "elongated"
+          },
+          "material": {
+            "stiffness": 0.9124881966538272,
+            "density": 1.2,
+            "damping": 0.35499527866153086
+          },
+          "maskSha256": "f99e8d561cea8f52c9f90017617fa257e36d881b3da527a4e5fd1ab8b8c28f5b",
+          "topologySha256": "57e3547b27d0c1bccfd51b108ef6c2e9af1f3479b69774a7841ddf157576a592"
+        }
+      },
+      "b": {
+        "label": "curved",
+        "sourcePairLabel": "shape-03",
+        "fixedGainPath": "listening/case-03-fixed.wav",
+        "rmsMatchedPath": "listening/case-03-matched.wav",
+        "measurementMetadata": {
+          "morphology": "curved",
+          "geometryRecipe": {
+            "description": "Fixed-width ribbon around a shallow quadratic arch on the 32-grid.",
+            "parameters": {
+              "xRange": [
+                2,
+                30
+              ],
+              "centerX": 16,
+              "centerY": 27,
+              "curveCoefficient": 0.075,
+              "halfWidth": 5.5
+            }
+          },
+          "sourceGrid": {
+            "dimensions": [
+              96,
+              96
+            ],
+            "width": 96,
+            "height": 96,
+            "occupiedCells": 2844,
+            "boundingBox": {
+              "minX": 6,
+              "minY": 21,
+              "maxX": 92,
+              "maxY": 95,
+              "width": 87,
+              "height": 75
+            },
+            "areaResidualFromMedianCells": 22.5
+          },
+          "solverGrid": {
+            "dimensions": [
+              32,
+              32
+            ],
+            "width": 32,
+            "height": 32,
+            "occupiedNodes": 316,
+            "boundingBox": {
+              "minX": 2,
+              "minY": 7,
+              "maxX": 30,
+              "maxY": 31,
+              "width": 29,
+              "height": 25
+            },
+            "nodeResidualFromMedian": 2.5
+          },
+          "pickupNodeIndices": [
+            272,
+            278
+          ],
+          "pickupSolverCells": [
+            909,
+            915
+          ],
+          "contactRoute": {
+            "sourceGridCell": [
+              48,
+              86
+            ],
+            "sourceCellIndex": 8304,
+            "routedLayerIndex": 0,
+            "routedPlateId": "curved"
+          },
+          "material": {
+            "stiffness": 0.9124881966538272,
+            "density": 1.2,
+            "damping": 0.35499527866153086
+          },
+          "maskSha256": "04596a65a30ace781e77bef8e4d5baea6bb7aabdfc0e1749c96c3df957dd7311",
+          "topologySha256": "ae07653dbd966b76d47e99aa67d9f525168cbd30010743232639d3dae7b4e66b"
+        }
+      }
+    },
+    {
+      "id": "shape-pair-03",
+      "label": "Comparison 3",
+      "a": {
+        "label": "curved",
+        "sourcePairLabel": "shape-03",
+        "fixedGainPath": "listening/case-03-fixed.wav",
+        "rmsMatchedPath": "listening/case-03-matched.wav",
+        "measurementMetadata": {
+          "morphology": "curved",
+          "geometryRecipe": {
+            "description": "Fixed-width ribbon around a shallow quadratic arch on the 32-grid.",
+            "parameters": {
+              "xRange": [
+                2,
+                30
+              ],
+              "centerX": 16,
+              "centerY": 27,
+              "curveCoefficient": 0.075,
+              "halfWidth": 5.5
+            }
+          },
+          "sourceGrid": {
+            "dimensions": [
+              96,
+              96
+            ],
+            "width": 96,
+            "height": 96,
+            "occupiedCells": 2844,
+            "boundingBox": {
+              "minX": 6,
+              "minY": 21,
+              "maxX": 92,
+              "maxY": 95,
+              "width": 87,
+              "height": 75
+            },
+            "areaResidualFromMedianCells": 22.5
+          },
+          "solverGrid": {
+            "dimensions": [
+              32,
+              32
+            ],
+            "width": 32,
+            "height": 32,
+            "occupiedNodes": 316,
+            "boundingBox": {
+              "minX": 2,
+              "minY": 7,
+              "maxX": 30,
+              "maxY": 31,
+              "width": 29,
+              "height": 25
+            },
+            "nodeResidualFromMedian": 2.5
+          },
+          "pickupNodeIndices": [
+            272,
+            278
+          ],
+          "pickupSolverCells": [
+            909,
+            915
+          ],
+          "contactRoute": {
+            "sourceGridCell": [
+              48,
+              86
+            ],
+            "sourceCellIndex": 8304,
+            "routedLayerIndex": 0,
+            "routedPlateId": "curved"
+          },
+          "material": {
+            "stiffness": 0.9124881966538272,
+            "density": 1.2,
+            "damping": 0.35499527866153086
+          },
+          "maskSha256": "04596a65a30ace781e77bef8e4d5baea6bb7aabdfc0e1749c96c3df957dd7311",
+          "topologySha256": "ae07653dbd966b76d47e99aa67d9f525168cbd30010743232639d3dae7b4e66b"
+        }
+      },
+      "b": {
+        "label": "Y-branch",
+        "sourcePairLabel": "shape-04",
+        "fixedGainPath": "listening/case-04-fixed.wav",
+        "rmsMatchedPath": "listening/case-04-matched.wav",
+        "measurementMetadata": {
+          "morphology": "Y-branch",
+          "geometryRecipe": {
+            "description": "Union of three Euclidean capsules sharing one junction on the 32-grid.",
+            "parameters": {
+              "junction": [
+                16,
+                19
+              ],
+              "endpoints": [
+                [
+                  4,
+                  5
+                ],
+                [
+                  28,
+                  5
+                ],
+                [
+                  16,
+                  29
+                ]
+              ],
+              "radius": 3
+            }
+          },
+          "sourceGrid": {
+            "dimensions": [
+              96,
+              96
+            ],
+            "width": 96,
+            "height": 96,
+            "occupiedCells": 2817,
+            "boundingBox": {
+              "minX": 3,
+              "minY": 6,
+              "maxX": 95,
+              "maxY": 95,
+              "width": 93,
+              "height": 90
+            },
+            "areaResidualFromMedianCells": -4.5
+          },
+          "solverGrid": {
+            "dimensions": [
+              32,
+              32
+            ],
+            "width": 32,
+            "height": 32,
+            "occupiedNodes": 313,
+            "boundingBox": {
+              "minX": 1,
+              "minY": 2,
+              "maxX": 31,
+              "maxY": 31,
+              "width": 31,
+              "height": 30
+            },
+            "nodeResidualFromMedian": -0.5
+          },
+          "pickupNodeIndices": [
+            289,
+            295
+          ],
+          "pickupSolverCells": [
+            909,
+            915
+          ],
+          "contactRoute": {
+            "sourceGridCell": [
+              48,
+              86
+            ],
+            "sourceCellIndex": 8304,
+            "routedLayerIndex": 0,
+            "routedPlateId": "y-branch"
+          },
+          "material": {
+            "stiffness": 0.9124881966538272,
+            "density": 1.2,
+            "damping": 0.35499527866153086
+          },
+          "maskSha256": "5ea84ec79d5a34fdef0932dd3860ab7b6fe92566569cc0caa873ffcd49cd8b6b",
+          "topologySha256": "4bb6b92ff48c27190ad43b03e33ecd506bbf0b4dfcf11e4a3a43131b140b7056"
+        }
+      }
+    },
+    {
+      "id": "shape-pair-04",
+      "label": "Comparison 4",
+      "a": {
+        "label": "Y-branch",
+        "sourcePairLabel": "shape-04",
+        "fixedGainPath": "listening/case-04-fixed.wav",
+        "rmsMatchedPath": "listening/case-04-matched.wav",
+        "measurementMetadata": {
+          "morphology": "Y-branch",
+          "geometryRecipe": {
+            "description": "Union of three Euclidean capsules sharing one junction on the 32-grid.",
+            "parameters": {
+              "junction": [
+                16,
+                19
+              ],
+              "endpoints": [
+                [
+                  4,
+                  5
+                ],
+                [
+                  28,
+                  5
+                ],
+                [
+                  16,
+                  29
+                ]
+              ],
+              "radius": 3
+            }
+          },
+          "sourceGrid": {
+            "dimensions": [
+              96,
+              96
+            ],
+            "width": 96,
+            "height": 96,
+            "occupiedCells": 2817,
+            "boundingBox": {
+              "minX": 3,
+              "minY": 6,
+              "maxX": 95,
+              "maxY": 95,
+              "width": 93,
+              "height": 90
+            },
+            "areaResidualFromMedianCells": -4.5
+          },
+          "solverGrid": {
+            "dimensions": [
+              32,
+              32
+            ],
+            "width": 32,
+            "height": 32,
+            "occupiedNodes": 313,
+            "boundingBox": {
+              "minX": 1,
+              "minY": 2,
+              "maxX": 31,
+              "maxY": 31,
+              "width": 31,
+              "height": 30
+            },
+            "nodeResidualFromMedian": -0.5
+          },
+          "pickupNodeIndices": [
+            289,
+            295
+          ],
+          "pickupSolverCells": [
+            909,
+            915
+          ],
+          "contactRoute": {
+            "sourceGridCell": [
+              48,
+              86
+            ],
+            "sourceCellIndex": 8304,
+            "routedLayerIndex": 0,
+            "routedPlateId": "y-branch"
+          },
+          "material": {
+            "stiffness": 0.9124881966538272,
+            "density": 1.2,
+            "damping": 0.35499527866153086
+          },
+          "maskSha256": "5ea84ec79d5a34fdef0932dd3860ab7b6fe92566569cc0caa873ffcd49cd8b6b",
+          "topologySha256": "4bb6b92ff48c27190ad43b03e33ecd506bbf0b4dfcf11e4a3a43131b140b7056"
+        }
+      },
+      "b": {
+        "label": "loop-like",
+        "sourcePairLabel": "shape-05",
+        "fixedGainPath": "listening/case-05-fixed.wav",
+        "rmsMatchedPath": "listening/case-05-matched.wav",
+        "measurementMetadata": {
+          "morphology": "loop-like",
+          "geometryRecipe": {
+            "description": "Closed circular annulus on the 32-grid.",
+            "parameters": {
+              "center": [
+                16,
+                18.5
+              ],
+              "innerRadius": 6,
+              "outerRadius": 11.5
+            }
+          },
+          "sourceGrid": {
+            "dimensions": [
+              96,
+              96
+            ],
+            "width": 96,
+            "height": 96,
+            "occupiedCells": 2736,
+            "boundingBox": {
+              "minX": 15,
+              "minY": 21,
+              "maxX": 83,
+              "maxY": 92,
+              "width": 69,
+              "height": 72
+            },
+            "areaResidualFromMedianCells": -85.5
+          },
+          "solverGrid": {
+            "dimensions": [
+              32,
+              32
+            ],
+            "width": 32,
+            "height": 32,
+            "occupiedNodes": 304,
+            "boundingBox": {
+              "minX": 5,
+              "minY": 7,
+              "maxX": 27,
+              "maxY": 30,
+              "width": 23,
+              "height": 24
+            },
+            "nodeResidualFromMedian": -9.5
+          },
+          "pickupNodeIndices": [
+            284,
+            290
+          ],
+          "pickupSolverCells": [
+            909,
+            915
+          ],
+          "contactRoute": {
+            "sourceGridCell": [
+              48,
+              86
+            ],
+            "sourceCellIndex": 8304,
+            "routedLayerIndex": 0,
+            "routedPlateId": "loop-like"
+          },
+          "material": {
+            "stiffness": 0.9124881966538272,
+            "density": 1.2,
+            "damping": 0.35499527866153086
+          },
+          "maskSha256": "bc162d06770d160717936a145ad2764cacc4dcbd8b4ab8fad9fc50f08630a5cf",
+          "topologySha256": "e5d817a0a89a770ff39fa8aa0063b8d6a89bba89e2bc29f514ddb6a13f8707d1"
+        }
+      }
+    },
+    {
+      "id": "shape-pair-05",
+      "label": "Comparison 5",
+      "a": {
+        "label": "loop-like",
+        "sourcePairLabel": "shape-05",
+        "fixedGainPath": "listening/case-05-fixed.wav",
+        "rmsMatchedPath": "listening/case-05-matched.wav",
+        "measurementMetadata": {
+          "morphology": "loop-like",
+          "geometryRecipe": {
+            "description": "Closed circular annulus on the 32-grid.",
+            "parameters": {
+              "center": [
+                16,
+                18.5
+              ],
+              "innerRadius": 6,
+              "outerRadius": 11.5
+            }
+          },
+          "sourceGrid": {
+            "dimensions": [
+              96,
+              96
+            ],
+            "width": 96,
+            "height": 96,
+            "occupiedCells": 2736,
+            "boundingBox": {
+              "minX": 15,
+              "minY": 21,
+              "maxX": 83,
+              "maxY": 92,
+              "width": 69,
+              "height": 72
+            },
+            "areaResidualFromMedianCells": -85.5
+          },
+          "solverGrid": {
+            "dimensions": [
+              32,
+              32
+            ],
+            "width": 32,
+            "height": 32,
+            "occupiedNodes": 304,
+            "boundingBox": {
+              "minX": 5,
+              "minY": 7,
+              "maxX": 27,
+              "maxY": 30,
+              "width": 23,
+              "height": 24
+            },
+            "nodeResidualFromMedian": -9.5
+          },
+          "pickupNodeIndices": [
+            284,
+            290
+          ],
+          "pickupSolverCells": [
+            909,
+            915
+          ],
+          "contactRoute": {
+            "sourceGridCell": [
+              48,
+              86
+            ],
+            "sourceCellIndex": 8304,
+            "routedLayerIndex": 0,
+            "routedPlateId": "loop-like"
+          },
+          "material": {
+            "stiffness": 0.9124881966538272,
+            "density": 1.2,
+            "damping": 0.35499527866153086
+          },
+          "maskSha256": "bc162d06770d160717936a145ad2764cacc4dcbd8b4ab8fad9fc50f08630a5cf",
+          "topologySha256": "e5d817a0a89a770ff39fa8aa0063b8d6a89bba89e2bc29f514ddb6a13f8707d1"
+        }
+      },
+      "b": {
+        "label": "concave / irregular broad",
+        "sourcePairLabel": "shape-06",
+        "fixedGainPath": "listening/case-06-fixed.wav",
+        "rmsMatchedPath": "listening/case-06-matched.wav",
+        "measurementMetadata": {
+          "morphology": "concave / irregular broad",
+          "geometryRecipe": {
+            "description": "Broad elliptical horseshoe with an open top notch and offset inner cavity on the 32-grid.",
+            "parameters": {
+              "outerCenter": [
+                16,
+                19
+              ],
+              "outerRadius": [
+                15.25,
+                12
+              ],
+              "innerCenter": [
+                16,
+                17
+              ],
+              "innerRadius": [
+                9.5,
+                7.8
+              ],
+              "openNotch": {
+                "x": [
+                  10,
+                  22
+                ],
+                "yMax": 17
+              }
+            }
+          },
+          "sourceGrid": {
+            "dimensions": [
+              96,
+              96
+            ],
+            "width": 96,
+            "height": 96,
+            "occupiedCells": 2799,
+            "boundingBox": {
+              "minX": 3,
+              "minY": 27,
+              "maxX": 95,
+              "maxY": 95,
+              "width": 93,
+              "height": 69
+            },
+            "areaResidualFromMedianCells": -22.5
+          },
+          "solverGrid": {
+            "dimensions": [
+              32,
+              32
+            ],
+            "width": 32,
+            "height": 32,
+            "occupiedNodes": 311,
+            "boundingBox": {
+              "minX": 1,
+              "minY": 9,
+              "maxX": 31,
+              "maxY": 31,
+              "width": 31,
+              "height": 23
+            },
+            "nodeResidualFromMedian": -2.5
+          },
+          "pickupNodeIndices": [
+            266,
+            272
+          ],
+          "pickupSolverCells": [
+            909,
+            915
+          ],
+          "contactRoute": {
+            "sourceGridCell": [
+              48,
+              86
+            ],
+            "sourceCellIndex": 8304,
+            "routedLayerIndex": 0,
+            "routedPlateId": "concave-irregular-broad"
+          },
+          "material": {
+            "stiffness": 0.9124881966538272,
+            "density": 1.2,
+            "damping": 0.35499527866153086
+          },
+          "maskSha256": "ff95161e1ea00bf3ba6f964f8e3436eb6c5b15ec82f5765f6b4b09a7c12c42fe",
+          "topologySha256": "c28b888ddc7044bed663cc522cf1e4da6592b606348d4f75f719991b8b6f547d"
+        }
+      }
+    },
+    {
+      "id": "shape-pair-06",
+      "label": "Comparison 6",
+      "a": {
+        "label": "concave / irregular broad",
+        "sourcePairLabel": "shape-06",
+        "fixedGainPath": "listening/case-06-fixed.wav",
+        "rmsMatchedPath": "listening/case-06-matched.wav",
+        "measurementMetadata": {
+          "morphology": "concave / irregular broad",
+          "geometryRecipe": {
+            "description": "Broad elliptical horseshoe with an open top notch and offset inner cavity on the 32-grid.",
+            "parameters": {
+              "outerCenter": [
+                16,
+                19
+              ],
+              "outerRadius": [
+                15.25,
+                12
+              ],
+              "innerCenter": [
+                16,
+                17
+              ],
+              "innerRadius": [
+                9.5,
+                7.8
+              ],
+              "openNotch": {
+                "x": [
+                  10,
+                  22
+                ],
+                "yMax": 17
+              }
+            }
+          },
+          "sourceGrid": {
+            "dimensions": [
+              96,
+              96
+            ],
+            "width": 96,
+            "height": 96,
+            "occupiedCells": 2799,
+            "boundingBox": {
+              "minX": 3,
+              "minY": 27,
+              "maxX": 95,
+              "maxY": 95,
+              "width": 93,
+              "height": 69
+            },
+            "areaResidualFromMedianCells": -22.5
+          },
+          "solverGrid": {
+            "dimensions": [
+              32,
+              32
+            ],
+            "width": 32,
+            "height": 32,
+            "occupiedNodes": 311,
+            "boundingBox": {
+              "minX": 1,
+              "minY": 9,
+              "maxX": 31,
+              "maxY": 31,
+              "width": 31,
+              "height": 23
+            },
+            "nodeResidualFromMedian": -2.5
+          },
+          "pickupNodeIndices": [
+            266,
+            272
+          ],
+          "pickupSolverCells": [
+            909,
+            915
+          ],
+          "contactRoute": {
+            "sourceGridCell": [
+              48,
+              86
+            ],
+            "sourceCellIndex": 8304,
+            "routedLayerIndex": 0,
+            "routedPlateId": "concave-irregular-broad"
+          },
+          "material": {
+            "stiffness": 0.9124881966538272,
+            "density": 1.2,
+            "damping": 0.35499527866153086
+          },
+          "maskSha256": "ff95161e1ea00bf3ba6f964f8e3436eb6c5b15ec82f5765f6b4b09a7c12c42fe",
+          "topologySha256": "c28b888ddc7044bed663cc522cf1e4da6592b606348d4f75f719991b8b6f547d"
+        }
+      },
+      "b": {
+        "label": "compact",
+        "sourcePairLabel": "shape-01",
+        "fixedGainPath": "listening/case-01-fixed.wav",
+        "rmsMatchedPath": "listening/case-01-matched.wav",
+        "measurementMetadata": {
+          "morphology": "compact",
+          "geometryRecipe": {
+            "description": "Closed ellipse on the 32-grid.",
+            "parameters": {
+              "center": [
+                16,
+                18.5
+              ],
+              "radius": [
+                9.5,
+                10.5
+              ]
+            }
+          },
+          "sourceGrid": {
+            "dimensions": [
+              96,
+              96
+            ],
+            "width": 96,
+            "height": 96,
+            "occupiedCells": 2826,
+            "boundingBox": {
+              "minX": 21,
+              "minY": 24,
+              "maxX": 77,
+              "maxY": 89,
+              "width": 57,
+              "height": 66
+            },
+            "areaResidualFromMedianCells": 4.5
+          },
+          "solverGrid": {
+            "dimensions": [
+              32,
+              32
+            ],
+            "width": 32,
+            "height": 32,
+            "occupiedNodes": 314,
+            "boundingBox": {
+              "minX": 7,
+              "minY": 8,
+              "maxX": 25,
+              "maxY": 29,
+              "width": 19,
+              "height": 22
+            },
+            "nodeResidualFromMedian": 0.5
+          },
+          "pickupNodeIndices": [
+            305,
+            311
+          ],
+          "pickupSolverCells": [
+            909,
+            915
+          ],
+          "contactRoute": {
+            "sourceGridCell": [
+              48,
+              86
+            ],
+            "sourceCellIndex": 8304,
+            "routedLayerIndex": 0,
+            "routedPlateId": "compact"
+          },
+          "material": {
+            "stiffness": 0.9124881966538272,
+            "density": 1.2,
+            "damping": 0.35499527866153086
+          },
+          "maskSha256": "8ca94a6aa021655e7b6e12fdb5d7800cb0293a1be9586ed1645614be42187f10",
+          "topologySha256": "b62708ac13f9427f47ed1438cef26add8f4956192bf76719e4c00aa55e475001"
+        }
+      }
+    }
+  ]
+}

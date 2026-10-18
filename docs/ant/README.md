@@ -1,6 +1,6 @@
 # ANT — Current Architecture, Evidence and Research Boundary
 
-**Current repository state: 2026-10-15**
+**Current repository state: 2026-10-18**
 
 이 문서는 ANT의 **현재 verified state**를 위한 GitHub-side hub다. 과정은 [daily logs](daily/README.md), 실험별 원본과 재현 자료는 [evidence packages](evidence/)에 둔다.
 
@@ -124,11 +124,13 @@ The full 48-node P1 map found strong channel-matched distance response plus near
 
 mature 20–30 Plate의 AudioWorklet realtime collapse는 unresolved known issue다. Audio/runtime, sleep/wake, ROM optimization은 현재 연구 본선에서 보류한다.
 
-These 2026-10-13–15 research passes are diagnostic only: production `src/` and `static/` are unchanged, and the production sonic baseline above remains in force.
+These 2026-10-13–18 research passes are diagnostic only: production `src/` and `static/` are unchanged, and the production sonic baseline above remains in force.
 
 Isolated Plate response depends strongly on contact position. Across the observed natural material range, changes are nearly absent at broad ERB scale; Z coupling gives a weak, structured perturbation. Under the q=4-matched comparison, frequency-selective loss redistributes modal decay across low and high modes.
 
 **P24 modal-participation result: SUPPORTED.** Frozen p25/p50/p75 cases share poles and eigenspaces, while contact changes mode participation. Pickup observability stays fixed; modal residue sums explain verified autonomous raw-pickup differences after the exact recurrence begins. This does not cover the earlier active-set expansion.
+
+A separate synthetic geometry capability listening session is prepared with six controlled connected Plate fixtures and matched playback. The fixtures are engineering controls, not natural shape classes; no human result has been collected. Complete and export the natural cross-Plate blind session before opening the synthetic one. [Synthetic shape capability evidence](evidence/2026-10-18-synthetic-plate-shape-capability/README.md).
 
 A reusable static A/B audio evidence viewer and blind first-listen workflow now exist. The workflow supports anonymous A/B, a hidden A/A catch, first notes before reveal, and separate post-reveal notes. One exploratory single-listener Base/Born session was collected on 2026-10-15: the hidden Base/Base A/A catch was judged no-difference, while the q25 and q75 RMS-matched Base/Born pairs were judged different before reveal; the q50 fixed-gain comparison was level-limited and is not used as character evidence. This is not formal perceptual validation and does not establish preference; the measurement decisions above remain unchanged.
 

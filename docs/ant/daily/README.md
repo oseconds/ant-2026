@@ -24,6 +24,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 - File and repository-root loopback playback passed focused Chromium checks; no cross-Plate human listening assessment was collected
 - The 2026-10-15 Base/Born session remains historical evidence and predates the playback-gain revision; scientific decision remains **MIXED**
 
+### 2026-10-18 — Synthetic Plate geometry capability session
+
+[Process log](./2026-10-18-synthetic-plate-shape-capability.md) · [Evidence and blind viewer](../evidence/2026-10-18-synthetic-plate-shape-capability/README.md)
+
+- Froze six connected 96×96 engineering fixtures with common contact and pickup anchors before rendering; source-area and compiled-node residuals are recorded
+- Rendered six controlled isolated responses and committed six fixed-gain plus six RMS-matched WAVs; no production source change
+- Prepared a separate seven-trial blind session with the fixed geometry-label cycle and a byte-identical compact A/A catch
+- Require natural cross-Plate listening to be completed and exported before this synthetic session is opened; no human synthetic-shape result has been collected
+
 ### 2026-10-15 — Frozen natural-event ERB crop-boundary sensitivity
 
 [Process log](./2026-10-15-erb-window-boundary.md) · [Evidence](../evidence/2026-10-15-erb-window-boundary/README.md)

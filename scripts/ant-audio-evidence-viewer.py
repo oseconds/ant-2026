@@ -301,15 +301,17 @@ def build_data(config, config_path, package, helper):
                         not math.isfinite(source_peak) or source_peak < 0):
                     raise ValueError(f"{pair_id}/{arm}: matched manifest needs finite positive RMS and peak")
                 levels.append((float(source_rms), float(source_peak)))
-            if not math.isclose(levels[0][0], levels[1][0], rel_tol=0, abs_tol=1e-12):
+            if not math.isclose(levels[0][0], levels[1][0], rel_tol=1e-8, abs_tol=1e-12):
                 raise ValueError(f"{pair_id}: matched A/B sources do not share one RMS")
-            post_gain = target_rms / levels[0][0]
+            pair_reference_rms = (levels[0][0] + levels[1][0]) / 2
+            post_gain = target_rms / pair_reference_rms
             post_gain_db = 20 * math.log10(post_gain)
             for arm, record, (source_rms, source_peak) in zip(("a", "b"), matched, levels):
                 predicted_peak = source_peak * post_gain
                 if not math.isfinite(predicted_peak) or predicted_peak >= 1.0:
                     raise ValueError(f"{pair_id}/{arm}: post-gain peak {predicted_peak} reaches full scale")
-                metadata = {"sourceMatchedRms": source_rms, "sourceMatchedPeak": source_peak,
+                metadata = {"sourceMatchedRms": source_rms, "pairReferenceRms": pair_reference_rms,
+                            "sourceMatchedPeak": source_peak,
                             "finalTargetRms": target_rms, "postGainLinear": post_gain,
                             "postGainDb": post_gain_db, "predictedPostGainPeak": predicted_peak}
                 record["listeningPostGain"] = metadata
