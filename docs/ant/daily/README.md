@@ -23,6 +23,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 - Kept mature AudioWorklet realtime collapse as a separate unresolved issue
 - Next bounded question is whether a current-production natural dense mix masks focal Plate response structure even under ideal offline rendering; no production change is selected
 
+### 2026-10-18 — Plate pickup-stem observability
+
+[Process log](./2026-10-18-plate-pickup-stem-observability.md) · [Evidence and reproduction](../evidence/2026-10-18-plate-pickup-stem-observability/README.md)
+
+- Reconstructed per-layer stereo point-pickup contributions plus Sphere exactly at every physics step and output sample
+- Raw worklet, solver state, strikes, telemetry, frozen P24/world PCM, and Chrome offline PCM matched exactly
+- Kept an opt-in offline readout harness; production worklet and audio law are unchanged
+- **SUPPORTED** as observability infrastructure; the dense eight-Plate masking experiment was not run
+
 ### 2026-10-18 — Cross-Plate p50 blind listening preparation
 
 [Process log](./2026-10-18-cross-plate-blind-listening-viewer.md) · [Cross-Plate viewer](../evidence/2026-10-13-plate-sonic-individuality/cross-plate-listening.html) · [Viewer guide](../audio-evidence-viewer.md)

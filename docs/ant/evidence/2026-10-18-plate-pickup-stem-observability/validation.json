@@ -1,0 +1,452 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-18",
+  "decision": "SUPPORTED",
+  "startingMainSha": "8c60e4bba3bd5b476300e90a2936bfebd1f831c2",
+  "workletSourceSha256": "14c7461f1412f0d6897a6683d46e582dbb80711f2ba74e8ea53e026895eeea5e",
+  "frozenInput": {
+    "path": "docs/ant/evidence/2026-10-13-plate-sonic-individuality/frozen-inputs.json.gz",
+    "sha256": "f600eb768df2721c98cc607ea8b4b4d4fc64ae74cda6b5bf3f9297e8b0865a2d",
+    "corpusBaseline": "d45823d40c9a87c1b333fa9872f3c897ee9ab01b",
+    "selectedP24DescriptorSha256": "97e394cb23b05409185d4ca72cef628dd2919927c6e1a84157e22206d56c3d2a",
+    "seed07World": {
+      "plates": 38,
+      "nodules": 32,
+      "simulationTimeMs": 599133.3333334032
+    }
+  },
+  "implementation": {
+    "boundary": "scripts/ant-sonic-shadow-render.js source instrumentation used only by the offline research harness",
+    "productionSourceChanged": false,
+    "exposes": "Float64Array stereo pickup contribution per Plate layer ID, aggregate Sphere contribution, per-step pre-limiter mix, topology generation and exact pickup accumulation order",
+    "captureMemoryLimitBytes": 268435456,
+    "normalProductionOverhead": "zero; src/, static/, SurfaceAudioBridge and topology compiler unchanged",
+    "noPerPlateWebAudioNodes": true,
+    "soloMuteSemantics": "select recorded layer arrays after the one full-network solve; no physics rerun or state removal"
+  },
+  "cases": [
+    {
+      "id": "isolated-p24-p50",
+      "provenance": "frozen native isolated P24 p50 production fixture",
+      "frames": 72000,
+      "sampleRate": 48000,
+      "topology": {
+        "generation": 0,
+        "layers": 1,
+        "layerIds": [
+          "trail-plate-24"
+        ],
+        "zLinks": 0,
+        "nodules": 0,
+        "sha256": "054638b345610bff0304662b691343878eab0f9482add24768591e61caaf0f01"
+      },
+      "eventSchedule": [
+        {
+          "frame": 480,
+          "message": {
+            "type": "strike",
+            "payload": {
+              "plateId": "trail-plate-24",
+              "layerId": "trail-plate-24",
+              "position": {
+                "x": 0.4105263157894737,
+                "y": 0.3157894736842105
+              },
+              "strength": 0.035,
+              "footprintRadius": 0.01,
+              "hardness": 0.5
+            }
+          }
+        }
+      ],
+      "eventScheduleSha256": "f5f0dd73f630bb790af7c9490d7cd0b60ccaeb7ec4c9054aa6c12f20806e9d95",
+      "acceptedStrikes": 1,
+      "telemetryEqual": true,
+      "counters": {
+        "topologies": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "physicsSteps": 9000,
+        "sleeps": 0,
+        "wakes": 277
+      },
+      "state": {
+        "exactFinalStateEquality": true,
+        "exactEveryPhysicsStep": true,
+        "finalSha256": "047731ad6c66ca085a304b3d83adb7680e755ede665ccabd321f591e24126fc8",
+        "physicsStepHashSha256": "696ec31b5d9cfc07fbe8fa59fe12ce6c960530584a5631b803eabeed72904b3c"
+      },
+      "pickupStems": {
+        "layerIds": [
+          "trail-plate-24"
+        ],
+        "physicsSteps": 9000,
+        "sampleRate": 6000,
+        "allocatedBytes": 540060,
+        "capacitySteps": 9001,
+        "preLimiterReconstruction": {
+          "left": {
+            "exact": true,
+            "samples": 9000,
+            "firstMismatch": null,
+            "maxAbsoluteError": 0
+          },
+          "right": {
+            "exact": true,
+            "samples": 9000,
+            "firstMismatch": null,
+            "maxAbsoluteError": 0
+          }
+        },
+        "spherePeakAbs": 0,
+        "pcmSha256": "1c6e7e68108ffa7ff375f9e8afc1b975775226b4b17f771624502c58c22779ac"
+      },
+      "finalPcmReconstruction": {
+        "left": {
+          "exact": true,
+          "samples": 72000,
+          "firstMismatch": null,
+          "maxAbsoluteError": 0
+        },
+        "right": {
+          "exact": true,
+          "samples": 72000,
+          "firstMismatch": null,
+          "maxAbsoluteError": 0
+        },
+        "exactFloat32StereoBytes": true
+      },
+      "frozenReference": {
+        "available": true,
+        "bytes": 576000,
+        "sha256": "1c6e7e68108ffa7ff375f9e8afc1b975775226b4b17f771624502c58c22779ac",
+        "exactProductionMatch": true
+      },
+      "runtime": {
+        "rawWorkletStateAuditMs": 1493.7184,
+        "stemCaptureStateAuditMs": 1498.7176000000002,
+        "measuredDeltaMs": 4.999200000000201,
+        "method": "Node VM timings; per-step state-hash audit is included equally in both paths and is not a production runtime estimate."
+      }
+    },
+    {
+      "id": "frozen-world-z-plate-38",
+      "provenance": "frozen seed-07 38-Plate topology, one Plate-38 strike, existing Z control",
+      "frames": 72000,
+      "sampleRate": 48000,
+      "topology": {
+        "generation": 0,
+        "layers": 38,
+        "layerIds": [
+          "trail-plate-1",
+          "trail-plate-2",
+          "trail-plate-3",
+          "trail-plate-4",
+          "trail-plate-5",
+          "trail-plate-6",
+          "trail-plate-7",
+          "trail-plate-8",
+          "trail-plate-9",
+          "trail-plate-10",
+          "trail-plate-11",
+          "trail-plate-12",
+          "trail-plate-13",
+          "trail-plate-14",
+          "trail-plate-15",
+          "trail-plate-16",
+          "trail-plate-17",
+          "trail-plate-18",
+          "trail-plate-19",
+          "trail-plate-20",
+          "trail-plate-21",
+          "trail-plate-22",
+          "trail-plate-23",
+          "trail-plate-24",
+          "trail-plate-25",
+          "trail-plate-26",
+          "trail-plate-27",
+          "trail-plate-28",
+          "trail-plate-29",
+          "trail-plate-30",
+          "trail-plate-31",
+          "trail-plate-32",
+          "trail-plate-33",
+          "trail-plate-34",
+          "trail-plate-35",
+          "trail-plate-36",
+          "trail-plate-37",
+          "trail-plate-38"
+        ],
+        "zLinks": 14772,
+        "nodules": 0,
+        "sha256": "229842415a80639434e02a0c2b4859727b696835c01591a90176f14d522ea2cf"
+      },
+      "eventSchedule": [
+        {
+          "frame": 480,
+          "message": {
+            "type": "strike",
+            "payload": {
+              "plateId": "trail-plate-38",
+              "layerId": "trail-plate-38",
+              "position": {
+                "x": 0.7684210526315789,
+                "y": 0.37894736842105264
+              },
+              "strength": 0.035,
+              "footprintRadius": 0.01,
+              "hardness": 0.5
+            }
+          }
+        }
+      ],
+      "eventScheduleSha256": "44cec0fccbbc0b07c4b74e06868ca431963e8269a79501e9e159d54e558fe409",
+      "acceptedStrikes": 1,
+      "telemetryEqual": true,
+      "counters": {
+        "topologies": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "physicsSteps": 9000,
+        "sleeps": 0,
+        "wakes": 1406
+      },
+      "state": {
+        "exactFinalStateEquality": true,
+        "exactEveryPhysicsStep": true,
+        "finalSha256": "664b062a81a4b90a2cf058b82789cdec38d48e8dc991ab6a797ebb123a2eea7c",
+        "physicsStepHashSha256": "0b2b02ee001ac3e284f61727449a5779e83153625ee96e9a2c34f3f5101d593a"
+      },
+      "pickupStems": {
+        "layerIds": [
+          "trail-plate-1",
+          "trail-plate-2",
+          "trail-plate-3",
+          "trail-plate-4",
+          "trail-plate-5",
+          "trail-plate-6",
+          "trail-plate-7",
+          "trail-plate-8",
+          "trail-plate-9",
+          "trail-plate-10",
+          "trail-plate-11",
+          "trail-plate-12",
+          "trail-plate-13",
+          "trail-plate-14",
+          "trail-plate-15",
+          "trail-plate-16",
+          "trail-plate-17",
+          "trail-plate-18",
+          "trail-plate-19",
+          "trail-plate-20",
+          "trail-plate-21",
+          "trail-plate-22",
+          "trail-plate-23",
+          "trail-plate-24",
+          "trail-plate-25",
+          "trail-plate-26",
+          "trail-plate-27",
+          "trail-plate-28",
+          "trail-plate-29",
+          "trail-plate-30",
+          "trail-plate-31",
+          "trail-plate-32",
+          "trail-plate-33",
+          "trail-plate-34",
+          "trail-plate-35",
+          "trail-plate-36",
+          "trail-plate-37",
+          "trail-plate-38"
+        ],
+        "physicsSteps": 9000,
+        "sampleRate": 6000,
+        "allocatedBytes": 7200800,
+        "capacitySteps": 9001,
+        "preLimiterReconstruction": {
+          "left": {
+            "exact": true,
+            "samples": 9000,
+            "firstMismatch": null,
+            "maxAbsoluteError": 0
+          },
+          "right": {
+            "exact": true,
+            "samples": 9000,
+            "firstMismatch": null,
+            "maxAbsoluteError": 0
+          }
+        },
+        "spherePeakAbs": 0,
+        "pcmSha256": "20d1aa40aa651d36ac7205ff693e6308c99554542bd92526a3c17763fdc55f4f"
+      },
+      "finalPcmReconstruction": {
+        "left": {
+          "exact": true,
+          "samples": 72000,
+          "firstMismatch": null,
+          "maxAbsoluteError": 0
+        },
+        "right": {
+          "exact": true,
+          "samples": 72000,
+          "firstMismatch": null,
+          "maxAbsoluteError": 0
+        },
+        "exactFloat32StereoBytes": true
+      },
+      "frozenReference": {
+        "available": true,
+        "bytes": 576000,
+        "sha256": "20d1aa40aa651d36ac7205ff693e6308c99554542bd92526a3c17763fdc55f4f",
+        "exactProductionMatch": true
+      },
+      "runtime": {
+        "rawWorkletStateAuditMs": 12009.6693,
+        "stemCaptureStateAuditMs": 11965.88,
+        "measuredDeltaMs": -43.78930000000037,
+        "method": "Node VM timings; per-step state-hash audit is included equally in both paths and is not a production runtime estimate."
+      }
+    },
+    {
+      "id": "coupled-sphere-test-fixture",
+      "provenance": "existing worklet test geometry with one direct strike and a coupled Nodule",
+      "frames": 9600,
+      "sampleRate": 48000,
+      "topology": {
+        "generation": 0,
+        "layers": 2,
+        "layerIds": [
+          "lower",
+          "upper"
+        ],
+        "zLinks": 18,
+        "nodules": 1,
+        "sha256": "94dcc9bcbe9ff532dcedd89afdd72568a69f64392d70f45de1c7ec2eef46e547"
+      },
+      "eventSchedule": [
+        {
+          "frame": 480,
+          "message": {
+            "type": "strike",
+            "payload": {
+              "plateId": "lower",
+              "layerId": "lower",
+              "position": {
+                "x": 0.3684210526315789,
+                "y": 0.49473684210526314
+              },
+              "strength": 0.035,
+              "footprintRadius": 0.012,
+              "hardness": 0.5
+            }
+          }
+        }
+      ],
+      "eventScheduleSha256": "6d4d91d6630dc7edc8029ff2743cb2872703a94f2e5b514dac9a81b29ef68e6d",
+      "acceptedStrikes": 1,
+      "telemetryEqual": true,
+      "counters": {
+        "topologies": 1,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "physicsSteps": 1200,
+        "sleeps": 0,
+        "wakes": 66
+      },
+      "state": {
+        "exactFinalStateEquality": true,
+        "exactEveryPhysicsStep": true,
+        "finalSha256": "0daaf396908c57d225ca9d0f1c1e064dea94281d66a16228c3040d56187999d7",
+        "physicsStepHashSha256": "fe6b7e54c80c8a55a45abe991373bca41d091673aec91a6b9d4af1c23cf22ee1"
+      },
+      "pickupStems": {
+        "layerIds": [
+          "lower",
+          "upper"
+        ],
+        "physicsSteps": 1200,
+        "sampleRate": 6000,
+        "allocatedBytes": 96080,
+        "capacitySteps": 1201,
+        "preLimiterReconstruction": {
+          "left": {
+            "exact": true,
+            "samples": 1200,
+            "firstMismatch": null,
+            "maxAbsoluteError": 0
+          },
+          "right": {
+            "exact": true,
+            "samples": 1200,
+            "firstMismatch": null,
+            "maxAbsoluteError": 0
+          }
+        },
+        "spherePeakAbs": 0.000028621909480997938,
+        "pcmSha256": "a364f7f81d85b5cec5f65ec686756778198298272459fcc783cf6ed0dc54c28f"
+      },
+      "finalPcmReconstruction": {
+        "left": {
+          "exact": true,
+          "samples": 9600,
+          "firstMismatch": null,
+          "maxAbsoluteError": 0
+        },
+        "right": {
+          "exact": true,
+          "samples": 9600,
+          "firstMismatch": null,
+          "maxAbsoluteError": 0
+        },
+        "exactFloat32StereoBytes": true
+      },
+      "frozenReference": {
+        "available": false
+      },
+      "runtime": {
+        "rawWorkletStateAuditMs": 86.30379999999786,
+        "stemCaptureStateAuditMs": 90.91010000000097,
+        "measuredDeltaMs": 4.6063000000031025,
+        "method": "Node VM timings; per-step state-hash audit is included equally in both paths and is not a production runtime estimate."
+      }
+    }
+  ],
+  "chromeOfflineAudioContext": [
+    {
+      "id": "isolated-p24-p50",
+      "browser": "155.0.8059.85",
+      "exactPcmEquality": true,
+      "samples": 72000,
+      "pcmSha256": "1c6e7e68108ffa7ff375f9e8afc1b975775226b4b17f771624502c58c22779ac"
+    },
+    {
+      "id": "frozen-world-z-plate-38",
+      "browser": "155.0.8059.85",
+      "exactPcmEquality": true,
+      "samples": 72000,
+      "pcmSha256": "20d1aa40aa651d36ac7205ff693e6308c99554542bd92526a3c17763fdc55f4f"
+    },
+    {
+      "id": "coupled-sphere-test-fixture",
+      "browser": "155.0.8059.85",
+      "exactPcmEquality": true,
+      "samples": 9600,
+      "pcmSha256": "a364f7f81d85b5cec5f65ec686756778198298272459fcc783cf6ed0dc54c28f"
+    }
+  ],
+  "overall": {
+    "preLimiterExactEveryPhysicsStep": true,
+    "finalPcmExactEveryOutputSample": true,
+    "completeFinalStateExact": true,
+    "completeStateHashesExactEveryPhysicsStep": true,
+    "acceptedStrikesUnchanged": true,
+    "chromeOfflinePcmExact": true,
+    "denseEightPlateExperimentRun": false
+  }
+}

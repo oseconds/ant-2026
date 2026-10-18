@@ -140,6 +140,8 @@ Generic Plate-individuality escalation is now parked: no automatic 1 ms pulse pa
 
 The next audio question is instead the **live dense-world mix**. The implementation sums all active Plate point-pickup outputs before one shared soft limiter and does not normalize by layer count. Natural simultaneous contacts and overlapping resonant tails may therefore mask otherwise distinct isolated responses, but this masking is currently a hypothesis, not established evidence. The next bounded pass will replay one current-production natural window starting at the eight-Plate milestone offline, preserve the full coupled physics and event stream, and decompose only the readout into focal/rest Plate contributions. This separates dense overlap from realtime deadline failure before any mix or DSP redesign. [Plan](daily/2026-10-18-plate-audio-review-and-live-density-plan.md).
 
+**Plate pickup-stem observability: SUPPORTED.** The opt-in offline harness captures each current layer's existing stereo point-pickup contribution and aggregate Sphere contribution from one full coupled solve. Three representative cases reconstructed the pre-limiter mix at every physics step and the current 48 kHz PCM exactly; the raw worklet's state/telemetry and Chrome OfflineAudioContext PCM also matched. This adds no production code or disabled-path cost. Stems remain point-readout contributions, not isolated physical Plate renders. The planned dense eight-Plate masking experiment remains unrun. [Evidence and limits](evidence/2026-10-18-plate-pickup-stem-observability/README.md).
+
 ### Read-only social observation
 
 `DynamicSocialGraph`:
@@ -350,6 +352,7 @@ Current production includes the adopted local locomotion condition. Further move
 
 ### Material / audio
 
+- [Plate pickup-stem observability — SUPPORTED](evidence/2026-10-18-plate-pickup-stem-observability/README.md)
 - [Reusable static A/B audio evidence viewer schema and usage](audio-evidence-viewer.md)
 - [Plate sonic individuality](evidence/2026-10-13-plate-sonic-individuality/README.md)
 - [Plate contact-position ERB identity](evidence/2026-10-14-plate-erb-position-identity/README.md)
