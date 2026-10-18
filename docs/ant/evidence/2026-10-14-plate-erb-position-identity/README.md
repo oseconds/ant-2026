@@ -6,6 +6,8 @@
 
 This is a descriptive result for twelve selected Plates. It does not establish that people can identify Plates, or that the differences are audible, preferred, or production quality.
 
+**2026-10-18 follow-up:** separate [natural](../../subjective-listening/2026-10-13-plate-sonic-individuality-subjective-listening.json) and [synthetic](../../subjective-listening/2026-10-18-synthetic-plate-shape-capability-subjective-listening.json) blind listening exports now exist. The [temporal-envelope investigation](../2026-10-18-plate-temporal-modulation/README.md) compares a frozen modulation diagnostic with this position result. The original decision and measurements below remain unchanged; the new sessions do not test cross-position identification.
+
 ## Question and scope
 
 For each frozen natural Plate, does its pooled stereo ERB-time response stay more similar across contact positions than responses from different Plates at the same position label?

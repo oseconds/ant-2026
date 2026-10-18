@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-18 — Plate temporal envelope and modulation
+
+[Process log](./2026-10-18-plate-temporal-modulation.md) · [Evidence, decisions and reproduction](../evidence/2026-10-18-plate-temporal-modulation/README.md)
+
+- Completed natural and synthetic one-listener session exports are now linked from their evidence packages; the synthetic A/A UI mistake has a separate correction annotation
+- Froze the full 36-natural / six-synthetic diagnostic and artifact hashes in Git before joining subjective judgments
+- Between-response explanatory value is **MIXED**; the selected modulation measure does not consistently follow strong versus weak judgments
+- Cross-position grouping is **MIXED** and does not support stable Plate identity; no production source or DSP change
+
 ### 2026-10-18 — Cross-Plate p50 blind listening preparation
 
 [Process log](./2026-10-18-cross-plate-blind-listening-viewer.md) · [Cross-Plate viewer](../evidence/2026-10-13-plate-sonic-individuality/cross-plate-listening.html) · [Viewer guide](../audio-evidence-viewer.md)

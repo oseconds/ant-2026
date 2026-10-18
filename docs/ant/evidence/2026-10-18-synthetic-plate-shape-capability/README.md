@@ -10,7 +10,7 @@ Can the current isolated Plate compiler, solver and point-pickup readout produce
 
 This is a capability/control experiment. The six masks are engineering fixtures, not proposed natural Plate classes. The session does not test TrailPlateBirth, natural geometry occurrence, shape identity persistence, identification accuracy, preference, formal psychophysics or production acceptance.
 
-**Synthetic geometry capability listening session prepared. No human listening result collected yet.** Do not infer geometry identification, a selector defect, solver adequacy, causation, statistical significance or production acceptance from the prepared artifacts. Existing measurement findings remain separate from listening evidence.
+**2026-10-18 listening follow-up:** this exploratory one-listener session is now complete; its original [source JSON](../../subjective-listening/2026-10-18-synthetic-plate-shape-capability-subjective-listening.json) remains unchanged. The [temporal-envelope investigation](../2026-10-18-plate-temporal-modulation/README.md) analyzes all six fixed-gain responses before joining the judgments. It also records a separate user-confirmed correction to the synthetic A/A selection; the raw export is retained. Do not infer geometry identification, a selector defect, solver adequacy, statistical significance or production acceptance from this session. Existing measurement findings remain separate from listening evidence.
 
 ## Frozen geometry and common controls
 
