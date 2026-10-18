@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { createServer } from 'node:http';
-import { readFile } from 'node:fs/promises';
+import { copyFile, mkdir, mkdtemp, readFile, readdir, rm } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -13,6 +13,9 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const evidence = path.join(root, 'docs/ant/evidence/2026-10-14-base-born-natural-event-erb');
 const htmlPath = path.join(evidence, 'listening.html');
 const crossEvidence = path.join(root, 'docs/ant/evidence/2026-10-13-plate-sonic-individuality');
+const crossEvidenceRelative = 'docs/ant/evidence/2026-10-13-plate-sonic-individuality';
+const crossAudioDirectory = 'cross-plate-listening';
+const crossAudioPath = path.join(crossEvidence, crossAudioDirectory);
 const crossHtmlPath = path.join(crossEvidence, 'cross-plate-listening.html');
 const manifest = JSON.parse(await readFile(path.join(evidence, 'listening-manifest.json'), 'utf8'));
 const viewerValidation = JSON.parse(await readFile(path.join(evidence, 'viewer-validation.json'), 'utf8'));
@@ -52,14 +55,22 @@ assert.ok(viewerValidation.erbAnalysisParity.every(item => item.passed && item.m
   'existing q25/q50/q75 ERB measurements retain exact parity');
 const crossAudioReceipts = new Map();
 for (const entry of crossManifest.listening) {
-  crossAudioReceipts.set(entry.fixed.path, entry.fixed);
-  crossAudioReceipts.set(entry.levelMatched.path, entry.levelMatched);
+  crossAudioReceipts.set(path.posix.join(crossEvidenceRelative, crossAudioDirectory, path.posix.basename(entry.fixed.path)), entry.fixed);
+  crossAudioReceipts.set(path.posix.join(crossEvidenceRelative, crossAudioDirectory, path.posix.basename(entry.levelMatched.path)), entry.levelMatched);
 }
 assert.equal(crossAudioReceipts.size, 24, 'cross-Plate manifest retains 24 fixed and matched WAV receipts');
+const committedWavNames = await readdir(crossAudioPath);
+assert.equal(committedWavNames.length, 24, 'committed listening subset contains exactly 24 files');
+assert.ok(committedWavNames.every(name => name.endsWith('.wav')), 'committed listening subset contains only WAVs');
+const crossValidationReceipts = new Map(crossValidation.validatedAudioFiles.map(record => [record.path, record]));
+assert.equal(crossValidationReceipts.size, 24);
 for (const [relativePath, receipt] of crossAudioReceipts) {
   const bytes = await readFile(path.join(root, relativePath));
   assert.equal(bytes.length, receipt.bytes, relativePath + ' byte length matches manifest');
   assert.equal(createHash('sha256').update(bytes).digest('hex'), receipt.sha256, relativePath + ' SHA-256 matches manifest');
+  const validationReceipt = crossValidationReceipts.get(path.posix.join(crossAudioDirectory, path.posix.basename(relativePath)));
+  assert.deepEqual(validationReceipt && { bytes: validationReceipt.bytes, sha256: validationReceipt.sha256 },
+    { bytes: receipt.bytes, sha256: receipt.sha256 }, relativePath + ' committed copy matches original validation receipt');
 }
 assert.equal(crossValidation.validatedAudioFiles.length, 24);
 assert.equal(crossValidation.listeningPostGain.targetRms, 0.08);
@@ -87,7 +98,11 @@ assert.deepEqual(crossConfig.pairs.map(pair => [pair.a.sourcePairLabel, pair.b.s
 const descriptorByKey = new Map(descriptorRoster.corpus.map(item => [item.key, item]));
 for (const pair of crossConfig.pairs) for (const arm of [pair.a, pair.b]) {
   const item = descriptorByKey.get(arm.measurementMetadata.corpusKey);
+  const source = crossManifest.listening.find(entry => entry.id === arm.sourcePairLabel);
   assert.ok(item, arm.measurementMetadata.corpusKey + ' exists in descriptor roster');
+  assert.ok(source, arm.sourcePairLabel + ' exists in original listening manifest');
+  assert.equal(arm.fixedGainPath, path.posix.join(crossEvidenceRelative, crossAudioDirectory, path.posix.basename(source.fixed.path)));
+  assert.equal(arm.rmsMatchedPath, path.posix.join(crossEvidenceRelative, crossAudioDirectory, path.posix.basename(source.levelMatched.path)));
   assert.deepEqual(arm.measurementMetadata, { corpusKey: item.key, seed: item.seed, plateId: item.plateId,
     geometry: { solverNodes: item.solverNodes, geodesicLength: item.geodesicLength,
       meanHalfWidth: item.meanHalfWidth, boundaryFraction: item.boundaryFraction, pickupDistance: item.pickupDistance },
@@ -95,14 +110,17 @@ for (const pair of crossConfig.pairs) for (const arm of [pair.a, pair.b]) {
 }
 assert.doesNotMatch(crossHtmlBytes.toString('utf8'), /DynamicsCompressor|createDynamicsCompressor|\blimiter\b/i,
   'cross-Plate playback contains no limiter or compressor stage');
+assert.doesNotMatch(crossHtmlBytes.toString('utf8'), /test-results\//,
+  'cross-Plate viewer embeds no ignored source paths');
 assert.ok(crossHtmlBytes.length < 100_000, 'cross-Plate HTML contains metadata, not the frozen PCM');
 assert.doesNotMatch(crossHtmlBytes.toString('utf8'), /data:audio\//i, 'cross-Plate HTML does not embed audio data');
 
+let serverRoot = root, isolatedHttpRoot = null;
 const server = createServer(async (request, response) => {
   try {
     const pathname = decodeURIComponent(new URL(request.url, 'http://127.0.0.1').pathname);
-    const target = path.resolve(root, '.' + pathname);
-    if (target !== root && !target.startsWith(root + path.sep)) { response.writeHead(403).end(); return; }
+    const target = path.resolve(serverRoot, '.' + pathname);
+    if (target !== serverRoot && !target.startsWith(serverRoot + path.sep)) { response.writeHead(403).end(); return; }
     const bytes = await readFile(target);
     const ext = path.extname(target).toLowerCase();
     const contentType = ext === '.html' ? 'text/html; charset=utf-8' : ext === '.wav' ? 'audio/wav' : 'application/octet-stream';
@@ -411,7 +429,7 @@ try {
       const audio = document.querySelector('.blind-card audio');
       return audio && !audio.paused && audio.currentTime > 0.02 && window.__audioContexts[0]?.state === 'running';
     }, null, { timeout: 5000 });
-    assert.match(await a.getAttribute('src'), /test-results\/ant-plate-sonic-individuality-20261013\/.*\.listening-only\.wav$/);
+    assert.match(await a.getAttribute('src'), /cross-plate-listening\/.*\.listening-only\.wav$/);
     assert.deepEqual(await crossRun.page.evaluate(() => window.__audioGains.map(node => node.gain.value)), [4],
       'matched audio uses a Web Audio GainNode at the declared 4x gain');
     assert.equal(await a.evaluate(audio => audio.volume), 1, 'HTMLMediaElement volume stays at unity');
@@ -529,6 +547,16 @@ try {
 
   const crossHttpUrl = 'http://127.0.0.1:' + server.address().port +
     '/docs/ant/evidence/2026-10-13-plate-sonic-individuality/cross-plate-listening.html';
+  isolatedHttpRoot = await mkdtemp(path.join(root, '.tmp-cross-plate-http-'));
+  const isolatedEvidence = path.join(isolatedHttpRoot, crossEvidenceRelative);
+  const isolatedAudio = path.join(isolatedEvidence, crossAudioDirectory);
+  await mkdir(isolatedAudio, { recursive: true });
+  await copyFile(crossHtmlPath, path.join(isolatedEvidence, path.basename(crossHtmlPath)));
+  for (const name of committedWavNames) await copyFile(path.join(crossAudioPath, name), path.join(isolatedAudio, name));
+  assert.equal((await readdir(isolatedHttpRoot)).includes('test-results'), false,
+    'fresh repository-style root has no ignored test-results directory');
+  serverRoot = isolatedHttpRoot;
+  const isolatedRequestStart = localServerRequests.length;
   const crossServerRun = await freshCrossBlindPage('cross-plate-http-check-20261018', crossHttpUrl);
   const crossServerPage = crossServerRun.page;
   try {
@@ -538,8 +566,11 @@ try {
       return audio && !audio.paused && audio.currentTime > 0.02 && window.__audioContexts[0]?.state === 'running';
     }, null, { timeout: 5000 });
     assert.ok(localServerRequests.includes('/docs/ant/evidence/2026-10-13-plate-sonic-individuality/cross-plate-listening.html'));
-    assert.ok(localServerRequests.some(url => url.startsWith('/test-results/ant-plate-sonic-individuality-20261013/') &&
-      url.endsWith('.listening-only.wav')), 'repository-root local server serves ignored matched WAVs');
+    const isolatedRequests = localServerRequests.slice(isolatedRequestStart);
+    assert.ok(isolatedRequests.some(url => url.startsWith('/docs/ant/evidence/2026-10-13-plate-sonic-individuality/cross-plate-listening/') &&
+      url.endsWith('.listening-only.wav')), 'fresh HTTP root serves committed matched WAVs');
+    assert.ok(isolatedRequests.every(url => !url.includes('test-results/')), 'fresh HTTP playback does not use test-results');
+    assert.deepEqual(await crossServerPage.evaluate(() => window.__audioGains.map(node => node.gain.value)), [4]);
   } finally { await crossServerRun.context.close(); }
   assert.deepEqual(remoteRequests, [], 'file and local-server modes make no remote requests');
   assert.deepEqual(pageErrors, [], 'headless Chromium reports no uncaught page errors');
@@ -557,10 +588,15 @@ try {
       sessionOrderMappingHashesAndTimestampsExported: true, localStorageResume: true,
       crossPlateMatchedOnlyBeforeReveal: true, crossPlateNoErbReveal: true, crossPlateWebAudioGain: true,
       audioContextResumesAfterGesture: true, crossPlateSeededOrderAndMapping: true,
-      repositoryRelativeFileAndHttpPlayback: true, fixedGainUnity: true,
+      repositoryRelativeFileAndHttpPlayback: true, freshHttpRootWithoutTestResults: true, fixedGainUnity: true,
       noRuntimeFetch: true, remoteNetworkRequests: 0, uncaughtPageErrors: 0 },
     localServerRequests: localServerRequests.length }, null, 2));
 } finally {
   await browser.close();
   await new Promise(resolve => server.close(resolve));
+  if (isolatedHttpRoot) {
+    if (!isolatedHttpRoot.startsWith(root + path.sep) || !path.basename(isolatedHttpRoot).startsWith('.tmp-cross-plate-http-'))
+      throw new Error('Refusing to clean an unexpected temporary HTTP root');
+    await rm(isolatedHttpRoot, { recursive: true, force: true });
+  }
 }

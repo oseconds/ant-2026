@@ -272,9 +272,11 @@ def build_data(config, config_path, package, helper):
                 else:
                     record_key = "fixed" if mode == "fixedGain" else "levelMatched"
                     candidate = arm_source_pair.get(record_key)
-                    record = candidate if candidate and manifest_file(
-                        package, candidate.get("path"), f"{pair_id}/{arm} manifest WAV path",
-                        allow_repository_path=allow_repository_audio_paths) == path else None
+                    if candidate:
+                        # The manifest keeps its historical source path when a receipt-identical copy is selected.
+                        manifest_file(package, candidate.get("path"), f"{pair_id}/{arm} manifest WAV path",
+                                     allow_repository_path=allow_repository_audio_paths)
+                    record = candidate
                 if not record:
                     raise ValueError(f"{pair_id}/{arm}: {path_key} is absent from the listening manifest")
                 receipt = file_receipt(path, package)
