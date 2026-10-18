@@ -29,9 +29,9 @@ The harness records each side's actual Plate accumulation order. It re-adds the 
 
 | Case | Frozen geometry / coupling | Steps | Stem array bytes | Observed capture delta | Pre-limiter L/R | Final 48 kHz PCM |
 | --- | --- | ---: | ---: | ---: | --- | --- |
-| Isolated P24 p50 | Existing frozen native Plate | 9,000 | 540,060 | +5.00 ms | Exact, max error 0 | Exact, 72,000 samples per side |
-| Frozen world Z | Seed-07 38-Plate topology, Plate-38 strike, 14,772 compiled Z links | 9,000 | 7,200,800 | −43.79 ms | Exact, max error 0 | Exact, 72,000 samples per side; matches frozen PCM hash |
-| Coupled Sphere fixture | Existing two-Plate/Z worklet-test geometry with one coupled Nodule | 1,200 | 96,080 | +4.61 ms | Exact, max error 0 | Exact, 9,600 samples per side; nonzero Sphere contribution |
+| Isolated P24 p50 | Existing frozen native Plate | 9,000 | 540,060 | +1.29 ms | Exact, max error 0 | Exact, 72,000 samples per side |
+| Frozen world Z | Seed-07 38-Plate topology, Plate-38 strike, 14,772 compiled Z links | 9,000 | 7,200,800 | +14.58 ms | Exact, max error 0 | Exact, 72,000 samples per side; matches frozen PCM hash |
+| Coupled Sphere fixture | Existing two-Plate/Z worklet-test geometry with one coupled Nodule | 1,200 | 96,080 | −4.39 ms | Exact, max error 0 | Exact, 9,600 samples per side; nonzero Sphere contribution |
 
 All cases accepted the scheduled strike(s), retained exact telemetry and per-step solver-state hashes against the raw worklet, and matched the complete final state. Dropped events/routes, non-finite values, and clipped cases were all zero. The isolated P24 frozen PCM and the 38-Plate/Z frozen PCM also matched their existing artifact hashes.
 
