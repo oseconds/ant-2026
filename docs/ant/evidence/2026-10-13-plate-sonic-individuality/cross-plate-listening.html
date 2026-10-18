@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<script id="viewer-data" type="application/octet-stream">eyJ2aWV3ZXJJZCI6ImFudC1wbGF0ZS1zb25pYy1pbmRpdmlkdWFsaXR5LWNyb3NzLXBsYXRlIiwiZXZpZGVuY2VJZCI6IjIwMjYtMTAtMTMtcGxhdGUtc29uaWMtaW5kaXZpZHVhbGl0eSIsInRpdGxlIjoiQ3Jvc3MtUGxhdGUgcDUwIGJsaW5kIGxpc3RlbmluZyBzZXNzaW9uIiwibWV0YWRhdGEiOiJUd2VsdmUgZnJvemVuIHA1MCBzb3VyY2VzOyBwYWlyZWQgYnkgYWRqYWNlbnQgbGlzdGVuaW5nLW1hbmlmZXN0IG9yZGVyLiBNYXRjaGVkIHBsYXliYWNrIHRhcmdldHMgZGlnaXRhbCBwb29sZWQgc3RlcmVvIFJNUyAwLjA4LCBub3QgY2FsaWJyYXRlZCBTUEwuIE5vIGNyb3NzLVBsYXRlIGh1bWFuIGxpc3RlbmluZyBhc3Nlc3NtZW50IGNvbGxlY3RlZCB5ZXQuIiwicGFpcnMiOlt7ImlkIjoiY3Jvc3MtcGxhdGUtMDEiLCJsYWJlbCI6IkNvbXBhcmlzb24gMSIsImEiOnsibGFiZWwiOiIyMDI2MTAwNS10cmFpbC1wbGF0ZS0xNSIsInNvdXJjZU1hbmlmZXN0RW50cnlJZCI6IjIwMjYxMDA1LXRyYWlsLXBsYXRlLTE1LXA1MC1uYXRpdmUiLCJtZWFzdXJlbWVudE1ldGFkYXRhIjp7ImNvcnB1c0tleSI6IjIwMjYxMDA1LXRyYWlsLXBsYXRlLTE1Iiwic2VlZCI6MjAyNjEwMDUsInBsYXRlSWQiOiJ0cmFpbC1wbGF0ZS0xNSIsImdlb21ldHJ5Ijp7InNvbHZlck5vZGVzIjoyNDcsImdlb2Rlc2ljTGVuZ3RoIjowLjk2NTY4NTQyNDk0OTIzNzQsIm1lYW5IYWxmV2lkdGgiOjAuMDEzODU0NDA4MDA0MzcyODEsImJvdW5kYXJ5RnJhY3Rpb24iOjAuNzEyNTUwNjA3Mjg3NDQ5MywicGlja3VwRGlzdGFuY2UiOjAuNDI4NjE2Mjc1MTg5NTIyN30sIm1hdGVyaWFsIjp7InN0aWZmbmVzcyI6MC45MTI2MzA0MDkzNDA5NjY4LCJkZW5zaXR5IjoxLjIsImRhbXBpbmciOjAuMzU1MDUyMTYzNzM2Mzg2N319LCJhdWRpbyI6eyJmaXhlZEdhaW4iOnsiYnl0ZXMiOjU3NjA0NCwic2hhMjU2IjoiMWYwN2JmYmFhNTBlYjdkMjI5ZmVjYTUzZWQ4NDJkN2IyNDBhNTgxYmU4MzQ4MDZmOGNmNWExZDM3MTcxYjEyNyIsInNvdXJjZU1hbmlmZXN0RW50cnlJZCI6IjIwMjYxMDA1LXRyYWlsLXBsYXRlLTE1LXA1MC1uYXRpdmUiLCJyZWxhdGl2ZVBhdGgiOiIuLi8uLi8uLi8uLi90ZXN0LXJlc3VsdHMvYW50LXBsYXRlLXNvbmljLWluZGl2aWR1YWxpdHktMjAyNjEwMTMvMjAyNjEwMDUtdHJhaWwtcGxhdGUtMTUtcDUwLW5hdGl2ZS5tZWFzdXJlbWVudC53YXYifSwicm1zTWF0Y2hlZExpc3RlbmluZ09ubHkiOnsiYnl0ZXMiOjU3NjA0NCwic2hhMjU2IjoiOWEyYjkyNTNkNjMzMGE2NTBiNGJlOWM3YjVjNjBlYmZmMzI3MTFiNTFkN2E2ZjRiMjlmMTQzMmVjN2E3YWJiZSIsImdhaW4iOjMuNjQxNzE1NzkwODAwNTg4NiwidGFyZ2V0Um1zIjowLjAyLCJwZWFrIjowLjE0ODExOTI1NTkwMDM4Mywic291cmNlTWFuaWZlc3RFbnRyeUlkIjoiMjAyNjEwMDUtdHJhaWwtcGxhdGUtMTUtcDUwLW5hdGl2ZSIsInJlbGF0aXZlUGF0aCI6Ii4uLy4uLy4uLy4uL3Rlc3QtcmVzdWx0cy9hbnQtcGxhdGUtc29uaWMtaW5kaXZpZHVhbGl0eS0yMDI2MTAxMy8yMDI2MTAwNS10cmFpbC1wbGF0ZS0xNS1wNTAtbmF0aXZlLmxpc3RlbmluZy1vbmx5LndhdiIsImxpc3RlbmluZ1Bvc3RHYWluIjp7InNvdXJjZU1hdGNoZWRSbXMiOjAuMDIsInNvdXJjZU1hdGNoZWRQZWFrIjowLjE0ODExOTI1NTkwMDM4MywiZmluYWxUYXJnZXRSbXMiOjAuMDgsInBvc3RHYWluTGluZWFyIjo0LjAsInBvc3RHYWluRGIiOjEyLjA0MTE5OTgyNjU1OTI0OCwicHJlZGljdGVkUG9zdEdhaW5QZWFrIjowLjU5MjQ3NzAyMzYwMTUzMn19fX0sImIiOnsibGFiZWwiOiIyMDI2MTAwNi10cmFpbC1wbGF0ZS0xNyIsInNvdXJjZU1hbmlmZXN0RW50cnlJZCI6IjIwMjYxMDA2LXRyYWlsLXBsYXRlLTE3LXA1MC1uYXRpdmUiLCJtZWFzdXJlbWVudE1ldGFkYXRhIjp7ImNvcnB1c0tleSI6IjIwMjYxMDA2LXRyYWlsLXBsYXRlLTE3Iiwic2VlZCI6MjAyNjEwMDYsInBsYXRlSWQiOiJ0cmFpbC1wbGF0ZS0xNyIsImdlb21ldHJ5Ijp7InNvbHZlck5vZGVzIjozMDMsImdlb2Rlc2ljTGVuZ3RoIjoxLjAwODUzODc3MDMzNzI5NDgsIm1lYW5IYWxmV2lkdGgiOjAuMDEzNjQ5NTczNTUxODE1NTgzLCJib3VuZGFyeUZyYWN0aW9uIjowLjY2OTk2Njk5NjY5OTY3LCJwaWNrdXBEaXN0YW5jZSI6MC40NDY4NDE3OTUzMDA4NjU4fSwibWF0ZXJpYWwiOnsic3RpZmZuZXNzIjowLjkxMTY0MDUwMDU1NzE0ODgsImRlbnNpdHkiOjEuMiwiZGFtcGluZyI6MC4zNTQ2NTYyMDAyMjI4NTk1NH19LCJhdWRpbyI6eyJmaXhlZEdhaW4iOnsiYnl0ZXMiOjU3NjA0NCwic2hhMjU2IjoiMTM2MTE4YmUxZmQ4ZWUwNjkzNzkxZDNlNGJkMDY2ZTU5M2RmYzczNmIxZGZhZjJlZjA5N2I0ZTk5MWJhNWM1OCIsInNvdXJjZU1hbmlmZXN0RW50cnlJZCI6IjIwMjYxMDA2LXRyYWlsLXBsYXRlLTE3LXA1MC1uYXRpdmUiLCJyZWxhdGl2ZVBhdGgiOiIuLi8uLi8uLi8uLi90ZXN0LXJlc3VsdHMvYW50LXBsYXRlLXNvbmljLWluZGl2aWR1YWxpdHktMjAyNjEwMTMvMjAyNjEwMDYtdHJhaWwtcGxhdGUtMTctcDUwLW5hdGl2ZS5tZWFzdXJlbWVudC53YXYifSwicm1zTWF0Y2hlZExpc3RlbmluZ09ubHkiOnsiYnl0ZXMiOjU3NjA0NCwic2hhMjU2IjoiZWM0NzljNTU2MmU2ZDViYTg3YmJhMDg0MGIzZjdjYTU0ODMxZTkyYjUzOWNhNDg0MDVkZWZlMGE4NmFjOGYwZCIsImdhaW4iOjExLjg0MjExMjc0MzA3ODIwNSwidGFyZ2V0Um1zIjowLjAyLCJwZWFrIjowLjE1MDMzOTE3MTI5MDM5NzY0LCJzb3VyY2VNYW5pZmVzdEVudHJ5SWQiOiIyMDI2MTAwNi10cmFpbC1wbGF0ZS0xNy1wNTAtbmF0aXZlIiwicmVsYXRpdmVQYXRoIjoiLi4vLi4vLi4vLi4vdGVzdC1yZXN1bHRzL2FudC1wbGF0ZS1zb25pYy1pbmRpdmlkdWFsaXR5LTIwMjYxMDEzLzIwMjYxMDA2LXRyYWlsLXBsYXRlLTE3LXA1MC1uYXRpdmUubGlzdGVuaW5nLW9ubHkud2F2IiwibGlzdGVuaW5nUG9zdEdhaW4iOnsic291cmNlTWF0Y2hlZFJtcyI6MC4wMiwic291cmNlTWF0Y2hlZFBlYWsiOjAuMTUwMzM5MTcxMjkwMzk3NjQsImZpbmFsVGFyZ2V0Um1zIjowLjA4LCJwb3N0R2FpbkxpbmVhciI6NC4wLCJwb3N0R2FpbkRiIjoxMi4wNDExOTk4MjY1NTkyNDgsInByZWRpY3RlZFBvc3RHYWluUGVhayI6MC42MDEzNTY2ODUxNjE1OTA2fX19fSwibWVhc3VyZW1lbnQiOm51bGwsImFuYWx5c2lzU3VtbWFyeSI6bnVsbH0seyJpZCI6ImNyb3NzLXBsYXRlLTAyIiwibGFiZWwiOiJDb21wYXJpc29uIDIiLCJhIjp7ImxhYmVsIjoiMjAyNjEwMDctdHJhaWwtcGxhdGUtMjAiLCJzb3VyY2VNYW5pZmVzdEVudHJ5SWQiOiIyMDI2MTAwNy10cmFpbC1wbGF0ZS0yMC1wNTAtbmF0aXZlIiwibWVhc3VyZW1lbnRNZXRhZGF0YSI6eyJjb3JwdXNLZXkiOiIyMDI2MTAwNy10cmFpbC1wbGF0ZS0yMCIsInNlZWQiOjIwMjYxMDA3LCJwbGF0ZUlkIjoidHJhaWwtcGxhdGUtMjAiLCJnZW9tZXRyeSI6eyJzb2x2ZXJOb2RlcyI6MjgzLCJnZW9kZXNpY0xlbmd0aCI6MC44ODk0NDcxMDE5MjY5MjkyLCJtZWFuSGFsZldpZHRoIjowLjAxMzkyNzU0MTY5MDM1MDQ3LCJib3VuZGFyeUZyYWN0aW9uIjowLjcyNDM4MTYyNTQ0MTY5NjIsInBpY2t1cERpc3RhbmNlIjowLjQwMjg5ODA4ODYxMDYyNH0sIm1hdGVyaWFsIjp7InN0aWZmbmVzcyI6MC45MTM4NDkxOTE2MjI2MzEyLCJkZW5zaXR5IjoxLjIsImRhbXBpbmciOjAuMzU1NTM5Njc2NjQ5MDUyNX19LCJhdWRpbyI6eyJmaXhlZEdhaW4iOnsiYnl0ZXMiOjU3NjA0NCwic2hhMjU2IjoiOTBjNDNlZjU2ZTVmODI4YWQwN2U3OThjY2ZmNjU2NzQzOWZlZWI4NDI4MGEzM2E1OTkyNGY4MjIwNDhkZWMxNSIsInNvdXJjZU1hbmlmZXN0RW50cnlJZCI6IjIwMjYxMDA3LXRyYWlsLXBsYXRlLTIwLXA1MC1uYXRpdmUiLCJyZWxhdGl2ZVBhdGgiOiIuLi8uLi8uLi8uLi90ZXN0LXJlc3VsdHMvYW50LXBsYXRlLXNvbmljLWluZGl2aWR1YWxpdHktMjAyNjEwMTMvMjAyNjEwMDctdHJhaWwtcGxhdGUtMjAtcDUwLW5hdGl2ZS5tZWFzdXJlbWVudC53YXYifSwicm1zTWF0Y2hlZExpc3RlbmluZ09ubHkiOnsiYnl0ZXMiOjU3NjA0NCwic2hhMjU2IjoiMmFlYmM0YWE1ZGM0ODA1ZDY0MDAxYzJkMzhkNTMyZTgwMzExOTFkZTFhOWRhNTk0ZjdjZmM2Mzc4MjIxMGJmMiIsImdhaW4iOjcuMTAwNjcxODU1Njg4NTQ0LCJ0YXJnZXRSbXMiOjAuMDIsInBlYWsiOjAuMTQ2MjIwMjIyMTE1NTE2NjYsInNvdXJjZU1hbmlmZXN0RW50cnlJZCI6IjIwMjYxMDA3LXRyYWlsLXBsYXRlLTIwLXA1MC1uYXRpdmUiLCJyZWxhdGl2ZVBhdGgiOiIuLi8uLi8uLi8uLi90ZXN0LXJlc3VsdHMvYW50LXBsYXRlLXNvbmljLWluZGl2aWR1YWxpdHktMjAyNjEwMTMvMjAyNjEwMDctdHJhaWwtcGxhdGUtMjAtcDUwLW5hdGl2ZS5saXN0ZW5pbmctb25seS53YXYiLCJsaXN0ZW5pbmdQb3N0R2FpbiI6eyJzb3VyY2VNYXRjaGVkUm1zIjowLjAyLCJzb3VyY2VNYXRjaGVkUGVhayI6MC4xNDYyMjAyMjIxMTU1MTY2NiwiZmluYWxUYXJnZXRSbXMiOjAuMDgsInBvc3RHYWluTGluZWFyIjo0LjAsInBvc3RHYWluRGIiOjEyLjA0MTE5OTgyNjU1OTI0OCwicHJlZGljdGVkUG9zdEdhaW5QZWFrIjowLjU4NDg4MDg4ODQ2MjA2Njd9fX19LCJiIjp7ImxhYmVsIjoiMjAyNjEwMDUtdHJhaWwtcGxhdGUtMSIsInNvdXJjZU1hbmlmZXN0RW50cnlJZCI6IjIwMjYxMDA1LXRyYWlsLXBsYXRlLTEtcDUwLW5hdGl2ZSIsIm1lYXN1cmVtZW50TWV0YWRhdGEiOnsiY29ycHVzS2V5IjoiMjAyNjEwMDUtdHJhaWwtcGxhdGUtMSIsInNlZWQiOjIwMjYxMDA1LCJwbGF0ZUlkIjoidHJhaWwtcGxhdGUtMSIsImdlb21ldHJ5Ijp7InNvbHZlck5vZGVzIjo0OCwiZ2VvZGVzaWNMZW5ndGgiOjAuODQ4MDg5OTIwOTk5MTk3MywibWVhbkhhbGZXaWR0aCI6MC4wMTMzODE2NzExMjg4MzE4LCJib3VuZGFyeUZyYWN0aW9uIjowLjkxNjY2NjY2NjY2NjY2NjYsInBpY2t1cERpc3RhbmNlIjowLjQxNzA4NjU4NDM0MDE4ODM2fSwibWF0ZXJpYWwiOnsic3RpZmZuZXNzIjowLjkwNDU5NDc3MTIxNzkwODEsImRlbnNpdHkiOjEuMiwiZGFtcGluZyI6MC4zNTE4Mzc5MDg0ODcxNjMyM319LCJhdWRpbyI6eyJmaXhlZEdhaW4iOnsiYnl0ZXMiOjU3NjA0NCwic2hhMjU2IjoiNGU2MjE2ZTRlYTM1Y2VmYWMyNjA2YjRlMDAzNTYyMWE0MGU4ZDUxY2YzOWFkYTk5ZDI0ZWU0MTU1ZWI0MmE0OSIsInNvdXJjZU1hbmlmZXN0RW50cnlJZCI6IjIwMjYxMDA1LXRyYWlsLXBsYXRlLTEtcDUwLW5hdGl2ZSIsInJlbGF0aXZlUGF0aCI6Ii4uLy4uLy4uLy4uL3Rlc3QtcmVzdWx0cy9hbnQtcGxhdGUtc29uaWMtaW5kaXZpZHVhbGl0eS0yMDI2MTAxMy8yMDI2MTAwNS10cmFpbC1wbGF0ZS0xLXA1MC1uYXRpdmUubWVhc3VyZW1lbnQud2F2In0sInJtc01hdGNoZWRMaXN0ZW5pbmdPbmx5Ijp7ImJ5dGVzIjo1NzYwNDQsInNoYTI1NiI6IjQzZWVlMTBhYTNiYzA4NGUyOGY4Mzk1MjFiZDk5YTkzMWFkNGJlMDJlZDVlOWY4NGRjNmE4NDEzOWExNWNjYTEiLCJnYWluIjoxNS45NjgzMzkyMzQ4Njg1MzcsInRhcmdldFJtcyI6MC4wMiwicGVhayI6MC4xNDA0MTk0NjgyODM2NTMyNiwic291cmNlTWFuaWZlc3RFbnRyeUlkIjoiMjAyNjEwMDUtdHJhaWwtcGxhdGUtMS1wNTAtbmF0aXZlIiwicmVsYXRpdmVQYXRoIjoiLi4vLi4vLi4vLi4vdGVzdC1yZXN1bHRzL2FudC1wbGF0ZS1zb25pYy1pbmRpdmlkdWFsaXR5LTIwMjYxMDEzLzIwMjYxMDA1LXRyYWlsLXBsYXRlLTEtcDUwLW5hdGl2ZS5saXN0ZW5pbmctb25seS53YXYiLCJsaXN0ZW5pbmdQb3N0R2FpbiI6eyJzb3VyY2VNYXRjaGVkUm1zIjowLjAyLCJzb3VyY2VNYXRjaGVkUGVhayI6MC4xNDA0MTk0NjgyODM2NTMyNiwiZmluYWxUYXJnZXRSbXMiOjAuMDgsInBvc3RHYWluTGluZWFyIjo0LjAsInBvc3RHYWluRGIiOjEyLjA0MTE5OTgyNjU1OTI0OCwicHJlZGljdGVkUG9zdEdhaW5QZWFrIjowLjU2MTY3Nzg3MzEzNDYxM319fX0sIm1lYXN1cmVtZW50IjpudWxsLCJhbmFseXNpc1N1bW1hcnkiOm51bGx9LHsiaWQiOiJjcm9zcy1wbGF0ZS0wMyIsImxhYmVsIjoiQ29tcGFyaXNvbiAzIiwiYSI6eyJsYWJlbCI6IjIwMjYxMDA2LXRyYWlsLXBsYXRlLTE0Iiwic291cmNlTWFuaWZlc3RFbnRyeUlkIjoiMjAyNjEwMDYtdHJhaWwtcGxhdGUtMTQtcDUwLW5hdGl2ZSIsIm1lYXN1cmVtZW50TWV0YWRhdGEiOnsiY29ycHVzS2V5IjoiMjAyNjEwMDYtdHJhaWwtcGxhdGUtMTQiLCJzZWVkIjoyMDI2MTAwNiwicGxhdGVJZCI6InRyYWlsLXBsYXRlLTE0IiwiZ2VvbWV0cnkiOnsic29sdmVyTm9kZXMiOjI3MCwiZ2VvZGVzaWNMZW5ndGgiOjAuOTI2NDQ0MTQwMDkyODM5LCJtZWFuSGFsZldpZHRoIjowLjAxNDA4NDQ1NjM1NzU5NzA3OSwiYm91bmRhcnlGcmFjdGlvbiI6MC42MjU5MjU5MjU5MjU5MjU5LCJwaWNrdXBEaXN0YW5jZSI6MC40MTQyODc3NjExNDAwOTMyNX0sIm1hdGVyaWFsIjp7InN0aWZmbmVzcyI6MC45MjA4MDg0Njk4NDQ4MzU5LCJkZW5zaXR5IjoxLjIsImRhbXBpbmciOjAuMzU4MzIzMzg3OTM3OTM0MzN9fSwiYXVkaW8iOnsiZml4ZWRHYWluIjp7ImJ5dGVzIjo1NzYwNDQsInNoYTI1NiI6IjQzODQxMmYyMTQ5OTNiZTRhZjg4YTk0ZjFjZWVlYjViZDc2YzZkODVkYzhkMGU1YzhiNWQyYWNhNjJkM2MyNjkiLCJzb3VyY2VNYW5pZmVzdEVudHJ5SWQiOiIyMDI2MTAwNi10cmFpbC1wbGF0ZS0xNC1wNTAtbmF0aXZlIiwicmVsYXRpdmVQYXRoIjoiLi4vLi4vLi4vLi4vdGVzdC1yZXN1bHRzL2FudC1wbGF0ZS1zb25pYy1pbmRpdmlkdWFsaXR5LTIwMjYxMDEzLzIwMjYxMDA2LXRyYWlsLXBsYXRlLTE0LXA1MC1uYXRpdmUubWVhc3VyZW1lbnQud2F2In0sInJtc01hdGNoZWRMaXN0ZW5pbmdPbmx5Ijp7ImJ5dGVzIjo1NzYwNDQsInNoYTI1NiI6ImJmOWUzYTQyMTBkODM0ZDczNjc3ZThmNzBjYmU1OWFiMDA3YTE1M2U5OTQ3ZTc0NTg0NTU0ZTAzNWY2NWY0ODIiLCJnYWluIjo1LjMyMTgxNDk4OTMwOTI4NSwidGFyZ2V0Um1zIjowLjAyLCJwZWFrIjowLjE0NjE1MDQyNTA3NjQ4NDY4LCJzb3VyY2VNYW5pZmVzdEVudHJ5SWQiOiIyMDI2MTAwNi10cmFpbC1wbGF0ZS0xNC1wNTAtbmF0aXZlIiwicmVsYXRpdmVQYXRoIjoiLi4vLi4vLi4vLi4vdGVzdC1yZXN1bHRzL2FudC1wbGF0ZS1zb25pYy1pbmRpdmlkdWFsaXR5LTIwMjYxMDEzLzIwMjYxMDA2LXRyYWlsLXBsYXRlLTE0LXA1MC1uYXRpdmUubGlzdGVuaW5nLW9ubHkud2F2IiwibGlzdGVuaW5nUG9zdEdhaW4iOnsic291cmNlTWF0Y2hlZFJtcyI6MC4wMiwic291cmNlTWF0Y2hlZFBlYWsiOjAuMTQ2MTUwNDI1MDc2NDg0NjgsImZpbmFsVGFyZ2V0Um1zIjowLjA4LCJwb3N0R2FpbkxpbmVhciI6NC4wLCJwb3N0R2FpbkRiIjoxMi4wNDExOTk4MjY1NTkyNDgsInByZWRpY3RlZFBvc3RHYWluUGVhayI6MC41ODQ2MDE3MDAzMDU5Mzg3fX19fSwiYiI6eyJsYWJlbCI6IjIwMjYxMDA1LXRyYWlsLXBsYXRlLTI0Iiwic291cmNlTWFuaWZlc3RFbnRyeUlkIjoiMjAyNjEwMDUtdHJhaWwtcGxhdGUtMjQtcDUwLW5hdGl2ZSIsIm1lYXN1cmVtZW50TWV0YWRhdGEiOnsiY29ycHVzS2V5IjoiMjAyNjEwMDUtdHJhaWwtcGxhdGUtMjQiLCJzZWVkIjoyMDI2MTAwNSwicGxhdGVJZCI6InRyYWlsLXBsYXRlLTI0IiwiZ2VvbWV0cnkiOnsic29sdmVyTm9kZXMiOjI3NywiZ2VvZGVzaWNMZW5ndGgiOjAuNzAyMDg5MzEzNzg3NzM2NSwibWVhbkhhbGZXaWR0aCI6MC4wMTI5NDMzODA1MjU0NjIxMDcsImJvdW5kYXJ5RnJhY3Rpb24iOjAuNzE0ODAxNDQ0MDQzMzIxNCwicGlja3VwRGlzdGFuY2UiOjAuMzIyMDQzMzM3NzAwNTk2OTV9LCJtYXRlcmlhbCI6eyJzdGlmZm5lc3MiOjAuOTA3Mjg0OTY3NzU0MjA0MSwiZGVuc2l0eSI6MS4yLCJkYW1waW5nIjowLjM1MjkxMzk4NzEwMTY4MTY1fX0sImF1ZGlvIjp7ImZpeGVkR2FpbiI6eyJieXRlcyI6NTc2MDQ0LCJzaGEyNTYiOiI0NmJlOGI4NzI4MTJjODIwNDJhNzkxYjU4MDg1YjViMzc5MjczMDQwOTJlM2IyZGI5NmRhZDg1NWExODJkMzQ3Iiwic291cmNlTWFuaWZlc3RFbnRyeUlkIjoiMjAyNjEwMDUtdHJhaWwtcGxhdGUtMjQtcDUwLW5hdGl2ZSIsInJlbGF0aXZlUGF0aCI6Ii4uLy4uLy4uLy4uL3Rlc3QtcmVzdWx0cy9hbnQtcGxhdGUtc29uaWMtaW5kaXZpZHVhbGl0eS0yMDI2MTAxMy8yMDI2MTAwNS10cmFpbC1wbGF0ZS0yNC1wNTAtbmF0aXZlLm1lYXN1cmVtZW50LndhdiJ9LCJybXNNYXRjaGVkTGlzdGVuaW5nT25seSI6eyJieXRlcyI6NTc2MDQ0LCJzaGEyNTYiOiJmNzA5YWVmYmUyZTFmYjBiYTk1NTg5Y2NhZjU4YWJhZGFiNDc3MWI5YTc3OWM3MTUzNDAxNjkyZjFlNGZlZDAyIiwiZ2FpbiI6NC44NjEyNzYwNzA2Mzg0OTEsInRhcmdldFJtcyI6MC4wMiwicGVhayI6MC4xNDYxODcwNTIxMzA2OTkxNiwic291cmNlTWFuaWZlc3RFbnRyeUlkIjoiMjAyNjEwMDUtdHJhaWwtcGxhdGUtMjQtcDUwLW5hdGl2ZSIsInJlbGF0aXZlUGF0aCI6Ii4uLy4uLy4uLy4uL3Rlc3QtcmVzdWx0cy9hbnQtcGxhdGUtc29uaWMtaW5kaXZpZHVhbGl0eS0yMDI2MTAxMy8yMDI2MTAwNS10cmFpbC1wbGF0ZS0yNC1wNTAtbmF0aXZlLmxpc3RlbmluZy1vbmx5LndhdiIsImxpc3RlbmluZ1Bvc3RHYWluIjp7InNvdXJjZU1hdGNoZWRSbXMiOjAuMDIsInNvdXJjZU1hdGNoZWRQZWFrIjowLjE0NjE4NzA1MjEzMDY5OTE2LCJmaW5hbFRhcmdldFJtcyI6MC4wOCwicG9zdEdhaW5MaW5lYXIiOjQuMCwicG9zdEdhaW5EYiI6MTIuMDQxMTk5ODI2NTU5MjQ4LCJwcmVkaWN0ZWRQb3N0R2FpblBlYWsiOjAuNTg0NzQ4MjA4NTIyNzk2Nn19fX0sIm1lYXN1cmVtZW50IjpudWxsLCJhbmFseXNpc1N1bW1hcnkiOm51bGx9LHsiaWQiOiJjcm9zcy1wbGF0ZS0wNCIsImxhYmVsIjoiQ29tcGFyaXNvbiA0IiwiYSI6eyJsYWJlbCI6IjIwMjYxMDA3LXRyYWlsLXBsYXRlLTEiLCJzb3VyY2VNYW5pZmVzdEVudHJ5SWQiOiIyMDI2MTAwNy10cmFpbC1wbGF0ZS0xLXA1MC1uYXRpdmUiLCJtZWFzdXJlbWVudE1ldGFkYXRhIjp7ImNvcnB1c0tleSI6IjIwMjYxMDA3LXRyYWlsLXBsYXRlLTEiLCJzZWVkIjoyMDI2MTAwNywicGxhdGVJZCI6InRyYWlsLXBsYXRlLTEiLCJnZW9tZXRyeSI6eyJzb2x2ZXJOb2RlcyI6OTcsImdlb2Rlc2ljTGVuZ3RoIjowLjc5NjUxNjI5MDA4NzQ5NTcsIm1lYW5IYWxmV2lkdGgiOjAuMDEzODIyNDgxOTQwMjY5NzQyLCJib3VuZGFyeUZyYWN0aW9uIjowLjc1MjU3NzMxOTU4NzYyODksInBpY2t1cERpc3RhbmNlIjowLjM2MjIwMzE2OTEzODYzNjl9LCJtYXRlcmlhbCI6eyJzdGlmZm5lc3MiOjAuOTEwODg0MzI1MDk3NDMsImRlbnNpdHkiOjEuMiwiZGFtcGluZyI6MC4zNTQzNTM3MzAwMzg5NzE5N319LCJhdWRpbyI6eyJmaXhlZEdhaW4iOnsiYnl0ZXMiOjU3NjA0NCwic2hhMjU2IjoiYmQ2ZDg4NjEwZGRhMjM3MTIzZDdlYmNhMWIyYzRmNmFmOTk2MmZjY2Y1MzY2MjIyOGViNDA1MzlmNGZiN2I5MyIsInNvdXJjZU1hbmlmZXN0RW50cnlJZCI6IjIwMjYxMDA3LXRyYWlsLXBsYXRlLTEtcDUwLW5hdGl2ZSIsInJlbGF0aXZlUGF0aCI6Ii4uLy4uLy4uLy4uL3Rlc3QtcmVzdWx0cy9hbnQtcGxhdGUtc29uaWMtaW5kaXZpZHVhbGl0eS0yMDI2MTAxMy8yMDI2MTAwNy10cmFpbC1wbGF0ZS0xLXA1MC1uYXRpdmUubWVhc3VyZW1lbnQud2F2In0sInJtc01hdGNoZWRMaXN0ZW5pbmdPbmx5Ijp7ImJ5dGVzIjo1NzYwNDQsInNoYTI1NiI6ImY0NzZjZWJiNWRhNTEzMDgxMTA3ZTZkNDhhNWU1OWZhYTVjNGYxNjIzYWU2ZWEyODJkOWEwYWZlY2ZiODk4M2QiLCJnYWluIjo0LjUwMjUzNjExNTA2MDkyOSwidGFyZ2V0Um1zIjowLjAyLCJwZWFrIjowLjEyNDg0MjIwNDE1MzUzNzc1LCJzb3VyY2VNYW5pZmVzdEVudHJ5SWQiOiIyMDI2MTAwNy10cmFpbC1wbGF0ZS0xLXA1MC1uYXRpdmUiLCJyZWxhdGl2ZVBhdGgiOiIuLi8uLi8uLi8uLi90ZXN0LXJlc3VsdHMvYW50LXBsYXRlLXNvbmljLWluZGl2aWR1YWxpdHktMjAyNjEwMTMvMjAyNjEwMDctdHJhaWwtcGxhdGUtMS1wNTAtbmF0aXZlLmxpc3RlbmluZy1vbmx5LndhdiIsImxpc3RlbmluZ1Bvc3RHYWluIjp7InNvdXJjZU1hdGNoZWRSbXMiOjAuMDIsInNvdXJjZU1hdGNoZWRQZWFrIjowLjEyNDg0MjIwNDE1MzUzNzc1LCJmaW5hbFRhcmdldFJtcyI6MC4wOCwicG9zdEdhaW5MaW5lYXIiOjQuMCwicG9zdEdhaW5EYiI6MTIuMDQxMTk5ODI2NTU5MjQ4LCJwcmVkaWN0ZWRQb3N0R2FpblBlYWsiOjAuNDk5MzY4ODE2NjE0MTUxfX19fSwiYiI6eyJsYWJlbCI6IjIwMjYxMDA3LXRyYWlsLXBsYXRlLTI2Iiwic291cmNlTWFuaWZlc3RFbnRyeUlkIjoiMjAyNjEwMDctdHJhaWwtcGxhdGUtMjYtcDUwLW5hdGl2ZSIsIm1lYXN1cmVtZW50TWV0YWRhdGEiOnsiY29ycHVzS2V5IjoiMjAyNjEwMDctdHJhaWwtcGxhdGUtMjYiLCJzZWVkIjoyMDI2MTAwNywicGxhdGVJZCI6InRyYWlsLXBsYXRlLTI2IiwiZ2VvbWV0cnkiOnsic29sdmVyTm9kZXMiOjM1MCwiZ2VvZGVzaWNMZW5ndGgiOjAuODM5MzY5NjM1NDc1NTUzMywibWVhbkhhbGZXaWR0aCI6MC4wMTMwMTU4NTA2OTI1Njk1NDgsImJvdW5kYXJ5RnJhY3Rpb24iOjAuNjA4NTcxNDI4NTcxNDI4NSwicGlja3VwRGlzdGFuY2UiOjAuMzg5NjE1OTA1NzU0MTQyfSwibWF0ZXJpYWwiOnsic3RpZmZuZXNzIjowLjkxNDY3NjI4NzIzMjUxNzQsImRlbnNpdHkiOjEuMiwiZGFtcGluZyI6MC4zNTU4NzA1MTQ4OTMwMDd9fSwiYXVkaW8iOnsiZml4ZWRHYWluIjp7ImJ5dGVzIjo1NzYwNDQsInNoYTI1NiI6IjVmMjNmMmVhNTc0YTQ0NzI3ZWFhNTcyZjE3ZWEzMTRiYWVlZjAwYTFhNWNiNDVkYWQ0OTBjOGFkNTJhZjk0MTMiLCJzb3VyY2VNYW5pZmVzdEVudHJ5SWQiOiIyMDI2MTAwNy10cmFpbC1wbGF0ZS0yNi1wNTAtbmF0aXZlIiwicmVsYXRpdmVQYXRoIjoiLi4vLi4vLi4vLi4vdGVzdC1yZXN1bHRzL2FudC1wbGF0ZS1zb25pYy1pbmRpdmlkdWFsaXR5LTIwMjYxMDEzLzIwMjYxMDA3LXRyYWlsLXBsYXRlLTI2LXA1MC1uYXRpdmUubWVhc3VyZW1lbnQud2F2In0sInJtc01hdGNoZWRMaXN0ZW5pbmdPbmx5Ijp7ImJ5dGVzIjo1NzYwNDQsInNoYTI1NiI6ImI0MjAwNzY1YjBkMzdmMDY5Y2E1MzVjZmZlNTg0MjY2NDI2NWZkOTNhYTQ5Njk1ZDdhMzg5NTQ3ZGFiMmFhNDciLCJnYWluIjo2LjM0NDA5NDQ5MTkxNjQwNTUsInRhcmdldFJtcyI6MC4wMiwicGVhayI6MC4xOTAxMDkzNDIzMzY2NTQ2Niwic291cmNlTWFuaWZlc3RFbnRyeUlkIjoiMjAyNjEwMDctdHJhaWwtcGxhdGUtMjYtcDUwLW5hdGl2ZSIsInJlbGF0aXZlUGF0aCI6Ii4uLy4uLy4uLy4uL3Rlc3QtcmVzdWx0cy9hbnQtcGxhdGUtc29uaWMtaW5kaXZpZHVhbGl0eS0yMDI2MTAxMy8yMDI2MTAwNy10cmFpbC1wbGF0ZS0yNi1wNTAtbmF0aXZlLmxpc3RlbmluZy1vbmx5LndhdiIsImxpc3RlbmluZ1Bvc3RHYWluIjp7InNvdXJjZU1hdGNoZWRSbXMiOjAuMDIsInNvdXJjZU1hdGNoZWRQZWFrIjowLjE5MDEwOTM0MjMzNjY1NDY2LCJmaW5hbFRhcmdldFJtcyI6MC4wOCwicG9zdEdhaW5MaW5lYXIiOjQuMCwicG9zdEdhaW5EYiI6MTIuMDQxMTk5ODI2NTU5MjQ4LCJwcmVkaWN0ZWRQb3N0R2FpblBlYWsiOjAuNzYwNDM3MzY5MzQ2NjE4N319fX0sIm1lYXN1cmVtZW50IjpudWxsLCJhbmFseXNpc1N1bW1hcnkiOm51bGx9LHsiaWQiOiJjcm9zcy1wbGF0ZS0wNSIsImxhYmVsIjoiQ29tcGFyaXNvbiA1IiwiYSI6eyJsYWJlbCI6IjIwMjYxMDA2LXRyYWlsLXBsYXRlLTI0Iiwic291cmNlTWFuaWZlc3RFbnRyeUlkIjoiMjAyNjEwMDYtdHJhaWwtcGxhdGUtMjQtcDUwLW5hdGl2ZSIsIm1lYXN1cmVtZW50TWV0YWRhdGEiOnsiY29ycHVzS2V5IjoiMjAyNjEwMDYtdHJhaWwtcGxhdGUtMjQiLCJzZWVkIjoyMDI2MTAwNiwicGxhdGVJZCI6InRyYWlsLXBsYXRlLTI0IiwiZ2VvbWV0cnkiOnsic29sdmVyTm9kZXMiOjI1NCwiZ2VvZGVzaWNMZW5ndGgiOjAuODczODEyNTYxMTQ1NDcwNywibWVhbkhhbGZXaWR0aCI6MC4wMTMyNjkxMTkwMjc1NTcwODYsImJvdW5kYXJ5RnJhY3Rpb24iOjAuNzcxNjUzNTQzMzA3MDg2NiwicGlja3VwRGlzdGFuY2UiOjAuMzkxNzQzMDMyOTY2OTEzNTR9LCJtYXRlcmlhbCI6eyJzdGlmZm5lc3MiOjAuOTA2MjIwNTEzNDI1NTUwOCwiZGVuc2l0eSI6MS4yLCJkYW1waW5nIjowLjM1MjQ4ODIwNTM3MDIyMDN9fSwiYXVkaW8iOnsiZml4ZWRHYWluIjp7ImJ5dGVzIjo1NzYwNDQsInNoYTI1NiI6IjUyNWM5MWYxMGU1ZjBhNzYxMzI4ZDJjNzhlYTU0MmI0MTI1NmNjZTEwMzdmMjIxYTQ5M2U1NGMyMTA0YmQ4ZWUiLCJzb3VyY2VNYW5pZmVzdEVudHJ5SWQiOiIyMDI2MTAwNi10cmFpbC1wbGF0ZS0yNC1wNTAtbmF0aXZlIiwicmVsYXRpdmVQYXRoIjoiLi4vLi4vLi4vLi4vdGVzdC1yZXN1bHRzL2FudC1wbGF0ZS1zb25pYy1pbmRpdmlkdWFsaXR5LTIwMjYxMDEzLzIwMjYxMDA2LXRyYWlsLXBsYXRlLTI0LXA1MC1uYXRpdmUubWVhc3VyZW1lbnQud2F2In0sInJtc01hdGNoZWRMaXN0ZW5pbmdPbmx5Ijp7ImJ5dGVzIjo1NzYwNDQsInNoYTI1NiI6ImIxMTJlMTVkYmIzYjE4NDA0MzVjNTBlZDFiZjA5NTk2ZjkxM2VlMWI1N2Y3OTFjM2Q2NGQ2ZDA1M2UwZDNiM2QiLCJnYWluIjo0LjU0MDI0NDU4OTQyMzkyNSwidGFyZ2V0Um1zIjowLjAyLCJwZWFrIjowLjEyMjY0MDEzMjkwNDA1MjczLCJzb3VyY2VNYW5pZmVzdEVudHJ5SWQiOiIyMDI2MTAwNi10cmFpbC1wbGF0ZS0yNC1wNTAtbmF0aXZlIiwicmVsYXRpdmVQYXRoIjoiLi4vLi4vLi4vLi4vdGVzdC1yZXN1bHRzL2FudC1wbGF0ZS1zb25pYy1pbmRpdmlkdWFsaXR5LTIwMjYxMDEzLzIwMjYxMDA2LXRyYWlsLXBsYXRlLTI0LXA1MC1uYXRpdmUubGlzdGVuaW5nLW9ubHkud2F2IiwibGlzdGVuaW5nUG9zdEdhaW4iOnsic291cmNlTWF0Y2hlZFJtcyI6MC4wMiwic291cmNlTWF0Y2hlZFBlYWsiOjAuMTIyNjQwMTMyOTA0MDUyNzMsImZpbmFsVGFyZ2V0Um1zIjowLjA4LCJwb3N0R2FpbkxpbmVhciI6NC4wLCJwb3N0R2FpbkRiIjoxMi4wNDExOTk4MjY1NTkyNDgsInByZWRpY3RlZFBvc3RHYWluUGVhayI6MC40OTA1NjA1MzE2MTYyMTA5NH19fX0sImIiOnsibGFiZWwiOiIyMDI2MTAwNS10cmFpbC1wbGF0ZS0yMyIsInNvdXJjZU1hbmlmZXN0RW50cnlJZCI6IjIwMjYxMDA1LXRyYWlsLXBsYXRlLTIzLXA1MC1uYXRpdmUiLCJtZWFzdXJlbWVudE1ldGFkYXRhIjp7ImNvcnB1c0tleSI6IjIwMjYxMDA1LXRyYWlsLXBsYXRlLTIzIiwic2VlZCI6MjAyNjEwMDUsInBsYXRlSWQiOiJ0cmFpbC1wbGF0ZS0yMyIsImdlb21ldHJ5Ijp7InNvbHZlck5vZGVzIjoyOTEsImdlb2Rlc2ljTGVuZ3RoIjowLjc0MjM4ODU0NjY3OTgwMTcsIm1lYW5IYWxmV2lkdGgiOjAuMDE0MDI4NTIwODg2NTE0NzI5LCJib3VuZGFyeUZyYWN0aW9uIjowLjY3MDEwMzA5Mjc4MzUwNTEsInBpY2t1cERpc3RhbmNlIjowLjMzOTc4OTczNDU1OTM0Njh9LCJtYXRlcmlhbCI6eyJzdGlmZm5lc3MiOjAuOTA5NzkzODI3NTk0NjI2OCwiZGVuc2l0eSI6MS4yLCJkYW1waW5nIjowLjM1MzkxNzUzMTAzNzg1MDczfX0sImF1ZGlvIjp7ImZpeGVkR2FpbiI6eyJieXRlcyI6NTc2MDQ0LCJzaGEyNTYiOiJjMDRlMjU3MTNhNTFlMGFhOGYzZGY0ZjNiYjA5NTRhOTdjYzdmM2M5ZTg1YzA3NWYyNmM4YzVlMGJlN2E0ZTJjIiwic291cmNlTWFuaWZlc3RFbnRyeUlkIjoiMjAyNjEwMDUtdHJhaWwtcGxhdGUtMjMtcDUwLW5hdGl2ZSIsInJlbGF0aXZlUGF0aCI6Ii4uLy4uLy4uLy4uL3Rlc3QtcmVzdWx0cy9hbnQtcGxhdGUtc29uaWMtaW5kaXZpZHVhbGl0eS0yMDI2MTAxMy8yMDI2MTAwNS10cmFpbC1wbGF0ZS0yMy1wNTAtbmF0aXZlLm1lYXN1cmVtZW50LndhdiJ9LCJybXNNYXRjaGVkTGlzdGVuaW5nT25seSI6eyJieXRlcyI6NTc2MDQ0LCJzaGEyNTYiOiI2NmFiZjZmMTVhY2YxNGFlYTk0NDRhNzRlMzRkZDg5NjlkNTg0ZDVjOGYzYjEwNWFmYzdiYzllNTVhZjA4YThjIiwiZ2FpbiI6NC42NjEzNDg1NDE2NjEzMzEsInRhcmdldFJtcyI6MC4wMiwicGVhayI6MC4xMjM0MTQ5NDg1ODI2NDkyMywic291cmNlTWFuaWZlc3RFbnRyeUlkIjoiMjAyNjEwMDUtdHJhaWwtcGxhdGUtMjMtcDUwLW5hdGl2ZSIsInJlbGF0aXZlUGF0aCI6Ii4uLy4uLy4uLy4uL3Rlc3QtcmVzdWx0cy9hbnQtcGxhdGUtc29uaWMtaW5kaXZpZHVhbGl0eS0yMDI2MTAxMy8yMDI2MTAwNS10cmFpbC1wbGF0ZS0yMy1wNTAtbmF0aXZlLmxpc3RlbmluZy1vbmx5LndhdiIsImxpc3RlbmluZ1Bvc3RHYWluIjp7InNvdXJjZU1hdGNoZWRSbXMiOjAuMDIsInNvdXJjZU1hdGNoZWRQZWFrIjowLjEyMzQxNDk0ODU4MjY0OTIzLCJmaW5hbFRhcmdldFJtcyI6MC4wOCwicG9zdEdhaW5MaW5lYXIiOjQuMCwicG9zdEdhaW5EYiI6MTIuMDQxMTk5ODI2NTU5MjQ4LCJwcmVkaWN0ZWRQb3N0R2FpblBlYWsiOjAuNDkzNjU5Nzk0MzMwNTk2OX19fX0sIm1lYXN1cmVtZW50IjpudWxsLCJhbmFseXNpc1N1bW1hcnkiOm51bGx9LHsiaWQiOiJjcm9zcy1wbGF0ZS0wNiIsImxhYmVsIjoiQ29tcGFyaXNvbiA2IiwiYSI6eyJsYWJlbCI6IjIwMjYxMDA1LXRyYWlsLXBsYXRlLTI3Iiwic291cmNlTWFuaWZlc3RFbnRyeUlkIjoiMjAyNjEwMDUtdHJhaWwtcGxhdGUtMjctcDUwLW5hdGl2ZSIsIm1lYXN1cmVtZW50TWV0YWRhdGEiOnsiY29ycHVzS2V5IjoiMjAyNjEwMDUtdHJhaWwtcGxhdGUtMjciLCJzZWVkIjoyMDI2MTAwNSwicGxhdGVJZCI6InRyYWlsLXBsYXRlLTI3IiwiZ2VvbWV0cnkiOnsic29sdmVyTm9kZXMiOjIzNywiZ2VvZGVzaWNMZW5ndGgiOjAuODIxOTI5MDY0NDI4MjY1MiwibWVhbkhhbGZXaWR0aCI6MC4wMTMwNjE3MTc1OTM1NjEyNTYsImJvdW5kYXJ5RnJhY3Rpb24iOjAuNzM4Mzk2NjI0NDcyNTczOCwicGlja3VwRGlzdGFuY2UiOjAuMzczNzk1Mzg3NDY0NTIwMjN9LCJtYXRlcmlhbCI6eyJzdGlmZm5lc3MiOjAuOTE3OTgyOTcwMzU0MDYzMywiZGVuc2l0eSI6MS4yLCJkYW1waW5nIjowLjM1NzE5MzE4ODE0MTYyNTN9fSwiYXVkaW8iOnsiZml4ZWRHYWluIjp7ImJ5dGVzIjo1NzYwNDQsInNoYTI1NiI6IjU3YzljMWI3Y2QzMzg0ZTJhZDZmYjkwNWIwNmM1NzZhMjlkNmU2NzYyNGFlNzMxNzcxOWI3MjhlZWQwYTVlNGQiLCJzb3VyY2VNYW5pZmVzdEVudHJ5SWQiOiIyMDI2MTAwNS10cmFpbC1wbGF0ZS0yNy1wNTAtbmF0aXZlIiwicmVsYXRpdmVQYXRoIjoiLi4vLi4vLi4vLi4vdGVzdC1yZXN1bHRzL2FudC1wbGF0ZS1zb25pYy1pbmRpdmlkdWFsaXR5LTIwMjYxMDEzLzIwMjYxMDA1LXRyYWlsLXBsYXRlLTI3LXA1MC1uYXRpdmUubWVhc3VyZW1lbnQud2F2In0sInJtc01hdGNoZWRMaXN0ZW5pbmdPbmx5Ijp7ImJ5dGVzIjo1NzYwNDQsInNoYTI1NiI6ImE4NjkyY2JhNjYyNmQ5NzIwN2QyYjdhZTc3NDcxMDVjZDkyY2M2OGE5NjYyM2Q5YjRiNGVmMmE2MzAyNGMyYjAiLCJnYWluIjo0Ljg0NzExNTUyNDk4NTkzMzUsInRhcmdldFJtcyI6MC4wMiwicGVhayI6MC4xMjEyMzkzMTk0NDM3MDI3LCJzb3VyY2VNYW5pZmVzdEVudHJ5SWQiOiIyMDI2MTAwNS10cmFpbC1wbGF0ZS0yNy1wNTAtbmF0aXZlIiwicmVsYXRpdmVQYXRoIjoiLi4vLi4vLi4vLi4vdGVzdC1yZXN1bHRzL2FudC1wbGF0ZS1zb25pYy1pbmRpdmlkdWFsaXR5LTIwMjYxMDEzLzIwMjYxMDA1LXRyYWlsLXBsYXRlLTI3LXA1MC1uYXRpdmUubGlzdGVuaW5nLW9ubHkud2F2IiwibGlzdGVuaW5nUG9zdEdhaW4iOnsic291cmNlTWF0Y2hlZFJtcyI6MC4wMiwic291cmNlTWF0Y2hlZFBlYWsiOjAuMTIxMjM5MzE5NDQzNzAyNywiZmluYWxUYXJnZXRSbXMiOjAuMDgsInBvc3RHYWluTGluZWFyIjo0LjAsInBvc3RHYWluRGIiOjEyLjA0MTE5OTgyNjU1OTI0OCwicHJlZGljdGVkUG9zdEdhaW5QZWFrIjowLjQ4NDk1NzI3Nzc3NDgxMDh9fX19LCJiIjp7ImxhYmVsIjoiMjAyNjEwMDctdHJhaWwtcGxhdGUtMzEiLCJzb3VyY2VNYW5pZmVzdEVudHJ5SWQiOiIyMDI2MTAwNy10cmFpbC1wbGF0ZS0zMS1wNTAtbmF0aXZlIiwibWVhc3VyZW1lbnRNZXRhZGF0YSI6eyJjb3JwdXNLZXkiOiIyMDI2MTAwNy10cmFpbC1wbGF0ZS0zMSIsInNlZWQiOjIwMjYxMDA3LCJwbGF0ZUlkIjoidHJhaWwtcGxhdGUtMzEiLCJnZW9tZXRyeSI6eyJzb2x2ZXJOb2RlcyI6MzUwLCJnZW9kZXNpY0xlbmd0aCI6MC45NDAyNzI2NTA2MDg0NjgxLCJtZWFuSGFsZldpZHRoIjowLjAxMzMxMzY0OTkyMTc5ODQwNywiYm91bmRhcnlGcmFjdGlvbiI6MC43MDI4NTcxNDI4NTcxNDI4LCJwaWNrdXBEaXN0YW5jZSI6MC40NDQyMzA0ODA5Njg2MTQ1Nn0sIm1hdGVyaWFsIjp7InN0aWZmbmVzcyI6MC45MjAwNDUyNjU3NDYwNzMxLCJkZW5zaXR5IjoxLjIsImRhbXBpbmciOjAuMzU4MDE4MTA2Mjk4NDI5MjN9fSwiYXVkaW8iOnsiZml4ZWRHYWluIjp7ImJ5dGVzIjo1NzYwNDQsInNoYTI1NiI6ImEzN2JjNDFkZmU2YTBhOTBmODA5NTM0MmZjZTFkYjRmMzg4MzdhNGE4ODVjZTQzNzQxZDRiY2YxYTJhZWI3NjEiLCJzb3VyY2VNYW5pZmVzdEVudHJ5SWQiOiIyMDI2MTAwNy10cmFpbC1wbGF0ZS0zMS1wNTAtbmF0aXZlIiwicmVsYXRpdmVQYXRoIjoiLi4vLi4vLi4vLi4vdGVzdC1yZXN1bHRzL2FudC1wbGF0ZS1zb25pYy1pbmRpdmlkdWFsaXR5LTIwMjYxMDEzLzIwMjYxMDA3LXRyYWlsLXBsYXRlLTMxLXA1MC1uYXRpdmUubWVhc3VyZW1lbnQud2F2In0sInJtc01hdGNoZWRMaXN0ZW5pbmdPbmx5Ijp7ImJ5dGVzIjo1NzYwNDQsInNoYTI1NiI6ImUwNWQzZGQ1MzQ3ZWJlOGUwOTU4OTM1YjllMzI1M2FhMTBkYmJjNmUzMmFkNTdmOTgzZjcyY2U3OWYyZjQ1ZmIiLCJnYWluIjo1LjAxOTA5MjQwMzkxMDI1NiwidGFyZ2V0Um1zIjowLjAyLCJwZWFrIjowLjA5Mjk3NjEzMDU0NTEzOTMxLCJzb3VyY2VNYW5pZmVzdEVudHJ5SWQiOiIyMDI2MTAwNy10cmFpbC1wbGF0ZS0zMS1wNTAtbmF0aXZlIiwicmVsYXRpdmVQYXRoIjoiLi4vLi4vLi4vLi4vdGVzdC1yZXN1bHRzL2FudC1wbGF0ZS1zb25pYy1pbmRpdmlkdWFsaXR5LTIwMjYxMDEzLzIwMjYxMDA3LXRyYWlsLXBsYXRlLTMxLXA1MC1uYXRpdmUubGlzdGVuaW5nLW9ubHkud2F2IiwibGlzdGVuaW5nUG9zdEdhaW4iOnsic291cmNlTWF0Y2hlZFJtcyI6MC4wMiwic291cmNlTWF0Y2hlZFBlYWsiOjAuMDkyOTc2MTMwNTQ1MTM5MzEsImZpbmFsVGFyZ2V0Um1zIjowLjA4LCJwb3N0R2FpbkxpbmVhciI6NC4wLCJwb3N0R2FpbkRiIjoxMi4wNDExOTk4MjY1NTkyNDgsInByZWRpY3RlZFBvc3RHYWluUGVhayI6MC4zNzE5MDQ1MjIxODA1NTcyNX19fX0sIm1lYXN1cmVtZW50IjpudWxsLCJhbmFseXNpc1N1bW1hcnkiOm51bGx9XSwiZXJiIjpudWxsLCJsaXN0ZW5pbmdQb3N0R2FpbiI6eyJ0YXJnZXRSbXMiOjAuMDgsInN0YWdlIjoiYWZ0ZXIgZXhpc3RpbmcgUk1TLW1hdGNoZWQgbGlzdGVuaW5nIFdBViwgYmVmb3JlIHBsYXliYWNrIiwibWVhbmluZyI6ImRpZ2l0YWwgbGlzdGVuaW5nIHRhcmdldDsgbm90IGNhbGlicmF0ZWQgU1BMIG9yIGVxdWFsLWxvdWRuZXNzIGV2aWRlbmNlIn0sImJsaW5kU2Vzc2lvbiI6eyJlbmFibGVkIjp0cnVlLCJyYW5kb21pemF0aW9uQWxnb3JpdGhtIjoiZm52MWEzMi14b3JzaGlmdDMyLWZpc2hlci15YXRlcy12MSIsInRyaWFsSWRzIjpbImNyb3NzLXBsYXRlLTAxIiwiY3Jvc3MtcGxhdGUtMDIiLCJjcm9zcy1wbGF0ZS0wMyIsImNyb3NzLXBsYXRlLTA0IiwiY3Jvc3MtcGxhdGUtMDUiLCJjcm9zcy1wbGF0ZS0wNiIsImNvbnRyb2wtYWEtZmlyc3QtcDUwIl0sImNhdGNoVHJpYWwiOnsiaWQiOiJjb250cm9sLWFhLWZpcnN0LXA1MCIsImxhYmVsIjoiQS9BIGNhdGNoIHRyaWFsIiwiaXNDYXRjaCI6dHJ1ZSwic291cmNlUGFpcklkIjoiY3Jvc3MtcGxhdGUtMDEiLCJzb3VyY2VBcm0iOiJhIiwic291cmNlTWFuaWZlc3RFbnRyeUlkIjoiMjAyNjEwMDUtdHJhaWwtcGxhdGUtMTUtcDUwLW5hdGl2ZSIsImEiOnsibGFiZWwiOiIyMDI2MTAwNS10cmFpbC1wbGF0ZS0xNSIsImF1ZGlvIjp7ImZpeGVkR2FpbiI6eyJieXRlcyI6NTc2MDQ0LCJzaGEyNTYiOiIxZjA3YmZiYWE1MGViN2QyMjlmZWNhNTNlZDg0MmQ3YjI0MGE1ODFiZTgzNDgwNmY4Y2Y1YTFkMzcxNzFiMTI3Iiwic291cmNlTWFuaWZlc3RFbnRyeUlkIjoiMjAyNjEwMDUtdHJhaWwtcGxhdGUtMTUtcDUwLW5hdGl2ZSIsInJlbGF0aXZlUGF0aCI6Ii4uLy4uLy4uLy4uL3Rlc3QtcmVzdWx0cy9hbnQtcGxhdGUtc29uaWMtaW5kaXZpZHVhbGl0eS0yMDI2MTAxMy8yMDI2MTAwNS10cmFpbC1wbGF0ZS0xNS1wNTAtbmF0aXZlLm1lYXN1cmVtZW50LndhdiJ9LCJybXNNYXRjaGVkTGlzdGVuaW5nT25seSI6eyJieXRlcyI6NTc2MDQ0LCJzaGEyNTYiOiI5YTJiOTI1M2Q2MzMwYTY1MGI0YmU5YzdiNWM2MGViZmYzMjcxMWI1MWQ3YTZmNGIyOWYxNDMyZWM3YTdhYmJlIiwiZ2FpbiI6My42NDE3MTU3OTA4MDA1ODg2LCJ0YXJnZXRSbXMiOjAuMDIsInBlYWsiOjAuMTQ4MTE5MjU1OTAwMzgzLCJzb3VyY2VNYW5pZmVzdEVudHJ5SWQiOiIyMDI2MTAwNS10cmFpbC1wbGF0ZS0xNS1wNTAtbmF0aXZlIiwicmVsYXRpdmVQYXRoIjoiLi4vLi4vLi4vLi4vdGVzdC1yZXN1bHRzL2FudC1wbGF0ZS1zb25pYy1pbmRpdmlkdWFsaXR5LTIwMjYxMDEzLzIwMjYxMDA1LXRyYWlsLXBsYXRlLTE1LXA1MC1uYXRpdmUubGlzdGVuaW5nLW9ubHkud2F2IiwibGlzdGVuaW5nUG9zdEdhaW4iOnsic291cmNlTWF0Y2hlZFJtcyI6MC4wMiwic291cmNlTWF0Y2hlZFBlYWsiOjAuMTQ4MTE5MjU1OTAwMzgzLCJmaW5hbFRhcmdldFJtcyI6MC4wOCwicG9zdEdhaW5MaW5lYXIiOjQuMCwicG9zdEdhaW5EYiI6MTIuMDQxMTk5ODI2NTU5MjQ4LCJwcmVkaWN0ZWRQb3N0R2FpblBlYWsiOjAuNTkyNDc3MDIzNjAxNTMyfX19fSwiYiI6eyJsYWJlbCI6IjIwMjYxMDA1LXRyYWlsLXBsYXRlLTE1IiwiYXVkaW8iOnsiZml4ZWRHYWluIjp7ImJ5dGVzIjo1NzYwNDQsInNoYTI1NiI6IjFmMDdiZmJhYTUwZWI3ZDIyOWZlY2E1M2VkODQyZDdiMjQwYTU4MWJlODM0ODA2ZjhjZjVhMWQzNzE3MWIxMjciLCJzb3VyY2VNYW5pZmVzdEVudHJ5SWQiOiIyMDI2MTAwNS10cmFpbC1wbGF0ZS0xNS1wNTAtbmF0aXZlIiwicmVsYXRpdmVQYXRoIjoiLi4vLi4vLi4vLi4vdGVzdC1yZXN1bHRzL2FudC1wbGF0ZS1zb25pYy1pbmRpdmlkdWFsaXR5LTIwMjYxMDEzLzIwMjYxMDA1LXRyYWlsLXBsYXRlLTE1LXA1MC1uYXRpdmUubWVhc3VyZW1lbnQud2F2In0sInJtc01hdGNoZWRMaXN0ZW5pbmdPbmx5Ijp7ImJ5dGVzIjo1NzYwNDQsInNoYTI1NiI6IjlhMmI5MjUzZDYzMzBhNjUwYjRiZTljN2I1YzYwZWJmZjMyNzExYjUxZDdhNmY0YjI5ZjE0MzJlYzdhN2FiYmUiLCJnYWluIjozLjY0MTcxNTc5MDgwMDU4ODYsInRhcmdldFJtcyI6MC4wMiwicGVhayI6MC4xNDgxMTkyNTU5MDAzODMsInNvdXJjZU1hbmlmZXN0RW50cnlJZCI6IjIwMjYxMDA1LXRyYWlsLXBsYXRlLTE1LXA1MC1uYXRpdmUiLCJyZWxhdGl2ZVBhdGgiOiIuLi8uLi8uLi8uLi90ZXN0LXJlc3VsdHMvYW50LXBsYXRlLXNvbmljLWluZGl2aWR1YWxpdHktMjAyNjEwMTMvMjAyNjEwMDUtdHJhaWwtcGxhdGUtMTUtcDUwLW5hdGl2ZS5saXN0ZW5pbmctb25seS53YXYiLCJsaXN0ZW5pbmdQb3N0R2FpbiI6eyJzb3VyY2VNYXRjaGVkUm1zIjowLjAyLCJzb3VyY2VNYXRjaGVkUGVhayI6MC4xNDgxMTkyNTU5MDAzODMsImZpbmFsVGFyZ2V0Um1zIjowLjA4LCJwb3N0R2FpbkxpbmVhciI6NC4wLCJwb3N0R2FpbkRiIjoxMi4wNDExOTk4MjY1NTkyNDgsInByZWRpY3RlZFBvc3RHYWluUGVhayI6MC41OTI0NzcwMjM2MDE1MzJ9fX19LCJtZWFzdXJlbWVudCI6eyJ0eXBlIjoiZXhwbG9yYXRvcnkgQS9BIGNhdGNoIiwic291cmNlUGFpcklkIjoiY3Jvc3MtcGxhdGUtMDEiLCJzb3VyY2VBcm0iOiJhIiwic2FtZVNvdXJjZUZvckJvdGhTaWRlcyI6dHJ1ZX0sImFuYWx5c2lzU3VtbWFyeSI6bnVsbH0sInBhaXJpbmdSdWxlIjoibWFuaWZlc3Qtb3JkZXItYWRqYWNlbnQtdjEiLCJwcmVSZXZlYWxNb2RlIjoibWF0Y2hlZC1vbmx5In19</script>
+<title></title><style>
+:root{color-scheme:light;font:16px/1.5 system-ui,sans-serif;color:#202a33;background:#f4f6f8}body{max-width:1100px;margin:2rem auto;padding:0 1rem}h1{font-size:1.7rem}.intro,.pair-card,.blind-card,#blind-complete{background:white;border:1px solid #ccd3da;border-radius:8px;padding:1rem;margin:1rem 0}.intro p{margin:.45rem 0}.pair-card h2,.blind-card h2{font-size:1.2rem;margin:0 0 .8rem}.audio-row{display:grid;grid-template-columns:minmax(4rem,1fr) auto minmax(16rem,2fr);gap:.7rem;align-items:center;padding:.55rem 0;border-top:1px solid #e3e7eb}.audio-row audio{width:100%}button,select,textarea,input{font:inherit}button{padding:.4rem .65rem}fieldset{border:1px solid #ccd3da;border-radius:6px;margin:.8rem 0;padding:.7rem}.mode-option{display:block}.mode-status,.scale-note,.save-status,.footer{color:#52606d;font-size:.92rem}.notes{border-top:1px solid #dce1e6;margin-top:1rem;padding-top:.7rem}.notes h3{font-size:1rem;margin:.25rem 0}.notes label,.blind-card label{display:block;margin:.55rem 0}.notes textarea,.blind-card textarea{display:block;width:min(100%,44rem);box-sizing:border-box;margin-top:.25rem}details{border-top:1px solid #e3e7eb;padding:.7rem 0}summary{cursor:pointer;font-weight:600}.erb-panels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.7rem}.erb-panels figure{margin:.3rem 0;min-width:0}.erb-panels figcaption{font-weight:600;margin-bottom:.25rem}.erb-panels canvas{display:block;width:100%;height:auto;border:1px solid #aeb6bf}.measurement-json{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f7f9;padding:.65rem;font-size:.8rem}.judgment-record{border:1px solid #e3e7eb;border-radius:5px;margin:.5rem 0;padding:.5rem}.session-setup{border-top:1px solid #e3e7eb;margin-top:.8rem;padding-top:.8rem}#trial-navigation{display:flex;gap:.6rem;margin:1rem 0}#export-notes{margin:1rem 0}.footer{font-size:.85rem}@media(max-width:760px){.audio-row{grid-template-columns:1fr}.erb-panels{grid-template-columns:1fr}}
+</style></head><body><main><h1 id="page-title"></h1><section class="intro"><p id="evidence-meta"></p><fieldset><legend>Listening mode</legend><label class="mode-option"><input type="radio" name="listening-mode" value="rms-matched-listening-only" checked> RMS matched — listening-only character comparison</label><label class="mode-option"><input type="radio" name="listening-mode" value="fixed-gain"> Fixed gain — amplitude / transfer context</label><p id="mode-status" class="mode-status"></p></fieldset><section id="session-setup" class="session-setup"><button id="start-session" type="button">Start randomized blind session</button></section><p id="session-meta" class="mode-status"></p></section><section id="blind-app" hidden aria-label="Blind audio evidence session"><article id="blind-card" class="blind-card" hidden></article><nav id="trial-navigation" hidden aria-label="Trial navigation"><button id="previous-trial" type="button">Previous trial</button><button id="next-trial" type="button">Next trial</button></nav><section id="blind-complete" hidden><h2>Session complete</h2><p class="completion-summary"></p><button data-action="review-last" type="button">Review last trial</button> <button id="new-session" type="button">Start another randomized session</button></section></section><section id="pairs" aria-label="A/B listening pairs"></section><button id="export-notes" type="button">Export subjective notes JSON</button><p id="export-status" class="mode-status"></p><p class="footer">Subjective notes stay in this browser until explicit export and remain separate from measurement evidence. RMS-matched playback is not audibility evidence. ERB analysis always uses fixed-gain source files only.</p></main><script>
+const encodedData = atob(document.getElementById('viewer-data').textContent.trim());
+const DATA = JSON.parse(new TextDecoder().decode(Uint8Array.from(encodedData, char => char.charCodeAt(0))));
+document.title = DATA.title;
+document.getElementById('page-title').textContent = DATA.title;
+document.getElementById('evidence-meta').textContent = DATA.metadata || '';
+const pairRoot = document.getElementById('pairs');
+const modeStatus = document.getElementById('mode-status');
+let audioContext = null;
+const audioOutputs = new WeakMap();
+const modeText = {
+  'rms-matched-listening-only': DATA.listeningPostGain
+    ? 'RMS matched — character comparison only; digital playback target RMS ' + DATA.listeningPostGain.targetRms + '; not audibility evidence; not calibrated SPL.'
+    : 'RMS matched — character comparison only; not audibility evidence.',
+  'fixed-gain': 'Fixed gain — amplitude / transfer context.'
+};
+const modeInputs = Array.from(document.querySelectorAll('input[name="listening-mode"]'));
+function selectedMode() { return document.querySelector('input[name="listening-mode"]:checked').value; }
+function updateRevealModeStatus() {
+  const current = document.querySelector('#reveal-mode-status .current-listening-mode');
+  if (current) current.textContent = 'Listening: ' + (selectedMode() === 'fixed-gain' ? 'fixed gain' : 'RMS matched');
+}
+function make(tag, className, text) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text !== undefined) node.textContent = text;
+  return node;
+}
+function configureAudioGain(audio, record, mode) {
+  let output = audioOutputs.get(audio);
+  const matchedGain = record.listeningPostGain && record.listeningPostGain.postGainLinear;
+  if (!output && (mode === 'fixed-gain' || !matchedGain)) return Promise.resolve();
+  const AudioContextType = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextType) throw new Error('Web Audio API is unavailable in this browser.');
+  if (!audioContext) audioContext = new AudioContextType();
+  if (!output) {
+    const source = audioContext.createMediaElementSource(audio), gain = audioContext.createGain();
+    source.connect(gain); gain.connect(audioContext.destination);
+    output = { gain }; audioOutputs.set(audio, output);
+  }
+  output.gain.gain.value = mode === 'fixed-gain' ? 1 : matchedGain || 1;
+  return audioContext.state === 'suspended' ? audioContext.resume() : Promise.resolve();
+}
+function playClip(audio, record, mode, status) {
+  audio.pause(); audio.src = record.relativePath; audio.load(); audio.currentTime = 0;
+  try {
+    const resumed = configureAudioGain(audio, record, mode);
+    const playing = audio.play();
+    Promise.all([resumed, playing]).catch(error => { status.textContent = 'Playback failed: ' + error.message; });
+  } catch (error) { status.textContent = 'Playback failed: ' + error.message; }
+}
+function keyFor(pair) { return 'ant-audio-evidence-viewer:v1:' + DATA.viewerId + ':' + pair.id; }
+function savedNote(pair) {
+  try { return JSON.parse(localStorage.getItem(keyFor(pair)) || 'null'); }
+  catch (error) { return null; }
+}
+function scaleColor(value, scale, difference) {
+  const t = Math.max(0, Math.min(1, (value - scale[0]) / (scale[1] - scale[0])));
+  if (!difference) {
+    const c = Math.round(24 + t * 220);
+    return 'rgb(' + c + ',' + c + ',' + c + ')';
+  }
+  const left = [59, 76, 192], mid = [247, 247, 247], right = [180, 4, 38];
+  const a = t < 0.5 ? left : mid, b = t < 0.5 ? mid : right, f = t < 0.5 ? t * 2 : (t - 0.5) * 2;
+  return 'rgb(' + a.map((v, i) => Math.round(v + (b[i] - v) * f)).join(',') + ')';
+}
+function drawPanel(canvas, matrix, scale, difference, emptyBands, durationMs) {
+  const ctx = canvas.getContext('2d'), width = canvas.width, height = canvas.height;
+  const left = 35, top = 10, plotW = width - left - 8, plotH = height - 34;
+  ctx.clearRect(0, 0, width, height);
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, width, height);
+  const rows = matrix.length ? matrix[0].length : 0, cols = matrix.length;
+  for (let band = 0; band < rows; band++) {
+    const y = top + (rows - 1 - band) * plotH / rows;
+    for (let frame = 0; frame < cols; frame++) {
+      const x = left + frame * plotW / cols;
+      ctx.fillStyle = emptyBands.includes(band) ? '#aeb4bc' : scaleColor(matrix[frame][band], scale, difference);
+      ctx.fillRect(x, y, plotW / cols + 0.5, plotH / rows + 0.5);
+    }
+  }
+  ctx.strokeStyle = '#535d68'; ctx.strokeRect(left, top, plotW, plotH);
+  ctx.fillStyle = '#39424c'; ctx.font = '11px system-ui';
+  ctx.textAlign = 'right'; ctx.fillText('30', left - 5, top + 8); ctx.fillText('1', left - 5, top + plotH);
+  ctx.textAlign = 'left'; ctx.fillText('0 ms', left, height - 7);
+  ctx.textAlign = 'right'; ctx.fillText(String(durationMs) + ' ms', left + plotW, height - 7);
+}
+function updateAudioMode() {
+  const mode = selectedMode();
+  modeStatus.textContent = modeText[mode];
+  document.querySelectorAll('.pair-card,.blind-card').forEach(card => card.querySelectorAll('audio').forEach(audio => {
+    audio.pause(); audio.removeAttribute('src'); audio.load();
+  }));
+  updateRevealModeStatus();
+}
+function addPair(pair) {
+  const card = make('article', 'pair-card'); card.dataset.pairId = pair.id;
+  card.innerHTML = '<h2 class="pair-title"></h2><div class="audio-controls"></div><section class="notes"><h3>Subjective note</h3><label>Different? <select data-field="different"><option value="">Choose later</option><option value="yes">Yes</option><option value="unsure">Unsure</option><option value="no">No</option></select></label><label>Free note <textarea data-field="note" rows="3"></textarea></label><button type="button" data-action="save-note">Save note on this device</button><p class="save-status" role="status"></p></section><div class="disclosures"></div>';
+  card.querySelector('.pair-title').textContent = pair.label;
+  for (const armKey of ['a', 'b']) {
+    const arm = pair[armKey], row = make('div', 'audio-row');
+    const label = make('strong', '', (armKey === 'a' ? 'A' : 'B') + ' — ' + arm.label);
+    const restart = make('button', '', 'Play ' + (armKey === 'a' ? 'A' : 'B') + ' from start');
+    restart.type = 'button'; restart.dataset.testid = 'restart-' + armKey;
+    const audio = document.createElement('audio'); audio.controls = true; audio.preload = 'none';
+    audio.setAttribute('aria-label', (armKey === 'a' ? 'A' : 'B') + ' playback');
+    audio.addEventListener('play', () => card.querySelectorAll('audio').forEach(other => { if (other !== audio) other.pause(); }));
+    restart.addEventListener('click', () => {
+      const clip = arm.audio[selectedMode() === 'fixed-gain' ? 'fixedGain' : 'rmsMatchedListeningOnly'];
+      playClip(audio, clip, selectedMode(), card.querySelector('.save-status'));
+    });
+    row.append(label, restart, audio); card.querySelector('.audio-controls').append(row);
+  }
+  card.querySelector('[data-action="save-note"]').addEventListener('click', () => {
+    const note = { listeningMode: selectedMode(), different: card.querySelector('[data-field="different"]').value,
+      note: card.querySelector('[data-field="note"]').value };
+    try { localStorage.setItem(keyFor(pair), JSON.stringify(note)); card.querySelector('.save-status').textContent = 'Saved locally in this browser.'; }
+    catch (error) { card.querySelector('.save-status').textContent = 'Local storage is unavailable in this browser.'; }
+  });
+  const prior = savedNote(pair);
+  if (prior) {
+    card.querySelector('[data-field="different"]').value = prior.different || '';
+    card.querySelector('[data-field="note"]').value = prior.note || '';
+    card.querySelector('.save-status').textContent = 'Loaded saved local note.';
+  }
+  const disclosures = card.querySelector('.disclosures');
+  if (pair.erbData && DATA.erb) {
+    const details = make('details', 'erb-details'), summary = make('summary', '', 'Reveal ERB');
+    const panels = make('div', 'erb-panels');
+    const panelSpecs = [
+      ['A — ' + pair.a.label, pair.erbData.aDb, DATA.erb.absolutePowerDbScale, false],
+      ['B — ' + pair.b.label, pair.erbData.bDb, DATA.erb.absolutePowerDbScale, false],
+      ['B − A difference', pair.erbData.differenceDb, DATA.erb.differenceDbScale, true]
+    ];
+    for (const panel of panelSpecs) {
+      const figure = document.createElement('figure'), caption = make('figcaption', '', panel[0]);
+      const canvas = document.createElement('canvas'); canvas.width = 440; canvas.height = 210;
+      canvas.setAttribute('role', 'img'); canvas.setAttribute('aria-label', panel[0] + ' ERB-time view');
+      figure.append(caption, canvas); panels.append(figure);
+    }
+    const scaleNote = make('p', 'scale-note', '48 kHz; symmetric Hann FFT 1024; hop 256; 30 equal ERB-rate bands over 0–8 kHz. Fixed-gain WAVs only; left/right linear power is averaged. A/B fixed scale: ' + DATA.erb.absolutePowerDbScale[0] + ' to ' + DATA.erb.absolutePowerDbScale[1] + ' dB power. Difference fixed symmetric scale: ' + DATA.erb.differenceDbScale[0] + ' to +' + DATA.erb.differenceDbScale[1] + ' dB. Band 4 (zero-based index 3) is gray when empty. No per-pair autoscale.');
+    details.append(summary, panels, scaleNote);
+    details.addEventListener('toggle', () => {
+      if (!details.open) return;
+      const canvases = panels.querySelectorAll('canvas');
+      drawPanel(canvases[0], pair.erbData.aDb, DATA.erb.absolutePowerDbScale, false, pair.erbData.emptyBandIndices, pair.erbData.durationMs);
+      drawPanel(canvases[1], pair.erbData.bDb, DATA.erb.absolutePowerDbScale, false, pair.erbData.emptyBandIndices, pair.erbData.durationMs);
+      drawPanel(canvases[2], pair.erbData.differenceDb, DATA.erb.differenceDbScale, true, pair.erbData.emptyBandIndices, pair.erbData.durationMs);
+    });
+    disclosures.append(details);
+  }
+  const measure = make('details', 'measurement-details');
+  measure.append(make('summary', '', 'Inspect measurement metadata'));
+  const pre = make('pre', 'measurement-json', JSON.stringify({
+    fixedGain: { a: pair.a.audio.fixedGain, b: pair.b.audio.fixedGain },
+    rmsMatchedListeningOnly: { a: pair.a.audio.rmsMatchedListeningOnly, b: pair.b.audio.rmsMatchedListeningOnly },
+    measurementMetadata: pair.measurement || null, analysisSummary: pair.analysisSummary || null
+  }, null, 2));
+  measure.append(pre); disclosures.append(measure); pairRoot.append(card);
+}
+function initializeBlindSession() {
+  const app = document.getElementById('blind-app'), setup = document.getElementById('session-setup');
+  const card = document.getElementById('blind-card'), complete = document.getElementById('blind-complete');
+  const exportButton = document.getElementById('export-notes'), exportStatus = document.getElementById('export-status');
+  const trialIds = DATA.blindSession.trialIds;
+  const matchedModeInput = document.querySelector('input[name="listening-mode"][value="rms-matched-listening-only"]');
+  const fixedModeInput = document.querySelector('input[name="listening-mode"][value="fixed-gain"]');
+  const fixedModeLabel = fixedModeInput.closest('label');
+  const catchId = DATA.blindSession.catchTrial.id, stateKey = 'ant-audio-evidence-viewer:v2:' + DATA.viewerId;
+  const algorithm = DATA.blindSession.randomizationAlgorithm;
+  const modeNames = { 'rms-matched-listening-only': 'RMS matched', 'fixed-gain': 'fixed gain' };
+  const emptyStore = () => ({ schemaVersion: 2, sessions: [], activeSessionId: null });
+  function loadStore() {
+    try {
+      const stored = JSON.parse(localStorage.getItem(stateKey) || 'null');
+      return stored && stored.schemaVersion === 2 && Array.isArray(stored.sessions) ? stored : emptyStore();
+    } catch (error) { return emptyStore(); }
+  }
+  let store = loadStore();
+  function activeSession() { return store.sessions.find(item => item.sessionId === store.activeSessionId) || null; }
+  function timestamp() { return new Date().toISOString(); }
+  function logEvent(session, type, trialId = null) {
+    session.eventSequence = (session.eventSequence || 0) + 1;
+    session.events.push({ sequence: session.eventSequence, timestamp: timestamp(), type, trialId });
+  }
+  function persist() {
+    try { localStorage.setItem(stateKey, JSON.stringify(store)); }
+    catch (error) { exportStatus.textContent = 'Browser storage is unavailable; export before closing this page.'; }
+  }
+  function seedHash(seed) {
+    let hash = 0x811c9dc5;
+    for (let i = 0; i < seed.length; i++) hash = Math.imul(hash ^ seed.charCodeAt(i), 0x01000193);
+    return hash >>> 0 || 0x9e3779b9;
+  }
+  function seededRandom(seed) {
+    let value = seedHash(seed);
+    return () => {
+      value ^= value << 13; value ^= value >>> 17; value ^= value << 5;
+      return (value >>> 0) / 4294967296;
+    };
+  }
+  function randomSeed() {
+    if (window.crypto && window.crypto.getRandomValues) {
+      const values = new Uint32Array(2); window.crypto.getRandomValues(values);
+      return Array.from(values, value => value.toString(16).padStart(8, '0')).join('');
+    }
+    return Date.now().toString(16) + Math.floor(Math.random() * 0xffffffff).toString(16);
+  }
+  function shuffled(ids, random) {
+    const result = ids.slice();
+    for (let i = result.length - 1; i > 0; i--) {
+      const j = Math.floor(random() * (i + 1)); [result[i], result[j]] = [result[j], result[i]];
+    }
+    return result;
+  }
+  function definition(id) {
+    if (id === catchId) return DATA.blindSession.catchTrial;
+    return DATA.pairs.find(pair => pair.id === id);
+  }
+  function makeSession(seed) {
+    const random = seededRandom(seed), order = shuffled(trialIds, random), trials = {};
+    for (const [index, id] of order.entries()) {
+      const item = definition(id), isCatch = id === catchId;
+      let sideMapping;
+      if (isCatch) {
+        const sameSource = { sourcePairId: item.sourcePairId, sourceArm: item.sourceArm };
+        sideMapping = { A: { ...sameSource }, B: { ...sameSource } };
+      } else {
+        const firstArm = random() < 0.5 ? 'a' : 'b';
+        sideMapping = { A: { sourcePairId: id, sourceArm: firstArm },
+          B: { sourcePairId: id, sourceArm: firstArm === 'a' ? 'b' : 'a' } };
+      }
+      trials[id] = { trialSequence: index + 1, sideMapping, isCatch, revealed: false, revealedAt: null,
+        openedAt: null, preRevealDraftsByMode: {}, preRevealJudgmentsByMode: {}, postRevealNotesByMode: {} };
+    }
+    const session = { sessionId: 'aev-' + Date.now().toString(36) + '-' + randomSeed().slice(0, 8), seed,
+      randomizationAlgorithm: algorithm, createdAt: timestamp(), trialOrder: order, currentIndex: 0,
+      trials, events: [], eventSequence: 0 };
+    return session;
+  }
+  function sessionComplete(session) {
+    return !!session && session.trialOrder.every(id => session.trials[id] && session.trials[id].revealed);
+  }
+  function allSessionsComplete() { return store.sessions.length > 0 && store.sessions.every(sessionComplete); }
+  function updateExportState() {
+    exportButton.disabled = !allSessionsComplete();
+    exportStatus.textContent = exportButton.disabled ? 'Export unlocks after every trial in the session has been revealed.' :
+      'Complete sessions export with seed, order, side mapping, audio hashes, and separate mode-specific judgments.';
+  }
+  function sourceForSide(trialState, side) {
+    const ref = trialState.sideMapping[side], pair = DATA.pairs.find(item => item.id === ref.sourcePairId);
+    return { ref, pair, arm: pair[ref.sourceArm] };
+  }
+  function audioRecord(trialState, side, mode) {
+    const { arm } = sourceForSide(trialState, side);
+    return arm.audio[mode === 'fixed-gain' ? 'fixedGain' : 'rmsMatchedListeningOnly'];
+  }
+  function applyModeAvailability(trialState) {
+    const matchedOnly = DATA.blindSession.preRevealMode === 'matched-only' && !trialState.revealed;
+    fixedModeInput.disabled = matchedOnly;
+    fixedModeLabel.hidden = matchedOnly;
+    if (matchedOnly && selectedMode() !== 'rms-matched-listening-only') {
+      matchedModeInput.checked = true;
+      updateAudioMode();
+      currentListeningMode = 'rms-matched-listening-only';
+    }
+  }
+  function copyReceipt(record) {
+    return { path: record.relativePath, bytes: record.bytes, sha256: record.sha256 };
+  }
+  function recordSnapshot(trialState, mode) {
+    const different = card.querySelector('[data-field="different"]');
+    const confidence = card.querySelector('[data-field="confidence"]');
+    const note = card.querySelector('[data-field="pre-note"]');
+    return { listeningMode: mode, different: different.value,
+      confidence: confidence.value ? Number(confidence.value) : null, freeNote: note.value,
+      timestamp: timestamp(), trialSequence: trialState.trialSequence };
+  }
+  function validSnapshot(snapshot) {
+    return !!snapshot && ['yes', 'unsure', 'no'].includes(snapshot.different) &&
+      Number.isInteger(snapshot.confidence) && snapshot.confidence >= 1 && snapshot.confidence <= 5;
+  }
+  function draftForMode(trialState, mode) {
+    return trialState.preRevealDraftsByMode[mode] ||
+      (trialState.preRevealJudgmentsByMode[mode] || {}).latest ||
+      (trialState.preRevealJudgmentsByMode[mode] || {}).first || null;
+  }
+  function populatePreReveal(trialState) {
+    const mode = selectedMode(), draft = draftForMode(trialState, mode) || {};
+    card.querySelector('[data-field="different"]').value = draft.different || '';
+    card.querySelector('[data-field="confidence"]').value = draft.confidence ? String(draft.confidence) : '';
+    card.querySelector('[data-field="pre-note"]').value = draft.freeNote || '';
+    const recorded = (trialState.preRevealJudgmentsByMode[mode] || {}).first;
+    card.querySelector('[data-action="save-judgment"]').textContent = recorded ? 'Save another pre-reveal revision' : 'Save blind judgment';
+    updatePreRevealButtons();
+  }
+  function updatePreRevealButtons() {
+    const valid = card.querySelector('[data-field="different"]').value &&
+      card.querySelector('[data-field="confidence"]').value;
+    card.querySelector('[data-action="save-judgment"]').disabled = !valid;
+    card.querySelector('[data-action="reveal"]').disabled = !valid;
+  }
+  function syncDraft(trialState) {
+    if (trialState.revealed) return;
+    const mode = selectedMode(), snapshot = recordSnapshot(trialState, mode);
+    trialState.preRevealDraftsByMode[mode] = { different: snapshot.different, confidence: snapshot.confidence,
+      freeNote: snapshot.freeNote, updatedAt: snapshot.timestamp };
+    persist(); updatePreRevealButtons();
+  }
+  function saveBlindJudgment(session, trialId, trialState) {
+    const mode = selectedMode(), snapshot = recordSnapshot(trialState, mode);
+    if (!validSnapshot(snapshot)) return false;
+    const entry = trialState.preRevealJudgmentsByMode[mode] || { first: null, latest: null };
+    if (!entry.first) entry.first = snapshot;
+    entry.latest = snapshot;
+    trialState.preRevealJudgmentsByMode[mode] = entry;
+    trialState.preRevealDraftsByMode[mode] = { different: snapshot.different, confidence: snapshot.confidence,
+      freeNote: snapshot.freeNote, updatedAt: snapshot.timestamp };
+    logEvent(session, 'pre_reveal_judgment_saved', trialId); persist();
+    card.querySelector('.save-status').textContent = entry.first === entry.latest ?
+      'Blind judgment saved.' : 'Latest saved; first judgment remains preserved.';
+    return true;
+  }
+  function postNoteForMode(trialState, mode) {
+    return trialState.postRevealNotesByMode[mode] || { note: '', updatedAt: null };
+  }
+  function syncPostNote(trialState, session, trialId, mode = selectedMode()) {
+    if (!trialState.revealed) return;
+    const field = card.querySelector('[data-field="post-note"]');
+    const old = postNoteForMode(trialState, mode);
+    if (old.note === field.value) return;
+    trialState.postRevealNotesByMode[mode] = { listeningMode: mode, note: field.value,
+      updatedAt: timestamp(), trialSequence: trialState.trialSequence };
+    logEvent(session, 'post_reveal_note_updated', trialId); persist();
+  }
+  function renderPreRevealSummary(trialState) {
+    const target = card.querySelector('.pre-reveal-summary'); target.replaceChildren();
+    for (const mode of ['rms-matched-listening-only', 'fixed-gain']) {
+      const entry = trialState.preRevealJudgmentsByMode[mode];
+      if (!entry || !entry.first) continue;
+      const box = make('section', 'judgment-record');
+      box.append(make('strong', '', modeNames[mode] + ' — first pre-reveal judgment'));
+      box.append(make('p', '', 'Different: ' + entry.first.different + '; confidence: ' + entry.first.confidence + '/5'));
+      if (entry.first.freeNote) box.append(make('p', '', 'First note: ' + entry.first.freeNote));
+      if (entry.latest && (entry.latest.different !== entry.first.different ||
+          entry.latest.confidence !== entry.first.confidence || entry.latest.freeNote !== entry.first.freeNote)) {
+        box.append(make('p', '', 'Latest pre-reveal revision: ' + entry.latest.different + '; confidence: ' +
+          entry.latest.confidence + '/5; note: ' + entry.latest.freeNote));
+      }
+      box.append(make('p', 'save-status', 'Recorded ' + entry.first.timestamp)); target.append(box);
+    }
+    if (!target.childElementCount) target.textContent = 'No blind judgment was recorded for this trial.';
+  }
+  function renderErb(pair, trialState) {
+    const details = make('details', 'erb-details'); details.open = true;
+    details.append(make('summary', '', 'Fixed-gain A / B / difference ERB'));
+    const panels = make('div', 'erb-panels');
+    let aData, bData, difference = pair.erbData.differenceDb;
+    if (pair.isCatch) { aData = pair.erbData.aDb; bData = pair.erbData.bDb; }
+    else {
+      aData = trialState.sideMapping.A.sourceArm === 'a' ? pair.erbData.aDb : pair.erbData.bDb;
+      bData = trialState.sideMapping.B.sourceArm === 'a' ? pair.erbData.aDb : pair.erbData.bDb;
+      if (trialState.sideMapping.A.sourceArm === 'b') difference = difference.map(row => row.map(value => -value));
+    }
+    const armA = sourceForSide(trialState, 'A').arm, armB = sourceForSide(trialState, 'B').arm;
+    const specs = [['A — ' + armA.label, aData, DATA.erb.absolutePowerDbScale, false],
+      ['B — ' + armB.label, bData, DATA.erb.absolutePowerDbScale, false],
+      ['B − A difference', difference, DATA.erb.differenceDbScale, true]];
+    for (const [captionText, matrix, scale, isDifference] of specs) {
+      const figure = document.createElement('figure'), canvas = document.createElement('canvas');
+      canvas.width = 440; canvas.height = 210; canvas.setAttribute('role', 'img');
+      canvas.setAttribute('aria-label', captionText + ' ERB-time view');
+      figure.append(make('figcaption', '', captionText), canvas); panels.append(figure);
+      drawPanel(canvas, matrix, scale, isDifference, pair.erbData.emptyBandIndices, pair.erbData.durationMs);
+    }
+    details.append(panels, make('p', 'scale-note', 'Analysis view: fixed gain. 48 kHz; symmetric Hann FFT 1024; hop 256; 30 equal ERB-rate bands over 0–8 kHz. Fixed-gain WAVs only; left/right linear power is averaged. A/B fixed scale: ' + DATA.erb.absolutePowerDbScale[0] + ' to ' + DATA.erb.absolutePowerDbScale[1] + ' dB power. Difference fixed symmetric scale: ' + DATA.erb.differenceDbScale[0] + ' to +' + DATA.erb.differenceDbScale[1] + ' dB. No per-pair autoscale.'));
+    return details;
+  }
+  function mappingForExport(trialState, side) {
+    const { ref, pair, arm } = sourceForSide(trialState, side);
+    return { condition: arm.label, sourcePairId: ref.sourcePairId, sourceArm: ref.sourceArm,
+      sourceManifestEntryId: arm.sourceManifestEntryId,
+      measurementMetadata: arm.measurementMetadata || null,
+      playbackMetadata: { modeAtReveal: trialState.listeningModeAtReveal, fixedGainLinear: 1,
+        matchedPostGain: arm.audio.rmsMatchedListeningOnly.listeningPostGain || null },
+      audioFileHashes: { fixedGain: copyReceipt(arm.audio.fixedGain),
+        rmsMatchedListeningOnly: copyReceipt(arm.audio.rmsMatchedListeningOnly) } };
+  }
+  function revealTrial(pair, trialState, trialId) {
+    const sideA = sourceForSide(trialState, 'A'), sideB = sourceForSide(trialState, 'B');
+    const identity = card.querySelector('.revealed-identity');
+    if (pair.isCatch) {
+      identity.textContent = 'A/A catch trial — A and B use the exact same ' + sideA.arm.label + ' source from ' +
+        pair.sourcePairId + '. Exploratory difference-seeking control; not a formal psychophysical test.';
+    } else identity.textContent = pair.label + ' — A: ' + sideA.arm.label + '; B: ' + sideB.arm.label + '.';
+    updateRevealModeStatus();
+    const analysis = card.querySelector('.revealed-analysis-content');
+    analysis.replaceChildren();
+    if (pair.erbData && DATA.erb) analysis.append(renderErb(pair, trialState));
+    const measure = make('details', 'measurement-details'); measure.open = true;
+    measure.append(make('summary', '', 'Inspect measurement metadata'));
+    measure.append(make('pre', 'measurement-json', JSON.stringify({
+      listeningModeAtReveal: selectedMode(), analysisView: 'fixed gain', isExploratoryAaCatch: pair.isCatch,
+      listeningPostGain: DATA.listeningPostGain,
+      sideMapping: { A: mappingForExport(trialState, 'A'), B: mappingForExport(trialState, 'B') },
+      measurementMetadata: pair.measurement || null, analysisSummary: pair.analysisSummary || null
+    }, null, 2)));
+    analysis.append(measure);
+    renderPreRevealSummary(trialState);
+    const post = card.querySelector('[data-field="post-note"]');
+    post.value = postNoteForMode(trialState, selectedMode()).note || '';
+    post.disabled = false;
+    post.addEventListener('input', () => syncPostNote(trialState, activeSession(), trialId));
+  }
+  function renderTrial(session) {
+    const id = session.trialOrder[session.currentIndex], pair = definition(id), trialState = session.trials[id];
+    applyModeAvailability(trialState);
+    if (!trialState.openedAt) { trialState.openedAt = timestamp(); logEvent(session, 'trial_opened', id); persist(); }
+    complete.hidden = true; card.hidden = false;
+    card.innerHTML = '<h2 class="pair-title"></h2><div class="audio-controls"></div><section class="pre-reveal"><h3>Before reveal</h3><p>Choose whether A and B sound different, rate confidence, and add an optional note. No sound descriptors are suggested.</p><label>Different? <select data-field="different"><option value="">Choose one</option><option value="yes">Yes</option><option value="unsure">Unsure</option><option value="no">No</option></select></label><label>Confidence (1–5) <select data-field="confidence"><option value="">Choose one</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label><label>Free note <textarea data-field="pre-note" rows="3"></textarea></label><button type="button" data-action="save-judgment">Save blind judgment</button> <button type="button" data-action="reveal">Reveal analysis</button><p class="save-status" role="status"></p></section><section class="revealed-analysis" hidden><h3>Revealed identity</h3><p class="revealed-identity"></p><div id="reveal-mode-status" class="mode-status"><p class="current-listening-mode"></p><p class="analysis-view">Analysis view: fixed gain</p></div><section class="pre-reveal-records"><h4>Preserved pre-reveal judgments</h4><div class="pre-reveal-summary"></div></section><label>Post-reveal note <textarea data-field="post-note" rows="3" placeholder="Optional interpretation after analysis"></textarea></label><div class="revealed-analysis-content"></div></section>';
+    card.querySelector('.pair-title').textContent = 'Trial ' + (session.currentIndex + 1) + ' of ' + session.trialOrder.length;
+    for (const side of ['A', 'B']) {
+      const row = make('div', 'audio-row'), label = make('strong', '', side);
+      const restart = make('button', '', 'Play ' + side + ' from start'); restart.type = 'button';
+      restart.dataset.testid = 'restart-' + side.toLowerCase();
+      const audio = document.createElement('audio'); audio.controls = true; audio.preload = 'none'; audio.setAttribute('aria-label', side + ' playback');
+      audio.addEventListener('play', () => card.querySelectorAll('audio').forEach(other => { if (other !== audio) other.pause(); }));
+      restart.addEventListener('click', () => {
+        const record = audioRecord(trialState, side, selectedMode());
+        playClip(audio, record, selectedMode(), card.querySelector('.save-status'));
+      });
+      row.append(label, restart, audio); card.querySelector('.audio-controls').append(row);
+    }
+    for (const field of ['different', 'confidence', 'pre-note']) {
+      card.querySelector('[data-field="' + field + '"]').addEventListener('input', () => syncDraft(trialState));
+      card.querySelector('[data-field="' + field + '"]').addEventListener('change', () => syncDraft(trialState));
+    }
+    card.querySelector('[data-action="save-judgment"]').addEventListener('click', () => saveBlindJudgment(session, id, trialState));
+    card.querySelector('[data-action="reveal"]').addEventListener('click', () => {
+      if (!saveBlindJudgment(session, id, trialState)) return;
+      trialState.revealed = true; trialState.revealedAt = timestamp();
+      trialState.listeningModeAtReveal = selectedMode(); logEvent(session, 'analysis_revealed', id); persist();
+      renderBlindSession();
+    });
+    populatePreReveal(trialState);
+    const nav = document.getElementById('trial-navigation'); nav.hidden = false;
+    const previous = document.getElementById('previous-trial'), next = document.getElementById('next-trial');
+    previous.disabled = session.currentIndex === 0;
+    next.disabled = !trialState.revealed; next.textContent = session.currentIndex === session.trialOrder.length - 1 ? 'Finish session' : 'Next trial';
+    previous.onclick = () => { syncPostNoteIfShown(); session.currentIndex--; logEvent(session, 'trial_reviewed', session.trialOrder[session.currentIndex]); persist(); renderBlindSession(); };
+    next.onclick = () => { syncPostNoteIfShown(); session.currentIndex++; logEvent(session, 'trial_advanced', id); persist(); renderBlindSession(); };
+    if (trialState.revealed) {
+      card.querySelector('.pre-reveal').hidden = true;
+      card.querySelector('.revealed-analysis').hidden = false;
+      revealTrial(pair, trialState, id);
+      updateRevealModeStatus();
+    }
+    document.getElementById('session-meta').textContent = 'Session ' + session.sessionId + ' · Trial ' +
+      (session.currentIndex + 1) + ' of ' + session.trialOrder.length;
+    updateExportState();
+  }
+  function syncPostNoteIfShown() {
+    const session = activeSession();
+    if (!session || session.currentIndex >= session.trialOrder.length) return;
+    const trialId = session.trialOrder[session.currentIndex], trialState = session.trials[trialId];
+    if (trialState.revealed) syncPostNote(trialState, session, trialId);
+  }
+  function renderBlindSession() {
+    const session = activeSession();
+    setup.hidden = !!session; app.hidden = false;
+    document.getElementById('trial-navigation').hidden = true;
+    if (!session) { card.hidden = true; complete.hidden = true; document.getElementById('session-meta').textContent = 'Start a randomized session to begin.'; updateExportState(); return; }
+    if (session.currentIndex >= session.trialOrder.length) {
+      card.hidden = true; complete.hidden = false; document.getElementById('trial-navigation').hidden = true;
+      complete.querySelector('.completion-summary').textContent = 'Session complete. Seed for reproduction: ' + session.seed +
+        ' (' + session.randomizationAlgorithm + '). Earlier sessions remain in local history.';
+      complete.querySelector('[data-action="review-last"]').onclick = () => { session.currentIndex = session.trialOrder.length - 1; persist(); renderBlindSession(); };
+      document.getElementById('session-meta').textContent = 'Session ' + session.sessionId + ' · Complete';
+      updateExportState(); return;
+    }
+    renderTrial(session);
+  }
+  function exportReceipt(record) { return copyReceipt(record); }
+  function exportTrial(session, id) {
+    const item = definition(id), trialState = session.trials[id];
+    const mapping = trialState.revealed ? { A: mappingForExport(trialState, 'A'), B: mappingForExport(trialState, 'B') } : null;
+    return { trialId: id, trialSequence: trialState.trialSequence, isCatch: trialState.revealed ? trialState.isCatch : null,
+      revealed: trialState.revealed, openedAt: trialState.openedAt, revealedAt: trialState.revealedAt,
+      listeningModeAtReveal: trialState.listeningModeAtReveal || null, sideMapping: mapping,
+      audioFileHashes: mapping ? { A: mapping.A.audioFileHashes, B: mapping.B.audioFileHashes } : null,
+      preRevealJudgmentsByMode: trialState.preRevealJudgmentsByMode,
+      postRevealNotesByMode: trialState.postRevealNotesByMode };
+  }
+  function exportPayload() {
+    syncPostNoteIfShown();
+    return { schemaVersion: 2, viewerId: DATA.viewerId, evidenceId: DATA.evidenceId, exportedAt: timestamp(),
+      listeningPostGain: DATA.listeningPostGain,
+      sessions: store.sessions.map(session => ({ sessionId: session.sessionId, seed: session.seed,
+        randomizationAlgorithm: session.randomizationAlgorithm, startedAt: session.createdAt,
+        completed: sessionComplete(session), trialOrder: session.trialOrder.slice(),
+        trials: session.trialOrder.map(id => exportTrial(session, id)), events: session.events.slice() })) };
+  }
+  function exportSession() {
+    if (!allSessionsComplete()) return;
+    const session = activeSession(); logEvent(session, 'session_exported'); persist();
+    const payload = exportPayload(), url = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' }));
+    const link = make('a'); link.href = url; link.download = DATA.evidenceId + '-subjective-listening.json';
+    document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+  document.getElementById('start-session').addEventListener('click', () => {
+    const session = makeSession(randomSeed());
+    store.sessions.push(session); store.activeSessionId = session.sessionId;
+    logEvent(session, 'session_started'); persist(); renderBlindSession();
+  });
+  document.getElementById('new-session').addEventListener('click', () => {
+    setup.hidden = false; complete.hidden = true; card.hidden = true;
+    document.getElementById('session-meta').textContent = 'Previous sessions remain saved.';
+  });
+  exportButton.textContent = 'Export subjective listening JSON';
+  exportButton.addEventListener('click', exportSession);
+  let currentListeningMode = selectedMode();
+  modeInputs.forEach(input => input.addEventListener('change', () => {
+    const nextMode = selectedMode();
+    const session = activeSession();
+    if (!session || session.currentIndex >= session.trialOrder.length) { currentListeningMode = nextMode; return; }
+    const trialState = session.trials[session.trialOrder[session.currentIndex]];
+    if (trialState.revealed) {
+      syncPostNote(trialState, session, session.trialOrder[session.currentIndex], currentListeningMode);
+      const field = card.querySelector('[data-field="post-note"]');
+      if (field) field.value = postNoteForMode(trialState, nextMode).note || '';
+    } else populatePreReveal(trialState);
+    currentListeningMode = nextMode;
+  }));
+  if (DATA.blindSession.preRevealMode === 'matched-only') applyModeAvailability({ revealed: false });
+  renderBlindSession();
+}
+if (DATA.blindSession && DATA.blindSession.enabled) {
+  document.getElementById('pairs').hidden = true;
+  initializeBlindSession();
+} else {
+  DATA.pairs.forEach(addPair);
+  document.getElementById('export-notes').addEventListener('click', () => {
+  const payload = { schemaVersion: 1, viewerId: DATA.viewerId, evidenceId: DATA.evidenceId,
+    pairs: DATA.pairs.map(pair => {
+      const saved = savedNote(pair) || {};
+      const card = document.querySelector('[data-pair-id="' + pair.id + '"]');
+      return { pairId: pair.id, listeningMode: saved.listeningMode || selectedMode(),
+        different: saved.different || card.querySelector('[data-field="different"]').value,
+        note: saved.note !== undefined ? saved.note : card.querySelector('[data-field="note"]').value };
+    }) };
+  const url = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' }));
+  const link = make('a'); link.href = url; link.download = DATA.evidenceId + '-subjective-notes.json';
+  document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
+}
+modeInputs.forEach(input => input.addEventListener('change', updateAudioMode));
+if (DATA.listeningPostGain) document.querySelector('.footer').textContent +=
+  ' Matched playback post-gain is listening convenience only; target is digital RMS, not calibrated SPL.';
+updateAudioMode();
+</script></body></html>

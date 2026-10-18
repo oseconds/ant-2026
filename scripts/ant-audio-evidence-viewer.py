@@ -5,6 +5,7 @@ import base64
 import hashlib
 import json
 import math
+import os
 import platform
 import re
 import struct
@@ -26,7 +27,11 @@ def sha256(data):
 
 def file_receipt(path, package):
     data = path.read_bytes()
-    return {"path": path.relative_to(package).as_posix(), "bytes": len(data), "sha256": sha256(data)}
+    try:
+        receipt_path = path.relative_to(package)
+    except ValueError:
+        receipt_path = path.relative_to(ROOT)
+    return {"path": receipt_path.as_posix(), "bytes": len(data), "sha256": sha256(data)}
 
 
 def package_file(package, value, label):
@@ -38,11 +43,23 @@ def package_file(package, value, label):
     return path
 
 
-def manifest_file(package, value, label):
-    if not isinstance(value, str) or not value or Path(value).is_absolute():
+def manifest_file(package, value, label, allow_repository_path=False):
+    relative = Path(value) if isinstance(value, str) else Path()
+    if (not isinstance(value, str) or not value or relative.is_absolute() or relative.drive or
+            ".." in relative.parts):
         raise ValueError(f"{label} must be a repository-relative path")
-    path = (ROOT / value).resolve()
-    if not path.is_relative_to(package.resolve()):
+    path = (ROOT / relative).resolve()
+    boundary = ROOT.resolve() if allow_repository_path else package.resolve()
+    if not path.is_relative_to(boundary):
+        raise ValueError(f"{label} escapes {'the repository' if allow_repository_path else 'the evidence package'}")
+    return path
+
+
+def configured_audio_file(package, value, label, allow_repository_path):
+    if allow_repository_path:
+        return manifest_file(package, value, label, allow_repository_path=True)
+    path = package_file(package, value, label)
+    if not path.is_relative_to(ROOT.resolve()):
         raise ValueError(f"{label} escapes the evidence package")
     return path
 
@@ -163,10 +180,25 @@ def build_data(config, config_path, package, helper):
         raise ValueError("title must be non-empty text")
     if not isinstance(config.get("metadata", ""), str):
         raise ValueError("metadata must be text")
+    allow_repository_audio_paths = config.get("allowRepositoryRelativeAudioPaths", False)
+    if type(allow_repository_audio_paths) is not bool:
+        raise ValueError("allowRepositoryRelativeAudioPaths must be boolean")
+    output_path = package_file(package, config["output"], "output")
     manifest_path = package_file(package, config["sourceListeningManifest"], "sourceListeningManifest")
     manifest_bytes = manifest_path.read_bytes()
     listening_manifest = json.loads(manifest_bytes)
-    source_pairs = {row["label"]: row for row in listening_manifest.get("pairs", [])}
+    if isinstance(listening_manifest.get("pairs"), list):
+        source_manifest_kind = "pairs"
+        manifest_rows = listening_manifest["pairs"]
+        source_pairs = {row["label"]: row for row in manifest_rows}
+    elif isinstance(listening_manifest.get("listening"), list):
+        source_manifest_kind = "listening"
+        manifest_rows = listening_manifest["listening"]
+        source_pairs = {row["id"]: row for row in manifest_rows}
+    else:
+        raise ValueError("listening manifest must contain pairs or listening entries")
+    if len(source_pairs) != len(manifest_rows):
+        raise ValueError("listening manifest contains duplicate source identifiers")
     if not isinstance(config["pairs"], list) or len(config["pairs"]) < 1:
         raise ValueError("pairs must contain at least one A/B pair")
     erb_config = config.get("erb")
@@ -188,6 +220,13 @@ def build_data(config, config_path, package, helper):
         analysis_path = package_file(package, config["sourceAnalysis"], "sourceAnalysis")
         analysis_bytes = analysis_path.read_bytes()
         analysis = json.loads(analysis_bytes)
+    target_rms = config.get("listeningPostGainTargetRms")
+    if target_rms is not None and (isinstance(target_rms, bool) or
+            not isinstance(target_rms, (int, float)) or not math.isfinite(target_rms) or
+            target_rms <= 0 or target_rms > 1):
+        raise ValueError("listeningPostGainTargetRms must be a finite value in (0, 1]")
+    target_rms = float(target_rms) if target_rms is not None else None
+    post_gain_validation = []
     pair_data, validated_files, parity_checks, seen_ids = [], [], [], set()
     for spec in config["pairs"]:
         if not isinstance(spec, dict):
@@ -197,13 +236,14 @@ def build_data(config, config_path, package, helper):
             raise ValueError(f"invalid or duplicate pair id: {pair_id}")
         seen_ids.add(pair_id)
         source_pair_label = spec.get("sourcePairLabel", pair_id)
-        if not isinstance(source_pair_label, str):
+        if source_pair_label is not None and not isinstance(source_pair_label, str):
             raise ValueError(f"{pair_id}: sourcePairLabel must be text")
-        source_pair = source_pairs.get(source_pair_label)
-        if source_pair is None:
-            raise ValueError(f"listening manifest has no source pair {source_pair_label}")
-        if spec.get("contactIndex") is not None and spec["contactIndex"] != source_pair.get("contactIndex"):
-            raise ValueError(f"{pair_id}: contactIndex differs from listening manifest")
+        source_pair = source_pairs.get(source_pair_label) if source_pair_label else None
+        if spec.get("contactIndex") is not None:
+            if source_pair is None:
+                raise ValueError(f"{pair_id}: contactIndex requires a sourcePairLabel")
+            if spec["contactIndex"] != source_pair.get("contactIndex"):
+                raise ValueError(f"{pair_id}: contactIndex differs from listening manifest")
         pair = {"id": pair_id, "label": spec.get("label", pair_id), "a": {}, "b": {}}
         if not isinstance(pair["label"], str) or not pair["label"].strip():
             raise ValueError(f"{pair_id}: label must be non-empty text")
@@ -213,24 +253,67 @@ def build_data(config, config_path, package, helper):
                     not arm_spec["label"].strip()):
                 raise ValueError(f"{pair_id}: {arm} needs a label")
             pair[arm]["label"] = arm_spec["label"]
+            arm_source_label = arm_spec.get("sourcePairLabel", source_pair_label)
+            if not isinstance(arm_source_label, str) or arm_source_label not in source_pairs:
+                raise ValueError(f"{pair_id}/{arm}: listening manifest has no source {arm_source_label}")
+            arm_source_pair = source_pairs[arm_source_label]
+            pair[arm]["sourceManifestEntryId"] = arm_source_label
+            pair[arm]["measurementMetadata"] = arm_spec.get("measurementMetadata")
             pair[arm]["audio"] = {}
             for mode, path_key, manifest_prefix in (("fixedGain", "fixedGainPath", "fixed-gain:"),
                                                     ("rmsMatchedListeningOnly", "rmsMatchedPath", "rms-matched-listening-only:")):
-                path = package_file(package, arm_spec.get(path_key), f"{pair_id}/{arm} {path_key}")
-                record = next((candidate for key, candidate in source_pair.get("files", {}).items()
-                               if key.startswith(manifest_prefix) and
-                               manifest_file(package, candidate.get("path"), f"{pair_id}/{arm} manifest WAV path") == path), None)
+                path = configured_audio_file(package, arm_spec.get(path_key), f"{pair_id}/{arm} {path_key}",
+                                             allow_repository_audio_paths)
+                if source_manifest_kind == "pairs":
+                    record = next((candidate for key, candidate in arm_source_pair.get("files", {}).items()
+                                   if key.startswith(manifest_prefix) and
+                                   manifest_file(package, candidate.get("path"), f"{pair_id}/{arm} manifest WAV path",
+                                                 allow_repository_path=allow_repository_audio_paths) == path), None)
+                else:
+                    record_key = "fixed" if mode == "fixedGain" else "levelMatched"
+                    candidate = arm_source_pair.get(record_key)
+                    record = candidate if candidate and manifest_file(
+                        package, candidate.get("path"), f"{pair_id}/{arm} manifest WAV path",
+                        allow_repository_path=allow_repository_audio_paths) == path else None
                 if not record:
                     raise ValueError(f"{pair_id}/{arm}: {path_key} is absent from the listening manifest")
                 receipt = file_receipt(path, package)
                 if receipt["bytes"] != record.get("bytes") or receipt["sha256"] != record.get("sha256"):
                     raise ValueError(f"{path}: size or SHA-256 differs from listening-manifest.json")
                 record_data = dict(record)
-                record_data["relativePath"] = receipt["path"]
+                record_data["sourceManifestEntryId"] = arm_source_label
+                record_data["relativePath"] = Path(os.path.relpath(path, output_path.parent)).as_posix()
                 record_data["absolutePath"] = str(path)
                 pair[arm]["audio"][mode] = record_data
                 if receipt["path"] not in {item["path"] for item in validated_files}:
                     validated_files.append(receipt)
+        if target_rms is not None:
+            matched = [pair[arm]["audio"]["rmsMatchedListeningOnly"] for arm in ("a", "b")]
+            levels = []
+            for arm, record in zip(("a", "b"), matched):
+                source_rms = record.get("rmsAfter", record.get("targetRms"))
+                source_peak = record.get("peakAfter", record.get("peak"))
+                if (isinstance(source_rms, bool) or not isinstance(source_rms, (int, float)) or
+                        not math.isfinite(source_rms) or source_rms <= 0 or
+                        isinstance(source_peak, bool) or not isinstance(source_peak, (int, float)) or
+                        not math.isfinite(source_peak) or source_peak < 0):
+                    raise ValueError(f"{pair_id}/{arm}: matched manifest needs finite positive RMS and peak")
+                levels.append((float(source_rms), float(source_peak)))
+            if not math.isclose(levels[0][0], levels[1][0], rel_tol=0, abs_tol=1e-12):
+                raise ValueError(f"{pair_id}: matched A/B sources do not share one RMS")
+            post_gain = target_rms / levels[0][0]
+            post_gain_db = 20 * math.log10(post_gain)
+            for arm, record, (source_rms, source_peak) in zip(("a", "b"), matched, levels):
+                predicted_peak = source_peak * post_gain
+                if not math.isfinite(predicted_peak) or predicted_peak >= 1.0:
+                    raise ValueError(f"{pair_id}/{arm}: post-gain peak {predicted_peak} reaches full scale")
+                metadata = {"sourceMatchedRms": source_rms, "sourceMatchedPeak": source_peak,
+                            "finalTargetRms": target_rms, "postGainLinear": post_gain,
+                            "postGainDb": post_gain_db, "predictedPostGainPeak": predicted_peak}
+                record["listeningPostGain"] = metadata
+                post_gain_validation.append({"pairId": pair_id, "arm": arm,
+                                             "sourceManifestEntryId": record["sourceManifestEntryId"],
+                                             **metadata})
         pair["measurement"] = spec.get("measurement")
         pair["analysisSummary"] = None
         if analysis is not None and spec.get("contactIndex") is not None:
@@ -251,8 +334,6 @@ def build_data(config, config_path, package, helper):
         if not isinstance(blind_session_cfg, dict) or type(blind_session_cfg.get("enabled")) is not bool:
             raise ValueError("blindSession must declare a boolean enabled field")
         if blind_session_cfg["enabled"]:
-            if erb is None:
-                raise ValueError("blindSession requires the fixed-gain ERB analysis")
             public_text = (config["title"] + " " + config.get("metadata", "")).casefold()
             condition_names = {pair[arm]["label"].casefold() for pair in pair_data for arm in ("a", "b")}
             if any(re.search(r"\b" + re.escape(name) + r"\b", public_text) for name in condition_names):
@@ -271,20 +352,25 @@ def build_data(config, config_path, package, helper):
                 raise ValueError(f"blindSession.catchTrial source pair is missing: {source_pair_id}")
             source = source_pair[source_arm]
             fixed_record = dict(source["audio"]["fixedGain"])
-            fixed_record["absolutePath"] = str(package_file(package, fixed_record["relativePath"], "catch fixedGain source"))
-            catch_erb_pair = {"id": catch_id,
-                "a": {"audio": {"fixedGain": fixed_record}},
-                "b": {"audio": {"fixedGain": fixed_record}}}
-            catch_erb, _ = analyze_pair(catch_erb_pair, helper, absolute_scale, difference_scale)
+            fixed_record["absolutePath"] = str((output_path.parent / fixed_record["relativePath"]).resolve())
+            catch_erb = None
+            if erb is not None:
+                catch_erb_pair = {"id": catch_id,
+                    "a": {"audio": {"fixedGain": fixed_record}},
+                    "b": {"audio": {"fixedGain": fixed_record}}}
+                catch_erb, _ = analyze_pair(catch_erb_pair, helper, absolute_scale, difference_scale)
             catch_pair = {
                 "id": catch_id, "label": "A/A catch trial", "isCatch": True,
                 "sourcePairId": source_pair_id, "sourceArm": source_arm,
+                "sourceManifestEntryId": source["sourceManifestEntryId"],
                 "a": {"label": source["label"], "audio": source["audio"]},
                 "b": {"label": source["label"], "audio": source["audio"]},
                 "measurement": {"type": "exploratory A/A catch", "sourcePairId": source_pair_id,
                                 "sourceArm": source_arm, "sameSourceForBothSides": True},
-                "analysisSummary": None, "erbData": catch_erb,
+                "analysisSummary": None,
             }
+            if catch_erb is not None:
+                catch_pair["erbData"] = catch_erb
             catch_audio_equal = all(
                 catch_pair["a"]["audio"][mode]["sha256"] == catch_pair["b"]["audio"][mode]["sha256"]
                 and catch_pair["a"]["audio"][mode]["bytes"] == catch_pair["b"]["audio"][mode]["bytes"]
@@ -292,27 +378,56 @@ def build_data(config, config_path, package, helper):
             )
             if not catch_audio_equal:
                 raise ValueError("A/A catch sides must use byte-identical source files in both listening modes")
+            pairing_rule = blind_session_cfg.get("pairingRule")
+            if pairing_rule is not None:
+                if pairing_rule != "manifest-order-adjacent-v1" or source_manifest_kind != "listening":
+                    raise ValueError("pairingRule requires listening-manifest entries and manifest-order-adjacent-v1")
+                manifest_order = [row["id"] for row in manifest_rows]
+                expected_pairs = [manifest_order[index:index + 2] for index in range(0, len(manifest_order), 2)]
+                actual_pairs = [[pair[arm]["sourceManifestEntryId"] for arm in ("a", "b")] for pair in pair_data]
+                if len(manifest_order) % 2 or actual_pairs != expected_pairs:
+                    raise ValueError("configured pairs must use each listening-manifest entry once in adjacent order")
+                if source["sourceManifestEntryId"] != manifest_order[0]:
+                    raise ValueError("A/A catch must reuse the first listening-manifest entry")
+            pre_reveal_mode = blind_session_cfg.get("preRevealMode")
+            if pre_reveal_mode not in (None, "matched-only"):
+                raise ValueError("blindSession.preRevealMode must be matched-only when specified")
             blind_session = {"enabled": True, "randomizationAlgorithm": "fnv1a32-xorshift32-fisher-yates-v1",
-                             "trialIds": [pair["id"] for pair in pair_data] + [catch_id], "catchTrial": catch_pair}
+                             "trialIds": [pair["id"] for pair in pair_data] + [catch_id], "catchTrial": catch_pair,
+                             "pairingRule": pairing_rule, "preRevealMode": pre_reveal_mode}
             blind_validation = {"catchTrialId": catch_id, "sourcePairId": source_pair_id,
+                                "sourceManifestEntryId": source["sourceManifestEntryId"],
                                 "sourceArm": source_arm, "sameBytesAndSha256ForBothSides": catch_audio_equal,
+                                "trialCount": len(pair_data) + 1,
+                                "betweenSourceCount": len({pair[arm]["sourceManifestEntryId"]
+                                    for pair in pair_data for arm in ("a", "b")}),
+                                "pairingRule": pairing_rule,
+                                "pairingOrder": [[pair[arm]["sourceManifestEntryId"] for arm in ("a", "b")]
+                                                  for pair in pair_data] if pairing_rule else None,
+                                "preRevealMode": pre_reveal_mode,
                                 "fixedGainReceipt": {key: source["audio"]["fixedGain"][key]
                                                      for key in ("relativePath", "bytes", "sha256")},
                                 "rmsMatchedReceipt": {key: source["audio"]["rmsMatchedListeningOnly"][key]
                                                        for key in ("relativePath", "bytes", "sha256")}}
-    erb_helper_check = helper.self_check()
-    if not erb_helper_check.get("passed"):
+    erb_helper_check = helper.self_check() if helper is not None else None
+    if helper is not None and not erb_helper_check.get("passed"):
         raise ValueError("reused ERB helper self-check failed")
     data = {"viewerId": config["viewerId"], "evidenceId": config["evidenceId"], "title": config["title"],
             "metadata": config.get("metadata", ""), "pairs": pair_data, "erb": erb,
+            "listeningPostGain": {"targetRms": target_rms,
+                                  "stage": "after existing RMS-matched listening WAV, before playback",
+                                  "meaning": "digital listening target; not calibrated SPL or equal-loudness evidence"}
+                if target_rms is not None else None,
             "blindSession": blind_session}
     return data, {"config": file_receipt(config_path, package),
                   "sourceListeningManifest": file_receipt(manifest_path, package),
                   "sourceAnalysis": file_receipt(analysis_path, package) if analysis_path else None,
                   "validatedAudio": validated_files, "erbAnalysisParity": parity_checks,
                   "erbHelper": {"path": ERB_HELPER.relative_to(ROOT).as_posix(),
-                                "sha256": sha256(ERB_HELPER.read_bytes()), "selfCheck": erb_helper_check},
-                  "blindSession": blind_validation}
+                                "sha256": sha256(ERB_HELPER.read_bytes()), "selfCheck": erb_helper_check}
+                      if erb_helper_check is not None else None,
+                  "blindSession": blind_validation, "postGain": post_gain_validation,
+                  "sourceManifestKind": source_manifest_kind}
 
 
 HTML_SCRIPT = r"""
@@ -323,8 +438,12 @@ document.getElementById('page-title').textContent = DATA.title;
 document.getElementById('evidence-meta').textContent = DATA.metadata || '';
 const pairRoot = document.getElementById('pairs');
 const modeStatus = document.getElementById('mode-status');
+let audioContext = null;
+const audioOutputs = new WeakMap();
 const modeText = {
-  'rms-matched-listening-only': 'RMS matched — character comparison only; not audibility evidence.',
+  'rms-matched-listening-only': DATA.listeningPostGain
+    ? 'RMS matched — character comparison only; digital playback target RMS ' + DATA.listeningPostGain.targetRms + '; not audibility evidence; not calibrated SPL.'
+    : 'RMS matched — character comparison only; not audibility evidence.',
   'fixed-gain': 'Fixed gain — amplitude / transfer context.'
 };
 const modeInputs = Array.from(document.querySelectorAll('input[name="listening-mode"]'));
@@ -338,6 +457,29 @@ function make(tag, className, text) {
   if (className) node.className = className;
   if (text !== undefined) node.textContent = text;
   return node;
+}
+function configureAudioGain(audio, record, mode) {
+  let output = audioOutputs.get(audio);
+  const matchedGain = record.listeningPostGain && record.listeningPostGain.postGainLinear;
+  if (!output && (mode === 'fixed-gain' || !matchedGain)) return Promise.resolve();
+  const AudioContextType = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextType) throw new Error('Web Audio API is unavailable in this browser.');
+  if (!audioContext) audioContext = new AudioContextType();
+  if (!output) {
+    const source = audioContext.createMediaElementSource(audio), gain = audioContext.createGain();
+    source.connect(gain); gain.connect(audioContext.destination);
+    output = { gain }; audioOutputs.set(audio, output);
+  }
+  output.gain.gain.value = mode === 'fixed-gain' ? 1 : matchedGain || 1;
+  return audioContext.state === 'suspended' ? audioContext.resume() : Promise.resolve();
+}
+function playClip(audio, record, mode, status) {
+  audio.pause(); audio.src = record.relativePath; audio.load(); audio.currentTime = 0;
+  try {
+    const resumed = configureAudioGain(audio, record, mode);
+    const playing = audio.play();
+    Promise.all([resumed, playing]).catch(error => { status.textContent = 'Playback failed: ' + error.message; });
+  } catch (error) { status.textContent = 'Playback failed: ' + error.message; }
 }
 function keyFor(pair) { return 'ant-audio-evidence-viewer:v1:' + DATA.viewerId + ':' + pair.id; }
 function savedNote(pair) {
@@ -396,8 +538,7 @@ function addPair(pair) {
     audio.addEventListener('play', () => card.querySelectorAll('audio').forEach(other => { if (other !== audio) other.pause(); }));
     restart.addEventListener('click', () => {
       const clip = arm.audio[selectedMode() === 'fixed-gain' ? 'fixedGain' : 'rmsMatchedListeningOnly'];
-      audio.pause(); audio.src = clip.relativePath; audio.load(); audio.currentTime = 0;
-      audio.play().catch(error => { card.querySelector('.save-status').textContent = 'Playback failed: ' + error.message; });
+      playClip(audio, clip, selectedMode(), card.querySelector('.save-status'));
     });
     row.append(label, restart, audio); card.querySelector('.audio-controls').append(row);
   }
@@ -453,6 +594,9 @@ function initializeBlindSession() {
   const card = document.getElementById('blind-card'), complete = document.getElementById('blind-complete');
   const exportButton = document.getElementById('export-notes'), exportStatus = document.getElementById('export-status');
   const trialIds = DATA.blindSession.trialIds;
+  const matchedModeInput = document.querySelector('input[name="listening-mode"][value="rms-matched-listening-only"]');
+  const fixedModeInput = document.querySelector('input[name="listening-mode"][value="fixed-gain"]');
+  const fixedModeLabel = fixedModeInput.closest('label');
   const catchId = DATA.blindSession.catchTrial.id, stateKey = 'ant-audio-evidence-viewer:v2:' + DATA.viewerId;
   const algorithm = DATA.blindSession.randomizationAlgorithm;
   const modeNames = { 'rms-matched-listening-only': 'RMS matched', 'fixed-gain': 'fixed gain' };
@@ -541,6 +685,16 @@ function initializeBlindSession() {
   function audioRecord(trialState, side, mode) {
     const { arm } = sourceForSide(trialState, side);
     return arm.audio[mode === 'fixed-gain' ? 'fixedGain' : 'rmsMatchedListeningOnly'];
+  }
+  function applyModeAvailability(trialState) {
+    const matchedOnly = DATA.blindSession.preRevealMode === 'matched-only' && !trialState.revealed;
+    fixedModeInput.disabled = matchedOnly;
+    fixedModeLabel.hidden = matchedOnly;
+    if (matchedOnly && selectedMode() !== 'rms-matched-listening-only') {
+      matchedModeInput.checked = true;
+      updateAudioMode();
+      currentListeningMode = 'rms-matched-listening-only';
+    }
   }
   function copyReceipt(record) {
     return { path: record.relativePath, bytes: record.bytes, sha256: record.sha256 };
@@ -656,6 +810,10 @@ function initializeBlindSession() {
   function mappingForExport(trialState, side) {
     const { ref, pair, arm } = sourceForSide(trialState, side);
     return { condition: arm.label, sourcePairId: ref.sourcePairId, sourceArm: ref.sourceArm,
+      sourceManifestEntryId: arm.sourceManifestEntryId,
+      measurementMetadata: arm.measurementMetadata || null,
+      playbackMetadata: { modeAtReveal: trialState.listeningModeAtReveal, fixedGainLinear: 1,
+        matchedPostGain: arm.audio.rmsMatchedListeningOnly.listeningPostGain || null },
       audioFileHashes: { fixedGain: copyReceipt(arm.audio.fixedGain),
         rmsMatchedListeningOnly: copyReceipt(arm.audio.rmsMatchedListeningOnly) } };
   }
@@ -668,11 +826,13 @@ function initializeBlindSession() {
     } else identity.textContent = pair.label + ' — A: ' + sideA.arm.label + '; B: ' + sideB.arm.label + '.';
     updateRevealModeStatus();
     const analysis = card.querySelector('.revealed-analysis-content');
-    analysis.replaceChildren(renderErb(pair, trialState));
+    analysis.replaceChildren();
+    if (pair.erbData && DATA.erb) analysis.append(renderErb(pair, trialState));
     const measure = make('details', 'measurement-details'); measure.open = true;
     measure.append(make('summary', '', 'Inspect measurement metadata'));
     measure.append(make('pre', 'measurement-json', JSON.stringify({
       listeningModeAtReveal: selectedMode(), analysisView: 'fixed gain', isExploratoryAaCatch: pair.isCatch,
+      listeningPostGain: DATA.listeningPostGain,
       sideMapping: { A: mappingForExport(trialState, 'A'), B: mappingForExport(trialState, 'B') },
       measurementMetadata: pair.measurement || null, analysisSummary: pair.analysisSummary || null
     }, null, 2)));
@@ -685,6 +845,7 @@ function initializeBlindSession() {
   }
   function renderTrial(session) {
     const id = session.trialOrder[session.currentIndex], pair = definition(id), trialState = session.trials[id];
+    applyModeAvailability(trialState);
     if (!trialState.openedAt) { trialState.openedAt = timestamp(); logEvent(session, 'trial_opened', id); persist(); }
     complete.hidden = true; card.hidden = false;
     card.innerHTML = '<h2 class="pair-title"></h2><div class="audio-controls"></div><section class="pre-reveal"><h3>Before reveal</h3><p>Choose whether A and B sound different, rate confidence, and add an optional note. No sound descriptors are suggested.</p><label>Different? <select data-field="different"><option value="">Choose one</option><option value="yes">Yes</option><option value="unsure">Unsure</option><option value="no">No</option></select></label><label>Confidence (1–5) <select data-field="confidence"><option value="">Choose one</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label><label>Free note <textarea data-field="pre-note" rows="3"></textarea></label><button type="button" data-action="save-judgment">Save blind judgment</button> <button type="button" data-action="reveal">Reveal analysis</button><p class="save-status" role="status"></p></section><section class="revealed-analysis" hidden><h3>Revealed identity</h3><p class="revealed-identity"></p><div id="reveal-mode-status" class="mode-status"><p class="current-listening-mode"></p><p class="analysis-view">Analysis view: fixed gain</p></div><section class="pre-reveal-records"><h4>Preserved pre-reveal judgments</h4><div class="pre-reveal-summary"></div></section><label>Post-reveal note <textarea data-field="post-note" rows="3" placeholder="Optional interpretation after analysis"></textarea></label><div class="revealed-analysis-content"></div></section>';
@@ -697,8 +858,7 @@ function initializeBlindSession() {
       audio.addEventListener('play', () => card.querySelectorAll('audio').forEach(other => { if (other !== audio) other.pause(); }));
       restart.addEventListener('click', () => {
         const record = audioRecord(trialState, side, selectedMode());
-        audio.pause(); audio.src = record.relativePath; audio.load(); audio.currentTime = 0;
-        audio.play().catch(error => { card.querySelector('.save-status').textContent = 'Playback failed: ' + error.message; });
+        playClip(audio, record, selectedMode(), card.querySelector('.save-status'));
       });
       row.append(label, restart, audio); card.querySelector('.audio-controls').append(row);
     }
@@ -765,6 +925,7 @@ function initializeBlindSession() {
   function exportPayload() {
     syncPostNoteIfShown();
     return { schemaVersion: 2, viewerId: DATA.viewerId, evidenceId: DATA.evidenceId, exportedAt: timestamp(),
+      listeningPostGain: DATA.listeningPostGain,
       sessions: store.sessions.map(session => ({ sessionId: session.sessionId, seed: session.seed,
         randomizationAlgorithm: session.randomizationAlgorithm, startedAt: session.createdAt,
         completed: sessionComplete(session), trialOrder: session.trialOrder.slice(),
@@ -801,6 +962,7 @@ function initializeBlindSession() {
     } else populatePreReveal(trialState);
     currentListeningMode = nextMode;
   }));
+  if (DATA.blindSession.preRevealMode === 'matched-only') applyModeAvailability({ revealed: false });
   renderBlindSession();
 }
 if (DATA.blindSession && DATA.blindSession.enabled) {
@@ -823,6 +985,8 @@ if (DATA.blindSession && DATA.blindSession.enabled) {
   });
 }
 modeInputs.forEach(input => input.addEventListener('change', updateAudioMode));
+if (DATA.listeningPostGain) document.querySelector('.footer').textContent +=
+  ' Matched playback post-gain is listening convenience only; target is digital RMS, not calibrated SPL.';
 updateAudioMode();
 """
 
@@ -870,7 +1034,7 @@ def main():
         raise ValueError("viewer config must be inside this repository")
     config_bytes = config_path.read_bytes()
     config = json.loads(config_bytes)
-    helper = load_helper()
+    helper = load_helper() if config.get("erb") is not None else None
     data, inputs = build_data(config, config_path, package, helper)
     html = render_html(data).encode("utf-8")
     if html != render_html(data).encode("utf-8"):
@@ -885,16 +1049,22 @@ def main():
                       "python": platform.python_version()},
         "config": inputs["config"], "listeningManifest": inputs["sourceListeningManifest"],
         "analysis": inputs["sourceAnalysis"], "erbHelper": inputs["erbHelper"],
-        "fixedGainOnlyErbAnalysis": True, "validatedAudioFiles": inputs["validatedAudio"],
+        "fixedGainOnlyErbAnalysis": data["erb"] is not None, "validatedAudioFiles": inputs["validatedAudio"],
         "erbAnalysisParity": inputs["erbAnalysisParity"],
         "blindSession": inputs["blindSession"],
+        "sourceManifestKind": inputs["sourceManifestKind"],
+        "listeningPostGain": {"targetRms": data["listeningPostGain"]["targetRms"],
+                               "sources": inputs["postGain"],
+                               "allPredictedPeaksBelowFullScale": all(
+                                   row["predictedPostGainPeak"] < 1 for row in inputs["postGain"])}
+            if data["listeningPostGain"] else None,
         "erbDisplay": {"specification": ERB_SPEC, "absolutePowerDbScale": data["erb"]["absolutePowerDbScale"] if data["erb"] else None,
                         "differenceDbScale": data["erb"]["differenceDbScale"] if data["erb"] else None,
                         "perPairAutoscale": False if data["erb"] else None},
         "html": {"path": html_path.relative_to(package).as_posix(), "bytes": len(html), "sha256": html_hash},
         "noAudioRenderOrSourceModification": True,
     }
-    validation_path = package_file(package, "viewer-validation.json", "validation output")
+    validation_path = package_file(package, config.get("validationOutput", "viewer-validation.json"), "validation output")
     validation_path.write_text(json.dumps(validation, indent=2, ensure_ascii=False, allow_nan=False) + "\n", encoding="utf-8", newline="\n")
     report_artifacts = refresh_report_manifest(package)
     print(json.dumps({"htmlPath": validation["html"]["path"], "htmlBytes": len(html), "htmlSha256": html_hash,

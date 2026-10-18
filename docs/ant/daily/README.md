@@ -14,6 +14,16 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-18 — Cross-Plate p50 blind listening preparation
+
+[Process log](./2026-10-18-cross-plate-blind-listening-viewer.md) · [Cross-Plate viewer](../evidence/2026-10-13-plate-sonic-individuality/cross-plate-listening.html) · [Viewer guide](../audio-evidence-viewer.md)
+
+- Prepared six deterministic between-Plate trials from the adjacent manifest-order p50 entries, plus one hidden A/A catch using the first entry
+- Matched playback now reaches digital pooled stereo RMS 0.08 through a playback-stage Web Audio gain; source WAVs remain unchanged
+- Cross-Plate Reveal runs without ERB; Base/Born keeps fixed-gain ERB and gains the same per-pair playback target
+- File and repository-root loopback playback passed focused Chromium checks; no cross-Plate human listening assessment was collected
+- The 2026-10-15 Base/Born session remains historical evidence and predates the playback-gain revision; scientific decision remains **MIXED**
+
 ### 2026-10-15 — Frozen natural-event ERB crop-boundary sensitivity
 
 [Process log](./2026-10-15-erb-window-boundary.md) · [Evidence](../evidence/2026-10-15-erb-window-boundary/README.md)

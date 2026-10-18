@@ -4,13 +4,13 @@
   "evidenceId": "2026-10-14-base-born-natural-event-erb",
   "generator": {
     "path": "scripts/ant-audio-evidence-viewer.py",
-    "sha256": "666bbb72bf4a579c2a7968e28a828df34a365aaa40849d9dcaf618a74c3007b4",
+    "sha256": "df5f863c6879b3d1878cb9ab0636fa1614283f2c7525ab7dd12649ce33b3b183",
     "python": "3.12.14"
   },
   "config": {
     "path": "viewer-config.json",
-    "bytes": 2171,
-    "sha256": "793e66a45f52e27ffd96bc78752b2b73b83c4df52c0c26e96c7d8c40543d4551"
+    "bytes": 2209,
+    "sha256": "55305bc05d7c18069b3ee8d74afd823833f4eae97df693f636cea4c9db8d7a93"
   },
   "listeningManifest": {
     "path": "listening-manifest.json",
@@ -125,8 +125,14 @@
   "blindSession": {
     "catchTrialId": "control-aa-q50-base",
     "sourcePairId": "q50",
+    "sourceManifestEntryId": "q50",
     "sourceArm": "a",
     "sameBytesAndSha256ForBothSides": true,
+    "trialCount": 4,
+    "betweenSourceCount": 3,
+    "pairingRule": null,
+    "pairingOrder": null,
+    "preRevealMode": null,
     "fixedGainReceipt": {
       "relativePath": "listening/q50-base-fixed-gain.wav",
       "bytes": 192044,
@@ -137,6 +143,79 @@
       "bytes": 192044,
       "sha256": "dba2174d1f9f2426b4221228722181bfa661f6487438afd8c5fb178464b23b1e"
     }
+  },
+  "sourceManifestKind": "pairs",
+  "listeningPostGain": {
+    "targetRms": 0.08,
+    "sources": [
+      {
+        "pairId": "q25",
+        "arm": "a",
+        "sourceManifestEntryId": "q25",
+        "sourceMatchedRms": 0.002469397787319644,
+        "sourceMatchedPeak": 0.009605727424370675,
+        "finalTargetRms": 0.08,
+        "postGainLinear": 32.39656259951311,
+        "postGainDb": 30.209978646564952,
+        "predictedPostGainPeak": 0.3111925498174844
+      },
+      {
+        "pairId": "q25",
+        "arm": "b",
+        "sourceManifestEntryId": "q25",
+        "sourceMatchedRms": 0.002469397787319644,
+        "sourceMatchedPeak": 0.018008369952440262,
+        "finalTargetRms": 0.08,
+        "postGainLinear": 32.39656259951311,
+        "postGainDb": 30.209978646564952,
+        "predictedPostGainPeak": 0.5834092844794219
+      },
+      {
+        "pairId": "q50",
+        "arm": "a",
+        "sourceManifestEntryId": "q50",
+        "sourceMatchedRms": 0.0026839984646231455,
+        "sourceMatchedPeak": 0.007007831280806719,
+        "finalTargetRms": 0.08,
+        "postGainLinear": 29.806276365077068,
+        "postGainDb": 29.486154478647073,
+        "predictedPostGainPeak": 0.20887735587555706
+      },
+      {
+        "pairId": "q50",
+        "arm": "b",
+        "sourceManifestEntryId": "q50",
+        "sourceMatchedRms": 0.0026839984646231455,
+        "sourceMatchedPeak": 0.01726294681429863,
+        "finalTargetRms": 0.08,
+        "postGainLinear": 29.806276365077068,
+        "postGainDb": 29.486154478647073,
+        "predictedPostGainPeak": 0.5145441636226117
+      },
+      {
+        "pairId": "q75",
+        "arm": "a",
+        "sourceManifestEntryId": "q75",
+        "sourceMatchedRms": 0.007912245891908011,
+        "sourceMatchedPeak": 0.017072720213050903,
+        "finalTargetRms": 0.08,
+        "postGainLinear": 10.110909227659036,
+        "postGainDb": 20.0958042291297,
+        "predictedPostGainPeak": 0.17262072434337733
+      },
+      {
+        "pairId": "q75",
+        "arm": "b",
+        "sourceManifestEntryId": "q75",
+        "sourceMatchedRms": 0.007912245891908013,
+        "sourceMatchedPeak": 0.02650025114417076,
+        "finalTargetRms": 0.08,
+        "postGainLinear": 10.110909227659036,
+        "postGainDb": 20.0958042291297,
+        "predictedPostGainPeak": 0.2679416338288781
+      }
+    ],
+    "allPredictedPeaksBelowFullScale": true
   },
   "erbDisplay": {
     "specification": {
@@ -158,8 +237,8 @@
   },
   "html": {
     "path": "listening.html",
-    "bytes": 830754,
-    "sha256": "7e7de8bdea5bf4c4f3fa36a115c012994855aa1c3f599b7c25ebf32543c559d2"
+    "bytes": 837530,
+    "sha256": "f36801bf9c4ebba8d6af4b07e1b540804fbb6df5a213cf1f84014dada03aba1a"
   },
   "noAudioRenderOrSourceModification": true
 }

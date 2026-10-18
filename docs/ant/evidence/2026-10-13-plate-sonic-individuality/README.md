@@ -120,7 +120,13 @@ Historical Born readout used `1/√12`. Current Plate readout is 1; its direct s
 
 [Local listening sheet](listening.html) contains the 12 midpoint native clips. Measurement column uses fixed gain 1. Optional listening-only column matches pooled stereo RMS **0.02**; its gain is recorded in [listening manifest](listening-manifest.json). It cannot support amplitude/transfer claims.
 
-**Subjective judgment: none collected.** The investigation makes no claim about preferred timbre or reliable listener identification. A future listening comparison should record that judgment independently of the measured acceptance conditions.
+**Cross-Plate perceptual status: not tested.** The measurements show distinct isolated responses, and the separate contact-position work shows strong within-Plate response change. Neither result establishes perceived cross-Plate identity.
+
+[Cross-Plate blind viewer](cross-plate-listening.html) prepares six exploratory between-Plate trials from the twelve frozen p50 entries, paired once each in adjacent listening-manifest order. One hidden A/A catch reuses the first entry's exact bytes on both sides. Before Reveal, playback is RMS matched only; fixed-gain playback is available after Reveal as amplitude/transfer context. The matched files remain unchanged and use a playback-stage Web Audio gain to target digital pooled stereo RMS **0.08**. This is not calibrated SPL or equal-loudness evidence. No cross-Plate human listening assessment has been collected.
+
+The viewer reads the existing ignored `test-results/ant-plate-sonic-individuality-20261013` WAVs by validated repository-relative paths. Open it from `file://` when the browser permits, or serve the repository root locally with `python -m http.server 8000`. GitHub's file preview is not a playback surface. The generated page contains metadata and relative paths, not copied or embedded PCM. [`cross-plate-viewer-config.json`](cross-plate-viewer-config.json) and [`cross-plate-viewer-validation.json`](cross-plate-viewer-validation.json) record the deterministic roster and source receipts.
+
+No preference, general human identification, formal significance, geometry cause, or production acceptance claim follows from the existing measurements. Any later export can support only a report of this listener's responses on these selected pairs.
 
 [Fixed-scale comparison](isolated-fixed-scale.png) reuses the locked renderer: ±1 waveform; 1024 Hann/256 hop; 0–8 kHz; −100…0 dBFS; no normalization. Six 1.5 s clips are padded to its existing 10 s display. Numeric response spectra use full post-contact rectangular FFTs with Parseval accounting, a separate analysis from the fixed Hann spectrogram.
 
