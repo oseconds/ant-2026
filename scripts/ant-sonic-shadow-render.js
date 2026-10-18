@@ -11,7 +11,8 @@ function finiteValues(value) {
   return !value || typeof value !== 'object' || Object.values(value).every(finiteValues);
 }
 
-export function instrumentSurfaceSchedule(source, pickupCapture = null) {
+export function instrumentSurfaceSchedule(source, pickupCapture = null, pickupStemFrameRange = null,
+  boundarySchedule = false) {
   if (typeof source !== 'string') throw new TypeError('Worklet source must be a string.');
   const replaceOnce = (before, after) => {
     if (source.split(before).length !== 2) throw new Error(`Surface worklet instrumentation anchor missing or ambiguous: ${before}`);
@@ -28,17 +29,26 @@ export function instrumentSurfaceSchedule(source, pickupCapture = null) {
     this.__shadowRawLeft = [];
     this.__shadowRawRight = [];
     this.__shadowFieldFinite = true;`);
+  if (pickupCapture && pickupStemFrameRange) {
+    replaceOnce('    this.__shadowFieldFinite = true;', `    this.__shadowFieldFinite = true;
+    this.__shadowPickupFrameRange = ${JSON.stringify(pickupStemFrameRange)};`);
+    replaceOnce('      this.queueHead = (this.queueHead + 1) & 63; this.queueLength--;', `      this.queueHead = (this.queueHead + 1) & 63; this.queueLength--;
+      if (this.__shadowPickupCapture && this.__shadowFrame === this.__shadowPickupFrameRange.startFrame)
+        this.__shadowPickupCapture.interpolationStart = { phase: this.phase, samplesSinceStep: this.samplesSinceStep,
+          lastL: this.lastL, lastR: this.lastR, queueHead: this.queueHead, queueLength: this.queueLength,
+          queueL: this.queueL.slice(), queueR: this.queueR.slice() };`);
+  }
   replaceOnce('    this.port.onmessage = (event) => this.handleMessage(event.data);',
     `    this.port.onmessage = (event) => this.handleMessage(event.data);
     this.handleMessage({ type: 'topology', payload: options?.processorOptions?.evidenceTopology });`);
-  replaceOnce('    for (let frame = 0; frame < left.length; frame++) {', `    for (let frame = 0; frame < left.length; frame++) {
-      while (this.__shadowEventCursor < this.__shadowEvents.length
+  const dispatchAtBoundary = `      while (this.__shadowEventCursor < this.__shadowEvents.length
         && this.__shadowEvents[this.__shadowEventCursor].frame === this.__shadowFrame) {
         const event = this.__shadowEvents[this.__shadowEventCursor++];
         this.__shadowReceipts.push({ frame: this.__shadowFrame, message: event.message });
         this.handleMessage(event.message);
-      }
-      this.__shadowFrame++;`);
+      }`;
+  replaceOnce('    for (let frame = 0; frame < left.length; frame++) {', `${boundarySchedule ? dispatchAtBoundary + '\n' : ''}    for (let frame = 0; frame < left.length; frame++) {
+${boundarySchedule ? '' : dispatchAtBoundary + '\n'}      this.__shadowFrame++;`);
   replaceOnce('        this.advancePhysics();', `        this.advancePhysics();
         if (this.__shadowFields) {
           this.__shadowFields.push(Array.from(this.current));
@@ -57,6 +67,7 @@ export function instrumentSurfaceSchedule(source, pickupCapture = null) {
     this.__shadowPickupCapture = {
       layerIds: stemIds, idToSlot: new Map(stemIds.map((id, index) => [id, index])), layerSlots: [],
       maxPhysicsSteps: ${pickupCapture.maxPhysicsSteps}, maxLayers: ${pickupCapture.maxLayers},
+      startFrame: ${pickupCapture.startFrame}, endFrame: ${pickupCapture.endFrame},
       allocatedBytes: ${pickupCapture.allocatedBytes}, steps: 0,
       plates: stemIds.map(id => ({ id, left: new Float64Array(${pickupCapture.maxPhysicsSteps}), right: new Float64Array(${pickupCapture.maxPhysicsSteps}) })),
       sphere: { left: new Float64Array(${pickupCapture.maxPhysicsSteps}), right: new Float64Array(${pickupCapture.maxPhysicsSteps}) },
@@ -75,16 +86,20 @@ export function instrumentSurfaceSchedule(source, pickupCapture = null) {
       if (slot === undefined) throw new Error('Pickup stem topology contains an unregistered Plate ID.');
       return slot;
     });`);
-    replaceOnce('        this.advancePhysics();', `        if (this.__shadowPickupCapture
-          && this.__shadowPickupCapture.steps >= this.__shadowPickupCapture.maxPhysicsSteps)
+    replaceOnce('        this.advancePhysics();', `        const pickupCaptureStep = this.__shadowPickupCapture
+          && this.__shadowFrame > this.__shadowPickupCapture.startFrame
+          && this.__shadowFrame <= this.__shadowPickupCapture.endFrame;
+        if (pickupCaptureStep && this.__shadowPickupCapture.steps >= this.__shadowPickupCapture.maxPhysicsSteps)
           throw new Error('Pickup stem capture exceeded its preallocated physics-step capacity.');
-        if (this.__shadowPickupCapture)
+        this.__shadowPickupCaptureStep = Boolean(pickupCaptureStep);
+        if (pickupCaptureStep)
           this.__shadowPickupCapture.topologyGeneration[this.__shadowPickupCapture.steps] = this.topology?.generation || 0;
         this.advancePhysics();
-        if (this.__shadowPickupCapture) this.__shadowPickupCapture.steps++;`);
+        this.__shadowPickupCaptureStep = false;
+        if (pickupCaptureStep) this.__shadowPickupCapture.steps++;`);
     replaceOnce('      if (node === t.pickupNodeIndices[layer * 2]) outL += next;', `      if (node === t.pickupNodeIndices[layer * 2]) {
         outL += next;
-        if (this.__shadowPickupCapture) {
+        if (this.__shadowPickupCaptureStep) {
           const capture = this.__shadowPickupCapture, step = capture.steps;
           const slot = capture.layerSlots[layer];
           capture.plates[slot].left[step] = next * PLATE_PICKUP_MIX;
@@ -93,7 +108,7 @@ export function instrumentSurfaceSchedule(source, pickupCapture = null) {
       }`);
     replaceOnce('      if (node === t.pickupNodeIndices[layer * 2 + 1]) outR += next;', `      if (node === t.pickupNodeIndices[layer * 2 + 1]) {
         outR += next;
-        if (this.__shadowPickupCapture) {
+        if (this.__shadowPickupCaptureStep) {
           const capture = this.__shadowPickupCapture, step = capture.steps;
           const slot = capture.layerSlots[layer];
           capture.plates[slot].right[step] = next * PLATE_PICKUP_MIX;
@@ -104,7 +119,7 @@ export function instrumentSurfaceSchedule(source, pickupCapture = null) {
     }
     for (let a = 0; a < steppingCount; ) {`, `      sphereOutR += this.sphereCurrent[i] * this.spherePickupR[i];
     }
-    if (this.__shadowPickupCapture) {
+    if (this.__shadowPickupCaptureStep) {
       const capture = this.__shadowPickupCapture, step = capture.steps;
       capture.sphere.left[step] = sphereOutL * MIX;
       capture.sphere.right[step] = sphereOutR * MIX;
@@ -112,7 +127,7 @@ export function instrumentSurfaceSchedule(source, pickupCapture = null) {
     for (let a = 0; a < steppingCount; ) {`);
     replaceOnce(`    const mixR = outR * PLATE_PICKUP_MIX + sphereOutR * MIX;
     this.telemetry.maxOutputAbs`, `    const mixR = outR * PLATE_PICKUP_MIX + sphereOutR * MIX;
-    if (this.__shadowPickupCapture) {
+    if (this.__shadowPickupCaptureStep) {
       const capture = this.__shadowPickupCapture, step = capture.steps;
       capture.preLimiter.left[step] = mixL;
       capture.preLimiter.right[step] = mixR;
@@ -144,7 +159,8 @@ export function encodeStereoFloatWav({ left, right }, { sampleRate = DEFAULT_RAT
 }
 
 export function renderSurface({ source, topology, events = [], frames, sampleRate = DEFAULT_RATE,
-  captureFields = true, capturePickupStems = false, captureState = false, captureStateHashes = false }) {
+  captureFields = true, capturePickupStems = false, captureState = false, captureStateHashes = false,
+  outputFrameRange = null, pickupStemFrameRange = null }) {
   if (typeof source !== 'string') throw new TypeError('source must be a string.');
   if (!topology || typeof topology !== 'object') throw new TypeError('topology must be compiled surface topology.');
   if (!Number.isSafeInteger(frames) || frames <= 0) throw new RangeError('frames must be a positive safe integer.');
@@ -153,6 +169,15 @@ export function renderSurface({ source, topology, events = [], frames, sampleRat
   if (typeof capturePickupStems !== 'boolean') throw new TypeError('capturePickupStems must be a boolean.');
   if (typeof captureState !== 'boolean') throw new TypeError('captureState must be a boolean.');
   if (typeof captureStateHashes !== 'boolean') throw new TypeError('captureStateHashes must be a boolean.');
+  const outputRange = normalizeFrameRange(outputFrameRange, frames, 'outputFrameRange');
+  const pickupRange = pickupStemFrameRange === null
+    ? { startFrame: 0, endFrame: frames }
+    : normalizeFrameRange(pickupStemFrameRange, frames, 'pickupStemFrameRange');
+  if (pickupStemFrameRange !== null && !capturePickupStems)
+    throw new TypeError('pickupStemFrameRange requires capturePickupStems.');
+  if (capturePickupStems && (pickupRange.startFrame * PHYSICS_RATE % sampleRate !== 0
+    || pickupRange.endFrame * PHYSICS_RATE % sampleRate !== 0))
+    throw new RangeError('pickupStemFrameRange boundaries must align with physics steps.');
   const scheduled = events.map((event, index) => {
     if (!Number.isSafeInteger(event?.frame) || event.frame < 0 || event.frame >= frames)
       throw new RangeError(`events[${index}].frame must be an integer within the render.`);
@@ -161,8 +186,9 @@ export function renderSurface({ source, topology, events = [], frames, sampleRat
     return { frame: event.frame, message: event.message, index };
   }).sort((a, b) => a.frame - b.frame || a.index - b.index);
 
-  const pickupCapture = capturePickupStems ? buildPickupCapture(topology, scheduled, frames, sampleRate) : null;
-  const instrumented = instrumentSurfaceSchedule(source, pickupCapture);
+  const pickupCapture = capturePickupStems
+    ? buildPickupCapture(topology, scheduled, pickupRange, sampleRate) : null;
+  const instrumented = instrumentSurfaceSchedule(source, pickupCapture, capturePickupStems ? pickupRange : null, true);
   let Processor;
   class AudioWorkletProcessorStub {
     constructor() { this.port = { onmessage: null, postMessage() {} }; }
@@ -178,7 +204,8 @@ export function renderSurface({ source, topology, events = [], frames, sampleRat
   const processor = new Processor({ processorOptions: { evidenceSchedule: { events: scheduled }, evidenceTopology: topology } });
   if (!captureFields) processor.__shadowFields = null;
   const stateHashes = captureStateHashes ? observePhysicsSteps(processor) : null;
-  const left = new Float32Array(frames), right = new Float32Array(frames);
+  const left = new Float32Array(outputRange.endFrame - outputRange.startFrame);
+  const right = new Float32Array(left.length);
   let frame = 0, eventCursor = 0;
   while (frame < frames) {
     let count = Math.min(QUANTUM, frames - frame);
@@ -188,13 +215,18 @@ export function renderSurface({ source, topology, events = [], frames, sampleRat
     if (!count) count = Math.min(QUANTUM, frames - frame);
     const outL = new Float32Array(count), outR = new Float32Array(count);
     processor.process([], [[outL, outR]]);
-    left.set(outL, frame); right.set(outR, frame); frame += count;
+    const copyStart = Math.max(frame, outputRange.startFrame), copyEnd = Math.min(frame + count, outputRange.endFrame);
+    if (copyEnd > copyStart) {
+      left.set(outL.subarray(copyStart - frame, copyEnd - frame), copyStart - outputRange.startFrame);
+      right.set(outR.subarray(copyStart - frame, copyEnd - frame), copyStart - outputRange.startFrame);
+    }
+    frame += count;
   }
   const telemetry = JSON.parse(JSON.stringify(processor.getDiagnostics()));
   if (telemetry.nonFinite !== 0 || !finiteValues(telemetry) || processor.current.some(value => !Number.isFinite(value))
     || left.some(value => !Number.isFinite(value)) || right.some(value => !Number.isFinite(value)))
     throw new Error('Surface shadow render produced non-finite PCM, state, or solver telemetry.');
-  const result = { pcm: { left, right }, telemetry,
+  const result = { pcm: { left, right }, pcmFrameRange: outputRange, telemetry,
     renderedFrameReceipts: Array.from(processor.__shadowReceipts, receipt => ({ ...receipt })),
     nodeCount: processor.current.length, sourceSha256: sha256(source) };
   if (captureState) result.finalState = snapshotSolverState(processor);
@@ -217,7 +249,7 @@ export function renderSurface({ source, topology, events = [], frames, sampleRat
 }
 
 export function renderProductionSurface({ source, topology, events = [], frames,
-  sampleRate = DEFAULT_RATE, captureState = false, captureStateHashes = false }) {
+  sampleRate = DEFAULT_RATE, captureState = false, captureStateHashes = false, outputFrameRange = null }) {
   if (typeof source !== 'string') throw new TypeError('source must be a string.');
   if (!topology || typeof topology !== 'object') throw new TypeError('topology must be compiled surface topology.');
   if (!Number.isSafeInteger(frames) || frames <= 0) throw new RangeError('frames must be a positive safe integer.');
@@ -225,6 +257,7 @@ export function renderProductionSurface({ source, topology, events = [], frames,
   if (!Array.isArray(events)) throw new TypeError('events must be an array.');
   if (typeof captureState !== 'boolean') throw new TypeError('captureState must be a boolean.');
   if (typeof captureStateHashes !== 'boolean') throw new TypeError('captureStateHashes must be a boolean.');
+  const outputRange = normalizeFrameRange(outputFrameRange, frames, 'outputFrameRange');
   const scheduled = events.map((event, index) => {
     if (!Number.isSafeInteger(event?.frame) || event.frame < 0 || event.frame >= frames)
       throw new RangeError(`events[${index}].frame must be an integer within the render.`);
@@ -242,14 +275,20 @@ export function renderProductionSurface({ source, topology, events = [], frames,
     registerProcessor(_name, processor) { Processor = processor; }
   }, { filename: 'surface-plate.worklet.production-render.js' });
   if (!Processor) throw new Error('Surface worklet did not register a processor.');
-  const processor = new Processor(), left = new Float32Array(frames), right = new Float32Array(frames);
+  const processor = new Processor(), left = new Float32Array(outputRange.endFrame - outputRange.startFrame),
+    right = new Float32Array(outputRange.endFrame - outputRange.startFrame);
   const stateHashes = captureStateHashes ? observePhysicsSteps(processor) : null;
   let frame = 0;
   const processTo = end => {
     while (frame < end) {
       const count = Math.min(QUANTUM, end - frame), outL = new Float32Array(count), outR = new Float32Array(count);
       processor.process([], [[outL, outR]]);
-      left.set(outL, frame); right.set(outR, frame); frame += count;
+      const copyStart = Math.max(frame, outputRange.startFrame), copyEnd = Math.min(end, outputRange.endFrame);
+      if (copyEnd > copyStart) {
+        left.set(outL.subarray(copyStart - frame, copyEnd - frame), copyStart - outputRange.startFrame);
+        right.set(outR.subarray(copyStart - frame, copyEnd - frame), copyStart - outputRange.startFrame);
+      }
+      frame += count;
     }
   };
   processor.handleMessage({ type: 'topology', payload: topology });
@@ -264,7 +303,7 @@ export function renderProductionSurface({ source, topology, events = [], frames,
   if (telemetry.nonFinite !== 0 || !finiteValues(telemetry) || processor.current.some(value => !Number.isFinite(value))
     || left.some(value => !Number.isFinite(value)) || right.some(value => !Number.isFinite(value)))
     throw new Error('Production render produced non-finite PCM, state, or solver telemetry.');
-  const result = { pcm: { left, right }, telemetry, renderedFrameReceipts: receipts,
+  const result = { pcm: { left, right }, pcmFrameRange: outputRange, telemetry, renderedFrameReceipts: receipts,
     nodeCount: processor.current.length, sourceSha256: sha256(source) };
   if (captureState) result.finalState = snapshotSolverState(processor);
   if (captureStateHashes) result.stateHashes = stateHashes;
@@ -293,9 +332,18 @@ export function reconstructSurfacePcm(stems, { frames, sampleRate = DEFAULT_RATE
   if (!Number.isSafeInteger(frames) || frames <= 0) throw new RangeError('frames must be a positive safe integer.');
   if (!Number.isSafeInteger(sampleRate) || sampleRate <= 0) throw new RangeError('sampleRate must be a positive integer.');
   const mix = reconstructPickupStemMix(stems);
+  if (Number.isSafeInteger(stems.startFrame) && Number.isSafeInteger(stems.endFrame)
+    && stems.endFrame - stems.startFrame !== frames)
+    throw new RangeError('PCM frame count must match the captured pickup stem range.');
   const left = new Float32Array(frames), right = new Float32Array(frames);
-  const queueL = new Float32Array(64), queueR = new Float32Array(64);
-  let phase = 0, samplesSinceStep = 0, lastL = 0, lastR = 0, queueHead = 0, queueLength = 0, step = 0;
+  const initial = stems.interpolationStart;
+  const queueL = initial ? Float32Array.from(initial.queueL) : new Float32Array(64);
+  const queueR = initial ? Float32Array.from(initial.queueR) : new Float32Array(64);
+  if (queueL.length !== 64 || queueR.length !== 64)
+    throw new TypeError('Captured interpolation boundary must contain 64 stereo queue entries.');
+  let phase = initial?.phase ?? 0, samplesSinceStep = initial?.samplesSinceStep ?? 0;
+  let lastL = initial?.lastL ?? 0, lastR = initial?.lastR ?? 0;
+  let queueHead = initial?.queueHead ?? 0, queueLength = initial?.queueLength ?? 0, step = 0;
   for (let frame = 0; frame < frames; frame++) {
     phase += PHYSICS_RATE;
     samplesSinceStep++;
@@ -322,8 +370,17 @@ export function reconstructSurfacePcm(stems, { frames, sampleRate = DEFAULT_RATE
   return { left, right };
 }
 
-function buildPickupCapture(topology, events, frames, sampleRate) {
-  const maxPhysicsSteps = Math.ceil(frames * PHYSICS_RATE / sampleRate) + 1;
+function normalizeFrameRange(value, frames, name) {
+  if (value === null) return { startFrame: 0, endFrame: frames };
+  if (!value || typeof value !== 'object' || !Number.isSafeInteger(value.startFrame)
+    || !Number.isSafeInteger(value.endFrame) || value.startFrame < 0
+    || value.endFrame <= value.startFrame || value.endFrame > frames)
+    throw new RangeError(`${name} must be a non-empty frame range within the render.`);
+  return { startFrame: value.startFrame, endFrame: value.endFrame };
+}
+
+function buildPickupCapture(topology, events, range, sampleRate) {
+  const maxPhysicsSteps = (range.endFrame - range.startFrame) * PHYSICS_RATE / sampleRate;
   if (!Number.isSafeInteger(maxPhysicsSteps)) throw new RangeError('Pickup stem physics-step capacity is too large.');
   const topologies = [topology, ...events.filter(event => event.message.type === 'topology')
     .map(event => event.message.payload)];
@@ -333,7 +390,8 @@ function buildPickupCapture(topology, events, frames, sampleRate) {
   if (!Number.isSafeInteger(allocatedBytes) || allocatedBytes > MAX_PICKUP_STEM_BYTES) {
     throw new RangeError(`Pickup stem capture needs ${allocatedBytes} bytes; limit is ${MAX_PICKUP_STEM_BYTES}.`);
   }
-  return { layerIds, maxPhysicsSteps, maxLayers, allocatedBytes };
+  return { layerIds, maxPhysicsSteps, maxLayers, allocatedBytes,
+    startFrame: range.startFrame, endFrame: range.endFrame };
 }
 
 function snapshotPickupStems(capture) {
@@ -341,6 +399,8 @@ function snapshotPickupStems(capture) {
   const frames = capture.steps;
   return {
     sampleRate: PHYSICS_RATE, frames, allocatedBytes: capture.allocatedBytes,
+    startFrame: capture.startFrame, endFrame: capture.endFrame,
+    interpolationStart: capture.interpolationStart,
     layerIds: Array.from(capture.layerIds), maxPhysicsSteps: capture.maxPhysicsSteps,
     plates: Array.from(capture.plates, ({ id, left, right }) => ({ id,
       left: left.subarray(0, frames), right: right.subarray(0, frames) })),

@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "decision": "DENSE-OVERLAP CANDIDATE SUPPORTED",
+  "startingMainSha": "8c60e4bba3bd5b476300e90a2936bfebd1f831c2",
+  "observerBaseSha": "c519302a58adc875eab782877f2fdf1c43e3608b",
+  "branch": "codex/ant-natural-dense-readout-overlap-20261018",
+  "sourceHashes": {
+    "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+    "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+    "src/lib/agents/ant/BodyPoseController.js": "2ec4cc12c12ae301ea07056889c3be9255b1b1e155b7724cd3366278d60ace8e",
+    "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd",
+    "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+    "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+    "src/lib/agents/ant/LocalOccupancy.js": "df22dd38e9af8078ebcb1d225ca2a5eaf579e994d2d4a00ce9ceeefa2403ff16",
+    "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+    "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+    "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+    "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+    "src/lib/audio/AntEnvironmentAudioBridge.js": "8650a38789ce3053232765131fef77dc9334bc43ff79acccec01a589a4a73a6d",
+    "src/lib/audio/SurfaceAudioBridge.js": "ef87c14015067f7cad512e0675716239b1707e441eb28cfd9175d28b0ef28215",
+    "src/lib/audio/compileSurfaceTopology.js": "b28b15158441a9cc24d8d3e22fbf10342962555de6ca6e6bf4f649985a5ba2fd",
+    "static/worklets/surface-plate.worklet.js": "14c7461f1412f0d6897a6683d46e582dbb80711f2ba74e8ea53e026895eeea5e",
+    "scripts/ant-sonic-shadow-render.js": "121c3ae16570cc1f06b11dc60395db891f3c58b0adec97afb386c2fc2357817a"
+  },
+  "routeAudit": {
+    "scheduledStrikes": 8280,
+    "accepted": 8279,
+    "rejected": [
+      {
+        "sequence": 1664,
+        "frame": 10992549,
+        "generation": 4,
+        "plateId": "trail-plate-2",
+        "layerId": "trail-plate-2",
+        "position": {
+          "x": 0.8980188950827352,
+          "y": 0.07481609743726574
+        },
+        "reason": "routed Plate ID is not the exposed installed layer"
+      }
+    ],
+    "topologyInstalls": 10,
+    "invalidTopologies": 0
+  },
+  "naturalCapture": {
+    "seed": 20261005,
+    "ticks": 18121,
+    "milestoneTick": 17521,
+    "intervalTicks": 600,
+    "pairedAudioOffStateParitySamples": 18122,
+    "allWorldParityFieldsMatch": true,
+    "audioOnBridge": {
+      "births": 9,
+      "routedFootEvents": 4286,
+      "routedFeet": 8280,
+      "strikeRoutes": 8280,
+      "supportedFeet": 8280,
+      "unsupportedFeet": 41520,
+      "directExposedStrikes": 8280,
+      "injectedImpulseEnergy": 3.327423978670926,
+      "events": 16786,
+      "unroutedContacts": 12500,
+      "capacityRejectedLayers": 0,
+      "ignoredWhileDisabled": 0,
+      "dropped": 0,
+      "processorErrors": 0
+    },
+    "rngEqual": true
+  },
+  "replay": {
+    "frames": 14496800,
+    "outputFrames": 480000,
+    "physicsSteps": 60000,
+    "capturedMessages": 8291,
+    "scheduledMessages": 8289,
+    "replayStrikes": 8279,
+    "replayTopologyInstalls": 10,
+    "droppedRoutes": 1,
+    "droppedEvents": 1,
+    "rejectedRoutesInAnalysisWindow": 0,
+    "rejectedRoutesBeforeAnalysisWindow": 1,
+    "nonFinite": 0,
+    "clipped": 0,
+    "rawUninstrumentedWallMs": 514405.1936,
+    "observedWallMs": 520272.9891,
+    "observerWallRatio": 1.0114069522878162,
+    "observedStemAllocatedBytes": 12000400,
+    "stemStorageBytes": 13440320,
+    "comparedPreLimiterValues": 120004,
+    "preLimiterExactValues": 120004,
+    "preLimiterMaxAbsoluteError": 0,
+    "comparedPcmValues": 960000,
+    "pcmExactValues": 960000,
+    "pcmMaxAbsoluteError": 0,
+    "pcmSampleExact": true,
+    "sourceWorkletSha256": "14c7461f1412f0d6897a6683d46e582dbb80711f2ba74e8ea53e026895eeea5e",
+    "analysisHarnessSha256": "3338d51c73d6914fb2ede32c92c5476940c3b8640018394ce58e911900902efc",
+    "erbHarnessSha256": "1436de7076ef2100f7c9dc358f16694fa34937fbe26de4b0c584e6b19620f384",
+    "telemetryExact": true,
+    "analysisSha256": "495a5d0f9f5529a4feac38675c498455ca16d2b5ffb6989639754e86655d4441"
+  },
+  "memoryAndRuntime": {
+    "productionWorkletChanged": false,
+    "diagnosticDisabledProductionCost": "zero added production branches or allocations; implementation changes are in scripts/ and tests/",
+    "boundedStemBytes": 12000400,
+    "observedReplayWallMs": 520272.9891,
+    "rawReplayWallMs": 514405.1936,
+    "timingIsSingleRunAndNotABenchmark": true
+  },
+  "sourceCaptureInputSha256": "fcfebf8c27adab472f564c99c02dda25d9c2221ea2a22d5bcdd380614279bcf9"
+}

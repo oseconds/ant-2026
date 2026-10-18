@@ -175,6 +175,25 @@ test('pickup stems preserve Plate ID slots across topology installations', () =>
   assert.deepEqual(reconstructSurfacePcm(observed.pickupStems, { frames: input.frames }), baseline.pcm);
 });
 
+test('bounded pickup stems retain interpolation boundary state and reconstruct an exact PCM slice', () => {
+  const input = { source, topology: topology(plate()), events: [{ frame: 137, message: strike },
+    { frame: 511, message: strike }], frames: 2048 };
+  const range = { startFrame: 800, endFrame: 1600 };
+  const baseline = renderProductionSurface(input);
+  const observed = renderSurface({ ...input, captureFields: false, capturePickupStems: true,
+    outputFrameRange: range, pickupStemFrameRange: range });
+  assert.deepEqual(observed.pcm.left, baseline.pcm.left.slice(range.startFrame, range.endFrame));
+  assert.deepEqual(observed.pcm.right, baseline.pcm.right.slice(range.startFrame, range.endFrame));
+  assert.deepEqual(reconstructPickupStemMix(observed.pickupStems), observed.pickupStems.preLimiter);
+  assert.deepEqual(reconstructSurfacePcm(observed.pickupStems, { frames: range.endFrame - range.startFrame }),
+    observed.pcm, 'the crop includes its pre-window interpolation tail and reconstructs exactly');
+  assert.equal(observed.pickupStems.frames, 100);
+  assert.equal(observed.pickupStems.allocatedBytes < 2048 * 8, true);
+  assert.throws(() => renderSurface({ ...input, capturePickupStems: true,
+    pickupStemFrameRange: { startFrame: 801, endFrame: 1600 } }), /align with physics steps/);
+  assert.throws(() => renderSurface({ ...input, outputFrameRange: { startFrame: 1600, endFrame: 1600 } }), /non-empty frame range/);
+});
+
 test('field observation does not change rendered PCM and empty topology remains finite and silent', () => {
   const input = { source, topology: topology(plate()), events: [{ frame: 0, message: strike }], frames: 1024 };
   const observed = renderSurface(input), unobserved = renderSurface({ ...input, captureFields: false });

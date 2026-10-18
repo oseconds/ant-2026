@@ -1,5 +1,7 @@
 # 2026-10-18 — Plate audio reassessment and live dense-mix next pass
 
+> **Status:** The bounded eight-Plate natural-window readout pass is complete. Decision: **DENSE-OVERLAP CANDIDATE SUPPORTED** for a later human listening check only; production remains unchanged. See the [completion log](./2026-10-18-natural-dense-readout-overlap.md) and [evidence package](../evidence/2026-10-18-natural-dense-readout-overlap/README.md). The original question, baseline, and plan below are preserved.
+
 ## Current decision
 
 Production remains the current `main` sonic baseline: 3 ms finite direct-contact pulse, 75 ms local recovery, ×50 Plate damping, point pickups, default-Off Base Substrate, and the authored source-to-boundary Plate formation law.

@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-18 — Natural dense Plate readout overlap
+
+[Process log](./2026-10-18-natural-dense-readout-overlap.md) · [Evidence package and aligned listening page](../evidence/2026-10-18-natural-dense-readout-overlap/README.md)
+
+- Captured the first 10 seconds after seed `20261005` reached eight historical Plates; Audio-Off/control parity matched across 18,122 tick snapshots
+- Full coupled offline replay reconstructed all 60,002 pre-limiter stem steps and 480,000 output frames exactly; 1,279 interval strikes were analyzed
+- Rest-of-Plate energy exceeded focal energy in 60.3% of complete 500 ms windows, with wide event variation and descriptive ERB structure differences
+- Decision: **DENSE-OVERLAP CANDIDATE SUPPORTED** for a later human listening check only; no subjective judgment or production change
+
 ### 2026-10-18 — Plate audio reassessment and live dense-mix plan
 
 [Process / next-pass plan](./2026-10-18-plate-audio-review-and-live-density-plan.md)
