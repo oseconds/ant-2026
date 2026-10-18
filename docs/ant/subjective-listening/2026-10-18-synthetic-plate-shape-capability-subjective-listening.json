@@ -1,0 +1,2454 @@
+{
+  "schemaVersion": 2,
+  "viewerId": "ant-synthetic-plate-shape-capability",
+  "evidenceId": "2026-10-18-synthetic-plate-shape-capability",
+  "exportedAt": "2026-10-18T07:19:08.315Z",
+  "listeningPostGain": {
+    "targetRms": 0.08,
+    "stage": "after existing RMS-matched listening WAV, before playback",
+    "meaning": "digital listening target; not calibrated SPL or equal-loudness evidence"
+  },
+  "sessions": [
+    {
+      "sessionId": "aev-mvdhibq8-a4d0d0a8",
+      "seed": "6c5b7a138336d48e",
+      "randomizationAlgorithm": "fnv1a32-xorshift32-fisher-yates-v1",
+      "startedAt": "2026-10-18T07:08:51.296Z",
+      "completed": true,
+      "trialOrder": [
+        "shape-pair-06",
+        "shape-catch-aa",
+        "shape-pair-05",
+        "shape-pair-03",
+        "shape-pair-01",
+        "shape-pair-02",
+        "shape-pair-04"
+      ],
+      "trials": [
+        {
+          "trialId": "shape-pair-06",
+          "trialSequence": 1,
+          "isCatch": false,
+          "revealed": true,
+          "openedAt": "2026-10-18T07:08:51.297Z",
+          "revealedAt": "2026-10-18T07:10:05.772Z",
+          "listeningModeAtReveal": "rms-matched-listening-only",
+          "sideMapping": {
+            "A": {
+              "condition": "concave / irregular broad",
+              "sourcePairId": "shape-pair-06",
+              "sourceArm": "a",
+              "sourceManifestEntryId": "shape-06",
+              "measurementMetadata": {
+                "morphology": "concave / irregular broad",
+                "geometryRecipe": {
+                  "description": "Broad elliptical horseshoe with an open top notch and offset inner cavity on the 32-grid.",
+                  "parameters": {
+                    "outerCenter": [
+                      16,
+                      19
+                    ],
+                    "outerRadius": [
+                      15.25,
+                      12
+                    ],
+                    "innerCenter": [
+                      16,
+                      17
+                    ],
+                    "innerRadius": [
+                      9.5,
+                      7.8
+                    ],
+                    "openNotch": {
+                      "x": [
+                        10,
+                        22
+                      ],
+                      "yMax": 17
+                    }
+                  }
+                },
+                "sourceGrid": {
+                  "dimensions": [
+                    96,
+                    96
+                  ],
+                  "width": 96,
+                  "height": 96,
+                  "occupiedCells": 2799,
+                  "boundingBox": {
+                    "minX": 3,
+                    "minY": 27,
+                    "maxX": 95,
+                    "maxY": 95,
+                    "width": 93,
+                    "height": 69
+                  },
+                  "areaResidualFromMedianCells": -22.5
+                },
+                "solverGrid": {
+                  "dimensions": [
+                    32,
+                    32
+                  ],
+                  "width": 32,
+                  "height": 32,
+                  "occupiedNodes": 311,
+                  "boundingBox": {
+                    "minX": 1,
+                    "minY": 9,
+                    "maxX": 31,
+                    "maxY": 31,
+                    "width": 31,
+                    "height": 23
+                  },
+                  "nodeResidualFromMedian": -2.5
+                },
+                "pickupNodeIndices": [
+                  266,
+                  272
+                ],
+                "pickupSolverCells": [
+                  909,
+                  915
+                ],
+                "contactRoute": {
+                  "sourceGridCell": [
+                    48,
+                    86
+                  ],
+                  "sourceCellIndex": 8304,
+                  "routedLayerIndex": 0,
+                  "routedPlateId": "concave-irregular-broad"
+                },
+                "material": {
+                  "stiffness": 0.9124881966538272,
+                  "density": 1.2,
+                  "damping": 0.35499527866153086
+                },
+                "maskSha256": "ff95161e1ea00bf3ba6f964f8e3436eb6c5b15ec82f5765f6b4b09a7c12c42fe",
+                "topologySha256": "c28b888ddc7044bed663cc522cf1e4da6592b606348d4f75f719991b8b6f547d"
+              },
+              "playbackMetadata": {
+                "modeAtReveal": "rms-matched-listening-only",
+                "fixedGainLinear": 1,
+                "matchedPostGain": {
+                  "sourceMatchedRms": 0.01999999999799554,
+                  "pairReferenceRms": 0.019999999998104277,
+                  "sourceMatchedPeak": 0.12121890485286713,
+                  "finalTargetRms": 0.08,
+                  "postGainLinear": 4.000000000379145,
+                  "postGainDb": 12.041199827382549,
+                  "predictedPostGainPeak": 0.484875619457428
+                }
+              },
+              "audioFileHashes": {
+                "fixedGain": {
+                  "path": "listening/case-06-fixed.wav",
+                  "bytes": 576044,
+                  "sha256": "54bff0cefea815025a7859b7df9af5331f4b772b0204388c22d7d7d9de1e9ee6"
+                },
+                "rmsMatchedListeningOnly": {
+                  "path": "listening/case-06-matched.wav",
+                  "bytes": 576044,
+                  "sha256": "fe479b057582916177f71d438b7acf21217b0b72b2df5f99b4dbf0471919c36a"
+                }
+              }
+            },
+            "B": {
+              "condition": "compact",
+              "sourcePairId": "shape-pair-06",
+              "sourceArm": "b",
+              "sourceManifestEntryId": "shape-01",
+              "measurementMetadata": {
+                "morphology": "compact",
+                "geometryRecipe": {
+                  "description": "Closed ellipse on the 32-grid.",
+                  "parameters": {
+                    "center": [
+                      16,
+                      18.5
+                    ],
+                    "radius": [
+                      9.5,
+                      10.5
+                    ]
+                  }
+                },
+                "sourceGrid": {
+                  "dimensions": [
+                    96,
+                    96
+                  ],
+                  "width": 96,
+                  "height": 96,
+                  "occupiedCells": 2826,
+                  "boundingBox": {
+                    "minX": 21,
+                    "minY": 24,
+                    "maxX": 77,
+                    "maxY": 89,
+                    "width": 57,
+                    "height": 66
+                  },
+                  "areaResidualFromMedianCells": 4.5
+                },
+                "solverGrid": {
+                  "dimensions": [
+                    32,
+                    32
+                  ],
+                  "width": 32,
+                  "height": 32,
+                  "occupiedNodes": 314,
+                  "boundingBox": {
+                    "minX": 7,
+                    "minY": 8,
+                    "maxX": 25,
+                    "maxY": 29,
+                    "width": 19,
+                    "height": 22
+                  },
+                  "nodeResidualFromMedian": 0.5
+                },
+                "pickupNodeIndices": [
+                  305,
+                  311
+                ],
+                "pickupSolverCells": [
+                  909,
+                  915
+                ],
+                "contactRoute": {
+                  "sourceGridCell": [
+                    48,
+                    86
+                  ],
+                  "sourceCellIndex": 8304,
+                  "routedLayerIndex": 0,
+                  "routedPlateId": "compact"
+                },
+                "material": {
+                  "stiffness": 0.9124881966538272,
+                  "density": 1.2,
+                  "damping": 0.35499527866153086
+                },
+                "maskSha256": "8ca94a6aa021655e7b6e12fdb5d7800cb0293a1be9586ed1645614be42187f10",
+                "topologySha256": "b62708ac13f9427f47ed1438cef26add8f4956192bf76719e4c00aa55e475001"
+              },
+              "playbackMetadata": {
+                "modeAtReveal": "rms-matched-listening-only",
+                "fixedGainLinear": 1,
+                "matchedPostGain": {
+                  "sourceMatchedRms": 0.019999999998213013,
+                  "pairReferenceRms": 0.019999999998104277,
+                  "sourceMatchedPeak": 0.13952696323394775,
+                  "finalTargetRms": 0.08,
+                  "postGainLinear": 4.000000000379145,
+                  "postGainDb": 12.041199827382549,
+                  "predictedPostGainPeak": 0.5581078529886919
+                }
+              },
+              "audioFileHashes": {
+                "fixedGain": {
+                  "path": "listening/case-01-fixed.wav",
+                  "bytes": 576044,
+                  "sha256": "306c5f5cb3fc440343c501bdf617fc8ba680e47f0c69fe0c7cd5e7f3adc8e955"
+                },
+                "rmsMatchedListeningOnly": {
+                  "path": "listening/case-01-matched.wav",
+                  "bytes": 576044,
+                  "sha256": "ff72d40e92885a1952c54d7f6c5dc963c99876e6b50865201d85d9fff1f46974"
+                }
+              }
+            }
+          },
+          "audioFileHashes": {
+            "A": {
+              "fixedGain": {
+                "path": "listening/case-06-fixed.wav",
+                "bytes": 576044,
+                "sha256": "54bff0cefea815025a7859b7df9af5331f4b772b0204388c22d7d7d9de1e9ee6"
+              },
+              "rmsMatchedListeningOnly": {
+                "path": "listening/case-06-matched.wav",
+                "bytes": 576044,
+                "sha256": "fe479b057582916177f71d438b7acf21217b0b72b2df5f99b4dbf0471919c36a"
+              }
+            },
+            "B": {
+              "fixedGain": {
+                "path": "listening/case-01-fixed.wav",
+                "bytes": 576044,
+                "sha256": "306c5f5cb3fc440343c501bdf617fc8ba680e47f0c69fe0c7cd5e7f3adc8e955"
+              },
+              "rmsMatchedListeningOnly": {
+                "path": "listening/case-01-matched.wav",
+                "bytes": 576044,
+                "sha256": "ff72d40e92885a1952c54d7f6c5dc963c99876e6b50865201d85d9fff1f46974"
+              }
+            }
+          },
+          "preRevealJudgmentsByMode": {
+            "rms-matched-listening-only": {
+              "first": {
+                "listeningMode": "rms-matched-listening-only",
+                "different": "yes",
+                "confidence": 4,
+                "freeNote": "a는 알맹이가 거의 없음 바람같은 느낌이 강하고 근데 어택은 또 잇음 \nb는 머랄까 녹슨 스프링 때리는거같음 ㅋㅋ",
+                "timestamp": "2026-10-18T07:10:04.692Z",
+                "trialSequence": 1
+              },
+              "latest": {
+                "listeningMode": "rms-matched-listening-only",
+                "different": "yes",
+                "confidence": 4,
+                "freeNote": "a는 알맹이가 거의 없음 바람같은 느낌이 강하고 근데 어택은 또 잇음 \nb는 머랄까 녹슨 스프링 때리는거같음 ㅋㅋ",
+                "timestamp": "2026-10-18T07:10:05.772Z",
+                "trialSequence": 1
+              }
+            }
+          },
+          "postRevealNotesByMode": {}
+        },
+        {
+          "trialId": "shape-catch-aa",
+          "trialSequence": 2,
+          "isCatch": true,
+          "revealed": true,
+          "openedAt": "2026-10-18T07:10:17.142Z",
+          "revealedAt": "2026-10-18T07:11:13.066Z",
+          "listeningModeAtReveal": "rms-matched-listening-only",
+          "sideMapping": {
+            "A": {
+              "condition": "compact",
+              "sourcePairId": "shape-pair-01",
+              "sourceArm": "a",
+              "sourceManifestEntryId": "shape-01",
+              "measurementMetadata": {
+                "morphology": "compact",
+                "geometryRecipe": {
+                  "description": "Closed ellipse on the 32-grid.",
+                  "parameters": {
+                    "center": [
+                      16,
+                      18.5
+                    ],
+                    "radius": [
+                      9.5,
+                      10.5
+                    ]
+                  }
+                },
+                "sourceGrid": {
+                  "dimensions": [
+                    96,
+                    96
+                  ],
+                  "width": 96,
+                  "height": 96,
+                  "occupiedCells": 2826,
+                  "boundingBox": {
+                    "minX": 21,
+                    "minY": 24,
+                    "maxX": 77,
+                    "maxY": 89,
+                    "width": 57,
+                    "height": 66
+                  },
+                  "areaResidualFromMedianCells": 4.5
+                },
+                "solverGrid": {
+                  "dimensions": [
+                    32,
+                    32
+                  ],
+                  "width": 32,
+                  "height": 32,
+                  "occupiedNodes": 314,
+                  "boundingBox": {
+                    "minX": 7,
+                    "minY": 8,
+                    "maxX": 25,
+                    "maxY": 29,
+                    "width": 19,
+                    "height": 22
+                  },
+                  "nodeResidualFromMedian": 0.5
+                },
+                "pickupNodeIndices": [
+                  305,
+                  311
+                ],
+                "pickupSolverCells": [
+                  909,
+                  915
+                ],
+                "contactRoute": {
+                  "sourceGridCell": [
+                    48,
+                    86
+                  ],
+                  "sourceCellIndex": 8304,
+                  "routedLayerIndex": 0,
+                  "routedPlateId": "compact"
+                },
+                "material": {
+                  "stiffness": 0.9124881966538272,
+                  "density": 1.2,
+                  "damping": 0.35499527866153086
+                },
+                "maskSha256": "8ca94a6aa021655e7b6e12fdb5d7800cb0293a1be9586ed1645614be42187f10",
+                "topologySha256": "b62708ac13f9427f47ed1438cef26add8f4956192bf76719e4c00aa55e475001"
+              },
+              "playbackMetadata": {
+                "modeAtReveal": "rms-matched-listening-only",
+                "fixedGainLinear": 1,
+                "matchedPostGain": {
+                  "sourceMatchedRms": 0.019999999998213013,
+                  "pairReferenceRms": 0.01999999999556589,
+                  "sourceMatchedPeak": 0.13952696323394775,
+                  "finalTargetRms": 0.08,
+                  "postGainLinear": 4.000000000886822,
+                  "postGainDb": 12.04119982848496,
+                  "predictedPostGainPeak": 0.5581078530595266
+                }
+              },
+              "audioFileHashes": {
+                "fixedGain": {
+                  "path": "listening/case-01-fixed.wav",
+                  "bytes": 576044,
+                  "sha256": "306c5f5cb3fc440343c501bdf617fc8ba680e47f0c69fe0c7cd5e7f3adc8e955"
+                },
+                "rmsMatchedListeningOnly": {
+                  "path": "listening/case-01-matched.wav",
+                  "bytes": 576044,
+                  "sha256": "ff72d40e92885a1952c54d7f6c5dc963c99876e6b50865201d85d9fff1f46974"
+                }
+              }
+            },
+            "B": {
+              "condition": "compact",
+              "sourcePairId": "shape-pair-01",
+              "sourceArm": "a",
+              "sourceManifestEntryId": "shape-01",
+              "measurementMetadata": {
+                "morphology": "compact",
+                "geometryRecipe": {
+                  "description": "Closed ellipse on the 32-grid.",
+                  "parameters": {
+                    "center": [
+                      16,
+                      18.5
+                    ],
+                    "radius": [
+                      9.5,
+                      10.5
+                    ]
+                  }
+                },
+                "sourceGrid": {
+                  "dimensions": [
+                    96,
+                    96
+                  ],
+                  "width": 96,
+                  "height": 96,
+                  "occupiedCells": 2826,
+                  "boundingBox": {
+                    "minX": 21,
+                    "minY": 24,
+                    "maxX": 77,
+                    "maxY": 89,
+                    "width": 57,
+                    "height": 66
+                  },
+                  "areaResidualFromMedianCells": 4.5
+                },
+                "solverGrid": {
+                  "dimensions": [
+                    32,
+                    32
+                  ],
+                  "width": 32,
+                  "height": 32,
+                  "occupiedNodes": 314,
+                  "boundingBox": {
+                    "minX": 7,
+                    "minY": 8,
+                    "maxX": 25,
+                    "maxY": 29,
+                    "width": 19,
+                    "height": 22
+                  },
+                  "nodeResidualFromMedian": 0.5
+                },
+                "pickupNodeIndices": [
+                  305,
+                  311
+                ],
+                "pickupSolverCells": [
+                  909,
+                  915
+                ],
+                "contactRoute": {
+                  "sourceGridCell": [
+                    48,
+                    86
+                  ],
+                  "sourceCellIndex": 8304,
+                  "routedLayerIndex": 0,
+                  "routedPlateId": "compact"
+                },
+                "material": {
+                  "stiffness": 0.9124881966538272,
+                  "density": 1.2,
+                  "damping": 0.35499527866153086
+                },
+                "maskSha256": "8ca94a6aa021655e7b6e12fdb5d7800cb0293a1be9586ed1645614be42187f10",
+                "topologySha256": "b62708ac13f9427f47ed1438cef26add8f4956192bf76719e4c00aa55e475001"
+              },
+              "playbackMetadata": {
+                "modeAtReveal": "rms-matched-listening-only",
+                "fixedGainLinear": 1,
+                "matchedPostGain": {
+                  "sourceMatchedRms": 0.019999999998213013,
+                  "pairReferenceRms": 0.01999999999556589,
+                  "sourceMatchedPeak": 0.13952696323394775,
+                  "finalTargetRms": 0.08,
+                  "postGainLinear": 4.000000000886822,
+                  "postGainDb": 12.04119982848496,
+                  "predictedPostGainPeak": 0.5581078530595266
+                }
+              },
+              "audioFileHashes": {
+                "fixedGain": {
+                  "path": "listening/case-01-fixed.wav",
+                  "bytes": 576044,
+                  "sha256": "306c5f5cb3fc440343c501bdf617fc8ba680e47f0c69fe0c7cd5e7f3adc8e955"
+                },
+                "rmsMatchedListeningOnly": {
+                  "path": "listening/case-01-matched.wav",
+                  "bytes": 576044,
+                  "sha256": "ff72d40e92885a1952c54d7f6c5dc963c99876e6b50865201d85d9fff1f46974"
+                }
+              }
+            }
+          },
+          "audioFileHashes": {
+            "A": {
+              "fixedGain": {
+                "path": "listening/case-01-fixed.wav",
+                "bytes": 576044,
+                "sha256": "306c5f5cb3fc440343c501bdf617fc8ba680e47f0c69fe0c7cd5e7f3adc8e955"
+              },
+              "rmsMatchedListeningOnly": {
+                "path": "listening/case-01-matched.wav",
+                "bytes": 576044,
+                "sha256": "ff72d40e92885a1952c54d7f6c5dc963c99876e6b50865201d85d9fff1f46974"
+              }
+            },
+            "B": {
+              "fixedGain": {
+                "path": "listening/case-01-fixed.wav",
+                "bytes": 576044,
+                "sha256": "306c5f5cb3fc440343c501bdf617fc8ba680e47f0c69fe0c7cd5e7f3adc8e955"
+              },
+              "rmsMatchedListeningOnly": {
+                "path": "listening/case-01-matched.wav",
+                "bytes": 576044,
+                "sha256": "ff72d40e92885a1952c54d7f6c5dc963c99876e6b50865201d85d9fff1f46974"
+              }
+            }
+          },
+          "preRevealJudgmentsByMode": {
+            "rms-matched-listening-only": {
+              "first": {
+                "listeningMode": "rms-matched-listening-only",
+                "different": "yes",
+                "confidence": 5,
+                "freeNote": "방금 들었던 이 전 b 아닌가\n\n걍 똑같은거같은데 이 둘은 ",
+                "timestamp": "2026-10-18T07:11:12.067Z",
+                "trialSequence": 2
+              },
+              "latest": {
+                "listeningMode": "rms-matched-listening-only",
+                "different": "yes",
+                "confidence": 5,
+                "freeNote": "방금 들었던 이 전 b 아닌가\n\n걍 똑같은거같은데 이 둘은 ",
+                "timestamp": "2026-10-18T07:11:13.066Z",
+                "trialSequence": 2
+              }
+            }
+          },
+          "postRevealNotesByMode": {}
+        },
+        {
+          "trialId": "shape-pair-05",
+          "trialSequence": 3,
+          "isCatch": false,
+          "revealed": true,
+          "openedAt": "2026-10-18T07:11:23.370Z",
+          "revealedAt": "2026-10-18T07:12:30.528Z",
+          "listeningModeAtReveal": "rms-matched-listening-only",
+          "sideMapping": {
+            "A": {
+              "condition": "loop-like",
+              "sourcePairId": "shape-pair-05",
+              "sourceArm": "a",
+              "sourceManifestEntryId": "shape-05",
+              "measurementMetadata": {
+                "morphology": "loop-like",
+                "geometryRecipe": {
+                  "description": "Closed circular annulus on the 32-grid.",
+                  "parameters": {
+                    "center": [
+                      16,
+                      18.5
+                    ],
+                    "innerRadius": 6,
+                    "outerRadius": 11.5
+                  }
+                },
+                "sourceGrid": {
+                  "dimensions": [
+                    96,
+                    96
+                  ],
+                  "width": 96,
+                  "height": 96,
+                  "occupiedCells": 2736,
+                  "boundingBox": {
+                    "minX": 15,
+                    "minY": 21,
+                    "maxX": 83,
+                    "maxY": 92,
+                    "width": 69,
+                    "height": 72
+                  },
+                  "areaResidualFromMedianCells": -85.5
+                },
+                "solverGrid": {
+                  "dimensions": [
+                    32,
+                    32
+                  ],
+                  "width": 32,
+                  "height": 32,
+                  "occupiedNodes": 304,
+                  "boundingBox": {
+                    "minX": 5,
+                    "minY": 7,
+                    "maxX": 27,
+                    "maxY": 30,
+                    "width": 23,
+                    "height": 24
+                  },
+                  "nodeResidualFromMedian": -9.5
+                },
+                "pickupNodeIndices": [
+                  284,
+                  290
+                ],
+                "pickupSolverCells": [
+                  909,
+                  915
+                ],
+                "contactRoute": {
+                  "sourceGridCell": [
+                    48,
+                    86
+                  ],
+                  "sourceCellIndex": 8304,
+                  "routedLayerIndex": 0,
+                  "routedPlateId": "loop-like"
+                },
+                "material": {
+                  "stiffness": 0.9124881966538272,
+                  "density": 1.2,
+                  "damping": 0.35499527866153086
+                },
+                "maskSha256": "bc162d06770d160717936a145ad2764cacc4dcbd8b4ab8fad9fc50f08630a5cf",
+                "topologySha256": "e5d817a0a89a770ff39fa8aa0063b8d6a89bba89e2bc29f514ddb6a13f8707d1"
+              },
+              "playbackMetadata": {
+                "modeAtReveal": "rms-matched-listening-only",
+                "fixedGainLinear": 1,
+                "matchedPostGain": {
+                  "sourceMatchedRms": 0.019999999998852363,
+                  "pairReferenceRms": 0.019999999998423952,
+                  "sourceMatchedPeak": 0.1420486569404602,
+                  "finalTargetRms": 0.08,
+                  "postGainLinear": 4.00000000031521,
+                  "postGainDb": 12.041199827243718,
+                  "predictedPostGainPeak": 0.568194627806616
+                }
+              },
+              "audioFileHashes": {
+                "fixedGain": {
+                  "path": "listening/case-05-fixed.wav",
+                  "bytes": 576044,
+                  "sha256": "4ea0b6ed6f0b6f3a6320f18f02a232484700996c60cfea3c73b57115eaa3a829"
+                },
+                "rmsMatchedListeningOnly": {
+                  "path": "listening/case-05-matched.wav",
+                  "bytes": 576044,
+                  "sha256": "0cb343cac2cff4324ad47c7249a061a4366d44a62168f7690b96e497f4dd9914"
+                }
+              }
+            },
+            "B": {
+              "condition": "concave / irregular broad",
+              "sourcePairId": "shape-pair-05",
+              "sourceArm": "b",
+              "sourceManifestEntryId": "shape-06",
+              "measurementMetadata": {
+                "morphology": "concave / irregular broad",
+                "geometryRecipe": {
+                  "description": "Broad elliptical horseshoe with an open top notch and offset inner cavity on the 32-grid.",
+                  "parameters": {
+                    "outerCenter": [
+                      16,
+                      19
+                    ],
+                    "outerRadius": [
+                      15.25,
+                      12
+                    ],
+                    "innerCenter": [
+                      16,
+                      17
+                    ],
+                    "innerRadius": [
+                      9.5,
+                      7.8
+                    ],
+                    "openNotch": {
+                      "x": [
+                        10,
+                        22
+                      ],
+                      "yMax": 17
+                    }
+                  }
+                },
+                "sourceGrid": {
+                  "dimensions": [
+                    96,
+                    96
+                  ],
+                  "width": 96,
+                  "height": 96,
+                  "occupiedCells": 2799,
+                  "boundingBox": {
+                    "minX": 3,
+                    "minY": 27,
+                    "maxX": 95,
+                    "maxY": 95,
+                    "width": 93,
+                    "height": 69
+                  },
+                  "areaResidualFromMedianCells": -22.5
+                },
+                "solverGrid": {
+                  "dimensions": [
+                    32,
+                    32
+                  ],
+                  "width": 32,
+                  "height": 32,
+                  "occupiedNodes": 311,
+                  "boundingBox": {
+                    "minX": 1,
+                    "minY": 9,
+                    "maxX": 31,
+                    "maxY": 31,
+                    "width": 31,
+                    "height": 23
+                  },
+                  "nodeResidualFromMedian": -2.5
+                },
+                "pickupNodeIndices": [
+                  266,
+                  272
+                ],
+                "pickupSolverCells": [
+                  909,
+                  915
+                ],
+                "contactRoute": {
+                  "sourceGridCell": [
+                    48,
+                    86
+                  ],
+                  "sourceCellIndex": 8304,
+                  "routedLayerIndex": 0,
+                  "routedPlateId": "concave-irregular-broad"
+                },
+                "material": {
+                  "stiffness": 0.9124881966538272,
+                  "density": 1.2,
+                  "damping": 0.35499527866153086
+                },
+                "maskSha256": "ff95161e1ea00bf3ba6f964f8e3436eb6c5b15ec82f5765f6b4b09a7c12c42fe",
+                "topologySha256": "c28b888ddc7044bed663cc522cf1e4da6592b606348d4f75f719991b8b6f547d"
+              },
+              "playbackMetadata": {
+                "modeAtReveal": "rms-matched-listening-only",
+                "fixedGainLinear": 1,
+                "matchedPostGain": {
+                  "sourceMatchedRms": 0.01999999999799554,
+                  "pairReferenceRms": 0.019999999998423952,
+                  "sourceMatchedPeak": 0.12121890485286713,
+                  "finalTargetRms": 0.08,
+                  "postGainLinear": 4.00000000031521,
+                  "postGainDb": 12.041199827243718,
+                  "predictedPostGainPeak": 0.48487561944967794
+                }
+              },
+              "audioFileHashes": {
+                "fixedGain": {
+                  "path": "listening/case-06-fixed.wav",
+                  "bytes": 576044,
+                  "sha256": "54bff0cefea815025a7859b7df9af5331f4b772b0204388c22d7d7d9de1e9ee6"
+                },
+                "rmsMatchedListeningOnly": {
+                  "path": "listening/case-06-matched.wav",
+                  "bytes": 576044,
+                  "sha256": "fe479b057582916177f71d438b7acf21217b0b72b2df5f99b4dbf0471919c36a"
+                }
+              }
+            }
+          },
+          "audioFileHashes": {
+            "A": {
+              "fixedGain": {
+                "path": "listening/case-05-fixed.wav",
+                "bytes": 576044,
+                "sha256": "4ea0b6ed6f0b6f3a6320f18f02a232484700996c60cfea3c73b57115eaa3a829"
+              },
+              "rmsMatchedListeningOnly": {
+                "path": "listening/case-05-matched.wav",
+                "bytes": 576044,
+                "sha256": "0cb343cac2cff4324ad47c7249a061a4366d44a62168f7690b96e497f4dd9914"
+              }
+            },
+            "B": {
+              "fixedGain": {
+                "path": "listening/case-06-fixed.wav",
+                "bytes": 576044,
+                "sha256": "54bff0cefea815025a7859b7df9af5331f4b772b0204388c22d7d7d9de1e9ee6"
+              },
+              "rmsMatchedListeningOnly": {
+                "path": "listening/case-06-matched.wav",
+                "bytes": 576044,
+                "sha256": "fe479b057582916177f71d438b7acf21217b0b72b2df5f99b4dbf0471919c36a"
+              }
+            }
+          },
+          "preRevealJudgmentsByMode": {
+            "rms-matched-listening-only": {
+              "first": {
+                "listeningMode": "rms-matched-listening-only",
+                "different": "yes",
+                "confidence": 2,
+                "freeNote": "a는 어택과 별개로 그 뒤에 좀 멜로디가 움직이는 잔향이 따라감 \nb는 어택도 약하고 힘 없음 ",
+                "timestamp": "2026-10-18T07:12:29.929Z",
+                "trialSequence": 3
+              },
+              "latest": {
+                "listeningMode": "rms-matched-listening-only",
+                "different": "yes",
+                "confidence": 2,
+                "freeNote": "a는 어택과 별개로 그 뒤에 좀 멜로디가 움직이는 잔향이 따라감 \nb는 어택도 약하고 힘 없음 ",
+                "timestamp": "2026-10-18T07:12:30.528Z",
+                "trialSequence": 3
+              }
+            }
+          },
+          "postRevealNotesByMode": {}
+        },
+        {
+          "trialId": "shape-pair-03",
+          "trialSequence": 4,
+          "isCatch": false,
+          "revealed": true,
+          "openedAt": "2026-10-18T07:12:34.930Z",
+          "revealedAt": "2026-10-18T07:13:49.122Z",
+          "listeningModeAtReveal": "rms-matched-listening-only",
+          "sideMapping": {
+            "A": {
+              "condition": "curved",
+              "sourcePairId": "shape-pair-03",
+              "sourceArm": "a",
+              "sourceManifestEntryId": "shape-03",
+              "measurementMetadata": {
+                "morphology": "curved",
+                "geometryRecipe": {
+                  "description": "Fixed-width ribbon around a shallow quadratic arch on the 32-grid.",
+                  "parameters": {
+                    "xRange": [
+                      2,
+                      30
+                    ],
+                    "centerX": 16,
+                    "centerY": 27,
+                    "curveCoefficient": 0.075,
+                    "halfWidth": 5.5
+                  }
+                },
+                "sourceGrid": {
+                  "dimensions": [
+                    96,
+                    96
+                  ],
+                  "width": 96,
+                  "height": 96,
+                  "occupiedCells": 2844,
+                  "boundingBox": {
+                    "minX": 6,
+                    "minY": 21,
+                    "maxX": 92,
+                    "maxY": 95,
+                    "width": 87,
+                    "height": 75
+                  },
+                  "areaResidualFromMedianCells": 22.5
+                },
+                "solverGrid": {
+                  "dimensions": [
+                    32,
+                    32
+                  ],
+                  "width": 32,
+                  "height": 32,
+                  "occupiedNodes": 316,
+                  "boundingBox": {
+                    "minX": 2,
+                    "minY": 7,
+                    "maxX": 30,
+                    "maxY": 31,
+                    "width": 29,
+                    "height": 25
+                  },
+                  "nodeResidualFromMedian": 2.5
+                },
+                "pickupNodeIndices": [
+                  272,
+                  278
+                ],
+                "pickupSolverCells": [
+                  909,
+                  915
+                ],
+                "contactRoute": {
+                  "sourceGridCell": [
+                    48,
+                    86
+                  ],
+                  "sourceCellIndex": 8304,
+                  "routedLayerIndex": 0,
+                  "routedPlateId": "curved"
+                },
+                "material": {
+                  "stiffness": 0.9124881966538272,
+                  "density": 1.2,
+                  "damping": 0.35499527866153086
+                },
+                "maskSha256": "04596a65a30ace781e77bef8e4d5baea6bb7aabdfc0e1749c96c3df957dd7311",
+                "topologySha256": "ae07653dbd966b76d47e99aa67d9f525168cbd30010743232639d3dae7b4e66b"
+              },
+              "playbackMetadata": {
+                "modeAtReveal": "rms-matched-listening-only",
+                "fixedGainLinear": 1,
+                "matchedPostGain": {
+                  "sourceMatchedRms": 0.020000000001275282,
+                  "pairReferenceRms": 0.01999999999883964,
+                  "sourceMatchedPeak": 0.09367351979017258,
+                  "finalTargetRms": 0.08,
+                  "postGainLinear": 4.000000000232072,
+                  "postGainDb": 12.041199827063187,
+                  "predictedPostGainPeak": 0.3746940791824293
+                }
+              },
+              "audioFileHashes": {
+                "fixedGain": {
+                  "path": "listening/case-03-fixed.wav",
+                  "bytes": 576044,
+                  "sha256": "ce6c7a77743bb65bf2894f457b971fea5c6202986066669fe620ea608e8fa937"
+                },
+                "rmsMatchedListeningOnly": {
+                  "path": "listening/case-03-matched.wav",
+                  "bytes": 576044,
+                  "sha256": "a7e4bbfc283fa24ff6234c6cdb02d11fb01267e3f09bfd1fcd11e8a20374947d"
+                }
+              }
+            },
+            "B": {
+              "condition": "Y-branch",
+              "sourcePairId": "shape-pair-03",
+              "sourceArm": "b",
+              "sourceManifestEntryId": "shape-04",
+              "measurementMetadata": {
+                "morphology": "Y-branch",
+                "geometryRecipe": {
+                  "description": "Union of three Euclidean capsules sharing one junction on the 32-grid.",
+                  "parameters": {
+                    "junction": [
+                      16,
+                      19
+                    ],
+                    "endpoints": [
+                      [
+                        4,
+                        5
+                      ],
+                      [
+                        28,
+                        5
+                      ],
+                      [
+                        16,
+                        29
+                      ]
+                    ],
+                    "radius": 3
+                  }
+                },
+                "sourceGrid": {
+                  "dimensions": [
+                    96,
+                    96
+                  ],
+                  "width": 96,
+                  "height": 96,
+                  "occupiedCells": 2817,
+                  "boundingBox": {
+                    "minX": 3,
+                    "minY": 6,
+                    "maxX": 95,
+                    "maxY": 95,
+                    "width": 93,
+                    "height": 90
+                  },
+                  "areaResidualFromMedianCells": -4.5
+                },
+                "solverGrid": {
+                  "dimensions": [
+                    32,
+                    32
+                  ],
+                  "width": 32,
+                  "height": 32,
+                  "occupiedNodes": 313,
+                  "boundingBox": {
+                    "minX": 1,
+                    "minY": 2,
+                    "maxX": 31,
+                    "maxY": 31,
+                    "width": 31,
+                    "height": 30
+                  },
+                  "nodeResidualFromMedian": -0.5
+                },
+                "pickupNodeIndices": [
+                  289,
+                  295
+                ],
+                "pickupSolverCells": [
+                  909,
+                  915
+                ],
+                "contactRoute": {
+                  "sourceGridCell": [
+                    48,
+                    86
+                  ],
+                  "sourceCellIndex": 8304,
+                  "routedLayerIndex": 0,
+                  "routedPlateId": "y-branch"
+                },
+                "material": {
+                  "stiffness": 0.9124881966538272,
+                  "density": 1.2,
+                  "damping": 0.35499527866153086
+                },
+                "maskSha256": "5ea84ec79d5a34fdef0932dd3860ab7b6fe92566569cc0caa873ffcd49cd8b6b",
+                "topologySha256": "4bb6b92ff48c27190ad43b03e33ecd506bbf0b4dfcf11e4a3a43131b140b7056"
+              },
+              "playbackMetadata": {
+                "modeAtReveal": "rms-matched-listening-only",
+                "fixedGainLinear": 1,
+                "matchedPostGain": {
+                  "sourceMatchedRms": 0.019999999996403995,
+                  "pairReferenceRms": 0.01999999999883964,
+                  "sourceMatchedPeak": 0.17949926853179932,
+                  "finalTargetRms": 0.08,
+                  "postGainLinear": 4.000000000232072,
+                  "postGainDb": 12.041199827063187,
+                  "predictedPostGainPeak": 0.717997074168854
+                }
+              },
+              "audioFileHashes": {
+                "fixedGain": {
+                  "path": "listening/case-04-fixed.wav",
+                  "bytes": 576044,
+                  "sha256": "218a8d232d08e590a60d8101b182942ca280ab77841d87edde0661c6a9e8d83d"
+                },
+                "rmsMatchedListeningOnly": {
+                  "path": "listening/case-04-matched.wav",
+                  "bytes": 576044,
+                  "sha256": "d7db5679075838b19ea3b3787aeee2dea0adfb901def91c8e390237427fa8a8d"
+                }
+              }
+            }
+          },
+          "audioFileHashes": {
+            "A": {
+              "fixedGain": {
+                "path": "listening/case-03-fixed.wav",
+                "bytes": 576044,
+                "sha256": "ce6c7a77743bb65bf2894f457b971fea5c6202986066669fe620ea608e8fa937"
+              },
+              "rmsMatchedListeningOnly": {
+                "path": "listening/case-03-matched.wav",
+                "bytes": 576044,
+                "sha256": "a7e4bbfc283fa24ff6234c6cdb02d11fb01267e3f09bfd1fcd11e8a20374947d"
+              }
+            },
+            "B": {
+              "fixedGain": {
+                "path": "listening/case-04-fixed.wav",
+                "bytes": 576044,
+                "sha256": "218a8d232d08e590a60d8101b182942ca280ab77841d87edde0661c6a9e8d83d"
+              },
+              "rmsMatchedListeningOnly": {
+                "path": "listening/case-04-matched.wav",
+                "bytes": 576044,
+                "sha256": "d7db5679075838b19ea3b3787aeee2dea0adfb901def91c8e390237427fa8a8d"
+              }
+            }
+          },
+          "preRevealJudgmentsByMode": {
+            "rms-matched-listening-only": {
+              "first": {
+                "listeningMode": "rms-matched-listening-only",
+                "different": "yes",
+                "confidence": 4,
+                "freeNote": "이건 레벨 차 많이나는것처럼 들려서 fixed 로 들으려했는데 지금 안되는구나 \n성격 자체는 비슷한거같은데 b 가 훨씬 쎔 \n어 그거빼면 거의 같다 \n근데 b 어택 진짜 쎔 에너지가 ",
+                "timestamp": "2026-10-18T07:13:48.040Z",
+                "trialSequence": 4
+              },
+              "latest": {
+                "listeningMode": "rms-matched-listening-only",
+                "different": "yes",
+                "confidence": 4,
+                "freeNote": "이건 레벨 차 많이나는것처럼 들려서 fixed 로 들으려했는데 지금 안되는구나 \n성격 자체는 비슷한거같은데 b 가 훨씬 쎔 \n어 그거빼면 거의 같다 \n근데 b 어택 진짜 쎔 에너지가 ",
+                "timestamp": "2026-10-18T07:13:49.122Z",
+                "trialSequence": 4
+              }
+            }
+          },
+          "postRevealNotesByMode": {}
+        },
+        {
+          "trialId": "shape-pair-01",
+          "trialSequence": 5,
+          "isCatch": false,
+          "revealed": true,
+          "openedAt": "2026-10-18T07:13:53.240Z",
+          "revealedAt": "2026-10-18T07:15:01.260Z",
+          "listeningModeAtReveal": "rms-matched-listening-only",
+          "sideMapping": {
+            "A": {
+              "condition": "compact",
+              "sourcePairId": "shape-pair-01",
+              "sourceArm": "a",
+              "sourceManifestEntryId": "shape-01",
+              "measurementMetadata": {
+                "morphology": "compact",
+                "geometryRecipe": {
+                  "description": "Closed ellipse on the 32-grid.",
+                  "parameters": {
+                    "center": [
+                      16,
+                      18.5
+                    ],
+                    "radius": [
+                      9.5,
+                      10.5
+                    ]
+                  }
+                },
+                "sourceGrid": {
+                  "dimensions": [
+                    96,
+                    96
+                  ],
+                  "width": 96,
+                  "height": 96,
+                  "occupiedCells": 2826,
+                  "boundingBox": {
+                    "minX": 21,
+                    "minY": 24,
+                    "maxX": 77,
+                    "maxY": 89,
+                    "width": 57,
+                    "height": 66
+                  },
+                  "areaResidualFromMedianCells": 4.5
+                },
+                "solverGrid": {
+                  "dimensions": [
+                    32,
+                    32
+                  ],
+                  "width": 32,
+                  "height": 32,
+                  "occupiedNodes": 314,
+                  "boundingBox": {
+                    "minX": 7,
+                    "minY": 8,
+                    "maxX": 25,
+                    "maxY": 29,
+                    "width": 19,
+                    "height": 22
+                  },
+                  "nodeResidualFromMedian": 0.5
+                },
+                "pickupNodeIndices": [
+                  305,
+                  311
+                ],
+                "pickupSolverCells": [
+                  909,
+                  915
+                ],
+                "contactRoute": {
+                  "sourceGridCell": [
+                    48,
+                    86
+                  ],
+                  "sourceCellIndex": 8304,
+                  "routedLayerIndex": 0,
+                  "routedPlateId": "compact"
+                },
+                "material": {
+                  "stiffness": 0.9124881966538272,
+                  "density": 1.2,
+                  "damping": 0.35499527866153086
+                },
+                "maskSha256": "8ca94a6aa021655e7b6e12fdb5d7800cb0293a1be9586ed1645614be42187f10",
+                "topologySha256": "b62708ac13f9427f47ed1438cef26add8f4956192bf76719e4c00aa55e475001"
+              },
+              "playbackMetadata": {
+                "modeAtReveal": "rms-matched-listening-only",
+                "fixedGainLinear": 1,
+                "matchedPostGain": {
+                  "sourceMatchedRms": 0.019999999998213013,
+                  "pairReferenceRms": 0.01999999999556589,
+                  "sourceMatchedPeak": 0.13952696323394775,
+                  "finalTargetRms": 0.08,
+                  "postGainLinear": 4.000000000886822,
+                  "postGainDb": 12.04119982848496,
+                  "predictedPostGainPeak": 0.5581078530595266
+                }
+              },
+              "audioFileHashes": {
+                "fixedGain": {
+                  "path": "listening/case-01-fixed.wav",
+                  "bytes": 576044,
+                  "sha256": "306c5f5cb3fc440343c501bdf617fc8ba680e47f0c69fe0c7cd5e7f3adc8e955"
+                },
+                "rmsMatchedListeningOnly": {
+                  "path": "listening/case-01-matched.wav",
+                  "bytes": 576044,
+                  "sha256": "ff72d40e92885a1952c54d7f6c5dc963c99876e6b50865201d85d9fff1f46974"
+                }
+              }
+            },
+            "B": {
+              "condition": "elongated",
+              "sourcePairId": "shape-pair-01",
+              "sourceArm": "b",
+              "sourceManifestEntryId": "shape-02",
+              "measurementMetadata": {
+                "morphology": "elongated",
+                "geometryRecipe": {
+                  "description": "Horizontal ellipse on the 32-grid.",
+                  "parameters": {
+                    "center": [
+                      16,
+                      22
+                    ],
+                    "radius": [
+                      15,
+                      7
+                    ]
+                  }
+                },
+                "sourceGrid": {
+                  "dimensions": [
+                    96,
+                    96
+                  ],
+                  "width": 96,
+                  "height": 96,
+                  "occupiedCells": 2925,
+                  "boundingBox": {
+                    "minX": 3,
+                    "minY": 45,
+                    "maxX": 95,
+                    "maxY": 89,
+                    "width": 93,
+                    "height": 45
+                  },
+                  "areaResidualFromMedianCells": 103.5
+                },
+                "solverGrid": {
+                  "dimensions": [
+                    32,
+                    32
+                  ],
+                  "width": 32,
+                  "height": 32,
+                  "occupiedNodes": 325,
+                  "boundingBox": {
+                    "minX": 1,
+                    "minY": 15,
+                    "maxX": 31,
+                    "maxY": 29,
+                    "width": 31,
+                    "height": 15
+                  },
+                  "nodeResidualFromMedian": 11.5
+                },
+                "pickupNodeIndices": [
+                  313,
+                  319
+                ],
+                "pickupSolverCells": [
+                  909,
+                  915
+                ],
+                "contactRoute": {
+                  "sourceGridCell": [
+                    48,
+                    86
+                  ],
+                  "sourceCellIndex": 8304,
+                  "routedLayerIndex": 0,
+                  "routedPlateId": "elongated"
+                },
+                "material": {
+                  "stiffness": 0.9124881966538272,
+                  "density": 1.2,
+                  "damping": 0.35499527866153086
+                },
+                "maskSha256": "f99e8d561cea8f52c9f90017617fa257e36d881b3da527a4e5fd1ab8b8c28f5b",
+                "topologySha256": "57e3547b27d0c1bccfd51b108ef6c2e9af1f3479b69774a7841ddf157576a592"
+              },
+              "playbackMetadata": {
+                "modeAtReveal": "rms-matched-listening-only",
+                "fixedGainLinear": 1,
+                "matchedPostGain": {
+                  "sourceMatchedRms": 0.019999999992918772,
+                  "pairReferenceRms": 0.01999999999556589,
+                  "sourceMatchedPeak": 0.1045263484120369,
+                  "finalTargetRms": 0.08,
+                  "postGainLinear": 4.000000000886822,
+                  "postGainDb": 12.04119982848496,
+                  "predictedPostGainPeak": 0.4181053937408439
+                }
+              },
+              "audioFileHashes": {
+                "fixedGain": {
+                  "path": "listening/case-02-fixed.wav",
+                  "bytes": 576044,
+                  "sha256": "2ee7b161fa6710b179bbe89b0ba3a9b67fe9a1865f4f847e4727ef29f244b025"
+                },
+                "rmsMatchedListeningOnly": {
+                  "path": "listening/case-02-matched.wav",
+                  "bytes": 576044,
+                  "sha256": "b1a1782b8e9b455b373b5b7ddb9316588d967df4c33f1e77ee4cb1447ae1798b"
+                }
+              }
+            }
+          },
+          "audioFileHashes": {
+            "A": {
+              "fixedGain": {
+                "path": "listening/case-01-fixed.wav",
+                "bytes": 576044,
+                "sha256": "306c5f5cb3fc440343c501bdf617fc8ba680e47f0c69fe0c7cd5e7f3adc8e955"
+              },
+              "rmsMatchedListeningOnly": {
+                "path": "listening/case-01-matched.wav",
+                "bytes": 576044,
+                "sha256": "ff72d40e92885a1952c54d7f6c5dc963c99876e6b50865201d85d9fff1f46974"
+              }
+            },
+            "B": {
+              "fixedGain": {
+                "path": "listening/case-02-fixed.wav",
+                "bytes": 576044,
+                "sha256": "2ee7b161fa6710b179bbe89b0ba3a9b67fe9a1865f4f847e4727ef29f244b025"
+              },
+              "rmsMatchedListeningOnly": {
+                "path": "listening/case-02-matched.wav",
+                "bytes": 576044,
+                "sha256": "b1a1782b8e9b455b373b5b7ddb9316588d967df4c33f1e77ee4cb1447ae1798b"
+              }
+            }
+          },
+          "preRevealJudgmentsByMode": {
+            "rms-matched-listening-only": {
+              "first": {
+                "listeningMode": "rms-matched-listening-only",
+                "different": "no",
+                "confidence": 2,
+                "freeNote": "비슷비슷하네 ",
+                "timestamp": "2026-10-18T07:14:59.794Z",
+                "trialSequence": 5
+              },
+              "latest": {
+                "listeningMode": "rms-matched-listening-only",
+                "different": "no",
+                "confidence": 2,
+                "freeNote": "비슷비슷하네 ",
+                "timestamp": "2026-10-18T07:15:01.260Z",
+                "trialSequence": 5
+              }
+            }
+          },
+          "postRevealNotesByMode": {}
+        },
+        {
+          "trialId": "shape-pair-02",
+          "trialSequence": 6,
+          "isCatch": false,
+          "revealed": true,
+          "openedAt": "2026-10-18T07:15:05.944Z",
+          "revealedAt": "2026-10-18T07:17:00.260Z",
+          "listeningModeAtReveal": "rms-matched-listening-only",
+          "sideMapping": {
+            "A": {
+              "condition": "curved",
+              "sourcePairId": "shape-pair-02",
+              "sourceArm": "b",
+              "sourceManifestEntryId": "shape-03",
+              "measurementMetadata": {
+                "morphology": "curved",
+                "geometryRecipe": {
+                  "description": "Fixed-width ribbon around a shallow quadratic arch on the 32-grid.",
+                  "parameters": {
+                    "xRange": [
+                      2,
+                      30
+                    ],
+                    "centerX": 16,
+                    "centerY": 27,
+                    "curveCoefficient": 0.075,
+                    "halfWidth": 5.5
+                  }
+                },
+                "sourceGrid": {
+                  "dimensions": [
+                    96,
+                    96
+                  ],
+                  "width": 96,
+                  "height": 96,
+                  "occupiedCells": 2844,
+                  "boundingBox": {
+                    "minX": 6,
+                    "minY": 21,
+                    "maxX": 92,
+                    "maxY": 95,
+                    "width": 87,
+                    "height": 75
+                  },
+                  "areaResidualFromMedianCells": 22.5
+                },
+                "solverGrid": {
+                  "dimensions": [
+                    32,
+                    32
+                  ],
+                  "width": 32,
+                  "height": 32,
+                  "occupiedNodes": 316,
+                  "boundingBox": {
+                    "minX": 2,
+                    "minY": 7,
+                    "maxX": 30,
+                    "maxY": 31,
+                    "width": 29,
+                    "height": 25
+                  },
+                  "nodeResidualFromMedian": 2.5
+                },
+                "pickupNodeIndices": [
+                  272,
+                  278
+                ],
+                "pickupSolverCells": [
+                  909,
+                  915
+                ],
+                "contactRoute": {
+                  "sourceGridCell": [
+                    48,
+                    86
+                  ],
+                  "sourceCellIndex": 8304,
+                  "routedLayerIndex": 0,
+                  "routedPlateId": "curved"
+                },
+                "material": {
+                  "stiffness": 0.9124881966538272,
+                  "density": 1.2,
+                  "damping": 0.35499527866153086
+                },
+                "maskSha256": "04596a65a30ace781e77bef8e4d5baea6bb7aabdfc0e1749c96c3df957dd7311",
+                "topologySha256": "ae07653dbd966b76d47e99aa67d9f525168cbd30010743232639d3dae7b4e66b"
+              },
+              "playbackMetadata": {
+                "modeAtReveal": "rms-matched-listening-only",
+                "fixedGainLinear": 1,
+                "matchedPostGain": {
+                  "sourceMatchedRms": 0.020000000001275282,
+                  "pairReferenceRms": 0.019999999997097027,
+                  "sourceMatchedPeak": 0.09367351979017258,
+                  "finalTargetRms": 0.08,
+                  "postGainLinear": 4.000000000580594,
+                  "postGainDb": 12.041199827819993,
+                  "predictedPostGainPeak": 0.37469407921507664
+                }
+              },
+              "audioFileHashes": {
+                "fixedGain": {
+                  "path": "listening/case-03-fixed.wav",
+                  "bytes": 576044,
+                  "sha256": "ce6c7a77743bb65bf2894f457b971fea5c6202986066669fe620ea608e8fa937"
+                },
+                "rmsMatchedListeningOnly": {
+                  "path": "listening/case-03-matched.wav",
+                  "bytes": 576044,
+                  "sha256": "a7e4bbfc283fa24ff6234c6cdb02d11fb01267e3f09bfd1fcd11e8a20374947d"
+                }
+              }
+            },
+            "B": {
+              "condition": "elongated",
+              "sourcePairId": "shape-pair-02",
+              "sourceArm": "a",
+              "sourceManifestEntryId": "shape-02",
+              "measurementMetadata": {
+                "morphology": "elongated",
+                "geometryRecipe": {
+                  "description": "Horizontal ellipse on the 32-grid.",
+                  "parameters": {
+                    "center": [
+                      16,
+                      22
+                    ],
+                    "radius": [
+                      15,
+                      7
+                    ]
+                  }
+                },
+                "sourceGrid": {
+                  "dimensions": [
+                    96,
+                    96
+                  ],
+                  "width": 96,
+                  "height": 96,
+                  "occupiedCells": 2925,
+                  "boundingBox": {
+                    "minX": 3,
+                    "minY": 45,
+                    "maxX": 95,
+                    "maxY": 89,
+                    "width": 93,
+                    "height": 45
+                  },
+                  "areaResidualFromMedianCells": 103.5
+                },
+                "solverGrid": {
+                  "dimensions": [
+                    32,
+                    32
+                  ],
+                  "width": 32,
+                  "height": 32,
+                  "occupiedNodes": 325,
+                  "boundingBox": {
+                    "minX": 1,
+                    "minY": 15,
+                    "maxX": 31,
+                    "maxY": 29,
+                    "width": 31,
+                    "height": 15
+                  },
+                  "nodeResidualFromMedian": 11.5
+                },
+                "pickupNodeIndices": [
+                  313,
+                  319
+                ],
+                "pickupSolverCells": [
+                  909,
+                  915
+                ],
+                "contactRoute": {
+                  "sourceGridCell": [
+                    48,
+                    86
+                  ],
+                  "sourceCellIndex": 8304,
+                  "routedLayerIndex": 0,
+                  "routedPlateId": "elongated"
+                },
+                "material": {
+                  "stiffness": 0.9124881966538272,
+                  "density": 1.2,
+                  "damping": 0.35499527866153086
+                },
+                "maskSha256": "f99e8d561cea8f52c9f90017617fa257e36d881b3da527a4e5fd1ab8b8c28f5b",
+                "topologySha256": "57e3547b27d0c1bccfd51b108ef6c2e9af1f3479b69774a7841ddf157576a592"
+              },
+              "playbackMetadata": {
+                "modeAtReveal": "rms-matched-listening-only",
+                "fixedGainLinear": 1,
+                "matchedPostGain": {
+                  "sourceMatchedRms": 0.019999999992918772,
+                  "pairReferenceRms": 0.019999999997097027,
+                  "sourceMatchedPeak": 0.1045263484120369,
+                  "finalTargetRms": 0.08,
+                  "postGainLinear": 4.000000000580594,
+                  "postGainDb": 12.041199827819993,
+                  "predictedPostGainPeak": 0.418105393708835
+                }
+              },
+              "audioFileHashes": {
+                "fixedGain": {
+                  "path": "listening/case-02-fixed.wav",
+                  "bytes": 576044,
+                  "sha256": "2ee7b161fa6710b179bbe89b0ba3a9b67fe9a1865f4f847e4727ef29f244b025"
+                },
+                "rmsMatchedListeningOnly": {
+                  "path": "listening/case-02-matched.wav",
+                  "bytes": 576044,
+                  "sha256": "b1a1782b8e9b455b373b5b7ddb9316588d967df4c33f1e77ee4cb1447ae1798b"
+                }
+              }
+            }
+          },
+          "audioFileHashes": {
+            "A": {
+              "fixedGain": {
+                "path": "listening/case-03-fixed.wav",
+                "bytes": 576044,
+                "sha256": "ce6c7a77743bb65bf2894f457b971fea5c6202986066669fe620ea608e8fa937"
+              },
+              "rmsMatchedListeningOnly": {
+                "path": "listening/case-03-matched.wav",
+                "bytes": 576044,
+                "sha256": "a7e4bbfc283fa24ff6234c6cdb02d11fb01267e3f09bfd1fcd11e8a20374947d"
+              }
+            },
+            "B": {
+              "fixedGain": {
+                "path": "listening/case-02-fixed.wav",
+                "bytes": 576044,
+                "sha256": "2ee7b161fa6710b179bbe89b0ba3a9b67fe9a1865f4f847e4727ef29f244b025"
+              },
+              "rmsMatchedListeningOnly": {
+                "path": "listening/case-02-matched.wav",
+                "bytes": 576044,
+                "sha256": "b1a1782b8e9b455b373b5b7ddb9316588d967df4c33f1e77ee4cb1447ae1798b"
+              }
+            }
+          },
+          "preRevealJudgmentsByMode": {
+            "rms-matched-listening-only": {
+              "first": {
+                "listeningMode": "rms-matched-listening-only",
+                "different": "yes",
+                "confidence": 4,
+                "freeNote": "b 방금 전에 들었던거 아닌가\n\n아 좀 다른가 \n\na 에너지 거의 없음 약간 모듈레이션 처럼 떨리는게 들림\nb는 머라해야하지 좀 스트레치로 압축된 느낌  암튼 차이는 많음 \n",
+                "timestamp": "2026-10-18T07:16:59.426Z",
+                "trialSequence": 6
+              },
+              "latest": {
+                "listeningMode": "rms-matched-listening-only",
+                "different": "yes",
+                "confidence": 4,
+                "freeNote": "b 방금 전에 들었던거 아닌가\n\n아 좀 다른가 \n\na 에너지 거의 없음 약간 모듈레이션 처럼 떨리는게 들림\nb는 머라해야하지 좀 스트레치로 압축된 느낌  암튼 차이는 많음 \n",
+                "timestamp": "2026-10-18T07:17:00.259Z",
+                "trialSequence": 6
+              }
+            }
+          },
+          "postRevealNotesByMode": {}
+        },
+        {
+          "trialId": "shape-pair-04",
+          "trialSequence": 7,
+          "isCatch": false,
+          "revealed": true,
+          "openedAt": "2026-10-18T07:17:03.560Z",
+          "revealedAt": "2026-10-18T07:18:51.295Z",
+          "listeningModeAtReveal": "rms-matched-listening-only",
+          "sideMapping": {
+            "A": {
+              "condition": "Y-branch",
+              "sourcePairId": "shape-pair-04",
+              "sourceArm": "a",
+              "sourceManifestEntryId": "shape-04",
+              "measurementMetadata": {
+                "morphology": "Y-branch",
+                "geometryRecipe": {
+                  "description": "Union of three Euclidean capsules sharing one junction on the 32-grid.",
+                  "parameters": {
+                    "junction": [
+                      16,
+                      19
+                    ],
+                    "endpoints": [
+                      [
+                        4,
+                        5
+                      ],
+                      [
+                        28,
+                        5
+                      ],
+                      [
+                        16,
+                        29
+                      ]
+                    ],
+                    "radius": 3
+                  }
+                },
+                "sourceGrid": {
+                  "dimensions": [
+                    96,
+                    96
+                  ],
+                  "width": 96,
+                  "height": 96,
+                  "occupiedCells": 2817,
+                  "boundingBox": {
+                    "minX": 3,
+                    "minY": 6,
+                    "maxX": 95,
+                    "maxY": 95,
+                    "width": 93,
+                    "height": 90
+                  },
+                  "areaResidualFromMedianCells": -4.5
+                },
+                "solverGrid": {
+                  "dimensions": [
+                    32,
+                    32
+                  ],
+                  "width": 32,
+                  "height": 32,
+                  "occupiedNodes": 313,
+                  "boundingBox": {
+                    "minX": 1,
+                    "minY": 2,
+                    "maxX": 31,
+                    "maxY": 31,
+                    "width": 31,
+                    "height": 30
+                  },
+                  "nodeResidualFromMedian": -0.5
+                },
+                "pickupNodeIndices": [
+                  289,
+                  295
+                ],
+                "pickupSolverCells": [
+                  909,
+                  915
+                ],
+                "contactRoute": {
+                  "sourceGridCell": [
+                    48,
+                    86
+                  ],
+                  "sourceCellIndex": 8304,
+                  "routedLayerIndex": 0,
+                  "routedPlateId": "y-branch"
+                },
+                "material": {
+                  "stiffness": 0.9124881966538272,
+                  "density": 1.2,
+                  "damping": 0.35499527866153086
+                },
+                "maskSha256": "5ea84ec79d5a34fdef0932dd3860ab7b6fe92566569cc0caa873ffcd49cd8b6b",
+                "topologySha256": "4bb6b92ff48c27190ad43b03e33ecd506bbf0b4dfcf11e4a3a43131b140b7056"
+              },
+              "playbackMetadata": {
+                "modeAtReveal": "rms-matched-listening-only",
+                "fixedGainLinear": 1,
+                "matchedPostGain": {
+                  "sourceMatchedRms": 0.019999999996403995,
+                  "pairReferenceRms": 0.01999999999762818,
+                  "sourceMatchedPeak": 0.17949926853179932,
+                  "finalTargetRms": 0.08,
+                  "postGainLinear": 4.0000000004743645,
+                  "postGainDb": 12.041199827589317,
+                  "predictedPostGainPeak": 0.7179970742123454
+                }
+              },
+              "audioFileHashes": {
+                "fixedGain": {
+                  "path": "listening/case-04-fixed.wav",
+                  "bytes": 576044,
+                  "sha256": "218a8d232d08e590a60d8101b182942ca280ab77841d87edde0661c6a9e8d83d"
+                },
+                "rmsMatchedListeningOnly": {
+                  "path": "listening/case-04-matched.wav",
+                  "bytes": 576044,
+                  "sha256": "d7db5679075838b19ea3b3787aeee2dea0adfb901def91c8e390237427fa8a8d"
+                }
+              }
+            },
+            "B": {
+              "condition": "loop-like",
+              "sourcePairId": "shape-pair-04",
+              "sourceArm": "b",
+              "sourceManifestEntryId": "shape-05",
+              "measurementMetadata": {
+                "morphology": "loop-like",
+                "geometryRecipe": {
+                  "description": "Closed circular annulus on the 32-grid.",
+                  "parameters": {
+                    "center": [
+                      16,
+                      18.5
+                    ],
+                    "innerRadius": 6,
+                    "outerRadius": 11.5
+                  }
+                },
+                "sourceGrid": {
+                  "dimensions": [
+                    96,
+                    96
+                  ],
+                  "width": 96,
+                  "height": 96,
+                  "occupiedCells": 2736,
+                  "boundingBox": {
+                    "minX": 15,
+                    "minY": 21,
+                    "maxX": 83,
+                    "maxY": 92,
+                    "width": 69,
+                    "height": 72
+                  },
+                  "areaResidualFromMedianCells": -85.5
+                },
+                "solverGrid": {
+                  "dimensions": [
+                    32,
+                    32
+                  ],
+                  "width": 32,
+                  "height": 32,
+                  "occupiedNodes": 304,
+                  "boundingBox": {
+                    "minX": 5,
+                    "minY": 7,
+                    "maxX": 27,
+                    "maxY": 30,
+                    "width": 23,
+                    "height": 24
+                  },
+                  "nodeResidualFromMedian": -9.5
+                },
+                "pickupNodeIndices": [
+                  284,
+                  290
+                ],
+                "pickupSolverCells": [
+                  909,
+                  915
+                ],
+                "contactRoute": {
+                  "sourceGridCell": [
+                    48,
+                    86
+                  ],
+                  "sourceCellIndex": 8304,
+                  "routedLayerIndex": 0,
+                  "routedPlateId": "loop-like"
+                },
+                "material": {
+                  "stiffness": 0.9124881966538272,
+                  "density": 1.2,
+                  "damping": 0.35499527866153086
+                },
+                "maskSha256": "bc162d06770d160717936a145ad2764cacc4dcbd8b4ab8fad9fc50f08630a5cf",
+                "topologySha256": "e5d817a0a89a770ff39fa8aa0063b8d6a89bba89e2bc29f514ddb6a13f8707d1"
+              },
+              "playbackMetadata": {
+                "modeAtReveal": "rms-matched-listening-only",
+                "fixedGainLinear": 1,
+                "matchedPostGain": {
+                  "sourceMatchedRms": 0.019999999998852363,
+                  "pairReferenceRms": 0.01999999999762818,
+                  "sourceMatchedPeak": 0.1420486569404602,
+                  "finalTargetRms": 0.08,
+                  "postGainLinear": 4.0000000004743645,
+                  "postGainDb": 12.041199827589317,
+                  "predictedPostGainPeak": 0.5681946278292237
+                }
+              },
+              "audioFileHashes": {
+                "fixedGain": {
+                  "path": "listening/case-05-fixed.wav",
+                  "bytes": 576044,
+                  "sha256": "4ea0b6ed6f0b6f3a6320f18f02a232484700996c60cfea3c73b57115eaa3a829"
+                },
+                "rmsMatchedListeningOnly": {
+                  "path": "listening/case-05-matched.wav",
+                  "bytes": 576044,
+                  "sha256": "0cb343cac2cff4324ad47c7249a061a4366d44a62168f7690b96e497f4dd9914"
+                }
+              }
+            }
+          },
+          "audioFileHashes": {
+            "A": {
+              "fixedGain": {
+                "path": "listening/case-04-fixed.wav",
+                "bytes": 576044,
+                "sha256": "218a8d232d08e590a60d8101b182942ca280ab77841d87edde0661c6a9e8d83d"
+              },
+              "rmsMatchedListeningOnly": {
+                "path": "listening/case-04-matched.wav",
+                "bytes": 576044,
+                "sha256": "d7db5679075838b19ea3b3787aeee2dea0adfb901def91c8e390237427fa8a8d"
+              }
+            },
+            "B": {
+              "fixedGain": {
+                "path": "listening/case-05-fixed.wav",
+                "bytes": 576044,
+                "sha256": "4ea0b6ed6f0b6f3a6320f18f02a232484700996c60cfea3c73b57115eaa3a829"
+              },
+              "rmsMatchedListeningOnly": {
+                "path": "listening/case-05-matched.wav",
+                "bytes": 576044,
+                "sha256": "0cb343cac2cff4324ad47c7249a061a4366d44a62168f7690b96e497f4dd9914"
+              }
+            }
+          },
+          "preRevealJudgmentsByMode": {
+            "rms-matched-listening-only": {
+              "first": {
+                "listeningMode": "rms-matched-listening-only",
+                "different": "yes",
+                "confidence": 2,
+                "freeNote": "거의 비슷하게 들리는데\n자세히 들으면 a는 속에서 좁게  11110100100100001000 이렇게 좀 드르르르 간격 벌어지는 느낌 피치가 떨리는게 \nb는 좀 더 완만하고 일정함 울림이 \n",
+                "timestamp": "2026-10-18T07:18:50.212Z",
+                "trialSequence": 7
+              },
+              "latest": {
+                "listeningMode": "rms-matched-listening-only",
+                "different": "yes",
+                "confidence": 2,
+                "freeNote": "거의 비슷하게 들리는데\n자세히 들으면 a는 속에서 좁게  11110100100100001000 이렇게 좀 드르르르 간격 벌어지는 느낌 피치가 떨리는게 \nb는 좀 더 완만하고 일정함 울림이 \n",
+                "timestamp": "2026-10-18T07:18:51.295Z",
+                "trialSequence": 7
+              }
+            }
+          },
+          "postRevealNotesByMode": {
+            "rms-matched-listening-only": {
+              "listeningMode": "rms-matched-listening-only",
+              "note": "맥북 오디오 5칸\n헤드폰 동일 ",
+              "updatedAt": "2026-10-18T07:19:02.277Z",
+              "trialSequence": 7
+            }
+          }
+        }
+      ],
+      "events": [
+        {
+          "sequence": 1,
+          "timestamp": "2026-10-18T07:08:51.296Z",
+          "type": "session_started",
+          "trialId": null
+        },
+        {
+          "sequence": 2,
+          "timestamp": "2026-10-18T07:08:51.297Z",
+          "type": "trial_opened",
+          "trialId": "shape-pair-06"
+        },
+        {
+          "sequence": 3,
+          "timestamp": "2026-10-18T07:10:04.692Z",
+          "type": "pre_reveal_judgment_saved",
+          "trialId": "shape-pair-06"
+        },
+        {
+          "sequence": 4,
+          "timestamp": "2026-10-18T07:10:05.772Z",
+          "type": "pre_reveal_judgment_saved",
+          "trialId": "shape-pair-06"
+        },
+        {
+          "sequence": 5,
+          "timestamp": "2026-10-18T07:10:05.772Z",
+          "type": "analysis_revealed",
+          "trialId": "shape-pair-06"
+        },
+        {
+          "sequence": 6,
+          "timestamp": "2026-10-18T07:10:17.141Z",
+          "type": "trial_advanced",
+          "trialId": "shape-pair-06"
+        },
+        {
+          "sequence": 7,
+          "timestamp": "2026-10-18T07:10:17.142Z",
+          "type": "trial_opened",
+          "trialId": "shape-catch-aa"
+        },
+        {
+          "sequence": 8,
+          "timestamp": "2026-10-18T07:11:12.067Z",
+          "type": "pre_reveal_judgment_saved",
+          "trialId": "shape-catch-aa"
+        },
+        {
+          "sequence": 9,
+          "timestamp": "2026-10-18T07:11:13.066Z",
+          "type": "pre_reveal_judgment_saved",
+          "trialId": "shape-catch-aa"
+        },
+        {
+          "sequence": 10,
+          "timestamp": "2026-10-18T07:11:13.066Z",
+          "type": "analysis_revealed",
+          "trialId": "shape-catch-aa"
+        },
+        {
+          "sequence": 11,
+          "timestamp": "2026-10-18T07:11:23.369Z",
+          "type": "trial_advanced",
+          "trialId": "shape-catch-aa"
+        },
+        {
+          "sequence": 12,
+          "timestamp": "2026-10-18T07:11:23.370Z",
+          "type": "trial_opened",
+          "trialId": "shape-pair-05"
+        },
+        {
+          "sequence": 13,
+          "timestamp": "2026-10-18T07:12:29.929Z",
+          "type": "pre_reveal_judgment_saved",
+          "trialId": "shape-pair-05"
+        },
+        {
+          "sequence": 14,
+          "timestamp": "2026-10-18T07:12:30.528Z",
+          "type": "pre_reveal_judgment_saved",
+          "trialId": "shape-pair-05"
+        },
+        {
+          "sequence": 15,
+          "timestamp": "2026-10-18T07:12:30.528Z",
+          "type": "analysis_revealed",
+          "trialId": "shape-pair-05"
+        },
+        {
+          "sequence": 16,
+          "timestamp": "2026-10-18T07:12:34.929Z",
+          "type": "trial_advanced",
+          "trialId": "shape-pair-05"
+        },
+        {
+          "sequence": 17,
+          "timestamp": "2026-10-18T07:12:34.930Z",
+          "type": "trial_opened",
+          "trialId": "shape-pair-03"
+        },
+        {
+          "sequence": 18,
+          "timestamp": "2026-10-18T07:13:48.040Z",
+          "type": "pre_reveal_judgment_saved",
+          "trialId": "shape-pair-03"
+        },
+        {
+          "sequence": 19,
+          "timestamp": "2026-10-18T07:13:49.122Z",
+          "type": "pre_reveal_judgment_saved",
+          "trialId": "shape-pair-03"
+        },
+        {
+          "sequence": 20,
+          "timestamp": "2026-10-18T07:13:49.122Z",
+          "type": "analysis_revealed",
+          "trialId": "shape-pair-03"
+        },
+        {
+          "sequence": 21,
+          "timestamp": "2026-10-18T07:13:53.240Z",
+          "type": "trial_advanced",
+          "trialId": "shape-pair-03"
+        },
+        {
+          "sequence": 22,
+          "timestamp": "2026-10-18T07:13:53.240Z",
+          "type": "trial_opened",
+          "trialId": "shape-pair-01"
+        },
+        {
+          "sequence": 23,
+          "timestamp": "2026-10-18T07:14:59.794Z",
+          "type": "pre_reveal_judgment_saved",
+          "trialId": "shape-pair-01"
+        },
+        {
+          "sequence": 24,
+          "timestamp": "2026-10-18T07:15:01.260Z",
+          "type": "pre_reveal_judgment_saved",
+          "trialId": "shape-pair-01"
+        },
+        {
+          "sequence": 25,
+          "timestamp": "2026-10-18T07:15:01.260Z",
+          "type": "analysis_revealed",
+          "trialId": "shape-pair-01"
+        },
+        {
+          "sequence": 26,
+          "timestamp": "2026-10-18T07:15:05.944Z",
+          "type": "trial_advanced",
+          "trialId": "shape-pair-01"
+        },
+        {
+          "sequence": 27,
+          "timestamp": "2026-10-18T07:15:05.944Z",
+          "type": "trial_opened",
+          "trialId": "shape-pair-02"
+        },
+        {
+          "sequence": 28,
+          "timestamp": "2026-10-18T07:16:59.426Z",
+          "type": "pre_reveal_judgment_saved",
+          "trialId": "shape-pair-02"
+        },
+        {
+          "sequence": 29,
+          "timestamp": "2026-10-18T07:17:00.259Z",
+          "type": "pre_reveal_judgment_saved",
+          "trialId": "shape-pair-02"
+        },
+        {
+          "sequence": 30,
+          "timestamp": "2026-10-18T07:17:00.260Z",
+          "type": "analysis_revealed",
+          "trialId": "shape-pair-02"
+        },
+        {
+          "sequence": 31,
+          "timestamp": "2026-10-18T07:17:03.560Z",
+          "type": "trial_advanced",
+          "trialId": "shape-pair-02"
+        },
+        {
+          "sequence": 32,
+          "timestamp": "2026-10-18T07:17:03.560Z",
+          "type": "trial_opened",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 33,
+          "timestamp": "2026-10-18T07:18:50.212Z",
+          "type": "pre_reveal_judgment_saved",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 34,
+          "timestamp": "2026-10-18T07:18:51.295Z",
+          "type": "pre_reveal_judgment_saved",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 35,
+          "timestamp": "2026-10-18T07:18:51.295Z",
+          "type": "analysis_revealed",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 36,
+          "timestamp": "2026-10-18T07:18:55.516Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 37,
+          "timestamp": "2026-10-18T07:18:55.660Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 38,
+          "timestamp": "2026-10-18T07:18:55.772Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 39,
+          "timestamp": "2026-10-18T07:18:55.924Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 40,
+          "timestamp": "2026-10-18T07:18:56.020Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 41,
+          "timestamp": "2026-10-18T07:18:56.090Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 42,
+          "timestamp": "2026-10-18T07:18:56.275Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 43,
+          "timestamp": "2026-10-18T07:18:57.067Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 44,
+          "timestamp": "2026-10-18T07:18:57.164Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 45,
+          "timestamp": "2026-10-18T07:18:57.244Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 46,
+          "timestamp": "2026-10-18T07:18:57.321Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 47,
+          "timestamp": "2026-10-18T07:18:57.322Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 48,
+          "timestamp": "2026-10-18T07:18:57.420Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 49,
+          "timestamp": "2026-10-18T07:18:57.502Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 50,
+          "timestamp": "2026-10-18T07:18:57.502Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 51,
+          "timestamp": "2026-10-18T07:18:57.590Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 52,
+          "timestamp": "2026-10-18T07:18:58.123Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 53,
+          "timestamp": "2026-10-18T07:18:58.467Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 54,
+          "timestamp": "2026-10-18T07:18:58.588Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 55,
+          "timestamp": "2026-10-18T07:18:58.684Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 56,
+          "timestamp": "2026-10-18T07:18:59.261Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 57,
+          "timestamp": "2026-10-18T07:19:00.371Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 58,
+          "timestamp": "2026-10-18T07:19:00.734Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 59,
+          "timestamp": "2026-10-18T07:19:00.843Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 60,
+          "timestamp": "2026-10-18T07:19:01.076Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 61,
+          "timestamp": "2026-10-18T07:19:01.106Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 62,
+          "timestamp": "2026-10-18T07:19:01.182Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 63,
+          "timestamp": "2026-10-18T07:19:01.183Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 64,
+          "timestamp": "2026-10-18T07:19:01.285Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 65,
+          "timestamp": "2026-10-18T07:19:01.398Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 66,
+          "timestamp": "2026-10-18T07:19:01.398Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 67,
+          "timestamp": "2026-10-18T07:19:01.452Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 68,
+          "timestamp": "2026-10-18T07:19:01.508Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 69,
+          "timestamp": "2026-10-18T07:19:01.659Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 70,
+          "timestamp": "2026-10-18T07:19:01.708Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 71,
+          "timestamp": "2026-10-18T07:19:01.844Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 72,
+          "timestamp": "2026-10-18T07:19:01.988Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 73,
+          "timestamp": "2026-10-18T07:19:02.076Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 74,
+          "timestamp": "2026-10-18T07:19:02.187Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 75,
+          "timestamp": "2026-10-18T07:19:02.277Z",
+          "type": "post_reveal_note_updated",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 76,
+          "timestamp": "2026-10-18T07:19:05.982Z",
+          "type": "trial_advanced",
+          "trialId": "shape-pair-04"
+        },
+        {
+          "sequence": 77,
+          "timestamp": "2026-10-18T07:19:08.315Z",
+          "type": "session_exported",
+          "trialId": null
+        }
+      ]
+    }
+  ]
+}
