@@ -197,6 +197,12 @@ class SurfacePlateProcessor extends AudioWorkletProcessor {
 
   buildNodeLinks(t) {
     const n = t.nodeGridIndices.length, pairCount = t.adjacentLinkCoefficients.length;
+    if (!pairCount) {
+      this.linkOffsets = new Uint32Array(n + 1);
+      this.linkNodes = new Uint32Array(0);
+      this.linkCoefficients = new Float32Array(0);
+      return;
+    }
     const counts = new Uint32Array(n);
     for (let p = 0; p < pairCount; p++) { counts[t.adjacentLinkNodes[p * 2]]++; counts[t.adjacentLinkNodes[p * 2 + 1]]++; }
     this.linkOffsets = new Uint32Array(n + 1);

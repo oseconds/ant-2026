@@ -21,13 +21,14 @@ const NEIGHBOR_OFFSETS = Object.freeze([[-1, 0], [1, 0], [0, -1], [0, 1]]);
  * worklet's responsibility. Plate order is bottom-to-top.
  */
 export function compileSurfaceTopology({ plates = [], nodules = [], stratigraphy = null,
-  generation = 0, maxLayers = SURFACE_MAX_LAYERS } = {}) {
+  generation = 0, maxLayers = SURFACE_MAX_LAYERS, zCouplingEnabled = true } = {}) {
   if (!Array.isArray(plates)) throw new TypeError('Surface topology plates must be an array.');
   if (!Array.isArray(nodules)) throw new TypeError('Surface topology nodules must be an array.');
   if (!Number.isSafeInteger(generation) || generation < 0) throw new RangeError('Topology generation must be a non-negative safe integer.');
   if (!Number.isSafeInteger(maxLayers) || maxLayers < 1 || maxLayers > SURFACE_MAX_LAYERS) {
     throw new RangeError(`Topology maxLayers must be between 1 and ${SURFACE_MAX_LAYERS}.`);
   }
+  if (typeof zCouplingEnabled !== 'boolean') throw new TypeError('zCouplingEnabled must be a boolean.');
 
   const orderedPlates = orderPlates(plates, stratigraphy);
   if (orderedPlates.length > maxLayers) throw new RangeError(`Surface topology exceeds its ${maxLayers}-layer ceiling.`);
@@ -75,8 +76,9 @@ export function compileSurfaceTopology({ plates = [], nodules = [], stratigraphy
 
   const { columnOffsets, columnLayerIndices, columnNodeIndices } = packColumns(layerCellNodes);
   const sourceColumns = compileSourceColumns(orderedPlates, stratigraphy);
-  const { adjacentLinkOffsets, adjacentLinkNodes, adjacentLinkCoefficients } =
-    packAdjacentLinks(sourceColumns, layers, nodeOffsets);
+  const { adjacentLinkOffsets, adjacentLinkNodes, adjacentLinkCoefficients } = zCouplingEnabled
+    ? packAdjacentLinks(sourceColumns, layers, nodeOffsets)
+    : { adjacentLinkOffsets: new Int32Array(SOLVER_CELLS + 1), adjacentLinkNodes: new Uint32Array(0), adjacentLinkCoefficients: new Float32Array(0) };
   const noduleData = compileNodules(nodules, layers, layerById, nodeOffsets, sourceColumns);
 
   return Object.freeze({

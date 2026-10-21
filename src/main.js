@@ -24,6 +24,11 @@ export function mountLab(root) {
   const query = (selector) => root.querySelector(selector);
   const audioStatus = query('#audio-status');
   const lab = new Lab({ workletBaseUrl: `${import.meta.env.BASE_URL}worklets/` });
+  const antAudioLite = new URLSearchParams(globalThis.location?.search || '').get('antAudio') === 'lite';
+  if (antAudioLite) {
+    const createAnt = lab.registry.ant;
+    lab.registry = { ...lab.registry, ant: (options) => createAnt({ ...options, zCouplingEnabled: false }) };
+  }
   const savedStates = new Map();
   const events = new AbortController();
   let renderer = null, interaction = null, inspectorRenderer = null, resizeObserver = null;
@@ -347,6 +352,12 @@ export function mountLab(root) {
       query('#model-title').textContent = definition.title;
       const description = query('#model-description');
       if (description) description.textContent = definition.description;
+      if (name === 'ant' && antAudioLite) {
+        const mode = document.createElement('p');
+        mode.id = 'ant-audio-mode-label';
+        mode.textContent = 'Audio Lite prototype · Z Off · Sphere coupling retained';
+        description?.after(mode);
+      }
       const hint = query('#interaction-hint');
       if (hint) hint.textContent = definition.hint;
       for (const tab of root.querySelectorAll('[data-model]')) tab.setAttribute('aria-pressed', String(tab.dataset.model === name));

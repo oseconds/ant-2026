@@ -9,11 +9,13 @@ const GRID_SIZE = 96;
 
 /** ANT trail surfaces share one stereo worklet and the application's AudioEngine. */
 export class SurfaceAudioBridge {
-  constructor({ audioEngine, workletBaseUrl = '/worklets/', workletFactory } = {}) {
+  constructor({ audioEngine, workletBaseUrl = '/worklets/', workletFactory, zCouplingEnabled = true } = {}) {
     if (!audioEngine) throw new TypeError('SurfaceAudioBridge requires the shared AudioEngine.');
+    if (typeof zCouplingEnabled !== 'boolean') throw new TypeError('zCouplingEnabled must be a boolean.');
     this.audioEngine = audioEngine;
     this.workletBaseUrl = `${String(workletBaseUrl).replace(/\/?$/, '/')}`;
     this.workletFactory = workletFactory;
+    Object.defineProperty(this, 'zCouplingEnabled', { value: zCouplingEnabled, enumerable: true });
     this.worklet = null;
     this.plates = new Map();
     this.topology = null;
@@ -104,7 +106,7 @@ export class SurfaceAudioBridge {
     let compiled;
     try {
       compiled = compileSurfaceTopology({ plates, nodules, stratigraphy,
-        generation: ++this.topologyGeneration, maxLayers: MAX_LAYERS });
+        generation: ++this.topologyGeneration, maxLayers: MAX_LAYERS, zCouplingEnabled: this.zCouplingEnabled });
     } catch {
       this.diagnostics.dropped += 1;
       return false;
@@ -261,7 +263,7 @@ export class SurfaceAudioBridge {
     const audioWallRatio = renderedSeconds !== null && wallSeconds > 0
       ? renderedSeconds / wallSeconds : null;
     return {
-      bridge: { ...this.diagnostics },
+      bridge: { ...this.diagnostics, zCouplingEnabled: this.zCouplingEnabled },
       processor,
       wallSeconds,
       renderedSeconds,
