@@ -10,6 +10,6 @@ export const modelRegistry = {
   plate: (options) => new PlateModel(options),
   sphere: (options) => new SphereModel(options),
   // ANT observes movement; its optional transport shares the existing engine.
-  ant: ({ state, audioEngine, workletBaseUrl, zCouplingEnabled = true } = {}) => new AntController({ state,
-    audioBridge: audioEngine ? new AntEnvironmentAudioBridge({ audioEngine, workletBaseUrl, zCouplingEnabled }) : null })
+  ant: ({ state, audioEngine, workletBaseUrl, zCouplingEnabled = true, residentPlateLimit = null } = {}) => new AntController({ state,
+    audioBridge: audioEngine ? new AntEnvironmentAudioBridge({ audioEngine, workletBaseUrl, zCouplingEnabled, residentPlateLimit }) : null })
 };

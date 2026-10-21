@@ -273,6 +273,23 @@ test('same-geometry topology recompiles retain pulse phase and local recovery wh
   assert.ok(p.contactForces.every(value=>value===0));assert.ok(p.contactMemory.every(value=>value===0));
 });
 
+test('fixed-size resident turnover carries surviving vibration and contact state without resetting the world',()=>{
+  const a=plate('retired'),b=plate('resident-b',8,36,8,14),c=plate('resident-c',55,83,78,84);
+  const p=instantiate().processor;install(p,topology(a,b));
+  const bStart=p.topology.nodeOffsets[1],bEnd=p.topology.nodeOffsets[2];
+  p.current.fill(.012,bStart,bEnd);p.previous.fill(-.004,bStart,bEnd);
+  p.contactMemory.fill(.003,bStart,bEnd);p.lastContactStep.fill(17,bStart,bEnd);
+  const state={current:p.current.slice(bStart,bEnd),previous:p.previous.slice(bStart,bEnd),
+    contactMemory:p.contactMemory.slice(bStart,bEnd),lastContactStep:p.lastContactStep.slice(bStart,bEnd)};
+  const retained=topology(b,c);install(p,retained);
+  assert.deepEqual(p.current.slice(0,bEnd-bStart),state.current);
+  assert.deepEqual(p.previous.slice(0,bEnd-bStart),state.previous);
+  assert.deepEqual(p.contactMemory.slice(0,bEnd-bStart),state.contactMemory);
+  assert.deepEqual(p.lastContactStep.slice(0,bEnd-bStart),state.lastContactStep);
+  assert.deepEqual(p.topology.layerIds,['resident-b','resident-c']);
+  assert.equal(p.telemetry.topologies,2,'topology turnover is not a processor/world reset');
+});
+
 test('stop removes all pending force and contact compliance without later replay',()=>{
   const p=instantiate().processor;install(p,topology(plate()));
   p.handleMessage({type:'strike',payload:{plateId:'route',position:{x:.5,y:48/95},strength:.035}});

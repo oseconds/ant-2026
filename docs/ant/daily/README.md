@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-21 — Long-run exhibition diagnosis / bounded acoustic prototype
+
+[Process log](./2026-10-21-long-run-exhibition.md) · [Evidence and decision](../evidence/2026-10-21-long-run-exhibition/REPORT.md)
+
+- Production 256-Plate cap stops material turnover at 63:34.8; approved 1024 storage shadow reaches 474 Plates in two accelerated model hours
+- Newest-two acoustic cohort retains real Plate/internal-Z response; startup Full stays default and historical world material is retained
+- Final headed Chrome run: 18:00.296, 30→112 historical Plates, stopped at the user's request; no two-hour stability claim
+- Human preview remains too similar; final decision E (not ready), with Audio Off/current renderer as an operational fallback only
+
 ### 2026-10-21 — Exhibition AudioWorklet feasibility
 
 [Process log](./2026-10-21-exhibition-audio-runtime.md) · [Evidence, A/B listening and operating limits](../evidence/2026-10-21-exhibition-audio-runtime/README.md)

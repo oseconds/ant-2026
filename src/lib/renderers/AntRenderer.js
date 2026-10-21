@@ -8,8 +8,12 @@ import { BODY_GEOMETRY } from '../agents/ant/BodyPoseController.js';
  * model/controller. No p5 object is created until `init()` is called.
  */
 export class AntRenderer {
-    constructor(canvas, { loadP5 = () => import('p5') } = {}) {
+    constructor(canvas, { loadP5 = () => import('p5'), materialReadout = 'baseline' } = {}) {
         if (!canvas) throw new TypeError('AntRenderer requires a canvas element');
+        if (!['baseline', 'recent'].includes(materialReadout)) {
+            throw new TypeError(`Unknown material readout: ${materialReadout}`);
+        }
+        Object.defineProperty(this, 'materialReadout', { value: materialReadout, enumerable: true });
         this.canvas = canvas;
         this.canvasParent = canvas.parentElement || null;
         this.canvasId = canvas.getAttribute ? canvas.getAttribute('id') : (canvas.id || null);
@@ -224,12 +228,17 @@ function drawSnapshot(p, snapshot, renderer) {
         if (!renderer.materialImage || renderer.materialRevision !== material.revision) {
             const image = p.createImage(material.width, material.height);
             image.loadPixels();
+            const layerOrder = topology.layerOrder || [];
+            const recentLayerStart = Math.max(0, layerOrder.length - 8);
             for (let index = 0; index < topology.topLayerByCell.length; index += 1) {
                 const depthCount = topology.layerCountByCell?.[index] || 1;
-                image.pixels[index * 4] = 100;
-                image.pixels[index * 4 + 1] = 100;
-                image.pixels[index * 4 + 2] = 100;
-                image.pixels[index * 4 + 3] = topology.topLayerByCell[index] >= 0
+                const topLayer = topology.topLayerByCell[index];
+                const recentTop = renderer.materialReadout === 'recent'
+                    && topLayer >= recentLayerStart && topLayer < layerOrder.length;
+                image.pixels[index * 4] = recentTop ? 194 : 100;
+                image.pixels[index * 4 + 1] = recentTop ? 112 : 100;
+                image.pixels[index * 4 + 2] = recentTop ? 39 : 100;
+                image.pixels[index * 4 + 3] = recentTop ? 64 : topLayer >= 0
                     ? Math.min(21, 9 + depthCount * 1.25) : 0;
             }
             image.updatePixels();

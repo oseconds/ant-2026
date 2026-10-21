@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Failure and partial-output receipt for three shadow visual-render attempts; no final-comparison claim.",
+  "date": "2026-10-21",
+  "input": "visual-capacity-1024",
+  "reference": "visual/snapshot-cap-0256.json",
+  "runtime": {
+    "node": "v22.23.2",
+    "playwright": "1.63.0",
+    "chromeFileVersion": "155.0.8059.85"
+  },
+  "sourceHashes": {
+    "renderer": "36f76459cc5323b846e04b8bced95b19a4d382c645303dbb9b49aa1050354566",
+    "harness": "617369faa1505e57794df7307f5b6ea5888fa22a3c052761b7e6387240a48545",
+    "captureManifest": "4b5182e66a1e08d8d7849d3d33c2a94658850a3cba153efc78fe4d9961bbaf52",
+    "reference": "1be48781b2d37a31d5f6ff86fb240b6ada500a87871bf11858772dd5301ca465"
+  },
+  "attempts": [
+    {
+      "sequence": 1,
+      "failure": "page.evaluate failed: Target page, context or browser has been closed",
+      "stage": "material-only comparison after all snapshot triptychs",
+      "inputMode": "full snapshots",
+      "interpretation": "Cause unproven; browser/process resource pressure suspected."
+    },
+    {
+      "sequence": 2,
+      "failure": "page.evaluate failed: Target page, context or browser has been closed",
+      "stage": "material-only comparison after time-series export and page reload",
+      "inputMode": "full snapshots",
+      "interpretation": "Cause unproven; browser/process resource pressure suspected."
+    },
+    {
+      "sequence": 3,
+      "failure": "page.evaluate failed: Target page, context or browser has been closed",
+      "stage": "material-only comparison after minimal renderer projection and page reload",
+      "inputMode": "minimal actual AntRenderer inputs",
+      "interpretation": "Cause unproven; browser/process resource pressure suspected."
+    }
+  ],
+  "partialOutputs": [
+    {
+      "file": "compare-00000s.png",
+      "bytes": 33877,
+      "sha256": "14908835dcfa89d5572e44b335441d819c5439c9711532f9e33f83d07c9e8afe"
+    },
+    {
+      "file": "compare-00060s.png",
+      "bytes": 220480,
+      "sha256": "2953baacce9d157d4d329940a75b63eddfbdc94da579c995a9123fa65f3ee26e"
+    },
+    {
+      "file": "compare-00300s.png",
+      "bytes": 744891,
+      "sha256": "ce93d912ce14d8113a0e3c295829a306c64f036369057f83a66604328b5bee74"
+    },
+    {
+      "file": "compare-00900s.png",
+      "bytes": 739111,
+      "sha256": "b5c4df2cd6ac262a1b12c984608f9a1c1d4f8d353ece70b9e3500211c167bbfc"
+    },
+    {
+      "file": "compare-01800s.png",
+      "bytes": 734197,
+      "sha256": "aa4915199942dd50e69ffe96e6b00726f6019fb8f5a96c50cdd4a82ce98c7717"
+    },
+    {
+      "file": "compare-03600s.png",
+      "bytes": 723326,
+      "sha256": "6e58ad14f6615a236f95513414e5e74d19df05ed3ebe4d4cc74e78042e64c6ea"
+    },
+    {
+      "file": "compare-07200s.png",
+      "bytes": 688152,
+      "sha256": "89181160bf79984c57c12cfeecdcfdfbfb9e523ec8254d773c5d4f378b1b12ff"
+    },
+    {
+      "file": "compare-default-cap-reference-0256.png",
+      "bytes": 673814,
+      "sha256": "dd14f12a973097210b82c80a748faa88bfa4b17a7c3b7e47440d3ba8539dc849"
+    },
+    {
+      "file": "time-series-baseline.png",
+      "bytes": 1177496,
+      "sha256": "cc5581d92d97ff241b248cddf2b9bc6d002e2212fe487efbb3c58e60574447b9"
+    },
+    {
+      "file": "time-series-burial-depth.png",
+      "bytes": 1470556,
+      "sha256": "13f4e84343abfd195cac662db4d333cfcc7dd35c5eafa084f1988b1c9c19b393"
+    },
+    {
+      "file": "time-series-latest8-top.png",
+      "bytes": 1408818,
+      "sha256": "b83c3d25ed58ed8b693eb02a64b649b3b5eab36776bdab66bd29f12330aaa3b8"
+    }
+  ],
+  "completedManifest": false,
+  "inputSnapshotsMatchRunManifest": true,
+  "referenceMatchesRecordedSha256": true,
+  "resumeRenderByteMatchedAllExistingTriptychs": true,
+  "explanation": "The bounded-input retry rerendered all eight prior triptych PNGs and all three time-series sheets; hash assertions matched existing files exactly. Paired comparisons still failed before completion."
+}

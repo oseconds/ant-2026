@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ANT — listening notes</title>
+<style>
+:root{color-scheme:dark;--paper:#111513;--panel:#1b211e;--ink:#edf0e7;--muted:#b4beb3;--line:#39443c;--accent:#c5d89c}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,sans-serif}
+main{max-width:920px;margin:0 auto;padding:40px 22px 72px}h1,h2{line-height:1.2}h1{font-size:clamp(2rem,6vw,3.5rem);margin:.1em 0 .35em}h2{font-size:1.35rem;margin:0 0 .35em}p{color:var(--muted);max-width:75ch}section{margin:32px 0}article{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;margin:12px 0}audio{display:block;width:100%;margin:12px 0 4px}small,.meta{color:var(--muted)}a{color:var(--accent)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}.tag{font-size:.78rem;text-transform:uppercase;letter-spacing:.09em;color:var(--accent)}
+</style>
+</head>
+<body><main>
+<p class="tag">ANT · frozen listening materials</p>
+<h1>A world becoming audible</h1>
+<p>These short recordings let you compare sound from fixed moments in ANT’s material history. In the model, movement and contact alter a persistent material world; the world is the sounding body. The audio here is a replay of recorded inputs and saved material states, not a live world unfolding during playback.</p>
+<p>All players use the WAV files as saved: no page-level gain, normalization, fade, or audio processing. Use your device’s volume for listening level. Playback starts only when you press play.</p>
+
+<section><h2>Recent material residents</h2>
+<p>Offline 12-second solver renders from one or two recent Plates at three historical counts. “Residents” are the latest one or two Plates in birth order. Their stream preserves recorded contacts for those Plates and omits nonresident routes, so these bounded examples are not complete full-history sound.</p>
+<div class="grid">
+<article><span class="tag">1 resident · 8 Plates</span><audio controls preload="none" src="resident-1/8-full.wav"></audio></article>
+<article><span class="tag">2 residents · 8 Plates</span><audio controls preload="none" src="resident-2/8-full.wav"></audio></article>
+<article><span class="tag">1 resident · 20 Plates</span><audio controls preload="none" src="resident-1/20-full.wav"></audio></article>
+<article><span class="tag">2 residents · 20 Plates</span><audio controls preload="none" src="resident-2/20-full.wav"></audio></article>
+<article><span class="tag">1 resident · 30 Plates</span><audio controls preload="none" src="resident-1/30-full.wav"></audio></article>
+<article><span class="tag">2 residents · 30 Plates</span><audio controls preload="none" src="resident-2/30-full.wav"></audio></article>
+</div></section>
+
+<section><h2>A material turnover</h2>
+<p>A recorded natural strike stream is replayed across a reconstructed birth boundary at 302.017 s of the source simulation. One case retires Plate 7 as Plate 9 enters; the control keeps Plate 7. Inputs and solver output are bounded replays. The event timing is reconstructed from recorded inputs and snapshot metadata; the exact-frame ordering is an assumption, though no captured strike falls on that boundary frame.</p>
+<div class="grid">
+<article><span class="tag">Retire Plate 7 · full 12 s</span><audio controls preload="none" src="turnover/retire-7.wav"></audio></article>
+<article><span class="tag">Retain Plate 7 · control · full 12 s</span><audio controls preload="none" src="turnover/retain-7-control.wav"></audio></article>
+<article><span class="tag">Retirement boundary · 2 s window</span><audio controls preload="none" src="turnover/retire-7-turnover-window.wav"></audio></article>
+<article><span class="tag">Control boundary · 2 s window</span><audio controls preload="none" src="turnover/retain-7-control-turnover-window.wav"></audio></article>
+</div>
+<p class="meta">The excerpts center the reconstructed topology change. The recorded world is not advanced here, and the replay does not establish a human judgment about clarity, audibility, preference, or a production fade.</p></section>
+
+<section><h2>Earlier full-history reference</h2>
+<p>These 30-Plate recordings are from the earlier frozen-input benchmark. Full Physics is the reference; Z-off removes inter-Plate coupling for that diagnostic. Both are bounded cold replays, not live-runtime samples.</p>
+<div class="grid">
+<article><span class="tag">30 Plates · Full Physics</span><audio controls preload="none" src="../../2026-10-21-exhibition-audio-runtime/30-full.wav"></audio></article>
+<article><span class="tag">30 Plates · Z-off</span><audio controls preload="none" src="../../2026-10-21-exhibition-audio-runtime/30-z-off.wav"></audio></article>
+</div>
+</section>
+<footer><small>Technical evidence and input receipts sit beside these audio files. These materials document bounded model outputs; they do not claim human listening evaluation or exhibition readiness.</small></footer>
+</main></body></html>

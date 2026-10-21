@@ -55,6 +55,65 @@ test('AntRenderer paints equal agent marks and a cached pheromone field without 
   assert.equal(calls.filter(([name]) => name === 'remove').length, 1);
 });
 
+test('recent material readout highlights only exposed recent tops and recompiles by revision', async () => {
+  const makeSnapshot = (revision = 1) => ({ agents: [], pheromone: { width: 0, height: 0, values: [] },
+    stratigraphy: { width: 3, height: 2, revision, stratigraphy: {
+      layerOrder: Array.from({ length: 10 }, (_, index) => `plate-${index}`),
+      topLayerByCell: new Int32Array([-1, 0, 1, 2, 9, 8]),
+      layerCountByCell: new Uint16Array([0, 1, 2, 3, 4, 5])
+    } } });
+  const calls = [];
+  const renderer = new AntRenderer(makeCanvas(makeParent()), {
+    loadP5: async () => ({ default: makeP5(calls) }), materialReadout: 'recent'
+  });
+  await renderer.init({ width: 30, height: 20 });
+  const snapshot = makeSnapshot();
+  const before = structuredClone(snapshot);
+  renderer.render(snapshot);
+  const firstImage = calls.find(([name]) => name === 'createImage')[1];
+  const pixels = [...firstImage.pixels];
+  const pixel = (cell) => pixels.slice(cell * 4, cell * 4 + 4);
+  assert.deepEqual(pixel(0), [100, 100, 100, 0], 'empty cells keep baseline transparent gray');
+  assert.deepEqual(pixel(1), [100, 100, 100, 10], 'older top layers keep baseline gray');
+  assert.deepEqual(pixel(2), [100, 100, 100, 12], 'older top layers keep baseline gray');
+  assert.deepEqual(pixel(3), [194, 112, 39, 64], 'the first of the newest eight exposed tops is amber');
+  assert.deepEqual(pixel(4), [194, 112, 39, 64]);
+  assert.deepEqual(pixel(5), [194, 112, 39, 64]);
+  assert.deepEqual(snapshot, before, 'readout leaves stratigraphy history unchanged');
+
+  const sameRevision = makeSnapshot();
+  sameRevision.stratigraphy.stratigraphy.topLayerByCell[1] = 9;
+  renderer.render(sameRevision);
+  assert.equal(calls.filter(([name]) => name === 'createImage').length, 1,
+    'cached material pixels remain fixed within a revision');
+  const nextRevision = makeSnapshot(2);
+  nextRevision.stratigraphy.stratigraphy.topLayerByCell[1] = 9;
+  renderer.render(nextRevision);
+  const nextImage = calls.filter(([name]) => name === 'createImage')[1][1];
+  assert.deepEqual([...nextImage.pixels.slice(4, 8)], [194, 112, 39, 64],
+    'a new revision recompiles from its exposed top-layer indices');
+  await renderer.destroy();
+});
+
+test('baseline material readout preserves gray pixels and readout selection is immutable', async () => {
+  assert.throws(() => new AntRenderer(makeCanvas(makeParent()), { materialReadout: 'unknown' }),
+    /Unknown material readout/);
+  const calls = [];
+  const renderer = new AntRenderer(makeCanvas(makeParent()), { loadP5: async () => ({ default: makeP5(calls) }) });
+  assert.equal(renderer.materialReadout, 'baseline');
+  assert.throws(() => { renderer.materialReadout = 'recent'; }, TypeError);
+  await renderer.init({ width: 20, height: 20 });
+  renderer.render({ agents: [], pheromone: { width: 0, height: 0, values: [] },
+    stratigraphy: { width: 2, height: 2, revision: 1, stratigraphy: {
+      layerOrder: ['plate-0'], topLayerByCell: new Int32Array([-1, 0, 0, -1]),
+      layerCountByCell: new Uint16Array([0, 1, 3, 0])
+    } } });
+  const image = calls.find(([name]) => name === 'createImage')[1];
+  assert.deepEqual([...image.pixels], [100, 100, 100, 0, 100, 100, 100, 10,
+    100, 100, 100, 13, 100, 100, 100, 0]);
+  await renderer.destroy();
+});
+
 test('Plate debug overlays are opt-in and do not mutate detached snapshots', async () => {
   const calls = [];
   const canvas = makeCanvas(makeParent());

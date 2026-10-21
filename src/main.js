@@ -24,10 +24,15 @@ export function mountLab(root) {
   const query = (selector) => root.querySelector(selector);
   const audioStatus = query('#audio-status');
   const lab = new Lab({ workletBaseUrl: `${import.meta.env.BASE_URL}worklets/` });
-  const antAudioLite = new URLSearchParams(globalThis.location?.search || '').get('antAudio') === 'lite';
-  if (antAudioLite) {
+  const params = new URLSearchParams(globalThis.location?.search || '');
+  const residentValue = params.get('antResidents');
+  const antResidentLimit = residentValue === '1' || residentValue === '2' ? Number(residentValue) : null;
+  const antAudioLite = params.get('antAudio') === 'lite' && antResidentLimit === null;
+  const antRecentVisual = params.get('antVisual') === 'recent';
+  if (antAudioLite || antResidentLimit !== null) {
     const createAnt = lab.registry.ant;
-    lab.registry = { ...lab.registry, ant: (options) => createAnt({ ...options, zCouplingEnabled: false }) };
+    lab.registry = { ...lab.registry, ant: (options) => createAnt({ ...options,
+      zCouplingEnabled: antAudioLite ? false : true, residentPlateLimit: antResidentLimit }) };
   }
   const savedStates = new Map();
   const events = new AbortController();
@@ -91,7 +96,8 @@ export function mountLab(root) {
     canvas.setAttribute('aria-label', item.hint);
     canvas.textContent = item.canvasDescription || '그림을 누르거나 키보드로 물리 모델을 연주하세요.';
     query('#scene').append(canvas);
-    const mountedRenderer = renderer = new item.Renderer(canvas);
+    const mountedRenderer = renderer = new item.Renderer(canvas,
+      name === 'ant' && antRecentVisual ? { materialReadout: 'recent' } : undefined);
     if (mountedRenderer.init) {
       const ready = await mountedRenderer.init(canvasSize(query('#scene')));
       if (ready === false || disposed || version !== selectionVersion || renderer !== mountedRenderer) return false;
@@ -352,11 +358,22 @@ export function mountLab(root) {
       query('#model-title').textContent = definition.title;
       const description = query('#model-description');
       if (description) description.textContent = definition.description;
-      if (name === 'ant' && antAudioLite) {
+      if (name === 'ant' && antResidentLimit !== null) {
+        const mode = document.createElement('p');
+        mode.id = 'ant-audio-mode-label';
+        mode.textContent = `Exhibition prototype · newest ${antResidentLimit} acoustic Plate${antResidentLimit === 1 ? '' : 's'} · resident Z / foundation Spheres retained; retired vibration omitted`;
+        (description || query('#model-title'))?.after(mode);
+      } else if (name === 'ant' && antAudioLite) {
         const mode = document.createElement('p');
         mode.id = 'ant-audio-mode-label';
         mode.textContent = 'Audio Lite prototype · Z Off · Sphere coupling retained';
-        description?.after(mode);
+        (description || query('#model-title'))?.after(mode);
+      }
+      if (name === 'ant' && antRecentVisual) {
+        const mode = document.createElement('p');
+        mode.id = 'ant-visual-mode-label';
+        mode.textContent = 'Visual prototype · amber = newest 8 exposed material layers · older/history retained';
+        (description || query('#model-title'))?.after(mode);
       }
       const hint = query('#interaction-hint');
       if (hint) hint.textContent = definition.hint;

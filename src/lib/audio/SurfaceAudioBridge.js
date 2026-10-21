@@ -9,19 +9,28 @@ const GRID_SIZE = 96;
 
 /** ANT trail surfaces share one stereo worklet and the application's AudioEngine. */
 export class SurfaceAudioBridge {
-  constructor({ audioEngine, workletBaseUrl = '/worklets/', workletFactory, zCouplingEnabled = true } = {}) {
+  constructor({ audioEngine, workletBaseUrl = '/worklets/', workletFactory, zCouplingEnabled = true,
+    residentPlateLimit = null } = {}) {
     if (!audioEngine) throw new TypeError('SurfaceAudioBridge requires the shared AudioEngine.');
     if (typeof zCouplingEnabled !== 'boolean') throw new TypeError('zCouplingEnabled must be a boolean.');
+    if (residentPlateLimit !== null && (!Number.isSafeInteger(residentPlateLimit)
+      || residentPlateLimit < 1 || residentPlateLimit > MAX_LAYERS)) {
+      throw new RangeError(`residentPlateLimit must be null or an integer from 1 to ${MAX_LAYERS}.`);
+    }
     this.audioEngine = audioEngine;
     this.workletBaseUrl = `${String(workletBaseUrl).replace(/\/?$/, '/')}`;
     this.workletFactory = workletFactory;
     Object.defineProperty(this, 'zCouplingEnabled', { value: zCouplingEnabled, enumerable: true });
+    Object.defineProperty(this, 'residentPlateLimit', { value: residentPlateLimit, enumerable: true });
     this.worklet = null;
     this.plates = new Map();
     this.topology = null;
     this.routingTopLayerByCell96 = null;
+    this.fullLayerOrder = null;
+    this.fullTopLayerByCell96 = null;
     this.topologyGeneration = 0;
     this.materialRevision = null;
+    this.noduleHistoryCount = 0;
     this._enabled = false;
     this._loading = false;
     this._error = null;
@@ -32,11 +41,14 @@ export class SurfaceAudioBridge {
     this.cleanupPromise = null;
     this.processorDiagnostics = null;
     this.diagnosticsWallStartMs = null;
+    this.topologyCompileWallMs = 0;
+    this.topologyCompileWallMsMax = 0;
+    this.topologyCompileCount = 0;
     this.diagnostics = {
       births: 0, routedFootEvents: 0, routedFeet: 0, strikeRoutes: 0,
       supportedFeet: 0, unsupportedFeet: 0, directExposedStrikes: 0,
       injectedImpulseEnergy: 0, events: 0, unroutedContacts: 0,
-      capacityRejectedLayers: 0, ignoredWhileDisabled: 0, dropped: 0, processorErrors: 0
+      capacityRejectedLayers: 0, ignoredWhileDisabled: 0, omittedResidentRouteFeet: 0, dropped: 0, processorErrors: 0
     };
   }
 
@@ -94,9 +106,12 @@ export class SurfaceAudioBridge {
     if (!validMaterialSnapshot(snapshot)) return false;
     const revision = `${snapshot.stratigraphy.revision ?? snapshot.revision}:${snapshot.noduleRevision ?? snapshot.stratigraphy.revision}`;
     const added = this.storePlates(snapshot.plates);
+    this.noduleHistoryCount = snapshot.nodules?.length || 0;
     if (revision === this.materialRevision && this.topology && !added) return true;
     const plates = [...this.plates.values()];
     if (!this.compileTopology({ plates, nodules: snapshot.nodules || [], stratigraphy: snapshot.stratigraphy })) return false;
+    this.fullLayerOrder = snapshot.stratigraphy.layerOrder || plates.map((plate) => plate.id);
+    this.fullTopLayerByCell96 = snapshot.stratigraphy.topLayerByCell;
     this.materialRevision = revision;
     if (this.worklet && !this._loading) this.post('topology', { ...this.topology, maxLayers: MAX_LAYERS });
     return true;
@@ -104,12 +119,19 @@ export class SurfaceAudioBridge {
 
   compileTopology({ plates = [...this.plates.values()], nodules = [], stratigraphy = null } = {}) {
     let compiled;
+    const started = monotonicNowMs();
     try {
-      compiled = compileSurfaceTopology({ plates, nodules, stratigraphy,
+      const residents = this.residentSelection(plates, nodules, stratigraphy);
+      compiled = compileSurfaceTopology({ plates: residents.plates, nodules: residents.nodules, stratigraphy: residents.stratigraphy,
         generation: ++this.topologyGeneration, maxLayers: MAX_LAYERS, zCouplingEnabled: this.zCouplingEnabled });
     } catch {
       this.diagnostics.dropped += 1;
       return false;
+    } finally {
+      const elapsed = Math.max(0, monotonicNowMs() - started);
+      this.topologyCompileWallMs += elapsed;
+      this.topologyCompileWallMsMax = Math.max(this.topologyCompileWallMsMax, elapsed);
+      this.topologyCompileCount += 1;
     }
     if (!validCompiledTopology(compiled, plates)) {
       this.diagnostics.dropped += 1;
@@ -118,6 +140,41 @@ export class SurfaceAudioBridge {
     this.topology = compiled;
     this.routingTopLayerByCell96 = compiled.routingTopLayerByCell96;
     return true;
+  }
+
+  residentSelection(plates, nodules, stratigraphy) {
+    if (this.residentPlateLimit === null) return { plates, nodules, stratigraphy };
+    const byId = new Map(plates.map((plate) => [plate.id, plate]));
+    if (byId.size !== plates.length) throw new TypeError('Resident selection requires unique Plate IDs.');
+    const layerOrder = stratigraphy?.layerOrder ?? plates.map((plate) => plate.id);
+    if (!Array.isArray(layerOrder) || layerOrder.length !== plates.length
+      || new Set(layerOrder).size !== layerOrder.length || layerOrder.some((id) => !byId.has(id))) {
+      throw new TypeError('Resident selection requires a complete birth-order list of stored Plates.');
+    }
+    const declaredTop = stratigraphy?.topLayerByCell;
+    if (declaredTop !== undefined && (!(Array.isArray(declaredTop) || ArrayBuffer.isView(declaredTop))
+      || declaredTop.length !== GRID_SIZE ** 2 || Array.from(declaredTop).some((layer) =>
+        !Number.isInteger(layer) || layer < -1 || layer >= layerOrder.length))) {
+      throw new TypeError('Resident selection requires a valid 96x96 full-world top-layer lookup.');
+    }
+    const firstResident = Math.max(0, layerOrder.length - this.residentPlateLimit);
+    const residentIds = layerOrder.slice(firstResident);
+    const residents = residentIds.map((id) => byId.get(id)).filter(Boolean);
+    let topLayerByCell;
+    if (declaredTop !== undefined) {
+      topLayerByCell = new Int16Array(declaredTop.length).fill(-1);
+      for (let cell = 0; cell < topLayerByCell.length; cell += 1) {
+        const layer = declaredTop[cell];
+        if (layer >= firstResident) topLayerByCell[cell] = layer - firstResident;
+      }
+    }
+    const residentSet = new Set(residentIds);
+    const residentNodules = nodules.filter((nodule) => residentSet.has(
+      nodule.coupling?.plateId ?? nodule.burying?.foundationPlateId ?? nodule.sourcePlateIDs?.[0]));
+    return { plates: residents, nodules: residentNodules, stratigraphy: stratigraphy
+      ? { version: stratigraphy.version, revision: stratigraphy.revision, layerOrder: residentIds,
+        ...(topLayerByCell ? { topLayerByCell } : {}) }
+      : null };
   }
 
   /** Invoke directly from the explicit Audio On gesture. Historical contacts are never replayed. */
@@ -190,9 +247,11 @@ export class SurfaceAudioBridge {
       const radius = clamp(Number(response.footprintRadius), 0.009, 0.014);
       if (!Number.isFinite(transfer) || !Number.isFinite(radius)) continue;
       const plate = this.exposedPlateAt(response.position);
+      const fullPlate = this.fullExposedPlateAt(response.position);
+      if (this.residentPlateLimit !== null && fullPlate && !plate) this.diagnostics.omittedResidentRouteFeet += 1;
       if (plate) this.diagnostics.supportedFeet += 1;
       else this.diagnostics.unsupportedFeet += 1;
-      feet.push({ response, transfer, radius, matching: plate ? [plate] : [] });
+      feet.push({ response, transfer, radius, matching: plate ? [plate] : [], fullMatching: fullPlate ? [fullPlate] : [] });
     }
     const routes = feet.flatMap((foot) => foot.matching.map((plate) => ({ ...foot, plate })));
     if (!routes.length) {
@@ -204,8 +263,8 @@ export class SurfaceAudioBridge {
       return false;
     }
     // L2-normalize only across exposed routes. Unsupported feet retain their share.
-    const norm = Math.sqrt(routes.reduce((sum, route) => sum
-      + (route.transfer / Math.sqrt(route.matching.length)) ** 2, 0));
+    const norm = Math.sqrt(feet.reduce((sum, foot) => sum + (foot.fullMatching.length
+      ? (foot.transfer / Math.sqrt(foot.fullMatching.length)) ** 2 : 0), 0));
     const maxNorm = Math.sqrt(feet.length);
     const scale = Math.min(1, maxNorm / norm);
     const perFootBase = groupStrength / Math.sqrt(feet.length);
@@ -248,6 +307,21 @@ export class SurfaceAudioBridge {
     return null;
   }
 
+  fullExposedPlateAt(position) {
+    if (this.residentPlateLimit === null) return this.exposedPlateAt(position);
+    if (!this.fullLayerOrder || !this.fullTopLayerByCell96) {
+      const plates = [...this.plates.values()];
+      for (let index = plates.length - 1; index >= 0; index -= 1) {
+        if (containsPoint(plates[index], position)) return plates[index];
+      }
+      return null;
+    }
+    const x = Math.max(0, Math.min(GRID_SIZE - 1, Math.round(position.x * (GRID_SIZE - 1))));
+    const y = Math.max(0, Math.min(GRID_SIZE - 1, Math.round(position.y * (GRID_SIZE - 1))));
+    const plate = this.plates.get(this.fullLayerOrder[this.fullTopLayerByCell96[y * GRID_SIZE + x]]);
+    return plate && containsPoint(plate, position) ? plate : null;
+  }
+
   requestDiagnostics() {
     if (!this._enabled || this._loading || !this.worklet || this.destroyed) return false;
     this.post('diagnostics');
@@ -263,7 +337,18 @@ export class SurfaceAudioBridge {
     const audioWallRatio = renderedSeconds !== null && wallSeconds > 0
       ? renderedSeconds / wallSeconds : null;
     return {
-      bridge: { ...this.diagnostics, zCouplingEnabled: this.zCouplingEnabled },
+      bridge: { ...this.diagnostics, zCouplingEnabled: this.zCouplingEnabled,
+        residency: { enabled: this.residentPlateLimit !== null, limit: this.residentPlateLimit,
+          residentPlateCount: this.topology?.layerIds?.length ?? 0, plateHistoryCount: this.plates.size,
+          retiredPlateCount: Math.max(0, this.plates.size - (this.topology?.layerIds?.length ?? 0)),
+          residentNodeCount: this.topology?.nodeOffsets?.[this.topology.layerIds.length] ?? 0,
+          residentNoduleCount: this.topology?.noduleIds?.length ?? 0,
+          residentNoduleDofCount: (this.topology?.noduleIds?.length ?? 0) * 12,
+          noduleHistoryCount: this.noduleHistoryCount,
+          retiredNoduleCount: Math.max(0, this.noduleHistoryCount - (this.topology?.noduleIds?.length ?? 0)),
+          topologyCompileCount: this.topologyCompileCount,
+          topologyCompileWallMs: this.topologyCompileWallMs,
+          topologyCompileWallMsMax: this.topologyCompileWallMsMax } },
       processor,
       wallSeconds,
       renderedSeconds,
@@ -311,7 +396,10 @@ export class SurfaceAudioBridge {
     this.plates.clear();
     this.topology = null;
     this.routingTopLayerByCell96 = null;
+    this.fullLayerOrder = null;
+    this.fullTopLayerByCell96 = null;
     this.materialRevision = null;
+    this.noduleHistoryCount = 0;
   }
 }
 

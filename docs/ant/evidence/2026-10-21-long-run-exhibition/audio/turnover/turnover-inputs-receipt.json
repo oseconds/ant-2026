@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "artifact": "docs/ant/evidence/2026-10-21-long-run-exhibition/audio/turnover/turnover-inputs.v8.gz",
+  "sha256": "2036ee98ad3dd69e6749ce570176dd967caeb8731a0a3bf7af1c1b4bb6a16377",
+  "bytes": 231705,
+  "captureSha256": "cb8929de9d166e6e41057549a927c14181ec9202468833e1fab08a835eba4ee2",
+  "snapshotSha256": "8473b23019d4d53d57352b5d0500916d56f861be016d6a52cd5eeb88714c5bc8",
+  "snapshotManifestSha256": "4b5182e66a1e08d8d7849d3d33c2a94658850a3cba153efc78fe4d9961bbaf52",
+  "naturalStrikes": 1503,
+  "boundary": {
+    "frame": 480000,
+    "absoluteFrame": 14496800,
+    "simulationTimeMs": 302016.6666666521,
+    "tick": 18121,
+    "layerIds": [
+      "trail-plate-1",
+      "trail-plate-2",
+      "trail-plate-3",
+      "trail-plate-4",
+      "trail-plate-5",
+      "trail-plate-6",
+      "trail-plate-7",
+      "trail-plate-8",
+      "trail-plate-9"
+    ],
+    "generation": 11,
+    "revision": 10,
+    "revisionBasis": "inferred as captured full-8 material revision plus the Plate-9 birth; only metadata, not DSP input",
+    "sameFrameNaturalStrikes": 0,
+    "ordering": "At the boundary, any same-frame captured strikes use pre-birth [7,8] routing and dispatch before the topology install."
+  },
+  "topologyParity": {
+    "reconstructedParent8": "exact",
+    "initialResident78": "exact projected/compiler parity",
+    "turnoverResident89": "exact projected/compiler parity",
+    "controlResident789": "exact projected/compiler parity"
+  },
+  "conditions": [
+    {
+      "id": "retire-7",
+      "initial": [
+        "trail-plate-7",
+        "trail-plate-8"
+      ],
+      "after": [
+        "trail-plate-8",
+        "trail-plate-9"
+      ],
+      "routeSelection": {
+        "inputNaturalStrikes": 1503,
+        "commonExcluded": {
+          "malformed": 0,
+          "staleOrMismatched": 0
+        },
+        "nonresident": {
+          "before": 578,
+          "after": 84
+        },
+        "conditionRouteMismatch": {
+          "before": 0,
+          "after": 0
+        },
+        "scheduledStrikes": 841,
+        "expectedProcessorDroppedRoutes": 0,
+        "policy": "preserve valid captured strike payloads and sequence; omit nonresident routes; do not synthesize or retarget contacts"
+      }
+    },
+    {
+      "id": "retain-7-control",
+      "initial": [
+        "trail-plate-7",
+        "trail-plate-8"
+      ],
+      "after": [
+        "trail-plate-7",
+        "trail-plate-8",
+        "trail-plate-9"
+      ],
+      "routeSelection": {
+        "inputNaturalStrikes": 1503,
+        "commonExcluded": {
+          "malformed": 0,
+          "staleOrMismatched": 0
+        },
+        "nonresident": {
+          "before": 578,
+          "after": 70
+        },
+        "conditionRouteMismatch": {
+          "before": 0,
+          "after": 0
+        },
+        "scheduledStrikes": 855,
+        "expectedProcessorDroppedRoutes": 0,
+        "policy": "preserve valid captured strike payloads and sequence; omit nonresident routes; do not synthesize or retarget contacts"
+      }
+    }
+  ]
+}

@@ -1,0 +1,319 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-21T04:29:41.721Z",
+  "browser": "155.0.8059.85",
+  "node": "v22.23.2",
+  "sampleRate": 48000,
+  "frames": 576000,
+  "gain": "Raw worklet output at its existing fixed mix; no normalization or additional gain.",
+  "audioState": "Cold 12 s solver replay from the recorded natural strike stream; the ANT world itself is unchanged and is not replayed by this harness.",
+  "source": {
+    "worklet": "static/worklets/surface-plate.worklet.js",
+    "sha256": "f0a0d9262988b1ad46772bf4027ae1a5892da6ce004e8573f4d20cee20ae7b69"
+  },
+  "inputSha256": "2036ee98ad3dd69e6749ce570176dd967caeb8731a0a3bf7af1c1b4bb6a16377",
+  "boundary": {
+    "frame": 480000,
+    "absoluteFrame": 14496800,
+    "simulationTimeMs": 302016.6666666521,
+    "tick": 18121,
+    "layerIds": [
+      "trail-plate-1",
+      "trail-plate-2",
+      "trail-plate-3",
+      "trail-plate-4",
+      "trail-plate-5",
+      "trail-plate-6",
+      "trail-plate-7",
+      "trail-plate-8",
+      "trail-plate-9"
+    ],
+    "generation": 11,
+    "revision": 10,
+    "revisionBasis": "inferred as captured full-8 material revision plus the Plate-9 birth; only metadata, not DSP input",
+    "sameFrameNaturalStrikes": 0,
+    "ordering": "At the boundary, any same-frame captured strikes use pre-birth [7,8] routing and dispatch before the topology install."
+  },
+  "orderingAssumption": "Natural topology payload was reduced to metadata in capture. Birth install is placed at its rounded sample frame after any same-frame strike payloads. Capture contains zero strikes on that exact frame; original controller foot-before-birth ordering is therefore a reconstruction assumption with no same-frame PCM effect in this window.",
+  "interpretationLimit": "PCM and solver-state measurements only; no human clarity, audibility, preference or production fade claim.",
+  "conditions": [
+    {
+      "id": "retire-7",
+      "topologyAtStart": [
+        "trail-plate-7",
+        "trail-plate-8"
+      ],
+      "topologyAfterBirth": [
+        "trail-plate-8",
+        "trail-plate-9"
+      ],
+      "routeSelection": {
+        "inputNaturalStrikes": 1503,
+        "commonExcluded": {
+          "malformed": 0,
+          "staleOrMismatched": 0
+        },
+        "nonresident": {
+          "before": 578,
+          "after": 84
+        },
+        "conditionRouteMismatch": {
+          "before": 0,
+          "after": 0
+        },
+        "scheduledStrikes": 841,
+        "expectedProcessorDroppedRoutes": 0,
+        "policy": "preserve valid captured strike payloads and sequence; omit nonresident routes; do not synthesize or retarget contacts"
+      },
+      "sourceSha256": "f0a0d9262988b1ad46772bf4027ae1a5892da6ce004e8573f4d20cee20ae7b69",
+      "pcmSha256": "a4f94896735fdcc66fee2aa45b2ec8032fa784007f177fe24c7c824d4b9b48c3",
+      "wavPath": "docs/ant/evidence/2026-10-21-long-run-exhibition/audio/turnover/retire-7.wav",
+      "excerptPath": "docs/ant/evidence/2026-10-21-long-run-exhibition/audio/turnover/retire-7-turnover-window.wav",
+      "metrics": {
+        "finiteSamples": 1152000,
+        "sampleCount": 1152000,
+        "nonFiniteSamples": 0,
+        "peak": 0.1282685399055481,
+        "rms": 0.025302407872595904,
+        "preTurnoverRms": 0.02507560904238893,
+        "postTurnoverRms": 0.02640720016725758,
+        "edgeDelta": {
+          "frame": 480000,
+          "left": -0.0003991890698671341,
+          "right": 0.000019454557332210243,
+          "maxAbs": 0.0003991890698671341
+        },
+        "preceding500msAdjacentDelta": {
+          "p50": 0.00022855820134282112,
+          "p95": 0.0006631501019001007,
+          "p99": 0.0008566286414861679,
+          "max": 0.0010666456073522568
+        }
+      },
+      "diagnostics": {
+        "topologies": 2,
+        "strikes": 841,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 1155,
+        "sleeps": 0,
+        "truncatedTailEnergy": 0,
+        "physicsSteps": 72000,
+        "energyDelta": 0.008082383355556444,
+        "couplingWorkProxy": 0.0089314377961089,
+        "deepPlateCouplingTransfers": 26934739,
+        "sphereCouplingTransfers": 0,
+        "maxOutputAbs": 0.1471422726903524,
+        "requestedContactImpulseSquared": 0.2853420706289866,
+        "compliantContactImpulseSquared": 0.2694107687031032,
+        "contactPulseNodeSteps": 108822,
+        "contactAttenuatedNodeContributions": 8157,
+        "activeSphereModes": 0,
+        "layers": 2,
+        "activeNodes": 596,
+        "awakeLayers": 2,
+        "sleepingLayers": 0,
+        "physicsRate": 6000,
+        "topologyGeneration": 11,
+        "couplingLinks": 214,
+        "noduleCount": 0,
+        "integratedSphereModes": 0,
+        "mix": 0.2886751345948129,
+        "platePickupMix": 1,
+        "sphereModeMix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000,
+        "contactPulseDurationMs": 3,
+        "contactPulseSteps": 18,
+        "contactRecoveryTimeMs": 75,
+        "contactReferenceDeltaV": 0.02,
+        "contactMaximumComplianceLoss": 0.25
+      },
+      "installObservation": {
+        "frame": 480000,
+        "oldLayerIds": [
+          "trail-plate-7",
+          "trail-plate-8"
+        ],
+        "newLayerIds": [
+          "trail-plate-8",
+          "trail-plate-9"
+        ],
+        "retiredPlatePresent": true,
+        "retiredPlateId": "trail-plate-7",
+        "nodeCount": 240,
+        "energyProxy": {
+          "kinetic": 0.00007078957300592505,
+          "bending": 0.00010199440691697584,
+          "inPlateTension": 4.729293581621639e-7,
+          "incidentZSpring": 0.000003368151416136405,
+          "total": 0.00017662506069719943,
+          "definition": "state-energy proxy in solver units; same kinetic, discrete bending/tension and incident Z-spring terms as the scaling evidence observer, not joules"
+        },
+        "pendingContactPulse": {
+          "nonzeroNodeSlots": 0,
+          "nodesWithQueuedSlots": 0,
+          "absoluteForceSum": 0,
+          "forceL2": 0,
+          "peakAbsForce": 0,
+          "queuedSlotCount": 18
+        },
+        "recentContactMemory": {
+          "nodes": 104,
+          "sum": 13.288821747679435,
+          "peak": 0.8922833204269409,
+          "definition": "worklet 75 ms local contact recovery state; separate from queued 3 ms pulse"
+        },
+        "incidentZLinks": 182
+      },
+      "wavSha256": "a270d8bfa0f5118766aff81787147639e0cf78a1a5488c03e2f0683c20847171",
+      "excerptSha256": "89fbeaf45e2d88cbc14896538ee0ec499562d40b0171b21a102bf9997e875141"
+    },
+    {
+      "id": "retain-7-control",
+      "topologyAtStart": [
+        "trail-plate-7",
+        "trail-plate-8"
+      ],
+      "topologyAfterBirth": [
+        "trail-plate-7",
+        "trail-plate-8",
+        "trail-plate-9"
+      ],
+      "routeSelection": {
+        "inputNaturalStrikes": 1503,
+        "commonExcluded": {
+          "malformed": 0,
+          "staleOrMismatched": 0
+        },
+        "nonresident": {
+          "before": 578,
+          "after": 70
+        },
+        "conditionRouteMismatch": {
+          "before": 0,
+          "after": 0
+        },
+        "scheduledStrikes": 855,
+        "expectedProcessorDroppedRoutes": 0,
+        "policy": "preserve valid captured strike payloads and sequence; omit nonresident routes; do not synthesize or retarget contacts"
+      },
+      "sourceSha256": "f0a0d9262988b1ad46772bf4027ae1a5892da6ce004e8573f4d20cee20ae7b69",
+      "pcmSha256": "54f0ad869d2fc135655a4f27a290f21919b0882c0d873f79367a1004d234064d",
+      "wavPath": "docs/ant/evidence/2026-10-21-long-run-exhibition/audio/turnover/retain-7-control.wav",
+      "excerptPath": "docs/ant/evidence/2026-10-21-long-run-exhibition/audio/turnover/retain-7-control-turnover-window.wav",
+      "metrics": {
+        "finiteSamples": 1152000,
+        "sampleCount": 1152000,
+        "nonFiniteSamples": 0,
+        "peak": 0.1282685399055481,
+        "rms": 0.025360793440719374,
+        "preTurnoverRms": 0.02507560904238893,
+        "postTurnoverRms": 0.026741133473047123,
+        "edgeDelta": {
+          "frame": 480000,
+          "left": -0.0003991890698671341,
+          "right": 0.000019454557332210243,
+          "maxAbs": 0.0003991890698671341
+        },
+        "preceding500msAdjacentDelta": {
+          "p50": 0.00022855820134282112,
+          "p95": 0.0006631501019001007,
+          "p99": 0.0008566286414861679,
+          "max": 0.0010666456073522568
+        }
+      },
+      "diagnostics": {
+        "topologies": 2,
+        "strikes": 855,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "clipped": 0,
+        "wakes": 1395,
+        "sleeps": 0,
+        "truncatedTailEnergy": 0,
+        "physicsSteps": 72000,
+        "energyDelta": 0.007983046040329456,
+        "couplingWorkProxy": 0.009651000603146553,
+        "deepPlateCouplingTransfers": 32190661,
+        "sphereCouplingTransfers": 0,
+        "maxOutputAbs": 0.1471422726903524,
+        "requestedContactImpulseSquared": 0.28984807756941344,
+        "compliantContactImpulseSquared": 0.27388376051992946,
+        "contactPulseNodeSteps": 110712,
+        "contactAttenuatedNodeContributions": 8245,
+        "activeSphereModes": 0,
+        "layers": 3,
+        "activeNodes": 836,
+        "awakeLayers": 3,
+        "sleepingLayers": 0,
+        "physicsRate": 6000,
+        "topologyGeneration": 11,
+        "couplingLinks": 433,
+        "noduleCount": 0,
+        "integratedSphereModes": 0,
+        "mix": 0.2886751345948129,
+        "platePickupMix": 1,
+        "sphereModeMix": 0.2886751345948129,
+        "truncatedTailRiskThreshold": 1e-10,
+        "quietStepsThreshold": 12000,
+        "contactPulseDurationMs": 3,
+        "contactPulseSteps": 18,
+        "contactRecoveryTimeMs": 75,
+        "contactReferenceDeltaV": 0.02,
+        "contactMaximumComplianceLoss": 0.25
+      },
+      "installObservation": {
+        "frame": 480000,
+        "oldLayerIds": [
+          "trail-plate-7",
+          "trail-plate-8"
+        ],
+        "newLayerIds": [
+          "trail-plate-7",
+          "trail-plate-8",
+          "trail-plate-9"
+        ],
+        "retiredPlatePresent": false,
+        "retiredPlateId": "trail-plate-7",
+        "nodeCount": 240,
+        "energyProxy": {
+          "kinetic": 0.00007078957300592505,
+          "bending": 0.00010199440691697584,
+          "inPlateTension": 4.729293581621639e-7,
+          "incidentZSpring": 0.000003368151416136405,
+          "total": 0.00017662506069719943,
+          "definition": "state-energy proxy in solver units; same kinetic, discrete bending/tension and incident Z-spring terms as the scaling evidence observer, not joules"
+        },
+        "pendingContactPulse": {
+          "nonzeroNodeSlots": 0,
+          "nodesWithQueuedSlots": 0,
+          "absoluteForceSum": 0,
+          "forceL2": 0,
+          "peakAbsForce": 0,
+          "queuedSlotCount": 18
+        },
+        "recentContactMemory": {
+          "nodes": 104,
+          "sum": 13.288821747679435,
+          "peak": 0.8922833204269409,
+          "definition": "worklet 75 ms local contact recovery state; separate from queued 3 ms pulse"
+        },
+        "incidentZLinks": 182
+      },
+      "wavSha256": "5a007c273eb163fd7009fa2c4c367d0e793ef24fac7da373e0c2539c3804aa56",
+      "excerptSha256": "e78f993d5b8363ae47c1b0e8bd2e63ed344c4f48b9f9dd4fd18b9c9ef6c2cc41"
+    }
+  ],
+  "differential": {
+    "firstDifferentFrame": 480007,
+    "anchorFrame": 480000,
+    "prefixBitExact": true,
+    "maxAbs": 0.021121334517374635,
+    "rms": 0.001961408471339684,
+    "differenceEnergyRatioPostAnchor": 0.03227956848075526
+  }
+}

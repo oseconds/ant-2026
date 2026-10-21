@@ -73,3 +73,19 @@ docs/ant/evidence/2026-10-21-exhibition-audio-runtime/**/*.json text eol=lf
 docs/ant/evidence/2026-10-21-exhibition-audio-runtime/**/*.wav binary
 docs/ant/evidence/2026-10-21-exhibition-audio-runtime/**/*.png binary
 docs/ant/evidence/2026-10-21-exhibition-audio-runtime/*.gz binary
+
+# Preserve the long-run exhibition captures and source receipts byte-for-byte.
+src/main.js text eol=crlf
+src/lib/audio/SurfaceAudioBridge.js text eol=crlf
+# This small file had mixed endings when the Chrome source receipt was taken.
+src/lib/lab/modelRegistry.js -text whitespace=cr-at-eol
+src/lib/renderers/AntRenderer.js text eol=crlf
+tests/ant-renderer.test.js text eol=crlf
+tests/surface-audio-bridge.test.js text eol=lf
+tests/surface-plate-worklet.test.js text eol=lf
+scripts/verify-ant-long-run-exhibition.js text eol=lf
+docs/ant/evidence/2026-10-21-long-run-exhibition/** text eol=lf
+docs/ant/evidence/2026-10-21-long-run-exhibition/**/*.gz binary
+docs/ant/evidence/2026-10-21-long-run-exhibition/**/*.wav binary
+docs/ant/evidence/2026-10-21-long-run-exhibition/**/*.png binary
+docs/ant/daily/2026-10-21-long-run-exhibition.md text eol=lf

@@ -10,7 +10,7 @@ import { filterStrikeEvents } from './ant-exhibition-excitation.js';
 import { forceCacheSource, transformSleepForceCache, instrumentSleepForceWork } from './ant-exhibition-force-cache.js';
 import { encodeStereoFloatWav, sha256 } from './ant-sonic-shadow-render.js';
 
-const DIR = 'docs/ant/evidence/2026-10-21-exhibition-audio-runtime';
+const DIR = process.env.ANT_EVIDENCE_DIR || 'docs/ant/evidence/2026-10-21-exhibition-audio-runtime';
 const inputPath = process.argv[2] || `${DIR}/capture-inputs.v8.gz`;
 const selected = process.env.ANT_VARIANTS?.split(',') || ['full', 'fast-wake', 'dense-lap', 'z-off', 'plate-gate', 'cell-gate'];
 assert.ok(selected.every(id=>['full','fast-wake','dense-lap','force-cache','plate-cache','sphere-cache',

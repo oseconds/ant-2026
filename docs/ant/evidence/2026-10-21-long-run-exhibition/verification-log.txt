@@ -1,0 +1,437 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-21T04:49:46.111Z",
+  "evidence": "docs\\ant\\evidence\\2026-10-21-long-run-exhibition",
+  "summary": {
+    "checks": 16,
+    "passed": 16,
+    "failed": 0,
+    "findings": 1,
+    "visualSnapshots": 14,
+    "sharedPrefixSnapshots": 6,
+    "stillArtifacts": 32,
+    "runtimeIncluded": true,
+    "twoHourRuntimeClaim": false
+  },
+  "runtime": {
+    "status": "interrupted",
+    "elapsedSeconds": 1080.2961999999882,
+    "samples": 36,
+    "continuousAudio": true,
+    "noNonFiniteOrDrops": true,
+    "complete2h": false,
+    "endMatchesHeartbeat": true,
+    "worldReceiptsOk": true,
+    "continuity": {
+      "status": "verified",
+      "checkpoints": [
+        {
+          "checkpointSeconds": 0,
+          "file": "world-0000.json.gz",
+          "simulationTimeMs": 516666.66666690196,
+          "plateCount": 30,
+          "historyCount": 30
+        },
+        {
+          "checkpointSeconds": 900,
+          "file": "world-0900.json.gz",
+          "simulationTimeMs": 1416966.6666674055,
+          "plateCount": 102,
+          "historyCount": 102
+        },
+        {
+          "checkpointSeconds": 1080,
+          "file": "world-final.json.gz",
+          "simulationTimeMs": 1596900.0000015767,
+          "plateCount": 112,
+          "historyCount": 112
+        }
+      ],
+      "initialPlatePrefixExact": true,
+      "monotonicTimeAndCounts": true,
+      "initialPlateDescriptors": 30,
+      "initialLayerOrderPrefixLength": 30,
+      "finalLayerOrderLength": 112,
+      "rngParityClaimed": false
+    }
+  },
+  "captureSourceComparison": {
+    "visual": {
+      "src/lib/agents/ant/AntController.js": {
+        "captured": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+        "current": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+        "matches": true
+      },
+      "src/lib/agents/ant/AntAgent.js": {
+        "captured": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+        "current": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+        "matches": true
+      },
+      "src/lib/agents/ant/TrailPlateBirth.js": {
+        "captured": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+        "current": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+        "matches": true
+      },
+      "src/lib/agents/ant/MaterialStratigraphy.js": {
+        "captured": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+        "current": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+        "matches": true
+      },
+      "src/lib/agents/ant/PheromoneField.js": {
+        "captured": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+        "current": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+        "matches": true
+      },
+      "src/lib/agents/ant/SurfaceField.js": {
+        "captured": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+        "current": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+        "matches": true
+      },
+      "src/lib/renderers/AntRenderer.js": {
+        "captured": "36f76459cc5323b846e04b8bced95b19a4d382c645303dbb9b49aa1050354566",
+        "current": "8e5190243144a5ac03fadb319e154209a1c266376a45c6094e454c00f69527b1",
+        "matches": false
+      },
+      "scripts/ant-exhibition-long-visual.js": {
+        "captured": "7c3d7769c8e9c7dd8de147e8b9912380a7546f9f86f6cca4e92608a33f9a32c8",
+        "current": "e4535183a91d0e9965503dc6b91a98bb1da2b38a6aee1d4192528fb167203073",
+        "matches": false
+      }
+    },
+    "capacity1024": {
+      "src/lib/agents/ant/AntController.js": {
+        "captured": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+        "current": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+        "matches": true
+      },
+      "src/lib/agents/ant/AntAgent.js": {
+        "captured": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+        "current": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+        "matches": true
+      },
+      "src/lib/agents/ant/TrailPlateBirth.js": {
+        "captured": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+        "current": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+        "matches": true
+      },
+      "src/lib/agents/ant/MaterialStratigraphy.js": {
+        "captured": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+        "current": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+        "matches": true
+      },
+      "src/lib/agents/ant/PheromoneField.js": {
+        "captured": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+        "current": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+        "matches": true
+      },
+      "src/lib/agents/ant/SurfaceField.js": {
+        "captured": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+        "current": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+        "matches": true
+      },
+      "src/lib/renderers/AntRenderer.js": {
+        "captured": "36f76459cc5323b846e04b8bced95b19a4d382c645303dbb9b49aa1050354566",
+        "current": "8e5190243144a5ac03fadb319e154209a1c266376a45c6094e454c00f69527b1",
+        "matches": false
+      },
+      "scripts/ant-exhibition-long-visual.js": {
+        "captured": "cc985f4f7f2c0cd55b1845e0b97c4373aa17980509b07fa7b282ba29a437e2ce",
+        "current": "e4535183a91d0e9965503dc6b91a98bb1da2b38a6aee1d4192528fb167203073",
+        "matches": false
+      }
+    }
+  },
+  "checks": [
+    {
+      "name": "visual manifest and snapshot SHA/size",
+      "ok": true,
+      "actualTicks": 432000,
+      "actualSeconds": 7200,
+      "snapshotCount": 7,
+      "hashesVerified": 7,
+      "sourceCommit": "aea6601f6fc5c4d241fae7376f0f6cd59d11101f"
+    },
+    {
+      "name": "visual-capacity-1024 manifest and snapshot SHA/size",
+      "ok": true,
+      "actualTicks": 432000,
+      "actualSeconds": 7200,
+      "snapshotCount": 7,
+      "hashesVerified": 7,
+      "sourceCommit": "aea6601f6fc5c4d241fae7376f0f6cd59d11101f"
+    },
+    {
+      "name": "six shared full snapshots byte-identical",
+      "ok": true,
+      "seconds": [
+        0,
+        60,
+        300,
+        900,
+        1800,
+        3600
+      ]
+    },
+    {
+      "name": "first 256 Plate descriptors at baseline cap match shadow",
+      "ok": true,
+      "baselinePlateDescriptors": 256,
+      "shadowPlateDescriptors": 474,
+      "compared": 256
+    },
+    {
+      "name": "baseline cap reached and stopped material formation",
+      "ok": true,
+      "capTick": 228887,
+      "capSeconds": 3814.783333321243,
+      "capPlateCount": 256,
+      "finalPlateCount": 256,
+      "finalBirths": 0,
+      "finalTopCellTurnover": 0
+    },
+    {
+      "name": "shadow continues material change after baseline cap",
+      "ok": true,
+      "finalPlateCount": 474,
+      "birthsLastMinute": 3,
+      "topCellTurnoverLastMinute": 2531,
+      "unionCells": 7163,
+      "newlyCoveredCells": 0,
+      "classification": "measured descriptive metrics; no artistic acceptance claim"
+    },
+    {
+      "name": "cap and final baseline top/count state stable",
+      "ok": true,
+      "capTick": 228887,
+      "capPlateCount": 256,
+      "finalPlateCount": 256,
+      "layerCountCells": 9216,
+      "topLayerCells": 9216
+    },
+    {
+      "name": "visual minute metrics have expected measured sample count",
+      "ok": true,
+      "baselineMetricRows": 121,
+      "shadowMetricRows": 121,
+      "statement": "metrics are counted capture outputs; no artistic acceptance inference"
+    },
+    {
+      "name": "still manifests, source/input/output hashes, and input immutability",
+      "ok": true,
+      "manifestDirs": [
+        "visual/stills",
+        "visual/stills-verified",
+        "visual-capacity-1024/stills-verified"
+      ],
+      "tileCounts": [
+        7,
+        8,
+        8
+      ],
+      "snapshotInputUnmutated": true,
+      "sourceHashComparisons": [
+        {
+          "manifest": "visual/stills",
+          "source": "src/lib/renderers/AntRenderer.js",
+          "capturedSha256": "36f76459cc5323b846e04b8bced95b19a4d382c645303dbb9b49aa1050354566",
+          "currentSha256": "8e5190243144a5ac03fadb319e154209a1c266376a45c6094e454c00f69527b1",
+          "matches": false
+        },
+        {
+          "manifest": "visual/stills",
+          "source": "scripts/ant-exhibition-visual-compare.js",
+          "capturedSha256": "1dc8aa79f134a39ac5da7e2cc58d3969796141e63f5c4c04c341444301ca0929",
+          "currentSha256": "1897b222075dcffa0ac70191dd0b7c34d9ca2780a7fc99413da67a4369f9a1a5",
+          "matches": false
+        },
+        {
+          "manifest": "visual/stills-verified",
+          "source": "src/lib/renderers/AntRenderer.js",
+          "capturedSha256": "36f76459cc5323b846e04b8bced95b19a4d382c645303dbb9b49aa1050354566",
+          "currentSha256": "8e5190243144a5ac03fadb319e154209a1c266376a45c6094e454c00f69527b1",
+          "matches": false
+        },
+        {
+          "manifest": "visual/stills-verified",
+          "source": "scripts/ant-exhibition-visual-compare.js",
+          "capturedSha256": "ded7b9a4b10f9eb8c8a1f707dd26fb5e31a53c1436d7c7f12fcfea489ef18ef4",
+          "currentSha256": "1897b222075dcffa0ac70191dd0b7c34d9ca2780a7fc99413da67a4369f9a1a5",
+          "matches": false
+        },
+        {
+          "manifest": "visual-capacity-1024/stills-verified",
+          "source": "src/lib/renderers/AntRenderer.js",
+          "capturedSha256": "8e5190243144a5ac03fadb319e154209a1c266376a45c6094e454c00f69527b1",
+          "currentSha256": "8e5190243144a5ac03fadb319e154209a1c266376a45c6094e454c00f69527b1",
+          "matches": true
+        },
+        {
+          "manifest": "visual-capacity-1024/stills-verified",
+          "source": "scripts/ant-exhibition-visual-compare.js",
+          "capturedSha256": "1897b222075dcffa0ac70191dd0b7c34d9ca2780a7fc99413da67a4369f9a1a5",
+          "currentSha256": "1897b222075dcffa0ac70191dd0b7c34d9ca2780a7fc99413da67a4369f9a1a5",
+          "matches": true
+        }
+      ],
+      "overlayParityClaimed": false
+    },
+    {
+      "name": "verified post-cap material readout is stable",
+      "ok": true,
+      "exactPerModePixelMatch": true
+    },
+    {
+      "name": "resident input receipts, parent capture hashes, benchmark links",
+      "ok": true,
+      "receipts": [
+        {
+          "artifact": "resident-1-inputs.v8.gz",
+          "sha256": "22e146475b9b8828b68702d721227b555692ce73f09c7c3d76d2c023600a1e2a",
+          "parentSha256": "cb8929de9d166e6e41057549a927c14181ec9202468833e1fab08a835eba4ee2",
+          "benchmarkInputSha256": "22e146475b9b8828b68702d721227b555692ce73f09c7c3d76d2c023600a1e2a",
+          "cases": 3
+        },
+        {
+          "artifact": "resident-2-inputs.v8.gz",
+          "sha256": "fbcd157cd376d5baf3b4c42902b117949786c959c2df47814093569c31161cac",
+          "parentSha256": "cb8929de9d166e6e41057549a927c14181ec9202468833e1fab08a835eba4ee2",
+          "benchmarkInputSha256": "fbcd157cd376d5baf3b4c42902b117949786c959c2df47814093569c31161cac",
+          "cases": 3
+        }
+      ]
+    },
+    {
+      "name": "turnover capture inputs, route parity records, finite PCM and no drops",
+      "ok": true,
+      "inputSha256": "2036ee98ad3dd69e6749ce570176dd967caeb8731a0a3bf7af1c1b4bb6a16377",
+      "naturalStrikes": 1503,
+      "topologyParity": {
+        "reconstructedParent8": "exact",
+        "initialResident78": "exact projected/compiler parity",
+        "turnoverResident89": "exact projected/compiler parity",
+        "controlResident789": "exact projected/compiler parity"
+      },
+      "conditions": [
+        {
+          "id": "retire-7",
+          "sampleCount": 1152000,
+          "finiteSamples": 1152000,
+          "dropped": 0,
+          "droppedRoutes": 0,
+          "wavSha256": "a270d8bfa0f5118766aff81787147639e0cf78a1a5488c03e2f0683c20847171"
+        },
+        {
+          "id": "retain-7-control",
+          "sampleCount": 1152000,
+          "finiteSamples": 1152000,
+          "dropped": 0,
+          "droppedRoutes": 0,
+          "wavSha256": "5a007c273eb163fd7009fa2c4c367d0e793ef24fac7da373e0c2539c3804aa56"
+        }
+      ]
+    },
+    {
+      "name": "turnover WAV bytes match PCM receipts and equal prefix",
+      "ok": true,
+      "firstDifferentFrame": 480007,
+      "anchorFrame": 480000,
+      "wav": [
+        {
+          "id": "retire-7",
+          "dataLength": 4608000,
+          "prefixBytes": 3840000,
+          "prefixSha256": "01cfe2d0622df010bee6f806650e0f5aa72dbcaae9d3f38b10238e7ba128309e",
+          "fileSha256": "a270d8bfa0f5118766aff81787147639e0cf78a1a5488c03e2f0683c20847171"
+        },
+        {
+          "id": "retain-7-control",
+          "dataLength": 4608000,
+          "prefixBytes": 3840000,
+          "prefixSha256": "01cfe2d0622df010bee6f806650e0f5aa72dbcaae9d3f38b10238e7ba128309e",
+          "fileSha256": "5a007c273eb163fd7009fa2c4c367d0e793ef24fac7da373e0c2539c3804aa56"
+        }
+      ]
+    },
+    {
+      "name": "runtime world continuity across available checkpoints",
+      "ok": true,
+      "status": "verified",
+      "checkpoints": [
+        {
+          "checkpointSeconds": 0,
+          "file": "world-0000.json.gz",
+          "simulationTimeMs": 516666.66666690196,
+          "plateCount": 30,
+          "historyCount": 30
+        },
+        {
+          "checkpointSeconds": 900,
+          "file": "world-0900.json.gz",
+          "simulationTimeMs": 1416966.6666674055,
+          "plateCount": 102,
+          "historyCount": 102
+        },
+        {
+          "checkpointSeconds": 1080,
+          "file": "world-final.json.gz",
+          "simulationTimeMs": 1596900.0000015767,
+          "plateCount": 112,
+          "historyCount": 112
+        }
+      ],
+      "initialPlatePrefixExact": true,
+      "monotonicTimeAndCounts": true,
+      "initialPlateDescriptors": 30,
+      "initialLayerOrderPrefixLength": 30,
+      "finalLayerOrderLength": 112,
+      "rngParityClaimed": false
+    },
+    {
+      "name": "runtime soak sampled audio, residency, and protected startup evidence",
+      "ok": true,
+      "runtime": "soak-2026-10-21T04-31-03-679Z",
+      "status": "interrupted",
+      "elapsedSeconds": 1080.2961999999882,
+      "samples": 36,
+      "continuousAudio": true,
+      "noNonFiniteOrDrops": true,
+      "protectedStartupFlags": true,
+      "protectedSourceRecorded": true,
+      "averageClockRatiosReportedOnly": true
+    },
+    {
+      "name": "runtime end record and world-checkpoint receipts verified",
+      "ok": true,
+      "endStatus": "interrupted",
+      "heartbeatStatus": "interrupted",
+      "endElapsedSeconds": 1080.2961999999882,
+      "heartbeatElapsedSeconds": 1080.2961999999882,
+      "endMatchesHeartbeat": true,
+      "worldCheckpoints": [
+        {
+          "file": "world-0000.json.gz",
+          "sha256": "e72dbed19447cee5e4150dfb38e19674ac222d9f9d40ac2fa7f764ef6e2e30f1",
+          "expectedSha256": "e72dbed19447cee5e4150dfb38e19674ac222d9f9d40ac2fa7f764ef6e2e30f1",
+          "compressedBytes": 794780,
+          "expectedCompressedBytes": 794780,
+          "ok": true
+        },
+        {
+          "file": "world-final.json.gz",
+          "sha256": "25cbb204e42e900af9352a73537046e34d123896863089f812f377439465e550",
+          "expectedSha256": "25cbb204e42e900af9352a73537046e34d123896863089f812f377439465e550",
+          "compressedBytes": 2045092,
+          "expectedCompressedBytes": 2045092,
+          "ok": true
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "name": "runtime excluded from two-hour claim",
+      "status": "interrupted",
+      "elapsedSeconds": 1080.2961999999882
+    }
+  ]
+}

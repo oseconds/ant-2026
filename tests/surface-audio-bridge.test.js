@@ -122,6 +122,70 @@ test('syncMaterial compiles exposure routing so buried overlapping layers receiv
   await bridge.destroy();
 });
 
+test('resident topology keeps the birth-order suffix, omits retired foundations, and preserves full-world strike normalization', async () => {
+  const harness = workletHarness();
+  const plates = [descriptor('retired', { x: 0.2 }), descriptor('resident', { x: 0.8 })];
+  const topLayerByCell = new Int32Array(96 * 96).fill(-1);
+  for (let cell = 0; cell < topLayerByCell.length; cell += 1) {
+    if (plates[0].mask[cell]) topLayerByCell[cell] = 0;
+    if (plates[1].mask[cell]) topLayerByCell[cell] = 1;
+  }
+  const nodule = (id, plateId, x) => ({ id, position: { x, y: 0.5 }, physicalRadiusMeters: 0.04,
+    material: { density: 2700, youngModulus: 70e9, poisson: 0.33 },
+    coupling: { plateId, position: { x, y: 0.5 }, weight: 0.3 } });
+  const snapshot = { plates, nodules: [nodule('old-sphere', 'retired', 0.2), nodule('new-sphere', 'resident', 0.8)],
+    stratigraphy: { version: 1, revision: 1, layerOrder: ['retired', 'resident'], topLayerByCell } };
+  const full = new SurfaceAudioBridge({ audioEngine: harness.audioEngine });
+  const explicitFull = new SurfaceAudioBridge({ audioEngine: harness.audioEngine, residentPlateLimit: null });
+  const resident = new SurfaceAudioBridge({ audioEngine: harness.audioEngine, residentPlateLimit: 1 });
+  assert.equal(full.syncMaterial(snapshot), true);
+  assert.equal(explicitFull.syncMaterial(snapshot), true);
+  assert.equal(resident.syncMaterial(snapshot), true);
+  assert.deepEqual(explicitFull.topology, full.topology, 'omitted and null limits preserve the same full topology');
+  assert.deepEqual(resident.topology.layerIds, ['resident']);
+  assert.deepEqual(resident.topology.noduleIds, ['new-sphere']);
+  assert.equal(resident.exposedPlateAt({ x: 0.2, y: 0.5 }), null, 'omitted material cannot become a false lower-layer route');
+  assert.equal(resident.getDiagnostics().bridge.residency.retiredPlateCount, 1);
+  assert.throws(() => new SurfaceAudioBridge({ audioEngine: {}, residentPlateLimit: 0 }), /residentPlateLimit/);
+  assert.throws(() => new SurfaceAudioBridge({ audioEngine: {}, residentPlateLimit: 257 }), /residentPlateLimit/);
+
+  await full.setEnabled(true);
+  await resident.setEnabled(true);
+  harness.messages.length = 0;
+  const event = { type: 'FOOT_CONTACT', strength: 0.05, contacts: [{ legId: 'FL' }, { legId: 'MR' }] };
+  const responses = [
+    { legId: 'FL', position: { x: 0.2, y: 0.5 }, hardness: 0.5, footprintRadius: 0.01, strengthTransfer: 1.05 },
+    { legId: 'MR', position: { x: 0.8, y: 0.5 }, hardness: 0.5, footprintRadius: 0.01, strengthTransfer: 0.95 }
+  ];
+  full.handleFootContact(event, { responses });
+  const fullStrikes = harness.messages.filter((message) => message.type === 'strike');
+  harness.messages.length = 0;
+  resident.handleFootContact(event, { responses });
+  const residentStrikes = harness.messages.filter((message) => message.type === 'strike');
+  assert.equal(fullStrikes.length, 2);
+  assert.equal(residentStrikes.length, 1);
+  assert.equal(residentStrikes[0].payload.plateId, 'resident');
+  assert.equal(residentStrikes[0].payload.strength, fullStrikes[1].payload.strength,
+    'resident strike retains the full-world normalizer including omitted Plate routes');
+  assert.equal(resident.diagnostics.omittedResidentRouteFeet, 1);
+  await full.destroy();
+  await explicitFull.destroy();
+  await resident.destroy();
+});
+
+test('resident selection validates the full source and also bounds no-stratigraphy compile paths', () => {
+  const harness = workletHarness();
+  const bridge = new SurfaceAudioBridge({ audioEngine: harness.audioEngine, residentPlateLimit: 1 });
+  const plates = [descriptor('old'), descriptor('new', { x: 0.8 })];
+  assert.equal(bridge.syncPlates(plates), 2);
+  assert.deepEqual(bridge.topology.layerIds, ['new'], 'insertion order supplies the fallback birth order');
+  const topLayerByCell = new Int32Array(96 * 96).fill(-1);
+  topLayerByCell[0] = 3;
+  const malformed = { plates, nodules: [], stratigraphy: { version: 1, revision: 1,
+    layerOrder: ['old', 'new'], topLayerByCell } };
+  assert.equal(bridge.syncMaterial(malformed), false, 'invalid omitted history is rejected before resident filtering');
+});
+
 test('syncPlates fallback compiles once per topology change and Off/On sends topology without replaying impacts', async () => {
   const harness = workletHarness();
   const bridge = new SurfaceAudioBridge({ audioEngine: harness.audioEngine });
