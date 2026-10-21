@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-21 — Exhibition AudioWorklet feasibility
+
+[Process log](./2026-10-21-exhibition-audio-runtime.md) · [Evidence, A/B listening and operating limits](../evidence/2026-10-21-exhibition-audio-runtime/README.md)
+
+- Compared Full, exact-computation shadows, actual Z off and audio-only refractory on frozen 8/20/30 Plate inputs
+- Same-step Plate/post-Sphere caches preserve raw state/PCM but show no consistent gain; sequential-time Z force cannot be reused
+- Z off improves throughput but mature realtime still fails in actual Chrome; startup opt-in remains a labeled prototype
+- Audio Off supported as visual fallback for 120 seconds of natural 30→38 Plate growth; live physical sound remains unresolved
+
 ### 2026-10-18 — Natural dense Plate readout overlap
 
 [Process log](./2026-10-18-natural-dense-readout-overlap.md) · [Evidence package and aligned listening page](../evidence/2026-10-18-natural-dense-readout-overlap/README.md)

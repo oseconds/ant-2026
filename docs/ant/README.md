@@ -1,6 +1,6 @@
 # ANT — Current Architecture, Evidence and Research Boundary
 
-**Current repository state: 2026-10-18**
+**Current repository state: 2026-10-21**
 
 이 문서는 ANT의 **현재 verified state**를 위한 GitHub-side hub다. 과정은 [daily logs](daily/README.md), 실험별 원본과 재현 자료는 [evidence packages](evidence/)에 둔다.
 
@@ -123,6 +123,8 @@ Frozen P1 pickup-distance diagnosis found a clear midpoint drop but a far-branch
 The full 48-node P1 map found strong channel-matched distance response plus nearby low-output and similarly distant high-output regions. One fixed sigma-1 Gaussian 1-hop aperture was tested and rejected: pooled P10 fell 23–25% across 100–500 ms windows. Production point pickups remain unchanged. [fixed-scale node map](evidence/2026-10-07-base-substrate-debug/audio/p1-node-observability/README.md) · [aperture A/B](evidence/2026-10-07-base-substrate-debug/audio/p1-pickup-aperture-ab/README.md).
 
 mature 20–30 Plate의 AudioWorklet realtime collapse는 unresolved known issue다. 이 runtime failure는 Plate individuality evidence와 별개이며 해결된 것으로 간주하지 않는다.
+
+The 2026-10-21 exhibition feasibility pass measured exact-computation shadows, actual Z removal and audio-only refractory independently. Z off materially reduced cost but did not make mature 20/30 Plate audio realtime; safe same-step Plate/post-Sphere caches preserved PCM/state but showed no consistent gain. A startup-only `?antAudio=lite` prototype now omits Z adjacency construction while retaining Sphere and individual Plate physics; **Full remains the default and Lite is not exhibition-ready**. Installed-Chrome natural runtime supports Audio Off as a visual fallback for the measured 120-second 30→38 Plate interval. Live-sound exhibition readiness, hours-long uptime and venue hardware remain unverified. [Evidence and decision](evidence/2026-10-21-exhibition-audio-runtime/README.md) · [Daily record](daily/2026-10-21-exhibition-audio-runtime.md).
 
 These 2026-10-13–18 research passes are diagnostic only: production `src/` and `static/` are unchanged, and the production sonic baseline above remains in force.
 

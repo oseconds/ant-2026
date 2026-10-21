@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 1,
+  "seed": 20261005,
+  "sourceCommit": "79833b4",
+  "sourceHashes": {
+    "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+    "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+    "src/lib/agents/ant/BodyPoseController.js": "2ec4cc12c12ae301ea07056889c3be9255b1b1e155b7724cd3366278d60ace8e",
+    "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd",
+    "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+    "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+    "src/lib/agents/ant/LocalOccupancy.js": "df22dd38e9af8078ebcb1d225ca2a5eaf579e994d2d4a00ce9ceeefa2403ff16",
+    "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+    "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+    "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+    "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+    "src/lib/audio/AntEnvironmentAudioBridge.js": "8650a38789ce3053232765131fef77dc9334bc43ff79acccec01a589a4a73a6d",
+    "src/lib/audio/SurfaceAudioBridge.js": "ef87c14015067f7cad512e0675716239b1707e441eb28cfd9175d28b0ef28215",
+    "src/lib/audio/compileSurfaceTopology.js": "b28b15158441a9cc24d8d3e22fbf10342962555de6ca6e6bf4f649985a5ba2fd",
+    "static/worklets/surface-plate.worklet.js": "14c7461f1412f0d6897a6683d46e582dbb80711f2ba74e8ea53e026895eeea5e"
+  },
+  "provenance": {
+    "model": "current production ANT simulation plus AntEnvironmentAudioBridge mocked worklet port",
+    "capture": "natural current topology; worklet messages captured at exact bridge boundaries",
+    "replay": "frozen topology at each milestone; strike events within 12 s retained only when routed Plate remains exposed in that frozen topology",
+    "preconditioningMs": 2000,
+    "measuredMs": 10000,
+    "windowMs": 12000
+  },
+  "parity": {
+    "samples": 37713,
+    "firstMismatch": null,
+    "fields": {
+      "agentTrajectory": "3e0469452395ad1cff94b00a2c025494c884cb1bebccd80bf398746ab6870c34",
+      "lifecycle": "47156da71329bf40021b4f941031f7fe5d884ccf146cb73748972731d77b10bf",
+      "rng": "dab13ad9bb4951b28756b4a2e3cca1f22f7655a760ab3b3ba0dbc480b58af56f",
+      "pheromone": "474c133d4e223047a3349041db286ee7124e19d2ab4bfadb7eb3705b3e9b1b99",
+      "surfaceField": "405b8ac245780b8f2aa9f1a4f80b0abe65362af421f5b4f8d76b6f047a78e0f1",
+      "gait": "969cfb37900d345b874d9721b743ede8ef27c0dc1edb867c340ed26677b3b648",
+      "bodyPose": "3938383124dac43a63a9deaef0f5edbde999fb06a3484664d288c60ba61bdf6a",
+      "gasterDeposition": "ecd8f076abc80e4b81884966686286086b14acf7d5eaf0cfb2769e9664d6ad9a",
+      "colonyActivation": "3cdb69d45c908cbe01fea9f6d48acb15cea54c1030787ab9dade13bff3753666",
+      "localOccupancy": "cdb9d61aaa055711e9af11851af4db86b5e9d63c694bca869a944b8680196c6b",
+      "footContacts": "b92e81db55b43d3435eeca993b2ef9fd1d720f87ca07e95a7586c253fa1a108a",
+      "materialBirthEvents": "acf4f5a80c36b27ebac652b19ae23a67a17e69bfc53de30877f8a655d07e5e29",
+      "trailPlateBirth": "b261a392190a37141b4ed6f33aee6dca7db7e5f57fa7004f38fe5a2009574fcc",
+      "materialStratigraphy": "4315e89fd60303a526842bc56464a7f35db8d1cd59afd9a21053eec1ddec28d3"
+    },
+    "equal": true,
+    "rng": {
+      "control": {
+        "state": 4038745024,
+        "calls": 400729
+      },
+      "audioBridge": {
+        "state": 4038745024,
+        "calls": 400729
+      }
+    }
+  },
+  "cases": [
+    {
+      "plateCount": 8,
+      "tick": 17521,
+      "endTick": 18241,
+      "frames": 576000,
+      "topologySha256": "1db0b9c1edddfee5c9fb8b0af1144a97f9420e0cc4d06500391a56bc942a5b15",
+      "expectedActivePlateIds": [
+        "trail-plate-1",
+        "trail-plate-2",
+        "trail-plate-3",
+        "trail-plate-4",
+        "trail-plate-5",
+        "trail-plate-6",
+        "trail-plate-7",
+        "trail-plate-8"
+      ],
+      "naturalTopologyMessages": 1,
+      "naturalStrikes": 1503,
+      "retainedEvents": 1401,
+      "droppedRoutes": 102,
+      "firstRelativeFrame": 334,
+      "lastRelativeFrame": 573992
+    },
+    {
+      "plateCount": 20,
+      "tick": 27601,
+      "endTick": 28321,
+      "frames": 576000,
+      "topologySha256": "5b841a28ee6378f18e82f5ff9250c3a3b67b1d351cefaf46f31001c429ab7b6e",
+      "expectedActivePlateIds": [
+        "trail-plate-1",
+        "trail-plate-10",
+        "trail-plate-11",
+        "trail-plate-12",
+        "trail-plate-13",
+        "trail-plate-14",
+        "trail-plate-15",
+        "trail-plate-16",
+        "trail-plate-17",
+        "trail-plate-18",
+        "trail-plate-19",
+        "trail-plate-2",
+        "trail-plate-20",
+        "trail-plate-3",
+        "trail-plate-4",
+        "trail-plate-5",
+        "trail-plate-6",
+        "trail-plate-7",
+        "trail-plate-8",
+        "trail-plate-9"
+      ],
+      "naturalTopologyMessages": 2,
+      "naturalStrikes": 1814,
+      "retainedEvents": 1698,
+      "droppedRoutes": 116,
+      "firstRelativeFrame": 1240,
+      "lastRelativeFrame": 575752
+    },
+    {
+      "plateCount": 30,
+      "tick": 36992,
+      "endTick": 37712,
+      "frames": 576000,
+      "topologySha256": "c917971c95282f35e034ffe92e3dbb59c54dbf958e0530606852bf7cca98efba",
+      "expectedActivePlateIds": [
+        "trail-plate-1",
+        "trail-plate-10",
+        "trail-plate-11",
+        "trail-plate-12",
+        "trail-plate-13",
+        "trail-plate-14",
+        "trail-plate-15",
+        "trail-plate-16",
+        "trail-plate-17",
+        "trail-plate-18",
+        "trail-plate-19",
+        "trail-plate-2",
+        "trail-plate-20",
+        "trail-plate-21",
+        "trail-plate-22",
+        "trail-plate-23",
+        "trail-plate-24",
+        "trail-plate-25",
+        "trail-plate-26",
+        "trail-plate-27",
+        "trail-plate-28",
+        "trail-plate-29",
+        "trail-plate-3",
+        "trail-plate-30",
+        "trail-plate-4",
+        "trail-plate-5",
+        "trail-plate-6",
+        "trail-plate-7",
+        "trail-plate-8",
+        "trail-plate-9"
+      ],
+      "naturalTopologyMessages": 0,
+      "naturalStrikes": 2056,
+      "retainedEvents": 2056,
+      "droppedRoutes": 0,
+      "firstRelativeFrame": 793,
+      "lastRelativeFrame": 574916
+    }
+  ],
+  "artifact": "capture-inputs.v8.gz",
+  "bytes": 700772,
+  "uncompressedBytes": 3117265,
+  "sha256": "cb8929de9d166e6e41057549a927c14181ec9202468833e1fab08a835eba4ee2",
+  "selfCheck": {
+    "passed": true,
+    "cases": 3,
+    "retainedEvents": [
+      1401,
+      1698,
+      2056
+    ]
+  },
+  "normalizedExistingCapture": true
+}
