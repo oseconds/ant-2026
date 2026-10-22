@@ -1,0 +1,334 @@
+{
+  "variant": "dampingOff",
+  "sourceSha256": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+  "shadowSha256": "64854deb6ee7819bf960d07f4014e9d78a3b5f38d8e561e8b9aa80b5dbc0b05b",
+  "substitution": {
+    "before": "steeringAngularVelocity * LOCAL_TURN_DAMPING * agent.trailAdherence",
+    "after": "steeringAngularVelocity * 0 * agent.trailAdherence"
+  },
+  "seed": 20261005,
+  "node": "v22.23.2",
+  "wallSeconds": 8.388224199999998,
+  "summary": {
+    "seed": 20261005,
+    "hz": 60,
+    "ticks": 36000,
+    "simulatedSeconds": 600,
+    "instrumentation": true,
+    "sampleCount": 698353,
+    "activePopulation": 21,
+    "totalSpawned": 259,
+    "totalRetired": 238,
+    "footPoints": 103133,
+    "rngState": 493624421,
+    "rngCalls": 355608,
+    "pheromoneSha256": "9613073dfc6e56f9b20eabaa3a4a57cf8104115000cc24e82171648497058c15",
+    "surfaceSha256": "4c591c0ad9f0c328e92a9ead667283c25817d628c41bff84681dc1e904db04e3",
+    "finalAgentsSha256": "c53fa9b04a33820fce6cf321f699f01585196e8efb9f769573899eeb28360a22",
+    "finalPlateCount": 18,
+    "finalNoduleCount": 32,
+    "routeCurvature": {
+      "1s": {
+        "windowCount": 11380,
+        "validWindowCount": 11368,
+        "lowDisplacementWindowCount": 12,
+        "meanPathLength": 0.05415927241505795,
+        "meanChordToPath": 0.9614719201984909,
+        "meanSignedTravelTurnRadians": -0.005063294768543566,
+        "meanAbsoluteTravelTurnRadians": 1.0088246846224684,
+        "meanSignedTravelTurnPerDistance": -0.4007322571188726,
+        "meanAbsoluteTravelTurnPerDistance": 28.065183836760426,
+        "meanSameSignTurnPairFraction": 0.9388718763825002,
+        "meanLongestSameSignTurnRunSeconds": 0.5553483462350485,
+        "meanPathTurnLag1Correlation": 0.8786953230470673,
+        "meanPathTurnLag3Correlation": 0.5617001321463371,
+        "distributions": {
+          "signedTravelTurnRadians": {
+            "count": 11368,
+            "mean": -0.005063294768542691,
+            "p50": -0.018671686637300233,
+            "p90": 1.0167536716320067
+          },
+          "absoluteTravelTurnRadians": {
+            "count": 11368,
+            "mean": 1.0088246846224624,
+            "p50": 0.9395515566020118,
+            "p90": 1.7535662310872653
+          },
+          "signedTravelTurnPerDistance": {
+            "count": 11368,
+            "mean": -0.40073225711886357,
+            "p50": -0.3747323931304352,
+            "p90": 20.428631474555473
+          },
+          "absoluteTravelTurnPerDistance": {
+            "count": 11368,
+            "mean": 28.065183836760365,
+            "p50": 17.306260286725436,
+            "p90": 43.609261658331036
+          },
+          "chordToPath": {
+            "count": 11368,
+            "mean": 0.961471920198492,
+            "p50": 0.9787338845875899,
+            "p90": 0.997705588017452
+          },
+          "sameSignTurnPairFraction": {
+            "count": 11368,
+            "mean": 0.9388718763825992,
+            "p50": 0.9482758620689655,
+            "p90": 0.9827586206896551
+          }
+        },
+        "meanBodyTurnRadians": -0.005887289390043057,
+        "meanAbsoluteBodyTurnRadians": 1.1084515592658346,
+        "turnCapSaturatedSampleCount": 97779,
+        "bodyTurnSampleCount": 682800,
+        "turnCapSaturatedSampleFraction": 0.14320298769771528,
+        "meanTravelBodyAlignmentCosine": 0.9993149056518006,
+        "lowSpeedSampleCount": 78669,
+        "speedSampleCount": 682800,
+        "lowSpeedSampleFraction": 0.1152152899824253,
+        "collisionConstrainedSampleCount": 4321,
+        "collisionSampleCount": 682800,
+        "collisionConstrainedSampleFraction": 0.006328353837141184,
+        "meanCollisionScale": 0.9948329231213091
+      },
+      "2s": {
+        "windowCount": 5562,
+        "validWindowCount": 5558,
+        "lowDisplacementWindowCount": 4,
+        "meanPathLength": 0.10835484629653207,
+        "meanChordToPath": 0.9110756490251973,
+        "meanSignedTravelTurnRadians": -0.01573217453095964,
+        "meanAbsoluteTravelTurnRadians": 2.026896650361439,
+        "meanSignedTravelTurnPerDistance": -0.3798705910668431,
+        "meanAbsoluteTravelTurnPerDistance": 21.47105925409932,
+        "meanSameSignTurnPairFraction": 0.9388852379529206,
+        "meanLongestSameSignTurnRunSeconds": 0.8005187717404318,
+        "meanPathTurnLag1Correlation": 0.9110143603235998,
+        "meanPathTurnLag3Correlation": 0.6471621143096814,
+        "distributions": {
+          "signedTravelTurnRadians": {
+            "count": 5558,
+            "mean": -0.01573217453096204,
+            "p50": -0.021236625446778845,
+            "p90": 1.4583241568099716
+          },
+          "absoluteTravelTurnRadians": {
+            "count": 5558,
+            "mean": 2.026896650361441,
+            "p50": 1.9221447429335585,
+            "p90": 3.1683483707595
+          },
+          "signedTravelTurnPerDistance": {
+            "count": 5558,
+            "mean": -0.3798705910668428,
+            "p50": -0.19285925031205503,
+            "p90": 14.148737693831963
+          },
+          "absoluteTravelTurnPerDistance": {
+            "count": 5558,
+            "mean": 21.471059254099334,
+            "p50": 17.71314193295379,
+            "p90": 35.285443410755114
+          },
+          "chordToPath": {
+            "count": 5558,
+            "mean": 0.911075649025197,
+            "p50": 0.9422870670953756,
+            "p90": 0.9886066061193478
+          },
+          "sameSignTurnPairFraction": {
+            "count": 5558,
+            "mean": 0.9388852379529129,
+            "p50": 0.9491525423728814,
+            "p90": 0.9745762711864406
+          }
+        },
+        "meanBodyTurnRadians": -0.017169573648577952,
+        "meanAbsoluteBodyTurnRadians": 2.2084929979422134,
+        "turnCapSaturatedSampleCount": 94741,
+        "bodyTurnSampleCount": 667440,
+        "turnCapSaturatedSampleFraction": 0.14194684166367014,
+        "meanTravelBodyAlignmentCosine": 0.9993196224401214,
+        "lowSpeedSampleCount": 76046,
+        "speedSampleCount": 667440,
+        "lowSpeedSampleFraction": 0.11393683327340286,
+        "collisionConstrainedSampleCount": 4245,
+        "collisionSampleCount": 667440,
+        "collisionConstrainedSampleFraction": 0.006360122258180511,
+        "meanCollisionScale": 0.9944686411361747
+      },
+      "5s": {
+        "windowCount": 2077,
+        "validWindowCount": 2077,
+        "lowDisplacementWindowCount": 0,
+        "meanPathLength": 0.2690353325040299,
+        "meanChordToPath": 0.7778319451773814,
+        "meanSignedTravelTurnRadians": -0.07601532342582853,
+        "meanAbsoluteTravelTurnRadians": 5.073516454718464,
+        "meanSignedTravelTurnPerDistance": -0.3636443864382905,
+        "meanAbsoluteTravelTurnPerDistance": 19.947828132523675,
+        "meanSameSignTurnPairFraction": 0.9389436633527546,
+        "meanLongestSameSignTurnRunSeconds": 1.1435403627026155,
+        "meanPathTurnLag1Correlation": 0.927498172698905,
+        "meanPathTurnLag3Correlation": 0.7048719088644313,
+        "distributions": {
+          "signedTravelTurnRadians": {
+            "count": 2077,
+            "mean": -0.07601532342582787,
+            "p50": -0.08572541940240797,
+            "p90": 2.3495695560738303
+          },
+          "absoluteTravelTurnRadians": {
+            "count": 2077,
+            "mean": 5.073516454718461,
+            "p50": 4.9859714372144435,
+            "p90": 7.077544977498104
+          },
+          "signedTravelTurnPerDistance": {
+            "count": 2077,
+            "mean": -0.3636443864382944,
+            "p50": -0.36152112109357165,
+            "p90": 8.877153609829929
+          },
+          "absoluteTravelTurnPerDistance": {
+            "count": 2077,
+            "mean": 19.947828132523643,
+            "p50": 18.242579188885646,
+            "p90": 29.247045882928987
+          },
+          "chordToPath": {
+            "count": 2077,
+            "mean": 0.7778319451773812,
+            "p50": 0.8290921447479707,
+            "p90": 0.9470355490667712
+          },
+          "sameSignTurnPairFraction": {
+            "count": 2077,
+            "mean": 0.9389436633527634,
+            "p50": 0.9429530201342282,
+            "p90": 0.9664429530201343
+          }
+        },
+        "meanBodyTurnRadians": -0.07849269907593492,
+        "meanAbsoluteBodyTurnRadians": 5.500414977745533,
+        "turnCapSaturatedSampleCount": 87730,
+        "bodyTurnSampleCount": 623100,
+        "turnCapSaturatedSampleFraction": 0.1407960199004975,
+        "meanTravelBodyAlignmentCosine": 0.9993250225803348,
+        "lowSpeedSampleCount": 70737,
+        "speedSampleCount": 623100,
+        "lowSpeedSampleFraction": 0.11352431391429947,
+        "collisionConstrainedSampleCount": 3969,
+        "collisionSampleCount": 623100,
+        "collisionConstrainedSampleFraction": 0.006369764082811748,
+        "meanCollisionScale": 0.9937475727592037
+      }
+    }
+  },
+  "toolSourceSha256": {
+    "scripts/ant-route-curvature-natural-shadows.js": "db1b965d8c2e07205f282e832df9c5542010b1b57efd9f8c635a106659961178",
+    "scripts/ant-route-curvature-natural.js": "3c7ed0a544de7841bea6d17213c66ab0e192bc0aa2285fead3aed7e623478541",
+    "scripts/ant-route-curvature-metrics.js": "b7cd1138a46a5687c431e2ffa948547cbc602f1e3de8d8c1d0581acbe55cac0c",
+    "scripts/ant-route-curvature-readout.js": "db79fbf0e630c84bf9782610612234a27a88caf8e0ea891c7d12dbe7cc877057",
+    "scripts/ant-route-curvature-shadows.js": "c0711915322ce80ac277c181512c3c8ae2782a964bc5ecdecb1bf6404d7d0348"
+  },
+  "orderedSamplesSha256": "c6051bf9084f77631b2fd8f28ffb754e37164859369ed8c825775aabae904423",
+  "immediate": [
+    {
+      "lo": 0,
+      "hi": 0.25,
+      "samples": 52145,
+      "cap": 16509,
+      "reversalPairs": 2640,
+      "nonzeroPairs": 38979,
+      "absOmega": 82735.79727820819,
+      "constrained": 119,
+      "crowdSamples": 2647,
+      "crowdAbsOmega": 7026.9115859356125,
+      "clearSamples": 49498,
+      "clearAbsOmega": 75708.88569227299,
+      "capFraction": 0.31659794802953306,
+      "reversalFraction": 0.06772877703378742,
+      "meanAbsOmega": 1.5866487156622533,
+      "constrainedFraction": 0.002282097995972768,
+      "meanAbsOmegaCrowded": 2.654670036243148,
+      "meanAbsOmegaClear": 1.5295342375908723
+    },
+    {
+      "lo": 0.25,
+      "hi": 0.75,
+      "samples": 494604,
+      "cap": 69060,
+      "reversalPairs": 42649,
+      "nonzeroPairs": 491818,
+      "absOmega": 540380.1488375638,
+      "constrained": 2589,
+      "crowdSamples": 56450,
+      "crowdAbsOmega": 83945.78066957738,
+      "clearSamples": 438154,
+      "clearAbsOmega": 456434.3681679841,
+      "capFraction": 0.13962685299754957,
+      "reversalFraction": 0.08671703760334107,
+      "meanAbsOmega": 1.0925511092461118,
+      "constrainedFraction": 0.005234490622801271,
+      "meanAbsOmegaCrowded": 1.487082031347695,
+      "meanAbsOmegaClear": 1.041721331239665
+    },
+    {
+      "lo": 0.75,
+      "hi": 1.000001,
+      "samples": 151604,
+      "cap": 16678,
+      "reversalPairs": 17239,
+      "nonzeroPairs": 151604,
+      "absOmega": 157879.5334206932,
+      "constrained": 1678,
+      "crowdSamples": 33026,
+      "crowdAbsOmega": 42972.87513421739,
+      "clearSamples": 118578,
+      "clearAbsOmega": 114906.6582864772,
+      "capFraction": 0.11001028996596396,
+      "reversalFraction": 0.1137107200337722,
+      "meanAbsOmega": 1.04139424699014,
+      "constrainedFraction": 0.011068309543283819,
+      "meanAbsOmegaCrowded": 1.3011831627874217,
+      "meanAbsOmegaClear": 0.9690385930482653
+    }
+  ],
+  "flow": {
+    "startTick": 18000,
+    "endTick": 36000,
+    "cellSize": 0.03,
+    "resampleSpacing": 0.03,
+    "minimumDistinctAnts": 3,
+    "caveat": "Coincident cells and aligned tangents are descriptive reuse proxies; no ridge, identity of an exact route, sustained-arc classification or causal field attribution is inferred.",
+    "occupiedCells": 881,
+    "reusedCells": 559,
+    "directedCoherentReusedCells": 43,
+    "coherentSignedTurn": {
+      "n": 43,
+      "mean": -0.7120189316056426,
+      "p10": -15.3528735032237,
+      "p50": -0.32334954127506416,
+      "p90": 12.94747918173068
+    },
+    "coherentAbsoluteTurn": {
+      "n": 43,
+      "mean": 14.332363668819806,
+      "p10": 7.776955014892352,
+      "p50": 13.100584054316103,
+      "p90": 25.142257503769148
+    },
+    "coherentSignAgreement": {
+      "n": 43,
+      "mean": 0.6309208170606612,
+      "p10": 0.12393816646250988,
+      "p50": 0.7290572939278473,
+      "p90": 1
+    }
+  },
+  "caveat": "One guarded expression changed from identical initial seed. Full coupled natural feedback diverges; no common post-divergence RNG stream claim. Raw 60 Hz replay is reproducible from frozen sources; only 10 Hz late trajectories are retained for visual inspection."
+}

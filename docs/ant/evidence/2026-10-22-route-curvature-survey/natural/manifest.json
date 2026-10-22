@@ -1,0 +1,886 @@
+{
+  "commit": "8c60e4bba3bd5b476300e90a2936bfebd1f831c2",
+  "productionState": "default AntController at repository source state; no behavior changes; 60 Hz fixed ticks",
+  "seeds": [
+    20261005,
+    20261006,
+    20261007
+  ],
+  "hz": 60,
+  "ticksPerSeed": 36000,
+  "rng": "LCG state=(imul(state,1664525)+1013904223)>>>0; output=state/2^32",
+  "parity": {
+    "seed": 20261005,
+    "ticks": 600,
+    "exactParity": true,
+    "hooksSamples": 3817,
+    "state": {
+      "rngState": 3086702900,
+      "rngCalls": 2717,
+      "pheromoneSha256": "8f0068a2d63f891e044a4cfbd6e812b3116bf8bf13df0fbab0be11935fc942fa",
+      "surfaceSha256": "4ebc78fada8ecd2ca096f0254720e3a9507584ed950dfa6c0f5a5bf8cf767d1a",
+      "finalAgentsSha256": "e8b3cdf763a660834d29b1621371c3d9c218fe577ec2c7f8fdbd0aef21586a41",
+      "totalSpawned": 9,
+      "totalRetired": 1,
+      "footPoints": 695
+    }
+  },
+  "sourceSha256": {
+    "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+    "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+    "src/lib/agents/ant/LocalOccupancy.js": "df22dd38e9af8078ebcb1d225ca2a5eaf579e994d2d4a00ce9ceeefa2403ff16",
+    "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+    "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+    "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+    "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+    "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+    "src/lib/agents/ant/BodyPoseController.js": "2ec4cc12c12ae301ea07056889c3be9255b1b1e155b7724cd3366278d60ace8e",
+    "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+    "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd",
+    "scripts/ant-route-curvature-natural.js": "33dbe4f98f5ab351b237c41667f218a8b92f14abdfd021e80627c51742e635ff",
+    "scripts/ant-route-curvature-metrics.js": "b7cd1138a46a5687c431e2ffa948547cbc602f1e3de8d8c1d0581acbe55cac0c"
+  },
+  "runs": [
+    {
+      "seed": 20261005,
+      "hz": 60,
+      "ticks": 36000,
+      "simulatedSeconds": 600,
+      "instrumentation": true,
+      "sampleCount": 677868,
+      "activePopulation": 21,
+      "totalSpawned": 755,
+      "totalRetired": 734,
+      "footPoints": 104222,
+      "rngState": 4264282984,
+      "rngCalls": 382305,
+      "pheromoneSha256": "8f1f653371f1b4fd3578433c1cba6d3869d20860103b4534eec20c7a6d5c192d",
+      "surfaceSha256": "864674a5d4a1a491366be83ad428c9f0c1a4fcd3e185e8a070ffa78b576934a3",
+      "finalAgentsSha256": "ab6dbd66cfeb3501ee8bf439dd291125454c86ac3781bb68416fd8792cc0d0c3",
+      "finalPlateCount": 29,
+      "finalNoduleCount": 32,
+      "routeCurvature": {
+        "1s": {
+          "windowCount": 10555,
+          "validWindowCount": 10555,
+          "lowDisplacementWindowCount": 0,
+          "meanPathLength": 0.05651578602183688,
+          "meanChordToPath": 0.9907155853177578,
+          "meanSignedTravelTurnRadians": -0.00990612745662732,
+          "meanAbsoluteTravelTurnRadians": 1.3385349583509967,
+          "meanSignedTravelTurnPerDistance": -0.22036508269355734,
+          "meanAbsoluteTravelTurnPerDistance": 38.538521449298926,
+          "meanSameSignTurnPairFraction": 0.09365066400954548,
+          "meanLongestSameSignTurnRunSeconds": 0.08018158850465222,
+          "meanPathTurnLag1Correlation": -0.6319815820585749,
+          "meanPathTurnLag3Correlation": -0.6777077882516791,
+          "distributions": {
+            "signedTravelTurnRadians": {
+              "count": 10555,
+              "mean": -0.009906127456627495,
+              "p50": -0.015070625028826612,
+              "p90": 0.36286742842833325
+            },
+            "absoluteTravelTurnRadians": {
+              "count": 10555,
+              "mean": 1.3385349583510011,
+              "p50": 1.2643197697552395,
+              "p90": 1.5990915130313426
+            },
+            "signedTravelTurnPerDistance": {
+              "count": 10555,
+              "mean": -0.22036508269354985,
+              "p50": -0.21052633691454714,
+              "p90": 7.1788142907457635
+            },
+            "absoluteTravelTurnPerDistance": {
+              "count": 10555,
+              "mean": 38.53852144929885,
+              "p50": 22.741783745300587,
+              "p90": 53.89416967272263
+            },
+            "chordToPath": {
+              "count": 10555,
+              "mean": 0.9907155853177584,
+              "p50": 0.9997592924130456,
+              "p90": 0.9999479399093403
+            },
+            "sameSignTurnPairFraction": {
+              "count": 10555,
+              "mean": 0.09365066400953612,
+              "p50": 0,
+              "p90": 0.25862068965517243
+            }
+          },
+          "meanBodyTurnRadians": -0.009980789311912984,
+          "meanAbsoluteBodyTurnRadians": 4.344840826415907,
+          "turnCapSaturatedSampleCount": 559180,
+          "bodyTurnSampleCount": 633300,
+          "turnCapSaturatedSampleFraction": 0.8829622611716406,
+          "meanTravelBodyAlignmentCosine": 0.9994777005753323,
+          "lowSpeedSampleCount": 70498,
+          "speedSampleCount": 633300,
+          "lowSpeedSampleFraction": 0.11131849044686562,
+          "collisionConstrainedSampleCount": 280,
+          "collisionSampleCount": 633300,
+          "collisionConstrainedSampleFraction": 0.00044212853308068844,
+          "meanCollisionScale": 0.9995681136821132
+        },
+        "2s": {
+          "windowCount": 4907,
+          "validWindowCount": 4907,
+          "lowDisplacementWindowCount": 0,
+          "meanPathLength": 0.11301808563944105,
+          "meanChordToPath": 0.9796885034147009,
+          "meanSignedTravelTurnRadians": -0.018175009452375084,
+          "meanAbsoluteTravelTurnRadians": 2.6876008015744226,
+          "meanSignedTravelTurnPerDistance": -0.2551186285492824,
+          "meanAbsoluteTravelTurnPerDistance": 27.78561955580608,
+          "meanSameSignTurnPairFraction": 0.09110989834653378,
+          "meanLongestSameSignTurnRunSeconds": 0.10980911622851385,
+          "meanPathTurnLag1Correlation": -0.5929084598258685,
+          "meanPathTurnLag3Correlation": -0.6369713664386343,
+          "distributions": {
+            "signedTravelTurnRadians": {
+              "count": 4907,
+              "mean": -0.018175009452374363,
+              "p50": -0.017706307318034575,
+              "p90": 0.545957739335045
+            },
+            "absoluteTravelTurnRadians": {
+              "count": 4907,
+              "mean": 2.6876008015744235,
+              "p50": 2.5393604819072024,
+              "p90": 3.095862493934868
+            },
+            "signedTravelTurnPerDistance": {
+              "count": 4907,
+              "mean": -0.2551186285492822,
+              "p50": -0.12352076968099966,
+              "p90": 5.24208977170891
+            },
+            "absoluteTravelTurnPerDistance": {
+              "count": 4907,
+              "mean": 27.78561955580607,
+              "p50": 23.405570297420347,
+              "p90": 42.76054295984949
+            },
+            "chordToPath": {
+              "count": 4907,
+              "mean": 0.9796885034147016,
+              "p50": 0.9964173784277827,
+              "p90": 0.9999451708547968
+            },
+            "sameSignTurnPairFraction": {
+              "count": 4907,
+              "mean": 0.09110989834653355,
+              "p50": 0.05084745762711865,
+              "p90": 0.22033898305084745
+            }
+          },
+          "meanBodyTurnRadians": -0.018310368516318478,
+          "meanAbsoluteBodyTurnRadians": 8.69138872312778,
+          "turnCapSaturatedSampleCount": 520248,
+          "bodyTurnSampleCount": 588840,
+          "turnCapSaturatedSampleFraction": 0.8835133482779702,
+          "meanTravelBodyAlignmentCosine": 0.9994837879250983,
+          "lowSpeedSampleCount": 63929,
+          "speedSampleCount": 588840,
+          "lowSpeedSampleFraction": 0.10856769241220025,
+          "collisionConstrainedSampleCount": 226,
+          "collisionSampleCount": 588840,
+          "collisionConstrainedSampleFraction": 0.00038380544799945657,
+          "meanCollisionScale": 0.9996216584516038
+        },
+        "5s": {
+          "windowCount": 1516,
+          "validWindowCount": 1516,
+          "lowDisplacementWindowCount": 0,
+          "meanPathLength": 0.27597245822882843,
+          "meanChordToPath": 0.9434556659974573,
+          "meanSignedTravelTurnRadians": -0.04427927901798413,
+          "meanAbsoluteTravelTurnRadians": 6.764399945240999,
+          "meanSignedTravelTurnPerDistance": -0.18677986388482107,
+          "meanAbsoluteTravelTurnPerDistance": 26.311313815800755,
+          "meanSameSignTurnPairFraction": 0.09297249915885991,
+          "meanLongestSameSignTurnRunSeconds": 0.16328056288478615,
+          "meanPathTurnLag1Correlation": -0.5328214395648279,
+          "meanPathTurnLag3Correlation": -0.5783715519657546,
+          "distributions": {
+            "signedTravelTurnRadians": {
+              "count": 1516,
+              "mean": -0.04427927901798399,
+              "p50": -0.018836530996016343,
+              "p90": 0.9175500229983538
+            },
+            "absoluteTravelTurnRadians": {
+              "count": 1516,
+              "mean": 6.764399945240992,
+              "p50": 6.438119996267065,
+              "p90": 7.767415641778587
+            },
+            "signedTravelTurnPerDistance": {
+              "count": 1516,
+              "mean": -0.18677986388482087,
+              "p50": -0.06144998961134141,
+              "p90": 3.5555966210239935
+            },
+            "absoluteTravelTurnPerDistance": {
+              "count": 1516,
+              "mean": 26.31131381580074,
+              "p50": 24.87688235813489,
+              "p90": 36.165560801981016
+            },
+            "chordToPath": {
+              "count": 1516,
+              "mean": 0.9434556659974569,
+              "p50": 0.9844888434439245,
+              "p90": 0.9998250201843443
+            },
+            "sameSignTurnPairFraction": {
+              "count": 1516,
+              "mean": 0.09297249915886038,
+              "p50": 0.05704697986577181,
+              "p90": 0.20469798657718122
+            }
+          },
+          "meanBodyTurnRadians": -0.04513033491450193,
+          "meanAbsoluteBodyTurnRadians": 21.707580228513105,
+          "turnCapSaturatedSampleCount": 401186,
+          "bodyTurnSampleCount": 454800,
+          "turnCapSaturatedSampleFraction": 0.8821152154793316,
+          "meanTravelBodyAlignmentCosine": 0.9994780391859504,
+          "lowSpeedSampleCount": 50692,
+          "speedSampleCount": 454800,
+          "lowSpeedSampleFraction": 0.11145998240985049,
+          "collisionConstrainedSampleCount": 138,
+          "collisionSampleCount": 454800,
+          "collisionConstrainedSampleFraction": 0.00030343007915567283,
+          "meanCollisionScale": 0.9997031816821824
+        }
+      }
+    },
+    {
+      "seed": 20261006,
+      "hz": 60,
+      "ticks": 36000,
+      "simulatedSeconds": 600,
+      "instrumentation": true,
+      "sampleCount": 669098,
+      "activePopulation": 21,
+      "totalSpawned": 689,
+      "totalRetired": 668,
+      "footPoints": 102250,
+      "rngState": 131363990,
+      "rngCalls": 380712,
+      "pheromoneSha256": "306b55e919d57e02b2b56226c20649654d1e977c77e34b1099190baefa630442",
+      "surfaceSha256": "8d80d10c007c3aaa7b0ddb0e67cac6fd832766dd786b7af1df9b12f94eea0de6",
+      "finalAgentsSha256": "a64bdb198c6dbec9ac14312c99795b5029c161be02b2827f0a728b456b554baf",
+      "finalPlateCount": 33,
+      "finalNoduleCount": 32,
+      "routeCurvature": {
+        "1s": {
+          "windowCount": 10480,
+          "validWindowCount": 10480,
+          "lowDisplacementWindowCount": 0,
+          "meanPathLength": 0.0562363692088613,
+          "meanChordToPath": 0.9886469567629105,
+          "meanSignedTravelTurnRadians": 0.0036712173621146096,
+          "meanAbsoluteTravelTurnRadians": 1.3613182925384344,
+          "meanSignedTravelTurnPerDistance": 0.13688914897864532,
+          "meanAbsoluteTravelTurnPerDistance": 41.293924391655295,
+          "meanSameSignTurnPairFraction": 0.10680277704659513,
+          "meanLongestSameSignTurnRunSeconds": 0.08646787531805922,
+          "meanPathTurnLag1Correlation": -0.5945131418754616,
+          "meanPathTurnLag3Correlation": -0.6438645461839402,
+          "distributions": {
+            "signedTravelTurnRadians": {
+              "count": 10480,
+              "mean": 0.003671217362115263,
+              "p50": -0.0025933442544214813,
+              "p90": 0.42057704950652436
+            },
+            "absoluteTravelTurnRadians": {
+              "count": 10480,
+              "mean": 1.361318292538427,
+              "p50": 1.2681725222960374,
+              "p90": 1.6946754092121799
+            },
+            "signedTravelTurnPerDistance": {
+              "count": 10480,
+              "mean": 0.13688914897867507,
+              "p50": -0.04726570617287404,
+              "p90": 8.506796092723167
+            },
+            "absoluteTravelTurnPerDistance": {
+              "count": 10480,
+              "mean": 41.293924391655146,
+              "p50": 23.170100996280816,
+              "p90": 56.412608972023534
+            },
+            "chordToPath": {
+              "count": 10480,
+              "mean": 0.9886469567629094,
+              "p50": 0.9996536152727107,
+              "p90": 0.9999478121019016
+            },
+            "sameSignTurnPairFraction": {
+              "count": 10480,
+              "mean": 0.10680277704658889,
+              "p50": 0,
+              "p90": 0.3103448275862069
+            }
+          },
+          "meanBodyTurnRadians": 0.004198840409586081,
+          "meanAbsoluteBodyTurnRadians": 4.322595958999868,
+          "turnCapSaturatedSampleCount": 548639,
+          "bodyTurnSampleCount": 628800,
+          "turnCapSaturatedSampleFraction": 0.8725174936386768,
+          "meanTravelBodyAlignmentCosine": 0.9994392853115156,
+          "lowSpeedSampleCount": 74815,
+          "speedSampleCount": 628800,
+          "lowSpeedSampleFraction": 0.11898059796437659,
+          "collisionConstrainedSampleCount": 646,
+          "collisionSampleCount": 628800,
+          "collisionConstrainedSampleFraction": 0.00102735368956743,
+          "meanCollisionScale": 0.9989903786779395
+        },
+        "2s": {
+          "windowCount": 4902,
+          "validWindowCount": 4902,
+          "lowDisplacementWindowCount": 0,
+          "meanPathLength": 0.1125160883885519,
+          "meanChordToPath": 0.9737324476359653,
+          "meanSignedTravelTurnRadians": 0.00633038116211718,
+          "meanAbsoluteTravelTurnRadians": 2.7404326356168514,
+          "meanSignedTravelTurnPerDistance": 0.08019603796549245,
+          "meanAbsoluteTravelTurnPerDistance": 28.80896714498994,
+          "meanSameSignTurnPairFraction": 0.10598060978224044,
+          "meanLongestSameSignTurnRunSeconds": 0.120107439140483,
+          "meanPathTurnLag1Correlation": -0.547340550059574,
+          "meanPathTurnLag3Correlation": -0.5950934151118662,
+          "distributions": {
+            "signedTravelTurnRadians": {
+              "count": 4902,
+              "mean": 0.006330381162117436,
+              "p50": 0.00930821432719764,
+              "p90": 0.6463597015667311
+            },
+            "absoluteTravelTurnRadians": {
+              "count": 4902,
+              "mean": 2.740432635616841,
+              "p50": 2.545321569257876,
+              "p90": 3.3608401171379207
+            },
+            "signedTravelTurnPerDistance": {
+              "count": 4902,
+              "mean": 0.08019603796547896,
+              "p50": 0.08784933380899378,
+              "p90": 6.36195636658732
+            },
+            "absoluteTravelTurnPerDistance": {
+              "count": 4902,
+              "mean": 28.808967144989985,
+              "p50": 23.946657370109907,
+              "p90": 43.1681429178988
+            },
+            "chordToPath": {
+              "count": 4902,
+              "mean": 0.973732447635967,
+              "p50": 0.995714637927213,
+              "p90": 0.9999449219189361
+            },
+            "sameSignTurnPairFraction": {
+              "count": 4902,
+              "mean": 0.1059806097822403,
+              "p50": 0.05084745762711865,
+              "p90": 0.288135593220339
+            }
+          },
+          "meanBodyTurnRadians": 0.007113575988083861,
+          "meanAbsoluteBodyTurnRadians": 8.644067459773176,
+          "turnCapSaturatedSampleCount": 513156,
+          "bodyTurnSampleCount": 588240,
+          "turnCapSaturatedSampleFraction": 0.8723582211342309,
+          "meanTravelBodyAlignmentCosine": 0.9994403644000689,
+          "lowSpeedSampleCount": 68425,
+          "speedSampleCount": 588240,
+          "lowSpeedSampleFraction": 0.11632156942744458,
+          "collisionConstrainedSampleCount": 598,
+          "collisionSampleCount": 588240,
+          "collisionConstrainedSampleFraction": 0.001016591867265062,
+          "meanCollisionScale": 0.998998852819103
+        },
+        "5s": {
+          "windowCount": 1551,
+          "validWindowCount": 1551,
+          "lowDisplacementWindowCount": 0,
+          "meanPathLength": 0.2766156270906633,
+          "meanChordToPath": 0.9211462443014437,
+          "meanSignedTravelTurnRadians": 0.013372828195945357,
+          "meanAbsoluteTravelTurnRadians": 6.9262313931055495,
+          "meanSignedTravelTurnPerDistance": 0.0447198010157288,
+          "meanAbsoluteTravelTurnPerDistance": 26.78931679512505,
+          "meanSameSignTurnPairFraction": 0.11243449776935391,
+          "meanLongestSameSignTurnRunSeconds": 0.18288201160541626,
+          "meanPathTurnLag1Correlation": -0.472111945294223,
+          "meanPathTurnLag3Correlation": -0.5228551284608344,
+          "distributions": {
+            "signedTravelTurnRadians": {
+              "count": 1551,
+              "mean": 0.013372828195945933,
+              "p50": 0.011689742563326888,
+              "p90": 1.153008086002723
+            },
+            "absoluteTravelTurnRadians": {
+              "count": 1551,
+              "mean": 6.926231393105542,
+              "p50": 6.465237537001803,
+              "p90": 8.612785235210149
+            },
+            "signedTravelTurnPerDistance": {
+              "count": 1551,
+              "mean": 0.04471980101572795,
+              "p50": 0.04804287021968522,
+              "p90": 4.411470068150021
+            },
+            "absoluteTravelTurnPerDistance": {
+              "count": 1551,
+              "mean": 26.78931679512501,
+              "p50": 24.870105855942384,
+              "p90": 36.7256876785085
+            },
+            "chordToPath": {
+              "count": 1551,
+              "mean": 0.9211462443014441,
+              "p50": 0.9817277999267187,
+              "p90": 0.999688754206782
+            },
+            "sameSignTurnPairFraction": {
+              "count": 1551,
+              "mean": 0.11243449776935426,
+              "p50": 0.06040268456375839,
+              "p90": 0.30201342281879195
+            }
+          },
+          "meanBodyTurnRadians": 0.012136330057840037,
+          "meanAbsoluteBodyTurnRadians": 21.546418723422757,
+          "turnCapSaturatedSampleCount": 403231,
+          "bodyTurnSampleCount": 465300,
+          "turnCapSaturatedSampleFraction": 0.8666043412851924,
+          "meanTravelBodyAlignmentCosine": 0.999434303622732,
+          "lowSpeedSampleCount": 55072,
+          "speedSampleCount": 465300,
+          "lowSpeedSampleFraction": 0.11835804857081453,
+          "collisionConstrainedSampleCount": 507,
+          "collisionSampleCount": 465300,
+          "collisionConstrainedSampleFraction": 0.001089619600257898,
+          "meanCollisionScale": 0.998923315952702
+        }
+      }
+    },
+    {
+      "seed": 20261007,
+      "hz": 60,
+      "ticks": 36000,
+      "simulatedSeconds": 600,
+      "instrumentation": true,
+      "sampleCount": 673115,
+      "activePopulation": 19,
+      "totalSpawned": 736,
+      "totalRetired": 717,
+      "footPoints": 101772,
+      "rngState": 2211568801,
+      "rngCalls": 375882,
+      "pheromoneSha256": "1ec20df94594577103942753e0ab622583dcb7390d21f087a511ff6da371a993",
+      "surfaceSha256": "56d25cb3273497b23958b2bc1c57a326d85236fd0c33554981667d957ab854c3",
+      "finalAgentsSha256": "fb83985e4c2f5d1e17e2c25fd8c313878ce2cbff58ecc085a29d0900bdc8e2ef",
+      "finalPlateCount": 38,
+      "finalNoduleCount": 32,
+      "routeCurvature": {
+        "1s": {
+          "windowCount": 10482,
+          "validWindowCount": 10447,
+          "lowDisplacementWindowCount": 35,
+          "meanPathLength": 0.05569873378884541,
+          "meanChordToPath": 0.9907217986088228,
+          "meanSignedTravelTurnRadians": -0.005132692007740228,
+          "meanAbsoluteTravelTurnRadians": 1.3547007769514163,
+          "meanSignedTravelTurnPerDistance": -0.17630670441221055,
+          "meanAbsoluteTravelTurnPerDistance": 62.633374286461,
+          "meanSameSignTurnPairFraction": 0.09297629976664176,
+          "meanLongestSameSignTurnRunSeconds": 0.07945183625282537,
+          "meanPathTurnLag1Correlation": -0.642086840574592,
+          "meanPathTurnLag3Correlation": -0.6858286737231588,
+          "distributions": {
+            "signedTravelTurnRadians": {
+              "count": 10447,
+              "mean": -0.005132692007740963,
+              "p50": -0.009660924742195931,
+              "p90": 0.3575987547755239
+            },
+            "absoluteTravelTurnRadians": {
+              "count": 10447,
+              "mean": 1.354700776951421,
+              "p50": 1.2628101376780752,
+              "p90": 1.5985602841486382
+            },
+            "signedTravelTurnPerDistance": {
+              "count": 10447,
+              "mean": -0.17630670441221089,
+              "p50": -0.1659424106563347,
+              "p90": 7.036783334305544
+            },
+            "absoluteTravelTurnPerDistance": {
+              "count": 10447,
+              "mean": 62.63337428646102,
+              "p50": 23.033670382122626,
+              "p90": 53.226922469919984
+            },
+            "chordToPath": {
+              "count": 10447,
+              "mean": 0.9907217986088247,
+              "p50": 0.9998163727468302,
+              "p90": 0.9999479255635663
+            },
+            "sameSignTurnPairFraction": {
+              "count": 10447,
+              "mean": 0.092976299766634,
+              "p50": 0,
+              "p90": 0.25862068965517243
+            }
+          },
+          "meanBodyTurnRadians": -0.005572632083546495,
+          "meanAbsoluteBodyTurnRadians": 4.340468488114154,
+          "turnCapSaturatedSampleCount": 554883,
+          "bodyTurnSampleCount": 628920,
+          "turnCapSaturatedSampleFraction": 0.8822791452012975,
+          "meanTravelBodyAlignmentCosine": 0.9991324099358536,
+          "lowSpeedSampleCount": 73191,
+          "speedSampleCount": 628920,
+          "lowSpeedSampleFraction": 0.11637569166189658,
+          "collisionConstrainedSampleCount": 2218,
+          "collisionSampleCount": 628920,
+          "collisionConstrainedSampleFraction": 0.003526680658907333,
+          "meanCollisionScale": 0.9990231012790632
+        },
+        "2s": {
+          "windowCount": 4892,
+          "validWindowCount": 4877,
+          "lowDisplacementWindowCount": 15,
+          "meanPathLength": 0.11151645913294232,
+          "meanChordToPath": 0.9801220022369422,
+          "meanSignedTravelTurnRadians": -0.015483272400703435,
+          "meanAbsoluteTravelTurnRadians": 2.770108372066018,
+          "meanSignedTravelTurnPerDistance": -0.13654393436747786,
+          "meanAbsoluteTravelTurnPerDistance": 56.07228458218396,
+          "meanSameSignTurnPairFraction": 0.0902544944327475,
+          "meanLongestSameSignTurnRunSeconds": 0.108912582871981,
+          "meanPathTurnLag1Correlation": -0.6042678156852994,
+          "meanPathTurnLag3Correlation": -0.6465256081744604,
+          "distributions": {
+            "signedTravelTurnRadians": {
+              "count": 4877,
+              "mean": -0.015483272400704347,
+              "p50": -0.008289590054541662,
+              "p90": 0.5300354003667801
+            },
+            "absoluteTravelTurnRadians": {
+              "count": 4877,
+              "mean": 2.770108372066027,
+              "p50": 2.5348667397484004,
+              "p90": 3.13974556280274
+            },
+            "signedTravelTurnPerDistance": {
+              "count": 4877,
+              "mean": -0.13654393436748494,
+              "p50": -0.08838306623238941,
+              "p90": 4.965661428613598
+            },
+            "absoluteTravelTurnPerDistance": {
+              "count": 4877,
+              "mean": 56.072284582183784,
+              "p50": 23.751585883493657,
+              "p90": 42.681109521906556
+            },
+            "chordToPath": {
+              "count": 4877,
+              "mean": 0.9801220022369411,
+              "p50": 0.9968887825178149,
+              "p90": 0.9999451399589887
+            },
+            "sameSignTurnPairFraction": {
+              "count": 4877,
+              "mean": 0.09025449443274722,
+              "p50": 0.05084745762711865,
+              "p90": 0.22033898305084745
+            }
+          },
+          "meanBodyTurnRadians": -0.015443328319825641,
+          "meanAbsoluteBodyTurnRadians": 8.684607935500862,
+          "turnCapSaturatedSampleCount": 518246,
+          "bodyTurnSampleCount": 587040,
+          "turnCapSaturatedSampleFraction": 0.8828120741346416,
+          "meanTravelBodyAlignmentCosine": 0.9986013869397266,
+          "lowSpeedSampleCount": 67071,
+          "speedSampleCount": 587040,
+          "lowSpeedSampleFraction": 0.11425286181520851,
+          "collisionConstrainedSampleCount": 2193,
+          "collisionSampleCount": 587040,
+          "collisionConstrainedSampleFraction": 0.0037356909239574815,
+          "meanCollisionScale": 0.9986801291545576
+        },
+        "5s": {
+          "windowCount": 1519,
+          "validWindowCount": 1516,
+          "lowDisplacementWindowCount": 3,
+          "meanPathLength": 0.27344066664215483,
+          "meanChordToPath": 0.9391580594171118,
+          "meanSignedTravelTurnRadians": -0.033996801397887556,
+          "meanAbsoluteTravelTurnRadians": 7.887622388698301,
+          "meanSignedTravelTurnPerDistance": 32.344630018742045,
+          "meanAbsoluteTravelTurnPerDistance": 3143.025996665882,
+          "meanSameSignTurnPairFraction": 0.09212288125723761,
+          "meanLongestSameSignTurnRunSeconds": 0.1631596306068616,
+          "meanPathTurnLag1Correlation": -0.5514621895553712,
+          "meanPathTurnLag3Correlation": -0.5955849550316256,
+          "distributions": {
+            "signedTravelTurnRadians": {
+              "count": 1516,
+              "mean": -0.03399680139788771,
+              "p50": -0.003569382364690732,
+              "p90": 0.9312031203820679
+            },
+            "absoluteTravelTurnRadians": {
+              "count": 1516,
+              "mean": 7.8876223886982935,
+              "p50": 6.426340573177301,
+              "p90": 7.902277418192204
+            },
+            "signedTravelTurnPerDistance": {
+              "count": 1516,
+              "mean": 32.34463001874205,
+              "p50": -0.01111716719567683,
+              "p90": 3.574321333107425
+            },
+            "absoluteTravelTurnPerDistance": {
+              "count": 1516,
+              "mean": 3143.0259966658805,
+              "p50": 24.909075320110645,
+              "p90": 35.69657535566628
+            },
+            "chordToPath": {
+              "count": 1516,
+              "mean": 0.9391580594171105,
+              "p50": 0.9834998670056082,
+              "p90": 0.9997547854268868
+            },
+            "sameSignTurnPairFraction": {
+              "count": 1516,
+              "mean": 0.09212288125723779,
+              "p50": 0.050335570469798654,
+              "p90": 0.20973154362416108
+            }
+          },
+          "meanBodyTurnRadians": -0.04592439130038004,
+          "meanAbsoluteBodyTurnRadians": 21.69130414948771,
+          "turnCapSaturatedSampleCount": 400936,
+          "bodyTurnSampleCount": 455700,
+          "turnCapSaturatedSampleFraction": 0.8798244459073952,
+          "meanTravelBodyAlignmentCosine": 0.997401045689687,
+          "lowSpeedSampleCount": 54180,
+          "speedSampleCount": 455700,
+          "lowSpeedSampleFraction": 0.11889400921658987,
+          "collisionConstrainedSampleCount": 2013,
+          "collisionSampleCount": 455700,
+          "collisionConstrainedSampleFraction": 0.004417379855167874,
+          "meanCollisionScale": 0.9975755763364252
+        }
+      }
+    }
+  ],
+  "captureCodec": {
+    "format": "lossless gzip of column-major blocks: uint32 LE id-index and tick, float64 LE numeric columns, uint8 booleans; null numeric values encode as NaN; ids and offsets are in each schema sidecar",
+    "schemaVersion": "ant-route-curvature-f64-v1",
+    "codecSourceSha256": "3c7ed0a544de7841bea6d17213c66ab0e192bc0aa2285fead3aed7e623478541",
+    "roundTrip": {
+      "20261005": {
+        "exactObjectIsEveryField": true,
+        "samples": 677868,
+        "rawJsonlArchivedSha256": "332e44c7ecf52171277fd656a32b1874e05c353b69047bdb561989f761acb450"
+      },
+      "20261006": {
+        "exactObjectIsEveryField": true,
+        "samples": 669098,
+        "rawJsonlArchivedSha256": "0102cc22a012df54ea0a408bc3e75b56c2c5e69576591782836637b8981f938a"
+      },
+      "20261007": {
+        "exactObjectIsEveryField": true,
+        "samples": 673115,
+        "rawJsonlArchivedSha256": "70f5bc435916a8502b702af844588c86c7f53818b71350911d4246ee6cba082d"
+      }
+    },
+    "artifacts": {
+      "20261005": {
+        "trajectory": {
+          "file": "seed-20261005-trajectory.f64.gz",
+          "bytes": 46402183,
+          "sha256": "e51d51f1f5bacb92560d4c7f867e7bbe76e3df7aa9bda6f871fd1fc8bb73fe5b"
+        },
+        "schema": {
+          "file": "seed-20261005-trajectory.schema.json",
+          "bytes": 9426,
+          "sha256": "87f89e2153682feabfdb496d4bb283fec5cb359a3f8495333dc1fa67a4df6437"
+        },
+        "snapshots": {
+          "file": "seed-20261005-snapshots.json.gz",
+          "bytes": 733582,
+          "sha256": "0dc419486c87117a244a9143fb47b727cee556156a466562ebaa396da253c119"
+        },
+        "summary": {
+          "file": "seed-20261005-summary.json",
+          "bytes": 8009,
+          "sha256": "ca0697b7ecfd80123b89d1520ff8f3249d4eb9067f7b7f6285371b65a50271c8"
+        }
+      },
+      "20261006": {
+        "trajectory": {
+          "file": "seed-20261006-trajectory.f64.gz",
+          "bytes": 45904695,
+          "sha256": "c70801559c225d43f85fb7be9961e74aa9dbcba2f41eee57c8dcc1069c03512a"
+        },
+        "schema": {
+          "file": "seed-20261006-trajectory.schema.json",
+          "bytes": 8766,
+          "sha256": "a21e89c8bfcf170223f87e5069c30fad737b55a05cef78c98c5755c6ac1917ab"
+        },
+        "snapshots": {
+          "file": "seed-20261006-snapshots.json.gz",
+          "bytes": 798047,
+          "sha256": "ba260b75708e47a87d21000bc0df66a9be58989cca4e53017be29f564c1f5ca1"
+        },
+        "summary": {
+          "file": "seed-20261006-summary.json",
+          "bytes": 7968,
+          "sha256": "799f88e409528bcc1f83bf72701f4837773f0344e3e68f1e30e8a045de543735"
+        }
+      },
+      "20261007": {
+        "trajectory": {
+          "file": "seed-20261007-trajectory.f64.gz",
+          "bytes": 45954845,
+          "sha256": "734cc9ce79aaefd4639a2b38a1c98000b7d537f09dfbeb2ecedc9ec51bdcb98c"
+        },
+        "schema": {
+          "file": "seed-20261007-trajectory.schema.json",
+          "bytes": 9236,
+          "sha256": "8da7319343673974dacf332c51a343bcf3285deca6f7806ce1ef9d2df56f700d"
+        },
+        "snapshots": {
+          "file": "seed-20261007-snapshots.json.gz",
+          "bytes": 827638,
+          "sha256": "3b95d36d1097be3a446a461546b518cc2a818e45b77680f60545ca63b4f551f3"
+        },
+        "summary": {
+          "file": "seed-20261007-summary.json",
+          "bytes": 7996,
+          "sha256": "b011d3cb3f96ee6889c084842ef8a0e7cb025b1f9a2b8501c8976131c1e867af"
+        }
+      }
+    },
+    "snapshots": {
+      "20261005": [
+        {
+          "tick": 1800,
+          "plateCount": 0,
+          "noduleCount": 0,
+          "pheromoneSha256": "48ce20c18788a4e3b2d835e6cc489a162dbd5ce30bd745e73845e6054eab02cf",
+          "surfaceSha256": "d92cb7765f1fa9587ea765555dc427b19d2fc84d9c6824c39f81ee802833f0dd"
+        },
+        {
+          "tick": 7200,
+          "plateCount": 1,
+          "noduleCount": 0,
+          "pheromoneSha256": "34d4835dfc8d10f3cd44846f9cfe9381976fc369c8a1db16922fcda8828c7b03",
+          "surfaceSha256": "b5af1dcc1ddd997165a4d1bb0cefab4cc3e93b03da1b0e2430321259399ba3cd"
+        },
+        {
+          "tick": 18000,
+          "plateCount": 8,
+          "noduleCount": 1,
+          "pheromoneSha256": "db67ee364f340801ab2d717718e9c4435ef8d0610256887b7b59d1237cd3dc26",
+          "surfaceSha256": "a4e8a246af58425f1629986ea86a9123965f4b6698e159232d4c34d307742a80"
+        },
+        {
+          "tick": 36000,
+          "plateCount": 29,
+          "noduleCount": 32,
+          "pheromoneSha256": "8f1f653371f1b4fd3578433c1cba6d3869d20860103b4534eec20c7a6d5c192d",
+          "surfaceSha256": "864674a5d4a1a491366be83ad428c9f0c1a4fcd3e185e8a070ffa78b576934a3"
+        }
+      ],
+      "20261006": [
+        {
+          "tick": 1800,
+          "plateCount": 0,
+          "noduleCount": 0,
+          "pheromoneSha256": "270011e15c8d7daa6908dd4ada425502fd041112921e9fb1ac89320e772b3b05",
+          "surfaceSha256": "b5e11f69a626befd0fb01fa0c851443322bbfe789d3e6a12d442ffe5ba4b7087"
+        },
+        {
+          "tick": 7200,
+          "plateCount": 0,
+          "noduleCount": 0,
+          "pheromoneSha256": "4d251eacdeb14c64b666264c5980284c0961e049cce2e1a1d81252af9554cede",
+          "surfaceSha256": "caa252ff2818d6fb411d87453466ce2d0dbbdce8e4096526e6f7bbdf54521a1d"
+        },
+        {
+          "tick": 18000,
+          "plateCount": 7,
+          "noduleCount": 1,
+          "pheromoneSha256": "f763938453320d2416f61ce17dd8fd9e7305453dbaf8294f5952ceb2aa583550",
+          "surfaceSha256": "4eb9e7b3188ad016db0f4ac33ee2d4df31e328122d757bc34ae82d2d505df1bb"
+        },
+        {
+          "tick": 36000,
+          "plateCount": 33,
+          "noduleCount": 32,
+          "pheromoneSha256": "306b55e919d57e02b2b56226c20649654d1e977c77e34b1099190baefa630442",
+          "surfaceSha256": "8d80d10c007c3aaa7b0ddb0e67cac6fd832766dd786b7af1df9b12f94eea0de6"
+        }
+      ],
+      "20261007": [
+        {
+          "tick": 1800,
+          "plateCount": 0,
+          "noduleCount": 0,
+          "pheromoneSha256": "a48b0846221f9df1ec20f373ed40836bf3ae50e4a8e3c1c6d8730fa525bbd6e6",
+          "surfaceSha256": "303bd2134ed8cacdcf18b10eacbe6297775a38c739895fe97ff7f85662cc6581"
+        },
+        {
+          "tick": 7200,
+          "plateCount": 0,
+          "noduleCount": 0,
+          "pheromoneSha256": "d13d12d7076430c2ec8080b0b2980a7fd3be77cc15c93fe676fcb02801edaac4",
+          "surfaceSha256": "48dbb3252ac23e3e37d3b0596b74e302472b8ea5b8441a2136d4c316afc3e611"
+        },
+        {
+          "tick": 18000,
+          "plateCount": 12,
+          "noduleCount": 4,
+          "pheromoneSha256": "fd9b77a3a70e0110ed62752a50c4baee0719bc47486aff3321a16ef22b6437a5",
+          "surfaceSha256": "d75f9bbcf799294de4e352a9faefcc9424d5d663b18aed999455e423bae1fad0"
+        },
+        {
+          "tick": 36000,
+          "plateCount": 38,
+          "noduleCount": 32,
+          "pheromoneSha256": "1ec20df94594577103942753e0ab622583dcb7390d21f087a511ff6da371a993",
+          "surfaceSha256": "56d25cb3273497b23958b2bc1c57a326d85236fd0c33554981667d957ab854c3"
+        }
+      ]
+    },
+    "executedCommand": "node scripts/ant-route-curvature-natural.js docs/ant/evidence/2026-10-22-route-curvature-survey/natural-final 8c60e4bba3bd5b476300e90a2936bfebd1f831c2",
+    "exitCode": 0
+  }
+}

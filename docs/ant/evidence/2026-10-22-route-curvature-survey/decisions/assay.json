@@ -1,0 +1,131 @@
+{
+  "method": "One production updateIntention per freshly reset agent/RNG trial. Flat scalar field=0.2, no neighbors. Local target equals prescribed adherence. Chosen intent only; no movement. Matched initial random state per trial/variant, not common random sequence after branch divergence.",
+  "seedRule": "20261005 + trial; production LCG, 4000 trials; default DT 1/60",
+  "diagnosticThreshold": "lateral iff abs(intent-current)>0.3 rad, separating center from ±.47/±.92 candidates",
+  "sourceSha256": "f05a59a4630557e9996fd7f7b7e3b1d942adea9ef0f30c16b55db43318cdfe00",
+  "rows": [
+    {
+      "variant": "baseline",
+      "adherence": 0,
+      "trials": 4000,
+      "sourceSha256": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+      "shadowSha256": null,
+      "randomCalls": 56000,
+      "lateralIntentFraction": 0.7985,
+      "meanAbsoluteIntentRadians": 0.5586690795728677,
+      "meanDecisionSeconds": 0.3681776188277751
+    },
+    {
+      "variant": "baseline",
+      "adherence": 0.5,
+      "trials": 4000,
+      "sourceSha256": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+      "shadowSha256": null,
+      "randomCalls": 56000,
+      "lateralIntentFraction": 0.70675,
+      "meanAbsoluteIntentRadians": 0.44917322139568916,
+      "meanDecisionSeconds": 0.4866847898879648
+    },
+    {
+      "variant": "baseline",
+      "adherence": 1,
+      "trials": 4000,
+      "sourceSha256": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+      "shadowSha256": null,
+      "randomCalls": 56000,
+      "lateralIntentFraction": 0.531,
+      "meanAbsoluteIntentRadians": 0.28771754642368297,
+      "meanDecisionSeconds": 0.6212997317718705
+    },
+    {
+      "variant": "scoreOff",
+      "adherence": 0,
+      "trials": 4000,
+      "sourceSha256": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+      "shadowSha256": "7c74703c53600b1020f30fc21a32e3466d3f27b2dac7bf2a4f069f3505c73977",
+      "substitution": {
+        "before": "+ (Math.cos(option.offset) - 1) * agent.trailAdherence * ADHERENCE_DIRECTION_SCORE",
+        "after": "+ 0"
+      },
+      "randomCalls": 56000,
+      "lateralIntentFraction": 0.7985,
+      "meanAbsoluteIntentRadians": 0.5586690795728677,
+      "meanDecisionSeconds": 0.3681776188277751
+    },
+    {
+      "variant": "scoreOff",
+      "adherence": 0.5,
+      "trials": 4000,
+      "sourceSha256": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+      "shadowSha256": "7c74703c53600b1020f30fc21a32e3466d3f27b2dac7bf2a4f069f3505c73977",
+      "substitution": {
+        "before": "+ (Math.cos(option.offset) - 1) * agent.trailAdherence * ADHERENCE_DIRECTION_SCORE",
+        "after": "+ 0"
+      },
+      "randomCalls": 56000,
+      "lateralIntentFraction": 0.78675,
+      "meanAbsoluteIntentRadians": 0.5393624165691567,
+      "meanDecisionSeconds": 0.4866847898879648
+    },
+    {
+      "variant": "scoreOff",
+      "adherence": 1,
+      "trials": 4000,
+      "sourceSha256": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+      "shadowSha256": "7c74703c53600b1020f30fc21a32e3466d3f27b2dac7bf2a4f069f3505c73977",
+      "substitution": {
+        "before": "+ (Math.cos(option.offset) - 1) * agent.trailAdherence * ADHERENCE_DIRECTION_SCORE",
+        "after": "+ 0"
+      },
+      "randomCalls": 56000,
+      "lateralIntentFraction": 0.75625,
+      "meanAbsoluteIntentRadians": 0.502512308761197,
+      "meanDecisionSeconds": 0.6212997317718705
+    },
+    {
+      "variant": "explorationUncoupled",
+      "adherence": 0,
+      "trials": 4000,
+      "sourceSha256": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+      "shadowSha256": "ef95fd7d59b974ea4ac9dce27886e43bc8101da7c3a1f41faf75fafa55fb1c93",
+      "substitution": {
+        "before": "agent.personality.exploration * (1.2 - confidence)",
+        "after": "agent.personality.exploration * 1.2"
+      },
+      "randomCalls": 56000,
+      "lateralIntentFraction": 0.7985,
+      "meanAbsoluteIntentRadians": 0.5586690795728677,
+      "meanDecisionSeconds": 0.3681776188277751
+    },
+    {
+      "variant": "explorationUncoupled",
+      "adherence": 0.5,
+      "trials": 4000,
+      "sourceSha256": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+      "shadowSha256": "ef95fd7d59b974ea4ac9dce27886e43bc8101da7c3a1f41faf75fafa55fb1c93",
+      "substitution": {
+        "before": "agent.personality.exploration * (1.2 - confidence)",
+        "after": "agent.personality.exploration * 1.2"
+      },
+      "randomCalls": 56000,
+      "lateralIntentFraction": 0.71925,
+      "meanAbsoluteIntentRadians": 0.4634469386268283,
+      "meanDecisionSeconds": 0.4866847898879648
+    },
+    {
+      "variant": "explorationUncoupled",
+      "adherence": 1,
+      "trials": 4000,
+      "sourceSha256": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+      "shadowSha256": "ef95fd7d59b974ea4ac9dce27886e43bc8101da7c3a1f41faf75fafa55fb1c93",
+      "substitution": {
+        "before": "agent.personality.exploration * (1.2 - confidence)",
+        "after": "agent.personality.exploration * 1.2"
+      },
+      "randomCalls": 56000,
+      "lateralIntentFraction": 0.59625,
+      "meanAbsoluteIntentRadians": 0.3513664938162726,
+      "meanDecisionSeconds": 0.6212997317718705
+    }
+  ]
+}
