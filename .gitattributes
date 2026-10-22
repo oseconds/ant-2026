@@ -62,6 +62,13 @@ docs/ant/daily/2026-10-18-synthetic-plate-shape-capability.md text eol=lf
 
 # Preserve hashes for the frozen-PCM boundary sensitivity pass.
 scripts/ant-erb-window-boundary.py text eol=lf
+
+# Preserve the new recruitment survey tooling across Windows checkouts.
+scripts/ant-recruitment-*.js text eol=lf
+# Preserve the already captured visual generator's exact source receipt bytes.
+scripts/ant-recruitment-visuals.js -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/ant-recruitment-*.test.js text eol=lf
+docs/ant/daily/2026-10-22-recruitment-founder-survey.md text eol=lf
 docs/ant/evidence/2026-10-15-erb-window-boundary/*.md text eol=lf
 docs/ant/evidence/2026-10-15-erb-window-boundary/*.json text eol=lf
 docs/ant/evidence/2026-10-15-erb-window-boundary/*.png binary
