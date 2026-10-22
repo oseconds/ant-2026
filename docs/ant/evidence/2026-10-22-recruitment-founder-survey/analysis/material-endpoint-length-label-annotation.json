@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "scope": "Interpretation-only annotation for historical Stage B receipt field naming; raw artifacts and receipts are unchanged.",
+  "affectedReceipts": [
+    {
+      "path": "stage-b-receipt.json",
+      "sha256": "c01609b9e06447d52dd1b9f59f8c156ea280605f773cb3b936e5d48f578523bf"
+    },
+    {
+      "path": "stage-b-v2-receipt.json",
+      "sha256": "4aecabd75bf7f190e98001ed316de9c5d8f5fbe10c0aa2fd445e891c24e88c3c"
+    }
+  ],
+  "matchingAnalyzerSourceSnapshot": {
+    "path": "execution-sources/stage-b-v2-ant-recruitment-analyze.js",
+    "sha256": "8bded6150e1df1aa6ff36cdd7cebb113e3750befd7be5b11fba3cd48bd1d4371",
+    "receiptSummaryAnalyzerSha256": "8bded6150e1df1aa6ff36cdd7cebb113e3750befd7be5b11fba3cd48bd1d4371"
+  },
+  "field": "material.*.material.endpointOrientation.meanLengthGridCells",
+  "historicalLabel": "meanLengthGridCells",
+  "correctInterpretation": "Mean Euclidean endpoint separation in normalized domain coordinates (x/(width-1), y/(height-1)); it is not a grid-cell distance.",
+  "reason": "The principalPath index is converted to normalized x/y coordinates before endpoint distances are measured.",
+  "correctedFieldNameForFutureExports": "meanLengthNormalizedDomainUnits",
+  "impact": "The historical numeric values are retained and remain interpretable as normalized-domain distances; only the unit label was incorrect."
+}

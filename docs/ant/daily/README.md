@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-22 — Recruitment / founder-condition responsibility
+
+[Process log](./2026-10-22-recruitment-founder-survey.md) · [Evidence and decision](../evidence/2026-10-22-recruitment-founder-survey/REPORT.md)
+
+- Three-seed heading-only controls support continuing heading bias as a major spatial condition; nest-position causation is untested
+- Direct/45-second-slow pheromone shadows track isotropic recruitment without a clear extra regime benefit
+- Twenty-two successful model runs, longest 30 simulated minutes / 110 retained Plates; no production adoption or hours-long claim
+- Human judgment distinguishes clear static cross-run differences from temporal candidates with similar overall impression
+
 ### 2026-10-18 — Plate audio reassessment and live dense-mix plan
 
 [Process / next-pass plan](./2026-10-18-plate-audio-review-and-live-density-plan.md)

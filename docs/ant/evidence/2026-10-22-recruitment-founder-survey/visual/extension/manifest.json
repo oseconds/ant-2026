@@ -1,0 +1,224 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Fixed-time rendered comparison and continuous descriptive plots for extension seed 20261005.",
+  "source": {
+    "sourceCommit": "8c60e4bba3bd5b476300e90a2936bfebd1f831c2",
+    "runnerSha256": "a5d33aa6c389e9fad2d406414aff91101d126273e6cfedcf5e424a87faa31e14",
+    "sourceHashes": {
+      "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+      "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+      "src/lib/agents/ant/LocalOccupancy.js": "df22dd38e9af8078ebcb1d225ca2a5eaf579e994d2d4a00ce9ceeefa2403ff16",
+      "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+      "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+      "src/lib/agents/ant/BodyPoseController.js": "2ec4cc12c12ae301ea07056889c3be9255b1b1e155b7724cd3366278d60ace8e",
+      "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+      "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd",
+      "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+      "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+      "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+      "scripts/ant-recruitment-descriptors.js": "b1f2300795d9674b33db666e40bbf9f6d72c3a4daea5c3c8a04a08cf1e9098b0",
+      "scripts/ant-recruitment-shadow.js": "a5d33aa6c389e9fad2d406414aff91101d126273e6cfedcf5e424a87faa31e14",
+      "src/lib/renderers/AntRenderer.js": "36f76459cc5323b846e04b8bced95b19a4d382c645303dbb9b49aa1050354566",
+      "scripts/ant-recruitment-visuals.js": "080af7fb79ce07e159e4d96b9da1355ec54a2aac9f1ddcfbb4accbd5b06b8aac"
+    },
+    "inputs": [
+      {
+        "variant": "baseline",
+        "seed": 20261005,
+        "manifestSha256": "10a2f8c19e9948276b7e4e4539bc3d63c7d699b0d5eae367c43176662645aee7",
+        "snapshotsSha256": "6a40ce276e6419e3818519a68d23ba5707ef28ffca0d98ef535d978177796353",
+        "framesSha256": "a2f6fd1f94339eaa811218f5dc121ce3f1e4ae2e6132ad7f1012f8d77e1053f4",
+        "snapshotSeconds": [
+          30.000000000000753,
+          59.999999999996994,
+          120.00000000001204,
+          299.99999999998306,
+          600.0000000000679,
+          899.9999999993694,
+          1800
+        ]
+      },
+      {
+        "variant": "isotropic",
+        "seed": 20261005,
+        "manifestSha256": "2ec27f4f7086ce1a90e7d0006038b7f7101b67d5d9023ea86b2f3790dd2963cc",
+        "snapshotsSha256": "02015ac69de2e5443aca2b60fbd0715f7b5ac6a3c9e85d0d0e7b6664183d99cf",
+        "framesSha256": "8fd8dfe9f7656c685dd8aa30d00b58e4802eb590ee75d6c0f95923382a26f8c9",
+        "snapshotSeconds": [
+          30.000000000000753,
+          59.999999999996994,
+          120.00000000001204,
+          299.99999999998306,
+          600.0000000000679,
+          899.9999999993694,
+          1800
+        ]
+      },
+      {
+        "variant": "pheromoneDirect",
+        "seed": 20261005,
+        "manifestSha256": "827acd1745985f9b4c4f5d51c55deaaef37c1e155048b09b4483eac65e3fdfa5",
+        "snapshotsSha256": "91ad88d047656873afbdf5cd79a58f0fea007d3da5ffd8865afa227dc1abd214",
+        "framesSha256": "673799b077b957de68ece678dfac7f6382f333f10bd2efd69539d57bac47200a",
+        "snapshotSeconds": [
+          30.000000000000753,
+          59.999999999996994,
+          120.00000000001204,
+          299.99999999998306,
+          600.0000000000679,
+          899.9999999993694,
+          1800
+        ]
+      },
+      {
+        "variant": "pheromoneSlow",
+        "seed": 20261005,
+        "manifestSha256": "02b063532fa259d764a4ccc22a22986f1b19e608cc6c5f8a8cdad34d3344664a",
+        "snapshotsSha256": "898df64c2127a7384b65e9008547b57b5da137db36a26b346de0a9fa9e6b3558",
+        "framesSha256": "26283a5bdefd7ecdc5f55c70f7c50f1066745222e4facc70a6390603176218d9",
+        "snapshotSeconds": [
+          30.000000000000753,
+          59.999999999996994,
+          120.00000000001204,
+          299.99999999998306,
+          600.0000000000679,
+          899.9999999993694,
+          1800
+        ]
+      }
+    ]
+  },
+  "renderer": {
+    "name": "AntRenderer",
+    "viewport": {
+      "width": 640,
+      "height": 640
+    },
+    "deviceScaleFactor": 1,
+    "pixelRatio": 1,
+    "material": true,
+    "pheromone": true,
+    "overlays": false,
+    "simulationSteps": 0,
+    "audioResources": false
+  },
+  "snapshotProjection": "The runner JSON encodes typed arrays as numeric-key objects. Renderer-only projection validates contiguous keys and exact width×height, then converts pheromone.values, topLayerByCell, and layerCountByCell to arrays without changing simulation data.",
+  "browserVersion": "155.0.8059.85",
+  "comparisons": [
+    {
+      "seconds": 300,
+      "file": "comparison-300s.png",
+      "sha256": "0f3e5b2dbe43687ad2411a999aefe2db28db72b6384df1c860c1f1d7825ac06b",
+      "bytes": 817145,
+      "dimensions": "1280x1336"
+    },
+    {
+      "seconds": 600,
+      "file": "comparison-600s.png",
+      "sha256": "29c32082d1044bb77471884dc42622cc904e8211c3b7b32bc87dbccc3135cb14",
+      "bytes": 982823,
+      "dimensions": "1280x1336"
+    },
+    {
+      "seconds": 900,
+      "file": "comparison-900s.png",
+      "sha256": "02aec997a961cbc5462305ac3a2918bc8805b91484c23fd2967252c6cc1a8f88",
+      "bytes": 961035,
+      "dimensions": "1280x1336"
+    },
+    {
+      "seconds": 1800,
+      "file": "comparison-1800s.png",
+      "sha256": "915f713990f7ad4d168ec721afc7f1c5f3359f72ae9d7dae3026b7db85f6a3fa",
+      "bytes": 952745,
+      "dimensions": "1280x1336"
+    }
+  ],
+  "timeseries": [
+    {
+      "variant": "baseline",
+      "file": "timeseries-baseline.png",
+      "sha256": "b257a6b0a4cde59f2e41a008e62a4e1ca2487be2245925aa37b8d7ed5cf0ff7d",
+      "bytes": 881588,
+      "dimensions": "1280x1336",
+      "seconds": [
+        300,
+        600,
+        900,
+        1800
+      ]
+    },
+    {
+      "variant": "isotropic",
+      "file": "timeseries-isotropic.png",
+      "sha256": "5d8fb04760693a9ff1c8dc00e070ba551ea27ba16bdfd26e68e600b0c3a23e07",
+      "bytes": 929483,
+      "dimensions": "1280x1336",
+      "seconds": [
+        300,
+        600,
+        900,
+        1800
+      ]
+    },
+    {
+      "variant": "pheromoneDirect",
+      "file": "timeseries-pheromoneDirect.png",
+      "sha256": "011a589710f931217e2e31d31e85279a82c50e3f9d00c5eb2500ed8e84bae075",
+      "bytes": 934621,
+      "dimensions": "1280x1336",
+      "seconds": [
+        300,
+        600,
+        900,
+        1800
+      ]
+    },
+    {
+      "variant": "pheromoneSlow",
+      "file": "timeseries-pheromoneSlow.png",
+      "sha256": "7d19d5d246e66d4e044ac82930cce14e1ace14ce0b35535291ad4e62565b2534",
+      "bytes": 994153,
+      "dimensions": "1280x1336",
+      "seconds": [
+        300,
+        600,
+        900,
+        1800
+      ]
+    }
+  ],
+  "descriptors": {
+    "file": "descriptors.svg",
+    "sha256": "59035ede61244ff46345ce09bc4dfdddd7bc444d36a8293d5738d05fa4160c30",
+    "bytes": 1063152,
+    "dimensions": "1440x1502",
+    "plotted": [
+      "ant centroid x/y",
+      "south fraction",
+      "covariance-trace RMS radius",
+      "movement polarization magnitude",
+      "movement polarization direction",
+      "pheromone angular direction and concentration",
+      "radial outward flow fraction",
+      "q R/angle",
+      "g R/angle"
+    ],
+    "flowDefinition": "fraction of sampled ant displacements with positive radial velocity from nest, pooled by 1 Hz frame",
+    "plottingFallback": "Matplotlib and chart packages were unavailable; SVG uses fixed axes. CSV retains every plotted sample for standard replotting.",
+    "csv": {
+      "file": "descriptors.csv",
+      "sha256": "176a30672f66cd38279cf5aba848c5f4c0968e7f63cd02536100d6a105e2c91e",
+      "bytes": 1634570
+    },
+    "gaps": "Null values create gaps; direction traces break across wrap discontinuities."
+  },
+  "completed": true,
+  "environment": {
+    "node": "v22.23.2",
+    "platform": "win32",
+    "architecture": "x64",
+    "browser": "155.0.8059.85",
+    "headless": true
+  }
+}

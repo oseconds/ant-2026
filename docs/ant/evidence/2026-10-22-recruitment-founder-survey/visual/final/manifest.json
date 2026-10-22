@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Fixed-time rendered comparison and continuous descriptive plots for Stage A seed 20261005.",
+  "source": {
+    "sourceCommit": "8c60e4bba3bd5b476300e90a2936bfebd1f831c2",
+    "sourceHashes": {
+      "src/lib/renderers/AntRenderer.js": "36f76459cc5323b846e04b8bced95b19a4d382c645303dbb9b49aa1050354566",
+      "scripts/ant-recruitment-visuals.js": "a58a6a9a11afdbc0b3b97f9f2138e71043e8d840a104a999c9aab69e3d7013e1"
+    },
+    "inputs": [
+      {
+        "variant": "baseline",
+        "seed": 20261005,
+        "manifestSha256": "459cbbb2f51893c473893ea261a9542e09ab36505dfc653be64d1f5b45ef26e2",
+        "snapshotsSha256": "f2f5b0113d8aab1946a8f9cdf3b7ca6d99df9a81641ebc3da193721e779af555",
+        "framesSha256": "d8099b3dff63665bf1828bdb39250a23a029c3c447dfd3d77cc329cbbdac19d7",
+        "snapshotSeconds": [
+          30.000000000000753,
+          59.999999999996994,
+          120.00000000001204,
+          299.99999999998306,
+          600
+        ]
+      },
+      {
+        "variant": "rotate90",
+        "seed": 20261005,
+        "manifestSha256": "79f480e0dcda82d60d12f7d14d51d3b3da62b9dca934ea83addeaf63c3a770bd",
+        "snapshotsSha256": "d5f23530239e4387a2dd822d0d63eaef38ad1a1c5f2766fecda03fe95f332c7f",
+        "framesSha256": "1eb34a3062463bfffc0aba476328a8b59696e64fd8038eebca8ca9fe212e82ef",
+        "snapshotSeconds": [
+          30.000000000000753,
+          59.999999999996994,
+          120.00000000001204,
+          299.99999999998306,
+          600
+        ]
+      },
+      {
+        "variant": "reverse",
+        "seed": 20261005,
+        "manifestSha256": "35af900e01d752096fb7f63a8b0052cbbfeb271bd5c80c83a30315e390e84e20",
+        "snapshotsSha256": "f3aecf6fcca02ed6973de9847fdc99ec1092c11b03e69d171bbe0cca6c284acc",
+        "framesSha256": "69fe9d044d61df0ccf3871bb9cdb89211b65fdf6fc2ac4fb8b3610487e6ff30c",
+        "snapshotSeconds": [
+          30.000000000000753,
+          59.999999999996994,
+          120.00000000001204,
+          299.99999999998306,
+          600
+        ]
+      },
+      {
+        "variant": "isotropic",
+        "seed": 20261005,
+        "manifestSha256": "7ef9c3d82b52c3bd7c7c2574b9966defeeb2779546479f296ee1c11b9eb843ce",
+        "snapshotsSha256": "c19b77e8d3b64e7c37de8618ac9ad5fcb670061e3fb40bbe91a49ce53a323432",
+        "framesSha256": "da215d08e2e14ff76d65f8a6c561541bdfc06d1ab13b530e265d552aa4273890",
+        "snapshotSeconds": [
+          30.000000000000753,
+          59.999999999996994,
+          120.00000000001204,
+          299.99999999998306,
+          600
+        ]
+      }
+    ]
+  },
+  "renderer": {
+    "name": "AntRenderer",
+    "viewport": {
+      "width": 640,
+      "height": 640
+    },
+    "deviceScaleFactor": 1,
+    "pixelRatio": 1,
+    "material": true,
+    "pheromone": true,
+    "overlays": false,
+    "simulationSteps": 0,
+    "audioResources": false
+  },
+  "snapshotProjection": "The runner JSON encodes typed arrays as numeric-key objects. Renderer-only projection validates contiguous keys and exact width×height, then converts pheromone.values, topLayerByCell, and layerCountByCell to arrays without changing simulation data.",
+  "browserVersion": "155.0.8059.85",
+  "comparisons": [
+    {
+      "seconds": 30,
+      "file": "comparison-30s.png",
+      "sha256": "3405422ed1670af73d1e8947a9a8f386ed55c2b8718ee8bf90924a071a153117",
+      "bytes": 237287,
+      "dimensions": "1280x1336"
+    },
+    {
+      "seconds": 60,
+      "file": "comparison-60s.png",
+      "sha256": "171ba826d659adf9b8cc9299df379c6e168271e9a0e222710fc6db83d374ad77",
+      "bytes": 356745,
+      "dimensions": "1280x1336"
+    },
+    {
+      "seconds": 120,
+      "file": "comparison-120s.png",
+      "sha256": "356fde44df2f3d8eb35e5156ff2918a42a5a0eec98c98f79bd00f5547e0634be",
+      "bytes": 525268,
+      "dimensions": "1280x1336"
+    },
+    {
+      "seconds": 300,
+      "file": "comparison-300s.png",
+      "sha256": "f00562eacc595887dfaa63d3170cdcbf6a437b2138cc132a7b3b28cdf6fe1f88",
+      "bytes": 681973,
+      "dimensions": "1280x1336"
+    },
+    {
+      "seconds": 600,
+      "file": "comparison-600s.png",
+      "sha256": "9deefbdd8b7522f73331775f3dbcbec02cfc7a6678c6b97aaac3bf9d0f2f00d8",
+      "bytes": 779731,
+      "dimensions": "1280x1336"
+    }
+  ],
+  "descriptors": {
+    "file": "descriptors.svg",
+    "sha256": "873b94c40ba2cd05be5f13e3ce86b13803cf66837e302b269354dd5680f0f4ec",
+    "bytes": 294093,
+    "dimensions": "1440x960",
+    "plotted": [
+      "ant centroid x/y",
+      "south fraction",
+      "covariance-trace RMS radius",
+      "movement polarization magnitude",
+      "movement polarization direction",
+      "pheromone angular direction and concentration",
+      "radial outward flow fraction"
+    ],
+    "flowDefinition": "fraction of sampled ant displacements with positive radial velocity from nest, pooled by 1 Hz frame",
+    "plottingFallback": "Matplotlib and chart packages were unavailable; SVG uses fixed axes. CSV retains every plotted sample for standard replotting.",
+    "csv": {
+      "file": "descriptors.csv",
+      "sha256": "255c495a2b501074888d3c0c52709d8764e91ac2eea849467e515ccb936e1174",
+      "bytes": 434432
+    },
+    "gaps": "Null values create gaps; direction traces break across wrap discontinuities."
+  },
+  "completed": true
+}

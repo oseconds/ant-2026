@@ -1,0 +1,709 @@
+{
+  "schemaVersion": 1,
+  "scope": "Single corrected descriptive receipt for every Stage A/B late 300–600 s comparison and 600–1800 s extension window; raw artifacts unchanged.",
+  "selection": {
+    "rule": "select 1 Hz rows by Math.round(raw timeSeconds) in the inclusive integer-second range",
+    "windows": {
+      "primary": [
+        300,
+        600
+      ],
+      "extension": [
+        600,
+        1800
+      ]
+    },
+    "expectedCounts": {
+      "primary": 301,
+      "extension": 1201
+    },
+    "maxAllowedAbsoluteTimestampDeviationSeconds": 0.000001,
+    "reason": "Floating accumulation labels nominal integer-second capture ticks just below/above boundaries; exact float comparisons dropped nominal endpoint ticks."
+  },
+  "stageAReceiptSha256": "a38c8adc22633f7d3123ab576bb31f9cb68d3629514d8607809401bb104a4fb6",
+  "stageBFirstPassReceiptSha256": "c01609b9e06447d52dd1b9f59f8c156ea280605f773cb3b936e5d48f578523bf",
+  "stageBV2ReceiptSha256": "4aecabd75bf7f190e98001ed316de9c5d8f5fbe10c0aa2fd445e891c24e88c3c",
+  "runs": [
+    {
+      "stage": "stage-a-control",
+      "key": "baseline-20261005",
+      "variant": "baseline",
+      "seed": 20261005,
+      "durationSeconds": 600,
+      "nominalWindowSeconds": [
+        300,
+        600
+      ],
+      "selectedFrameCount": 301,
+      "firstRawTimestampSeconds": 299.99999999998306,
+      "lastRawTimestampSeconds": 600,
+      "maxAbsoluteTimestampDeviationSeconds": 2.438582669128664e-10,
+      "means": {
+        "centroidX": 0.47608333039996387,
+        "centroidY": 0.4736696777109236,
+        "southFraction": 0.07051125047803689,
+        "dispersionRg": 0.3161246900307927,
+        "population": 20.47840531561462,
+        "polarization": 0.5576903485008423,
+        "angularMomentumSigned": -0.029548318808725587,
+        "angularMomentumAbsolute": 0.29119483825199577
+      },
+      "rawFrameFileSha256": "d8099b3dff63665bf1828bdb39250a23a029c3c447dfd3d77cc329cbbdac19d7"
+    },
+    {
+      "stage": "stage-a-control",
+      "key": "baseline-20261006",
+      "variant": "baseline",
+      "seed": 20261006,
+      "durationSeconds": 600,
+      "nominalWindowSeconds": [
+        300,
+        600
+      ],
+      "selectedFrameCount": 301,
+      "firstRawTimestampSeconds": 299.99999999998306,
+      "lastRawTimestampSeconds": 600,
+      "maxAbsoluteTimestampDeviationSeconds": 2.438582669128664e-10,
+      "means": {
+        "centroidX": 0.4960920786369468,
+        "centroidY": 0.46568100763778325,
+        "southFraction": 0.06887863887973797,
+        "dispersionRg": 0.31310733731361806,
+        "population": 20.245847176079735,
+        "polarization": 0.5919931210980425,
+        "angularMomentumSigned": 0.028390721699332627,
+        "angularMomentumAbsolute": 0.3056561635014138
+      },
+      "rawFrameFileSha256": "2d3365ef15527369bc5af184b82a6748b4146047608bf831b5e9e75150ea0398"
+    },
+    {
+      "stage": "stage-a-control",
+      "key": "baseline-20261007",
+      "variant": "baseline",
+      "seed": 20261007,
+      "durationSeconds": 600,
+      "nominalWindowSeconds": [
+        300,
+        600
+      ],
+      "selectedFrameCount": 301,
+      "firstRawTimestampSeconds": 299.99999999998306,
+      "lastRawTimestampSeconds": 600,
+      "maxAbsoluteTimestampDeviationSeconds": 2.438582669128664e-10,
+      "means": {
+        "centroidX": 0.49684631827947007,
+        "centroidY": 0.44915330084194344,
+        "southFraction": 0.046554504695526494,
+        "dispersionRg": 0.31081584345104674,
+        "population": 20.435215946843854,
+        "polarization": 0.6451224701470255,
+        "angularMomentumSigned": 0.032210190710423206,
+        "angularMomentumAbsolute": 0.2888465463120851
+      },
+      "rawFrameFileSha256": "af0d30799b0d8fe2de4dea30f8bd2296bd7c859e2722fc6e3f5693ba774220ca"
+    },
+    {
+      "stage": "stage-a-control",
+      "key": "rotate90-20261005",
+      "variant": "rotate90",
+      "seed": 20261005,
+      "durationSeconds": 600,
+      "nominalWindowSeconds": [
+        300,
+        600
+      ],
+      "selectedFrameCount": 301,
+      "firstRawTimestampSeconds": 299.99999999998306,
+      "lastRawTimestampSeconds": 600,
+      "maxAbsoluteTimestampDeviationSeconds": 2.438582669128664e-10,
+      "means": {
+        "centroidX": 0.6710021214561994,
+        "centroidY": 0.6149243577301075,
+        "southFraction": 0.38829649704262126,
+        "dispersionRg": 0.2801393792256513,
+        "population": 17.568106312292358,
+        "polarization": 0.5873595483746161,
+        "angularMomentumSigned": -0.027802215550851432,
+        "angularMomentumAbsolute": 0.28540677787897567
+      },
+      "rawFrameFileSha256": "1eb34a3062463bfffc0aba476328a8b59696e64fd8038eebca8ca9fe212e82ef"
+    },
+    {
+      "stage": "stage-a-control",
+      "key": "rotate90-20261006",
+      "variant": "rotate90",
+      "seed": 20261006,
+      "durationSeconds": 600,
+      "nominalWindowSeconds": [
+        300,
+        600
+      ],
+      "selectedFrameCount": 301,
+      "firstRawTimestampSeconds": 299.99999999998306,
+      "lastRawTimestampSeconds": 600,
+      "maxAbsoluteTimestampDeviationSeconds": 2.438582669128664e-10,
+      "means": {
+        "centroidX": 0.6929134019338736,
+        "centroidY": 0.6089147678953586,
+        "southFraction": 0.3838060793338806,
+        "dispersionRg": 0.27624627535067486,
+        "population": 18.079734219269103,
+        "polarization": 0.6551326159643152,
+        "angularMomentumSigned": 0.020057903159806278,
+        "angularMomentumAbsolute": 0.2698598980746981
+      },
+      "rawFrameFileSha256": "fd04effecdda11ddc6271cc57ab5857ab8c4338ea409cfa79a938390bfffa22f"
+    },
+    {
+      "stage": "stage-a-control",
+      "key": "rotate90-20261007",
+      "variant": "rotate90",
+      "seed": 20261007,
+      "durationSeconds": 600,
+      "nominalWindowSeconds": [
+        300,
+        600
+      ],
+      "selectedFrameCount": 301,
+      "firstRawTimestampSeconds": 299.99999999998306,
+      "lastRawTimestampSeconds": 600,
+      "maxAbsoluteTimestampDeviationSeconds": 2.438582669128664e-10,
+      "means": {
+        "centroidX": 0.6848895157140725,
+        "centroidY": 0.6279721801353974,
+        "southFraction": 0.37103246857360406,
+        "dispersionRg": 0.2638289475943806,
+        "population": 17.083056478405314,
+        "polarization": 0.6861414242813177,
+        "angularMomentumSigned": -0.03841248627011933,
+        "angularMomentumAbsolute": 0.2432645803804379
+      },
+      "rawFrameFileSha256": "3f612ef3c1e11e282fbcd350462d33ebfaa239081667f79332a295214b95289e"
+    },
+    {
+      "stage": "stage-a-control",
+      "key": "reverse-20261005",
+      "variant": "reverse",
+      "seed": 20261005,
+      "durationSeconds": 600,
+      "nominalWindowSeconds": [
+        300,
+        600
+      ],
+      "selectedFrameCount": 301,
+      "firstRawTimestampSeconds": 299.99999999998306,
+      "lastRawTimestampSeconds": 600,
+      "maxAbsoluteTimestampDeviationSeconds": 2.438582669128664e-10,
+      "means": {
+        "centroidX": 0.5132968419322382,
+        "centroidY": 0.8245975028090882,
+        "southFraction": 0.9209037084375226,
+        "dispersionRg": 0.22330067770653253,
+        "population": 13.46843853820598,
+        "polarization": 0.5470753776143388,
+        "angularMomentumSigned": 0.009170857200426862,
+        "angularMomentumAbsolute": 0.22610933344787337
+      },
+      "rawFrameFileSha256": "69fe9d044d61df0ccf3871bb9cdb89211b65fdf6fc2ac4fb8b3610487e6ff30c"
+    },
+    {
+      "stage": "stage-a-control",
+      "key": "reverse-20261006",
+      "variant": "reverse",
+      "seed": 20261006,
+      "durationSeconds": 600,
+      "nominalWindowSeconds": [
+        300,
+        600
+      ],
+      "selectedFrameCount": 301,
+      "firstRawTimestampSeconds": 299.99999999998306,
+      "lastRawTimestampSeconds": 600,
+      "maxAbsoluteTimestampDeviationSeconds": 2.438582669128664e-10,
+      "means": {
+        "centroidX": 0.5102707531576626,
+        "centroidY": 0.825266434456761,
+        "southFraction": 0.925355744563776,
+        "dispersionRg": 0.2213797631714745,
+        "population": 12.90033222591362,
+        "polarization": 0.5614872682285678,
+        "angularMomentumSigned": -0.03438097414857376,
+        "angularMomentumAbsolute": 0.2052791038289859
+      },
+      "rawFrameFileSha256": "37a96e1f1fafa92e6a8d47cd191dce32eca8fe3f0a6aa0dc219ec42c119a9c7b"
+    },
+    {
+      "stage": "stage-a-control",
+      "key": "reverse-20261007",
+      "variant": "reverse",
+      "seed": 20261007,
+      "durationSeconds": 600,
+      "nominalWindowSeconds": [
+        300,
+        600
+      ],
+      "selectedFrameCount": 301,
+      "firstRawTimestampSeconds": 299.99999999998306,
+      "lastRawTimestampSeconds": 600,
+      "maxAbsoluteTimestampDeviationSeconds": 2.438582669128664e-10,
+      "means": {
+        "centroidX": 0.5018580115123786,
+        "centroidY": 0.8101402020172686,
+        "southFraction": 0.8754383787392949,
+        "dispersionRg": 0.23265774445201615,
+        "population": 13.551495016611296,
+        "polarization": 0.5467222469881414,
+        "angularMomentumSigned": -0.0063454806013478245,
+        "angularMomentumAbsolute": 0.23929910805711788
+      },
+      "rawFrameFileSha256": "4ba3ee1e5e1cff6b504730253e41636c7b53ae1fe1c052cf6575e7e24f67b384"
+    },
+    {
+      "stage": "stage-a-control",
+      "key": "isotropic-20261005",
+      "variant": "isotropic",
+      "seed": 20261005,
+      "durationSeconds": 600,
+      "nominalWindowSeconds": [
+        300,
+        600
+      ],
+      "selectedFrameCount": 301,
+      "firstRawTimestampSeconds": 299.99999999998306,
+      "lastRawTimestampSeconds": 600,
+      "maxAbsoluteTimestampDeviationSeconds": 2.438582669128664e-10,
+      "means": {
+        "centroidX": 0.4893685649766155,
+        "centroidY": 0.5974018100452905,
+        "southFraction": 0.3542478553210208,
+        "dispersionRg": 0.32158509859174406,
+        "population": 18.3953488372093,
+        "polarization": 0.25736376603849215,
+        "angularMomentumSigned": -0.028086223133392683,
+        "angularMomentumAbsolute": 0.3589807673596008
+      },
+      "rawFrameFileSha256": "da215d08e2e14ff76d65f8a6c561541bdfc06d1ab13b530e265d552aa4273890"
+    },
+    {
+      "stage": "stage-a-control",
+      "key": "isotropic-20261006",
+      "variant": "isotropic",
+      "seed": 20261006,
+      "durationSeconds": 600,
+      "nominalWindowSeconds": [
+        300,
+        600
+      ],
+      "selectedFrameCount": 301,
+      "firstRawTimestampSeconds": 299.99999999998306,
+      "lastRawTimestampSeconds": 600,
+      "maxAbsoluteTimestampDeviationSeconds": 2.438582669128664e-10,
+      "means": {
+        "centroidX": 0.5073455738293055,
+        "centroidY": 0.5877939339210118,
+        "southFraction": 0.33985318218595334,
+        "dispersionRg": 0.32097391187600155,
+        "population": 17.827242524916944,
+        "polarization": 0.25684025444060204,
+        "angularMomentumSigned": 0.0077693100960775805,
+        "angularMomentumAbsolute": 0.31442687023058336
+      },
+      "rawFrameFileSha256": "52a58148d39bd18113663201b750481b5dce118be0833d507a24f9f03770e04b"
+    },
+    {
+      "stage": "stage-a-control",
+      "key": "isotropic-20261007",
+      "variant": "isotropic",
+      "seed": 20261007,
+      "durationSeconds": 600,
+      "nominalWindowSeconds": [
+        300,
+        600
+      ],
+      "selectedFrameCount": 301,
+      "firstRawTimestampSeconds": 299.99999999998306,
+      "lastRawTimestampSeconds": 600,
+      "maxAbsoluteTimestampDeviationSeconds": 2.438582669128664e-10,
+      "means": {
+        "centroidX": 0.483390213327126,
+        "centroidY": 0.5881626154935655,
+        "southFraction": 0.40376415104042046,
+        "dispersionRg": 0.33603421603359745,
+        "population": 17.760797342192692,
+        "polarization": 0.2834285351427155,
+        "angularMomentumSigned": -0.015791763320467656,
+        "angularMomentumAbsolute": 0.3085896618433618
+      },
+      "rawFrameFileSha256": "afdcd0b22a4c081c86f21e432de4cd84c40291f08589c41bdbde2a36443133c4"
+    },
+    {
+      "stage": "stage-b-conditioned",
+      "key": "conditioning\\pheromoneDirect-20261005",
+      "variant": "pheromoneDirect",
+      "seed": 20261005,
+      "durationSeconds": 600,
+      "nominalWindowSeconds": [
+        300,
+        600
+      ],
+      "selectedFrameCount": 301,
+      "firstRawTimestampSeconds": 299.99999999998306,
+      "lastRawTimestampSeconds": 600,
+      "maxAbsoluteTimestampDeviationSeconds": 2.438582669128664e-10,
+      "means": {
+        "centroidX": 0.49647796363011437,
+        "centroidY": 0.6013900872597441,
+        "southFraction": 0.35649925215276773,
+        "dispersionRg": 0.3197356545446114,
+        "population": 18.006644518272424,
+        "polarization": 0.2485665722621308,
+        "angularMomentumSigned": 0.021816197544264455,
+        "angularMomentumAbsolute": 0.3503534651330611
+      },
+      "rawFrameFileSha256": "2f50b9a7c1b6af2e7419dd29dc0f48f4d1d932fc4178bddf34e71f919b4b48ed"
+    },
+    {
+      "stage": "stage-b-conditioned",
+      "key": "conditioning\\pheromoneDirect-20261006",
+      "variant": "pheromoneDirect",
+      "seed": 20261006,
+      "durationSeconds": 600,
+      "nominalWindowSeconds": [
+        300,
+        600
+      ],
+      "selectedFrameCount": 301,
+      "firstRawTimestampSeconds": 299.99999999998306,
+      "lastRawTimestampSeconds": 600,
+      "maxAbsoluteTimestampDeviationSeconds": 2.438582669128664e-10,
+      "means": {
+        "centroidX": 0.5112501302775152,
+        "centroidY": 0.6002057483805955,
+        "southFraction": 0.34279449163243864,
+        "dispersionRg": 0.31775893281964673,
+        "population": 17.910299003322258,
+        "polarization": 0.26125130253989065,
+        "angularMomentumSigned": 0.013471445476673578,
+        "angularMomentumAbsolute": 0.3678284007713818
+      },
+      "rawFrameFileSha256": "fd07e9ba530b5fc1cd7c05d67abc575bddb2f0babdea626035bfc1ac6843707d"
+    },
+    {
+      "stage": "stage-b-conditioned",
+      "key": "conditioning\\pheromoneDirect-20261007",
+      "variant": "pheromoneDirect",
+      "seed": 20261007,
+      "durationSeconds": 600,
+      "nominalWindowSeconds": [
+        300,
+        600
+      ],
+      "selectedFrameCount": 301,
+      "firstRawTimestampSeconds": 299.99999999998306,
+      "lastRawTimestampSeconds": 600,
+      "maxAbsoluteTimestampDeviationSeconds": 2.438582669128664e-10,
+      "means": {
+        "centroidX": 0.5093980487057118,
+        "centroidY": 0.6238105807902774,
+        "southFraction": 0.42939125582185844,
+        "dispersionRg": 0.33153144993502875,
+        "population": 17.774086378737543,
+        "polarization": 0.23639666530815615,
+        "angularMomentumSigned": -0.004345067246708186,
+        "angularMomentumAbsolute": 0.3464202444113668
+      },
+      "rawFrameFileSha256": "81ff2e48aa4795c765771d9b224bffa3bdcb06e1368a7da12f47b6c2c5d13fcf"
+    },
+    {
+      "stage": "stage-b-conditioned",
+      "key": "conditioning\\pheromoneSlow-20261005",
+      "variant": "pheromoneSlow",
+      "seed": 20261005,
+      "durationSeconds": 600,
+      "nominalWindowSeconds": [
+        300,
+        600
+      ],
+      "selectedFrameCount": 301,
+      "firstRawTimestampSeconds": 299.99999999998306,
+      "lastRawTimestampSeconds": 600,
+      "maxAbsoluteTimestampDeviationSeconds": 2.438582669128664e-10,
+      "means": {
+        "centroidX": 0.49484825488113493,
+        "centroidY": 0.5937561148532096,
+        "southFraction": 0.3515922306119728,
+        "dispersionRg": 0.3292872231613509,
+        "population": 17.906976744186046,
+        "polarization": 0.24710860887417116,
+        "angularMomentumSigned": 0.01617150011181523,
+        "angularMomentumAbsolute": 0.3326579771797618
+      },
+      "rawFrameFileSha256": "7d4fe3413e0b7aacc19255294b691ec552f2ebfd8b1f2dce893aa53344547e36"
+    },
+    {
+      "stage": "stage-b-conditioned",
+      "key": "conditioning\\pheromoneSlow-20261006",
+      "variant": "pheromoneSlow",
+      "seed": 20261006,
+      "durationSeconds": 600,
+      "nominalWindowSeconds": [
+        300,
+        600
+      ],
+      "selectedFrameCount": 301,
+      "firstRawTimestampSeconds": 299.99999999998306,
+      "lastRawTimestampSeconds": 600,
+      "maxAbsoluteTimestampDeviationSeconds": 2.438582669128664e-10,
+      "means": {
+        "centroidX": 0.4657707403902924,
+        "centroidY": 0.595960391613861,
+        "southFraction": 0.37873360737588363,
+        "dispersionRg": 0.3235589410477291,
+        "population": 18.20265780730897,
+        "polarization": 0.24179931260363535,
+        "angularMomentumSigned": -0.025370905388574658,
+        "angularMomentumAbsolute": 0.3740599995218106
+      },
+      "rawFrameFileSha256": "88b851d8270b44d354e105c1cf4fbc17fcb527a6773e42aee30c36826b9068ac"
+    },
+    {
+      "stage": "stage-b-conditioned",
+      "key": "conditioning\\pheromoneSlow-20261007",
+      "variant": "pheromoneSlow",
+      "seed": 20261007,
+      "durationSeconds": 600,
+      "nominalWindowSeconds": [
+        300,
+        600
+      ],
+      "selectedFrameCount": 301,
+      "firstRawTimestampSeconds": 299.99999999998306,
+      "lastRawTimestampSeconds": 600,
+      "maxAbsoluteTimestampDeviationSeconds": 2.438582669128664e-10,
+      "means": {
+        "centroidX": 0.4949237772025979,
+        "centroidY": 0.585266623245344,
+        "southFraction": 0.32955534205019926,
+        "dispersionRg": 0.31818017629200596,
+        "population": 16.983388704318937,
+        "polarization": 0.27369272164933756,
+        "angularMomentumSigned": 0.006645336816320057,
+        "angularMomentumAbsolute": 0.3319634553933243
+      },
+      "rawFrameFileSha256": "03cbadc9ce644701cde8304d4b4ed42d7e4ee39d01fdc6c65f1c6c5ea9eaeadc"
+    },
+    {
+      "stage": "stage-b-extension",
+      "key": "extension\\baseline-20261005",
+      "variant": "baseline",
+      "seed": 20261005,
+      "durationSeconds": 1800,
+      "nominalWindowSeconds": [
+        300,
+        600
+      ],
+      "selectedFrameCount": 301,
+      "firstRawTimestampSeconds": 299.99999999998306,
+      "lastRawTimestampSeconds": 600.0000000000679,
+      "maxAbsoluteTimestampDeviationSeconds": 2.438582669128664e-10,
+      "means": {
+        "centroidX": 0.47608333039996387,
+        "centroidY": 0.4736696777109236,
+        "southFraction": 0.07051125047803689,
+        "dispersionRg": 0.3161246900307927,
+        "population": 20.47840531561462,
+        "polarization": 0.5576903485008423,
+        "angularMomentumSigned": -0.029548318808725587,
+        "angularMomentumAbsolute": 0.29119483825199577
+      },
+      "rawFrameFileSha256": "a2f6fd1f94339eaa811218f5dc121ce3f1e4ae2e6132ad7f1012f8d77e1053f4"
+    },
+    {
+      "stage": "stage-b-extension",
+      "key": "extension\\baseline-20261005",
+      "variant": "baseline",
+      "seed": 20261005,
+      "durationSeconds": 1800,
+      "nominalWindowSeconds": [
+        600,
+        1800
+      ],
+      "selectedFrameCount": 1201,
+      "firstRawTimestampSeconds": 600.0000000000679,
+      "lastRawTimestampSeconds": 1800,
+      "maxAbsoluteTimestampDeviationSeconds": 2.517936081858352e-9,
+      "means": {
+        "centroidX": 0.5065491337024904,
+        "centroidY": 0.44788440981386407,
+        "southFraction": 0.052188982182214905,
+        "dispersionRg": 0.3097837398264675,
+        "population": 20.357202331390507,
+        "polarization": 0.6073904440313324,
+        "angularMomentumSigned": -0.0030088676053679404,
+        "angularMomentumAbsolute": 0.31301220598286245
+      },
+      "rawFrameFileSha256": "a2f6fd1f94339eaa811218f5dc121ce3f1e4ae2e6132ad7f1012f8d77e1053f4"
+    },
+    {
+      "stage": "stage-b-extension",
+      "key": "extension\\isotropic-20261005",
+      "variant": "isotropic",
+      "seed": 20261005,
+      "durationSeconds": 1800,
+      "nominalWindowSeconds": [
+        300,
+        600
+      ],
+      "selectedFrameCount": 301,
+      "firstRawTimestampSeconds": 299.99999999998306,
+      "lastRawTimestampSeconds": 600.0000000000679,
+      "maxAbsoluteTimestampDeviationSeconds": 2.438582669128664e-10,
+      "means": {
+        "centroidX": 0.4893685649766155,
+        "centroidY": 0.5974018100452905,
+        "southFraction": 0.3542478553210208,
+        "dispersionRg": 0.32158509859174406,
+        "population": 18.3953488372093,
+        "polarization": 0.25736376603849215,
+        "angularMomentumSigned": -0.028086223133392683,
+        "angularMomentumAbsolute": 0.3589807673596008
+      },
+      "rawFrameFileSha256": "8fd8dfe9f7656c685dd8aa30d00b58e4802eb590ee75d6c0f95923382a26f8c9"
+    },
+    {
+      "stage": "stage-b-extension",
+      "key": "extension\\isotropic-20261005",
+      "variant": "isotropic",
+      "seed": 20261005,
+      "durationSeconds": 1800,
+      "nominalWindowSeconds": [
+        600,
+        1800
+      ],
+      "selectedFrameCount": 1201,
+      "firstRawTimestampSeconds": 600.0000000000679,
+      "lastRawTimestampSeconds": 1800,
+      "maxAbsoluteTimestampDeviationSeconds": 2.517936081858352e-9,
+      "means": {
+        "centroidX": 0.5024579644044938,
+        "centroidY": 0.6009454306514721,
+        "southFraction": 0.35924287365322677,
+        "dispersionRg": 0.32348157742459016,
+        "population": 18.579517069109077,
+        "polarization": 0.2330203135400984,
+        "angularMomentumSigned": 0.01380450246662598,
+        "angularMomentumAbsolute": 0.3607530278958559
+      },
+      "rawFrameFileSha256": "8fd8dfe9f7656c685dd8aa30d00b58e4802eb590ee75d6c0f95923382a26f8c9"
+    },
+    {
+      "stage": "stage-b-extension",
+      "key": "extension\\pheromoneDirect-20261005",
+      "variant": "pheromoneDirect",
+      "seed": 20261005,
+      "durationSeconds": 1800,
+      "nominalWindowSeconds": [
+        300,
+        600
+      ],
+      "selectedFrameCount": 301,
+      "firstRawTimestampSeconds": 299.99999999998306,
+      "lastRawTimestampSeconds": 600.0000000000679,
+      "maxAbsoluteTimestampDeviationSeconds": 2.438582669128664e-10,
+      "means": {
+        "centroidX": 0.49647796363011437,
+        "centroidY": 0.6013900872597441,
+        "southFraction": 0.35649925215276773,
+        "dispersionRg": 0.3197356545446114,
+        "population": 18.006644518272424,
+        "polarization": 0.2485665722621308,
+        "angularMomentumSigned": 0.021816197544264455,
+        "angularMomentumAbsolute": 0.3503534651330611
+      },
+      "rawFrameFileSha256": "673799b077b957de68ece678dfac7f6382f333f10bd2efd69539d57bac47200a"
+    },
+    {
+      "stage": "stage-b-extension",
+      "key": "extension\\pheromoneDirect-20261005",
+      "variant": "pheromoneDirect",
+      "seed": 20261005,
+      "durationSeconds": 1800,
+      "nominalWindowSeconds": [
+        600,
+        1800
+      ],
+      "selectedFrameCount": 1201,
+      "firstRawTimestampSeconds": 600.0000000000679,
+      "lastRawTimestampSeconds": 1800,
+      "maxAbsoluteTimestampDeviationSeconds": 2.517936081858352e-9,
+      "means": {
+        "centroidX": 0.502471823906314,
+        "centroidY": 0.59915743119895,
+        "southFraction": 0.3748364895987777,
+        "dispersionRg": 0.32712623194405627,
+        "population": 18.79683597002498,
+        "polarization": 0.22487798796296174,
+        "angularMomentumSigned": -0.0048737739977890715,
+        "angularMomentumAbsolute": 0.34974316979813297
+      },
+      "rawFrameFileSha256": "673799b077b957de68ece678dfac7f6382f333f10bd2efd69539d57bac47200a"
+    },
+    {
+      "stage": "stage-b-extension",
+      "key": "extension\\pheromoneSlow-20261005",
+      "variant": "pheromoneSlow",
+      "seed": 20261005,
+      "durationSeconds": 1800,
+      "nominalWindowSeconds": [
+        300,
+        600
+      ],
+      "selectedFrameCount": 301,
+      "firstRawTimestampSeconds": 299.99999999998306,
+      "lastRawTimestampSeconds": 600.0000000000679,
+      "maxAbsoluteTimestampDeviationSeconds": 2.438582669128664e-10,
+      "means": {
+        "centroidX": 0.49484825488113493,
+        "centroidY": 0.5937561148532096,
+        "southFraction": 0.3515922306119728,
+        "dispersionRg": 0.3292872231613509,
+        "population": 17.906976744186046,
+        "polarization": 0.24710860887417116,
+        "angularMomentumSigned": 0.01617150011181523,
+        "angularMomentumAbsolute": 0.3326579771797618
+      },
+      "rawFrameFileSha256": "26283a5bdefd7ecdc5f55c70f7c50f1066745222e4facc70a6390603176218d9"
+    },
+    {
+      "stage": "stage-b-extension",
+      "key": "extension\\pheromoneSlow-20261005",
+      "variant": "pheromoneSlow",
+      "seed": 20261005,
+      "durationSeconds": 1800,
+      "nominalWindowSeconds": [
+        600,
+        1800
+      ],
+      "selectedFrameCount": 1201,
+      "firstRawTimestampSeconds": 600.0000000000679,
+      "lastRawTimestampSeconds": 1800,
+      "maxAbsoluteTimestampDeviationSeconds": 2.517936081858352e-9,
+      "means": {
+        "centroidX": 0.5039267843217924,
+        "centroidY": 0.596673126468211,
+        "southFraction": 0.37046943895460854,
+        "dispersionRg": 0.33143580114730403,
+        "population": 18.92422980849292,
+        "polarization": 0.21977267738715817,
+        "angularMomentumSigned": 0.0007091474153446683,
+        "angularMomentumAbsolute": 0.3582506670645839
+      },
+      "rawFrameFileSha256": "26283a5bdefd7ecdc5f55c70f7c50f1066745222e4facc70a6390603176218d9"
+    }
+  ],
+  "limits": [
+    "Each time sample is serially dependent; seeds/runs, not 1 Hz frames, are replication units.",
+    "Stage B extension is one seed and describes persistence only; comparisons remain descriptive.",
+    "Corrected nominal window selection does not alter or rewrite raw frame timestamps or any prior receipt."
+  ]
+}
