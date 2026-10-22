@@ -1,0 +1,342 @@
+{
+  "schemaVersion": 2,
+  "purpose": "Fixed same-snapshot comparison at 0, 15, 30, 60, and 120 minutes, with per-recipe time series and a material-only view.",
+  "source": {
+    "captureManifestSha256": "4b5182e66a1e08d8d7849d3d33c2a94658850a3cba153efc78fe4d9961bbaf52",
+    "sourceCommit": "aea6601f6fc5c4d241fae7376f0f6cd59d11101f",
+    "inputDirectory": "2026-10-21-long-run-exhibition/visual-capacity-1024",
+    "sourceHashes": {
+      "src/lib/renderers/AntRenderer.js": "8e5190243144a5ac03fadb319e154209a1c266376a45c6094e454c00f69527b1",
+      "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+      "scripts/ant-visual-readout-recipes.js": "97b694e53425836432896963bb6180cac94a7bc176834645d9a6d22f34e31336"
+    },
+    "snapshots": [
+      {
+        "seconds": 0,
+        "file": "snapshot-00000s.json",
+        "sourceSha256": "24fc61157fd7a84bfd7f9bebec3b64028dd77a3259d6943c0e12e787d570de4b",
+        "projectedSnapshotSha256": "58b9efe3ba5eb8110424432ef5c7dddc02ae0ae360684fc5faf4ebadaceebb86"
+      },
+      {
+        "seconds": 900,
+        "file": "snapshot-00900s.json",
+        "sourceSha256": "8473b23019d4d53d57352b5d0500916d56f861be016d6a52cd5eeb88714c5bc8",
+        "projectedSnapshotSha256": "89837fbd502aca7ff9fadf92de1839596b9550187d60e4ba05dc04e8f3292b26"
+      },
+      {
+        "seconds": 1800,
+        "file": "snapshot-01800s.json",
+        "sourceSha256": "25074ffa6cdd3f7e5366fe4e65de05c8cc430857eae15105e6c12a6dd2ddc876",
+        "projectedSnapshotSha256": "1f2a765738acf0be996cec18d37ec36e70a0ec0a4820118f848a1aae7acf7fe6"
+      },
+      {
+        "seconds": 3600,
+        "file": "snapshot-03600s.json",
+        "sourceSha256": "65c107d897cc70626a2ccadfdb37a7695fededa514ade84ecd581077a86d88c0",
+        "projectedSnapshotSha256": "6b48da87d3bc28ed09a7a909e466d4651ff31be799ce5463c58bc66c0a9a7201"
+      },
+      {
+        "seconds": 7200,
+        "file": "snapshot-07200s.json",
+        "sourceSha256": "c57a19550ebad41dfc5a4a0e86f548371d81d8c05211501eb832ac4b001a3bf5",
+        "projectedSnapshotSha256": "ce38d37c16307bea0fe9ec873f37e6a95bfe40af02e8bcb57920c7908a95aad0"
+      }
+    ]
+  },
+  "rendering": {
+    "browserVersion": "155.0.8059.85",
+    "surveyScriptSha256": "5da0cddcb74bb5aabeb98ffada3cc6ffa280d68ee911c2c44db3531f549b904c",
+    "viewport": {
+      "width": 3200,
+      "height": 666
+    },
+    "canvas": "640x640",
+    "deviceScaleFactor": 1,
+    "pixelRatio": 1,
+    "readoutOverlayAlpha": 112,
+    "settle": "two requestAnimationFrame callbacks",
+    "recipes": [
+      "AntRenderer baseline",
+      "AntRenderer materialReadout recent8",
+      "actual exposed top Plate index, fixed golden-angle hue palette; diagnostic identity ceiling; alpha 112",
+      "current exposed-top tenure = simulation time minus actual top Plate bornAtSimulationTimeMs; fixed 120min saturating map; alpha 112",
+      "monochrome boundary between adjacent actual exposed top Plate identities; alpha 112"
+    ],
+    "antsAndPheromone": true,
+    "materialOnly": "AntRenderer with agents removed and pheromone debug disabled; native material map retained and scaled to 640x640",
+    "simulationAudio": false,
+    "maskReadout": "96x96 raster cells, displayed with nearest-neighbor scaling; not an exhibition rendering"
+  },
+  "outputs": [
+    {
+      "seconds": 0,
+      "file": "contact-000m.png",
+      "sha256": "7d15f9600911853178845a9bd65bef56fc548ea31e621915970d270da3aba72f",
+      "bytes": 51728,
+      "dimensions": "3200x666",
+      "panelSourceHashes": {
+        "baseline": "b2fd59a490ff7e5f09403d7451ff96724962140c5b953219cf0a160dc0691c6b",
+        "recent": "b2fd59a490ff7e5f09403d7451ff96724962140c5b953219cf0a160dc0691c6b",
+        "materialOnly": "2099fe78f39e9bd97e16d0766213b7d3db216d1aaee2a8486632073ba9aeda09",
+        "identity": "b2fd59a490ff7e5f09403d7451ff96724962140c5b953219cf0a160dc0691c6b",
+        "tenure": "b2fd59a490ff7e5f09403d7451ff96724962140c5b953219cf0a160dc0691c6b",
+        "boundaries": "b2fd59a490ff7e5f09403d7451ff96724962140c5b953219cf0a160dc0691c6b"
+      },
+      "topCells": 0,
+      "overlappingCells": 0,
+      "exposedPlateIdentities": 0,
+      "retainedPlates": 0
+    },
+    {
+      "seconds": 900,
+      "file": "contact-015m.png",
+      "sha256": "738c732a8976e4ad49e8b47a0bea3cec8024fa16e44586056f00d73bbd50565d",
+      "bytes": 1211382,
+      "dimensions": "3200x666",
+      "panelSourceHashes": {
+        "baseline": "80fae3289b26046d223108a45f70a0daa7474ab8e00e4a2893a13394b34cb992",
+        "recent": "e5996b9c868847597c4b1c48c738abd0cf9d17f9720a71522222325f0bd2db09",
+        "materialOnly": "9cd44b6b21ab68351227925ea0bd16f5531c97f5e3a01d27f9e1abd0693b3cb6",
+        "identity": "52c0d503b57696e34b67792bd36b928d53da0e6bac9932243912d6094d9a2d53",
+        "tenure": "86db0c410285f1ffdd060f46e69c744a797f9d6821bf3787bf0baf6224744add",
+        "boundaries": "56b7b4570cc98d7c55118dd581efff6d77ae1e52db98c2a5ae03019a22a520e0"
+      },
+      "topCells": 6786,
+      "overlappingCells": 6507,
+      "exposedPlateIdentities": 49,
+      "retainedPlates": 49
+    },
+    {
+      "seconds": 1800,
+      "file": "contact-030m.png",
+      "sha256": "0ea42f6c61abf6d086b94a97c5d2b32f7a14f5f2ba241a445d2be40dac5c9892",
+      "bytes": 1160004,
+      "dimensions": "3200x666",
+      "panelSourceHashes": {
+        "baseline": "97b8a0d57660c5f7b47fa51f8c66903a143c5d806576d7e9c57cf92d28c0d64f",
+        "recent": "d81113ed89c9f01405781a6f6afc344d5e6b713fa403c3e2bc97bde49ff849af",
+        "materialOnly": "d5c85c91a40ab9a2f327198ab9b37ce1d0a097bd36d01640814e75ca77850ec5",
+        "identity": "30e6b4aa7b39a85ef636697fa74042421d43801f98d99cb0c75993277df689f3",
+        "tenure": "cfed82f2ccea132b378eb546c21e16e606813efd5f7c01854c238e642adceff0",
+        "boundaries": "c2523d2c7265b35e770c6d8f0eb92c8b409f48adccc43049bae171c34288d1a4"
+      },
+      "topCells": 6999,
+      "overlappingCells": 6792,
+      "exposedPlateIdentities": 95,
+      "retainedPlates": 110
+    },
+    {
+      "seconds": 3600,
+      "file": "contact-060m.png",
+      "sha256": "d5d967b3752087dee290c3a1b06acbc4cb3548c4c3d8e64b082d4d750db55ecd",
+      "bytes": 1173708,
+      "dimensions": "3200x666",
+      "panelSourceHashes": {
+        "baseline": "1273b93a5d6fad670a3e3bf9d2b38dc18be36a6fb4a19a97ec3bc4dcf217669a",
+        "recent": "299b16279b181e60ae5225fb4b9d19387150ce080db8334122db14995014a95b",
+        "materialOnly": "4b6397e52a5a44972031f7532d77e2648b7d602aa6e1d4e161d8c43e13a915ad",
+        "identity": "adb8bc001b1ec3cd870bcf23233008845b40e9c246f946b5579881535ddf5b19",
+        "tenure": "73d252e59e5645da5ddc3049be7cc3fab6ebea18e3b8f684731b273c0d3c9f35",
+        "boundaries": "9fb47a6b1d2859339a6afe10bb29ea19992f99342d7578946279e3c26b639560"
+      },
+      "topCells": 7128,
+      "overlappingCells": 6932,
+      "exposedPlateIdentities": 134,
+      "retainedPlates": 237
+    },
+    {
+      "seconds": 7200,
+      "file": "contact-120m.png",
+      "sha256": "bfb46ad8a9c943d8cf3a4960ccb845d7e91ed53f75d6e44a7539f6508e9249ce",
+      "bytes": 1048673,
+      "dimensions": "3200x666",
+      "panelSourceHashes": {
+        "baseline": "6d1801cbb6753e48c04a1531914abae04f58d7fac56604e31ca1e5ce6468a717",
+        "recent": "1eddf0da77df5f77ae6e45fdccb7d0eaef870656de71fc0b2fe73e48c59822b6",
+        "materialOnly": "01c31133ca03bd0430afb39251dfd8d499f10fd33f1918e46d1837937b0d6621",
+        "identity": "e711062e18fd34d1700c009172332b6ed7593b44706628ccfaacfbc7cb481d5b",
+        "tenure": "e552b89d230ee77f09650926835ab3d84e65d476922dacafb2e2fcb31f6a8c11",
+        "boundaries": "1bd9b3ec8778f2dced2af1ab5eb8944ae89eff368e0b60ac999873702a1c0939"
+      },
+      "topCells": 7163,
+      "overlappingCells": 6989,
+      "exposedPlateIdentities": 153,
+      "retainedPlates": 474
+    },
+    {
+      "file": "timeseries-baseline.png",
+      "sha256": "b74f866308f8be895779d63598662ceee32e3e79213da73440688386b3f1ffd9",
+      "bytes": 861938,
+      "dimensions": "3200x666",
+      "recipe": "baseline",
+      "sourcePanels": [
+        {
+          "seconds": 0,
+          "sha256": "b2fd59a490ff7e5f09403d7451ff96724962140c5b953219cf0a160dc0691c6b"
+        },
+        {
+          "seconds": 900,
+          "sha256": "80fae3289b26046d223108a45f70a0daa7474ab8e00e4a2893a13394b34cb992"
+        },
+        {
+          "seconds": 1800,
+          "sha256": "97b8a0d57660c5f7b47fa51f8c66903a143c5d806576d7e9c57cf92d28c0d64f"
+        },
+        {
+          "seconds": 3600,
+          "sha256": "1273b93a5d6fad670a3e3bf9d2b38dc18be36a6fb4a19a97ec3bc4dcf217669a"
+        },
+        {
+          "seconds": 7200,
+          "sha256": "6d1801cbb6753e48c04a1531914abae04f58d7fac56604e31ca1e5ce6468a717"
+        }
+      ]
+    },
+    {
+      "file": "timeseries-recent.png",
+      "sha256": "9b76678045b1ac3cc09d7bfd375a0809d78d4ca350f6d7d7d492afac241b5fda",
+      "bytes": 1524613,
+      "dimensions": "3200x666",
+      "recipe": "recent",
+      "sourcePanels": [
+        {
+          "seconds": 0,
+          "sha256": "b2fd59a490ff7e5f09403d7451ff96724962140c5b953219cf0a160dc0691c6b"
+        },
+        {
+          "seconds": 900,
+          "sha256": "e5996b9c868847597c4b1c48c738abd0cf9d17f9720a71522222325f0bd2db09"
+        },
+        {
+          "seconds": 1800,
+          "sha256": "d81113ed89c9f01405781a6f6afc344d5e6b713fa403c3e2bc97bde49ff849af"
+        },
+        {
+          "seconds": 3600,
+          "sha256": "299b16279b181e60ae5225fb4b9d19387150ce080db8334122db14995014a95b"
+        },
+        {
+          "seconds": 7200,
+          "sha256": "1eddf0da77df5f77ae6e45fdccb7d0eaef870656de71fc0b2fe73e48c59822b6"
+        }
+      ]
+    },
+    {
+      "file": "timeseries-identity.png",
+      "sha256": "741ee2c652fbb5926b815b4ac4dd6b67946c226b9c20d31ffcad000caa98e439",
+      "bytes": 822638,
+      "dimensions": "3200x666",
+      "recipe": "identity",
+      "sourcePanels": [
+        {
+          "seconds": 0,
+          "sha256": "b2fd59a490ff7e5f09403d7451ff96724962140c5b953219cf0a160dc0691c6b"
+        },
+        {
+          "seconds": 900,
+          "sha256": "52c0d503b57696e34b67792bd36b928d53da0e6bac9932243912d6094d9a2d53"
+        },
+        {
+          "seconds": 1800,
+          "sha256": "30e6b4aa7b39a85ef636697fa74042421d43801f98d99cb0c75993277df689f3"
+        },
+        {
+          "seconds": 3600,
+          "sha256": "adb8bc001b1ec3cd870bcf23233008845b40e9c246f946b5579881535ddf5b19"
+        },
+        {
+          "seconds": 7200,
+          "sha256": "e711062e18fd34d1700c009172332b6ed7593b44706628ccfaacfbc7cb481d5b"
+        }
+      ]
+    },
+    {
+      "file": "timeseries-tenure.png",
+      "sha256": "7876b288cb279faf795ea080eb8fd92d2d506626f48ac3312964a4c03859d6ca",
+      "bytes": 803886,
+      "dimensions": "3200x666",
+      "recipe": "tenure",
+      "sourcePanels": [
+        {
+          "seconds": 0,
+          "sha256": "b2fd59a490ff7e5f09403d7451ff96724962140c5b953219cf0a160dc0691c6b"
+        },
+        {
+          "seconds": 900,
+          "sha256": "86db0c410285f1ffdd060f46e69c744a797f9d6821bf3787bf0baf6224744add"
+        },
+        {
+          "seconds": 1800,
+          "sha256": "cfed82f2ccea132b378eb546c21e16e606813efd5f7c01854c238e642adceff0"
+        },
+        {
+          "seconds": 3600,
+          "sha256": "73d252e59e5645da5ddc3049be7cc3fab6ebea18e3b8f684731b273c0d3c9f35"
+        },
+        {
+          "seconds": 7200,
+          "sha256": "e552b89d230ee77f09650926835ab3d84e65d476922dacafb2e2fcb31f6a8c11"
+        }
+      ]
+    },
+    {
+      "file": "timeseries-boundaries.png",
+      "sha256": "f72e7d60b4613fb04236f67e6946be689f2a59904eca04691a2b3c00d22f979d",
+      "bytes": 853434,
+      "dimensions": "3200x666",
+      "recipe": "boundaries",
+      "sourcePanels": [
+        {
+          "seconds": 0,
+          "sha256": "b2fd59a490ff7e5f09403d7451ff96724962140c5b953219cf0a160dc0691c6b"
+        },
+        {
+          "seconds": 900,
+          "sha256": "56b7b4570cc98d7c55118dd581efff6d77ae1e52db98c2a5ae03019a22a520e0"
+        },
+        {
+          "seconds": 1800,
+          "sha256": "c2523d2c7265b35e770c6d8f0eb92c8b409f48adccc43049bae171c34288d1a4"
+        },
+        {
+          "seconds": 3600,
+          "sha256": "9fb47a6b1d2859339a6afe10bb29ea19992f99342d7578946279e3c26b639560"
+        },
+        {
+          "seconds": 7200,
+          "sha256": "1bd9b3ec8778f2dced2af1ab5eb8944ae89eff368e0b60ac999873702a1c0939"
+        }
+      ]
+    },
+    {
+      "file": "timeseries-materialOnly.png",
+      "sha256": "429af93d88f85ac507ab709ecbf59eb06e3d8b7ce9d09b2fd3c4b5035179279d",
+      "bytes": 217480,
+      "dimensions": "3200x666",
+      "recipe": "materialOnly",
+      "sourcePanels": [
+        {
+          "seconds": 0,
+          "sha256": "2099fe78f39e9bd97e16d0766213b7d3db216d1aaee2a8486632073ba9aeda09"
+        },
+        {
+          "seconds": 900,
+          "sha256": "9cd44b6b21ab68351227925ea0bd16f5531c97f5e3a01d27f9e1abd0693b3cb6"
+        },
+        {
+          "seconds": 1800,
+          "sha256": "d5c85c91a40ab9a2f327198ab9b37ce1d0a097bd36d01640814e75ca77850ec5"
+        },
+        {
+          "seconds": 3600,
+          "sha256": "4b6397e52a5a44972031f7532d77e2648b7d602aa6e1d4e161d8c43e13a915ad"
+        },
+        {
+          "seconds": 7200,
+          "sha256": "01c31133ca03bd0430afb39251dfd8d499f10fd33f1918e46d1837937b0d6621"
+        }
+      ]
+    }
+  ],
+  "completed": true
+}

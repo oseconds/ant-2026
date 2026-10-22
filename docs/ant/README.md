@@ -1,6 +1,6 @@
 # ANT — Current Architecture, Evidence and Research Boundary
 
-**Current repository state: 2026-10-21**
+**Current repository state: 2026-10-22**
 
 이 문서는 ANT의 **현재 verified state**를 위한 GitHub-side hub다. 과정은 [daily logs](daily/README.md), 실험별 원본과 재현 자료는 [evidence packages](evidence/)에 둔다.
 
@@ -127,6 +127,8 @@ mature 20–30 Plate의 AudioWorklet realtime collapse는 unresolved known issue
 The 2026-10-21 exhibition feasibility pass measured exact-computation shadows, actual Z removal and audio-only refractory independently. Z off materially reduced cost but did not make mature 20/30 Plate audio realtime; safe same-step Plate/post-Sphere caches preserved PCM/state but showed no consistent gain. A startup-only `?antAudio=lite` prototype now omits Z adjacency construction while retaining Sphere and individual Plate physics; **Full remains the default and Lite is not exhibition-ready**. Installed-Chrome natural runtime supports Audio Off as a visual fallback for the measured 120-second 30→38 Plate interval. Live-sound exhibition readiness, hours-long uptime and venue hardware remain unverified. [Evidence and decision](evidence/2026-10-21-exhibition-audio-runtime/README.md) · [Daily record](daily/2026-10-21-exhibition-audio-runtime.md).
 
 The separate long-run exhibition pass adds opt-in `?antResidents=2` bounded physical audio and `?antVisual=recent` presentation prototypes; Full/current rendering remain defaults. An approved **1,024 storage shadow only** continued real layering to 474 Plates in two accelerated model hours, while production's 256 cap stopped births at 63:34.8. The final protected headed Chrome run sustained two residents during 30→112 historical Plate growth for **18:00.296**, then ended on the user's instruction to stop further investigation; no two-hour runtime claim is made. The artist judged the latest-material preview still too similar. **Submission decision: E — not ready; Audio Off/current renderer is a conservative operational fallback, not a solution to long-run macro-form evolution.** [Measured results and losses](evidence/2026-10-21-long-run-exhibition/REPORT.md) · [Operator boundaries](evidence/2026-10-21-long-run-exhibition/OPERATOR.md) · [Daily record](daily/2026-10-21-long-run-exhibition.md).
+
+The 2026-10-22 saved-history visual survey finds **MIXED responsibility**: current readouts hide genuine internal top-partition geometry changes, while long-window footprints/blank-space geometry remain similar and the 256 cap independently stops material turnover. Diagnostic boundary/identity views gave the artist only slight local change; no new renderer, capacity or world law is adopted. No new simulation/audio soak ran, and submission decision E remains. [Measurements, human response and one proposed next pass](evidence/2026-10-22-visual-turnover-survey/REPORT.md) · [Daily record](daily/2026-10-22-visual-turnover-survey.md).
 
 These 2026-10-13–18 research passes are diagnostic only: production `src/` and `static/` are unchanged, and the production sonic baseline above remains in force.
 

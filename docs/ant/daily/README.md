@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-22 — Visual turnover responsibility survey
+
+[Process log](./2026-10-22-visual-turnover-survey.md) · [Diagnosis and next pass](../evidence/2026-10-22-visual-turnover-survey/REPORT.md)
+
+- MIXED: gray/cohort readouts hide real internal partition turnover, but global material distribution remains similar
+- Saved two-hour histories only; 60→120-minute capacity shadow adds 35 union cells and replaces top identity on 6,730 already occupied cells
+- Human response: slight local difference, similar overall distribution and blank space; no new exhibition renderer adopted
+- No new world simulation/audio tuning; prior submission decision E remains
+
 ### 2026-10-21 — Long-run exhibition diagnosis / bounded acoustic prototype
 
 [Process log](./2026-10-21-long-run-exhibition.md) · [Evidence and decision](../evidence/2026-10-21-long-run-exhibition/REPORT.md)
