@@ -1,0 +1,434 @@
+{
+  "schemaVersion": 1,
+  "createdBy": "scripts/ant-spatial-recruitment-runs.js",
+  "runDriverSha256": "a3fb6c614a47896ebb4c7d03fa782ae5e0e73c46dd0a703f3bdcaa1214f8510c",
+  "sourceHashes": {
+    "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+    "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+    "src/lib/agents/ant/LocalOccupancy.js": "df22dd38e9af8078ebcb1d225ca2a5eaf579e994d2d4a00ce9ceeefa2403ff16",
+    "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+    "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+    "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+    "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+    "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+    "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+    "src/lib/agents/ant/BodyPoseController.js": "2ec4cc12c12ae301ea07056889c3be9255b1b1e155b7724cd3366278d60ace8e",
+    "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd",
+    "scripts/ant-spatial-core.js": "6573ef627e050f0cdd23279d886f1a8c2adf224fdcf840370fe35db5c051de4b",
+    "scripts/ant-spatial-recruitment.js": "37258f30722bd9ce4f28a5f07c8bf6688a7705059722b69bc92659a086c4da40",
+    "scripts/ant-spatial-field.js": "fb6d5caeafcbc009b1b373edb681d9e8505454d05924284822c4682fea261364",
+    "scripts/ant-spatial-run.js": "a84e8b9f10f997598426e985faef42f76144542499cb1c68ecef20d782f0d632",
+    "scripts/ant-spatial-descriptors.js": "1c7b64b480909865f3b5549433036a0ed6498ed3c2eeacac5aca0fa595c12524",
+    "scripts/ant-route-curvature-metrics.js": "d87989a9abba11cfdc7641e1b74d3856f7614d0ae3d2d6b7ca6c6bfddd97792c",
+    "scripts/ant-recruitment-descriptors.js": "90a6f688b91af0ccf21680ed6f0881cba8cdb5b85ff8920ed7e929e521edd2dd"
+  },
+  "seconds": 600,
+  "dtSeconds": 0.016666666666666666,
+  "seeds": [
+    20261005,
+    20261006,
+    20261007
+  ],
+  "policies": [
+    "isotropic",
+    "flow"
+  ],
+  "cases": [
+    {
+      "seed": 20261005,
+      "recruitment": "isotropic",
+      "label": "production-movement-isotropic-recruitment",
+      "output": "docs/ant/evidence/2026-10-22-spatial-dynamics/recruitment/natural/isotropic-20261005/result.json",
+      "wallSeconds": 7.5420984,
+      "modelSeconds": 600.0000000000679,
+      "rngCalls": 353736,
+      "final": {
+        "population": 17,
+        "totalSpawned": 795,
+        "totalRetired": 778,
+        "plateCount": 30,
+        "noduleCount": 24
+      },
+      "spawnFlowStats": {
+        "acceptedCount": 795,
+        "flowValidCount": 157,
+        "flowInvalidCount": 638,
+        "postInitAcceptedCount": 794,
+        "postInitFlowValidCount": 157,
+        "postInitFlowValidFraction": 0.1977329974811083,
+        "meanValidR": 0.4485976655620219,
+        "validRBins": {
+          "0-.2": 19,
+          ".2-.4": 52,
+          ".4-.6": 49,
+          ".6-.8": 24,
+          ".8-1": 13
+        },
+        "appliedHalfSpread": {
+          "count": 795,
+          "mean": 3.1415926535898095,
+          "p50": 3.141592653589793,
+          "p90": 3.141592653589793
+        },
+        "potentialFlowHalfSpread": {
+          "count": 157,
+          "mean": 1.8668608227112213,
+          "p50": 1.8870547146091825,
+          "p90": 2.6080898927533775
+        }
+      },
+      "flowStats": {
+        "totalTicks": 36000,
+        "validTicks": 6465,
+        "invalidTicks": 29535,
+        "invalidReasons": {
+          "insufficient-count": 29535
+        },
+        "countBins": {
+          "0": 5581,
+          "1-2": 23954,
+          "3-4": 6402,
+          "5-8": 63,
+          "9+": 0
+        },
+        "validResultantBins": {
+          "0-.2": 719,
+          ".2-.4": 2362,
+          ".4-.6": 1696,
+          ".6-.8": 1151,
+          ".8-1": 537
+        }
+      }
+    },
+    {
+      "seed": 20261005,
+      "recruitment": "flow",
+      "label": "production-movement-flow-recruitment",
+      "output": "docs/ant/evidence/2026-10-22-spatial-dynamics/recruitment/natural/flow-20261005/result.json",
+      "wallSeconds": 7.727245299999999,
+      "modelSeconds": 600.0000000000679,
+      "rngCalls": 349953,
+      "final": {
+        "population": 22,
+        "totalSpawned": 795,
+        "totalRetired": 773,
+        "plateCount": 28,
+        "noduleCount": 24
+      },
+      "spawnFlowStats": {
+        "acceptedCount": 795,
+        "flowValidCount": 127,
+        "flowInvalidCount": 668,
+        "postInitAcceptedCount": 794,
+        "postInitFlowValidCount": 127,
+        "postInitFlowValidFraction": 0.15994962216624686,
+        "meanValidR": 0.44310601643735614,
+        "validRBins": {
+          "0-.2": 15,
+          ".2-.4": 43,
+          ".4-.6": 39,
+          ".6-.8": 25,
+          ".8-1": 5
+        },
+        "appliedHalfSpread": {
+          "count": 795,
+          "mean": 2.940449126878034,
+          "p50": 3.141592653589793,
+          "p90": 3.141592653589793
+        },
+        "potentialFlowHalfSpread": {
+          "count": 127,
+          "mean": 1.8824658525199642,
+          "p50": 1.965727024396523,
+          "p90": 2.594727242291828
+        }
+      },
+      "flowStats": {
+        "totalTicks": 36000,
+        "validTicks": 5778,
+        "invalidTicks": 30222,
+        "invalidReasons": {
+          "insufficient-count": 30222
+        },
+        "countBins": {
+          "0": 5311,
+          "1-2": 24911,
+          "3-4": 5728,
+          "5-8": 50,
+          "9+": 0
+        },
+        "validResultantBins": {
+          "0-.2": 667,
+          ".2-.4": 2196,
+          ".4-.6": 1536,
+          ".6-.8": 1019,
+          ".8-1": 360
+        }
+      }
+    },
+    {
+      "seed": 20261006,
+      "recruitment": "isotropic",
+      "label": "production-movement-isotropic-recruitment",
+      "output": "docs/ant/evidence/2026-10-22-spatial-dynamics/recruitment/natural/isotropic-20261006/result.json",
+      "wallSeconds": 7.881148499999999,
+      "modelSeconds": 600.0000000000679,
+      "rngCalls": 347580,
+      "final": {
+        "population": 19,
+        "totalSpawned": 801,
+        "totalRetired": 782,
+        "plateCount": 32,
+        "noduleCount": 23
+      },
+      "spawnFlowStats": {
+        "acceptedCount": 801,
+        "flowValidCount": 142,
+        "flowInvalidCount": 659,
+        "postInitAcceptedCount": 800,
+        "postInitFlowValidCount": 142,
+        "postInitFlowValidFraction": 0.1775,
+        "meanValidR": 0.46369942970329514,
+        "validRBins": {
+          "0-.2": 17,
+          ".2-.4": 48,
+          ".4-.6": 37,
+          ".6-.8": 28,
+          ".8-1": 12
+        },
+        "appliedHalfSpread": {
+          "count": 801,
+          "mean": 3.141592653589808,
+          "p50": 3.141592653589793,
+          "p90": 3.141592653589793
+        },
+        "potentialFlowHalfSpread": {
+          "count": 142,
+          "mean": 1.8239477606711343,
+          "p50": 1.842440168477547,
+          "p90": 2.606300723012699
+        }
+      },
+      "flowStats": {
+        "totalTicks": 36000,
+        "validTicks": 6372,
+        "invalidTicks": 29628,
+        "invalidReasons": {
+          "insufficient-count": 29628
+        },
+        "countBins": {
+          "0": 5397,
+          "1-2": 24231,
+          "3-4": 6226,
+          "5-8": 146,
+          "9+": 0
+        },
+        "validResultantBins": {
+          "0-.2": 673,
+          ".2-.4": 2216,
+          ".4-.6": 1698,
+          ".6-.8": 1245,
+          ".8-1": 540
+        }
+      }
+    },
+    {
+      "seed": 20261006,
+      "recruitment": "flow",
+      "label": "production-movement-flow-recruitment",
+      "output": "docs/ant/evidence/2026-10-22-spatial-dynamics/recruitment/natural/flow-20261006/result.json",
+      "wallSeconds": 6.950171200000001,
+      "modelSeconds": 600.0000000000679,
+      "rngCalls": 342598,
+      "final": {
+        "population": 15,
+        "totalSpawned": 787,
+        "totalRetired": 772,
+        "plateCount": 20,
+        "noduleCount": 31
+      },
+      "spawnFlowStats": {
+        "acceptedCount": 787,
+        "flowValidCount": 138,
+        "flowInvalidCount": 649,
+        "postInitAcceptedCount": 786,
+        "postInitFlowValidCount": 138,
+        "postInitFlowValidFraction": 0.17557251908396945,
+        "meanValidR": 0.44909539283636707,
+        "validRBins": {
+          "0-.2": 12,
+          ".2-.4": 52,
+          ".4-.6": 48,
+          ".6-.8": 12,
+          ".8-1": 14
+        },
+        "appliedHalfSpread": {
+          "count": 787,
+          "mean": 2.917821152537484,
+          "p50": 3.141592653589793,
+          "p90": 3.141592653589793
+        },
+        "potentialFlowHalfSpread": {
+          "count": 138,
+          "mean": 1.8654464845449497,
+          "p50": 1.9554729263236694,
+          "p90": 2.55011422683474
+        }
+      },
+      "flowStats": {
+        "totalTicks": 36000,
+        "validTicks": 5934,
+        "invalidTicks": 30066,
+        "invalidReasons": {
+          "insufficient-count": 30066
+        },
+        "countBins": {
+          "0": 5515,
+          "1-2": 24551,
+          "3-4": 5838,
+          "5-8": 96,
+          "9+": 0
+        },
+        "validResultantBins": {
+          "0-.2": 593,
+          ".2-.4": 2130,
+          ".4-.6": 1749,
+          ".6-.8": 792,
+          ".8-1": 670
+        }
+      }
+    },
+    {
+      "seed": 20261007,
+      "recruitment": "isotropic",
+      "label": "production-movement-isotropic-recruitment",
+      "output": "docs/ant/evidence/2026-10-22-spatial-dynamics/recruitment/natural/isotropic-20261007/result.json",
+      "wallSeconds": 8.384809400000002,
+      "modelSeconds": 600.0000000000679,
+      "rngCalls": 349350,
+      "final": {
+        "population": 15,
+        "totalSpawned": 816,
+        "totalRetired": 801,
+        "plateCount": 32,
+        "noduleCount": 25
+      },
+      "spawnFlowStats": {
+        "acceptedCount": 816,
+        "flowValidCount": 151,
+        "flowInvalidCount": 665,
+        "postInitAcceptedCount": 815,
+        "postInitFlowValidCount": 151,
+        "postInitFlowValidFraction": 0.18527607361963191,
+        "meanValidR": 0.4626982003626591,
+        "validRBins": {
+          "0-.2": 21,
+          ".2-.4": 48,
+          ".4-.6": 42,
+          ".6-.8": 26,
+          ".8-1": 14
+        },
+        "appliedHalfSpread": {
+          "count": 816,
+          "mean": 3.141592653589806,
+          "p50": 3.141592653589793,
+          "p90": 3.141592653589793
+        },
+        "potentialFlowHalfSpread": {
+          "count": 151,
+          "mean": 1.8267928466100423,
+          "p50": 1.9459208821741207,
+          "p90": 2.63167158227367
+        }
+      },
+      "flowStats": {
+        "totalTicks": 36000,
+        "validTicks": 6317,
+        "invalidTicks": 29683,
+        "invalidReasons": {
+          "insufficient-count": 29683
+        },
+        "countBins": {
+          "0": 5310,
+          "1-2": 24373,
+          "3-4": 6280,
+          "5-8": 37,
+          "9+": 0
+        },
+        "validResultantBins": {
+          "0-.2": 776,
+          ".2-.4": 2160,
+          ".4-.6": 1733,
+          ".6-.8": 1033,
+          ".8-1": 615
+        }
+      }
+    },
+    {
+      "seed": 20261007,
+      "recruitment": "flow",
+      "label": "production-movement-flow-recruitment",
+      "output": "docs/ant/evidence/2026-10-22-spatial-dynamics/recruitment/natural/flow-20261007/result.json",
+      "wallSeconds": 7.729858400000005,
+      "modelSeconds": 600.0000000000679,
+      "rngCalls": 345620,
+      "final": {
+        "population": 17,
+        "totalSpawned": 821,
+        "totalRetired": 804,
+        "plateCount": 20,
+        "noduleCount": 23
+      },
+      "spawnFlowStats": {
+        "acceptedCount": 821,
+        "flowValidCount": 137,
+        "flowInvalidCount": 684,
+        "postInitAcceptedCount": 820,
+        "postInitFlowValidCount": 137,
+        "postInitFlowValidFraction": 0.16707317073170733,
+        "meanValidR": 0.49872969245556037,
+        "validRBins": {
+          "0-.2": 11,
+          ".2-.4": 41,
+          ".4-.6": 43,
+          ".6-.8": 28,
+          ".8-1": 14
+        },
+        "appliedHalfSpread": {
+          "count": 821,
+          "mean": 2.905107186673118,
+          "p50": 3.141592653589793,
+          "p90": 3.141592653589793
+        },
+        "potentialFlowHalfSpread": {
+          "count": 137,
+          "mean": 1.7244060233809753,
+          "p50": 1.7689404581293122,
+          "p90": 2.465901248307643
+        }
+      },
+      "flowStats": {
+        "totalTicks": 36000,
+        "validTicks": 5477,
+        "invalidTicks": 30523,
+        "invalidReasons": {
+          "insufficient-count": 30523
+        },
+        "countBins": {
+          "0": 5410,
+          "1-2": 25113,
+          "3-4": 5417,
+          "5-8": 60,
+          "9+": 0
+        },
+        "validResultantBins": {
+          "0-.2": 539,
+          ".2-.4": 1591,
+          ".4-.6": 1584,
+          ".6-.8": 1070,
+          ".8-1": 693
+        }
+      }
+    }
+  ]
+}

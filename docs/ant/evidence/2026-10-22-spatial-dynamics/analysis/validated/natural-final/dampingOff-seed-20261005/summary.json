@@ -1,0 +1,2001 @@
+{
+  "inputPath": "C:\\Users\\5dudt\\Documents\\Github\\ant-2026\\docs\\ant\\evidence\\2026-10-22-spatial-dynamics\\movement\\natural\\dampingOff-20261005\\result.json",
+  "inputSha256": "3dd562cdd0b56a5b80e964f1a16a08d8c4e9ccd5b59cd4160d3591f63ce2aded",
+  "label": "dampingOff",
+  "seed": 20261005,
+  "seconds": 600,
+  "receipt": {
+    "movement": "dampingOff",
+    "field": "production",
+    "recruitment": "north",
+    "productionControllerSha256": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+    "transformedControllerSha256": "8bfcd30140c717ac239e32ad489a4df0c7f779fbf8c701a059ecbaa7bd7df69a",
+    "changes": [
+      {
+        "mechanism": "movement",
+        "before": "steeringAngularVelocity * LOCAL_TURN_DAMPING * agent.trailAdherence",
+        "after": "0"
+      },
+      {
+        "mechanism": "heading-observer-only",
+        "before": "SPAWN_HEADING + signed(this.random) * SPAWN_HEADING_SPREAD",
+        "after": "this.spatialRecruitmentHeading(this.random(), { x, y })"
+      }
+    ],
+    "timing": "Flow uses current tick completed postcollision movement before end-of-tick accepted heading. Init has no segments. Observer emits after tick; newborns supplied no movement to their own spawn.",
+    "fieldChange": null
+  },
+  "sourceHashes": {
+    "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+    "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+    "src/lib/agents/ant/LocalOccupancy.js": "df22dd38e9af8078ebcb1d225ca2a5eaf579e994d2d4a00ce9ceeefa2403ff16",
+    "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+    "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+    "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+    "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+    "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+    "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+    "src/lib/agents/ant/BodyPoseController.js": "2ec4cc12c12ae301ea07056889c3be9255b1b1e155b7724cd3366278d60ace8e",
+    "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd",
+    "scripts/ant-spatial-core.js": "6573ef627e050f0cdd23279d886f1a8c2adf224fdcf840370fe35db5c051de4b",
+    "scripts/ant-spatial-recruitment.js": "37258f30722bd9ce4f28a5f07c8bf6688a7705059722b69bc92659a086c4da40",
+    "scripts/ant-spatial-field.js": "fb6d5caeafcbc009b1b373edb681d9e8505454d05924284822c4682fea261364",
+    "scripts/ant-spatial-run.js": "a84e8b9f10f997598426e985faef42f76144542499cb1c68ecef20d782f0d632",
+    "scripts/ant-spatial-descriptors.js": "1c7b64b480909865f3b5549433036a0ed6498ed3c2eeacac5aca0fa595c12524",
+    "scripts/ant-route-curvature-metrics.js": "d87989a9abba11cfdc7641e1b74d3856f7614d0ae3d2d6b7ca6c6bfddd97792c",
+    "scripts/ant-recruitment-descriptors.js": "90a6f688b91af0ccf21680ed6f0881cba8cdb5b85ff8920ed7e929e521edd2dd"
+  },
+  "toolHashes": {
+    "scripts/ant-spatial-analysis.js": "8c72f9856fe30becbaf2f015a8ee036f3f2ff8770a9ea98f873fe92c908120d3",
+    "scripts/ant-morphology-plates.js": "915ce76cb706412866d8255bb73cbeb9f4707da73992bcd255d1c4c2d3914e33"
+  },
+  "fixedWindows": [
+    {
+      "label": "early-0-120",
+      "startSecond": 0,
+      "endSecond": 120,
+      "samples": 120,
+      "antCount": 13.6,
+      "centroidX": 0.5905765039720035,
+      "centroidY": 0.5669908822748801,
+      "centroidRadius": 0.18583305142975687,
+      "gyrationRadius": 0.25447932492738246,
+      "rmsRadiusFromNest": 0.31837500163534077,
+      "covarianceXX": 0.03443230066934315,
+      "covarianceXY": -0.0002649580778935026,
+      "covarianceYY": 0.03309965578281585,
+      "covarianceAxisCoherence": -0.008600689657404412,
+      "nestNearFraction": 0.11926761211784422,
+      "polarization": 0.30651537196913725,
+      "angularMomentumSigned": -0.03342915158573304,
+      "angularMomentumAbsolute": 0.5968977637449151,
+      "pheromoneMass": 104.54335335710314,
+      "pheromoneCentroidDistance": 0.06901248709651682,
+      "pheromoneOrientationCoherence": 0.3334455224326956,
+      "angularSector00": 0.038563886878515356,
+      "angularSector01": 0.030047252548220046,
+      "angularSector02": 0.025000703236964846,
+      "angularSector03": 0.007025800817402985,
+      "angularSector04": 0.010863731176231175,
+      "angularSector05": 0.005978830859829311,
+      "angularSector06": 0.027865735485704528,
+      "angularSector07": 0.03520467968707132,
+      "angularSector08": 0.026153534431398194,
+      "angularSector09": 0.03290931788513057,
+      "angularSector10": 0.053574760615201764,
+      "angularSector11": 0.08133907343659662,
+      "angularSector12": 0.13726332974301228,
+      "angularSector13": 0.14279981542365452,
+      "angularSector14": 0.1875899560893755,
+      "angularSector15": 0.15781959168569074,
+      "covarianceAxisMeanAngle": -0.8435537817845059,
+      "angularSectorDominant": 14,
+      "angularSectorPeakFraction": 0.1875899560893755
+    },
+    {
+      "label": "late-300-600",
+      "startSecond": 300,
+      "endSecond": 600,
+      "samples": 300,
+      "antCount": 21.073333333333334,
+      "centroidX": 0.6065495728226313,
+      "centroidY": 0.48885366145411124,
+      "centroidRadius": 0.2594670808604814,
+      "gyrationRadius": 0.32998903906621135,
+      "rmsRadiusFromNest": 0.42186622875806906,
+      "covarianceXX": 0.05964091554178298,
+      "covarianceXY": -0.01590244756526724,
+      "covarianceYY": 0.04996166663760115,
+      "covarianceAxisCoherence": 0.20272593961164087,
+      "nestNearFraction": 0.053369433685223115,
+      "polarization": 0.24686359940534477,
+      "angularMomentumSigned": -0.0428104913033755,
+      "angularMomentumAbsolute": 0.6320680877318121,
+      "pheromoneMass": 284.98172919462024,
+      "pheromoneCentroidDistance": 0.05213577150834626,
+      "pheromoneOrientationCoherence": -0.5643761397044013,
+      "angularSector00": 0.06968474215842638,
+      "angularSector01": 0.017412419938735713,
+      "angularSector02": 0.0072027417027417,
+      "angularSector03": 0.007138755980861243,
+      "angularSector04": 0.007558441558441557,
+      "angularSector05": 0.008925419609630133,
+      "angularSector06": 0.02957020075441128,
+      "angularSector07": 0.0415205058099795,
+      "angularSector08": 0.04695473532315635,
+      "angularSector09": 0.045673729778992915,
+      "angularSector10": 0.08034740892635633,
+      "angularSector11": 0.05260155439102808,
+      "angularSector12": 0.17110525049998732,
+      "angularSector13": 0.22143333080175182,
+      "angularSector14": 0.11214066732487787,
+      "angularSector15": 0.08073009544062176,
+      "covarianceAxisMeanAngle": -0.6297200092220492,
+      "angularSectorDominant": 13,
+      "angularSectorPeakFraction": 0.22143333080175182
+    }
+  ],
+  "withinRunDynamics": {
+    "signedAngularMomentumMean": -0.06579733867489727,
+    "positiveWindowFraction": 0.2,
+    "negativeWindowFraction": 0.8,
+    "majoritySign": -1,
+    "majoritySignWindowFraction": 0.8,
+    "longestConsecutiveMajoritySignWindows": 5,
+    "covarianceAxisMeanAngle": [
+      -0.7063546354512908,
+      1.4835683546250344,
+      -0.07795924725542236,
+      0.08346012855008163,
+      -0.3396009734782259,
+      -0.42250282637177594,
+      -0.5271755968186083,
+      -0.7471209901776402,
+      -0.6524655323654736,
+      -0.7680229114292063
+    ],
+    "angularSectorDominant": [
+      14,
+      12,
+      10,
+      10,
+      13,
+      13,
+      13,
+      12,
+      13,
+      13
+    ],
+    "angularSectorPeakFraction": 0.21256081617614128
+  },
+  "plateCap": {
+    "finalCount": 18,
+    "maxPlatesReached": false,
+    "lastImmutablePlateBirthTimeMs": 576883.333333455,
+    "lastImmutablePlateBirthTimeSeconds": 576.883333333455
+  },
+  "temporal": {
+    "autocorrelation": [
+      {
+        "series": "centroidX",
+        "lagSeconds": 30,
+        "correlation": 0.08550740182536809
+      },
+      {
+        "series": "centroidY",
+        "lagSeconds": 30,
+        "correlation": 0.34580777928462963
+      },
+      {
+        "series": "gyrationRadius",
+        "lagSeconds": 30,
+        "correlation": 0.5372948014509985
+      },
+      {
+        "series": "angularMomentumSigned",
+        "lagSeconds": 30,
+        "correlation": 0.17973258026178168
+      },
+      {
+        "series": "covarianceAxisCoherence",
+        "lagSeconds": 30,
+        "correlation": 0.2017114466490914
+      },
+      {
+        "series": "pheromoneMass",
+        "lagSeconds": 30,
+        "correlation": 0.9764945441577916
+      },
+      {
+        "series": "pheromoneCentroidX",
+        "lagSeconds": 30,
+        "correlation": 0.34707363705121524
+      },
+      {
+        "series": "pheromoneCentroidY",
+        "lagSeconds": 30,
+        "correlation": 0.8607436510573403
+      },
+      {
+        "series": "angularSector00",
+        "lagSeconds": 30,
+        "correlation": 0.11886782565892545
+      },
+      {
+        "series": "angularSector01",
+        "lagSeconds": 30,
+        "correlation": 0.19935564268725328
+      },
+      {
+        "series": "angularSector02",
+        "lagSeconds": 30,
+        "correlation": 0.09573496910281125
+      },
+      {
+        "series": "angularSector03",
+        "lagSeconds": 30,
+        "correlation": -0.02138912613491166
+      },
+      {
+        "series": "angularSector04",
+        "lagSeconds": 30,
+        "correlation": -0.03989102466932665
+      },
+      {
+        "series": "angularSector05",
+        "lagSeconds": 30,
+        "correlation": -0.02872164587465959
+      },
+      {
+        "series": "angularSector06",
+        "lagSeconds": 30,
+        "correlation": 0.1260760039892767
+      },
+      {
+        "series": "angularSector07",
+        "lagSeconds": 30,
+        "correlation": 0.09917621418387744
+      },
+      {
+        "series": "angularSector08",
+        "lagSeconds": 30,
+        "correlation": 0.05124125483738548
+      },
+      {
+        "series": "angularSector09",
+        "lagSeconds": 30,
+        "correlation": 0.1121411797754694
+      },
+      {
+        "series": "angularSector10",
+        "lagSeconds": 30,
+        "correlation": 0.21712728788070293
+      },
+      {
+        "series": "angularSector11",
+        "lagSeconds": 30,
+        "correlation": 0.00723363736227104
+      },
+      {
+        "series": "angularSector12",
+        "lagSeconds": 30,
+        "correlation": 0.09028539821039415
+      },
+      {
+        "series": "angularSector13",
+        "lagSeconds": 30,
+        "correlation": 0.22501332581558497
+      },
+      {
+        "series": "angularSector14",
+        "lagSeconds": 30,
+        "correlation": 0.11506484711795728
+      },
+      {
+        "series": "angularSector15",
+        "lagSeconds": 30,
+        "correlation": 0.20793812645897067
+      },
+      {
+        "series": "centroidX",
+        "lagSeconds": 60,
+        "correlation": 0.007993211625805071
+      },
+      {
+        "series": "centroidY",
+        "lagSeconds": 60,
+        "correlation": 0.05885283601573896
+      },
+      {
+        "series": "gyrationRadius",
+        "lagSeconds": 60,
+        "correlation": 0.37758099570077613
+      },
+      {
+        "series": "angularMomentumSigned",
+        "lagSeconds": 60,
+        "correlation": -0.05853803423488405
+      },
+      {
+        "series": "covarianceAxisCoherence",
+        "lagSeconds": 60,
+        "correlation": 0.09600213597668175
+      },
+      {
+        "series": "pheromoneMass",
+        "lagSeconds": 60,
+        "correlation": 0.9444337128517472
+      },
+      {
+        "series": "pheromoneCentroidX",
+        "lagSeconds": 60,
+        "correlation": -0.09695941246530716
+      },
+      {
+        "series": "pheromoneCentroidY",
+        "lagSeconds": 60,
+        "correlation": 0.6256579258232287
+      },
+      {
+        "series": "angularSector00",
+        "lagSeconds": 60,
+        "correlation": 0.04242632507454737
+      },
+      {
+        "series": "angularSector01",
+        "lagSeconds": 60,
+        "correlation": 0.11186085483641349
+      },
+      {
+        "series": "angularSector02",
+        "lagSeconds": 60,
+        "correlation": 0.16125823841439305
+      },
+      {
+        "series": "angularSector03",
+        "lagSeconds": 60,
+        "correlation": -0.011299200861138094
+      },
+      {
+        "series": "angularSector04",
+        "lagSeconds": 60,
+        "correlation": 0.07333024296373826
+      },
+      {
+        "series": "angularSector05",
+        "lagSeconds": 60,
+        "correlation": -0.05098607605228894
+      },
+      {
+        "series": "angularSector06",
+        "lagSeconds": 60,
+        "correlation": 0.06166670333761764
+      },
+      {
+        "series": "angularSector07",
+        "lagSeconds": 60,
+        "correlation": -0.07885711543047219
+      },
+      {
+        "series": "angularSector08",
+        "lagSeconds": 60,
+        "correlation": -0.0982178434842749
+      },
+      {
+        "series": "angularSector09",
+        "lagSeconds": 60,
+        "correlation": -0.07910373351064603
+      },
+      {
+        "series": "angularSector10",
+        "lagSeconds": 60,
+        "correlation": 0.11105986931038203
+      },
+      {
+        "series": "angularSector11",
+        "lagSeconds": 60,
+        "correlation": -0.037508268461263254
+      },
+      {
+        "series": "angularSector12",
+        "lagSeconds": 60,
+        "correlation": -0.016079644688750394
+      },
+      {
+        "series": "angularSector13",
+        "lagSeconds": 60,
+        "correlation": 0.06432670138220965
+      },
+      {
+        "series": "angularSector14",
+        "lagSeconds": 60,
+        "correlation": 0.13367673725629955
+      },
+      {
+        "series": "angularSector15",
+        "lagSeconds": 60,
+        "correlation": 0.02512189789180706
+      },
+      {
+        "series": "centroidX",
+        "lagSeconds": 120,
+        "correlation": -0.09603759369550098
+      },
+      {
+        "series": "centroidY",
+        "lagSeconds": 120,
+        "correlation": 0.06930126331500107
+      },
+      {
+        "series": "gyrationRadius",
+        "lagSeconds": 120,
+        "correlation": 0.17937844678389284
+      },
+      {
+        "series": "angularMomentumSigned",
+        "lagSeconds": 120,
+        "correlation": -0.02533957003858591
+      },
+      {
+        "series": "covarianceAxisCoherence",
+        "lagSeconds": 120,
+        "correlation": -0.06988926592637863
+      },
+      {
+        "series": "pheromoneMass",
+        "lagSeconds": 120,
+        "correlation": 0.7402206005482502
+      },
+      {
+        "series": "pheromoneCentroidX",
+        "lagSeconds": 120,
+        "correlation": -0.4892347636913959
+      },
+      {
+        "series": "pheromoneCentroidY",
+        "lagSeconds": 120,
+        "correlation": 0.3889550998684448
+      },
+      {
+        "series": "angularSector00",
+        "lagSeconds": 120,
+        "correlation": 0.028491607220822637
+      },
+      {
+        "series": "angularSector01",
+        "lagSeconds": 120,
+        "correlation": -0.029754472726312087
+      },
+      {
+        "series": "angularSector02",
+        "lagSeconds": 120,
+        "correlation": -0.006627194965280656
+      },
+      {
+        "series": "angularSector03",
+        "lagSeconds": 120,
+        "correlation": -0.028570789081295962
+      },
+      {
+        "series": "angularSector04",
+        "lagSeconds": 120,
+        "correlation": -0.04988139456668549
+      },
+      {
+        "series": "angularSector05",
+        "lagSeconds": 120,
+        "correlation": -0.021368110530670715
+      },
+      {
+        "series": "angularSector06",
+        "lagSeconds": 120,
+        "correlation": 0.07198719328570292
+      },
+      {
+        "series": "angularSector07",
+        "lagSeconds": 120,
+        "correlation": 0.005295004958193208
+      },
+      {
+        "series": "angularSector08",
+        "lagSeconds": 120,
+        "correlation": -0.09217652978267968
+      },
+      {
+        "series": "angularSector09",
+        "lagSeconds": 120,
+        "correlation": -0.14767111382505996
+      },
+      {
+        "series": "angularSector10",
+        "lagSeconds": 120,
+        "correlation": -0.17361975528355278
+      },
+      {
+        "series": "angularSector11",
+        "lagSeconds": 120,
+        "correlation": 0.06913716009273886
+      },
+      {
+        "series": "angularSector12",
+        "lagSeconds": 120,
+        "correlation": 0.0670065269949975
+      },
+      {
+        "series": "angularSector13",
+        "lagSeconds": 120,
+        "correlation": -0.2200743366114848
+      },
+      {
+        "series": "angularSector14",
+        "lagSeconds": 120,
+        "correlation": 0.11772348633081396
+      },
+      {
+        "series": "angularSector15",
+        "lagSeconds": 120,
+        "correlation": 0.12449742171732732
+      }
+    ],
+    "antPheromoneLaggedSpatial": [
+      {
+        "lagSeconds": 0,
+        "centroidDistanceMean": 0.061583641765808834,
+        "centroidCrossCorrelationX": 0.5838258163610724,
+        "centroidCrossCorrelationY": 0.7308659595577175
+      },
+      {
+        "lagSeconds": 1,
+        "centroidDistanceMean": 0.058871576806915515,
+        "centroidCrossCorrelationX": 0.6255934891283103,
+        "centroidCrossCorrelationY": 0.7520611590350296
+      },
+      {
+        "lagSeconds": 5,
+        "centroidDistanceMean": 0.05119380153841104,
+        "centroidCrossCorrelationX": 0.7357649141298092,
+        "centroidCrossCorrelationY": 0.8033436867960748
+      },
+      {
+        "lagSeconds": 15,
+        "centroidDistanceMean": 0.05640149129966634,
+        "centroidCrossCorrelationX": 0.6788269764183554,
+        "centroidCrossCorrelationY": 0.7496184418282461
+      },
+      {
+        "lagSeconds": 30,
+        "centroidDistanceMean": 0.07063330537716786,
+        "centroidCrossCorrelationX": 0.4144006934816889,
+        "centroidCrossCorrelationY": 0.6575831972295342
+      },
+      {
+        "lagSeconds": 60,
+        "centroidDistanceMean": 0.08557897965870283,
+        "centroidCrossCorrelationX": 0.10017293517994123,
+        "centroidCrossCorrelationY": 0.4214144532960597
+      }
+    ]
+  },
+  "material": [
+    {
+      "second": 30,
+      "kind": "production",
+      "available": true,
+      "count": 0,
+      "unionCells": 0,
+      "meanCurvature03": null,
+      "meanCurvature10": null,
+      "candidateObservation": null,
+      "localHistoryCondition": {
+        "cells": 9216,
+        "meanLayerCount": 0,
+        "maximumLayerCount": 0,
+        "occupiedCellFraction": 0,
+        "meanDesiredSpeedMultiplier": 1,
+        "multiplierP10": 1,
+        "multiplierP90": 1,
+        "multiplierRange": 0,
+        "definition": "m(L) = 1 - 0.10 * (1 - exp(-L / 4)); public cell layer count including top layer; authored condition proxy, not measured friction."
+      },
+      "historyFromPreviousCheckpoint": null
+    },
+    {
+      "second": 30,
+      "kind": "candidate",
+      "available": false,
+      "count": null,
+      "meanCurvature03": null,
+      "meanCurvature10": null,
+      "candidateObservation": null
+    },
+    {
+      "second": 120,
+      "kind": "production",
+      "available": true,
+      "count": 0,
+      "unionCells": 0,
+      "meanCurvature03": null,
+      "meanCurvature10": null,
+      "candidateObservation": null,
+      "localHistoryCondition": {
+        "cells": 9216,
+        "meanLayerCount": 0,
+        "maximumLayerCount": 0,
+        "occupiedCellFraction": 0,
+        "meanDesiredSpeedMultiplier": 1,
+        "multiplierP10": 1,
+        "multiplierP90": 1,
+        "multiplierRange": 0,
+        "definition": "m(L) = 1 - 0.10 * (1 - exp(-L / 4)); public cell layer count including top layer; authored condition proxy, not measured friction."
+      },
+      "historyFromPreviousCheckpoint": {
+        "previousSecond": 30,
+        "unionOverlapCells": 0,
+        "newlyOccupiedCells": 0,
+        "unionRetentionFraction": null,
+        "topIdentityChangedCells": 0,
+        "principalEndpointDirection": null,
+        "principalEndpointDirectionResultant": null,
+        "directionCount": 0,
+        "note": "Per-Plate endpoint direction is frozen geometry; no Plate identity is tracked as a trajectory."
+      }
+    },
+    {
+      "second": 120,
+      "kind": "candidate",
+      "available": true,
+      "count": 1,
+      "unionCells": null,
+      "meanCurvature03": 16.04582805558041,
+      "meanCurvature10": 5.204731601605106,
+      "candidateObservation": {
+        "source": {
+          "x": 0.4631578947368421,
+          "y": 0.6421052631578947,
+          "index": 5900
+        },
+        "target": {
+          "x": 0.9789473684210527,
+          "y": 0.5368421052631579,
+          "index": 4989
+        },
+        "geodesicLength": 0.7405825164139722,
+        "stableSeconds": 6.000000000001746,
+        "similarity": 0.9836065573770492,
+        "footContacts": 2695,
+        "meanChemical": 0.596633234864703,
+        "meanSupport": 0.2085537876234931,
+        "qualified": false,
+        "birthReady": false,
+        "curvature03": 16.04582805558041,
+        "curvature10": 5.204731601605106,
+        "endpointDirection": -0.20131710837464073,
+        "pathPoints": [
+          {
+            "x": 0.4631578947368421,
+            "y": 0.6421052631578947,
+            "index": 5900
+          },
+          {
+            "x": 0.47368421052631576,
+            "y": 0.6526315789473685,
+            "index": 5997
+          },
+          {
+            "x": 0.47368421052631576,
+            "y": 0.6631578947368421,
+            "index": 6093
+          },
+          {
+            "x": 0.47368421052631576,
+            "y": 0.6736842105263158,
+            "index": 6189
+          },
+          {
+            "x": 0.4842105263157895,
+            "y": 0.6842105263157895,
+            "index": 6286
+          },
+          {
+            "x": 0.49473684210526314,
+            "y": 0.6947368421052632,
+            "index": 6383
+          },
+          {
+            "x": 0.5052631578947369,
+            "y": 0.6947368421052632,
+            "index": 6384
+          },
+          {
+            "x": 0.5157894736842106,
+            "y": 0.6947368421052632,
+            "index": 6385
+          },
+          {
+            "x": 0.5263157894736842,
+            "y": 0.6947368421052632,
+            "index": 6386
+          },
+          {
+            "x": 0.5368421052631579,
+            "y": 0.6842105263157895,
+            "index": 6291
+          },
+          {
+            "x": 0.5473684210526316,
+            "y": 0.6736842105263158,
+            "index": 6196
+          },
+          {
+            "x": 0.5578947368421052,
+            "y": 0.6631578947368421,
+            "index": 6101
+          },
+          {
+            "x": 0.5684210526315789,
+            "y": 0.6526315789473685,
+            "index": 6006
+          },
+          {
+            "x": 0.5789473684210527,
+            "y": 0.6421052631578947,
+            "index": 5911
+          },
+          {
+            "x": 0.5894736842105263,
+            "y": 0.6421052631578947,
+            "index": 5912
+          },
+          {
+            "x": 0.6,
+            "y": 0.6526315789473685,
+            "index": 6009
+          },
+          {
+            "x": 0.6105263157894737,
+            "y": 0.6631578947368421,
+            "index": 6106
+          },
+          {
+            "x": 0.6210526315789474,
+            "y": 0.6631578947368421,
+            "index": 6107
+          },
+          {
+            "x": 0.631578947368421,
+            "y": 0.6631578947368421,
+            "index": 6108
+          },
+          {
+            "x": 0.6421052631578947,
+            "y": 0.6631578947368421,
+            "index": 6109
+          },
+          {
+            "x": 0.6526315789473685,
+            "y": 0.6526315789473685,
+            "index": 6014
+          },
+          {
+            "x": 0.6631578947368421,
+            "y": 0.6421052631578947,
+            "index": 5919
+          },
+          {
+            "x": 0.6736842105263158,
+            "y": 0.6421052631578947,
+            "index": 5920
+          },
+          {
+            "x": 0.6842105263157895,
+            "y": 0.6526315789473685,
+            "index": 6017
+          },
+          {
+            "x": 0.6947368421052632,
+            "y": 0.6631578947368421,
+            "index": 6114
+          },
+          {
+            "x": 0.7052631578947368,
+            "y": 0.6736842105263158,
+            "index": 6211
+          },
+          {
+            "x": 0.7157894736842105,
+            "y": 0.6736842105263158,
+            "index": 6212
+          },
+          {
+            "x": 0.7263157894736842,
+            "y": 0.6842105263157895,
+            "index": 6309
+          },
+          {
+            "x": 0.7368421052631579,
+            "y": 0.6842105263157895,
+            "index": 6310
+          },
+          {
+            "x": 0.7473684210526316,
+            "y": 0.6842105263157895,
+            "index": 6311
+          },
+          {
+            "x": 0.7578947368421053,
+            "y": 0.6842105263157895,
+            "index": 6312
+          },
+          {
+            "x": 0.7684210526315789,
+            "y": 0.6842105263157895,
+            "index": 6313
+          },
+          {
+            "x": 0.7789473684210526,
+            "y": 0.6842105263157895,
+            "index": 6314
+          },
+          {
+            "x": 0.7894736842105263,
+            "y": 0.6842105263157895,
+            "index": 6315
+          },
+          {
+            "x": 0.8,
+            "y": 0.6947368421052632,
+            "index": 6412
+          },
+          {
+            "x": 0.8105263157894737,
+            "y": 0.6947368421052632,
+            "index": 6413
+          },
+          {
+            "x": 0.8210526315789474,
+            "y": 0.6947368421052632,
+            "index": 6414
+          },
+          {
+            "x": 0.8315789473684211,
+            "y": 0.6947368421052632,
+            "index": 6415
+          },
+          {
+            "x": 0.8421052631578947,
+            "y": 0.6947368421052632,
+            "index": 6416
+          },
+          {
+            "x": 0.8526315789473684,
+            "y": 0.6842105263157895,
+            "index": 6321
+          },
+          {
+            "x": 0.8631578947368421,
+            "y": 0.6736842105263158,
+            "index": 6226
+          },
+          {
+            "x": 0.8736842105263158,
+            "y": 0.6631578947368421,
+            "index": 6131
+          },
+          {
+            "x": 0.8842105263157894,
+            "y": 0.6631578947368421,
+            "index": 6132
+          },
+          {
+            "x": 0.8947368421052632,
+            "y": 0.6631578947368421,
+            "index": 6133
+          },
+          {
+            "x": 0.9052631578947369,
+            "y": 0.6631578947368421,
+            "index": 6134
+          },
+          {
+            "x": 0.9157894736842105,
+            "y": 0.6631578947368421,
+            "index": 6135
+          },
+          {
+            "x": 0.9263157894736842,
+            "y": 0.6631578947368421,
+            "index": 6136
+          },
+          {
+            "x": 0.9368421052631579,
+            "y": 0.6526315789473685,
+            "index": 6041
+          },
+          {
+            "x": 0.9473684210526315,
+            "y": 0.6526315789473685,
+            "index": 6042
+          },
+          {
+            "x": 0.9578947368421052,
+            "y": 0.6526315789473685,
+            "index": 6043
+          },
+          {
+            "x": 0.968421052631579,
+            "y": 0.6421052631578947,
+            "index": 5948
+          },
+          {
+            "x": 0.968421052631579,
+            "y": 0.631578947368421,
+            "index": 5852
+          },
+          {
+            "x": 0.9789473684210527,
+            "y": 0.6210526315789474,
+            "index": 5757
+          },
+          {
+            "x": 0.9789473684210527,
+            "y": 0.6105263157894737,
+            "index": 5661
+          },
+          {
+            "x": 0.968421052631579,
+            "y": 0.6,
+            "index": 5564
+          },
+          {
+            "x": 0.968421052631579,
+            "y": 0.5894736842105263,
+            "index": 5468
+          },
+          {
+            "x": 0.968421052631579,
+            "y": 0.5789473684210527,
+            "index": 5372
+          },
+          {
+            "x": 0.968421052631579,
+            "y": 0.5684210526315789,
+            "index": 5276
+          },
+          {
+            "x": 0.968421052631579,
+            "y": 0.5578947368421052,
+            "index": 5180
+          },
+          {
+            "x": 0.968421052631579,
+            "y": 0.5473684210526316,
+            "index": 5084
+          },
+          {
+            "x": 0.9789473684210527,
+            "y": 0.5368421052631579,
+            "index": 4989
+          }
+        ]
+      },
+      "localHistoryCondition": null,
+      "historyFromPreviousCheckpoint": null
+    },
+    {
+      "second": 300,
+      "kind": "production",
+      "available": true,
+      "count": 7,
+      "unionCells": 2753,
+      "meanCurvature03": 12.192344965982732,
+      "meanCurvature10": 4.620824544371869,
+      "candidateObservation": null,
+      "localHistoryCondition": {
+        "cells": 9216,
+        "meanLayerCount": 0.8745659722222222,
+        "maximumLayerCount": 7,
+        "occupiedCellFraction": 0.2987196180555556,
+        "meanDesiredSpeedMultiplier": 0.9855886078509665,
+        "multiplierP10": 0.9367879441171443,
+        "multiplierP90": 1,
+        "multiplierRange": 0.0826226056549555,
+        "definition": "m(L) = 1 - 0.10 * (1 - exp(-L / 4)); public cell layer count including top layer; authored condition proxy, not measured friction."
+      },
+      "historyFromPreviousCheckpoint": {
+        "previousSecond": 120,
+        "unionOverlapCells": 0,
+        "newlyOccupiedCells": 2753,
+        "unionRetentionFraction": null,
+        "topIdentityChangedCells": 2753,
+        "principalEndpointDirection": -1.2215806780867025,
+        "principalEndpointDirectionResultant": 0.6544688855804467,
+        "directionCount": 7,
+        "note": "Per-Plate endpoint direction is frozen geometry; no Plate identity is tracked as a trajectory."
+      }
+    },
+    {
+      "second": 300,
+      "kind": "candidate",
+      "available": true,
+      "count": 1,
+      "unionCells": null,
+      "meanCurvature03": 12.285886905153102,
+      "meanCurvature10": 5.161818440081037,
+      "candidateObservation": {
+        "source": {
+          "x": 0.4631578947368421,
+          "y": 0.6421052631578947,
+          "index": 5900
+        },
+        "target": {
+          "x": 0.9157894736842105,
+          "y": 0.021052631578947368,
+          "index": 279
+        },
+        "geodesicLength": 0.9729095460125559,
+        "stableSeconds": 168.99999999996697,
+        "similarity": 1,
+        "footContacts": 12889,
+        "meanChemical": 0.6151103045416888,
+        "meanSupport": 0.32829934092504637,
+        "qualified": true,
+        "birthReady": false,
+        "curvature03": 12.285886905153102,
+        "curvature10": 5.161818440081037,
+        "endpointDirection": -0.9409929913744781,
+        "pathPoints": [
+          {
+            "x": 0.4631578947368421,
+            "y": 0.6421052631578947,
+            "index": 5900
+          },
+          {
+            "x": 0.4631578947368421,
+            "y": 0.631578947368421,
+            "index": 5804
+          },
+          {
+            "x": 0.4631578947368421,
+            "y": 0.6210526315789474,
+            "index": 5708
+          },
+          {
+            "x": 0.47368421052631576,
+            "y": 0.6105263157894737,
+            "index": 5613
+          },
+          {
+            "x": 0.4842105263157895,
+            "y": 0.6,
+            "index": 5518
+          },
+          {
+            "x": 0.4842105263157895,
+            "y": 0.5894736842105263,
+            "index": 5422
+          },
+          {
+            "x": 0.49473684210526314,
+            "y": 0.5789473684210527,
+            "index": 5327
+          },
+          {
+            "x": 0.5052631578947369,
+            "y": 0.5684210526315789,
+            "index": 5232
+          },
+          {
+            "x": 0.5052631578947369,
+            "y": 0.5578947368421052,
+            "index": 5136
+          },
+          {
+            "x": 0.5157894736842106,
+            "y": 0.5473684210526316,
+            "index": 5041
+          },
+          {
+            "x": 0.5157894736842106,
+            "y": 0.5368421052631579,
+            "index": 4945
+          },
+          {
+            "x": 0.5263157894736842,
+            "y": 0.5263157894736842,
+            "index": 4850
+          },
+          {
+            "x": 0.5368421052631579,
+            "y": 0.5157894736842106,
+            "index": 4755
+          },
+          {
+            "x": 0.5368421052631579,
+            "y": 0.5052631578947369,
+            "index": 4659
+          },
+          {
+            "x": 0.5473684210526316,
+            "y": 0.49473684210526314,
+            "index": 4564
+          },
+          {
+            "x": 0.5473684210526316,
+            "y": 0.4842105263157895,
+            "index": 4468
+          },
+          {
+            "x": 0.5473684210526316,
+            "y": 0.47368421052631576,
+            "index": 4372
+          },
+          {
+            "x": 0.5578947368421052,
+            "y": 0.4631578947368421,
+            "index": 4277
+          },
+          {
+            "x": 0.5684210526315789,
+            "y": 0.4631578947368421,
+            "index": 4278
+          },
+          {
+            "x": 0.5789473684210527,
+            "y": 0.45263157894736844,
+            "index": 4183
+          },
+          {
+            "x": 0.5894736842105263,
+            "y": 0.45263157894736844,
+            "index": 4184
+          },
+          {
+            "x": 0.6,
+            "y": 0.4421052631578947,
+            "index": 4089
+          },
+          {
+            "x": 0.6105263157894737,
+            "y": 0.43157894736842106,
+            "index": 3994
+          },
+          {
+            "x": 0.6210526315789474,
+            "y": 0.42105263157894735,
+            "index": 3899
+          },
+          {
+            "x": 0.6210526315789474,
+            "y": 0.4105263157894737,
+            "index": 3803
+          },
+          {
+            "x": 0.6210526315789474,
+            "y": 0.4,
+            "index": 3707
+          },
+          {
+            "x": 0.6210526315789474,
+            "y": 0.3894736842105263,
+            "index": 3611
+          },
+          {
+            "x": 0.631578947368421,
+            "y": 0.37894736842105264,
+            "index": 3516
+          },
+          {
+            "x": 0.631578947368421,
+            "y": 0.3684210526315789,
+            "index": 3420
+          },
+          {
+            "x": 0.631578947368421,
+            "y": 0.35789473684210527,
+            "index": 3324
+          },
+          {
+            "x": 0.6421052631578947,
+            "y": 0.3473684210526316,
+            "index": 3229
+          },
+          {
+            "x": 0.6526315789473685,
+            "y": 0.3473684210526316,
+            "index": 3230
+          },
+          {
+            "x": 0.6631578947368421,
+            "y": 0.3473684210526316,
+            "index": 3231
+          },
+          {
+            "x": 0.6736842105263158,
+            "y": 0.3473684210526316,
+            "index": 3232
+          },
+          {
+            "x": 0.6842105263157895,
+            "y": 0.3368421052631579,
+            "index": 3137
+          },
+          {
+            "x": 0.6947368421052632,
+            "y": 0.3263157894736842,
+            "index": 3042
+          },
+          {
+            "x": 0.7052631578947368,
+            "y": 0.3157894736842105,
+            "index": 2947
+          },
+          {
+            "x": 0.7157894736842105,
+            "y": 0.3157894736842105,
+            "index": 2948
+          },
+          {
+            "x": 0.7263157894736842,
+            "y": 0.30526315789473685,
+            "index": 2853
+          },
+          {
+            "x": 0.7263157894736842,
+            "y": 0.29473684210526313,
+            "index": 2757
+          },
+          {
+            "x": 0.7263157894736842,
+            "y": 0.28421052631578947,
+            "index": 2661
+          },
+          {
+            "x": 0.7368421052631579,
+            "y": 0.2736842105263158,
+            "index": 2566
+          },
+          {
+            "x": 0.7473684210526316,
+            "y": 0.2631578947368421,
+            "index": 2471
+          },
+          {
+            "x": 0.7473684210526316,
+            "y": 0.25263157894736843,
+            "index": 2375
+          },
+          {
+            "x": 0.7473684210526316,
+            "y": 0.24210526315789474,
+            "index": 2279
+          },
+          {
+            "x": 0.7473684210526316,
+            "y": 0.23157894736842105,
+            "index": 2183
+          },
+          {
+            "x": 0.7473684210526316,
+            "y": 0.22105263157894736,
+            "index": 2087
+          },
+          {
+            "x": 0.7473684210526316,
+            "y": 0.21052631578947367,
+            "index": 1991
+          },
+          {
+            "x": 0.7473684210526316,
+            "y": 0.2,
+            "index": 1895
+          },
+          {
+            "x": 0.7473684210526316,
+            "y": 0.18947368421052632,
+            "index": 1799
+          },
+          {
+            "x": 0.7578947368421053,
+            "y": 0.17894736842105263,
+            "index": 1704
+          },
+          {
+            "x": 0.7684210526315789,
+            "y": 0.16842105263157894,
+            "index": 1609
+          },
+          {
+            "x": 0.7789473684210526,
+            "y": 0.15789473684210525,
+            "index": 1514
+          },
+          {
+            "x": 0.7894736842105263,
+            "y": 0.15789473684210525,
+            "index": 1515
+          },
+          {
+            "x": 0.8,
+            "y": 0.15789473684210525,
+            "index": 1516
+          },
+          {
+            "x": 0.8105263157894737,
+            "y": 0.15789473684210525,
+            "index": 1517
+          },
+          {
+            "x": 0.8210526315789474,
+            "y": 0.15789473684210525,
+            "index": 1518
+          },
+          {
+            "x": 0.8315789473684211,
+            "y": 0.15789473684210525,
+            "index": 1519
+          },
+          {
+            "x": 0.8421052631578947,
+            "y": 0.15789473684210525,
+            "index": 1520
+          },
+          {
+            "x": 0.8526315789473684,
+            "y": 0.15789473684210525,
+            "index": 1521
+          },
+          {
+            "x": 0.8631578947368421,
+            "y": 0.15789473684210525,
+            "index": 1522
+          },
+          {
+            "x": 0.8736842105263158,
+            "y": 0.15789473684210525,
+            "index": 1523
+          },
+          {
+            "x": 0.8842105263157894,
+            "y": 0.15789473684210525,
+            "index": 1524
+          },
+          {
+            "x": 0.8947368421052632,
+            "y": 0.15789473684210525,
+            "index": 1525
+          },
+          {
+            "x": 0.9052631578947369,
+            "y": 0.15789473684210525,
+            "index": 1526
+          },
+          {
+            "x": 0.9157894736842105,
+            "y": 0.16842105263157894,
+            "index": 1623
+          },
+          {
+            "x": 0.9263157894736842,
+            "y": 0.16842105263157894,
+            "index": 1624
+          },
+          {
+            "x": 0.9368421052631579,
+            "y": 0.15789473684210525,
+            "index": 1529
+          },
+          {
+            "x": 0.9368421052631579,
+            "y": 0.14736842105263157,
+            "index": 1433
+          },
+          {
+            "x": 0.9368421052631579,
+            "y": 0.1368421052631579,
+            "index": 1337
+          },
+          {
+            "x": 0.9473684210526315,
+            "y": 0.12631578947368421,
+            "index": 1242
+          },
+          {
+            "x": 0.9473684210526315,
+            "y": 0.11578947368421053,
+            "index": 1146
+          },
+          {
+            "x": 0.9473684210526315,
+            "y": 0.10526315789473684,
+            "index": 1050
+          },
+          {
+            "x": 0.9473684210526315,
+            "y": 0.09473684210526316,
+            "index": 954
+          },
+          {
+            "x": 0.9473684210526315,
+            "y": 0.08421052631578947,
+            "index": 858
+          },
+          {
+            "x": 0.9473684210526315,
+            "y": 0.07368421052631578,
+            "index": 762
+          },
+          {
+            "x": 0.9473684210526315,
+            "y": 0.06315789473684211,
+            "index": 666
+          },
+          {
+            "x": 0.9368421052631579,
+            "y": 0.05263157894736842,
+            "index": 569
+          },
+          {
+            "x": 0.9263157894736842,
+            "y": 0.042105263157894736,
+            "index": 472
+          },
+          {
+            "x": 0.9263157894736842,
+            "y": 0.031578947368421054,
+            "index": 376
+          },
+          {
+            "x": 0.9157894736842105,
+            "y": 0.021052631578947368,
+            "index": 279
+          }
+        ]
+      },
+      "localHistoryCondition": null,
+      "historyFromPreviousCheckpoint": null
+    },
+    {
+      "second": 600,
+      "kind": "production",
+      "available": true,
+      "count": 18,
+      "unionCells": 4455,
+      "meanCurvature03": 12.901302799712846,
+      "meanCurvature10": 4.734660584724065,
+      "candidateObservation": null,
+      "localHistoryCondition": {
+        "cells": 9216,
+        "meanLayerCount": 2.195095486111111,
+        "maximumLayerCount": 18,
+        "occupiedCellFraction": 0.4833984375,
+        "meanDesiredSpeedMultiplier": 0.9715875511385086,
+        "multiplierP10": 0.9173773943450445,
+        "multiplierP90": 1,
+        "multiplierRange": 0.09888910034617582,
+        "definition": "m(L) = 1 - 0.10 * (1 - exp(-L / 4)); public cell layer count including top layer; authored condition proxy, not measured friction."
+      },
+      "historyFromPreviousCheckpoint": {
+        "previousSecond": 300,
+        "unionOverlapCells": 2753,
+        "newlyOccupiedCells": 1702,
+        "unionRetentionFraction": 1,
+        "topIdentityChangedCells": 3415,
+        "principalEndpointDirection": -1.102606385567562,
+        "principalEndpointDirectionResultant": 0.8432806716721056,
+        "directionCount": 18,
+        "note": "Per-Plate endpoint direction is frozen geometry; no Plate identity is tracked as a trajectory."
+      }
+    },
+    {
+      "second": 600,
+      "kind": "candidate",
+      "available": true,
+      "count": 1,
+      "unionCells": null,
+      "meanCurvature03": 14.078278303459602,
+      "meanCurvature10": 6.070814873665603,
+      "candidateObservation": {
+        "source": {
+          "x": 0.47368421052631576,
+          "y": 0.8,
+          "index": 7341
+        },
+        "target": {
+          "x": 0.7578947368421053,
+          "y": 0.031578947368421054,
+          "index": 360
+        },
+        "geodesicLength": 1.1638793946834076,
+        "stableSeconds": 220.2333333333279,
+        "similarity": 1,
+        "footContacts": 23083,
+        "meanChemical": 0.6300162775848042,
+        "meanSupport": 0.4681880317761735,
+        "qualified": true,
+        "birthReady": false,
+        "curvature03": 14.078278303459602,
+        "curvature10": 6.070814873665603,
+        "endpointDirection": -1.2165369041162304,
+        "pathPoints": [
+          {
+            "x": 0.47368421052631576,
+            "y": 0.8,
+            "index": 7341
+          },
+          {
+            "x": 0.47368421052631576,
+            "y": 0.7894736842105263,
+            "index": 7245
+          },
+          {
+            "x": 0.4842105263157895,
+            "y": 0.7789473684210526,
+            "index": 7150
+          },
+          {
+            "x": 0.4842105263157895,
+            "y": 0.7684210526315789,
+            "index": 7054
+          },
+          {
+            "x": 0.49473684210526314,
+            "y": 0.7578947368421053,
+            "index": 6959
+          },
+          {
+            "x": 0.49473684210526314,
+            "y": 0.7473684210526316,
+            "index": 6863
+          },
+          {
+            "x": 0.49473684210526314,
+            "y": 0.7368421052631579,
+            "index": 6767
+          },
+          {
+            "x": 0.49473684210526314,
+            "y": 0.7263157894736842,
+            "index": 6671
+          },
+          {
+            "x": 0.5052631578947369,
+            "y": 0.7157894736842105,
+            "index": 6576
+          },
+          {
+            "x": 0.5157894736842106,
+            "y": 0.7052631578947368,
+            "index": 6481
+          },
+          {
+            "x": 0.5263157894736842,
+            "y": 0.6947368421052632,
+            "index": 6386
+          },
+          {
+            "x": 0.5263157894736842,
+            "y": 0.6842105263157895,
+            "index": 6290
+          },
+          {
+            "x": 0.5263157894736842,
+            "y": 0.6736842105263158,
+            "index": 6194
+          },
+          {
+            "x": 0.5263157894736842,
+            "y": 0.6631578947368421,
+            "index": 6098
+          },
+          {
+            "x": 0.5263157894736842,
+            "y": 0.6526315789473685,
+            "index": 6002
+          },
+          {
+            "x": 0.5263157894736842,
+            "y": 0.6421052631578947,
+            "index": 5906
+          },
+          {
+            "x": 0.5157894736842106,
+            "y": 0.631578947368421,
+            "index": 5809
+          },
+          {
+            "x": 0.5157894736842106,
+            "y": 0.6210526315789474,
+            "index": 5713
+          },
+          {
+            "x": 0.5052631578947369,
+            "y": 0.6105263157894737,
+            "index": 5616
+          },
+          {
+            "x": 0.5052631578947369,
+            "y": 0.6,
+            "index": 5520
+          },
+          {
+            "x": 0.5052631578947369,
+            "y": 0.5894736842105263,
+            "index": 5424
+          },
+          {
+            "x": 0.49473684210526314,
+            "y": 0.5789473684210527,
+            "index": 5327
+          },
+          {
+            "x": 0.4842105263157895,
+            "y": 0.5684210526315789,
+            "index": 5230
+          },
+          {
+            "x": 0.49473684210526314,
+            "y": 0.5578947368421052,
+            "index": 5135
+          },
+          {
+            "x": 0.5052631578947369,
+            "y": 0.5473684210526316,
+            "index": 5040
+          },
+          {
+            "x": 0.5157894736842106,
+            "y": 0.5368421052631579,
+            "index": 4945
+          },
+          {
+            "x": 0.5157894736842106,
+            "y": 0.5263157894736842,
+            "index": 4849
+          },
+          {
+            "x": 0.5052631578947369,
+            "y": 0.5157894736842106,
+            "index": 4752
+          },
+          {
+            "x": 0.49473684210526314,
+            "y": 0.5052631578947369,
+            "index": 4655
+          },
+          {
+            "x": 0.49473684210526314,
+            "y": 0.49473684210526314,
+            "index": 4559
+          },
+          {
+            "x": 0.49473684210526314,
+            "y": 0.4842105263157895,
+            "index": 4463
+          },
+          {
+            "x": 0.4842105263157895,
+            "y": 0.47368421052631576,
+            "index": 4366
+          },
+          {
+            "x": 0.4842105263157895,
+            "y": 0.4631578947368421,
+            "index": 4270
+          },
+          {
+            "x": 0.4842105263157895,
+            "y": 0.45263157894736844,
+            "index": 4174
+          },
+          {
+            "x": 0.4842105263157895,
+            "y": 0.4421052631578947,
+            "index": 4078
+          },
+          {
+            "x": 0.4842105263157895,
+            "y": 0.43157894736842106,
+            "index": 3982
+          },
+          {
+            "x": 0.4842105263157895,
+            "y": 0.42105263157894735,
+            "index": 3886
+          },
+          {
+            "x": 0.4842105263157895,
+            "y": 0.4105263157894737,
+            "index": 3790
+          },
+          {
+            "x": 0.47368421052631576,
+            "y": 0.4,
+            "index": 3693
+          },
+          {
+            "x": 0.47368421052631576,
+            "y": 0.3894736842105263,
+            "index": 3597
+          },
+          {
+            "x": 0.4631578947368421,
+            "y": 0.37894736842105264,
+            "index": 3500
+          },
+          {
+            "x": 0.4631578947368421,
+            "y": 0.3684210526315789,
+            "index": 3404
+          },
+          {
+            "x": 0.4631578947368421,
+            "y": 0.35789473684210527,
+            "index": 3308
+          },
+          {
+            "x": 0.4631578947368421,
+            "y": 0.3473684210526316,
+            "index": 3212
+          },
+          {
+            "x": 0.47368421052631576,
+            "y": 0.3368421052631579,
+            "index": 3117
+          },
+          {
+            "x": 0.4842105263157895,
+            "y": 0.3263157894736842,
+            "index": 3022
+          },
+          {
+            "x": 0.49473684210526314,
+            "y": 0.3157894736842105,
+            "index": 2927
+          },
+          {
+            "x": 0.5052631578947369,
+            "y": 0.3157894736842105,
+            "index": 2928
+          },
+          {
+            "x": 0.5157894736842106,
+            "y": 0.30526315789473685,
+            "index": 2833
+          },
+          {
+            "x": 0.5157894736842106,
+            "y": 0.29473684210526313,
+            "index": 2737
+          },
+          {
+            "x": 0.5157894736842106,
+            "y": 0.28421052631578947,
+            "index": 2641
+          },
+          {
+            "x": 0.5052631578947369,
+            "y": 0.2736842105263158,
+            "index": 2544
+          },
+          {
+            "x": 0.49473684210526314,
+            "y": 0.2631578947368421,
+            "index": 2447
+          },
+          {
+            "x": 0.49473684210526314,
+            "y": 0.25263157894736843,
+            "index": 2351
+          },
+          {
+            "x": 0.4842105263157895,
+            "y": 0.24210526315789474,
+            "index": 2254
+          },
+          {
+            "x": 0.47368421052631576,
+            "y": 0.23157894736842105,
+            "index": 2157
+          },
+          {
+            "x": 0.4631578947368421,
+            "y": 0.22105263157894736,
+            "index": 2060
+          },
+          {
+            "x": 0.4631578947368421,
+            "y": 0.21052631578947367,
+            "index": 1964
+          },
+          {
+            "x": 0.4631578947368421,
+            "y": 0.2,
+            "index": 1868
+          },
+          {
+            "x": 0.47368421052631576,
+            "y": 0.18947368421052632,
+            "index": 1773
+          },
+          {
+            "x": 0.4842105263157895,
+            "y": 0.17894736842105263,
+            "index": 1678
+          },
+          {
+            "x": 0.49473684210526314,
+            "y": 0.16842105263157894,
+            "index": 1583
+          },
+          {
+            "x": 0.5052631578947369,
+            "y": 0.16842105263157894,
+            "index": 1584
+          },
+          {
+            "x": 0.5157894736842106,
+            "y": 0.15789473684210525,
+            "index": 1489
+          },
+          {
+            "x": 0.5263157894736842,
+            "y": 0.15789473684210525,
+            "index": 1490
+          },
+          {
+            "x": 0.5368421052631579,
+            "y": 0.15789473684210525,
+            "index": 1491
+          },
+          {
+            "x": 0.5473684210526316,
+            "y": 0.15789473684210525,
+            "index": 1492
+          },
+          {
+            "x": 0.5578947368421052,
+            "y": 0.15789473684210525,
+            "index": 1493
+          },
+          {
+            "x": 0.5684210526315789,
+            "y": 0.15789473684210525,
+            "index": 1494
+          },
+          {
+            "x": 0.5789473684210527,
+            "y": 0.14736842105263157,
+            "index": 1399
+          },
+          {
+            "x": 0.5894736842105263,
+            "y": 0.14736842105263157,
+            "index": 1400
+          },
+          {
+            "x": 0.6,
+            "y": 0.1368421052631579,
+            "index": 1305
+          },
+          {
+            "x": 0.6105263157894737,
+            "y": 0.12631578947368421,
+            "index": 1210
+          },
+          {
+            "x": 0.6210526315789474,
+            "y": 0.11578947368421053,
+            "index": 1115
+          },
+          {
+            "x": 0.631578947368421,
+            "y": 0.10526315789473684,
+            "index": 1020
+          },
+          {
+            "x": 0.631578947368421,
+            "y": 0.09473684210526316,
+            "index": 924
+          },
+          {
+            "x": 0.631578947368421,
+            "y": 0.08421052631578947,
+            "index": 828
+          },
+          {
+            "x": 0.6210526315789474,
+            "y": 0.07368421052631578,
+            "index": 731
+          },
+          {
+            "x": 0.6210526315789474,
+            "y": 0.06315789473684211,
+            "index": 635
+          },
+          {
+            "x": 0.6210526315789474,
+            "y": 0.05263157894736842,
+            "index": 539
+          },
+          {
+            "x": 0.6210526315789474,
+            "y": 0.042105263157894736,
+            "index": 443
+          },
+          {
+            "x": 0.6210526315789474,
+            "y": 0.031578947368421054,
+            "index": 347
+          },
+          {
+            "x": 0.631578947368421,
+            "y": 0.021052631578947368,
+            "index": 252
+          },
+          {
+            "x": 0.6421052631578947,
+            "y": 0.021052631578947368,
+            "index": 253
+          },
+          {
+            "x": 0.6526315789473685,
+            "y": 0.010526315789473684,
+            "index": 158
+          },
+          {
+            "x": 0.6631578947368421,
+            "y": 0.010526315789473684,
+            "index": 159
+          },
+          {
+            "x": 0.6736842105263158,
+            "y": 0.010526315789473684,
+            "index": 160
+          },
+          {
+            "x": 0.6842105263157895,
+            "y": 0.010526315789473684,
+            "index": 161
+          },
+          {
+            "x": 0.6947368421052632,
+            "y": 0.010526315789473684,
+            "index": 162
+          },
+          {
+            "x": 0.7052631578947368,
+            "y": 0.010526315789473684,
+            "index": 163
+          },
+          {
+            "x": 0.7157894736842105,
+            "y": 0.010526315789473684,
+            "index": 164
+          },
+          {
+            "x": 0.7263157894736842,
+            "y": 0.010526315789473684,
+            "index": 165
+          },
+          {
+            "x": 0.7368421052631579,
+            "y": 0.010526315789473684,
+            "index": 166
+          },
+          {
+            "x": 0.7473684210526316,
+            "y": 0.021052631578947368,
+            "index": 263
+          },
+          {
+            "x": 0.7578947368421053,
+            "y": 0.031578947368421054,
+            "index": 360
+          }
+        ]
+      },
+      "localHistoryCondition": null,
+      "historyFromPreviousCheckpoint": null
+    }
+  ]
+}

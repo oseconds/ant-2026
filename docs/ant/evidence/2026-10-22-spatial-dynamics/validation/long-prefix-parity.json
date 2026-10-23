@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "method": "Exact JSON equality over checkpoints, one-second frames, ten-Hz active-ant trajectories, and accepted-spawn records with tick <= 600*60. Metadata and whole-run summaries excluded.",
+  "runs": [
+    {
+      "label": "production 7200s prefix vs 600s baseline",
+      "longRun": "long-run/production-20261005/result.json",
+      "referenceRun": "baseline/seed-20261005/result.json",
+      "prefixModelSeconds": 600,
+      "comparedPrefixTicks": 36000,
+      "comparedPrefixSeconds": 600,
+      "comparisons": {
+        "checkpoints": {
+          "expected": 4,
+          "actual": 4,
+          "firstDifference": null,
+          "exactMatch": true
+        },
+        "oneSecondFrames": {
+          "expected": 600,
+          "actual": 600,
+          "firstDifference": null,
+          "exactMatch": true
+        },
+        "tenHzTrajectory": {
+          "expected": 6000,
+          "actual": 6000,
+          "firstDifference": null,
+          "exactMatch": true
+        },
+        "acceptedSpawns": {
+          "expected": 755,
+          "actual": 755,
+          "firstDifference": null,
+          "exactMatch": true
+        }
+      },
+      "allComparedStreamsMatch": true,
+      "excludedMetadata": [
+        "wallSeconds",
+        "sourceHashes",
+        "whole-run curvature and flow aggregates",
+        "whole-run final state"
+      ]
+    },
+    {
+      "label": "dtFeedback 7200s prefix vs 600s natural run",
+      "longRun": "long-run/dtFeedback-20261005/result.json",
+      "referenceRun": "movement/natural/dtFeedback-20261005/result.json",
+      "prefixModelSeconds": 600,
+      "comparedPrefixTicks": 36000,
+      "comparedPrefixSeconds": 600,
+      "comparisons": {
+        "checkpoints": {
+          "expected": 4,
+          "actual": 4,
+          "firstDifference": null,
+          "exactMatch": true
+        },
+        "oneSecondFrames": {
+          "expected": 600,
+          "actual": 600,
+          "firstDifference": null,
+          "exactMatch": true
+        },
+        "tenHzTrajectory": {
+          "expected": 6000,
+          "actual": 6000,
+          "firstDifference": null,
+          "exactMatch": true
+        },
+        "acceptedSpawns": {
+          "expected": 311,
+          "actual": 311,
+          "firstDifference": null,
+          "exactMatch": true
+        }
+      },
+      "allComparedStreamsMatch": true,
+      "excludedMetadata": [
+        "wallSeconds",
+        "sourceHashes",
+        "whole-run curvature and flow aggregates",
+        "whole-run final state"
+      ]
+    }
+  ]
+}

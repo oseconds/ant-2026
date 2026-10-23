@@ -1,0 +1,89 @@
+# Spatial dynamics source and evidence audit
+
+This is the preserved **pre-experiment** audit. Its conditional proposals and then-unknown measurements are planning context; the completed results and current decisions are in [REPORT.md](REPORT.md).
+
+**Scope:** independent read-only audit of production movement → chemical/mechanical field → immutable material → later movement, on `codex/ant-spatial-dynamics-research-20261022` at `8c60e4b`. No source or test files were changed. Prior evidence was read by exact references `046b21c` (founder survey), `d0e07d0` (route curvature), `deda54e` (visual turnover), and `c1332b8` (long-run exhibition). `docs/ant/archive/**` was excluded.
+
+## Decision
+
+Production can generate new Plate identities and change the exposed top partition, but it cannot reopen an occupied cell or guarantee continuing macro-composition change. A larger Plate ceiling is needed to observe behavior after the current cap in a research run; it is not a visual solution. Any claim of successful temporal turnover must separate movement change, field/qualification transfer, top-partition turnover, union growth, and human perception.
+
+The strongest measured upstream movement limitation is the current delayed angular-velocity feedback under high trail adherence. A single `dt`-scaled shadow is a reasonable bounded test, but it is a new law interpretation, not a proven unit correction, and it does not directly remove the fixed recruitment bias or source-to-boundary formation constraint. Actual-outflow heading is more directly aimed at macro distribution, but its baseline availability and directional signal remain unknown at tick/spawn resolution. A field-phase probe is justified only to quantify the already-demonstrated controlled subcell sensitivity on a natural movement/contact input. Do not combine these candidates or infer that one will repair the next link.
+
+## Implemented causal chain and boundaries
+
+`AntController.update` advances fixed `1/60 s` simulation steps. The initial agent and later recruits are placed in a disk of radius `0.018` around `(0.5, 0.72)` and begin near north (`−π/2 ± 0.3`). Later entries remain gradual and variable-timed. `ColonyActivation` changes only the scalar population limit; it discards sector direction. The fixed location and heading are implementation facts, but the fixed heading has the stronger direct intervention evidence so far. The finite unit-square domain is not rotationally symmetric around the entry point, and altered movement can change exits, activation, spawn timing, and the random stream.
+
+During a tick, local chemical sensing, intent selection, body steering, and collision constraints update travel. With adherence `A`, the local correction currently includes:
+
+```text
+localTurn = clamp(localTrailSteering * (0.35 + 0.65 A)
+                  − clamp(previousOmega, −2.2, 2.2) * 0.65 A,
+                  −0.45, +0.45)
+```
+
+`localTurn` is added to the target heading; `AntAgent.turnToward` caps the applied turn at `4.5 rad/s`. `LocalOccupancy` contributes body separation, collision braking, and same-flow headway; it is not an aggregate egress census. `AntAgent` has no leader or social-role state, and several randomized personality fields are currently unused by movement. Social graph/topology remains observational.
+
+The controller measures post-collision displacement, clips an exiting ant's observed segment to the domain, and uses that travel distance to calculate pheromone dose. `GasterDeposition` locates the deposit along the pose-specific rear point, so thorax flow and deposited-trail geometry are related but not identical. The default pheromone field is 96×96, has a 15 s half-life, caps each cell at 8, and deposits a normalized Gaussian brush with radius `0.0045`; segment input is midpoint-sampled at no more than half a cell per step. If no grid node lies in the brush support, the brush falls back to the nearest cell. Current x/y grid spacing is `1/95 ≈ 0.01053`, greater than the brush radius. Chemical steering reads bilinearly interpolated values and responds to local contrast; it does not read a signed movement vector.
+
+The six-leg gait emits actual `FOOT_CONTACT` events. Those feet update `SurfaceField`, repeat-corridor contact counts, and `MaterialStratigraphy` load. `TrailPlateBirth` applies a 20 s chemical-memory filter, chemical threshold `0.30`, support threshold `0.015`, 20 s candidate persistence, minimum geodesic length `0.30`, a source annulus of `0.055–0.115` around the same fixed origin, and a target within `0.05` of the square boundary. Repeated corridors also have a 90 s refractory period and require 30 new contacts; births have a 10 s global gap. Its selected path is frozen into an immutable descriptor. The source/boundary rule is an architectural filter on later material, even if ant routes change.
+
+Each birth is appended to ordered per-cell material columns. Age alone never creates burial; only later overlap changes exposed layer and depth. At tick entry, the controller reads only the current cell's aggregate `layerCountByCell` and multiplies desired speed by `m(L)=1−0.10(1−exp(−L/4))`, with a maximum 10% reduction. It does not read Plate IDs, top-layer identity, buried identity, or age. A Plate born later in the tick affects movement starting the next tick. The world therefore has an implemented material→locomotion link, but no individual buried-Plate sensing claim is supported.
+
+Both `TrailPlateBirth.maxBirths` and `MaterialStratigraphy.maxPlates` are capped at 256. Births and descriptors are append-only; there is no eviction path. Layer order, stable Plate IDs and indices, frozen masks, repeat-birth records, exposure maps, and nodule foundation IDs have downstream consumers. Raising a ceiling is a research storage/formation intervention because extra layers also change `L` and later movement; removing history would require an explicit preservation contract across those consumers. It is not a transparent cache adjustment.
+
+## What prior evidence establishes
+
+**Founder heading.** In `046b21c`, three 600 s seeds show a continuing heading-law effect on colony distribution: the fixed-north baseline differs strongly from rotated, reversed, and isotropic heading controls. This supports heading as a real spatial cause, not a solution for repeated temporal regimes. Subsequent direct/slow pheromone-conditioned variants track the isotropic control much more closely than fixed north and show no clear added benefit over isotropic. Position was held fixed and not causally tested. Their shared RNG diverges naturally after movement changes, so later outcomes are total effects under endogenous lifecycle, not all-time common-random-number isolation.
+
+The founder survey's outflow screen finds `N≥3` in only 94/600, 80/600, and 81/600 sampled one-second frames (13.3–15.7%). It used post-tick velocity and an approximate midpoint; it did not inspect all completed segments or accepted-spawn opportunities. These rates cannot be called all-tick availability and do not justify loosening the preregistered ring, speed, direction, or count gates.
+
+**Movement curvature.** `d0e07d0` measures high-adherence samples at the body turn cap in 99.35–99.56% of cases and adjacent nonzero omega sign reversals in 99.73–99.85%. In isolated natural shadows, turning off only the delayed omega correction raises the five-second same-sign tangent-pair fraction from `0.093` to `0.939` on seed 20261005 and similarly on 20261006, while body-cap occupancy falls from `0.882` to `0.141`. This supports the correction as a strong tested source of turn alternation. It does not establish that damping-off is desirable production, that every route is straight, or that smoothing yields macro turnover. Controlled arcs show limited capability; a deposited S-route counterexample worsens under damping-off, so it is not a universal fix. The curvature report also finds field/grid-phase sensitivity in controlled curves and leaves natural reinforcement straightening inconclusive.
+
+**Material and visual turnover.** `c1332b8` records production reaching the 256-Plate cap at `3,814.783 s`; after that point the two-hour baseline has no new births or sampled material turnover. The 1,024-cap research shadow reaches 474 Plates by 7,200 s and preserves the first 256 descriptor prefix, but it is not production parity after the baseline cap. It adds only 377 first-covered cells after 15 minutes; the final minute adds three Plates and changes 2,531 sampled top-cell identities with zero union growth.
+
+`deda54e` refines this distinction: from 60 to 120 minutes the larger shadow adds 35 union cells while 6,730 previously occupied cells change top identity. Internal boundary IoU is `0.272` and top-partition ARI `0.058`, while empty-space IoU is `0.983`. Thus the change is real partition turnover, not just Plate-ID renaming, but the outer envelope remains similar. The artist reported some local difference and a similar overall distribution/blank-space impression. This is a perceptual judgment, separate from measured topology. A larger cap permits internal turnover to continue; append-only occupied union remains monotone, so it cannot renew blank space.
+
+## Candidate audit
+
+### One `dt`-scaled angular-feedback shadow
+
+The candidate `−0.65 * A * previousOmega * dt` is coherent **if** `0.65` is declared as a dimensionless fraction of the prior tick's angular increment. It then tests whether subtracting a fraction of the last angular step reduces alternation. The existing `−0.65 * A * omega` also has coherent units if `0.65` is instead a 0.65 s time constant. The evidence calls the current coefficient's time-scale interpretation unresolved; the new formula must not be described as correcting a demonstrated dimensional bug.
+
+At the production fixed step, with `A=1` and the input omega clamp at `2.2 rad/s`, the new feedback contribution is at most `0.65×2.2/60 ≈ 0.0238 rad`, before combination with local trail steering and the outer `±0.45 rad` clamp. The old feedback term alone reaches that outer clamp once `|omega|` exceeds about `0.69 rad/s` at `A=1`. This is a substantially weaker, specific discrete rule, not a small notation change. Production uses a fixed step, so ordinary display-frame scheduling does not exercise variable `dt`; a `dt`-invariance claim would need a separate controlled check.
+
+If run, use this one coefficient/formula only, no gain search and no combined recruitment or field change. Compare production and the existing damping-off diagnostic on the same predeclared seed set. First validate the intended turn-persistence/tracking effect in a frozen cue; then observe natural per-ant signed curvature, turn-cap occupancy, field geometry, exits/population, births, and top-partition/union changes at fixed times. A movement win without a downstream material or reviewed macro-view change is a movement result, not turnover success. Fixed spawn heading, entry location, material source/boundary selection, and append-only history remain strong competing constraints.
+
+### Signed actual-outflow conditioning
+
+This is a different signal from pheromone occupancy and could test whether realized traffic has value after isotropic recruitment already matched pheromone-conditioned output. The preregistered gates `N≥3`, `0.018 < r ≤ 0.085`, speed `≥0.008`, and positive outward displacement are engineering cutoffs. Apply them to actual completed post-collision segments, with one segment per ant per fixed tick, and lock segment midpoint/radial convention, one-tick lag, normalization, and accepted-spawn sampling before capture.
+
+`N≥3` alone is not an input-validity test. A global mean of unit displacement vectors can cancel for balanced outward motion around the entry point; a normalized resultant can also give a few aligned ants the same concentration as a much larger flow. Record eligible counts, raw vector magnitude, normalized resultant, angle, effective heading spread, and zero/fallback fraction specifically at accepted spawns. Preregister a minimum coverage and effective-signal rule before running a conditioned candidate. If the gate fails, stop this family; do not relax it or add slow memory. If it passes, the useful bounded candidate is one direct completed-tick signal compared with production and a matched isotropic control, with unchanged position, cadence, movement and formation. Watch for chance-route lock-in, changing exits/population, a signal that is almost always zero, or a fixed new attractor. The outward reference is the current spawn-origin center, not an established nest destination.
+
+### Field phase probe and one possible CIC alternative
+
+Existing controlled evidence already shows default-radius deposits of the same curved fixture can fail the selector at base `x=0.500` and succeed at `x=0.504`; that supports a narrow subcell-phase failure, not its frequency or share in natural runs. A new probe is informative only if it uses a frozen, identical realized movement/contact sequence and answers whether that phase effect changes the field or Plate qualification on natural route shapes. Keep the question local to field transfer: report field mass and saturation, concentration/chemical-memory distributions, support-qualified cells, candidate/birth outcomes, and geometric differences. Do not tune birth thresholds or move source/boundary rules to rescue a phase.
+
+Only if the probe shows that phase sensitivity materially interrupts the movement→field→material link, test at most one fixed normalized bilinear/CIC deposit as a research shadow. Preserve the captured path/dose, time decay, field grid, support/contact history, selector and thresholds. CIC changes the effective footprint relative to a `0.0045` Gaussian on a `0.01053` cell grid; mass normalization does not preserve peak concentration, and the per-cell value cap can still discard mass. Measure those differences explicitly. No second kernel, radius sweep, or threshold compensation follows automatically.
+
+## Most informative finite sequence
+
+Use separate gates and stop between links:
+
+1. **Read-only baseline gate:** capture actual post-collision segments at every `1/60 s` tick for the three established seeds and score the proposed outflow signal at exact accepted-spawn opportunities. Keep all four gates fixed and preregister minimum coverage plus effective directional signal. This is the cheapest way to reject an unusable heading input. It changes no world behavior.
+2. **Choose one behavior question.** For macro distribution, run direct outflow only if its gate passes. For route shape, run the single `dt`-scaled correction shadow as a separate pass. Do not combine them: the first asks whether current flow should condition new entrants; the second asks whether angular feedback suppresses smooth turns. Existing evidence supports the second mechanism more strongly, while the outflow question is more directly aimed at the founder/distribution cause.
+3. **Follow only a verified upstream change.** Compare actual field and contact-derived support, then Plate birth/path/partition outputs against the same production reference. If a movement difference disappears at the field/material stage, inspect phase with frozen replay; do not attribute it to the selector from screenshots alone.
+4. **At most one transfer alternative.** Only a material phase failure on that replay opens the single normalized CIC shadow. No automatic follow-up from increased field smoothness or more birth count.
+5. **Keep cap capacity separate.** Use a larger research ceiling only when the question requires observations after 256 births. It changes the number of real layers and later aggregate locomotion resistance; compare pre-cap prefixes only where equality is actually verified, and keep high-cap results labeled as a research shadow. Do not use more births, larger storage or internal top turnover as a substitute for renewed macro space or artistic acceptance.
+
+For any finite run, keep independent outcomes rather than a composite novelty score: movement persistence/curvature; actual input support and usage; field geometry/phase; contact support; birth timing and immutable paths; exposed-top identity and boundaries; union/empty-space change; lifecycle; and reviewed fixed-view perception. A treatment can succeed at one stage and fail at the next. No positive stage licenses a biological claim, production adoption, or the assumption that later stages will improve.
+
+## Relevant source and test anchors
+
+- `src/lib/agents/ant/AntController.js`: fixed-step scheduler; spawn rules; tick ordering; angular feedback; post-collision travel; next-tick material feedback.
+- `src/lib/agents/ant/AntAgent.js`, `LocalOccupancy.js`: turn cap, velocity response, local separation and headway.
+- `src/lib/agents/ant/GasterDeposition.js`, `PheromoneField.js`: travel-dose/rear-point distinction, dab bounds, grid brush, saturation, decay and sampling.
+- `src/lib/agents/ant/TrailPlateBirth.js`, `MaterialStratigraphy.js`: immutable formation, source/boundary gates, repeat evidence, append-only identity/order and 256 ceilings.
+- Relevant existing tests: `tests/ant-controller.test.js` (fixed headings, fixed-step determinism, turn cap and route behavior); `tests/ant-gaster-integration.test.js` and `tests/ant-gaster-deposition.test.js` (travel dose, rear geometry, rotation and dabs); `tests/pheromone-field.test.js` (subdivision, decay, saturation and edges); `tests/trail-plate-birth.test.js` (persistence, foot support, source/boundary, repeat gates, immutability and non-eviction); `tests/material-stratigraphy.test.js` (ordered immutable columns, age/depth distinction and capped identity); `tests/ant-material-locomotion-resistance.test.js` (aggregate count input and next-tick boundary).
+
+No tests were run for this documentation-only audit.

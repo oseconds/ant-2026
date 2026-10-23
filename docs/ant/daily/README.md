@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-23 — Coordinated spatial dynamics research
+
+[Process and decisions](./2026-10-23-spatial-dynamics-research.md) · [Evidence and responsibility map](../evidence/2026-10-22-spatial-dynamics/README.md)
+
+- Separated movement feedback, field phase sensitivity and actual-outflow recruitment under independent fixed protocols
+- dt-feedback changed natural turning in three seeds; direct-flow recruitment remained mixed versus isotropic and was not combined
+- One-seed accelerated two-hour comparison exposed late material saturation: 99.20% candidate union versus 77.34% production
+- User read both route and temporal differences in fixed-view diagnostics; no new exhibition mode or production adoption
+
 ### 2026-10-18 — Plate audio reassessment and live dense-mix plan
 
 [Process / next-pass plan](./2026-10-18-plate-audio-review-and-live-density-plan.md)

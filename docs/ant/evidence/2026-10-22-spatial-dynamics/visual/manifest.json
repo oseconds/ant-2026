@@ -1,0 +1,117 @@
+{
+  "diagnosticOnly": true,
+  "seed": 20261005,
+  "checkpointModelSeconds": [
+    300,
+    600,
+    1200,
+    1800,
+    3600,
+    7200
+  ],
+  "traceWindowsModelSeconds": {
+    "600": [
+      480,
+      600
+    ],
+    "1800": [
+      1680,
+      1800
+    ],
+    "7200": [
+      7080,
+      7200
+    ]
+  },
+  "coordinateConvention": "Normalized x,y drawn as AntRenderer: image x right, y down; no axis inversion.",
+  "pheromoneMapping": "AntRenderer fixed two-scale alpha transfer rendered as black alpha over white; no per-panel normalization.",
+  "materialUnion": "Boolean OR of per-plate 96x96 masks from publicSnapshot.surfacePlates.plates.",
+  "routeColors": "Diagnostic birth-time cohorts at fixed 1200 model-second intervals; not production renderer colors.",
+  "traceRule": "Only consecutive 10 Hz samples for a continuously present ID; coordinate jumps over 0.1 normalized units break segments.",
+  "inputs": [
+    {
+      "label": "production",
+      "path": "docs/ant/evidence/2026-10-22-spatial-dynamics/long-run/production-20261005/result.json",
+      "sha256": "d7d1bbacc671638e79a0e68170d23edc50587f19ee37f6c7c2bdbb2b12e91179",
+      "modelSeconds": 7200.000000040361,
+      "resultSourceHashes": {
+        "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+        "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+        "src/lib/agents/ant/LocalOccupancy.js": "df22dd38e9af8078ebcb1d225ca2a5eaf579e994d2d4a00ce9ceeefa2403ff16",
+        "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+        "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+        "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+        "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+        "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+        "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+        "src/lib/agents/ant/BodyPoseController.js": "2ec4cc12c12ae301ea07056889c3be9255b1b1e155b7724cd3366278d60ace8e",
+        "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd",
+        "scripts/ant-spatial-core.js": "6573ef627e050f0cdd23279d886f1a8c2adf224fdcf840370fe35db5c051de4b",
+        "scripts/ant-spatial-recruitment.js": "37258f30722bd9ce4f28a5f07c8bf6688a7705059722b69bc92659a086c4da40",
+        "scripts/ant-spatial-field.js": "fb6d5caeafcbc009b1b373edb681d9e8505454d05924284822c4682fea261364",
+        "scripts/ant-spatial-run.js": "a84e8b9f10f997598426e985faef42f76144542499cb1c68ecef20d782f0d632",
+        "scripts/ant-spatial-descriptors.js": "1c7b64b480909865f3b5549433036a0ed6498ed3c2eeacac5aca0fa595c12524",
+        "scripts/ant-route-curvature-metrics.js": "d87989a9abba11cfdc7641e1b74d3856f7614d0ae3d2d6b7ca6c6bfddd97792c",
+        "scripts/ant-recruitment-descriptors.js": "90a6f688b91af0ccf21680ed6f0881cba8cdb5b85ff8920ed7e929e521edd2dd"
+      }
+    },
+    {
+      "label": "dtFeedback",
+      "path": "docs/ant/evidence/2026-10-22-spatial-dynamics/long-run/dtFeedback-20261005/result.json",
+      "sha256": "81581cc2a74be95f5dcf3aa52a3f37b2f590c2bd007eebe51311bb67d3412496",
+      "modelSeconds": 7200.000000040361,
+      "resultSourceHashes": {
+        "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+        "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+        "src/lib/agents/ant/LocalOccupancy.js": "df22dd38e9af8078ebcb1d225ca2a5eaf579e994d2d4a00ce9ceeefa2403ff16",
+        "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+        "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+        "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+        "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+        "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+        "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+        "src/lib/agents/ant/BodyPoseController.js": "2ec4cc12c12ae301ea07056889c3be9255b1b1e155b7724cd3366278d60ace8e",
+        "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd",
+        "scripts/ant-spatial-core.js": "6573ef627e050f0cdd23279d886f1a8c2adf224fdcf840370fe35db5c051de4b",
+        "scripts/ant-spatial-recruitment.js": "37258f30722bd9ce4f28a5f07c8bf6688a7705059722b69bc92659a086c4da40",
+        "scripts/ant-spatial-field.js": "fb6d5caeafcbc009b1b373edb681d9e8505454d05924284822c4682fea261364",
+        "scripts/ant-spatial-run.js": "a84e8b9f10f997598426e985faef42f76144542499cb1c68ecef20d782f0d632",
+        "scripts/ant-spatial-descriptors.js": "1c7b64b480909865f3b5549433036a0ed6498ed3c2eeacac5aca0fa595c12524",
+        "scripts/ant-route-curvature-metrics.js": "d87989a9abba11cfdc7641e1b74d3856f7614d0ae3d2d6b7ca6c6bfddd97792c",
+        "scripts/ant-recruitment-descriptors.js": "90a6f688b91af0ccf21680ed6f0881cba8cdb5b85ff8920ed7e929e521edd2dd"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "path": "field-checkpoints.png",
+      "width": 2548,
+      "height": 962,
+      "sha256": "906246af3bc0de150905079658650480c5cac79a3621d99185a9d2b90ad6171f"
+    },
+    {
+      "path": "ants-checkpoints.png",
+      "width": 2548,
+      "height": 962,
+      "sha256": "67a4521e87e21638fa26c63ff64be1eb4641f160db18344e2e49fd6f46462411"
+    },
+    {
+      "path": "material-checkpoints.png",
+      "width": 2548,
+      "height": 962,
+      "sha256": "18b3b488fa7c49fae5bed7e41924887cf49d6d193cad43a9444c06f4f23aa73c"
+    },
+    {
+      "path": "routes-checkpoints.png",
+      "width": 2548,
+      "height": 962,
+      "sha256": "e928123799b0aa81019a2bc514bffc88f719c648517ce9ba20cc8d0f73ba7c35"
+    },
+    {
+      "path": "ant-traces-120s.png",
+      "width": 1336,
+      "height": 966,
+      "sha256": "3b571cd5edf97edd3f844a04f6fa50dced72dfcea08767380856b1a5ac171198"
+    }
+  ]
+}

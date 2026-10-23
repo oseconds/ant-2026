@@ -1,6 +1,19 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
+# Preserve byte-hashed spatial research sources and evidence across Windows checkouts.
+scripts/ant-spatial-*.js -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/ant-spatial-*.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/ant-spatial-*.test.js -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/ant-route-curvature-*.js -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/ant-route-curvature-*.test.js -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+scripts/ant-recruitment-descriptors.js -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+tests/ant-recruitment-descriptors.test.js -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+docs/ant/evidence/2026-10-22-spatial-dynamics/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Preserve literal captured command output, including its blank diagnostic lines.
+docs/ant/evidence/2026-10-22-spatial-dynamics/validation/full-tests.txt whitespace=-blank-at-eol,-blank-at-eof,space-before-tab,cr-at-eol
+docs/ant/evidence/2026-10-22-spatial-dynamics/validation/long-analysis-reviewed-rebuild.txt whitespace=-blank-at-eof,blank-at-eol,space-before-tab,cr-at-eol
+
 # Keep this run's source and byte-hashed evidence stable across Windows worktrees.
 scripts/ant-natural-nodule-opportunity.js text eol=lf
 tests/ant-natural-nodule-opportunity.test.js text eol=lf
