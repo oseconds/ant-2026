@@ -1,0 +1,3153 @@
+{
+  "schema": "ant-field-write-read-isolation-writer/v1",
+  "provenance": {
+    "naturalBranchCommit": "1dab083b640dbe73bc00f97a59c27568c8ba7866",
+    "routeCurvatureBranchCommit": "d0e07d089c82d29409c7dd067e17cdeb9a5ecf7f",
+    "matrixManifestSha256": "8ea739584be0425ba9e2d166a4af04b4a84d4d3ccb6228ef6745026ad9a4ade3",
+    "controlledResultsGzipSha256": "56378c7dc975bc6e5ea0c42a57acfc27369f6eb52458c3096a3be46022bb9bd6",
+    "controlledResultsRawSha256": "9615a86610e651753e89b3abea0a2a15527f26af6a12b63d86dc21f348b19578",
+    "currentFieldSha256": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+    "detailCsvGzip": "writer-per-brush.csv.gz"
+  },
+  "protocol": {
+    "phases": [
+      {
+        "id": "p00",
+        "dx": 0,
+        "dy": 0
+      },
+      {
+        "id": "p10",
+        "dx": 0.005263157894736842,
+        "dy": 0
+      },
+      {
+        "id": "p01",
+        "dx": 0,
+        "dy": 0.005263157894736842
+      },
+      {
+        "id": "p11",
+        "dx": 0.005263157894736842,
+        "dy": 0.005263157894736842
+      }
+    ],
+    "writerOnlyIsolation": "each natural physical write was applied to an otherwise-empty raster through the production depositPoint/depositSegment/depositBrush code; each translated phase is a separate empty raster",
+    "boundaryRule": "write is boundary-exposed when the physical write or any brush center lies within deposit radius of an edge; excluded from interior-only tallies when summarized",
+    "cellPitch": 0.010526315789473684,
+    "radius": 0.0045,
+    "maximumSupportCellsAtDefaultRadius": 1
+  },
+  "naturalHistories": [
+    {
+      "originPolicy": "production",
+      "seed": 20261005,
+      "historyPath": "histories/production-seed-20261005-write-stream.json.gz",
+      "historySha256": "2f42749f923b54cbd3f0ea3982e268a98f1af1aed40d709892d79d26dace7f58",
+      "fieldParameters": {
+        "width": 96,
+        "height": 96,
+        "decayHalfLifeSeconds": 15,
+        "maxValue": 8
+      },
+      "eventCount": 141493,
+      "depositEvents": 105493,
+      "pointEvents": 105493,
+      "segmentEvents": 0,
+      "phases": {
+        "p00": {
+          "events": 105493,
+          "brushes": 105428,
+          "fallbacks": 44882,
+          "supportNodes": {
+            "zero": 44882,
+            "one": 60546,
+            "moreThanOne": 0
+          },
+          "nearest": {
+            "n": 105428,
+            "mean": 0.004031207381517229,
+            "median": 0.00419518931063652,
+            "p90": 0.005878640320635453,
+            "max": 0.007429057149390686
+          },
+          "centroidError": {
+            "n": 105428,
+            "mean": 0.004031207381517229,
+            "median": 0.00419518931063652,
+            "p90": 0.005878640320635453,
+            "max": 0.007429057149390686
+          },
+          "anisotropy": {
+            "n": 105428,
+            "mean": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "actualMass": 5467.375407860893,
+          "requestedBrushMass": 5467.3754071496805,
+          "capBrushes": 0,
+          "capLoss": 0,
+          "float32Residual": 7.112584295266056e-7,
+          "boundaryWrites": 75,
+          "acceptedDose": 5467.37540715,
+          "requestedDose": 5468.49198689,
+          "clippedDose": 1.11657974424,
+          "changedFootprintEvents": 0
+        },
+        "p10": {
+          "events": 105493,
+          "brushes": 105418,
+          "fallbacks": 44896,
+          "supportNodes": {
+            "zero": 44896,
+            "one": 60522,
+            "moreThanOne": 0
+          },
+          "nearest": {
+            "n": 105418,
+            "mean": 0.004026393792403846,
+            "median": 0.004197562091645588,
+            "p90": 0.0058639769076015615,
+            "max": 0.007424283803587111
+          },
+          "centroidError": {
+            "n": 105418,
+            "mean": 0.004026393792403846,
+            "median": 0.004197562091645588,
+            "p90": 0.0058639769076015615,
+            "max": 0.007424283803587111
+          },
+          "anisotropy": {
+            "n": 105418,
+            "mean": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "actualMass": 5466.802529382798,
+          "requestedBrushMass": 5466.8025286682805,
+          "capBrushes": 0,
+          "capLoss": 0,
+          "float32Residual": 7.14562745505509e-7,
+          "boundaryWrites": 95,
+          "acceptedDose": 5466.80252867,
+          "requestedDose": 5468.49198689,
+          "clippedDose": 1.68945822563,
+          "changedFootprintEvents": 52763
+        },
+        "p01": {
+          "events": 105493,
+          "brushes": 105454,
+          "fallbacks": 44851,
+          "supportNodes": {
+            "zero": 44851,
+            "one": 60603,
+            "moreThanOne": 0
+          },
+          "nearest": {
+            "n": 105454,
+            "mean": 0.004028486522453854,
+            "median": 0.004197656903650376,
+            "p90": 0.005872378469901772,
+            "max": 0.007425433119756703
+          },
+          "centroidError": {
+            "n": 105454,
+            "mean": 0.004028486522453854,
+            "median": 0.004197656903650376,
+            "p90": 0.005872378469901772,
+            "max": 0.007425433119756703
+          },
+          "anisotropy": {
+            "n": 105454,
+            "mean": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "actualMass": 5467.897546140755,
+          "requestedBrushMass": 5467.8975454304555,
+          "capBrushes": 0,
+          "capLoss": 0,
+          "float32Residual": 7.10346381299611e-7,
+          "boundaryWrites": 66,
+          "acceptedDose": 5467.89754543,
+          "requestedDose": 5468.49198689,
+          "clippedDose": 0.59444146346,
+          "changedFootprintEvents": 52477
+        },
+        "p11": {
+          "events": 105493,
+          "brushes": 105444,
+          "fallbacks": 44901,
+          "supportNodes": {
+            "zero": 44901,
+            "one": 60543,
+            "moreThanOne": 0
+          },
+          "nearest": {
+            "n": 105444,
+            "mean": 0.004025108724216514,
+            "median": 0.004197818184259756,
+            "p90": 0.005864209458523479,
+            "max": 0.007432688042706986
+          },
+          "centroidError": {
+            "n": 105444,
+            "mean": 0.004025108724216514,
+            "median": 0.004197818184259756,
+            "p90": 0.005864209458523479,
+            "max": 0.007432688042706986
+          },
+          "anisotropy": {
+            "n": 105444,
+            "mean": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "actualMass": 5467.32466766266,
+          "requestedBrushMass": 5467.3246669490545,
+          "capBrushes": 0,
+          "capLoss": 0,
+          "float32Residual": 7.136506963559397e-7,
+          "boundaryWrites": 86,
+          "acceptedDose": 5467.32466695,
+          "requestedDose": 5468.49198689,
+          "clippedDose": 1.16731994486,
+          "changedFootprintEvents": 79002
+        }
+      }
+    },
+    {
+      "originPolicy": "production",
+      "seed": 20261006,
+      "historyPath": "histories/production-seed-20261006-write-stream.json.gz",
+      "historySha256": "edf08215f9579c214b2f1d46f4391e7cd74320efd027f347235ca40afa071005",
+      "fieldParameters": {
+        "width": 96,
+        "height": 96,
+        "decayHalfLifeSeconds": 15,
+        "maxValue": 8
+      },
+      "eventCount": 139572,
+      "depositEvents": 103572,
+      "pointEvents": 103572,
+      "segmentEvents": 0,
+      "phases": {
+        "p00": {
+          "events": 103572,
+          "brushes": 103502,
+          "fallbacks": 44177,
+          "supportNodes": {
+            "zero": 44177,
+            "one": 59325,
+            "moreThanOne": 0
+          },
+          "nearest": {
+            "n": 103502,
+            "mean": 0.004028229196081144,
+            "median": 0.004205138889556186,
+            "p90": 0.005855553649422217,
+            "max": 0.007425309509452032
+          },
+          "centroidError": {
+            "n": 103502,
+            "mean": 0.004028229196081144,
+            "median": 0.004205138889556186,
+            "p90": 0.005855553649422217,
+            "max": 0.007425309509452032
+          },
+          "anisotropy": {
+            "n": 103502,
+            "mean": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "actualMass": 5239.928160216451,
+          "requestedBrushMass": 5239.92816015548,
+          "capBrushes": 0,
+          "capLoss": 0,
+          "float32Residual": 6.094426217378698e-8,
+          "boundaryWrites": 139,
+          "acceptedDose": 5239.92816016,
+          "requestedDose": 5241.3335094,
+          "clippedDose": 1.40534924072,
+          "changedFootprintEvents": 0
+        },
+        "p10": {
+          "events": 103572,
+          "brushes": 103484,
+          "fallbacks": 44147,
+          "supportNodes": {
+            "zero": 44147,
+            "one": 59337,
+            "moreThanOne": 0
+          },
+          "nearest": {
+            "n": 103484,
+            "mean": 0.004028055002303786,
+            "median": 0.004199924638145724,
+            "p90": 0.005865743960652227,
+            "max": 0.007430989876977174
+          },
+          "centroidError": {
+            "n": 103484,
+            "mean": 0.004028055002303786,
+            "median": 0.004199924638145724,
+            "p90": 0.005865743960652227,
+            "max": 0.007430989876977174
+          },
+          "anisotropy": {
+            "n": 103484,
+            "mean": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "actualMass": 5239.893114199654,
+          "requestedBrushMass": 5239.893114131781,
+          "capBrushes": 0,
+          "capLoss": 0,
+          "float32Residual": 6.784708832861928e-8,
+          "boundaryWrites": 152,
+          "acceptedDose": 5239.89311413,
+          "requestedDose": 5241.3335094,
+          "clippedDose": 1.44039526442,
+          "changedFootprintEvents": 51958
+        },
+        "p01": {
+          "events": 103572,
+          "brushes": 103506,
+          "fallbacks": 44010,
+          "supportNodes": {
+            "zero": 44010,
+            "one": 59496,
+            "moreThanOne": 0
+          },
+          "nearest": {
+            "n": 103506,
+            "mean": 0.004025965610545636,
+            "median": 0.00419679320863995,
+            "p90": 0.005866301178801683,
+            "max": 0.0074265953608229395
+          },
+          "centroidError": {
+            "n": 103506,
+            "mean": 0.004025965610545636,
+            "median": 0.00419679320863995,
+            "p90": 0.005866301178801683,
+            "max": 0.0074265953608229395
+          },
+          "anisotropy": {
+            "n": 103506,
+            "mean": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "actualMass": 5239.997299837672,
+          "requestedBrushMass": 5239.997299776409,
+          "capBrushes": 0,
+          "capLoss": 0,
+          "float32Residual": 6.123546691095011e-8,
+          "boundaryWrites": 90,
+          "acceptedDose": 5239.99729978,
+          "requestedDose": 5241.3335094,
+          "clippedDose": 1.33620961979,
+          "changedFootprintEvents": 51819
+        },
+        "p11": {
+          "events": 103572,
+          "brushes": 103488,
+          "fallbacks": 44003,
+          "supportNodes": {
+            "zero": 44003,
+            "one": 59485,
+            "moreThanOne": 0
+          },
+          "nearest": {
+            "n": 103488,
+            "mean": 0.004026797892531425,
+            "median": 0.004199138069050252,
+            "p90": 0.005868412403483224,
+            "max": 0.007419601408433254
+          },
+          "centroidError": {
+            "n": 103488,
+            "mean": 0.004026797892531425,
+            "median": 0.004199138069050252,
+            "p90": 0.005868412403483224,
+            "max": 0.007419601408433254
+          },
+          "anisotropy": {
+            "n": 103488,
+            "mean": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "actualMass": 5239.962253820874,
+          "requestedBrushMass": 5239.962253752709,
+          "capBrushes": 0,
+          "capLoss": 0,
+          "float32Residual": 6.813829097151039e-8,
+          "boundaryWrites": 103,
+          "acceptedDose": 5239.96225375,
+          "requestedDose": 5241.3335094,
+          "clippedDose": 1.37125564349,
+          "changedFootprintEvents": 77734
+        }
+      }
+    },
+    {
+      "originPolicy": "production",
+      "seed": 20261007,
+      "historyPath": "histories/production-seed-20261007-write-stream.json.gz",
+      "historySha256": "584615c7a911e4bc48f35d609702175339d4b0ae64f71264fe2c4e0f80d9ccd5",
+      "fieldParameters": {
+        "width": 96,
+        "height": 96,
+        "decayHalfLifeSeconds": 15,
+        "maxValue": 8
+      },
+      "eventCount": 139204,
+      "depositEvents": 103204,
+      "pointEvents": 103204,
+      "segmentEvents": 0,
+      "phases": {
+        "p00": {
+          "events": 103204,
+          "brushes": 103133,
+          "fallbacks": 43855,
+          "supportNodes": {
+            "zero": 43855,
+            "one": 59278,
+            "moreThanOne": 0
+          },
+          "nearest": {
+            "n": 103133,
+            "mean": 0.004029985251520977,
+            "median": 0.004195272665578297,
+            "p90": 0.005869058521546133,
+            "max": 0.007426166187281978
+          },
+          "centroidError": {
+            "n": 103133,
+            "mean": 0.004029985251520977,
+            "median": 0.004195272665578297,
+            "p90": 0.005869058521546133,
+            "max": 0.007426166187281978
+          },
+          "anisotropy": {
+            "n": 103133,
+            "mean": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "actualMass": 5496.453192413474,
+          "requestedBrushMass": 5496.453192852771,
+          "capBrushes": 0,
+          "capLoss": 0,
+          "float32Residual": -4.392958247913569e-7,
+          "boundaryWrites": 102,
+          "acceptedDose": 5496.45319285,
+          "requestedDose": 5497.68812285,
+          "clippedDose": 1.23493000077,
+          "changedFootprintEvents": 0
+        },
+        "p10": {
+          "events": 103204,
+          "brushes": 103099,
+          "fallbacks": 43832,
+          "supportNodes": {
+            "zero": 43832,
+            "one": 59267,
+            "moreThanOne": 0
+          },
+          "nearest": {
+            "n": 103099,
+            "mean": 0.004026405110546922,
+            "median": 0.004201630378786756,
+            "p90": 0.005863968343465483,
+            "max": 0.007430791931905923
+          },
+          "centroidError": {
+            "n": 103099,
+            "mean": 0.004026405110546922,
+            "median": 0.004201630378786756,
+            "p90": 0.005863968343465483,
+            "max": 0.007430791931905923
+          },
+          "anisotropy": {
+            "n": 103099,
+            "mean": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "actualMass": 5494.872674822497,
+          "requestedBrushMass": 5494.872675263742,
+          "capBrushes": 0,
+          "capLoss": 0,
+          "float32Residual": -4.4124239037925385e-7,
+          "boundaryWrites": 109,
+          "acceptedDose": 5494.87267526,
+          "requestedDose": 5497.68812285,
+          "clippedDose": 2.8154475898,
+          "changedFootprintEvents": 51474
+        },
+        "p01": {
+          "events": 103204,
+          "brushes": 103139,
+          "fallbacks": 43890,
+          "supportNodes": {
+            "zero": 43890,
+            "one": 59249,
+            "moreThanOne": 0
+          },
+          "nearest": {
+            "n": 103139,
+            "mean": 0.004027155666117723,
+            "median": 0.00419569281928706,
+            "p90": 0.005867690604394001,
+            "max": 0.0074329049930320626
+          },
+          "centroidError": {
+            "n": 103139,
+            "mean": 0.004027155666117723,
+            "median": 0.00419569281928706,
+            "p90": 0.005867690604394001,
+            "max": 0.0074329049930320626
+          },
+          "anisotropy": {
+            "n": 103139,
+            "mean": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "actualMass": 5496.779377195907,
+          "requestedBrushMass": 5496.779377636381,
+          "capBrushes": 0,
+          "capLoss": 0,
+          "float32Residual": -4.404733772509239e-7,
+          "boundaryWrites": 106,
+          "acceptedDose": 5496.77937764,
+          "requestedDose": 5497.68812285,
+          "clippedDose": 0.908745217162,
+          "changedFootprintEvents": 51655
+        },
+        "p11": {
+          "events": 103204,
+          "brushes": 103105,
+          "fallbacks": 43883,
+          "supportNodes": {
+            "zero": 43883,
+            "one": 59222,
+            "moreThanOne": 0
+          },
+          "nearest": {
+            "n": 103105,
+            "mean": 0.004023186303079289,
+            "median": 0.004199271223215836,
+            "p90": 0.005856736746290606,
+            "max": 0.007429965833747025
+          },
+          "centroidError": {
+            "n": 103105,
+            "mean": 0.004023186303079289,
+            "median": 0.004199271223215836,
+            "p90": 0.005856736746290606,
+            "max": 0.007429965833747025
+          },
+          "anisotropy": {
+            "n": 103105,
+            "mean": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "actualMass": 5495.19885960493,
+          "requestedBrushMass": 5495.198860047351,
+          "capBrushes": 0,
+          "capLoss": 0,
+          "float32Residual": -4.4241994200132043e-7,
+          "boundaryWrites": 113,
+          "acceptedDose": 5495.19886005,
+          "requestedDose": 5497.68812285,
+          "clippedDose": 2.48926280619,
+          "changedFootprintEvents": 77311
+        }
+      }
+    },
+    {
+      "originPolicy": "dtFeedback",
+      "seed": 20261005,
+      "historyPath": "histories/dtFeedback-seed-20261005-write-stream.json.gz",
+      "historySha256": "f3fddbe403514db4d7dafdaa0cff42719ca3cf87cdbdfb11ae1f7228d19aa7a1",
+      "fieldParameters": {
+        "width": 96,
+        "height": 96,
+        "decayHalfLifeSeconds": 15,
+        "maxValue": 8
+      },
+      "eventCount": 143749,
+      "depositEvents": 107749,
+      "pointEvents": 107749,
+      "segmentEvents": 0,
+      "phases": {
+        "p00": {
+          "events": 107749,
+          "brushes": 107610,
+          "fallbacks": 45414,
+          "supportNodes": {
+            "zero": 45414,
+            "one": 62196,
+            "moreThanOne": 0
+          },
+          "nearest": {
+            "n": 107610,
+            "mean": 0.004021716734609,
+            "median": 0.004184998340681599,
+            "p90": 0.00587232606718168,
+            "max": 0.007435851265501266
+          },
+          "centroidError": {
+            "n": 107610,
+            "mean": 0.004021716734609,
+            "median": 0.004184998340681599,
+            "p90": 0.00587232606718168,
+            "max": 0.007435851265501266
+          },
+          "anisotropy": {
+            "n": 107610,
+            "mean": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "actualMass": 6981.090440412268,
+          "requestedBrushMass": 6981.090440276455,
+          "capBrushes": 0,
+          "capLoss": 0,
+          "float32Residual": 1.3581019535551187e-7,
+          "boundaryWrites": 303,
+          "acceptedDose": 6981.09044028,
+          "requestedDose": 6992.63834761,
+          "clippedDose": 11.5479073377,
+          "changedFootprintEvents": 0
+        },
+        "p10": {
+          "events": 107749,
+          "brushes": 107647,
+          "fallbacks": 45999,
+          "supportNodes": {
+            "zero": 45999,
+            "one": 61648,
+            "moreThanOne": 0
+          },
+          "nearest": {
+            "n": 107647,
+            "mean": 0.004036395350490897,
+            "median": 0.004207910003376279,
+            "p90": 0.005878942313069022,
+            "max": 0.007422970007830895
+          },
+          "centroidError": {
+            "n": 107647,
+            "mean": 0.004036395350490897,
+            "median": 0.004207910003376279,
+            "p90": 0.005878942313069022,
+            "max": 0.007422970007830895
+          },
+          "anisotropy": {
+            "n": 107647,
+            "mean": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "actualMass": 6984.147219475575,
+          "requestedBrushMass": 6984.147219336348,
+          "capBrushes": 0,
+          "capLoss": 0,
+          "float32Residual": 1.3922541102263805e-7,
+          "boundaryWrites": 196,
+          "acceptedDose": 6984.14721934,
+          "requestedDose": 6992.63834761,
+          "clippedDose": 8.49112827782,
+          "changedFootprintEvents": 53835
+        },
+        "p01": {
+          "events": 107749,
+          "brushes": 107571,
+          "fallbacks": 45610,
+          "supportNodes": {
+            "zero": 45610,
+            "one": 61961,
+            "moreThanOne": 0
+          },
+          "nearest": {
+            "n": 107571,
+            "mean": 0.00402019623332104,
+            "median": 0.0041896275746914225,
+            "p90": 0.005861232854365125,
+            "max": 0.007431137786587542
+          },
+          "centroidError": {
+            "n": 107571,
+            "mean": 0.00402019623332104,
+            "median": 0.0041896275746914225,
+            "p90": 0.005861232854365125,
+            "max": 0.007431137786587542
+          },
+          "anisotropy": {
+            "n": 107571,
+            "mean": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "actualMass": 6976.482091912285,
+          "requestedBrushMass": 6976.482091723462,
+          "capBrushes": 0,
+          "capLoss": 0,
+          "float32Residual": 1.8882812317952635e-7,
+          "boundaryWrites": 500,
+          "acceptedDose": 6976.48209172,
+          "requestedDose": 6992.63834761,
+          "clippedDose": 16.1562558907,
+          "changedFootprintEvents": 54157
+        },
+        "p11": {
+          "events": 107749,
+          "brushes": 107608,
+          "fallbacks": 46172,
+          "supportNodes": {
+            "zero": 46172,
+            "one": 61436,
+            "moreThanOne": 0
+          },
+          "nearest": {
+            "n": 107608,
+            "mean": 0.004035071829497223,
+            "median": 0.004214792799494835,
+            "p90": 0.005871735579804217,
+            "max": 0.007422870725334972
+          },
+          "centroidError": {
+            "n": 107608,
+            "mean": 0.004035071829497223,
+            "median": 0.004214792799494835,
+            "p90": 0.005871735579804217,
+            "max": 0.007422870725334972
+          },
+          "anisotropy": {
+            "n": 107608,
+            "mean": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "actualMass": 6979.538870975592,
+          "requestedBrushMass": 6979.538870783354,
+          "capBrushes": 0,
+          "capLoss": 0,
+          "float32Residual": 1.9224333958629526e-7,
+          "boundaryWrites": 393,
+          "acceptedDose": 6979.53887078,
+          "requestedDose": 6992.63834761,
+          "clippedDose": 13.0994768308,
+          "changedFootprintEvents": 80895
+        }
+      }
+    },
+    {
+      "originPolicy": "dtFeedback",
+      "seed": 20261006,
+      "historyPath": "histories/dtFeedback-seed-20261006-write-stream.json.gz",
+      "historySha256": "892e22705801688ed5fbd2b3840f2e4ef2639c31bbb26c30dcb6b83c40b1a413",
+      "fieldParameters": {
+        "width": 96,
+        "height": 96,
+        "decayHalfLifeSeconds": 15,
+        "maxValue": 8
+      },
+      "eventCount": 139276,
+      "depositEvents": 103276,
+      "pointEvents": 103276,
+      "segmentEvents": 0,
+      "phases": {
+        "p00": {
+          "events": 103276,
+          "brushes": 103135,
+          "fallbacks": 43657,
+          "supportNodes": {
+            "zero": 43657,
+            "one": 59478,
+            "moreThanOne": 0
+          },
+          "nearest": {
+            "n": 103135,
+            "mean": 0.004017257153728165,
+            "median": 0.004190116335086882,
+            "p90": 0.005859174463512107,
+            "max": 0.0074228306220246775
+          },
+          "centroidError": {
+            "n": 103135,
+            "mean": 0.004017257153728165,
+            "median": 0.004190116335086882,
+            "p90": 0.005859174463512107,
+            "max": 0.0074228306220246775
+          },
+          "anisotropy": {
+            "n": 103135,
+            "mean": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "actualMass": 6662.087524157043,
+          "requestedBrushMass": 6662.087525290404,
+          "capBrushes": 0,
+          "capLoss": 0,
+          "float32Residual": -0.0000011333258288246322,
+          "boundaryWrites": 206,
+          "acceptedDose": 6662.08752529,
+          "requestedDose": 6672.24075452,
+          "clippedDose": 10.1532292326,
+          "changedFootprintEvents": 0
+        },
+        "p10": {
+          "events": 103276,
+          "brushes": 103109,
+          "fallbacks": 43873,
+          "supportNodes": {
+            "zero": 43873,
+            "one": 59236,
+            "moreThanOne": 0
+          },
+          "nearest": {
+            "n": 103109,
+            "mean": 0.004028170531243316,
+            "median": 0.004198139039356336,
+            "p90": 0.00586264399762059,
+            "max": 0.007427762392224405
+          },
+          "centroidError": {
+            "n": 103109,
+            "mean": 0.004028170531243316,
+            "median": 0.004198139039356336,
+            "p90": 0.00586264399762059,
+            "max": 0.007427762392224405
+          },
+          "anisotropy": {
+            "n": 103109,
+            "mean": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "actualMass": 6659.717666288863,
+          "requestedBrushMass": 6659.717667415352,
+          "capBrushes": 0,
+          "capLoss": 0,
+          "float32Residual": -0.0000011264498844974828,
+          "boundaryWrites": 270,
+          "acceptedDose": 6659.71766742,
+          "requestedDose": 6672.24075452,
+          "clippedDose": 12.5230871077,
+          "changedFootprintEvents": 51504
+        },
+        "p01": {
+          "events": 103276,
+          "brushes": 102995,
+          "fallbacks": 43712,
+          "supportNodes": {
+            "zero": 43712,
+            "one": 59283,
+            "moreThanOne": 0
+          },
+          "nearest": {
+            "n": 102995,
+            "mean": 0.0040262814223745854,
+            "median": 0.004193884735831015,
+            "p90": 0.005864325923131085,
+            "max": 0.007432272173265855
+          },
+          "centroidError": {
+            "n": 102995,
+            "mean": 0.0040262814223745854,
+            "median": 0.004193884735831015,
+            "p90": 0.005864325923131085,
+            "max": 0.007432272173265855
+          },
+          "anisotropy": {
+            "n": 102995,
+            "mean": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "actualMass": 6649.4072157964365,
+          "requestedBrushMass": 6649.407216888029,
+          "capBrushes": 0,
+          "capLoss": 0,
+          "float32Residual": -0.0000010915517976947561,
+          "boundaryWrites": 256,
+          "acceptedDose": 6649.40721689,
+          "requestedDose": 6672.24075452,
+          "clippedDose": 22.833537635,
+          "changedFootprintEvents": 51651
+        },
+        "p11": {
+          "events": 103276,
+          "brushes": 102969,
+          "fallbacks": 43911,
+          "supportNodes": {
+            "zero": 43911,
+            "one": 59058,
+            "moreThanOne": 0
+          },
+          "nearest": {
+            "n": 102969,
+            "mean": 0.004034506132831733,
+            "median": 0.004202673347942313,
+            "p90": 0.005877150862542415,
+            "max": 0.007437175020121943
+          },
+          "centroidError": {
+            "n": 102969,
+            "mean": 0.004034506132831733,
+            "median": 0.004202673347942313,
+            "p90": 0.005877150862542415,
+            "max": 0.007437175020121943
+          },
+          "anisotropy": {
+            "n": 102969,
+            "mean": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "actualMass": 6647.037357928257,
+          "requestedBrushMass": 6647.037359012975,
+          "capBrushes": 0,
+          "capLoss": 0,
+          "float32Residual": -0.0000010846758524783441,
+          "boundaryWrites": 320,
+          "acceptedDose": 6647.03735901,
+          "requestedDose": 6672.24075452,
+          "clippedDose": 25.20339551,
+          "changedFootprintEvents": 77456
+        }
+      }
+    },
+    {
+      "originPolicy": "dtFeedback",
+      "seed": 20261007,
+      "historyPath": "histories/dtFeedback-seed-20261007-write-stream.json.gz",
+      "historySha256": "7f637540242c8b51bdf69d9764c9d9235a999842f5162a1dec7c7d765b67cbc0",
+      "fieldParameters": {
+        "width": 96,
+        "height": 96,
+        "decayHalfLifeSeconds": 15,
+        "maxValue": 8
+      },
+      "eventCount": 145445,
+      "depositEvents": 109445,
+      "pointEvents": 109445,
+      "segmentEvents": 0,
+      "phases": {
+        "p00": {
+          "events": 109445,
+          "brushes": 109265,
+          "fallbacks": 46415,
+          "supportNodes": {
+            "zero": 46415,
+            "one": 62850,
+            "moreThanOne": 0
+          },
+          "nearest": {
+            "n": 109265,
+            "mean": 0.004020149518661583,
+            "median": 0.00419065447203145,
+            "p90": 0.005870106203945179,
+            "max": 0.0074252454947279925
+          },
+          "centroidError": {
+            "n": 109265,
+            "mean": 0.004020149518661583,
+            "median": 0.00419065447203145,
+            "p90": 0.005870106203945179,
+            "max": 0.0074252454947279925
+          },
+          "anisotropy": {
+            "n": 109265,
+            "mean": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "actualMass": 7298.531257770475,
+          "requestedBrushMass": 7298.531257030986,
+          "capBrushes": 0,
+          "capLoss": 0,
+          "float32Residual": 7.395035739971115e-7,
+          "boundaryWrites": 348,
+          "acceptedDose": 7298.53125703,
+          "requestedDose": 7311.5443859,
+          "clippedDose": 13.0131288682,
+          "changedFootprintEvents": 0
+        },
+        "p10": {
+          "events": 109445,
+          "brushes": 109228,
+          "fallbacks": 46572,
+          "supportNodes": {
+            "zero": 46572,
+            "one": 62656,
+            "moreThanOne": 0
+          },
+          "nearest": {
+            "n": 109228,
+            "mean": 0.004031023674203229,
+            "median": 0.004202095806546381,
+            "p90": 0.005878450434493822,
+            "max": 0.007429451736161915
+          },
+          "centroidError": {
+            "n": 109228,
+            "mean": 0.004031023674203229,
+            "median": 0.004202095806546381,
+            "p90": 0.005878450434493822,
+            "max": 0.007429451736161915
+          },
+          "anisotropy": {
+            "n": 109228,
+            "mean": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "actualMass": 7295.776469765682,
+          "requestedBrushMass": 7295.776469021522,
+          "capBrushes": 0,
+          "capLoss": 0,
+          "float32Residual": 7.441791889051063e-7,
+          "boundaryWrites": 386,
+          "acceptedDose": 7295.77646902,
+          "requestedDose": 7311.5443859,
+          "clippedDose": 15.7679168776,
+          "changedFootprintEvents": 54795
+        },
+        "p01": {
+          "events": 109445,
+          "brushes": 109097,
+          "fallbacks": 46650,
+          "supportNodes": {
+            "zero": 46650,
+            "one": 62447,
+            "moreThanOne": 0
+          },
+          "nearest": {
+            "n": 109097,
+            "mean": 0.004026623416879872,
+            "median": 0.004207351024048283,
+            "p90": 0.005861718943943358,
+            "max": 0.0074353034865223214
+          },
+          "centroidError": {
+            "n": 109097,
+            "mean": 0.004026623416879872,
+            "median": 0.004207351024048283,
+            "p90": 0.005861718943943358,
+            "max": 0.0074353034865223214
+          },
+          "anisotropy": {
+            "n": 109097,
+            "mean": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "actualMass": 7281.784318572827,
+          "requestedBrushMass": 7281.784317837374,
+          "capBrushes": 0,
+          "capLoss": 0,
+          "float32Residual": 7.354637403132253e-7,
+          "boundaryWrites": 760,
+          "acceptedDose": 7281.78431784,
+          "requestedDose": 7311.5443859,
+          "clippedDose": 29.7600680618,
+          "changedFootprintEvents": 54818
+        },
+        "p11": {
+          "events": 109445,
+          "brushes": 109060,
+          "fallbacks": 46836,
+          "supportNodes": {
+            "zero": 46836,
+            "one": 62224,
+            "moreThanOne": 0
+          },
+          "nearest": {
+            "n": 109060,
+            "mean": 0.004036668284664333,
+            "median": 0.004211879168712879,
+            "p90": 0.005876751647151304,
+            "max": 0.007418805632293683
+          },
+          "centroidError": {
+            "n": 109060,
+            "mean": 0.004036668284664333,
+            "median": 0.004211879168712879,
+            "p90": 0.005876751647151304,
+            "max": 0.007418805632293683
+          },
+          "anisotropy": {
+            "n": 109060,
+            "mean": 0,
+            "median": 0,
+            "p90": 0,
+            "max": 0
+          },
+          "actualMass": 7279.029530568034,
+          "requestedBrushMass": 7279.029529827906,
+          "capBrushes": 0,
+          "capLoss": 0,
+          "float32Residual": 7.401393553000958e-7,
+          "boundaryWrites": 798,
+          "acceptedDose": 7279.02952983,
+          "requestedDose": 7311.5443859,
+          "clippedDose": 32.5148560713,
+          "changedFootprintEvents": 82094
+        }
+      }
+    }
+  ],
+  "controlledFixtures": {
+    "provenance": {
+      "sourceBranchCommit": "d0e07d089c82d29409c7dd067e17cdeb9a5ecf7f",
+      "sourceResultsGzipSha256": "56378c7dc975bc6e5ea0c42a57acfc27369f6eb52458c3096a3be46022bb9bd6",
+      "fixtureProtocol": "reused six route geometries, start, [-0.12,0.34] station window, 0.002 station spacing, 4.5 dose rate and 0.0045 radius from route-curvature pass"
+    },
+    "fixtures": [
+      {
+        "shape": "straight",
+        "source": {
+          "start": {
+            "x": 0.35,
+            "y": 0.5
+          },
+          "stationRange": [
+            -0.12,
+            0.34
+          ],
+          "step": 0.002,
+          "representation": "96x96 PheromoneField depositSegment source, frozen sample during capability pass; full dynamic deposit/sense feedback during repeat pass",
+          "sourcePolylineSegments": 230
+        },
+        "phases": [
+          {
+            "phase": "p00",
+            "depositEvents": 230,
+            "requestedDose": 2.069999999999987,
+            "rasterMass": 2.069999910891056,
+            "nonzeroCells": 44,
+            "peakCell": 0.053999997675418854,
+            "localSteering": {
+              "n": 231,
+              "mean": 0.1976213254693445,
+              "median": 0.20957051366726379,
+              "p90": 0.21369949013247624,
+              "max": 0.21456341894053266
+            },
+            "localStrength": {
+              "n": 231,
+              "mean": 0.7795914620379358,
+              "median": 0.8267295180209963,
+              "p90": 0.843017814210168,
+              "max": 0.8464259053282515
+            },
+            "localCoherence": {
+              "n": 231,
+              "mean": 0.9480519135459482,
+              "median": 0.999999965546942,
+              "p90": 0.999999967062086,
+              "max": 0.9999999682752688
+            },
+            "wideWinnerOffsetCounts": [
+              {
+                "offset": -0.92,
+                "count": 18
+              },
+              {
+                "offset": -0.47,
+                "count": 0
+              },
+              {
+                "offset": 0,
+                "count": 212
+              },
+              {
+                "offset": 0.47,
+                "count": 1
+              },
+              {
+                "offset": 0.92,
+                "count": 0
+              }
+            ],
+            "wideWinnerChangesFromForward": 19,
+            "wideMargin": {
+              "n": 231,
+              "mean": 0.16546774210447932,
+              "median": 0.17194401092046965,
+              "p90": 0.21344390481792588,
+              "max": 0.29317135094778374
+            },
+            "centerReadout": {
+              "n": 231,
+              "mean": 0.022501947083288735,
+              "median": 0.02351249898783863,
+              "p90": 0.02443499894812703,
+              "max": 0.024749998934566975
+            },
+            "acceptedDose": 2.069999999999987,
+            "fallbackBrushes": 230,
+            "fallbackFraction": 1
+          },
+          {
+            "phase": "p10",
+            "depositEvents": 230,
+            "requestedDose": 2.069999999999987,
+            "rasterMass": 2.069999910891056,
+            "nonzeroCells": 45,
+            "peakCell": 0.053999997675418854,
+            "localSteering": {
+              "n": 231,
+              "mean": 0.1983162167319775,
+              "median": 0.21102977007750692,
+              "p90": 0.21369966079785788,
+              "max": 0.21456341894053266
+            },
+            "localStrength": {
+              "n": 231,
+              "mean": 0.7823327213886214,
+              "median": 0.8324861021975888,
+              "p90": 0.8430184874637958,
+              "max": 0.8464259053282515
+            },
+            "localCoherence": {
+              "n": 231,
+              "mean": 0.9567099216262281,
+              "median": 0.999999965546942,
+              "p90": 0.9999999671249447,
+              "max": 0.9999999682752688
+            },
+            "wideWinnerOffsetCounts": [
+              {
+                "offset": -0.92,
+                "count": 16
+              },
+              {
+                "offset": -0.47,
+                "count": 0
+              },
+              {
+                "offset": 0,
+                "count": 214
+              },
+              {
+                "offset": 0.47,
+                "count": 1
+              },
+              {
+                "offset": 0.92,
+                "count": 0
+              }
+            ],
+            "wideWinnerChangesFromForward": 17,
+            "wideMargin": {
+              "n": 231,
+              "mean": 0.16430532010778587,
+              "median": 0.17194401092046965,
+              "p90": 0.21312250330349744,
+              "max": 0.22321088738711364
+            },
+            "centerReadout": {
+              "n": 231,
+              "mean": 0.022515973056710915,
+              "median": 0.023849998973310013,
+              "p90": 0.02443499894812703,
+              "max": 0.024749998934566975
+            },
+            "acceptedDose": 2.069999999999987,
+            "fallbackBrushes": 230,
+            "fallbackFraction": 1
+          },
+          {
+            "phase": "p01",
+            "depositEvents": 230,
+            "requestedDose": 2.069999999999987,
+            "rasterMass": 2.069999910891056,
+            "nonzeroCells": 44,
+            "peakCell": 0.053999997675418854,
+            "localSteering": {
+              "n": 231,
+              "mean": 1.1382627396273997e-15,
+              "median": 1.2043807381935692e-15,
+              "p90": 1.2271094921467369e-15,
+              "max": 1.2282878815488565e-15
+            },
+            "localStrength": {
+              "n": 231,
+              "mean": 0.8664862634307108,
+              "median": 0.9181096981466426,
+              "p90": 0.9265707701368175,
+              "max": 0.9283191595421626
+            },
+            "localCoherence": {
+              "n": 231,
+              "mean": 0.7490439384498135,
+              "median": 0.7900874430816356,
+              "p90": 0.7900874439820754,
+              "max": 0.7900874447030617
+            },
+            "wideWinnerOffsetCounts": [
+              {
+                "offset": -0.92,
+                "count": 19
+              },
+              {
+                "offset": -0.47,
+                "count": 0
+              },
+              {
+                "offset": 0,
+                "count": 212
+              },
+              {
+                "offset": 0.47,
+                "count": 0
+              },
+              {
+                "offset": 0.92,
+                "count": 0
+              }
+            ],
+            "wideWinnerChangesFromForward": 19,
+            "wideMargin": {
+              "n": 231,
+              "mean": 0.6232906985585496,
+              "median": 0.6627758254603903,
+              "p90": 0.7382388907815517,
+              "max": 0.764293075976688
+            },
+            "centerReadout": {
+              "n": 231,
+              "mean": 0.038590839247840236,
+              "median": 0.040323935764143254,
+              "p90": 0.04190602319603785,
+              "max": 0.04244624817278236
+            },
+            "acceptedDose": 2.069999999999987,
+            "fallbackBrushes": 33,
+            "fallbackFraction": 0.14347826086956522
+          },
+          {
+            "phase": "p11",
+            "depositEvents": 230,
+            "requestedDose": 2.069999999999987,
+            "rasterMass": 2.069999910891056,
+            "nonzeroCells": 45,
+            "peakCell": 0.053999997675418854,
+            "localSteering": {
+              "n": 231,
+              "mean": 1.1442605802095233e-15,
+              "median": 1.205302346805318e-15,
+              "p90": 1.227109492146737e-15,
+              "max": 1.2392951695877584e-15
+            },
+            "localStrength": {
+              "n": 231,
+              "mean": 0.8709493860888414,
+              "median": 0.9211200133676315,
+              "p90": 0.9265711162665947,
+              "max": 0.9283191595421626
+            },
+            "localCoherence": {
+              "n": 231,
+              "mean": 0.7558845222065328,
+              "median": 0.7900874430816356,
+              "p90": 0.7900874440194319,
+              "max": 0.7900874447030617
+            },
+            "wideWinnerOffsetCounts": [
+              {
+                "offset": -0.92,
+                "count": 17
+              },
+              {
+                "offset": -0.47,
+                "count": 0
+              },
+              {
+                "offset": 0,
+                "count": 214
+              },
+              {
+                "offset": 0.47,
+                "count": 0
+              },
+              {
+                "offset": 0.92,
+                "count": 0
+              }
+            ],
+            "wideWinnerChangesFromForward": 17,
+            "wideMargin": {
+              "n": 231,
+              "mean": 0.6205458997972777,
+              "median": 0.66118427728688,
+              "p90": 0.738238890781551,
+              "max": 0.7564228162259016
+            },
+            "centerReadout": {
+              "n": 231,
+              "mean": 0.038614893792259304,
+              "median": 0.04090274823922667,
+              "p90": 0.04190602319603785,
+              "max": 0.04244624817278236
+            },
+            "acceptedDose": 2.069999999999987,
+            "fallbackBrushes": 32,
+            "fallbackFraction": 0.1391304347826087
+          }
+        ]
+      },
+      {
+        "shape": "gentle",
+        "source": {
+          "start": {
+            "x": 0.35,
+            "y": 0.5
+          },
+          "stationRange": [
+            -0.12,
+            0.34
+          ],
+          "step": 0.002,
+          "representation": "96x96 PheromoneField depositSegment source, frozen sample during capability pass; full dynamic deposit/sense feedback during repeat pass",
+          "sourcePolylineSegments": 230
+        },
+        "phases": [
+          {
+            "phase": "p00",
+            "depositEvents": 230,
+            "requestedDose": 2.0699944800044148,
+            "rasterMass": 2.0699945902451873,
+            "nonzeroCells": 52,
+            "peakCell": 0.06299983710050583,
+            "localSteering": {
+              "n": 231,
+              "mean": 0.0710300553518407,
+              "median": 0.04435640228799881,
+              "p90": 0.2072803692341901,
+              "max": 0.2551819797268509
+            },
+            "localStrength": {
+              "n": 231,
+              "mean": 0.8038713855397908,
+              "median": 0.8531999790298205,
+              "p90": 0.8923929094443158,
+              "max": 0.9171187373705733
+            },
+            "localCoherence": {
+              "n": 231,
+              "mean": 0.7490164895085222,
+              "median": 0.7660544144239038,
+              "p90": 0.9996354751009215,
+              "max": 0.9999999708073927
+            },
+            "wideWinnerOffsetCounts": [
+              {
+                "offset": -0.92,
+                "count": 17
+              },
+              {
+                "offset": -0.47,
+                "count": 0
+              },
+              {
+                "offset": 0,
+                "count": 214
+              },
+              {
+                "offset": 0.47,
+                "count": 0
+              },
+              {
+                "offset": 0.92,
+                "count": 0
+              }
+            ],
+            "wideWinnerChangesFromForward": 17,
+            "wideMargin": {
+              "n": 231,
+              "mean": 0.24557457568168276,
+              "median": 0.22458743926570002,
+              "p90": 0.4487693644956655,
+              "max": 0.5986058036116174
+            },
+            "centerReadout": {
+              "n": 231,
+              "mean": 0.029929945077727355,
+              "median": 0.031806322441551946,
+              "p90": 0.03696226792659492,
+              "max": 0.04014547698141045
+            },
+            "acceptedDose": 2.0699944800044148,
+            "fallbackBrushes": 104,
+            "fallbackFraction": 0.45217391304347826
+          },
+          {
+            "phase": "p10",
+            "depositEvents": 230,
+            "requestedDose": 2.0699944800044148,
+            "rasterMass": 2.069994597695768,
+            "nonzeroCells": 50,
+            "peakCell": 0.07199981063604355,
+            "localSteering": {
+              "n": 231,
+              "mean": 0.0734365783440933,
+              "median": 0.049930714180815926,
+              "p90": 0.2051537432196673,
+              "max": 0.25150810336076057
+            },
+            "localStrength": {
+              "n": 231,
+              "mean": 0.8151257667173029,
+              "median": 0.8593561877379953,
+              "p90": 0.9051614130359836,
+              "max": 0.9485541151742325
+            },
+            "localCoherence": {
+              "n": 231,
+              "mean": 0.7711760639134132,
+              "median": 0.7892028756875028,
+              "p90": 0.9996378259999686,
+              "max": 0.9999999709417735
+            },
+            "wideWinnerOffsetCounts": [
+              {
+                "offset": -0.92,
+                "count": 17
+              },
+              {
+                "offset": -0.47,
+                "count": 0
+              },
+              {
+                "offset": 0,
+                "count": 214
+              },
+              {
+                "offset": 0.47,
+                "count": 0
+              },
+              {
+                "offset": 0.92,
+                "count": 0
+              }
+            ],
+            "wideWinnerChangesFromForward": 17,
+            "wideMargin": {
+              "n": 231,
+              "mean": 0.25894110746959514,
+              "median": 0.2361672252603485,
+              "p90": 0.4782876274997497,
+              "max": 0.7148601727570082
+            },
+            "centerReadout": {
+              "n": 231,
+              "mean": 0.030939302001085883,
+              "median": 0.03220944504392215,
+              "p90": 0.038297758213054506,
+              "max": 0.04756189929268058
+            },
+            "acceptedDose": 2.069994480004415,
+            "fallbackBrushes": 105,
+            "fallbackFraction": 0.45652173913043476
+          },
+          {
+            "phase": "p01",
+            "depositEvents": 230,
+            "requestedDose": 2.0699944800044148,
+            "rasterMass": 2.0699946023523808,
+            "nonzeroCells": 54,
+            "peakCell": 0.06299983710050583,
+            "localSteering": {
+              "n": 231,
+              "mean": 0.043341014884437645,
+              "median": 0.04271333487545961,
+              "p90": 0.07774688962460431,
+              "max": 0.12181032513794306
+            },
+            "localStrength": {
+              "n": 231,
+              "mean": 0.8164101284104799,
+              "median": 0.8593382376975123,
+              "p90": 0.9143492089273609,
+              "max": 0.9419062245547253
+            },
+            "localCoherence": {
+              "n": 231,
+              "mean": 0.7446956748591352,
+              "median": 0.7900874430815831,
+              "p90": 0.8617865618149946,
+              "max": 0.9999992361632554
+            },
+            "wideWinnerOffsetCounts": [
+              {
+                "offset": -0.92,
+                "count": 15
+              },
+              {
+                "offset": -0.47,
+                "count": 0
+              },
+              {
+                "offset": 0,
+                "count": 215
+              },
+              {
+                "offset": 0.47,
+                "count": 1
+              },
+              {
+                "offset": 0.92,
+                "count": 0
+              }
+            ],
+            "wideWinnerChangesFromForward": 16,
+            "wideMargin": {
+              "n": 231,
+              "mean": 0.2856291785484387,
+              "median": 0.27417442287836113,
+              "p90": 0.5163638474581642,
+              "max": 0.6401142888779757
+            },
+            "centerReadout": {
+              "n": 231,
+              "mean": 0.032632103046043456,
+              "median": 0.03331714644720577,
+              "p90": 0.03969176028657413,
+              "max": 0.045627938356403774
+            },
+            "acceptedDose": 2.0699944800044148,
+            "fallbackBrushes": 88,
+            "fallbackFraction": 0.3826086956521739
+          },
+          {
+            "phase": "p11",
+            "depositEvents": 230,
+            "requestedDose": 2.0699944800044148,
+            "rasterMass": 2.06999459117651,
+            "nonzeroCells": 57,
+            "peakCell": 0.05399985983967781,
+            "localSteering": {
+              "n": 231,
+              "mean": 0.04354635194114943,
+              "median": 0.045019757674617515,
+              "p90": 0.0724623351301214,
+              "max": 0.12289951131557428
+            },
+            "localStrength": {
+              "n": 231,
+              "mean": 0.8116055674026882,
+              "median": 0.8503487603770247,
+              "p90": 0.9091322947144481,
+              "max": 0.926481896540842
+            },
+            "localCoherence": {
+              "n": 231,
+              "mean": 0.7201873333946399,
+              "median": 0.7591203310030118,
+              "p90": 0.8423548921308391,
+              "max": 0.912445345143005
+            },
+            "wideWinnerOffsetCounts": [
+              {
+                "offset": -0.92,
+                "count": 14
+              },
+              {
+                "offset": -0.47,
+                "count": 0
+              },
+              {
+                "offset": 0,
+                "count": 217
+              },
+              {
+                "offset": 0.47,
+                "count": 0
+              },
+              {
+                "offset": 0.92,
+                "count": 0
+              }
+            ],
+            "wideWinnerChangesFromForward": 14,
+            "wideMargin": {
+              "n": 231,
+              "mean": 0.2749838688294512,
+              "median": 0.2560107291702213,
+              "p90": 0.5158919334508043,
+              "max": 0.6611827445090402
+            },
+            "centerReadout": {
+              "n": 231,
+              "mean": 0.03197650501452533,
+              "median": 0.03279179832819227,
+              "p90": 0.03881967664128671,
+              "max": 0.041905915926862505
+            },
+            "acceptedDose": 2.069994480004415,
+            "fallbackBrushes": 88,
+            "fallbackFraction": 0.3826086956521739
+          }
+        ]
+      },
+      {
+        "shape": "tight",
+        "source": {
+          "start": {
+            "x": 0.35,
+            "y": 0.5
+          },
+          "stationRange": [
+            -0.12,
+            0.34
+          ],
+          "step": 0.002,
+          "representation": "96x96 PheromoneField depositSegment source, frozen sample during capability pass; full dynamic deposit/sense feedback during repeat pass",
+          "sourcePolylineSegments": 230
+        },
+        "phases": [
+          {
+            "phase": "p00",
+            "depositEvents": 230,
+            "requestedDose": 2.0699655001724997,
+            "rasterMass": 2.069965474307537,
+            "nonzeroCells": 51,
+            "peakCell": 0.0629989504814148,
+            "localSteering": {
+              "n": 231,
+              "mean": 0.12453106789496249,
+              "median": 0.10666058859729793,
+              "p90": 0.2704851851171703,
+              "max": 0.30482624599932273
+            },
+            "localStrength": {
+              "n": 231,
+              "mean": 0.804798442907844,
+              "median": 0.8481136939685034,
+              "p90": 0.9051308527577574,
+              "max": 0.9148224004558576
+            },
+            "localCoherence": {
+              "n": 231,
+              "mean": 0.7933772720363615,
+              "median": 0.8198516304239227,
+              "p90": 0.9999999694426457,
+              "max": 0.9999999737467512
+            },
+            "wideWinnerOffsetCounts": [
+              {
+                "offset": -0.92,
+                "count": 17
+              },
+              {
+                "offset": -0.47,
+                "count": 0
+              },
+              {
+                "offset": 0,
+                "count": 115
+              },
+              {
+                "offset": 0.47,
+                "count": 99
+              },
+              {
+                "offset": 0.92,
+                "count": 0
+              }
+            ],
+            "wideWinnerChangesFromForward": 116,
+            "wideMargin": {
+              "n": 231,
+              "mean": 0.1418867755311033,
+              "median": 0.14894120502267186,
+              "p90": 0.2579515100591806,
+              "max": 0.3635453193777123
+            },
+            "centerReadout": {
+              "n": 231,
+              "mean": 0.026743746164807347,
+              "median": 0.02916437558721713,
+              "p90": 0.0349985919064167,
+              "max": 0.03849276668483909
+            },
+            "acceptedDose": 2.0699655001724997,
+            "fallbackBrushes": 116,
+            "fallbackFraction": 0.5043478260869565
+          },
+          {
+            "phase": "p10",
+            "depositEvents": 230,
+            "requestedDose": 2.0699655001724997,
+            "rasterMass": 2.069965480826795,
+            "nonzeroCells": 50,
+            "peakCell": 0.0629989504814148,
+            "localSteering": {
+              "n": 231,
+              "mean": 0.136664488511038,
+              "median": 0.10953729840567476,
+              "p90": 0.27529185430031305,
+              "max": 0.3046726765374299
+            },
+            "localStrength": {
+              "n": 231,
+              "mean": 0.8052071726114256,
+              "median": 0.8482304662316206,
+              "p90": 0.90482040233592,
+              "max": 0.9281234053899454
+            },
+            "localCoherence": {
+              "n": 231,
+              "mean": 0.8225186113191247,
+              "median": 0.8351064067097017,
+              "p90": 0.9999999690515085,
+              "max": 0.999999973757951
+            },
+            "wideWinnerOffsetCounts": [
+              {
+                "offset": -0.92,
+                "count": 14
+              },
+              {
+                "offset": -0.47,
+                "count": 0
+              },
+              {
+                "offset": 0,
+                "count": 110
+              },
+              {
+                "offset": 0.47,
+                "count": 107
+              },
+              {
+                "offset": 0.92,
+                "count": 0
+              }
+            ],
+            "wideWinnerChangesFromForward": 121,
+            "wideMargin": {
+              "n": 231,
+              "mean": 0.13678357815176762,
+              "median": 0.1321995763728266,
+              "p90": 0.2661609957163818,
+              "max": 0.3730896100717884
+            },
+            "centerReadout": {
+              "n": 231,
+              "mean": 0.026587068661432803,
+              "median": 0.02915556469639062,
+              "p90": 0.03464416750564514,
+              "max": 0.03856771439433379
+            },
+            "acceptedDose": 2.0699655001724997,
+            "fallbackBrushes": 110,
+            "fallbackFraction": 0.4782608695652174
+          },
+          {
+            "phase": "p01",
+            "depositEvents": 230,
+            "requestedDose": 2.0699655001724997,
+            "rasterMass": 2.069965470582247,
+            "nonzeroCells": 57,
+            "peakCell": 0.0629989504814148,
+            "localSteering": {
+              "n": 231,
+              "mean": 0.08805640299584758,
+              "median": 0.10002553963926372,
+              "p90": 0.12852459387746515,
+              "max": 0.1571015754893029
+            },
+            "localStrength": {
+              "n": 231,
+              "mean": 0.7988190719722955,
+              "median": 0.842509332998779,
+              "p90": 0.8930909032705672,
+              "max": 0.9128819361692173
+            },
+            "localCoherence": {
+              "n": 231,
+              "mean": 0.7618622330951332,
+              "median": 0.810757951346072,
+              "p90": 0.8718459791695478,
+              "max": 0.9226692335692627
+            },
+            "wideWinnerOffsetCounts": [
+              {
+                "offset": -0.92,
+                "count": 17
+              },
+              {
+                "offset": -0.47,
+                "count": 0
+              },
+              {
+                "offset": 0,
+                "count": 161
+              },
+              {
+                "offset": 0.47,
+                "count": 53
+              },
+              {
+                "offset": 0.92,
+                "count": 0
+              }
+            ],
+            "wideWinnerChangesFromForward": 70,
+            "wideMargin": {
+              "n": 231,
+              "mean": 0.1293982601438458,
+              "median": 0.12389842650215954,
+              "p90": 0.2599647753210249,
+              "max": 0.3490150502947336
+            },
+            "centerReadout": {
+              "n": 231,
+              "mean": 0.029886572160599485,
+              "median": 0.030333036433864948,
+              "p90": 0.03659900218885405,
+              "max": 0.03949823450940321
+            },
+            "acceptedDose": 2.0699655001724997,
+            "fallbackBrushes": 88,
+            "fallbackFraction": 0.3826086956521739
+          },
+          {
+            "phase": "p11",
+            "depositEvents": 230,
+            "requestedDose": 2.0699655001724997,
+            "rasterMass": 2.069965470582247,
+            "nonzeroCells": 56,
+            "peakCell": 0.0629989504814148,
+            "localSteering": {
+              "n": 231,
+              "mean": 0.09786254071608792,
+              "median": 0.10046786298037397,
+              "p90": 0.13670313651568633,
+              "max": 0.20484774708731263
+            },
+            "localStrength": {
+              "n": 231,
+              "mean": 0.795017870325348,
+              "median": 0.831704128038774,
+              "p90": 0.89304059645504,
+              "max": 0.9170206742849194
+            },
+            "localCoherence": {
+              "n": 231,
+              "mean": 0.7814622546182644,
+              "median": 0.8136406500295676,
+              "p90": 0.9038490005277353,
+              "max": 0.9733530049248968
+            },
+            "wideWinnerOffsetCounts": [
+              {
+                "offset": -0.92,
+                "count": 15
+              },
+              {
+                "offset": -0.47,
+                "count": 0
+              },
+              {
+                "offset": 0,
+                "count": 151
+              },
+              {
+                "offset": 0.47,
+                "count": 65
+              },
+              {
+                "offset": 0.92,
+                "count": 0
+              }
+            ],
+            "wideWinnerChangesFromForward": 80,
+            "wideMargin": {
+              "n": 231,
+              "mean": 0.1310251668918135,
+              "median": 0.11508501044174063,
+              "p90": 0.2768727447388226,
+              "max": 0.3499377747042961
+            },
+            "centerReadout": {
+              "n": 231,
+              "mean": 0.029425063694231823,
+              "median": 0.02957936175233481,
+              "p90": 0.0361028979280381,
+              "max": 0.04003105035795161
+            },
+            "acceptedDose": 2.0699655001724997,
+            "fallbackBrushes": 82,
+            "fallbackFraction": 0.3565217391304348
+          }
+        ]
+      },
+      {
+        "shape": "gentleMirror",
+        "source": {
+          "start": {
+            "x": 0.35,
+            "y": 0.5
+          },
+          "stationRange": [
+            -0.12,
+            0.34
+          ],
+          "step": 0.002,
+          "representation": "96x96 PheromoneField depositSegment source, frozen sample during capability pass; full dynamic deposit/sense feedback during repeat pass",
+          "sourcePolylineSegments": 230
+        },
+        "phases": [
+          {
+            "phase": "p00",
+            "depositEvents": 230,
+            "requestedDose": 2.0699944800044148,
+            "rasterMass": 2.0699945902451873,
+            "nonzeroCells": 52,
+            "peakCell": 0.06299983710050583,
+            "localSteering": {
+              "n": 231,
+              "mean": 0.07103005535184068,
+              "median": 0.044356402287999676,
+              "p90": 0.20728036923419013,
+              "max": 0.2551819797268494
+            },
+            "localStrength": {
+              "n": 231,
+              "mean": 0.8038713855397905,
+              "median": 0.8531999790298205,
+              "p90": 0.8923929094443167,
+              "max": 0.917118737370574
+            },
+            "localCoherence": {
+              "n": 231,
+              "mean": 0.7490164895085221,
+              "median": 0.7660544144239066,
+              "p90": 0.9996354751009184,
+              "max": 0.9999999708073927
+            },
+            "wideWinnerOffsetCounts": [
+              {
+                "offset": -0.92,
+                "count": 17
+              },
+              {
+                "offset": -0.47,
+                "count": 0
+              },
+              {
+                "offset": 0,
+                "count": 214
+              },
+              {
+                "offset": 0.47,
+                "count": 0
+              },
+              {
+                "offset": 0.92,
+                "count": 0
+              }
+            ],
+            "wideWinnerChangesFromForward": 17,
+            "wideMargin": {
+              "n": 231,
+              "mean": 0.245574575681683,
+              "median": 0.22458743926570002,
+              "p90": 0.4487693644956688,
+              "max": 0.5986058036116197
+            },
+            "centerReadout": {
+              "n": 231,
+              "mean": 0.029929945077727362,
+              "median": 0.03180632244155199,
+              "p90": 0.03696226792659501,
+              "max": 0.04014547698141058
+            },
+            "acceptedDose": 2.0699944800044148,
+            "fallbackBrushes": 104,
+            "fallbackFraction": 0.45217391304347826
+          },
+          {
+            "phase": "p10",
+            "depositEvents": 230,
+            "requestedDose": 2.0699944800044148,
+            "rasterMass": 2.069994597695768,
+            "nonzeroCells": 50,
+            "peakCell": 0.07199981063604355,
+            "localSteering": {
+              "n": 231,
+              "mean": 0.07343657834409334,
+              "median": 0.04993071418081657,
+              "p90": 0.20515374321967073,
+              "max": 0.2515081033607613
+            },
+            "localStrength": {
+              "n": 231,
+              "mean": 0.8151257667173029,
+              "median": 0.8593561877379953,
+              "p90": 0.905161413035983,
+              "max": 0.9485541151742327
+            },
+            "localCoherence": {
+              "n": 231,
+              "mean": 0.771176063913413,
+              "median": 0.7892028756875028,
+              "p90": 0.9996378259999655,
+              "max": 0.9999999709417735
+            },
+            "wideWinnerOffsetCounts": [
+              {
+                "offset": -0.92,
+                "count": 17
+              },
+              {
+                "offset": -0.47,
+                "count": 0
+              },
+              {
+                "offset": 0,
+                "count": 214
+              },
+              {
+                "offset": 0.47,
+                "count": 0
+              },
+              {
+                "offset": 0.92,
+                "count": 0
+              }
+            ],
+            "wideWinnerChangesFromForward": 17,
+            "wideMargin": {
+              "n": 231,
+              "mean": 0.2589411074695958,
+              "median": 0.23616722526034958,
+              "p90": 0.4782876274997491,
+              "max": 0.7148601727570087
+            },
+            "centerReadout": {
+              "n": 231,
+              "mean": 0.030939302001085873,
+              "median": 0.03220944504392215,
+              "p90": 0.03829775821305442,
+              "max": 0.04756189929268062
+            },
+            "acceptedDose": 2.0699944800044148,
+            "fallbackBrushes": 105,
+            "fallbackFraction": 0.45652173913043476
+          },
+          {
+            "phase": "p01",
+            "depositEvents": 230,
+            "requestedDose": 2.0699944800044148,
+            "rasterMass": 2.0699946023523808,
+            "nonzeroCells": 54,
+            "peakCell": 0.06299983710050583,
+            "localSteering": {
+              "n": 231,
+              "mean": 0.043341014884438145,
+              "median": 0.04271333487546039,
+              "p90": 0.07774688962460612,
+              "max": 0.12181032513794311
+            },
+            "localStrength": {
+              "n": 231,
+              "mean": 0.8164101284104798,
+              "median": 0.8593382376975123,
+              "p90": 0.9143492089273614,
+              "max": 0.9419062245547248
+            },
+            "localCoherence": {
+              "n": 231,
+              "mean": 0.7446956748591358,
+              "median": 0.7900874430815831,
+              "p90": 0.861786561814992,
+              "max": 0.9999992361632554
+            },
+            "wideWinnerOffsetCounts": [
+              {
+                "offset": -0.92,
+                "count": 15
+              },
+              {
+                "offset": -0.47,
+                "count": 1
+              },
+              {
+                "offset": 0,
+                "count": 215
+              },
+              {
+                "offset": 0.47,
+                "count": 0
+              },
+              {
+                "offset": 0.92,
+                "count": 0
+              }
+            ],
+            "wideWinnerChangesFromForward": 16,
+            "wideMargin": {
+              "n": 231,
+              "mean": 0.28562917854843756,
+              "median": 0.27417442287835814,
+              "p90": 0.5163638474581701,
+              "max": 0.6401142888779768
+            },
+            "centerReadout": {
+              "n": 231,
+              "mean": 0.03263210304604345,
+              "median": 0.03331714644720589,
+              "p90": 0.03969176028657405,
+              "max": 0.04562793835640369
+            },
+            "acceptedDose": 2.0699944800044148,
+            "fallbackBrushes": 88,
+            "fallbackFraction": 0.3826086956521739
+          },
+          {
+            "phase": "p11",
+            "depositEvents": 230,
+            "requestedDose": 2.0699944800044148,
+            "rasterMass": 2.06999459117651,
+            "nonzeroCells": 57,
+            "peakCell": 0.05399985983967781,
+            "localSteering": {
+              "n": 231,
+              "mean": 0.04354635194114992,
+              "median": 0.0450197576746178,
+              "p90": 0.07246233513012224,
+              "max": 0.12289951131557417
+            },
+            "localStrength": {
+              "n": 231,
+              "mean": 0.8116055674026883,
+              "median": 0.8503487603770244,
+              "p90": 0.909132294714447,
+              "max": 0.926481896540842
+            },
+            "localCoherence": {
+              "n": 231,
+              "mean": 0.7201873333946393,
+              "median": 0.7591203310030079,
+              "p90": 0.842354892130835,
+              "max": 0.9124453451430048
+            },
+            "wideWinnerOffsetCounts": [
+              {
+                "offset": -0.92,
+                "count": 14
+              },
+              {
+                "offset": -0.47,
+                "count": 0
+              },
+              {
+                "offset": 0,
+                "count": 217
+              },
+              {
+                "offset": 0.47,
+                "count": 0
+              },
+              {
+                "offset": 0.92,
+                "count": 0
+              }
+            ],
+            "wideWinnerChangesFromForward": 14,
+            "wideMargin": {
+              "n": 231,
+              "mean": 0.2749838688294502,
+              "median": 0.2560107291702277,
+              "p90": 0.5158919334508103,
+              "max": 0.6611827445090402
+            },
+            "centerReadout": {
+              "n": 231,
+              "mean": 0.0319765050145253,
+              "median": 0.03279179832819226,
+              "p90": 0.03881967664128662,
+              "max": 0.041905915926862505
+            },
+            "acceptedDose": 2.0699944800044148,
+            "fallbackBrushes": 88,
+            "fallbackFraction": 0.3826086956521739
+          }
+        ]
+      },
+      {
+        "shape": "tightMirror",
+        "source": {
+          "start": {
+            "x": 0.35,
+            "y": 0.5
+          },
+          "stationRange": [
+            -0.12,
+            0.34
+          ],
+          "step": 0.002,
+          "representation": "96x96 PheromoneField depositSegment source, frozen sample during capability pass; full dynamic deposit/sense feedback during repeat pass",
+          "sourcePolylineSegments": 230
+        },
+        "phases": [
+          {
+            "phase": "p00",
+            "depositEvents": 230,
+            "requestedDose": 2.0699655001724993,
+            "rasterMass": 2.069965474307537,
+            "nonzeroCells": 51,
+            "peakCell": 0.0629989504814148,
+            "localSteering": {
+              "n": 231,
+              "mean": 0.12453106789496252,
+              "median": 0.10666058859729656,
+              "p90": 0.2704851851171722,
+              "max": 0.30482624599932423
+            },
+            "localStrength": {
+              "n": 231,
+              "mean": 0.804798442907844,
+              "median": 0.8481136939685012,
+              "p90": 0.9051308527577586,
+              "max": 0.914822400455856
+            },
+            "localCoherence": {
+              "n": 231,
+              "mean": 0.7933772720363614,
+              "median": 0.8198516304239242,
+              "p90": 0.9999999694426457,
+              "max": 0.9999999737467512
+            },
+            "wideWinnerOffsetCounts": [
+              {
+                "offset": -0.92,
+                "count": 17
+              },
+              {
+                "offset": -0.47,
+                "count": 99
+              },
+              {
+                "offset": 0,
+                "count": 115
+              },
+              {
+                "offset": 0.47,
+                "count": 0
+              },
+              {
+                "offset": 0.92,
+                "count": 0
+              }
+            ],
+            "wideWinnerChangesFromForward": 116,
+            "wideMargin": {
+              "n": 231,
+              "mean": 0.14188677553110343,
+              "median": 0.1489412050226722,
+              "p90": 0.2579515100591805,
+              "max": 0.3635453193777052
+            },
+            "centerReadout": {
+              "n": 231,
+              "mean": 0.02674374616480733,
+              "median": 0.0291643755872172,
+              "p90": 0.034998591906416666,
+              "max": 0.03849276668483909
+            },
+            "acceptedDose": 2.0699655001724993,
+            "fallbackBrushes": 116,
+            "fallbackFraction": 0.5043478260869565
+          },
+          {
+            "phase": "p10",
+            "depositEvents": 230,
+            "requestedDose": 2.0699655001724993,
+            "rasterMass": 2.069965480826795,
+            "nonzeroCells": 50,
+            "peakCell": 0.0629989504814148,
+            "localSteering": {
+              "n": 231,
+              "mean": 0.136664488511038,
+              "median": 0.10953729840567242,
+              "p90": 0.2752918543003129,
+              "max": 0.30467267653743074
+            },
+            "localStrength": {
+              "n": 231,
+              "mean": 0.8052071726114257,
+              "median": 0.8482304662316198,
+              "p90": 0.9048204023359194,
+              "max": 0.9281234053899448
+            },
+            "localCoherence": {
+              "n": 231,
+              "mean": 0.8225186113191244,
+              "median": 0.8351064067097017,
+              "p90": 0.9999999690515085,
+              "max": 0.999999973757951
+            },
+            "wideWinnerOffsetCounts": [
+              {
+                "offset": -0.92,
+                "count": 14
+              },
+              {
+                "offset": -0.47,
+                "count": 107
+              },
+              {
+                "offset": 0,
+                "count": 110
+              },
+              {
+                "offset": 0.47,
+                "count": 0
+              },
+              {
+                "offset": 0.92,
+                "count": 0
+              }
+            ],
+            "wideWinnerChangesFromForward": 121,
+            "wideMargin": {
+              "n": 231,
+              "mean": 0.13678357815176753,
+              "median": 0.1321995763728266,
+              "p90": 0.2661609957163771,
+              "max": 0.3730896100717928
+            },
+            "centerReadout": {
+              "n": 231,
+              "mean": 0.02658706866143279,
+              "median": 0.029155564696390468,
+              "p90": 0.034644167505645106,
+              "max": 0.038567714394333805
+            },
+            "acceptedDose": 2.0699655001724993,
+            "fallbackBrushes": 110,
+            "fallbackFraction": 0.4782608695652174
+          },
+          {
+            "phase": "p01",
+            "depositEvents": 230,
+            "requestedDose": 2.0699655001724993,
+            "rasterMass": 2.069965470582247,
+            "nonzeroCells": 57,
+            "peakCell": 0.0629989504814148,
+            "localSteering": {
+              "n": 231,
+              "mean": 0.08805640299584756,
+              "median": 0.10002553963926462,
+              "p90": 0.12852459387746695,
+              "max": 0.1571015754893029
+            },
+            "localStrength": {
+              "n": 231,
+              "mean": 0.7988190719722955,
+              "median": 0.8425093329987804,
+              "p90": 0.8930909032705685,
+              "max": 0.9128819361692172
+            },
+            "localCoherence": {
+              "n": 231,
+              "mean": 0.7618622330951329,
+              "median": 0.810757951346069,
+              "p90": 0.8718459791695481,
+              "max": 0.9226692335692663
+            },
+            "wideWinnerOffsetCounts": [
+              {
+                "offset": -0.92,
+                "count": 17
+              },
+              {
+                "offset": -0.47,
+                "count": 53
+              },
+              {
+                "offset": 0,
+                "count": 161
+              },
+              {
+                "offset": 0.47,
+                "count": 0
+              },
+              {
+                "offset": 0.92,
+                "count": 0
+              }
+            ],
+            "wideWinnerChangesFromForward": 70,
+            "wideMargin": {
+              "n": 231,
+              "mean": 0.1293982601438454,
+              "median": 0.12389842650216504,
+              "p90": 0.25996477532102924,
+              "max": 0.3490150502947291
+            },
+            "centerReadout": {
+              "n": 231,
+              "mean": 0.02988657216059946,
+              "median": 0.030333036433864903,
+              "p90": 0.03659900218885408,
+              "max": 0.03949823450940319
+            },
+            "acceptedDose": 2.0699655001724993,
+            "fallbackBrushes": 88,
+            "fallbackFraction": 0.3826086956521739
+          },
+          {
+            "phase": "p11",
+            "depositEvents": 230,
+            "requestedDose": 2.0699655001724993,
+            "rasterMass": 2.069965470582247,
+            "nonzeroCells": 56,
+            "peakCell": 0.0629989504814148,
+            "localSteering": {
+              "n": 231,
+              "mean": 0.09786254071608796,
+              "median": 0.10046786298037377,
+              "p90": 0.13670313651568666,
+              "max": 0.20484774708731257
+            },
+            "localStrength": {
+              "n": 231,
+              "mean": 0.795017870325348,
+              "median": 0.831704128038776,
+              "p90": 0.8930405964550386,
+              "max": 0.9170206742849193
+            },
+            "localCoherence": {
+              "n": 231,
+              "mean": 0.7814622546182642,
+              "median": 0.813640650029571,
+              "p90": 0.903849000527736,
+              "max": 0.9733530049248968
+            },
+            "wideWinnerOffsetCounts": [
+              {
+                "offset": -0.92,
+                "count": 15
+              },
+              {
+                "offset": -0.47,
+                "count": 65
+              },
+              {
+                "offset": 0,
+                "count": 151
+              },
+              {
+                "offset": 0.47,
+                "count": 0
+              },
+              {
+                "offset": 0.92,
+                "count": 0
+              }
+            ],
+            "wideWinnerChangesFromForward": 80,
+            "wideMargin": {
+              "n": 231,
+              "mean": 0.1310251668918128,
+              "median": 0.11508501044174632,
+              "p90": 0.2768727447388235,
+              "max": 0.3499377747042961
+            },
+            "centerReadout": {
+              "n": 231,
+              "mean": 0.029425063694231812,
+              "median": 0.02957936175233459,
+              "p90": 0.036102897928038086,
+              "max": 0.040031050357951604
+            },
+            "acceptedDose": 2.0699655001724993,
+            "fallbackBrushes": 82,
+            "fallbackFraction": 0.3565217391304348
+          }
+        ]
+      },
+      {
+        "shape": "sCurve",
+        "source": {
+          "start": {
+            "x": 0.35,
+            "y": 0.5
+          },
+          "stationRange": [
+            -0.12,
+            0.34
+          ],
+          "step": 0.002,
+          "representation": "96x96 PheromoneField depositSegment source, frozen sample during capability pass; full dynamic deposit/sense feedback during repeat pass",
+          "sourcePolylineSegments": 230
+        },
+        "phases": [
+          {
+            "phase": "p00",
+            "depositEvents": 230,
+            "requestedDose": 2.0699923086053458,
+            "rasterMass": 2.0699923168867826,
+            "nonzeroCells": 49,
+            "peakCell": 0.053999997675418854,
+            "localSteering": {
+              "n": 231,
+              "mean": 0.06458963811882384,
+              "median": 0.04910585120518294,
+              "p90": 0.15148007942327293,
+              "max": 0.16132729205380827
+            },
+            "localStrength": {
+              "n": 231,
+              "mean": 0.8088075796122685,
+              "median": 0.8561539960825475,
+              "p90": 0.903339942370153,
+              "max": 0.9212321065078323
+            },
+            "localCoherence": {
+              "n": 231,
+              "mean": 0.7833807320575168,
+              "median": 0.8205488161265023,
+              "p90": 0.9446922915428242,
+              "max": 0.9537030687588934
+            },
+            "wideWinnerOffsetCounts": [
+              {
+                "offset": -0.92,
+                "count": 18
+              },
+              {
+                "offset": -0.47,
+                "count": 0
+              },
+              {
+                "offset": 0,
+                "count": 213
+              },
+              {
+                "offset": 0.47,
+                "count": 0
+              },
+              {
+                "offset": 0.92,
+                "count": 0
+              }
+            ],
+            "wideWinnerChangesFromForward": 18,
+            "wideMargin": {
+              "n": 231,
+              "mean": 0.2827867222191701,
+              "median": 0.2637419276099796,
+              "p90": 0.5616175191668118,
+              "max": 0.7354178922064164
+            },
+            "centerReadout": {
+              "n": 231,
+              "mean": 0.03197238583722886,
+              "median": 0.033012462336255405,
+              "p90": 0.03828021306632401,
+              "max": 0.04091228650211862
+            },
+            "acceptedDose": 2.0699923086053458,
+            "fallbackBrushes": 74,
+            "fallbackFraction": 0.3217391304347826
+          },
+          {
+            "phase": "p10",
+            "depositEvents": 230,
+            "requestedDose": 2.0699923086053458,
+            "rasterMass": 2.0699923001229763,
+            "nonzeroCells": 51,
+            "peakCell": 0.05400000140070915,
+            "localSteering": {
+              "n": 231,
+              "mean": 0.06256156539244719,
+              "median": 0.04633201881305765,
+              "p90": 0.1522937685368893,
+              "max": 0.163123116460491
+            },
+            "localStrength": {
+              "n": 231,
+              "mean": 0.8079965055384447,
+              "median": 0.8535917958364131,
+              "p90": 0.9032273785396832,
+              "max": 0.9225467488461254
+            },
+            "localCoherence": {
+              "n": 231,
+              "mean": 0.7616214172057031,
+              "median": 0.7990371168621888,
+              "p90": 0.942926252078885,
+              "max": 0.9506250226989308
+            },
+            "wideWinnerOffsetCounts": [
+              {
+                "offset": -0.92,
+                "count": 15
+              },
+              {
+                "offset": -0.47,
+                "count": 0
+              },
+              {
+                "offset": 0,
+                "count": 216
+              },
+              {
+                "offset": 0.47,
+                "count": 0
+              },
+              {
+                "offset": 0.92,
+                "count": 0
+              }
+            ],
+            "wideWinnerChangesFromForward": 15,
+            "wideMargin": {
+              "n": 231,
+              "mean": 0.2725181289958169,
+              "median": 0.25526797417623315,
+              "p90": 0.5338073905380942,
+              "max": 0.7024619175673082
+            },
+            "centerReadout": {
+              "n": 231,
+              "mean": 0.031733261085300064,
+              "median": 0.03280411445009762,
+              "p90": 0.03805254248859723,
+              "max": 0.04124018796514933
+            },
+            "acceptedDose": 2.069992308605346,
+            "fallbackBrushes": 79,
+            "fallbackFraction": 0.34347826086956523
+          },
+          {
+            "phase": "p01",
+            "depositEvents": 230,
+            "requestedDose": 2.0699923086053458,
+            "rasterMass": 2.0699923122301698,
+            "nonzeroCells": 54,
+            "peakCell": 0.05400001257658005,
+            "localSteering": {
+              "n": 231,
+              "mean": 0.05562475002083418,
+              "median": 0.0541600308098184,
+              "p90": 0.11265709851149995,
+              "max": 0.1673664035450876
+            },
+            "localStrength": {
+              "n": 231,
+              "mean": 0.8018997422404341,
+              "median": 0.8538185446149102,
+              "p90": 0.9015097143349342,
+              "max": 0.9146278059238157
+            },
+            "localCoherence": {
+              "n": 231,
+              "mean": 0.7191629581982841,
+              "median": 0.7780052426320297,
+              "p90": 0.862601614163485,
+              "max": 0.9763635029149909
+            },
+            "wideWinnerOffsetCounts": [
+              {
+                "offset": -0.92,
+                "count": 19
+              },
+              {
+                "offset": -0.47,
+                "count": 0
+              },
+              {
+                "offset": 0,
+                "count": 210
+              },
+              {
+                "offset": 0.47,
+                "count": 2
+              },
+              {
+                "offset": 0.92,
+                "count": 0
+              }
+            ],
+            "wideWinnerChangesFromForward": 21,
+            "wideMargin": {
+              "n": 231,
+              "mean": 0.3127952011080489,
+              "median": 0.2845917972577484,
+              "p90": 0.5820255133583372,
+              "max": 0.739781567152382
+            },
+            "centerReadout": {
+              "n": 231,
+              "mean": 0.031224201727632434,
+              "median": 0.032883233806235736,
+              "p90": 0.037724804165653436,
+              "max": 0.03974006613186468
+            },
+            "acceptedDose": 2.0699923086053458,
+            "fallbackBrushes": 112,
+            "fallbackFraction": 0.48695652173913045
+          },
+          {
+            "phase": "p11",
+            "depositEvents": 230,
+            "requestedDose": 2.0699923086053458,
+            "rasterMass": 2.0699922991916537,
+            "nonzeroCells": 53,
+            "peakCell": 0.05400001257658005,
+            "localSteering": {
+              "n": 231,
+              "mean": 0.05513560790970008,
+              "median": 0.051438161740692795,
+              "p90": 0.11314071532939007,
+              "max": 0.14575397676752555
+            },
+            "localStrength": {
+              "n": 231,
+              "mean": 0.8052558980430304,
+              "median": 0.847027201511234,
+              "p90": 0.9037681244279254,
+              "max": 0.9183798643134051
+            },
+            "localCoherence": {
+              "n": 231,
+              "mean": 0.7377532255538396,
+              "median": 0.794772407748151,
+              "p90": 0.8786195321296085,
+              "max": 0.9458423977022911
+            },
+            "wideWinnerOffsetCounts": [
+              {
+                "offset": -0.92,
+                "count": 16
+              },
+              {
+                "offset": -0.47,
+                "count": 2
+              },
+              {
+                "offset": 0,
+                "count": 212
+              },
+              {
+                "offset": 0.47,
+                "count": 1
+              },
+              {
+                "offset": 0.92,
+                "count": 0
+              }
+            ],
+            "wideWinnerChangesFromForward": 19,
+            "wideMargin": {
+              "n": 231,
+              "mean": 0.3128777169889623,
+              "median": 0.2861622596497113,
+              "p90": 0.5646439327279508,
+              "max": 0.7177261648909988
+            },
+            "centerReadout": {
+              "n": 231,
+              "mean": 0.03126643369899121,
+              "median": 0.032348456029891656,
+              "p90": 0.038137442373267307,
+              "max": 0.0405177905036209
+            },
+            "acceptedDose": 2.069992308605346,
+            "fallbackBrushes": 108,
+            "fallbackFraction": 0.46956521739130436
+          }
+        ]
+      }
+    ],
+    "phaseSpread": {
+      "stationCount": 1386,
+      "byShape": {
+        "straight": {
+          "steeringRange": {
+            "n": 231,
+            "mean": 0.20125661716752993,
+            "median": 0.21346491545293195,
+            "p90": 0.21448090027189112,
+            "max": 0.21456341894053388
+          },
+          "strengthRange": {
+            "n": 231,
+            "mean": 0.10909668586866368,
+            "median": 0.11184451185144928,
+            "p90": 0.12056131014114657,
+            "max": 0.5080402902406361
+          },
+          "coherenceRange": {
+            "n": 231,
+            "mean": 0.2076659838547037,
+            "median": 0.20991252246530645,
+            "p90": 0.2099125250763514,
+            "max": 0.9999998488901141
+          },
+          "anyWideWinnerChange": 3,
+          "stationCount": 231
+        },
+        "gentle": {
+          "steeringRange": {
+            "n": 231,
+            "mean": 0.0835855287844999,
+            "median": 0.05107478929297561,
+            "p90": 0.2136556742417263,
+            "max": 0.23532325447713542
+          },
+          "strengthRange": {
+            "n": 231,
+            "mean": 0.07592616496641152,
+            "median": 0.06543202078938348,
+            "p90": 0.12794044790450831,
+            "max": 0.42771950509362816
+          },
+          "coherenceRange": {
+            "n": 231,
+            "mean": 0.18817398068686023,
+            "median": 0.17630974229533014,
+            "p90": 0.2922870155070249,
+            "max": 0.9999992361632554
+          },
+          "anyWideWinnerChange": 3,
+          "stationCount": 231
+        },
+        "tight": {
+          "steeringRange": {
+            "n": 231,
+            "mean": 0.08856167939830342,
+            "median": 0.055779517927501784,
+            "p90": 0.20284059740603103,
+            "max": 0.22330173342121112
+          },
+          "strengthRange": {
+            "n": 231,
+            "mean": 0.07845619103076969,
+            "median": 0.07322102423295396,
+            "p90": 0.13063351016501057,
+            "max": 0.3837767558017188
+          },
+          "coherenceRange": {
+            "n": 231,
+            "mean": 0.17841766546833607,
+            "median": 0.16419411922363214,
+            "p90": 0.2560204046640171,
+            "max": 0.9504948932099023
+          },
+          "anyWideWinnerChange": 193,
+          "stationCount": 231
+        },
+        "gentleMirror": {
+          "steeringRange": {
+            "n": 231,
+            "mean": 0.08358552878449958,
+            "median": 0.05107478929297524,
+            "p90": 0.21365567424172388,
+            "max": 0.23532325447713498
+          },
+          "strengthRange": {
+            "n": 231,
+            "mean": 0.0759261649664117,
+            "median": 0.0654320207893837,
+            "p90": 0.12794044790450843,
+            "max": 0.4277195050936306
+          },
+          "coherenceRange": {
+            "n": 231,
+            "mean": 0.1881739806868605,
+            "median": 0.17630974229532137,
+            "p90": 0.2922870155070187,
+            "max": 0.9999992361632554
+          },
+          "anyWideWinnerChange": 3,
+          "stationCount": 231
+        },
+        "tightMirror": {
+          "steeringRange": {
+            "n": 231,
+            "mean": 0.08856167939830345,
+            "median": 0.05577951792750295,
+            "p90": 0.20284059740603286,
+            "max": 0.22330173342121096
+          },
+          "strengthRange": {
+            "n": 231,
+            "mean": 0.07845619103076974,
+            "median": 0.0732210242329524,
+            "p90": 0.13063351016500846,
+            "max": 0.3837767558017105
+          },
+          "coherenceRange": {
+            "n": 231,
+            "mean": 0.1784176654683366,
+            "median": 0.16419411922363336,
+            "p90": 0.2560204046640101,
+            "max": 0.9504948932099011
+          },
+          "anyWideWinnerChange": 193,
+          "stationCount": 231
+        },
+        "sCurve": {
+          "steeringRange": {
+            "n": 231,
+            "mean": 0.11461278025062635,
+            "median": 0.10127292870405055,
+            "p90": 0.2321041435798375,
+            "max": 0.24628944891085036
+          },
+          "strengthRange": {
+            "n": 231,
+            "mean": 0.08606675619989068,
+            "median": 0.08043863554141417,
+            "p90": 0.1422386472241738,
+            "max": 0.38267214729821464
+          },
+          "coherenceRange": {
+            "n": 231,
+            "mean": 0.20201668189244343,
+            "median": 0.1807417115480494,
+            "p90": 0.3406302482297995,
+            "max": 0.9312056724974976
+          },
+          "anyWideWinnerChange": 9,
+          "stationCount": 231
+        }
+      }
+    },
+    "mirrorConsistency": [
+      {
+        "shape": "gentle",
+        "phase": "p00",
+        "steeringMirrorError": {
+          "n": 231,
+          "mean": 1.0887772651107034e-15,
+          "median": 7.91033905045424e-16,
+          "p90": 2.6298407895808396e-15,
+          "max": 5.037636974236648e-15
+        }
+      },
+      {
+        "shape": "gentle",
+        "phase": "p10",
+        "steeringMirrorError": {
+          "n": 231,
+          "mean": 1.1285141254320537e-15,
+          "median": 9.003214840319629e-16,
+          "p90": 2.5743296383495817e-15,
+          "max": 5.7592819402429996e-15
+        }
+      },
+      {
+        "shape": "gentle",
+        "phase": "p01",
+        "steeringMirrorError": {
+          "n": 231,
+          "mean": 1.3542769559857907e-15,
+          "median": 1.1518563880486e-15,
+          "p90": 2.7547408798511697e-15,
+          "max": 5.780098621954721e-15
+        }
+      },
+      {
+        "shape": "gentle",
+        "phase": "p11",
+        "steeringMirrorError": {
+          "n": 231,
+          "mean": 1.3148968531926e-15,
+          "median": 1.0685896612017132e-15,
+          "p90": 2.699229728619912e-15,
+          "max": 5.960509863456309e-15
+        }
+      },
+      {
+        "shape": "tight",
+        "phase": "p00",
+        "steeringMirrorError": {
+          "n": 231,
+          "mean": 9.974181248245024e-16,
+          "median": 8.049116928532385e-16,
+          "p90": 2.3037127760972e-15,
+          "max": 5.1209037010835345e-15
+        }
+      },
+      {
+        "shape": "tight",
+        "phase": "p10",
+        "steeringMirrorError": {
+          "n": 231,
+          "mean": 9.647550676546584e-16,
+          "median": 7.632783294297951e-16,
+          "p90": 2.3314683517128287e-15,
+          "max": 5.093148125467906e-15
+        }
+      },
+      {
+        "shape": "tight",
+        "phase": "p01",
+        "steeringMirrorError": {
+          "n": 231,
+          "mean": 1.1855821158867464e-15,
+          "median": 9.159339953157541e-16,
+          "p90": 2.8033131371785203e-15,
+          "max": 5.162537064506978e-15
+        }
+      },
+      {
+        "shape": "tight",
+        "phase": "p11",
+        "steeringMirrorError": {
+          "n": 231,
+          "mean": 1.130832848790688e-15,
+          "median": 7.632783294297951e-16,
+          "p90": 2.858824288409778e-15,
+          "max": 4.801714581503802e-15
+        }
+      }
+    ]
+  }
+}

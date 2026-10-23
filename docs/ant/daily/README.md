@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-23 — Pheromone field write/read responsibility
+
+[Process log](./2026-10-23-field-write-read-isolation.md) · [Evidence package](../evidence/2026-10-23-field-write-read-isolation/README.md)
+
+- Located phase sensitivity at the one-node deposit/raster write boundary; nearest fallback is frequent but shares that footprint
+- Fixed-raster bilinear reads and local/wide sensing also change cues, with comparable field-stage contributions and sparse/small one-tick movement transfer
+- Decision: **MIXED / INCONCLUSIVE**; no field candidate, production change, or free-running natural shadow
+
 ### 2026-10-18 — Plate audio reassessment and live dense-mix plan
 
 [Process / next-pass plan](./2026-10-18-plate-audio-review-and-live-density-plan.md)
