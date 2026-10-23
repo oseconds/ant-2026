@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: stationary agents deposit no signal while traveled distance deposits finite field mass
+ok 1 - stationary agents deposit no signal while traveled distance deposits finite field mass
+  ---
+  duration_ms: 2.5939
+  type: 'test'
+  ...
+# Subtest: segment deposition is approximately stable under path subdivision
+ok 2 - segment deposition is approximately stable under path subdivision
+  ---
+  duration_ms: 2.5446
+  type: 'test'
+  ...
+# Subtest: exponential decay honors half-life and composes over elapsed time
+ok 3 - exponential decay honors half-life and composes over elapsed time
+  ---
+  duration_ms: 0.3759
+  type: 'test'
+  ...
+# Subtest: reinforcement is bounded and snapshots do not expose live field storage
+ok 4 - reinforcement is bounded and snapshots do not expose live field storage
+  ---
+  duration_ms: 1.4034
+  type: 'test'
+  ...
+# Subtest: sampling returns no signal outside the observed square and preserves valid edge samples
+ok 5 - sampling returns no signal outside the observed square and preserves valid edge samples
+  ---
+  duration_ms: 0.4456
+  type: 'test'
+  ...
+# Subtest: segments outside the field leave no edge trail while crossing travel deposits only the in-domain length
+ok 6 - segments outside the field leave no edge trail while crossing travel deposits only the in-domain length
+  ---
+  duration_ms: 0.2841
+  type: 'test'
+  ...
+# Subtest: point deposition preserves a fixed amount with the existing brush and ignores outside points
+ok 7 - point deposition preserves a fixed amount with the existing brush and ignores outside points
+  ---
+  duration_ms: 0.5802
+  type: 'test'
+  ...
+# Subtest: default half-life is fifteen seconds and abandoned traces retain one sixteenth after one minute
+ok 8 - default half-life is fifteen seconds and abandoned traces retain one sixteenth after one minute
+  ---
+  duration_ms: 1.7283
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 16.7199

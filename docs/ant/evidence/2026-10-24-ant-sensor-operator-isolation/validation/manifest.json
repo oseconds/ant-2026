@@ -1,0 +1,74 @@
+{
+  "schema": "ant-sensor-operator-isolation-validation/v1",
+  "productionBaseline": {
+    "ref": "origin/main",
+    "sha": "8c60e4bba3bd5b476300e90a2936bfebd1f831c2",
+    "changedProductionSource": false,
+    "sourceSha256": {
+      "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+      "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+      "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41"
+    }
+  },
+  "reusedEvidence": {
+    "branch": "codex/ant-field-analytic-reference-20261023",
+    "commit": "2f00c300a9b8dc7a34d9efa5fd49cf92f024d9aa",
+    "analyticAttributionSha256": "1b60936621c0a2c3fa352763c0d6950615d630ea46bb5f0015284c83d148a6b9",
+    "analyticScriptSha256": "1a9ba25d6e128a67c3795f6cb1b97bf1ee3e62ee38c8d71d893141ccce9fea2e",
+    "stationRawSha256": "50547f963041e1505e1caf1bed3da27bbe36d84b0d5f26266313e60e8e573d29"
+  },
+  "artifactsSha256": {
+    "scripts/ant-sensor-operator-isolation.js": "be8021a052a1df136dfd237d4e9c4d873dcdfbf12b0abaf496e14510f0da76ea",
+    "tests/ant-sensor-operator-isolation.test.js": "a6ee414759a9540e66e2fca20e01058c20aeb32a8479face4c734d2ce42ea1c9",
+    "computed/sensor-operator-attribution.json": "062a1897b844a092af4b41455bf4b645376cf2936d567771d792bcf2513fa0ac",
+    "computed/sensor-stage-rows.json.gz": "b39722afb0489383352659e2329a55bbde3bba16f2a62942c1173e2e30082d99",
+    "inputs/station-raw.json.gz": "50547f963041e1505e1caf1bed3da27bbe36d84b0d5f26266313e60e8e573d29"
+  },
+  "environment": {
+    "node": "v22.23.2"
+  },
+  "checks": {
+    "syntax": [
+      {
+        "command": "node --check scripts/ant-sensor-operator-isolation.js",
+        "passed": true
+      },
+      {
+        "command": "node --check tests/ant-sensor-operator-isolation.test.js",
+        "passed": true
+      }
+    ],
+    "focusedTests": [
+      {
+        "command": "node tests/ant-sensor-operator-isolation.test.js",
+        "passed": 3,
+        "failed": 0,
+        "receipt": "sensor-operator.tap"
+      },
+      {
+        "command": "node tests/ant-trail-following.test.js",
+        "passed": 8,
+        "failed": 0,
+        "receipt": "trail-following.tap"
+      },
+      {
+        "command": "node tests/ant-controller.test.js",
+        "passed": 21,
+        "failed": 0,
+        "receipt": "ant-controller.tap"
+      },
+      {
+        "command": "node tests/pheromone-field.test.js",
+        "passed": 8,
+        "failed": 0,
+        "receipt": "pheromone-field.tap"
+      }
+    ],
+    "totalFocused": {
+      "passed": 40,
+      "failed": 0
+    },
+    "deterministicReplay": "report and compressed stage rows are byte-identical; see determinism.json",
+    "fullBuild": "not run; production src/ unchanged and this pass only adds research tooling, tests, and docs"
+  }
+}

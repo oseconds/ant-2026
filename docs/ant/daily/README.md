@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-24 — Pheromone sensor operator isolation
+
+[Process log](./2026-10-24-sensor-operator-isolation.md) · [Evidence](../evidence/2026-10-24-ant-sensor-operator-isolation/README.md)
+
+- Traced local and wide sensor operators against the frozen continuous analytic-reference cohort, retaining every row's intermediates
+- All 549 local sign differences begin in raw-side sample evidence; among 2,378 wide winner mismatches, production first departs from the analytic final winner at raw maxima for 1,380 and at production weighting + max for 998
+- Decision: **MIXED; no sensor candidate**. Revisit field representation before changing sensor logic
+
 ### 2026-10-18 — Plate audio reassessment and live dense-mix plan
 
 [Process / next-pass plan](./2026-10-18-plate-audio-review-and-live-density-plan.md)
