@@ -1,0 +1,166 @@
+{
+  "baselineRevision": "8c60e4bba3bd5b476300e90a2936bfebd1f831c2",
+  "sourcePaths": {
+    "core": "scripts/ant-spatial-core.js",
+    "controller": "src/lib/agents/ant/AntController.js",
+    "routeProbe": "scripts/ant-route-curvature-probes.js"
+  },
+  "coreSourceSha256": "6573ef627e050f0cdd23279d886f1a8c2adf224fdcf840370fe35db5c051de4b",
+  "qualificationCoreSha256": "8f246cb144c26997d79520da4ff02ed0d7b5f29ccb5c4804a587712f284650e3",
+  "helperSourceSha256": "3562fe3302f797d3a1de5a17b4d3978529c1aef518c88abd110b1f389cfc2db9",
+  "helperInstrumentedSha256": "3a1e5e2d82148675c817ad4edce62ca959ef4c265066fddf6dc4f9e051a98b17",
+  "helperGuard": {
+    "before": "const dampingTerm = fixture.variant === 'dampingOff' ? 0\n      : -clamp(before.angularVelocity, -ANGULAR_VELOCITY_CLAMP, ANGULAR_VELOCITY_CLAMP)\n        * LOCAL_TURN_DAMPING * ant.trailAdherence;",
+    "after": "const dampingTerm = fixture.feedbackTerm(before.angularVelocity, ant.trailAdherence, DT);",
+    "occurrenceCount": 1
+  },
+  "rawControllerCompatibility": {
+    "existingBuilderReceipts": {
+      "production": {
+        "match": true,
+        "transformedControllerSha256": "5d117637267b89e386bfa3679f6d8d6c49ee6bb0a7007732f2674d1207d267fd"
+      },
+      "dtFeedback": {
+        "match": true,
+        "transformedControllerSha256": "1d9e8cd2508e274f0275c5e790b6924411ab2e4a2c29ffd45dfbf3376e27afdd"
+      },
+      "dampingOff": {
+        "match": true,
+        "transformedControllerSha256": "8bfcd30140c717ac239e32ad489a4df0c7f779fbf8c701a059ecbaa7bd7df69a"
+      }
+    },
+    "plainSha256": "4be0143eba6905039d2a0bf396d888c3fbedf54306dddd5823cb86d831da3c4c",
+    "instrumentedSha256": "e5a140f88c3170166763209831faeab38179650b9026602054a67e05e19afef3",
+    "plainAndInstrumentedDifferOnlyByTrace": true,
+    "plainChanges": [
+      {
+        "mechanism": "movement",
+        "before": "steeringAngularVelocity * LOCAL_TURN_DAMPING * agent.trailAdherence",
+        "after": "agent.angularVelocity * LOCAL_TURN_DAMPING * agent.trailAdherence * dt"
+      },
+      {
+        "mechanism": "remove-extra-feedback-clamp",
+        "before": "            const steeringAngularVelocity = clamp(\r\n                agent.angularVelocity,\r\n                -2.2,\r\n                2.2\r\n            );\r\n",
+        "after": ""
+      },
+      {
+        "mechanism": "heading-observer-only",
+        "before": "SPAWN_HEADING + signed(this.random) * SPAWN_HEADING_SPREAD",
+        "after": "this.spatialRecruitmentHeading(this.random(), { x, y })"
+      }
+    ],
+    "instrumentedChanges": [
+      {
+        "mechanism": "movement",
+        "before": "steeringAngularVelocity * LOCAL_TURN_DAMPING * agent.trailAdherence",
+        "after": "agent.angularVelocity * LOCAL_TURN_DAMPING * agent.trailAdherence * dt"
+      },
+      {
+        "mechanism": "remove-extra-feedback-clamp",
+        "before": "            const steeringAngularVelocity = clamp(\r\n                agent.angularVelocity,\r\n                -2.2,\r\n                2.2\r\n            );\r\n",
+        "after": ""
+      },
+      {
+        "mechanism": "feedback-trace-instrumentation",
+        "before": "            const localTurn = clamp(\r\n",
+        "after": "            this.qualificationFeedbackTrace ??= [];\r\n            this.qualificationFeedbackTrace.push({ id: agent.id, previousOmega: agent.angularVelocity,\r\n                adherence: agent.trailAdherence,\r\n                feedbackRadians: -agent.angularVelocity * LOCAL_TURN_DAMPING * agent.trailAdherence * dt });\r\n            const localTurn = clamp(\r\n"
+      },
+      {
+        "mechanism": "heading-observer-only",
+        "before": "SPAWN_HEADING + signed(this.random) * SPAWN_HEADING_SPREAD",
+        "after": "this.spatialRecruitmentHeading(this.random(), { x, y })"
+      }
+    ]
+  },
+  "arms": {
+    "production": {
+      "movement": "production",
+      "field": "production",
+      "recruitment": "north",
+      "productionControllerSha256": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+      "transformedControllerSha256": "5d117637267b89e386bfa3679f6d8d6c49ee6bb0a7007732f2674d1207d267fd",
+      "changes": [
+        {
+          "mechanism": "heading-observer-only",
+          "before": "SPAWN_HEADING + signed(this.random) * SPAWN_HEADING_SPREAD",
+          "after": "this.spatialRecruitmentHeading(this.random(), { x, y })"
+        }
+      ],
+      "timing": "Flow uses current tick completed postcollision movement before end-of-tick accepted heading. Init has no segments. Observer emits after tick; newborns supplied no movement to their own spawn.",
+      "fieldChange": null
+    },
+    "dtFeedback": {
+      "movement": "dtFeedback",
+      "field": "production",
+      "recruitment": "north",
+      "productionControllerSha256": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+      "transformedControllerSha256": "1d9e8cd2508e274f0275c5e790b6924411ab2e4a2c29ffd45dfbf3376e27afdd",
+      "changes": [
+        {
+          "mechanism": "movement",
+          "before": "steeringAngularVelocity * LOCAL_TURN_DAMPING * agent.trailAdherence",
+          "after": "steeringAngularVelocity * LOCAL_TURN_DAMPING * agent.trailAdherence * dt"
+        },
+        {
+          "mechanism": "heading-observer-only",
+          "before": "SPAWN_HEADING + signed(this.random) * SPAWN_HEADING_SPREAD",
+          "after": "this.spatialRecruitmentHeading(this.random(), { x, y })"
+        }
+      ],
+      "timing": "Flow uses current tick completed postcollision movement before end-of-tick accepted heading. Init has no segments. Observer emits after tick; newborns supplied no movement to their own spawn.",
+      "fieldChange": null
+    },
+    "dampingOff": {
+      "movement": "dampingOff",
+      "field": "production",
+      "recruitment": "north",
+      "productionControllerSha256": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+      "transformedControllerSha256": "8bfcd30140c717ac239e32ad489a4df0c7f779fbf8c701a059ecbaa7bd7df69a",
+      "changes": [
+        {
+          "mechanism": "movement",
+          "before": "steeringAngularVelocity * LOCAL_TURN_DAMPING * agent.trailAdherence",
+          "after": "0"
+        },
+        {
+          "mechanism": "heading-observer-only",
+          "before": "SPAWN_HEADING + signed(this.random) * SPAWN_HEADING_SPREAD",
+          "after": "this.spatialRecruitmentHeading(this.random(), { x, y })"
+        }
+      ],
+      "timing": "Flow uses current tick completed postcollision movement before end-of-tick accepted heading. Init has no segments. Observer emits after tick; newborns supplied no movement to their own spawn.",
+      "fieldChange": null
+    },
+    "rawDisplacement": {
+      "movement": "rawDisplacement",
+      "field": "production",
+      "recruitment": "north",
+      "productionControllerSha256": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+      "transformedControllerSha256": "e5a140f88c3170166763209831faeab38179650b9026602054a67e05e19afef3",
+      "changes": [
+        {
+          "mechanism": "movement",
+          "before": "steeringAngularVelocity * LOCAL_TURN_DAMPING * agent.trailAdherence",
+          "after": "agent.angularVelocity * LOCAL_TURN_DAMPING * agent.trailAdherence * dt"
+        },
+        {
+          "mechanism": "remove-extra-feedback-clamp",
+          "before": "            const steeringAngularVelocity = clamp(\r\n                agent.angularVelocity,\r\n                -2.2,\r\n                2.2\r\n            );\r\n",
+          "after": ""
+        },
+        {
+          "mechanism": "feedback-trace-instrumentation",
+          "before": "            const localTurn = clamp(\r\n",
+          "after": "            this.qualificationFeedbackTrace ??= [];\r\n            this.qualificationFeedbackTrace.push({ id: agent.id, previousOmega: agent.angularVelocity,\r\n                adherence: agent.trailAdherence,\r\n                feedbackRadians: -agent.angularVelocity * LOCAL_TURN_DAMPING * agent.trailAdherence * dt });\r\n            const localTurn = clamp(\r\n"
+        },
+        {
+          "mechanism": "heading-observer-only",
+          "before": "SPAWN_HEADING + signed(this.random) * SPAWN_HEADING_SPREAD",
+          "after": "this.spatialRecruitmentHeading(this.random(), { x, y })"
+        }
+      ],
+      "timing": "Flow uses current tick completed postcollision movement before end-of-tick accepted heading. Init has no segments. Observer emits after tick; newborns supplied no movement to their own spawn.",
+      "fieldChange": null
+    }
+  }
+}

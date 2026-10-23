@@ -1,0 +1,40 @@
+# 2026-10-23 — natural field-to-turn transfer
+
+## Starting boundary
+
+Freshly fetched `origin/main` was `8c60e4bba3bd5b476300e90a2936bfebd1f831c2`. Created `codex/ant-natural-field-transfer-20261023` from that ref in the primary worktree. Read canonical ANT status, current source/tests, recent evidence/daily and the future world-model contract; archive remained excluded. Previous spatial commit `9fcd96205ff8a5c671be26e2e024524c0e9345d1` and curvature commit `d0e07d089c82d29409c7dd067e17cdeb9a5ecf7f` are research provenance, not production.
+
+The unrelated material-experience worktree and existing untracked raw captures/helpers were preserved. No research branch was merged. Individually restored prior fixture/tooling paths have explicit provenance; only dependencies actually needed by the final research are published.
+
+The user clarified the artistic priority as **live pheromone and route change**. Therefore append-only material saturation is recorded as a separate consequence, not an automatic rejection of live spatial change. This did not authorize erosion, history deletion, cap growth, renderer corrections or production adoption.
+
+## Investigation sequence and decisions
+
+1. Froze the Stage A protocol before target replay analysis: three seeds, two natural origins, eleven times, 66 complete world states, all current ants, 60 Hz. Source audit established that all ants sense before same-tick movement/deposition; P/dt/off on one stored raster identifies a conditional read-side controller effect, not total field responsibility.
+2. Implemented a complete graph/RNG replay rather than using public snapshots. Preserved prototypes, maps, aliases, backing buffers, body/gaster/gait/material state and exact RNG calls. The 180 s pilot passed untouched/instrumented/restored tick and raster reconstruction checks. Corrected two pilot pre-tick metadata labels; retained the first artifact and explicit erratum.
+3. Ran six 600 model-second natural histories and all 66 three-arm frozen replays. All states passed; the analysis independently reconstructed all field checkpoints. There were 1,255 complete ant-state observations and 1,168 nonzero local cues. Production reversed the local cue in 556 cases, dtFeedback in 93. First divergence was local correction in 1,251 P/dt pairs; four were equal at analyzed stages. This supported Gate A1 conditionally, without selecting dtFeedback as a production law.
+4. Audited strict previous-omega clamp exposure: production-origin 583/607 overall and 100/100 high-entry-adherence; dtFeedback-origin 148/648 and 52/201. dt/off actual travel differences remained measurable. This earned one further controlled contrast using raw previous angular displacement, with no gain search.
+5. Kept the old failed CIC gate closed. Froze a new default-Gaussian half-cell fixed-write/read challenge, requiring phase-zero full parity and retaining boundary/dose/storage/cap accounting. The cohort runs serially. Packaging guards initially confused compressed Git-file bounds with legitimate uncompressed JSON size; preserved executed runner revisions and changed only receipt-bounded inflation/output packaging. No state was excluded for size or response.
+6. Analyzed prior saved multi-ant trajectories with a fixed local routelet screen. Rejected an added body-scale curvature gate before natural target analysis because it would exclude the gentle-arc control. Preserved protocol versions. The screen knowingly admits microscopic matching jitter, so counts are accompanied by continuous curvature/chord deviation. A separately frozen follow-up grouped matches around fixed spatial anchors, not ant-pair recurrence across different regions. All 24 case-window/scale pair counts matched the original screen. It found multiple ants reusing local one-second traces; it does not demonstrate a long continuous corridor.
+7. Read the 66 saved selector/material graphs without stepping them. Support removed at most one chemical-qualified cell at the sampled boundaries. Supported masks without a selected candidate occurred in six captures per origin, localizing an unresolved geometric selector question but not identifying a specific rejection gate or curvature compression. No selector change followed.
+8. Separated historical identity, column count/depth, retained locomotion, visual presence, acoustic participation and provenance lifetimes. No persistence semantics were implemented. Prior one-seed 7,200 model-second saturation remains a counterexample to treating movement improvement or early birth slowdown as material renewal.
+
+## Validation and review boundary
+
+The first broad test run had two failures in an unused, unfinished seed-shard utility. The serial matrix had already completed, so that utility was preserved locally under `.cache/ant-transfer-unused-shards` with hashes and omitted from publication. It was not repaired into unnecessary scope. Core analysis and controlled tests are rerun for the actual final scope. Production build passed with the existing large-chunk warning.
+
+Delegation used Luna Max for complete-state/RNG implementation, causal control audit, paired analysis, phase qualification/analysis, collective geometry and independent adversarial review; Luna High for the bounded persistence/material consumer audits. Scientific coupling, numerical parity and architecture claim risk justified Max; the read-only consumer inventories used High. Roles/file ownership were separate. Final acceptance remains with a fresh reviewer after final artifacts are available.
+
+## Final research outcome
+
+The phase challenge completed all 66 states / 792 arms and 594 p00-to-shifted comparisons. All phase-zero gates passed. In one movement arm, interior comparable cue values changed in 3,360/3,449 and flipped sign in 323/3,449; the same cue result repeats across movement arms and is not tripled as independent evidence. Interior travel-angle change occurred in 670/3,474 production and 1,882/3,474 dt comparisons. dt absolute travel-angle difference was small at the median (0.0001727 rad), with p90 0.014233 rad. This supports conditional raster-phase sensitivity reaching movement, not field dominance or a replacement kernel.
+
+The raw angular-displacement candidate failed the fixed 144-case qualification. Its term activated and paths changed, but mirrored/S deposited counterexamples remained; no new natural run or integrated candidate followed. The routelet/anchor readout supports repeated use of local curved traces, with tiny-jitter, traffic, nest/boundary and non-continuous-visit limits. Selector compression remains unresolved. The user's live-route priority does not require implementing material erosion now.
+
+Fresh review separated physical-query correspondence from global indices/heading metadata, end-tick RNG identity from cumulative per-ant stream exposure, and zero-query edge states from genuine mismatches. Exactly seven edge ant/capture pairs had all 18 local query points outside the domain: their 63 shifted comparisons are unqualified and now `none-observed`, with no fabricated raw query or changed interior denominator. Report-field/table integrity checks and targeted fixtures were added; no raw phase/simulation history changed.
+
+Final broad tests: **397 passed, 0 failed**. Build passed with the existing bundle-size warning. All 14 current capture-source hashes and 12 individually reused prior tooling/test blobs matched their pinned receipts. Re-fetch before publication left `origin/main` at the same `8c60e4b` baseline. Production source and canonical ANT README/world-model remained unchanged.
+
+No new exhibition startup mode, field alternative, recruitment policy, selector or persistence law was adopted. No accelerated result is a headed Chrome soak. Headless Chromium was used only to rasterize a static controlled plot. No audio optimization occurred. The final evidence/review and Git publication scope are in the package index; the exact commit is recorded by Git and the final delivery response.
+
+Evidence: [natural-field-transfer package](../evidence/2026-10-23-natural-field-transfer/README.md).

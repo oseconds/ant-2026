@@ -1,0 +1,37 @@
+# Collective routelet reuse protocol — version 3
+
+**Status:** frozen before natural routelet analysis. Version 1 preserves the initial draft; version 2 preserves the later body-scale screen that was rejected before target-row analysis because it excluded the specified gentle-arc control. No gate will be changed in response to the natural results.
+
+## Question and claim boundary
+
+Do distinct ants traverse similar one-second curved *local routelets* at separate times? This is a local route-reuse screen. A one-second match does not establish a long shared corridor, persistent route, whole-loop circulation, ellipse, or milling. It cannot establish intention, following, a social relationship, pioneer role, memory, or a causal field effect. Boundaries, density, obstacles, initialization, and other movement constraints remain competing explanations. This pass addresses saved movement in the natural pheromone/route-transfer cases; it does not test material blank renewal.
+
+The unit compared is a pair of one-second routelets from different ants. Many pairs share an ant or a routelet and are dependent. Reports keep cases, temporal windows, ant IDs, unordered ant pairs, and recurrence gaps visible; pooled routelet pairs are not treated as independent replicates or used for population-level significance.
+
+## Frozen inputs and time mapping
+
+Inputs are existing 10 Hz natural trajectory archives from frozen commit `9fcd962`. The committed receipt `docs/ant/evidence/2026-10-22-spatial-dynamics/validation/packed-results.json` defines each trajectory row as `{tick, agents}`, with agent tuples `[id, x, y, heading]`. Coordinates are normalized world units. Source rows advance by six simulation ticks; convert using `sampleIndex = tick / 6` and assert the quotient is an integer. One sample-index step is 0.1 s. The archived sequence starts at `tick: 6` (`sampleIndex: 1`), so the first nine tenths of a second are absent and the first complete aligned one-second routelet starts at sample index 10. Do not synthesize the missing initial position.
+
+Before analysis, record repository-relative path, byte size, and SHA-256 for each source JSON and verify against the frozen receipt. Read source archives without rewriting or sorting them in place; analyze one case at a time. Analyze the three 600 s production and three 600 s `dtFeedback` cases separately. Keep the 7,200 s production and `dtFeedback` cases separate descriptive cases, each restricted to three existing windows `[480,600]`, `[1680,1800]`, and `[7080,7200]` seconds. Routelets and comparisons do not cross window boundaries, and windows are not pooled. Their pair counts are bounded to those windows, not all-history comparisons.
+
+## Routelets, measures, and fixed candidate gates
+
+Use fixed one-second routelets: eleven consecutive positions / ten 100 ms segments, aligned to integer seconds. Require every sample; do not interpolate gaps. Skip routelets with path length below `1e-4` normalized units, the inherited diagnostic floor. Coordinates and distances are normalized world units. Body diameter is `0.012`; compare at fixed distances `0.012` and `0.024` (one and two body diameters). These scales are not inferred from target outcomes.
+
+Represent each routelet as the ten straight segments between observed positions. Use Euclidean point-to-segment distances and segment-length-weighted summaries, never raster-cell equality as the reuse criterion. Compare only different ant IDs. Routelet intervals cannot overlap and must have at least one full second between them. Report the actual elapsed gap. This is an operational temporal exclusion, not a biological timescale.
+
+At each spatial scale, report both route directions and the following separately: path-length fraction with segment midpoints within distance of the other continuous polyline; length-weighted mean nearest-polyline distance; fraction of matched path whose tangent axes differ by no more than 30 degrees; directed tangent cosine; curvature-sign agreement after canonicalizing reverse traversal; curved matched sample count, indices, contiguous run lengths and mean absolute curvature on both sides. For every routelet, report integrated signed turn, integrated absolute turn, net endpoint tangent turn, and maximum deviation from the endpoint chord. Also report observed segment-step lengths to show the 10 Hz sampling scale.
+
+Curvature is signed change in travel tangent per mean adjacent-segment length, in inverse normalized world units. Values within `1e-6` inverse normalized units are treated as numerically straight. No body-scale curvature or chord-deviation minimum is imposed: specifically, the gentle circular-arc fixture with radius `0.25` normalized units must remain eligible. A pair is flagged only as a *candidate local curved reuse* at a scale when in both directions overlap is at least 0.75, tangent-axis aligned fraction is at least 0.75, at least three matched samples have numerically non-straight curvature on both routes, and at least 0.75 of those samples have direction-canonicalized curvature-sign agreement. These are a fixed local screen, not proof that an extended corridor exists.
+
+The near-straight matching-jitter control is expected to expose a known screen limit: because the frozen curvature floor is numeric rather than body-scaled, sufficiently consistent tiny wiggles can pass the candidate gates. If it does, record it as a candidate false positive and retain its turn and chord-deviation values. Do not retune the gates against that control or against the natural trajectories. No composite score, learned mode, or aesthetic minimum is defined.
+
+## Deterministic controls and analysis sequence
+
+The pre-analysis tests cover: offset straight parallel paths; a matched near-straight numerical-jitter false positive; reused arcs including reverse traversal and a gentle radius-`0.25` arc; independent crossing paths; independent deterministic zigzags; same-ant replay; simultaneous distinct-ant routelets; malformed/duplicate samples; and missing samples. Repeated arcs check the one-second local screen only and do not serve as evidence of a long shared corridor.
+
+After recording this protocol and passing its deterministic tests, freeze the analysis code and inspect the eight saved cases. Report, per case/window and scale, routelet count, eligible comparison count, candidate-pair count, distinct contributing ants, distinct unordered ant pairs, routelet-pair recurrence counts, and descriptive temporal-gap / recurrence-gap distributions. Keep 600 s seeds separate. For the long runs, report each of the six bounded case-windows separately. Candidate examples are selected deterministically by earliest start times and unique unordered ant pairs; detailed geometry remains available for those representatives. Do not persist the full comparison-pair arrays when exact source hashes, algorithm revision, and aggregate counts suffice for reproduction.
+
+## Interpretation limits
+
+A positive candidate count supports only repeated geometric use of similar one-second curved routelets by distinct ants in the saved data under these fixed measurements. It does not show route recognition, pheromone causation, long-term corridor memory, or an ellipse/milling formation. A negative count remains limited by one-second segmentation, 10 Hz observation, the fixed spatial scales, numerical curvature floor, and one-second temporal exclusion. The protocol uses candidates and continuous geometry rather than aesthetic judgments.

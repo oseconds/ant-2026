@@ -1,0 +1,131 @@
+{
+  "schema": "ant-natural-field-transfer-analysis-receipts/v1",
+  "matrixManifest": {
+    "path": "docs/ant/evidence/2026-10-23-natural-field-transfer/capture/matrix-20261023/matrix-manifest.json",
+    "sha256": "8ea739584be0425ba9e2d166a4af04b4a84d4d3ccb6228ef6745026ad9a4ade3"
+  },
+  "analyzer": {
+    "path": "scripts/ant-transfer-analysis.js",
+    "sha256": "1016912b578e21fbfaf452502682441a580f9fbe4e7b60a45f57cb1265608445"
+  },
+  "tests": {
+    "path": "tests/ant-transfer-analysis.test.js",
+    "sha256": "5a100eff36c5e88995f03d36a39f31b8dc0a7d383f87fdb24b6b1dbce1ceb371",
+    "passingCount": 8
+  },
+  "result": {
+    "compressed": {
+      "path": "results.json.gz",
+      "format": "gzip",
+      "bytes": 2666656,
+      "sha256": "998bf684aba12db804a9afb8d460a8fe7fc934d271b42e2eb0d360a1baa158a8"
+    },
+    "uncompressed": {
+      "logicalName": "results.json",
+      "bytes": 47355697,
+      "sha256": "79e1d43fcc1dc4c1c5a6191d9d820f742ab21513e518894d082d1e99d46ba42e"
+    },
+    "roundTripByteEqual": true
+  },
+  "report": {
+    "path": "REPORT.md",
+    "bytes": 16974,
+    "sha256": "9a16b316e4c0656c10e1c5accc65d93b317263a67253dd2f4d28d09b32cc2ad9"
+  },
+  "marginals": {
+    "path": "marginal-summaries.csv",
+    "bytes": 705894,
+    "sha256": "6f5c524a0eefa288eaa22d5a631052b456c866577c4945db8e1e034e5ab123ce"
+  },
+  "verification": {
+    "sourceCopies": 14,
+    "generatedControllerCopies": 6,
+    "stateReceipts": 66,
+    "historyStreams": 6,
+    "fieldCheckpoints": 66,
+    "validFrozenWorldStates": 66,
+    "invalidFrozenWorldStates": 0,
+    "completeThreeArmAntObservations": 1255,
+    "antObservations": 1255
+  },
+  "command": "node scripts/ant-transfer-analysis.js",
+  "readme": {
+    "path": "analysis/README.md",
+    "bytes": 5456,
+    "sha256": "d57c4b9dcc1ba8378f41cb5a118f90d766ebd9b849c20b7a0085ec1cdd910bee"
+  },
+  "historyStreams": {
+    "verifiedIndependently": true,
+    "method": "Direct replay of ordered decay/deposit events against each initialized PheromoneField matched all frozen-state reconstruction hashes.",
+    "count": 6,
+    "matchedFieldCheckpoints": 66,
+    "streams": [
+      {
+        "originPolicy": "production",
+        "seed": 20261005,
+        "path": "capture/matrix-20261023/histories/production-seed-20261005-write-stream.json.gz",
+        "sha256": "2f42749f923b54cbd3f0ea3982e268a98f1af1aed40d709892d79d26dace7f58",
+        "compressedBytes": 4725732,
+        "eventCount": 141493,
+        "captureChecks": 11,
+        "throughTick": 36000,
+        "checkpointHashesMatchStateReceipts": true
+      },
+      {
+        "originPolicy": "production",
+        "seed": 20261006,
+        "path": "capture/matrix-20261023/histories/production-seed-20261006-write-stream.json.gz",
+        "sha256": "edf08215f9579c214b2f1d46f4391e7cd74320efd027f347235ca40afa071005",
+        "compressedBytes": 4647778,
+        "eventCount": 139572,
+        "captureChecks": 11,
+        "throughTick": 36000,
+        "checkpointHashesMatchStateReceipts": true
+      },
+      {
+        "originPolicy": "production",
+        "seed": 20261007,
+        "path": "capture/matrix-20261023/histories/production-seed-20261007-write-stream.json.gz",
+        "sha256": "584615c7a911e4bc48f35d609702175339d4b0ae64f71264fe2c4e0f80d9ccd5",
+        "compressedBytes": 4627764,
+        "eventCount": 139204,
+        "captureChecks": 11,
+        "throughTick": 36000,
+        "checkpointHashesMatchStateReceipts": true
+      },
+      {
+        "originPolicy": "dtFeedback",
+        "seed": 20261005,
+        "path": "capture/matrix-20261023/histories/dtFeedback-seed-20261005-write-stream.json.gz",
+        "sha256": "f3fddbe403514db4d7dafdaa0cff42719ca3cf87cdbdfb11ae1f7228d19aa7a1",
+        "compressedBytes": 4802849,
+        "eventCount": 143749,
+        "captureChecks": 11,
+        "throughTick": 36000,
+        "checkpointHashesMatchStateReceipts": true
+      },
+      {
+        "originPolicy": "dtFeedback",
+        "seed": 20261006,
+        "path": "capture/matrix-20261023/histories/dtFeedback-seed-20261006-write-stream.json.gz",
+        "sha256": "892e22705801688ed5fbd2b3840f2e4ef2639c31bbb26c30dcb6b83c40b1a413",
+        "compressedBytes": 4629417,
+        "eventCount": 139276,
+        "captureChecks": 11,
+        "throughTick": 36000,
+        "checkpointHashesMatchStateReceipts": true
+      },
+      {
+        "originPolicy": "dtFeedback",
+        "seed": 20261007,
+        "path": "capture/matrix-20261023/histories/dtFeedback-seed-20261007-write-stream.json.gz",
+        "sha256": "7f637540242c8b51bdf69d9764c9d9235a999842f5162a1dec7c7d765b67cbc0",
+        "compressedBytes": 4864829,
+        "eventCount": 145445,
+        "captureChecks": 11,
+        "throughTick": 36000,
+        "checkpointHashesMatchStateReceipts": true
+      }
+    ]
+  }
+}

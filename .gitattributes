@@ -1,6 +1,15 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
+# Preserve byte-hashed natural field-transfer tooling and captures.
+scripts/ant-transfer-* -text
+tests/ant-transfer-* -text
+scripts/ant-spatial-*.js -text
+scripts/ant-route-curvature-*.js -text
+scripts/ant-recruitment-descriptors.js -text
+tests/ant-route-curvature-*.test.js -text
+docs/ant/evidence/2026-10-23-natural-field-transfer/** -text
+
 # Keep this run's source and byte-hashed evidence stable across Windows worktrees.
 scripts/ant-natural-nodule-opportunity.js text eol=lf
 tests/ant-natural-nodule-opportunity.test.js text eol=lf
