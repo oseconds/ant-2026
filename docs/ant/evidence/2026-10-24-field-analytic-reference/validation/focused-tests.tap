@@ -1,0 +1,384 @@
+=== tests/ant-field-analytic-reference.test.js ===
+TAP version 13
+# Subtest: continuous line-dose reference has the defined compact Gaussian support and straight symmetry
+ok 1 - continuous line-dose reference has the defined compact Gaussian support and straight symmetry
+  ---
+  duration_ms: 2.9631
+  type: 'test'
+  ...
+# Subtest: continuous reference preserves the established gentle-curve mirror transform
+ok 2 - continuous reference preserves the established gentle-curve mirror transform
+  ---
+  duration_ms: 0.6445
+  type: 'test'
+  ...
+# Subtest: all four phase arms use the same local and wide query geometry up to the declared translation
+ok 3 - all four phase arms use the same local and wide query geometry up to the declared translation
+  ---
+  duration_ms: 0.8867
+  type: 'test'
+  ...
+# Subtest: research local and wide sensor operations reproduce current AntController aggregation
+ok 4 - research local and wide sensor operations reproduce current AntController aggregation
+  ---
+  duration_ms: 0.4833
+  type: 'test'
+  ...
+# Subtest: frozen queries match production coordinates and consume no RNG
+ok 5 - frozen queries match production coordinates and consume no RNG
+  ---
+  duration_ms: 3.0222
+  type: 'test'
+  ...
+# Subtest: wide winner diagnostics distinguish exact analytic ties from unique winners
+ok 6 - wide winner diagnostics distinguish exact analytic ties from unique winners
+  ---
+  duration_ms: 0.2194
+  type: 'test'
+  ...
+# Subtest: production default dab fixture replays to exact Float32 state and conserves uncapped route dose
+ok 7 - production default dab fixture replays to exact Float32 state and conserves uncapped route dose
+  ---
+  duration_ms: 6.2648
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 20.142
+=== tests/pheromone-field.test.js ===
+TAP version 13
+# Subtest: stationary agents deposit no signal while traveled distance deposits finite field mass
+ok 1 - stationary agents deposit no signal while traveled distance deposits finite field mass
+  ---
+  duration_ms: 2.2515
+  type: 'test'
+  ...
+# Subtest: segment deposition is approximately stable under path subdivision
+ok 2 - segment deposition is approximately stable under path subdivision
+  ---
+  duration_ms: 2.4323
+  type: 'test'
+  ...
+# Subtest: exponential decay honors half-life and composes over elapsed time
+ok 3 - exponential decay honors half-life and composes over elapsed time
+  ---
+  duration_ms: 0.3356
+  type: 'test'
+  ...
+# Subtest: reinforcement is bounded and snapshots do not expose live field storage
+ok 4 - reinforcement is bounded and snapshots do not expose live field storage
+  ---
+  duration_ms: 1.465
+  type: 'test'
+  ...
+# Subtest: sampling returns no signal outside the observed square and preserves valid edge samples
+ok 5 - sampling returns no signal outside the observed square and preserves valid edge samples
+  ---
+  duration_ms: 0.4225
+  type: 'test'
+  ...
+# Subtest: segments outside the field leave no edge trail while crossing travel deposits only the in-domain length
+ok 6 - segments outside the field leave no edge trail while crossing travel deposits only the in-domain length
+  ---
+  duration_ms: 0.2697
+  type: 'test'
+  ...
+# Subtest: point deposition preserves a fixed amount with the existing brush and ignores outside points
+ok 7 - point deposition preserves a fixed amount with the existing brush and ignores outside points
+  ---
+  duration_ms: 0.6476
+  type: 'test'
+  ...
+# Subtest: default half-life is fifteen seconds and abandoned traces retain one sixteenth after one minute
+ok 8 - default half-life is fifteen seconds and abandoned traces retain one sixteenth after one minute
+  ---
+  duration_ms: 1.8278
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 15.7972
+=== tests/ant-trail-following.test.js ===
+TAP version 13
+# Subtest: short-range sensing gives mirrored, continuous centering corrections without changing the field
+ok 1 - short-range sensing gives mirrored, continuous centering corrections without changing the field
+  ---
+  duration_ms: 5.0732
+  type: 'test'
+  ...
+# Subtest: trail adherence rises on a coherent trail and fades gradually through a temporary gap
+ok 2 - trail adherence rises on a coherent trail and fades gradually through a temporary gap
+  ---
+  duration_ms: 1.2137
+  type: 'test'
+  ...
+# Subtest: uniform pheromone is ambiguous and does not build trail adherence
+ok 3 - uniform pheromone is ambiguous and does not build trail adherence
+  ---
+  duration_ms: 1.0633
+  type: 'test'
+  ...
+# Subtest: an isolated strong point does not become a route-following target
+ok 4 - an isolated strong point does not become a route-following target
+  ---
+  duration_ms: 1.0306
+  type: 'test'
+  ...
+# Subtest: local adherence senses continue updating during a committed movement interval
+ok 5 - local adherence senses continue updating during a committed movement interval
+  ---
+  duration_ms: 8.3108
+  type: 'test'
+  ...
+# Subtest: an ant stays near a narrow straight trail over several seconds with smooth finite motion
+ok 6 - an ant stays near a narrow straight trail over several seconds with smooth finite motion
+  ---
+  duration_ms: 30.8811
+  type: 'test'
+  ...
+# Subtest: high adherence reduces exploration while leaving occasional stochastic departures
+ok 7 - high adherence reduces exploration while leaving occasional stochastic departures
+  ---
+  duration_ms: 5.6319
+  type: 'test'
+  ...
+# Subtest: adherence response is bounded and independent of update step size
+ok 8 - adherence response is bounded and independent of update step size
+  ---
+  duration_ms: 1.2436
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 60.4712
+=== tests/ant-controller.test.js ===
+TAP version 13
+# Subtest: population has equal agents with stable individual personalities and shared pheromone memory
+ok 1 - population has equal agents with stable individual personalities and shared pheromone memory
+  ---
+  duration_ms: 354.125
+  type: 'test'
+  ...
+# Subtest: ants enter one at a time from a common region with irregular delays and distinct headings
+ok 2 - ants enter one at a time from a common region with irregular delays and distinct headings
+  ---
+  duration_ms: 105.3127
+  type: 'test'
+  ...
+# Subtest: occupied spawn space delays entry without allocating an overlapping agent or skipping an ID
+ok 3 - occupied spawn space delays entry without allocating an overlapping agent or skipping an ID
+  ---
+  duration_ms: 1.352
+  type: 'test'
+  ...
+# Subtest: changing the target preserves shared history and introduces additional ants gradually
+ok 4 - changing the target preserves shared history and introduces additional ants gradually
+  ---
+  duration_ms: 118.044
+  type: 'test'
+  ...
+# Subtest: swept occupancy guard prevents direct pass-through in head-on and crossing encounters
+ok 5 - swept occupancy guard prevents direct pass-through in head-on and crossing encounters
+  ---
+  duration_ms: 0.5897
+  type: 'test'
+  ...
+# Subtest: local occupancy reads front and sides more strongly than the rear
+ok 6 - local occupancy reads front and sides more strongly than the rear
+  ---
+  duration_ms: 0.2471
+  type: 'test'
+  ...
+# Subtest: probabilistic trail choice increases attraction while exploration can still choose away
+ok 7 - probabilistic trail choice increases attraction while exploration can still choose away
+  ---
+  duration_ms: 2.7349
+  type: 'test'
+  ...
+# Subtest: long runs across seeds remain finite, spread out, and collision stable
+ok 8 - long runs across seeds remain finite, spread out, and collision stable
+  ---
+  duration_ms: 788.2243
+  type: 'test'
+  ...
+# Subtest: a dense equal-agent cluster disperses without body overlap or unstable velocity
+ok 9 - a dense equal-agent cluster disperses without body overlap or unstable velocity
+  ---
+  duration_ms: 540.2523
+  type: 'test'
+  ...
+# Subtest: near-boundary body collisions still prevent overlap
+ok 10 - near-boundary body collisions still prevent overlap
+  ---
+  duration_ms: 1.2114
+  type: 'test'
+  ...
+# Subtest: fixed-step controller is deterministic across equivalent frame schedules
+ok 11 - fixed-step controller is deterministic across equivalent frame schedules
+  ---
+  duration_ms: 9.6985
+  type: 'test'
+  ...
+# Subtest: stop and destroy halt simulation and detach listeners
+ok 12 - stop and destroy halt simulation and detach listeners
+  ---
+  duration_ms: 0.9825
+  type: 'test'
+  ...
+# Subtest: an isolated ant has repeated near-stops after warmup and resumes forward movement
+ok 13 - an isolated ant has repeated near-stops after warmup and resumes forward movement
+  ---
+  duration_ms: 294.9378
+  type: 'test'
+  ...
+# Subtest: approaching bodies brake smoothly before a head-on contact
+ok 14 - approaching bodies brake smoothly before a head-on contact
+  ---
+  duration_ms: 19.0535
+  type: 'test'
+  ...
+# Subtest: agents use bounded turn rate and exponential velocity response
+ok 15 - agents use bounded turn rate and exponential velocity response
+  ---
+  duration_ms: 0.1508
+  type: 'test'
+  ...
+# Subtest: long-range discovery ignores weak residue and favors reinforced trails probabilistically
+ok 16 - long-range discovery ignores weak residue and favors reinforced trails probabilistically
+  ---
+  duration_ms: 19.9245
+  type: 'test'
+  ...
+# Subtest: a wide sensor discovers a thin adjacent trail without broadening the pheromone field
+ok 17 - a wide sensor discovers a thin adjacent trail without broadening the pheromone field
+  ---
+  duration_ms: 0.4061
+  type: 'test'
+  ...
+# Subtest: distance deposition keeps convex adherence reinforcement above the evidence baseline
+ok 18 - distance deposition keeps convex adherence reinforcement above the evidence baseline
+  ---
+  duration_ms: 5.5834
+  type: 'test'
+  ...
+# Subtest: far pheromone concentration does not add to deposition at fixed local evidence
+ok 19 - far pheromone concentration does not add to deposition at fixed local evidence
+  ---
+  duration_ms: 0.8827
+  type: 'test'
+  ...
+# Subtest: configured base amount and bounded reinforcement gain scale real deposits
+ok 20 - configured base amount and bounded reinforcement gain scale real deposits
+  ---
+  duration_ms: 1.5975
+  type: 'test'
+  ...
+# Subtest: a stationary ant adds no pheromone despite the nonzero deposition baseline
+ok 21 - a stationary ant adds no pheromone despite the nonzero deposition baseline
+  ---
+  duration_ms: 0.8133
+  type: 'test'
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2276.8574
+=== tests/ant-gaster-deposition.test.js ===
+TAP version 13
+# Subtest: continuous mode preserves thorax-distance dose when the gaster point travels a different distance
+ok 1 - continuous mode preserves thorax-distance dose when the gaster point travels a different distance
+  ---
+  duration_ms: 0.9658
+  type: 'test'
+  ...
+# Subtest: dab thresholds follow traveled distance, ignore pure gaster rotation, and interpolate the rear point
+ok 2 - dab thresholds follow traveled distance, ignore pure gaster rotation, and interpolate the rear point
+  ---
+  duration_ms: 0.2325
+  type: 'test'
+  ...
+# Subtest: large movement emits every crossed dab boundary and retirement flushes the final partial dose
+ok 3 - large movement emits every crossed dab boundary and retirement flushes the final partial dose
+  ---
+  duration_ms: 0.1922
+  type: 'test'
+  ...
+# Subtest: pathological dab bursts are bounded while their weighted amount is conserved
+ok 4 - pathological dab bursts are bounded while their weighted amount is conserved
+  ---
+  duration_ms: 0.2303
+  type: 'test'
+  ...
+# Subtest: continuous and dab modes preserve adherence-weighted dose across different movement subdivisions
+ok 5 - continuous and dab modes preserve adherence-weighted dose across different movement subdivisions
+  ---
+  duration_ms: 3.7511
+  type: 'test'
+  ...
+# Subtest: dab remainder is flushed and cleared on retirement; retain and reset release transient state
+ok 6 - dab remainder is flushed and cleared on retirement; retain and reset release transient state
+  ---
+  duration_ms: 0.1859
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 11.4261
+=== tests/ant-gaster-integration.test.js ===
+TAP version 13
+# Subtest: controller deposits continuous dose between pose-specific rear endpoints using existing LCR samples
+ok 1 - controller deposits continuous dose between pose-specific rear endpoints using existing LCR samples
+  ---
+  duration_ms: 10.6491
+  type: 'test'
+  ...
+# Subtest: zero thorax travel and rotation create no gaster dose; retiring an ant flushes dab remainder and clears its state
+ok 2 - zero thorax travel and rotation create no gaster dose; retiring an ant flushes dab remainder and clears its state
+  ---
+  duration_ms: 4.1966
+  type: 'test'
+  ...
+# Subtest: same pose preserves traveled-distance quantity for continuous deposition
+ok 3 - same pose preserves traveled-distance quantity for continuous deposition
+  ---
+  duration_ms: 1.9151
+  type: 'test'
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 3
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 22.5309

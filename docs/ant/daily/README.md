@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-24 — Pheromone field analytic-reference attribution
+
+[Process log](./2026-10-24-field-analytic-reference.md) · [Evidence package](../evidence/2026-10-24-field-analytic-reference/README.md)
+
+- Compared six fixed physical routes across four subcell phases against a dose-mapped compact-Gaussian continuous reference; production source remained unchanged
+- Located first error in the stored Float32 raster; bilinear reconstruction adds a larger pooled raw-read component, and local/wide sensors turn representation differences into steering and unique-winner changes
+- The straight phase artifact is explained by a half-cell nearest-node fallback alias; mirrored curves remain symmetric and the S fixture includes analytic no-direction intervals
+- Decision: **MIXED**; no field candidate or free-running movement pass
+
 ### 2026-10-18 — Plate audio reassessment and live dense-mix plan
 
 [Process / next-pass plan](./2026-10-18-plate-audio-review-and-live-density-plan.md)
