@@ -1,0 +1,127 @@
+{
+  "schema": "ant-field-writer-reader-validation-manifest/v1",
+  "mainSha": "8c60e4bba3bd5b476300e90a2936bfebd1f831c2",
+  "branch": "codex/ant-field-writer-reader-failure-attribution-20261024",
+  "reused": {
+    "sensorIsolation": "e0340d21196438ea56cadd178b81b2d8064755e6",
+    "analyticReference": "2f00c300a9b8dc7a34d9efa5fd49cf92f024d9aa"
+  },
+  "inputSha256": "50547f963041e1505e1caf1bed3da27bbe36d84b0d5f26266313e60e8e573d29",
+  "uncompressedRowsSha256": "bdab38fd13ccb8bae6689cdb7af134c52265969849d4cbfdd5c528677628e13d",
+  "sourceHashes": {
+    "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+    "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+    "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41"
+  },
+  "BRecovery": {
+    "localPairs": 99792,
+    "widePairs": 138600,
+    "bMinusAReaderNonExact": 0,
+    "cMinusBWriterNonExact": 67807,
+    "totalNonExact": 0,
+    "maxBMinusAReader": 0,
+    "maxCMinusBWriter": 2.7755575615628914e-17,
+    "maxCMinusATotal": 0,
+    "maxDecompositionResidual": 2.7755575615628914e-17
+  },
+  "precisionSensitivity": {
+    "localRows": 5544,
+    "localSignChanges": 0,
+    "maxLocalRawDifference": 2.7755575615628914e-17,
+    "maxLocalSteeringDifference": 9.71445146547012e-17,
+    "wideRows": 5544,
+    "maxWideRawDifference": 2.7755575615628914e-17,
+    "rawWinnerChanges": 0,
+    "rawRankChanges": 0,
+    "weightedWinnerChanges": 0,
+    "weightedRankChanges": 0,
+    "finalWinnerChanges": 0,
+    "finalRankChanges": 0
+  },
+  "replayParity": {
+    "local": {
+      "comparisons": 77616,
+      "nonExact": 0,
+      "maxAbsError": 0
+    },
+    "wide": {
+      "comparisons": 166320,
+      "nonExact": 0,
+      "maxAbsError": 0
+    },
+    "weightedSamples": {
+      "comparisons": 277200,
+      "nonExact": 0
+    },
+    "candidateRanks": {
+      "comparisons": 55440,
+      "nonExact": 0
+    },
+    "finalWinners": {
+      "comparisons": 11088,
+      "nonExact": 0
+    }
+  },
+  "focusedTestTotal": {
+    "tests": 53,
+    "passed": 53,
+    "failed": 0
+  },
+  "testLogs": [
+    {
+      "file": "ant-controller.tap",
+      "tests": 21,
+      "passed": 21,
+      "failed": 0,
+      "sha256": "ad7e7b3cd52a4e8b0a165d164788dfd1a94d69ab17f73554d069fa76168fb86d"
+    },
+    {
+      "file": "ant-gaster-deposition.tap",
+      "tests": 6,
+      "passed": 6,
+      "failed": 0,
+      "sha256": "b09c2542d48d34e4b9cf75290da102c4f95a0514d24829325a10d0c72f113bff"
+    },
+    {
+      "file": "ant-gaster-integration.tap",
+      "tests": 3,
+      "passed": 3,
+      "failed": 0,
+      "sha256": "c0ab3841240391aefe19c6fff664de7f9e2e1dab60685cbcc68eb6e4e4a22c9d"
+    },
+    {
+      "file": "ant-trail-following.tap",
+      "tests": 8,
+      "passed": 8,
+      "failed": 0,
+      "sha256": "a7cbf9e543fb8b9b7daf070e5eb1a72232ec366df87a131a235e2e138e4aed68"
+    },
+    {
+      "file": "new-attribution.tap",
+      "tests": 7,
+      "passed": 7,
+      "failed": 0,
+      "sha256": "83c768513fffceeedcc8c354bbb42519e842d4ccdf69ac0408e8dcb90f23c1e0"
+    },
+    {
+      "file": "pheromone-field.tap",
+      "tests": 8,
+      "passed": 8,
+      "failed": 0,
+      "sha256": "a225edfd79cf0af4ffa94885f900d99b5af795831e0b697a790de7b15164a414"
+    }
+  ],
+  "files": {
+    "docs/ant/evidence/2026-10-24-ant-field-writer-reader-failure-attribution/inputs/station-raw.json.gz": "50547f963041e1505e1caf1bed3da27bbe36d84b0d5f26266313e60e8e573d29",
+    "docs/ant/evidence/2026-10-24-ant-field-writer-reader-failure-attribution/computed/abcs-attribution.json": "d8602ec7c40a53c5064c524be17693e5ed2d35fb24bae420d3c18d3d00b08217",
+    "docs/ant/evidence/2026-10-24-ant-field-writer-reader-failure-attribution/computed/abcs-stage-rows.json.gz": "a456a10a49445dbd54cd760ad7b371ffbdead6579777d2b05f89b0ddadd5678b",
+    "docs/ant/evidence/2026-10-24-ant-field-writer-reader-failure-attribution/validation/determinism.json": "fa3b9e9955f5c32589e7ff3e7bab72c1c80cd1492e0577fcd12156d3bfdec11f",
+    "scripts/ant-field-writer-reader-failure-attribution.js": "72c020cb2abb8dd42a6c56fa277ff9ef4bcbff26c949f45c994c001998779864",
+    "tests/ant-field-writer-reader-failure-attribution.test.js": "1409606878345849fe673998e7a558c7239dade32ceb45dbcd022dddc024287e",
+    "docs/ant/evidence/2026-10-24-ant-field-writer-reader-failure-attribution/README.md": "d8779736a508ebab09c85fe15e6109da0edc2feb7037d5ca6e78bd767294d2ee",
+    "docs/ant/daily/2026-10-24-ant-field-writer-reader-failure-attribution.md": "21865587e0ef3778b094545d59a32b9164d52325c8a9a5ae1d95c22bdc9c7c8e",
+    "docs/ant/daily/README.md": "0fcf0fe908fe776c2fc3909235ec5f4a8690ae5fd0c9f8954694834b7f32cdea",
+    ".gitattributes": "bb4a2203bde99a2280c12a28fff6d851d0ea6184fe234882f5421df1d17e4768"
+  },
+  "fullBuild": "not run; production src unchanged"
+}

@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-24 — Pheromone writer / reader failure attribution
+
+[Process log](./2026-10-24-ant-field-writer-reader-failure-attribution.md) · [Evidence package](../evidence/2026-10-24-ant-field-writer-reader-failure-attribution/README.md)
+
+- Reused the hash-verified analytic and sensor cohorts; A/B/C replay had zero non-exact A/C sensor outputs
+- Reader/reconstruction was sufficient for most targeted failures, while writer/storage accounted for a substantial minority and restored 598 wide winners
+- No alternative was tested; next smallest test is one reader-only frozen counterfactual with production raster values held fixed
+
 ### 2026-10-18 — Plate audio reassessment and live dense-mix plan
 
 [Process / next-pass plan](./2026-10-18-plate-audio-review-and-live-density-plan.md)

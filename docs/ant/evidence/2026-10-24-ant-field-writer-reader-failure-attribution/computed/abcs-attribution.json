@@ -1,0 +1,2471 @@
+{
+  "schema": "ant-field-writer-reader-failure-attribution/v1",
+  "provenance": {
+    "mainSha": "8c60e4bba3bd5b476300e90a2936bfebd1f831c2",
+    "sensorIsolationCommit": "e0340d21196438ea56cadd178b81b2d8064755e6",
+    "analyticReferenceCommit": "2f00c300a9b8dc7a34d9efa5fd49cf92f024d9aa",
+    "inputSha256": "50547f963041e1505e1caf1bed3da27bbe36d84b0d5f26266313e60e8e573d29",
+    "uncompressedRowsSha256": "bdab38fd13ccb8bae6689cdb7af134c52265969849d4cbfdd5c528677628e13d",
+    "sourceHashes": {
+      "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+      "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+      "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41"
+    },
+    "armDefinitions": {
+      "A": "saved continuous analytic query samples",
+      "B": "A plus the frozen per-sample analytic-node bilinear residual; recovers analytic node samples through the production bilinear path",
+      "C": "saved production Float32 raster query samples"
+    },
+    "BRecovery": {
+      "localPairs": 99792,
+      "widePairs": 138600,
+      "bMinusAReaderNonExact": 0,
+      "cMinusBWriterNonExact": 67807,
+      "totalNonExact": 0,
+      "maxBMinusAReader": 0,
+      "maxCMinusBWriter": 2.7755575615628914e-17,
+      "maxCMinusATotal": 0,
+      "maxDecompositionResidual": 2.7755575615628914e-17
+    },
+    "precisionSensitivityBetweenAPlusC2AndCMinusC1": {
+      "localRows": 5544,
+      "localSignChanges": 0,
+      "maxLocalRawDifference": 2.7755575615628914e-17,
+      "maxLocalSteeringDifference": 9.71445146547012e-17,
+      "wideRows": 5544,
+      "maxWideRawDifference": 2.7755575615628914e-17,
+      "rawWinnerChanges": 0,
+      "rawRankChanges": 0,
+      "weightedWinnerChanges": 0,
+      "weightedRankChanges": 0,
+      "finalWinnerChanges": 0,
+      "finalRankChanges": 0
+    },
+    "frozenRows": 5544,
+    "shapes": [
+      "straight",
+      "gentle",
+      "tight",
+      "gentleMirror",
+      "tightMirror",
+      "sCurve"
+    ],
+    "phases": [
+      "p00",
+      "p10",
+      "p01",
+      "p11"
+    ],
+    "stationsPerShapePhase": 231,
+    "bRepresentationLimitation": "The frozen row artifact stores C2 residuals rather than raw analytic node arrays; B is reconstructed by A + C2. Round-trip Float64 residuals are measured below; routes and analytic samples were not regenerated.",
+    "rowsSha256": "a456a10a49445dbd54cd760ad7b371ffbdead6579777d2b05f89b0ddadd5678b"
+  },
+  "replayParity": {
+    "local": {
+      "comparisons": 77616,
+      "nonExact": 0,
+      "maxAbsError": 0
+    },
+    "wide": {
+      "comparisons": 166320,
+      "nonExact": 0,
+      "maxAbsError": 0
+    },
+    "weightedSamples": {
+      "comparisons": 277200,
+      "nonExact": 0
+    },
+    "candidateRanks": {
+      "comparisons": 55440,
+      "nonExact": 0
+    },
+    "finalWinners": {
+      "comparisons": 11088,
+      "nonExact": 0
+    }
+  },
+  "local": {
+    "stableSignFailures": {
+      "count": 546,
+      "classes": {
+        "READER-SUFFICIENT": 335,
+        "WRITER/STORAGE-SUFFICIENT": 211,
+        "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+        "MIXED / COMPOUND": 0,
+        "B TOP TIE / AMBIGUOUS": 0
+      },
+      "byPhase": {
+        "p00": {
+          "count": 107,
+          "classes": {
+            "READER-SUFFICIENT": 40,
+            "WRITER/STORAGE-SUFFICIENT": 67,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 0
+          }
+        },
+        "p01": {
+          "count": 191,
+          "classes": {
+            "READER-SUFFICIENT": 138,
+            "WRITER/STORAGE-SUFFICIENT": 53,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 0
+          }
+        },
+        "p10": {
+          "count": 77,
+          "classes": {
+            "READER-SUFFICIENT": 30,
+            "WRITER/STORAGE-SUFFICIENT": 47,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 0
+          }
+        },
+        "p11": {
+          "count": 171,
+          "classes": {
+            "READER-SUFFICIENT": 127,
+            "WRITER/STORAGE-SUFFICIENT": 44,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 0
+          }
+        }
+      },
+      "byShape": {
+        "gentle": {
+          "count": 150,
+          "classes": {
+            "READER-SUFFICIENT": 71,
+            "WRITER/STORAGE-SUFFICIENT": 79,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 0
+          }
+        },
+        "gentleMirror": {
+          "count": 150,
+          "classes": {
+            "READER-SUFFICIENT": 71,
+            "WRITER/STORAGE-SUFFICIENT": 79,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 0
+          }
+        },
+        "sCurve": {
+          "count": 170,
+          "classes": {
+            "READER-SUFFICIENT": 149,
+            "WRITER/STORAGE-SUFFICIENT": 21,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 0
+          }
+        },
+        "tight": {
+          "count": 38,
+          "classes": {
+            "READER-SUFFICIENT": 22,
+            "WRITER/STORAGE-SUFFICIENT": 16,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 0
+          }
+        },
+        "tightMirror": {
+          "count": 38,
+          "classes": {
+            "READER-SUFFICIENT": 22,
+            "WRITER/STORAGE-SUFFICIENT": 16,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 0
+          }
+        }
+      },
+      "analyticCueMagnitude": {
+        "count": 546,
+        "signedMean": 0.017864582466862133,
+        "mae": 0.017864582466862133,
+        "rms": 0.027317011690277827,
+        "min": 0.001121536970904803,
+        "p50": 0.004424535647652071,
+        "p90": 0.06478671569989523,
+        "p95": 0.06478671569989643,
+        "p99": 0.06478671569989784,
+        "max": 0.06478671569989898,
+        "maxAbs": 0.06478671569989898
+      },
+      "marginByClass": {
+        "READER-SUFFICIENT": {
+          "count": 335,
+          "signedMean": 0.020086305688764,
+          "mae": 0.020086305688764,
+          "rms": 0.02815866588981147,
+          "min": 0.001121536970904803,
+          "p50": 0.01582976781645269,
+          "p90": 0.06478671569989539,
+          "p95": 0.06478671569989651,
+          "p99": 0.06478671569989725,
+          "max": 0.06478671569989898,
+          "maxAbs": 0.06478671569989898
+        },
+        "WRITER/STORAGE-SUFFICIENT": {
+          "count": 211,
+          "signedMean": 0.014337201996070104,
+          "mae": 0.014337201996070104,
+          "rms": 0.025924666477398564,
+          "min": 0.0020124778647255845,
+          "p50": 0.0044245356476505975,
+          "p90": 0.06478671569989486,
+          "p95": 0.06478671569989579,
+          "p99": 0.064786715699898,
+          "max": 0.06478671569989881,
+          "maxAbs": 0.06478671569989881
+        }
+      }
+    },
+    "nearZeroCases": {
+      "count": 3,
+      "rows": [
+        {
+          "shape": "gentle",
+          "phase": "p01",
+          "station": 0,
+          "steering": {
+            "A": 0.004424535647651096,
+            "B": -1.2984073396837753e-15,
+            "C": -1.170704280958132e-15
+          },
+          "sign": {
+            "A": 1,
+            "B": 0,
+            "C": 0
+          },
+          "class": "MIXED / COMPOUND",
+          "components": {
+            "readerSteering": -0.004424535647652395,
+            "writerSteering": 1.2770305872564325e-16,
+            "totalSteering": -0.004424535647652267,
+            "relationship": {
+              "direction": "opposing",
+              "writerReducesReaderError": true
+            }
+          }
+        },
+        {
+          "shape": "gentle",
+          "phase": "p11",
+          "station": 0,
+          "steering": {
+            "A": 0.004424535647651096,
+            "B": -1.2995441030397685e-15,
+            "C": -1.157964303674188e-15
+          },
+          "sign": {
+            "A": 1,
+            "B": 0,
+            "C": 0
+          },
+          "class": "MIXED / COMPOUND",
+          "components": {
+            "readerSteering": -0.0044245356476523955,
+            "writerSteering": 1.4157979936558057e-16,
+            "totalSteering": -0.004424535647652254,
+            "relationship": {
+              "direction": "opposing",
+              "writerReducesReaderError": true
+            }
+          }
+        },
+        {
+          "shape": "tight",
+          "phase": "p01",
+          "station": 0,
+          "steering": {
+            "A": 0.06478671569989614,
+            "B": -1.10168247907787e-15,
+            "C": -1.170704280958132e-15
+          },
+          "sign": {
+            "A": 1,
+            "B": 0,
+            "C": 0
+          },
+          "class": "MIXED / COMPOUND",
+          "components": {
+            "readerSteering": -0.06478671569989723,
+            "writerSteering": -6.902180188026196e-17,
+            "totalSteering": -0.0647867156998973,
+            "relationship": {
+              "direction": "reinforcing",
+              "writerReducesReaderError": false
+            }
+          }
+        }
+      ]
+    },
+    "exactSignMismatchCount": 549,
+    "controlRows": 4995,
+    "allAnalyticDirectionalRows": {
+      "count": 4012,
+      "classes": {
+        "READER-SUFFICIENT": 335,
+        "WRITER/STORAGE-SUFFICIENT": 211,
+        "READER-FAILURE PARTLY RESTORED BY WRITER": 125,
+        "MIXED / COMPOUND": 152,
+        "B TOP TIE / AMBIGUOUS": 0,
+        "NO QUALITATIVE FAILURE": 3189
+      },
+      "byPhase": {
+        "p00": {
+          "count": 1003,
+          "classes": {
+            "READER-SUFFICIENT": 40,
+            "WRITER/STORAGE-SUFFICIENT": 67,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 37,
+            "MIXED / COMPOUND": 74,
+            "B TOP TIE / AMBIGUOUS": 0,
+            "NO QUALITATIVE FAILURE": 785
+          }
+        },
+        "p01": {
+          "count": 1003,
+          "classes": {
+            "READER-SUFFICIENT": 138,
+            "WRITER/STORAGE-SUFFICIENT": 53,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 21,
+            "MIXED / COMPOUND": 4,
+            "B TOP TIE / AMBIGUOUS": 0,
+            "NO QUALITATIVE FAILURE": 787
+          }
+        },
+        "p10": {
+          "count": 1003,
+          "classes": {
+            "READER-SUFFICIENT": 30,
+            "WRITER/STORAGE-SUFFICIENT": 47,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 31,
+            "MIXED / COMPOUND": 72,
+            "B TOP TIE / AMBIGUOUS": 0,
+            "NO QUALITATIVE FAILURE": 823
+          }
+        },
+        "p11": {
+          "count": 1003,
+          "classes": {
+            "READER-SUFFICIENT": 127,
+            "WRITER/STORAGE-SUFFICIENT": 44,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 36,
+            "MIXED / COMPOUND": 2,
+            "B TOP TIE / AMBIGUOUS": 0,
+            "NO QUALITATIVE FAILURE": 794
+          }
+        }
+      },
+      "byShape": {
+        "gentle": {
+          "count": 868,
+          "classes": {
+            "READER-SUFFICIENT": 71,
+            "WRITER/STORAGE-SUFFICIENT": 79,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 45,
+            "MIXED / COMPOUND": 45,
+            "B TOP TIE / AMBIGUOUS": 0,
+            "NO QUALITATIVE FAILURE": 628
+          }
+        },
+        "gentleMirror": {
+          "count": 868,
+          "classes": {
+            "READER-SUFFICIENT": 71,
+            "WRITER/STORAGE-SUFFICIENT": 79,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 45,
+            "MIXED / COMPOUND": 45,
+            "B TOP TIE / AMBIGUOUS": 0,
+            "NO QUALITATIVE FAILURE": 628
+          }
+        },
+        "sCurve": {
+          "count": 532,
+          "classes": {
+            "READER-SUFFICIENT": 149,
+            "WRITER/STORAGE-SUFFICIENT": 21,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 21,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 0,
+            "NO QUALITATIVE FAILURE": 341
+          }
+        },
+        "tight": {
+          "count": 872,
+          "classes": {
+            "READER-SUFFICIENT": 22,
+            "WRITER/STORAGE-SUFFICIENT": 16,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 7,
+            "MIXED / COMPOUND": 31,
+            "B TOP TIE / AMBIGUOUS": 0,
+            "NO QUALITATIVE FAILURE": 796
+          }
+        },
+        "tightMirror": {
+          "count": 872,
+          "classes": {
+            "READER-SUFFICIENT": 22,
+            "WRITER/STORAGE-SUFFICIENT": 16,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 7,
+            "MIXED / COMPOUND": 31,
+            "B TOP TIE / AMBIGUOUS": 0,
+            "NO QUALITATIVE FAILURE": 796
+          }
+        }
+      }
+    },
+    "componentError": {
+      "rawSamples": {
+        "count": 99792,
+        "readerError": {
+          "count": 99792,
+          "signedMean": 0.0002237274220342827,
+          "mae": 0.017035574167625835,
+          "rms": 0.02693102864779605,
+          "min": -0.09759350730529459,
+          "p50": 0.0002384746099438808,
+          "p90": 0.03127822639898524,
+          "p95": 0.039491870184260175,
+          "p99": 0.04841115384157934,
+          "max": 0.05846630732843903,
+          "maxAbs": 0.09759350730529459
+        },
+        "writerError": {
+          "count": 99792,
+          "signedMean": -0.00023895784903242887,
+          "mae": 0.010255987170942199,
+          "rms": 0.015707035381704197,
+          "min": -0.07059350660494,
+          "p50": 0,
+          "p90": 0.01810883048898284,
+          "p95": 0.025815034272259833,
+          "p99": 0.04239000109955689,
+          "max": 0.0531924733270996,
+          "maxAbs": 0.07059350660494
+        },
+        "totalError": {
+          "count": 99792,
+          "signedMean": -0.000015230426998134333,
+          "mae": 0.017335539046672375,
+          "rms": 0.024917053484392805,
+          "min": -0.08409350695511729,
+          "p50": 0.003135802242971558,
+          "p90": 0.025011272564089755,
+          "p95": 0.03135435536209056,
+          "p99": 0.0444746759860272,
+          "max": 0.053938658190088834,
+          "maxAbs": 0.08409350695511729
+        },
+        "pairedDirection": {
+          "bothNonzero": 71419,
+          "opposing": 43330,
+          "reinforcing": 28089,
+          "eitherZero": 28373
+        },
+        "writerReducesReaderError": 40690,
+        "writerEnlargesReaderError": 59102
+      },
+      "steering": {
+        "count": 5544,
+        "readerError": {
+          "count": 5544,
+          "signedMean": 0.0011603518483859893,
+          "mae": 0.03647450762962889,
+          "rms": 0.050534186014634476,
+          "min": -0.1620968982547992,
+          "p50": 0,
+          "p90": 0.06445993093400172,
+          "p95": 0.0851230995408008,
+          "p99": 0.13658075791718866,
+          "max": 0.1620968982547993,
+          "maxAbs": 0.1620968982547993
+        },
+        "writerError": {
+          "count": 5544,
+          "signedMean": 0.016343236638721472,
+          "mae": 0.05310607787616624,
+          "rms": 0.08809093877365093,
+          "min": -0.3088085849031499,
+          "p50": 1.4991807380036466e-16,
+          "p90": 0.1764082183944226,
+          "p95": 0.21250264334189356,
+          "p99": 0.2593513560756858,
+          "max": 0.30880858490314794,
+          "maxAbs": 0.3088085849031499
+        },
+        "totalError": {
+          "count": 5544,
+          "signedMean": 0.017503588487107483,
+          "mae": 0.06505353958993083,
+          "rms": 0.09285825112385229,
+          "min": -0.2571220049445113,
+          "p50": 0,
+          "p90": 0.1725383192555584,
+          "p95": 0.20960736774933547,
+          "p99": 0.2229630978412928,
+          "max": 0.25712200494451465,
+          "maxAbs": 0.25712200494451465
+        },
+        "pairedDirection": {
+          "bothNonzero": 4860,
+          "opposing": 3097,
+          "reinforcing": 1763,
+          "eitherZero": 684
+        },
+        "writerReducesReaderError": 2449,
+        "writerEnlargesReaderError": 3095
+      },
+      "stableFailureSteering": {
+        "count": 546,
+        "readerError": {
+          "count": 546,
+          "signedMean": -0.004988938030659403,
+          "mae": 0.03831288932759482,
+          "rms": 0.04702135172130512,
+          "min": -0.10474764912868932,
+          "p50": -0.005857172880660417,
+          "p90": 0.06337534180677735,
+          "p95": 0.07783192164172494,
+          "p99": 0.09739041479461191,
+          "max": 0.10474764912868868,
+          "maxAbs": 0.10474764912868932
+        },
+        "writerError": {
+          "count": 546,
+          "signedMean": -0.0033425338871476535,
+          "mae": 0.034792862201301906,
+          "rms": 0.04368791840525495,
+          "min": -0.12200587074722269,
+          "p50": -0.004470808223435438,
+          "p90": 0.05065335670148381,
+          "p95": 0.06690362100446348,
+          "p99": 0.09925588181802786,
+          "max": 0.12200587074721839,
+          "maxAbs": 0.12200587074722269
+        },
+        "totalError": {
+          "count": 546,
+          "signedMean": -0.00833147191780707,
+          "mae": 0.05456227936999028,
+          "rms": 0.06510412481261121,
+          "min": -0.13766276032038688,
+          "p50": -0.010972821523772564,
+          "p90": 0.08661069050546934,
+          "p95": 0.1008050040192005,
+          "p99": 0.11879718980561703,
+          "max": 0.1319470112429264,
+          "maxAbs": 0.13766276032038688
+        },
+        "pairedDirection": {
+          "bothNonzero": 546,
+          "opposing": 212,
+          "reinforcing": 334,
+          "eitherZero": 0
+        },
+        "writerReducesReaderError": 146,
+        "writerEnlargesReaderError": 400
+      }
+    },
+    "straightControl": {
+      "analyticSteeringExactlyZero": true,
+      "phases": {
+        "p00": {
+          "A": {
+            "count": 231,
+            "signedMean": 0,
+            "mae": 0,
+            "rms": 0,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0,
+            "maxAbs": 0
+          },
+          "B": {
+            "count": 231,
+            "signedMean": 0,
+            "mae": 0,
+            "rms": 0,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0,
+            "maxAbs": 0
+          },
+          "C": {
+            "count": 231,
+            "signedMean": 0.19690264640853122,
+            "mae": 0.19690264640853122,
+            "rms": 0.20159728143040526,
+            "min": 0,
+            "p50": 0.20386194830165744,
+            "p90": 0.22274861718494274,
+            "p95": 0.22274861718494274,
+            "p99": 0.22274861718494274,
+            "max": 0.22274861718494274,
+            "maxAbs": 0.22274861718494274
+          }
+        },
+        "p10": {
+          "A": {
+            "count": 231,
+            "signedMean": 0,
+            "mae": 0,
+            "rms": 0,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0,
+            "maxAbs": 0
+          },
+          "B": {
+            "count": 231,
+            "signedMean": 0,
+            "mae": 0,
+            "rms": 0,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0,
+            "maxAbs": 0
+          },
+          "C": {
+            "count": 231,
+            "signedMean": 0.1961959163549172,
+            "mae": 0.1961959163549172,
+            "rms": 0.20126350410965724,
+            "min": 0,
+            "p50": 0.20386194830165727,
+            "p90": 0.22274861718494274,
+            "p95": 0.22274861718494274,
+            "p99": 0.22274861718494274,
+            "max": 0.22274861718494274,
+            "maxAbs": 0.22274861718494274
+          }
+        },
+        "p01": {
+          "A": {
+            "count": 231,
+            "signedMean": 0,
+            "mae": 0,
+            "rms": 0,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0,
+            "maxAbs": 0
+          },
+          "B": {
+            "count": 231,
+            "signedMean": 1.2435883682639493e-15,
+            "mae": 1.2435883682639493e-15,
+            "rms": 1.277591030075106e-15,
+            "min": 0,
+            "p50": 1.3140263606633053e-15,
+            "p90": 1.3270365226500705e-15,
+            "p95": 1.3270365226500705e-15,
+            "p99": 1.3270365226500705e-15,
+            "max": 1.3270365226500705e-15,
+            "maxAbs": 1.3270365226500705e-15
+          },
+          "C": {
+            "count": 231,
+            "signedMean": 1.140910580838309e-15,
+            "mae": 1.140910580838309e-15,
+            "rms": 1.1641517231040413e-15,
+            "min": 0,
+            "p50": 1.18396995641046e-15,
+            "p90": 1.2336256557042472e-15,
+            "p95": 1.2336256557042472e-15,
+            "p99": 1.2404063125112036e-15,
+            "max": 1.247438003399516e-15,
+            "maxAbs": 1.247438003399516e-15
+          }
+        },
+        "p11": {
+          "A": {
+            "count": 231,
+            "signedMean": 0,
+            "mae": 0,
+            "rms": 0,
+            "min": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0,
+            "max": 0,
+            "maxAbs": 0
+          },
+          "B": {
+            "count": 231,
+            "signedMean": 1.257318258603226e-15,
+            "mae": 1.257318258603226e-15,
+            "rms": 1.2857805938579947e-15,
+            "min": 0,
+            "p50": 1.3140263606633054e-15,
+            "p90": 1.3270365226500705e-15,
+            "p95": 1.3270365226500705e-15,
+            "p99": 1.3270365226500705e-15,
+            "max": 1.3270365226500705e-15,
+            "maxAbs": 1.3270365226500705e-15
+          },
+          "C": {
+            "count": 231,
+            "signedMean": 1.136170743687897e-15,
+            "mae": 1.136170743687897e-15,
+            "rms": 1.1628546895058428e-15,
+            "min": 0,
+            "p50": 1.1830025446944754e-15,
+            "p90": 1.2336256557042472e-15,
+            "p95": 1.2352317638720715e-15,
+            "p99": 1.2413685619527188e-15,
+            "max": 1.247438003399518e-15,
+            "maxAbs": 1.247438003399518e-15
+          }
+        }
+      },
+      "p00p01Station0122": [
+        {
+          "phase": "p00",
+          "station": 0.122,
+          "raw": {
+            "A": [
+              0,
+              0,
+              0,
+              0.03631622124258213,
+              0.09759350730529458,
+              0.03631622124258213,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0.03631622124258213,
+              0.09759350730529458,
+              0.03631622124258213,
+              0,
+              0,
+              0
+            ],
+            "B": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "C": [
+              0,
+              0,
+              0,
+              0.009520200246944863,
+              0.02214000057429076,
+              0.034759800901636655,
+              0.0411804010681808,
+              0.028560600740834906,
+              0.015940800413489324,
+              0,
+              0,
+              0,
+              0.0087075002258642,
+              0.020250000525265932,
+              0.03179250082466766,
+              0.03766500097699462,
+              0.02612250067759289,
+              0.01458000037819145
+            ]
+          },
+          "steering": {
+            "A": 0,
+            "B": 0,
+            "C": 0.19708966205049175
+          },
+          "balance": {
+            "A": 0,
+            "B": 0,
+            "C": 0.5633187656865024
+          }
+        },
+        {
+          "phase": "p01",
+          "station": 0.122,
+          "raw": {
+            "A": [
+              0,
+              0,
+              0,
+              0.03631622124258213,
+              0.09759350730529458,
+              0.03631622124258213,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0.03631622124258213,
+              0.09759350730529458,
+              0.03631622124258213,
+              0,
+              0,
+              0
+            ],
+            "B": [
+              0,
+              0.014151058559268018,
+              0.04196520814127664,
+              0.06977935772328596,
+              0.09759350730529458,
+              0.06977935772328527,
+              0.04196520814127664,
+              0.014151058559267321,
+              0,
+              0,
+              0.014151058559268018,
+              0.04196520814127664,
+              0.06977935772328596,
+              0.09759350730529458,
+              0.06977935772328527,
+              0.04196520814127664,
+              0.014151058559267321,
+              0
+            ],
+            "C": [
+              0,
+              0.006420600166544459,
+              0.019040400493890042,
+              0.03166020082123594,
+              0.04428000114858152,
+              0.03166020082123562,
+              0.019040400493890042,
+              0.006420600166544145,
+              0,
+              0,
+              0.005872500152327247,
+              0.01741500045172869,
+              0.028957500751130422,
+              0.040500001050531864,
+              0.028957500751130134,
+              0.01741500045172869,
+              0.005872500152326959,
+              0
+            ]
+          },
+          "steering": {
+            "A": 0,
+            "B": -1.3140263606633054e-15,
+            "C": -1.1730513378528801e-15
+          },
+          "balance": {
+            "A": 0,
+            "B": -2.9491151204091287e-15,
+            "C": -2.924267531830767e-15
+          }
+        }
+      ]
+    },
+    "mirror": {
+      "gentle": {
+        "A": {
+          "count": 924,
+          "maxAbsMirrorSum": 3.935220205253387e-15
+        },
+        "B": {
+          "count": 924,
+          "maxAbsMirrorSum": 6.0021432268797525e-15
+        },
+        "C": {
+          "count": 924,
+          "maxAbsMirrorSum": 6.480926906249351e-15
+        }
+      },
+      "tight": {
+        "A": {
+          "count": 924,
+          "maxAbsMirrorSum": 5.398459457239824e-15
+        },
+        "B": {
+          "count": 924,
+          "maxAbsMirrorSum": 1.6334156249797616e-14
+        },
+        "C": {
+          "count": 924,
+          "maxAbsMirrorSum": 5.495603971894525e-15
+        }
+      }
+    }
+  },
+  "wide": {
+    "strictUniqueAnalyticRows": 5072,
+    "finalWinnerMismatches": 2378,
+    "allStrictUniqueOutcomes": {
+      "count": 5072,
+      "rawMaximum": {
+        "classes": {
+          "READER-SUFFICIENT": 1217,
+          "WRITER/STORAGE-SUFFICIENT": 476,
+          "READER-FAILURE PARTLY RESTORED BY WRITER": 546,
+          "MIXED / COMPOUND": 436,
+          "B TOP TIE / AMBIGUOUS": 370,
+          "NO QUALITATIVE FAILURE": 2027
+        },
+        "byPhase": {
+          "p00": {
+            "count": 1268,
+            "classes": {
+              "READER-SUFFICIENT": 299,
+              "WRITER/STORAGE-SUFFICIENT": 102,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 183,
+              "MIXED / COMPOUND": 109,
+              "B TOP TIE / AMBIGUOUS": 186,
+              "NO QUALITATIVE FAILURE": 389
+            }
+          },
+          "p01": {
+            "count": 1268,
+            "classes": {
+              "READER-SUFFICIENT": 280,
+              "WRITER/STORAGE-SUFFICIENT": 132,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 110,
+              "MIXED / COMPOUND": 109,
+              "B TOP TIE / AMBIGUOUS": 0,
+              "NO QUALITATIVE FAILURE": 637
+            }
+          },
+          "p10": {
+            "count": 1268,
+            "classes": {
+              "READER-SUFFICIENT": 329,
+              "WRITER/STORAGE-SUFFICIENT": 98,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 145,
+              "MIXED / COMPOUND": 109,
+              "B TOP TIE / AMBIGUOUS": 184,
+              "NO QUALITATIVE FAILURE": 403
+            }
+          },
+          "p11": {
+            "count": 1268,
+            "classes": {
+              "READER-SUFFICIENT": 309,
+              "WRITER/STORAGE-SUFFICIENT": 144,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 108,
+              "MIXED / COMPOUND": 109,
+              "B TOP TIE / AMBIGUOUS": 0,
+              "NO QUALITATIVE FAILURE": 598
+            }
+          }
+        },
+        "byShape": {
+          "gentle": {
+            "count": 844,
+            "classes": {
+              "READER-SUFFICIENT": 337,
+              "WRITER/STORAGE-SUFFICIENT": 99,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 99,
+              "MIXED / COMPOUND": 4,
+              "B TOP TIE / AMBIGUOUS": 28,
+              "NO QUALITATIVE FAILURE": 277
+            }
+          },
+          "gentleMirror": {
+            "count": 844,
+            "classes": {
+              "READER-SUFFICIENT": 337,
+              "WRITER/STORAGE-SUFFICIENT": 99,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 99,
+              "MIXED / COMPOUND": 4,
+              "B TOP TIE / AMBIGUOUS": 28,
+              "NO QUALITATIVE FAILURE": 277
+            }
+          },
+          "sCurve": {
+            "count": 848,
+            "classes": {
+              "READER-SUFFICIENT": 99,
+              "WRITER/STORAGE-SUFFICIENT": 40,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 22,
+              "MIXED / COMPOUND": 428,
+              "B TOP TIE / AMBIGUOUS": 0,
+              "NO QUALITATIVE FAILURE": 259
+            }
+          },
+          "straight": {
+            "count": 848,
+            "classes": {
+              "READER-SUFFICIENT": 0,
+              "WRITER/STORAGE-SUFFICIENT": 0,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 110,
+              "MIXED / COMPOUND": 0,
+              "B TOP TIE / AMBIGUOUS": 314,
+              "NO QUALITATIVE FAILURE": 424
+            }
+          },
+          "tight": {
+            "count": 844,
+            "classes": {
+              "READER-SUFFICIENT": 222,
+              "WRITER/STORAGE-SUFFICIENT": 119,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 108,
+              "MIXED / COMPOUND": 0,
+              "B TOP TIE / AMBIGUOUS": 0,
+              "NO QUALITATIVE FAILURE": 395
+            }
+          },
+          "tightMirror": {
+            "count": 844,
+            "classes": {
+              "READER-SUFFICIENT": 222,
+              "WRITER/STORAGE-SUFFICIENT": 119,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 108,
+              "MIXED / COMPOUND": 0,
+              "B TOP TIE / AMBIGUOUS": 0,
+              "NO QUALITATIVE FAILURE": 395
+            }
+          }
+        }
+      },
+      "weightedMaximum": {
+        "classes": {
+          "READER-SUFFICIENT": 2044,
+          "WRITER/STORAGE-SUFFICIENT": 250,
+          "READER-FAILURE PARTLY RESTORED BY WRITER": 609,
+          "MIXED / COMPOUND": 12,
+          "B TOP TIE / AMBIGUOUS": 90,
+          "NO QUALITATIVE FAILURE": 2067
+        },
+        "byPhase": {
+          "p00": {
+            "count": 1268,
+            "classes": {
+              "READER-SUFFICIENT": 537,
+              "WRITER/STORAGE-SUFFICIENT": 70,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 229,
+              "MIXED / COMPOUND": 3,
+              "B TOP TIE / AMBIGUOUS": 46,
+              "NO QUALITATIVE FAILURE": 383
+            }
+          },
+          "p01": {
+            "count": 1268,
+            "classes": {
+              "READER-SUFFICIENT": 473,
+              "WRITER/STORAGE-SUFFICIENT": 61,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 56,
+              "MIXED / COMPOUND": 3,
+              "B TOP TIE / AMBIGUOUS": 0,
+              "NO QUALITATIVE FAILURE": 675
+            }
+          },
+          "p10": {
+            "count": 1268,
+            "classes": {
+              "READER-SUFFICIENT": 549,
+              "WRITER/STORAGE-SUFFICIENT": 64,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 262,
+              "MIXED / COMPOUND": 3,
+              "B TOP TIE / AMBIGUOUS": 44,
+              "NO QUALITATIVE FAILURE": 346
+            }
+          },
+          "p11": {
+            "count": 1268,
+            "classes": {
+              "READER-SUFFICIENT": 485,
+              "WRITER/STORAGE-SUFFICIENT": 55,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 62,
+              "MIXED / COMPOUND": 3,
+              "B TOP TIE / AMBIGUOUS": 0,
+              "NO QUALITATIVE FAILURE": 663
+            }
+          }
+        },
+        "byShape": {
+          "gentle": {
+            "count": 844,
+            "classes": {
+              "READER-SUFFICIENT": 766,
+              "WRITER/STORAGE-SUFFICIENT": 33,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+              "MIXED / COMPOUND": 0,
+              "B TOP TIE / AMBIGUOUS": 29,
+              "NO QUALITATIVE FAILURE": 16
+            }
+          },
+          "gentleMirror": {
+            "count": 844,
+            "classes": {
+              "READER-SUFFICIENT": 766,
+              "WRITER/STORAGE-SUFFICIENT": 33,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+              "MIXED / COMPOUND": 0,
+              "B TOP TIE / AMBIGUOUS": 29,
+              "NO QUALITATIVE FAILURE": 16
+            }
+          },
+          "sCurve": {
+            "count": 848,
+            "classes": {
+              "READER-SUFFICIENT": 108,
+              "WRITER/STORAGE-SUFFICIENT": 12,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 33,
+              "MIXED / COMPOUND": 12,
+              "B TOP TIE / AMBIGUOUS": 0,
+              "NO QUALITATIVE FAILURE": 683
+            }
+          },
+          "straight": {
+            "count": 848,
+            "classes": {
+              "READER-SUFFICIENT": 0,
+              "WRITER/STORAGE-SUFFICIENT": 0,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 424,
+              "MIXED / COMPOUND": 0,
+              "B TOP TIE / AMBIGUOUS": 0,
+              "NO QUALITATIVE FAILURE": 424
+            }
+          },
+          "tight": {
+            "count": 844,
+            "classes": {
+              "READER-SUFFICIENT": 202,
+              "WRITER/STORAGE-SUFFICIENT": 86,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 76,
+              "MIXED / COMPOUND": 0,
+              "B TOP TIE / AMBIGUOUS": 16,
+              "NO QUALITATIVE FAILURE": 464
+            }
+          },
+          "tightMirror": {
+            "count": 844,
+            "classes": {
+              "READER-SUFFICIENT": 202,
+              "WRITER/STORAGE-SUFFICIENT": 86,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 76,
+              "MIXED / COMPOUND": 0,
+              "B TOP TIE / AMBIGUOUS": 16,
+              "NO QUALITATIVE FAILURE": 464
+            }
+          }
+        }
+      },
+      "finalWinner": {
+        "classes": {
+          "READER-SUFFICIENT": 2039,
+          "WRITER/STORAGE-SUFFICIENT": 249,
+          "READER-FAILURE PARTLY RESTORED BY WRITER": 598,
+          "MIXED / COMPOUND": 0,
+          "B TOP TIE / AMBIGUOUS": 90,
+          "NO QUALITATIVE FAILURE": 2096
+        },
+        "byPhase": {
+          "p00": {
+            "count": 1268,
+            "classes": {
+              "READER-SUFFICIENT": 533,
+              "WRITER/STORAGE-SUFFICIENT": 68,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 231,
+              "MIXED / COMPOUND": 0,
+              "B TOP TIE / AMBIGUOUS": 46,
+              "NO QUALITATIVE FAILURE": 390
+            }
+          },
+          "p01": {
+            "count": 1268,
+            "classes": {
+              "READER-SUFFICIENT": 473,
+              "WRITER/STORAGE-SUFFICIENT": 61,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 53,
+              "MIXED / COMPOUND": 0,
+              "B TOP TIE / AMBIGUOUS": 0,
+              "NO QUALITATIVE FAILURE": 681
+            }
+          },
+          "p10": {
+            "count": 1268,
+            "classes": {
+              "READER-SUFFICIENT": 549,
+              "WRITER/STORAGE-SUFFICIENT": 64,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 256,
+              "MIXED / COMPOUND": 0,
+              "B TOP TIE / AMBIGUOUS": 44,
+              "NO QUALITATIVE FAILURE": 355
+            }
+          },
+          "p11": {
+            "count": 1268,
+            "classes": {
+              "READER-SUFFICIENT": 484,
+              "WRITER/STORAGE-SUFFICIENT": 56,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 58,
+              "MIXED / COMPOUND": 0,
+              "B TOP TIE / AMBIGUOUS": 0,
+              "NO QUALITATIVE FAILURE": 670
+            }
+          }
+        },
+        "byShape": {
+          "gentle": {
+            "count": 844,
+            "classes": {
+              "READER-SUFFICIENT": 768,
+              "WRITER/STORAGE-SUFFICIENT": 31,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+              "MIXED / COMPOUND": 0,
+              "B TOP TIE / AMBIGUOUS": 29,
+              "NO QUALITATIVE FAILURE": 16
+            }
+          },
+          "gentleMirror": {
+            "count": 844,
+            "classes": {
+              "READER-SUFFICIENT": 768,
+              "WRITER/STORAGE-SUFFICIENT": 31,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+              "MIXED / COMPOUND": 0,
+              "B TOP TIE / AMBIGUOUS": 29,
+              "NO QUALITATIVE FAILURE": 16
+            }
+          },
+          "sCurve": {
+            "count": 848,
+            "classes": {
+              "READER-SUFFICIENT": 109,
+              "WRITER/STORAGE-SUFFICIENT": 11,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 30,
+              "MIXED / COMPOUND": 0,
+              "B TOP TIE / AMBIGUOUS": 0,
+              "NO QUALITATIVE FAILURE": 698
+            }
+          },
+          "straight": {
+            "count": 848,
+            "classes": {
+              "READER-SUFFICIENT": 0,
+              "WRITER/STORAGE-SUFFICIENT": 0,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 424,
+              "MIXED / COMPOUND": 0,
+              "B TOP TIE / AMBIGUOUS": 0,
+              "NO QUALITATIVE FAILURE": 424
+            }
+          },
+          "tight": {
+            "count": 844,
+            "classes": {
+              "READER-SUFFICIENT": 197,
+              "WRITER/STORAGE-SUFFICIENT": 88,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 72,
+              "MIXED / COMPOUND": 0,
+              "B TOP TIE / AMBIGUOUS": 16,
+              "NO QUALITATIVE FAILURE": 471
+            }
+          },
+          "tightMirror": {
+            "count": 844,
+            "classes": {
+              "READER-SUFFICIENT": 197,
+              "WRITER/STORAGE-SUFFICIENT": 88,
+              "READER-FAILURE PARTLY RESTORED BY WRITER": 72,
+              "MIXED / COMPOUND": 0,
+              "B TOP TIE / AMBIGUOUS": 16,
+              "NO QUALITATIVE FAILURE": 471
+            }
+          }
+        }
+      }
+    },
+    "rawMaximumFirstWrong": {
+      "count": 1380,
+      "classes": {
+        "READER-SUFFICIENT": 993,
+        "WRITER/STORAGE-SUFFICIENT": 328,
+        "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+        "MIXED / COMPOUND": 3,
+        "B TOP TIE / AMBIGUOUS": 56
+      },
+      "byPhase": {
+        "p00": {
+          "count": 344,
+          "classes": {
+            "READER-SUFFICIENT": 235,
+            "WRITER/STORAGE-SUFFICIENT": 79,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 30
+          }
+        },
+        "p01": {
+          "count": 302,
+          "classes": {
+            "READER-SUFFICIENT": 225,
+            "WRITER/STORAGE-SUFFICIENT": 76,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 1,
+            "B TOP TIE / AMBIGUOUS": 0
+          }
+        },
+        "p10": {
+          "count": 385,
+          "classes": {
+            "READER-SUFFICIENT": 285,
+            "WRITER/STORAGE-SUFFICIENT": 74,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 26
+          }
+        },
+        "p11": {
+          "count": 349,
+          "classes": {
+            "READER-SUFFICIENT": 248,
+            "WRITER/STORAGE-SUFFICIENT": 99,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 2,
+            "B TOP TIE / AMBIGUOUS": 0
+          }
+        }
+      },
+      "byShape": {
+        "gentle": {
+          "count": 464,
+          "classes": {
+            "READER-SUFFICIENT": 337,
+            "WRITER/STORAGE-SUFFICIENT": 99,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 28
+          }
+        },
+        "gentleMirror": {
+          "count": 464,
+          "classes": {
+            "READER-SUFFICIENT": 337,
+            "WRITER/STORAGE-SUFFICIENT": 99,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 28
+          }
+        },
+        "sCurve": {
+          "count": 64,
+          "classes": {
+            "READER-SUFFICIENT": 55,
+            "WRITER/STORAGE-SUFFICIENT": 6,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 3,
+            "B TOP TIE / AMBIGUOUS": 0
+          }
+        },
+        "tight": {
+          "count": 194,
+          "classes": {
+            "READER-SUFFICIENT": 132,
+            "WRITER/STORAGE-SUFFICIENT": 62,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 0
+          }
+        },
+        "tightMirror": {
+          "count": 194,
+          "classes": {
+            "READER-SUFFICIENT": 132,
+            "WRITER/STORAGE-SUFFICIENT": 62,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 0
+          }
+        }
+      },
+      "analyticMargin": {
+        "count": 1380,
+        "signedMean": 0.5614587997717794,
+        "mae": 0.5614587997717794,
+        "rms": 0.9388337671556111,
+        "min": 0.004928750794281234,
+        "p50": 0.09347396970840627,
+        "p90": 1.783073186692389,
+        "p95": 1.783073186692401,
+        "p99": 1.7830731866924339,
+        "max": 1.8186870737711827,
+        "maxAbs": 1.8186870737711827
+      },
+      "marginByClass": {
+        "B TOP TIE / AMBIGUOUS": {
+          "count": 56,
+          "signedMean": 0.0934739697083542,
+          "mae": 0.0934739697083542,
+          "rms": 0.09347396970835423,
+          "min": 0.09347396970814015,
+          "p50": 0.09347396970835897,
+          "p90": 0.09347396970849264,
+          "p95": 0.09347396970849853,
+          "p99": 0.09347396970852051,
+          "max": 0.09347396970852051,
+          "maxAbs": 0.09347396970852051
+        },
+        "MIXED / COMPOUND": {
+          "count": 3,
+          "signedMean": 0.34702826989214186,
+          "mae": 0.34702826989214186,
+          "rms": 0.347033093126614,
+          "min": 0.3444490793569699,
+          "p50": 0.3481382456304054,
+          "p90": 0.3484974846890503,
+          "p95": 0.3484974846890503,
+          "p99": 0.3484974846890503,
+          "max": 0.3484974846890503,
+          "maxAbs": 0.3484974846890503
+        },
+        "READER-SUFFICIENT": {
+          "count": 993,
+          "signedMean": 0.5320643881935002,
+          "mae": 0.5320643881935002,
+          "rms": 0.9084257256782102,
+          "min": 0.004928750794281234,
+          "p50": 0.0934739697084046,
+          "p90": 1.7830731866923872,
+          "p95": 1.7830731866924008,
+          "p99": 1.7830731866924339,
+          "max": 1.8186870737711827,
+          "maxAbs": 1.8186870737711827
+        },
+        "WRITER/STORAGE-SUFFICIENT": {
+          "count": 328,
+          "signedMean": 0.7323096923645315,
+          "mae": 0.7323096923645315,
+          "rms": 1.0988255580624968,
+          "min": 0.05887130652953765,
+          "p50": 0.0934739697084287,
+          "p90": 1.7830731866923941,
+          "p95": 1.783073186692408,
+          "p99": 1.783073186692439,
+          "max": 1.7830731866924474,
+          "maxAbs": 1.7830731866924474
+        }
+      }
+    },
+    "weightedMaximumFirstWrong": {
+      "count": 998,
+      "classes": {
+        "READER-SUFFICIENT": 841,
+        "WRITER/STORAGE-SUFFICIENT": 123,
+        "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+        "MIXED / COMPOUND": 0,
+        "B TOP TIE / AMBIGUOUS": 34
+      },
+      "byPhase": {
+        "p00": {
+          "count": 303,
+          "classes": {
+            "READER-SUFFICIENT": 249,
+            "WRITER/STORAGE-SUFFICIENT": 38,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 16
+          }
+        },
+        "p01": {
+          "count": 232,
+          "classes": {
+            "READER-SUFFICIENT": 200,
+            "WRITER/STORAGE-SUFFICIENT": 32,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 0
+          }
+        },
+        "p10": {
+          "count": 272,
+          "classes": {
+            "READER-SUFFICIENT": 220,
+            "WRITER/STORAGE-SUFFICIENT": 34,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 18
+          }
+        },
+        "p11": {
+          "count": 191,
+          "classes": {
+            "READER-SUFFICIENT": 172,
+            "WRITER/STORAGE-SUFFICIENT": 19,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 0
+          }
+        }
+      },
+      "byShape": {
+        "gentle": {
+          "count": 364,
+          "classes": {
+            "READER-SUFFICIENT": 344,
+            "WRITER/STORAGE-SUFFICIENT": 19,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 1
+          }
+        },
+        "gentleMirror": {
+          "count": 364,
+          "classes": {
+            "READER-SUFFICIENT": 344,
+            "WRITER/STORAGE-SUFFICIENT": 19,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 1
+          }
+        },
+        "sCurve": {
+          "count": 56,
+          "classes": {
+            "READER-SUFFICIENT": 47,
+            "WRITER/STORAGE-SUFFICIENT": 9,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 0
+          }
+        },
+        "tight": {
+          "count": 107,
+          "classes": {
+            "READER-SUFFICIENT": 53,
+            "WRITER/STORAGE-SUFFICIENT": 38,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 16
+          }
+        },
+        "tightMirror": {
+          "count": 107,
+          "classes": {
+            "READER-SUFFICIENT": 53,
+            "WRITER/STORAGE-SUFFICIENT": 38,
+            "READER-FAILURE PARTLY RESTORED BY WRITER": 0,
+            "MIXED / COMPOUND": 0,
+            "B TOP TIE / AMBIGUOUS": 16
+          }
+        }
+      },
+      "analyticMargin": {
+        "count": 998,
+        "signedMean": 0.4597004830695754,
+        "mae": 0.4597004830695754,
+        "rms": 0.8306967339570402,
+        "min": 0.0049287507943203135,
+        "p50": 0.0934739697084006,
+        "p90": 1.783073186692375,
+        "p95": 1.7830731866923952,
+        "p99": 1.7830731866924243,
+        "max": 1.7830731866924467,
+        "maxAbs": 1.7830731866924467
+      },
+      "marginByClass": {
+        "B TOP TIE / AMBIGUOUS": {
+          "count": 34,
+          "signedMean": 1.6836849974580181,
+          "mae": 1.6836849974580181,
+          "rms": 1.7299836314872257,
+          "min": 0.09347396970844524,
+          "p50": 1.7830731866923533,
+          "p90": 1.7830731866924165,
+          "p95": 1.7830731866924208,
+          "p99": 1.7830731866924336,
+          "max": 1.7830731866924336,
+          "maxAbs": 1.7830731866924336
+        },
+        "READER-SUFFICIENT": {
+          "count": 841,
+          "signedMean": 0.3104337971023624,
+          "mae": 0.3104337971023624,
+          "rms": 0.6402252906117099,
+          "min": 0.0049287507943203135,
+          "p50": 0.0934739697083884,
+          "p90": 1.7830731866923435,
+          "p95": 1.7830731866923841,
+          "p99": 1.7830731866924232,
+          "max": 1.7830731866924454,
+          "maxAbs": 1.7830731866924454
+        },
+        "WRITER/STORAGE-SUFFICIENT": {
+          "count": 123,
+          "signedMean": 1.1419590961526553,
+          "mae": 1.1419590961526553,
+          "rms": 1.40326017538671,
+          "min": 0.05860588713241088,
+          "p50": 1.7830731866923433,
+          "p90": 1.7830731866923952,
+          "p95": 1.7830731866924017,
+          "p99": 1.7830731866924416,
+          "max": 1.7830731866924467,
+          "maxAbs": 1.7830731866924467
+        }
+      }
+    },
+    "allMismatchMargins": {
+      "count": 2378,
+      "all": {
+        "count": 2378,
+        "signedMean": 0.5187528283383094,
+        "mae": 0.5187528283383094,
+        "rms": 0.895043155765764,
+        "min": 0.004928750794281234,
+        "p50": 0.09347396970840438,
+        "p90": 1.7830731866923841,
+        "p95": 1.7830731866924001,
+        "p99": 1.7830731866924299,
+        "max": 1.8186870737711827,
+        "maxAbs": 1.8186870737711827
+      },
+      "byAttribution": {
+        "B TOP TIE / AMBIGUOUS": {
+          "count": 90,
+          "signedMean": 0.6942203579693387,
+          "mae": 0.6942203579693387,
+          "rms": 1.0658641140512182,
+          "min": 0.09347396970814015,
+          "p50": 0.0934739697084439,
+          "p90": 1.7830731866923826,
+          "p95": 1.7830731866923994,
+          "p99": 1.7830731866924336,
+          "max": 1.7830731866924336,
+          "maxAbs": 1.7830731866924336
+        },
+        "MIXED / COMPOUND": {
+          "count": 3,
+          "signedMean": 0.34702826989214186,
+          "mae": 0.34702826989214186,
+          "rms": 0.347033093126614,
+          "min": 0.3444490793569699,
+          "p50": 0.3481382456304054,
+          "p90": 0.3484974846890503,
+          "p95": 0.3484974846890503,
+          "p99": 0.3484974846890503,
+          "max": 0.3484974846890503,
+          "maxAbs": 0.3484974846890503
+        },
+        "READER-SUFFICIENT": {
+          "count": 1834,
+          "signedMean": 0.43043334833109664,
+          "mae": 0.43043334833109664,
+          "rms": 0.7967274947741024,
+          "min": 0.004928750794281234,
+          "p50": 0.0934739697083955,
+          "p90": 1.7830731866923784,
+          "p95": 1.7830731866923974,
+          "p99": 1.7830731866924243,
+          "max": 1.8186870737711827,
+          "maxAbs": 1.8186870737711827
+        },
+        "WRITER/STORAGE-SUFFICIENT": {
+          "count": 451,
+          "signedMean": 0.844032257034019,
+          "mae": 0.844032257034019,
+          "rms": 1.18960490828181,
+          "min": 0.05860588713241088,
+          "p50": 0.09347396970848065,
+          "p90": 1.7830731866923948,
+          "p95": 1.783073186692406,
+          "p99": 1.7830731866924416,
+          "max": 1.7830731866924474,
+          "maxAbs": 1.7830731866924474
+        }
+      },
+      "byFirstWrongStage": {
+        "maximum": {
+          "count": 998,
+          "signedMean": 0.4597004830695754,
+          "mae": 0.4597004830695754,
+          "rms": 0.8306967339570402,
+          "min": 0.0049287507943203135,
+          "p50": 0.0934739697084006,
+          "p90": 1.783073186692375,
+          "p95": 1.7830731866923952,
+          "p99": 1.7830731866924243,
+          "max": 1.7830731866924467,
+          "maxAbs": 1.7830731866924467
+        },
+        "rawMaximum": {
+          "count": 1380,
+          "signedMean": 0.5614587997717794,
+          "mae": 0.5614587997717794,
+          "rms": 0.9388337671556111,
+          "min": 0.004928750794281234,
+          "p50": 0.09347396970840627,
+          "p90": 1.783073186692389,
+          "p95": 1.783073186692401,
+          "p99": 1.7830731866924339,
+          "max": 1.8186870737711827,
+          "maxAbs": 1.8186870737711827
+        }
+      },
+      "equalCountDecilesAscending": [
+        {
+          "decile": 1,
+          "count": 237,
+          "margin": {
+            "min": 0.004928750794281234,
+            "max": 0.09347396970824617
+          },
+          "firstWrongStage": {
+            "rawMaximum": 145,
+            "maximum": 92
+          },
+          "attribution": {
+            "READER-SUFFICIENT": 195,
+            "WRITER/STORAGE-SUFFICIENT": 32,
+            "B TOP TIE / AMBIGUOUS": 10
+          }
+        },
+        {
+          "decile": 2,
+          "count": 238,
+          "margin": {
+            "min": 0.09347396970824617,
+            "max": 0.09347396970830157
+          },
+          "firstWrongStage": {
+            "maximum": 88,
+            "rawMaximum": 150
+          },
+          "attribution": {
+            "READER-SUFFICIENT": 195,
+            "WRITER/STORAGE-SUFFICIENT": 39,
+            "B TOP TIE / AMBIGUOUS": 4
+          }
+        },
+        {
+          "decile": 3,
+          "count": 238,
+          "margin": {
+            "min": 0.09347396970830157,
+            "max": 0.09347396970833532
+          },
+          "firstWrongStage": {
+            "rawMaximum": 136,
+            "maximum": 102
+          },
+          "attribution": {
+            "READER-SUFFICIENT": 186,
+            "WRITER/STORAGE-SUFFICIENT": 39,
+            "B TOP TIE / AMBIGUOUS": 13
+          }
+        },
+        {
+          "decile": 4,
+          "count": 238,
+          "margin": {
+            "min": 0.09347396970833532,
+            "max": 0.09347396970837085
+          },
+          "firstWrongStage": {
+            "rawMaximum": 124,
+            "maximum": 114
+          },
+          "attribution": {
+            "READER-SUFFICIENT": 195,
+            "WRITER/STORAGE-SUFFICIENT": 39,
+            "B TOP TIE / AMBIGUOUS": 4
+          }
+        },
+        {
+          "decile": 5,
+          "count": 238,
+          "margin": {
+            "min": 0.09347396970837085,
+            "max": 0.09347396970840438
+          },
+          "firstWrongStage": {
+            "rawMaximum": 122,
+            "maximum": 116
+          },
+          "attribution": {
+            "WRITER/STORAGE-SUFFICIENT": 34,
+            "READER-SUFFICIENT": 198,
+            "B TOP TIE / AMBIGUOUS": 6
+          }
+        },
+        {
+          "decile": 6,
+          "count": 237,
+          "margin": {
+            "min": 0.09347396970840438,
+            "max": 0.0934739697084439
+          },
+          "firstWrongStage": {
+            "rawMaximum": 124,
+            "maximum": 113
+          },
+          "attribution": {
+            "READER-SUFFICIENT": 201,
+            "WRITER/STORAGE-SUFFICIENT": 27,
+            "B TOP TIE / AMBIGUOUS": 9
+          }
+        },
+        {
+          "decile": 7,
+          "count": 238,
+          "margin": {
+            "min": 0.0934739697084439,
+            "max": 0.09347396970853095
+          },
+          "firstWrongStage": {
+            "maximum": 105,
+            "rawMaximum": 133
+          },
+          "attribution": {
+            "READER-SUFFICIENT": 199,
+            "WRITER/STORAGE-SUFFICIENT": 27,
+            "B TOP TIE / AMBIGUOUS": 12
+          }
+        },
+        {
+          "decile": 8,
+          "count": 238,
+          "margin": {
+            "min": 0.0934739697085335,
+            "max": 1.7830731866923486
+          },
+          "firstWrongStage": {
+            "maximum": 108,
+            "rawMaximum": 130
+          },
+          "attribution": {
+            "READER-SUFFICIENT": 162,
+            "WRITER/STORAGE-SUFFICIENT": 63,
+            "MIXED / COMPOUND": 3,
+            "B TOP TIE / AMBIGUOUS": 10
+          }
+        },
+        {
+          "decile": 9,
+          "count": 238,
+          "margin": {
+            "min": 1.7830731866923486,
+            "max": 1.7830731866923841
+          },
+          "firstWrongStage": {
+            "rawMaximum": 157,
+            "maximum": 81
+          },
+          "attribution": {
+            "READER-SUFFICIENT": 152,
+            "WRITER/STORAGE-SUFFICIENT": 73,
+            "B TOP TIE / AMBIGUOUS": 13
+          }
+        },
+        {
+          "decile": 10,
+          "count": 238,
+          "margin": {
+            "min": 1.7830731866923841,
+            "max": 1.8186870737711827
+          },
+          "firstWrongStage": {
+            "maximum": 79,
+            "rawMaximum": 159
+          },
+          "attribution": {
+            "READER-SUFFICIENT": 151,
+            "B TOP TIE / AMBIGUOUS": 9,
+            "WRITER/STORAGE-SUFFICIENT": 78
+          }
+        }
+      ],
+      "maximumMarginCase": {
+        "shape": "tight",
+        "phase": "p10",
+        "station": 0.294,
+        "margin": 1.8186870737711827,
+        "firstWrongStage": "rawMaximum",
+        "class": "READER-SUFFICIENT"
+      }
+    },
+    "componentError": {
+      "rawSamples": {
+        "count": 138600,
+        "readerError": {
+          "count": 138600,
+          "signedMean": 0.0006287997375385852,
+          "mae": 0.00350503766242599,
+          "rms": 0.011377145699431502,
+          "min": -0.09759350730529458,
+          "p50": 0,
+          "p90": 0.004679172509791411,
+          "p95": 0.016767451528679582,
+          "p99": 0.0369654483215842,
+          "max": 0.05197721654498852,
+          "maxAbs": 0.09759350730529458
+        },
+        "writerError": {
+          "count": 138600,
+          "signedMean": 0.00005087303830827062,
+          "mae": 0.002682352538251531,
+          "rms": 0.007931900727710259,
+          "min": -0.07059350660494,
+          "p50": 0,
+          "p90": 0.0015501218876048401,
+          "p95": 0.009849141522729598,
+          "p99": 0.02850532124417196,
+          "max": 0.05037321304326787,
+          "maxAbs": 0.07059350660494
+        },
+        "totalError": {
+          "count": 138600,
+          "signedMean": 0.00067967277584686,
+          "mae": 0.003440027921592415,
+          "rms": 0.010125436865458545,
+          "min": -0.08409350695511729,
+          "p50": 0,
+          "p90": 0.00832221562197379,
+          "p95": 0.015654380531531814,
+          "p99": 0.03013136897691593,
+          "max": 0.050609022466030607,
+          "maxAbs": 0.08409350695511729
+        },
+        "pairedDirection": {
+          "bothNonzero": 26078,
+          "opposing": 17298,
+          "reinforcing": 8780,
+          "eitherZero": 112522
+        },
+        "writerReducesReaderError": 15679,
+        "writerEnlargesReaderError": 122921
+      },
+      "candidateRawMaxima": {
+        "count": 27720,
+        "readerError": {
+          "count": 27720,
+          "signedMean": -0.0024003657679348344,
+          "mae": 0.010160638163457417,
+          "rms": 0.021324434579123933,
+          "min": -0.09759350730529458,
+          "p50": 0,
+          "p90": 0.01652917619163718,
+          "p95": 0.03230022929924076,
+          "p99": 0.03719333044085648,
+          "max": 0.05192114011638804,
+          "maxAbs": 0.09759350730529458
+        },
+        "writerError": {
+          "count": 27720,
+          "signedMean": -0.0003475016836031619,
+          "mae": 0.007985842446309713,
+          "rms": 0.015171142387991717,
+          "min": -0.07059350660494,
+          "p50": 0,
+          "p90": 0.01431131704554977,
+          "p95": 0.02758711164987018,
+          "p99": 0.04668756140731241,
+          "max": 0.05037321304326787,
+          "maxAbs": 0.07059350660494
+        },
+        "totalError": {
+          "count": 27720,
+          "signedMean": -0.002747867451537962,
+          "mae": 0.00899646815450012,
+          "rms": 0.01759343137566759,
+          "min": -0.08175786078205846,
+          "p50": 0,
+          "p90": 0.01292779112230806,
+          "p95": 0.01963852029725461,
+          "p99": 0.04080285121511409,
+          "max": 0.04745355664131479,
+          "maxAbs": 0.08175786078205846
+        },
+        "pairedDirection": {
+          "bothNonzero": 11754,
+          "opposing": 8524,
+          "reinforcing": 3230,
+          "eitherZero": 15966
+        },
+        "writerReducesReaderError": 7504,
+        "writerEnlargesReaderError": 20216
+      },
+      "candidateWeightedMaxima": {
+        "count": 27720,
+        "readerError": {
+          "count": 27720,
+          "signedMean": -0.0020515108569921,
+          "mae": 0.007672258398286225,
+          "rms": 0.01756933917699752,
+          "min": -0.09759350730529458,
+          "p50": 0,
+          "p90": 0.012583315766709279,
+          "p95": 0.02033099657687131,
+          "p99": 0.0319914291750687,
+          "max": 0.0438640180957663,
+          "maxAbs": 0.09759350730529458
+        },
+        "writerError": {
+          "count": 27720,
+          "signedMean": -0.000499702353208058,
+          "mae": 0.005768267932194945,
+          "rms": 0.011627601991829606,
+          "min": -0.07059350660494,
+          "p50": 0,
+          "p90": 0.009984853212836512,
+          "p95": 0.020100545360625888,
+          "p99": 0.03494475090643395,
+          "max": 0.04511555202317704,
+          "maxAbs": 0.07059350660494
+        },
+        "totalError": {
+          "count": 27720,
+          "signedMean": -0.0025512132102001412,
+          "mae": 0.00701826843496047,
+          "rms": 0.01480449099010762,
+          "min": -0.0801211318520776,
+          "p50": 0,
+          "p90": 0.009400327451210198,
+          "p95": 0.012937661870854888,
+          "p99": 0.02544300562587591,
+          "max": 0.030148240883543218,
+          "maxAbs": 0.0801211318520776
+        },
+        "pairedDirection": {
+          "bothNonzero": 11754,
+          "opposing": 8494,
+          "reinforcing": 3260,
+          "eitherZero": 15966
+        },
+        "writerReducesReaderError": 7360,
+        "writerEnlargesReaderError": 20360
+      }
+    },
+    "representatives": [
+      {
+        "selectionRule": "Named in task before this attribution run; retained without listening or outcome-based selection.",
+        "shape": "tight",
+        "phase": "p00",
+        "station": 0.294,
+        "analyticWinner": 0,
+        "productionWinner": 0.47,
+        "analyticMargin": 1.8186870737711827,
+        "firstProductionWrongStage": "rawMaximum",
+        "raw": {
+          "A": {
+            "values": [
+              0,
+              0,
+              0.06078647108559383,
+              0.0275097548058132,
+              0
+            ],
+            "winner": 0,
+            "order": [
+              0,
+              0.47,
+              -0.92,
+              -0.47,
+              0.92
+            ]
+          },
+          "B": {
+            "values": [
+              0,
+              0,
+              0.03201627776195625,
+              0.032387874470204296,
+              0
+            ],
+            "winner": 0.47,
+            "order": [
+              0.47,
+              0,
+              -0.92,
+              -0.47,
+              0.92
+            ],
+            "topTie": [
+              0.47
+            ],
+            "targetInTopTie": false
+          },
+          "C": {
+            "values": [
+              0,
+              0,
+              0.03528578404987475,
+              0.041085056813513196,
+              0
+            ],
+            "winner": 0.47,
+            "order": [
+              0.47,
+              0,
+              -0.92,
+              -0.47,
+              0.92
+            ]
+          },
+          "class": "READER-SUFFICIENT"
+        },
+        "weighted": {
+          "A": {
+            "values": [
+              0,
+              0,
+              0.04710951509133522,
+              0.015130365143197263,
+              0
+            ],
+            "winner": 0,
+            "order": [
+              0,
+              0.47,
+              -0.92,
+              -0.47,
+              0.92
+            ]
+          },
+          "B": {
+            "values": [
+              0,
+              0,
+              0.01760895276907594,
+              0.02510060271440833,
+              0
+            ],
+            "winner": 0.47,
+            "order": [
+              0.47,
+              0,
+              -0.92,
+              -0.47,
+              0.92
+            ],
+            "topTie": [
+              0.47
+            ],
+            "targetInTopTie": false
+          },
+          "C": {
+            "values": [
+              0,
+              0,
+              0.019411445570753354,
+              0.03184091903047273,
+              0
+            ],
+            "winner": 0.47,
+            "order": [
+              0.47,
+              0,
+              -0.92,
+              -0.47,
+              0.92
+            ]
+          },
+          "class": "READER-SUFFICIENT"
+        },
+        "final": {
+          "A": {
+            "scores": [
+              -0.1537483788159594,
+              -0.04229338507075395,
+              1.9856901173881942,
+              0.1670030436170116,
+              -0.1537483788159594
+            ],
+            "winner": 0,
+            "order": [
+              0,
+              0.47,
+              -0.47,
+              -0.92,
+              0.92
+            ]
+          },
+          "B": {
+            "scores": [
+              -0.05841843990814714,
+              -0.016069851228971147,
+              0.31629767306231166,
+              0.7384156249248932,
+              -0.05841843990814714
+            ],
+            "winner": 0.47,
+            "order": [
+              0.47,
+              0,
+              -0.47,
+              -0.92,
+              0.92
+            ],
+            "topTie": [
+              0.47
+            ],
+            "targetInTopTie": false
+          },
+          "C": {
+            "scores": [
+              -0.09312065384356152,
+              -0.02561579966810888,
+              0.40805659573537634,
+              1.1770554966792004,
+              -0.09312065384356152
+            ],
+            "winner": 0.47,
+            "order": [
+              0.47,
+              0,
+              -0.47,
+              -0.92,
+              0.92
+            ]
+          },
+          "class": "READER-SUFFICIENT"
+        }
+      },
+      {
+        "selectionRule": "Named in task before this attribution run; retained without listening or outcome-based selection.",
+        "shape": "tight",
+        "phase": "p10",
+        "station": 0.066,
+        "analyticWinner": 0,
+        "productionWinner": 0.47,
+        "analyticMargin": 1.7830731866924467,
+        "firstProductionWrongStage": "maximum",
+        "raw": {
+          "A": {
+            "values": [
+              0,
+              0,
+              0.06189317239334453,
+              0.03044982355756859,
+              0
+            ],
+            "winner": 0,
+            "order": [
+              0,
+              0.47,
+              -0.92,
+              -0.47,
+              0.92
+            ]
+          },
+          "B": {
+            "values": [
+              0,
+              0,
+              0.03523030411359432,
+              0.029834238187708,
+              0
+            ],
+            "winner": 0,
+            "order": [
+              0,
+              0.47,
+              -0.92,
+              -0.47,
+              0.92
+            ],
+            "topTie": [
+              0
+            ],
+            "targetInTopTie": true
+          },
+          "C": {
+            "values": [
+              0,
+              0,
+              0.049206620228434896,
+              0.047434510230003585,
+              0
+            ],
+            "winner": 0,
+            "order": [
+              0,
+              0.47,
+              -0.92,
+              -0.47,
+              0.92
+            ]
+          },
+          "class": "NO QUALITATIVE FAILURE"
+        },
+        "weighted": {
+          "A": {
+            "values": [
+              0,
+              0,
+              0.04796720860484201,
+              0.016747402956662726,
+              0
+            ],
+            "winner": 0,
+            "order": [
+              0,
+              0.47,
+              -0.92,
+              -0.47,
+              0.92
+            ]
+          },
+          "B": {
+            "values": [
+              0,
+              0,
+              0.027303485688035596,
+              0.0231215345954737,
+              0
+            ],
+            "winner": 0,
+            "order": [
+              0,
+              0.47,
+              -0.92,
+              -0.47,
+              0.92
+            ],
+            "topTie": [
+              0
+            ],
+            "targetInTopTie": true
+          },
+          "C": {
+            "values": [
+              0,
+              0,
+              0.028501675781825334,
+              0.03676174542825278,
+              0
+            ],
+            "winner": 0.47,
+            "order": [
+              0.47,
+              0,
+              -0.92,
+              -0.47,
+              0.92
+            ]
+          },
+          "class": "WRITER/STORAGE-SUFFICIENT"
+        },
+        "final": {
+          "A": {
+            "scores": [
+              -0.15614097165824317,
+              -0.04295154388306484,
+              2.0165909177637453,
+              0.23351773107129864,
+              -0.15614097165824317
+            ],
+            "winner": 0,
+            "order": [
+              0,
+              0.47,
+              -0.47,
+              -0.92,
+              0.92
+            ]
+          },
+          "B": {
+            "scores": [
+              -0.06979006770214642,
+              -0.019197979387958777,
+              0.9013522535667874,
+              0.6073965382766429,
+              -0.06979006770214642
+            ],
+            "winner": 0,
+            "order": [
+              0,
+              0.47,
+              -0.47,
+              -0.92,
+              0.92
+            ],
+            "topTie": [
+              0
+            ],
+            "targetInTopTie": true
+          },
+          "C": {
+            "scores": [
+              -0.11637024430419858,
+              -0.03201133950834414,
+              0.9818376969338749,
+              1.470932924700774,
+              -0.11637024430419858
+            ],
+            "winner": 0.47,
+            "order": [
+              0.47,
+              0,
+              -0.47,
+              -0.92,
+              0.92
+            ]
+          },
+          "class": "WRITER/STORAGE-SUFFICIENT"
+        }
+      }
+    ]
+  },
+  "phaseGeometry": {
+    "comparisons": 357588,
+    "maxTranslationResidual": 2.0556473190325164e-16,
+    "phases": {
+      "p00": [
+        0,
+        0
+      ],
+      "p10": [
+        0.005263157894736842,
+        0
+      ],
+      "p01": [
+        0,
+        0.005263157894736842
+      ],
+      "p11": [
+        0.005263157894736842,
+        0.005263157894736842
+      ]
+    },
+    "frozenQueriesPerStation": {
+      "local": 18,
+      "wide": 25
+    }
+  },
+  "rowCount": 5544
+}

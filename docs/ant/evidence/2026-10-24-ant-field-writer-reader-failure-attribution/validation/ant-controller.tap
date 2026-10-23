@@ -1,0 +1,136 @@
+TAP version 13
+# Subtest: population has equal agents with stable individual personalities and shared pheromone memory
+ok 1 - population has equal agents with stable individual personalities and shared pheromone memory
+  ---
+  duration_ms: 387.9387
+  type: 'test'
+  ...
+# Subtest: ants enter one at a time from a common region with irregular delays and distinct headings
+ok 2 - ants enter one at a time from a common region with irregular delays and distinct headings
+  ---
+  duration_ms: 104.5146
+  type: 'test'
+  ...
+# Subtest: occupied spawn space delays entry without allocating an overlapping agent or skipping an ID
+ok 3 - occupied spawn space delays entry without allocating an overlapping agent or skipping an ID
+  ---
+  duration_ms: 1.3675
+  type: 'test'
+  ...
+# Subtest: changing the target preserves shared history and introduces additional ants gradually
+ok 4 - changing the target preserves shared history and introduces additional ants gradually
+  ---
+  duration_ms: 115.4273
+  type: 'test'
+  ...
+# Subtest: swept occupancy guard prevents direct pass-through in head-on and crossing encounters
+ok 5 - swept occupancy guard prevents direct pass-through in head-on and crossing encounters
+  ---
+  duration_ms: 0.6005
+  type: 'test'
+  ...
+# Subtest: local occupancy reads front and sides more strongly than the rear
+ok 6 - local occupancy reads front and sides more strongly than the rear
+  ---
+  duration_ms: 0.2536
+  type: 'test'
+  ...
+# Subtest: probabilistic trail choice increases attraction while exploration can still choose away
+ok 7 - probabilistic trail choice increases attraction while exploration can still choose away
+  ---
+  duration_ms: 2.834
+  type: 'test'
+  ...
+# Subtest: long runs across seeds remain finite, spread out, and collision stable
+ok 8 - long runs across seeds remain finite, spread out, and collision stable
+  ---
+  duration_ms: 795.8161
+  type: 'test'
+  ...
+# Subtest: a dense equal-agent cluster disperses without body overlap or unstable velocity
+ok 9 - a dense equal-agent cluster disperses without body overlap or unstable velocity
+  ---
+  duration_ms: 562.7379
+  type: 'test'
+  ...
+# Subtest: near-boundary body collisions still prevent overlap
+ok 10 - near-boundary body collisions still prevent overlap
+  ---
+  duration_ms: 1.3412
+  type: 'test'
+  ...
+# Subtest: fixed-step controller is deterministic across equivalent frame schedules
+ok 11 - fixed-step controller is deterministic across equivalent frame schedules
+  ---
+  duration_ms: 10.1844
+  type: 'test'
+  ...
+# Subtest: stop and destroy halt simulation and detach listeners
+ok 12 - stop and destroy halt simulation and detach listeners
+  ---
+  duration_ms: 1.0816
+  type: 'test'
+  ...
+# Subtest: an isolated ant has repeated near-stops after warmup and resumes forward movement
+ok 13 - an isolated ant has repeated near-stops after warmup and resumes forward movement
+  ---
+  duration_ms: 300.9508
+  type: 'test'
+  ...
+# Subtest: approaching bodies brake smoothly before a head-on contact
+ok 14 - approaching bodies brake smoothly before a head-on contact
+  ---
+  duration_ms: 19.4032
+  type: 'test'
+  ...
+# Subtest: agents use bounded turn rate and exponential velocity response
+ok 15 - agents use bounded turn rate and exponential velocity response
+  ---
+  duration_ms: 0.1714
+  type: 'test'
+  ...
+# Subtest: long-range discovery ignores weak residue and favors reinforced trails probabilistically
+ok 16 - long-range discovery ignores weak residue and favors reinforced trails probabilistically
+  ---
+  duration_ms: 19.2199
+  type: 'test'
+  ...
+# Subtest: a wide sensor discovers a thin adjacent trail without broadening the pheromone field
+ok 17 - a wide sensor discovers a thin adjacent trail without broadening the pheromone field
+  ---
+  duration_ms: 0.4091
+  type: 'test'
+  ...
+# Subtest: distance deposition keeps convex adherence reinforcement above the evidence baseline
+ok 18 - distance deposition keeps convex adherence reinforcement above the evidence baseline
+  ---
+  duration_ms: 5.0351
+  type: 'test'
+  ...
+# Subtest: far pheromone concentration does not add to deposition at fixed local evidence
+ok 19 - far pheromone concentration does not add to deposition at fixed local evidence
+  ---
+  duration_ms: 1.2481
+  type: 'test'
+  ...
+# Subtest: configured base amount and bounded reinforcement gain scale real deposits
+ok 20 - configured base amount and bounded reinforcement gain scale real deposits
+  ---
+  duration_ms: 2.2312
+  type: 'test'
+  ...
+# Subtest: a stationary ant adds no pheromone despite the nonzero deposition baseline
+ok 21 - a stationary ant adds no pheromone despite the nonzero deposition baseline
+  ---
+  duration_ms: 0.7753
+  type: 'test'
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2346.5515

@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: continuous mode preserves thorax-distance dose when the gaster point travels a different distance
+ok 1 - continuous mode preserves thorax-distance dose when the gaster point travels a different distance
+  ---
+  duration_ms: 1.0149
+  type: 'test'
+  ...
+# Subtest: dab thresholds follow traveled distance, ignore pure gaster rotation, and interpolate the rear point
+ok 2 - dab thresholds follow traveled distance, ignore pure gaster rotation, and interpolate the rear point
+  ---
+  duration_ms: 0.2413
+  type: 'test'
+  ...
+# Subtest: large movement emits every crossed dab boundary and retirement flushes the final partial dose
+ok 3 - large movement emits every crossed dab boundary and retirement flushes the final partial dose
+  ---
+  duration_ms: 0.197
+  type: 'test'
+  ...
+# Subtest: pathological dab bursts are bounded while their weighted amount is conserved
+ok 4 - pathological dab bursts are bounded while their weighted amount is conserved
+  ---
+  duration_ms: 0.2468
+  type: 'test'
+  ...
+# Subtest: continuous and dab modes preserve adherence-weighted dose across different movement subdivisions
+ok 5 - continuous and dab modes preserve adherence-weighted dose across different movement subdivisions
+  ---
+  duration_ms: 5.42
+  type: 'test'
+  ...
+# Subtest: dab remainder is flushed and cleared on retirement; retain and reset release transient state
+ok 6 - dab remainder is flushed and cleared on retirement; retain and reset release transient state
+  ---
+  duration_ms: 0.2471
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 14.8266
