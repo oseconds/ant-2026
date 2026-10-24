@@ -1,0 +1,25 @@
+{
+  "schema": "ant-cic-writer-preregistration/v1",
+  "frozenAt": "2026-10-24T04:44:44.316Z",
+  "baseline": "8c60e4bba3bd5b476300e90a2936bfebd1f831c2",
+  "protocol": {
+    "path": "docs/ant/evidence/2026-10-24-ant-cic-writer-qualification/PROTOCOL.md",
+    "sha256": "6a4aadc894ec5175b0ba1111e5e2b82e9b81c6c9aeb8d6f5e9b16541f26eb7ca"
+  },
+  "plan": {
+    "path": "docs/ant/evidence/2026-10-24-ant-cic-writer-qualification/PLAN.md",
+    "sha256": "a25eca2452c7f1ff3c8cba9ef5e62d5055b4c61f9c4d008f5d01d80e202709e8"
+  },
+  "candidateTargetEvaluationStarted": false,
+  "redTests": {
+    "tests": 4,
+    "pass": 1,
+    "fail": 3,
+    "reason": "Unmodified production writer lacks four-node barycentric support; no candidate target assay run."
+  },
+  "gates": [
+    "dose-and-first-moment",
+    "fixed-cue-improvement",
+    "movement-improvement"
+  ]
+}
