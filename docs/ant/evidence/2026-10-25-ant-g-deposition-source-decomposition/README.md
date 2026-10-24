@@ -36,6 +36,14 @@ All doses below are requested amounts in the temporary legacy node-sum conventio
 | Pooled difference | +6.459 | +8,545.750 | +8,552.209 |
 | Signed share of total difference | +0.0755% | +99.9245% | 100% |
 
+For comparison, the accrued G source terms in the actual scaled writer convention were baseline `42,564.043`, reinforcement `229,672.187`, total `272,236.230` pooled. These include pending dab carry. The field had received `272,210.082` requested amount by 600 s; the remaining `26.148` scaled amount was pending in the dab accumulators. Per-seed accrued scaled totals were:
+
+| Seed | Scaled baseline | Scaled reinforcement | Scaled total |
+| --- | ---: | ---: | ---: |
+| 20261005 | 14,014.871 | 74,574.111 | 88,588.981 |
+| 20261006 | 14,334.418 | 79,676.605 | 94,011.023 |
+| 20261007 | 14,214.755 | 75,421.471 | 89,636.225 |
+
 The prior emitted-writer statistic reproduces: C requested `16,207.513619`; G requested `272,210.081940`, or `24,758.840912` after dividing by `S`, a ratio of `1.527615×` C. The chunk ledger includes dabs still pending at the 600-second boundary: `1.496164` unscaled for C and `2.378276` unscaled for G. Including those accrued chunks gives the decomposition above (`1.527621×`). The pending carry is part of the chunk-source accounting, while emitted field requests remain a separate writer statistic.
 
 ### Per-seed totals
