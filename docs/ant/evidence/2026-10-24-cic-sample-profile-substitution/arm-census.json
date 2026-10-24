@@ -1,0 +1,787 @@
+{
+  "schema": "ant-cic-sample-profile-substitution-census/v1",
+  "primaryRows": 26,
+  "reproduction": {
+    "strictUniqueRows": 5072,
+    "productionMismatchRows": 2378,
+    "cicMismatchRows": 2378,
+    "recoveredRows": 92,
+    "newErrorRows": 92,
+    "primaryRows": 26,
+    "primarySortedKeysSha256": "960def8884a5fee1be4ad0872ae0e66be508388b031a28d2ac4f09bdd8f59085",
+    "byRoute": {
+      "tight": 13,
+      "tightMirror": 13
+    },
+    "byPhase": {
+      "p00": 8,
+      "p10": 2,
+      "p01": 10,
+      "p11": 6
+    },
+    "targetSampleSwitches": 26,
+    "rivalSampleSwitches": 0,
+    "sameSampleReorders": 0,
+    "relevantExactTies": 0
+  },
+  "arms": {
+    "D": {
+      "source": null,
+      "replacedRoles": [],
+      "weightedTargetWins": 0,
+      "finalTargetWins": 0,
+      "weightedWrong": 26,
+      "finalWrong": 26,
+      "weightedExactTopTiesContainingTarget": 0,
+      "finalExactTopTiesContainingTarget": 0,
+      "exactTopTieRows": {
+        "rawMaximum": [],
+        "weightedMaximum": [],
+        "finalFieldOnlyScore": []
+      },
+      "thirdWeightedWinnerCount": 0,
+      "thirdFinalWinnerCount": 0,
+      "thirdWeightedWinnerByOffset": {},
+      "thirdFinalWinnerByOffset": {},
+      "restorationByRoutePhase": {
+        "weighted": {
+          "byRoute": {},
+          "byPhase": {},
+          "byRoutePhase": {}
+        },
+        "final": {
+          "byRoute": {},
+          "byPhase": {},
+          "byRoutePhase": {}
+        }
+      },
+      "marginDistributions": {
+        "rawMaximum": {
+          "n": 26,
+          "mean": 0.00189272158015647,
+          "min": 0.0005699671796151329,
+          "p10": 0.0011407374241101283,
+          "median": 0.0018896660942740937,
+          "p90": 0.002573126956378166,
+          "max": 0.0030700429133285675
+        },
+        "weightedMaximum": {
+          "n": 26,
+          "mean": -0.002029441139825983,
+          "min": -0.003768941223694776,
+          "p10": -0.0036097885767406336,
+          "median": -0.0017453695757534485,
+          "p90": -0.0007940896818816982,
+          "max": -0.0004538046995182371
+        },
+        "finalFieldOnlyScore": {
+          "n": 26,
+          "mean": -0.10175226741253557,
+          "min": -0.19412823912573773,
+          "p10": -0.19069977399337035,
+          "median": -0.08197427793775097,
+          "p90": -0.03387657887210721,
+          "max": -0.01563270133570044
+        }
+      }
+    },
+    "D[target←C]": {
+      "source": "C",
+      "replacedRoles": [
+        "target"
+      ],
+      "weightedTargetWins": 12,
+      "finalTargetWins": 16,
+      "weightedWrong": 14,
+      "finalWrong": 10,
+      "weightedExactTopTiesContainingTarget": 0,
+      "finalExactTopTiesContainingTarget": 0,
+      "exactTopTieRows": {
+        "rawMaximum": [],
+        "weightedMaximum": [],
+        "finalFieldOnlyScore": []
+      },
+      "thirdWeightedWinnerCount": 0,
+      "thirdFinalWinnerCount": 0,
+      "thirdWeightedWinnerByOffset": {},
+      "thirdFinalWinnerByOffset": {},
+      "restorationByRoutePhase": {
+        "weighted": {
+          "byRoute": {
+            "tight": 6,
+            "tightMirror": 6
+          },
+          "byPhase": {
+            "p00": 6,
+            "p01": 6
+          },
+          "byRoutePhase": {
+            "tight|p00": 3,
+            "tight|p01": 3,
+            "tightMirror|p00": 3,
+            "tightMirror|p01": 3
+          }
+        },
+        "final": {
+          "byRoute": {
+            "tight": 8,
+            "tightMirror": 8
+          },
+          "byPhase": {
+            "p00": 6,
+            "p10": 2,
+            "p01": 6,
+            "p11": 2
+          },
+          "byRoutePhase": {
+            "tight|p00": 3,
+            "tight|p10": 1,
+            "tight|p01": 3,
+            "tight|p11": 1,
+            "tightMirror|p00": 3,
+            "tightMirror|p10": 1,
+            "tightMirror|p01": 3,
+            "tightMirror|p11": 1
+          }
+        }
+      },
+      "marginDistributions": {
+        "rawMaximum": {
+          "n": 26,
+          "mean": 0.001773657247818629,
+          "min": -0.0032154585982975548,
+          "p10": -0.001405900796141394,
+          "median": 0.0014360859258164792,
+          "p90": 0.004652967024755501,
+          "max": 0.0065455270416208446
+        },
+        "weightedMaximum": {
+          "n": 26,
+          "mean": 0.0019172166329248402,
+          "min": -0.002491980413680605,
+          "p10": -0.0013249501771728268,
+          "median": -0.0000012941798163829121,
+          "p90": 0.005646961421302908,
+          "max": 0.012012311440654302
+        },
+        "finalFieldOnlyScore": {
+          "n": 26,
+          "mean": 0.13632108173966762,
+          "min": -0.1371091153680623,
+          "p10": -0.06670791246659724,
+          "median": 0.009652721260549224,
+          "p90": 0.36573815256832076,
+          "max": 0.7968044952434286
+        }
+      }
+    },
+    "D[rival←C]": {
+      "source": "C",
+      "replacedRoles": [
+        "rival"
+      ],
+      "weightedTargetWins": 18,
+      "finalTargetWins": 20,
+      "weightedWrong": 8,
+      "finalWrong": 6,
+      "weightedExactTopTiesContainingTarget": 0,
+      "finalExactTopTiesContainingTarget": 0,
+      "exactTopTieRows": {
+        "rawMaximum": [],
+        "weightedMaximum": [],
+        "finalFieldOnlyScore": []
+      },
+      "thirdWeightedWinnerCount": 0,
+      "thirdFinalWinnerCount": 0,
+      "thirdWeightedWinnerByOffset": {},
+      "thirdFinalWinnerByOffset": {},
+      "restorationByRoutePhase": {
+        "weighted": {
+          "byRoute": {
+            "tight": 9,
+            "tightMirror": 9
+          },
+          "byPhase": {
+            "p00": 8,
+            "p01": 6,
+            "p11": 4
+          },
+          "byRoutePhase": {
+            "tight|p00": 4,
+            "tight|p01": 3,
+            "tight|p11": 2,
+            "tightMirror|p00": 4,
+            "tightMirror|p01": 3,
+            "tightMirror|p11": 2
+          }
+        },
+        "final": {
+          "byRoute": {
+            "tight": 10,
+            "tightMirror": 10
+          },
+          "byPhase": {
+            "p00": 8,
+            "p01": 8,
+            "p11": 4
+          },
+          "byRoutePhase": {
+            "tight|p00": 4,
+            "tight|p01": 4,
+            "tight|p11": 2,
+            "tightMirror|p00": 4,
+            "tightMirror|p01": 4,
+            "tightMirror|p11": 2
+          }
+        }
+      },
+      "marginDistributions": {
+        "rawMaximum": {
+          "n": 26,
+          "mean": 0.0027305121578270015,
+          "min": -0.0019183498713054928,
+          "p10": -0.0007971205294785774,
+          "median": 0.0031981906784205247,
+          "p90": 0.005407846966274235,
+          "max": 0.006379514566884799
+        },
+        "weightedMaximum": {
+          "n": 26,
+          "mean": 0.0013523253872911368,
+          "min": -0.0013431863968707478,
+          "p10": -0.0010982362097461881,
+          "median": 0.0015414772068041462,
+          "p90": 0.0040023203944469735,
+          "max": 0.005186555557428748
+        },
+        "finalFieldOnlyScore": {
+          "n": 26,
+          "mean": 0.07292713939345218,
+          "min": -0.061474507758805974,
+          "p10": -0.047547836226099705,
+          "median": 0.0836998563081941,
+          "p90": 0.18721124236869868,
+          "max": 0.268410692765997
+        }
+      }
+    },
+    "D[target+rival←C]": {
+      "source": "C",
+      "replacedRoles": [
+        "target",
+        "rival"
+      ],
+      "weightedTargetWins": 26,
+      "finalTargetWins": 26,
+      "weightedWrong": 0,
+      "finalWrong": 0,
+      "weightedExactTopTiesContainingTarget": 0,
+      "finalExactTopTiesContainingTarget": 0,
+      "exactTopTieRows": {
+        "rawMaximum": [],
+        "weightedMaximum": [],
+        "finalFieldOnlyScore": []
+      },
+      "thirdWeightedWinnerCount": 0,
+      "thirdFinalWinnerCount": 0,
+      "thirdWeightedWinnerByOffset": {},
+      "thirdFinalWinnerByOffset": {},
+      "restorationByRoutePhase": {
+        "weighted": {
+          "byRoute": {
+            "tight": 13,
+            "tightMirror": 13
+          },
+          "byPhase": {
+            "p00": 8,
+            "p10": 2,
+            "p01": 10,
+            "p11": 6
+          },
+          "byRoutePhase": {
+            "tight|p00": 4,
+            "tight|p10": 1,
+            "tight|p01": 5,
+            "tight|p11": 3,
+            "tightMirror|p00": 4,
+            "tightMirror|p10": 1,
+            "tightMirror|p01": 5,
+            "tightMirror|p11": 3
+          }
+        },
+        "final": {
+          "byRoute": {
+            "tight": 13,
+            "tightMirror": 13
+          },
+          "byPhase": {
+            "p00": 8,
+            "p10": 2,
+            "p01": 10,
+            "p11": 6
+          },
+          "byRoutePhase": {
+            "tight|p00": 4,
+            "tight|p10": 1,
+            "tight|p01": 5,
+            "tight|p11": 3,
+            "tightMirror|p00": 4,
+            "tightMirror|p10": 1,
+            "tightMirror|p01": 5,
+            "tightMirror|p11": 3
+          }
+        }
+      },
+      "marginDistributions": {
+        "rawMaximum": {
+          "n": 26,
+          "mean": 0.0026114478254891595,
+          "min": -0.0013251900317857931,
+          "p10": 0.0010516509438665486,
+          "median": 0.002500195383690399,
+          "p90": 0.005938382218917477,
+          "max": 0.005963813613169836
+        },
+        "weightedMaximum": {
+          "n": 26,
+          "mean": 0.00529898316004196,
+          "min": 0.0003571912101578631,
+          "p10": 0.0007143824203157192,
+          "median": 0.003651509946177755,
+          "p90": 0.010718037578800682,
+          "max": 0.015411774576037422
+        },
+        "finalFieldOnlyScore": {
+          "n": 26,
+          "mean": 0.31251455675702966,
+          "min": 0.02972081817094352,
+          "p10": 0.04719967005646475,
+          "median": 0.19551783476230117,
+          "p90": 0.6022853096910143,
+          "max": 0.9644184862949304
+        }
+      }
+    },
+    "D[target←A]": {
+      "source": "A",
+      "replacedRoles": [
+        "target"
+      ],
+      "weightedTargetWins": 26,
+      "finalTargetWins": 26,
+      "weightedWrong": 0,
+      "finalWrong": 0,
+      "weightedExactTopTiesContainingTarget": 0,
+      "finalExactTopTiesContainingTarget": 0,
+      "exactTopTieRows": {
+        "rawMaximum": [],
+        "weightedMaximum": [],
+        "finalFieldOnlyScore": []
+      },
+      "thirdWeightedWinnerCount": 0,
+      "thirdFinalWinnerCount": 0,
+      "thirdWeightedWinnerByOffset": {},
+      "thirdFinalWinnerByOffset": {},
+      "restorationByRoutePhase": {
+        "weighted": {
+          "byRoute": {
+            "tight": 13,
+            "tightMirror": 13
+          },
+          "byPhase": {
+            "p00": 8,
+            "p10": 2,
+            "p01": 10,
+            "p11": 6
+          },
+          "byRoutePhase": {
+            "tight|p00": 4,
+            "tight|p10": 1,
+            "tight|p01": 5,
+            "tight|p11": 3,
+            "tightMirror|p00": 4,
+            "tightMirror|p10": 1,
+            "tightMirror|p01": 5,
+            "tightMirror|p11": 3
+          }
+        },
+        "final": {
+          "byRoute": {
+            "tight": 13,
+            "tightMirror": 13
+          },
+          "byPhase": {
+            "p00": 8,
+            "p10": 2,
+            "p01": 10,
+            "p11": 6
+          },
+          "byRoutePhase": {
+            "tight|p00": 4,
+            "tight|p10": 1,
+            "tight|p01": 5,
+            "tight|p11": 3,
+            "tightMirror|p00": 4,
+            "tightMirror|p10": 1,
+            "tightMirror|p01": 5,
+            "tightMirror|p11": 3
+          }
+        }
+      },
+      "marginDistributions": {
+        "rawMaximum": {
+          "n": 26,
+          "mean": 0.034872294789425384,
+          "min": 0.03212885468567983,
+          "p10": 0.03347103660447715,
+          "median": 0.03442549357589815,
+          "p90": 0.0362367298978612,
+          "max": 0.036388088733639856
+        },
+        "weightedMaximum": {
+          "n": 26,
+          "mean": 0.02702602846180468,
+          "min": 0.02489986238140187,
+          "p10": 0.02594005336846979,
+          "median": 0.02667975752132106,
+          "p90": 0.02808346567084243,
+          "max": 0.02820076876857089
+        },
+        "finalFieldOnlyScore": {
+          "n": 26,
+          "mean": 1.5643174536118236,
+          "min": 1.436364936685716,
+          "p10": 1.500850262857914,
+          "median": 1.5452718875174194,
+          "p90": 1.6256984069916252,
+          "max": 1.6321664442706645
+        }
+      }
+    },
+    "D[rival←A]": {
+      "source": "A",
+      "replacedRoles": [
+        "rival"
+      ],
+      "weightedTargetWins": 26,
+      "finalTargetWins": 26,
+      "weightedWrong": 0,
+      "finalWrong": 0,
+      "weightedExactTopTiesContainingTarget": 0,
+      "finalExactTopTiesContainingTarget": 0,
+      "exactTopTieRows": {
+        "rawMaximum": [],
+        "weightedMaximum": [],
+        "finalFieldOnlyScore": []
+      },
+      "thirdWeightedWinnerCount": 0,
+      "thirdFinalWinnerCount": 0,
+      "thirdWeightedWinnerByOffset": {},
+      "thirdFinalWinnerByOffset": {},
+      "restorationByRoutePhase": {
+        "weighted": {
+          "byRoute": {
+            "tight": 13,
+            "tightMirror": 13
+          },
+          "byPhase": {
+            "p00": 8,
+            "p10": 2,
+            "p01": 10,
+            "p11": 6
+          },
+          "byRoutePhase": {
+            "tight|p00": 4,
+            "tight|p10": 1,
+            "tight|p01": 5,
+            "tight|p11": 3,
+            "tightMirror|p00": 4,
+            "tightMirror|p10": 1,
+            "tightMirror|p01": 5,
+            "tightMirror|p11": 3
+          }
+        },
+        "final": {
+          "byRoute": {
+            "tight": 13,
+            "tightMirror": 13
+          },
+          "byPhase": {
+            "p00": 8,
+            "p10": 2,
+            "p01": 10,
+            "p11": 6
+          },
+          "byRoutePhase": {
+            "tight|p00": 4,
+            "tight|p10": 1,
+            "tight|p01": 5,
+            "tight|p11": 3,
+            "tightMirror|p00": 4,
+            "tightMirror|p10": 1,
+            "tightMirror|p01": 5,
+            "tightMirror|p11": 3
+          }
+        }
+      },
+      "marginDistributions": {
+        "rawMaximum": {
+          "n": 26,
+          "mean": -0.0015362243734948306,
+          "min": -0.0028678740087925737,
+          "p10": -0.002610033972717807,
+          "median": -0.001563304168413042,
+          "p90": -0.00015046949491717004,
+          "max": 0.0004552315742029876
+        },
+        "weightedMaximum": {
+          "n": 26,
+          "mean": 0.002164336046547309,
+          "min": 0.0010438188685162018,
+          "p10": 0.0011779165329705021,
+          "median": 0.0019847479232125084,
+          "p90": 0.003523945060130807,
+          "max": 0.0040862434273383
+        },
+        "finalFieldOnlyScore": {
+          "n": 26,
+          "mean": 0.11461157599130704,
+          "min": 0.055523891639981116,
+          "p10": 0.0621918506689248,
+          "median": 0.10365471352939615,
+          "p90": 0.1887374919880564,
+          "max": 0.22160233618645786
+        }
+      }
+    },
+    "D[target+rival←A]": {
+      "source": "A",
+      "replacedRoles": [
+        "target",
+        "rival"
+      ],
+      "weightedTargetWins": 26,
+      "finalTargetWins": 26,
+      "weightedWrong": 0,
+      "finalWrong": 0,
+      "weightedExactTopTiesContainingTarget": 0,
+      "finalExactTopTiesContainingTarget": 0,
+      "exactTopTieRows": {
+        "rawMaximum": [],
+        "weightedMaximum": [],
+        "finalFieldOnlyScore": []
+      },
+      "thirdWeightedWinnerCount": 0,
+      "thirdFinalWinnerCount": 0,
+      "thirdWeightedWinnerByOffset": {},
+      "thirdFinalWinnerByOffset": {},
+      "restorationByRoutePhase": {
+        "weighted": {
+          "byRoute": {
+            "tight": 13,
+            "tightMirror": 13
+          },
+          "byPhase": {
+            "p00": 8,
+            "p10": 2,
+            "p01": 10,
+            "p11": 6
+          },
+          "byRoutePhase": {
+            "tight|p00": 4,
+            "tight|p10": 1,
+            "tight|p01": 5,
+            "tight|p11": 3,
+            "tightMirror|p00": 4,
+            "tightMirror|p10": 1,
+            "tightMirror|p01": 5,
+            "tightMirror|p11": 3
+          }
+        },
+        "final": {
+          "byRoute": {
+            "tight": 13,
+            "tightMirror": 13
+          },
+          "byPhase": {
+            "p00": 8,
+            "p10": 2,
+            "p01": 10,
+            "p11": 6
+          },
+          "byRoutePhase": {
+            "tight|p00": 4,
+            "tight|p10": 1,
+            "tight|p01": 5,
+            "tight|p11": 3,
+            "tightMirror|p00": 4,
+            "tightMirror|p10": 1,
+            "tightMirror|p01": 5,
+            "tightMirror|p11": 3
+          }
+        }
+      },
+      "marginDistributions": {
+        "rawMaximum": {
+          "n": 26,
+          "mean": 0.03144334883577409,
+          "min": 0.031443348835770144,
+          "p10": 0.031443348835772274,
+          "median": 0.03144334883577392,
+          "p90": 0.03144334883577643,
+          "max": 0.03144334883577669
+        },
+        "weightedMaximum": {
+          "n": 26,
+          "mean": 0.03121980564817797,
+          "min": 0.03121980564817509,
+          "p10": 0.03121980564817645,
+          "median": 0.03121980564817795,
+          "p90": 0.031219805648179777,
+          "max": 0.03121980564817986
+        },
+        "finalFieldOnlyScore": {
+          "n": 26,
+          "mean": 1.7830731866923972,
+          "min": 1.7830731866922893,
+          "p10": 1.7830731866923448,
+          "median": 1.783073186692394,
+          "p90": 1.783073186692462,
+          "max": 1.7830731866924678
+        }
+      }
+    }
+  },
+  "sufficiencyPatterns": {
+    "C": {
+      "weighted": {
+        "targetSingleRestores": 12,
+        "rivalSingleRestores": 18,
+        "bothSingleRestores": 10,
+        "pairedReplacementRestores": 26,
+        "jointOnlyRestores": 6,
+        "neitherSingleNorPairRestores": 0,
+        "bothSinglesRestoreButPairDoesNot": 0,
+        "rowPattern": {
+          "rival-only-plus-pair": 8,
+          "both-singles-and-pair": 10,
+          "joint-only": 6,
+          "target-only-plus-pair": 2
+        }
+      },
+      "final": {
+        "targetSingleRestores": 16,
+        "rivalSingleRestores": 20,
+        "bothSingleRestores": 12,
+        "pairedReplacementRestores": 26,
+        "jointOnlyRestores": 2,
+        "neitherSingleNorPairRestores": 0,
+        "bothSinglesRestoreButPairDoesNot": 0,
+        "rowPattern": {
+          "rival-only-plus-pair": 8,
+          "both-singles-and-pair": 12,
+          "target-only-plus-pair": 4,
+          "joint-only": 2
+        }
+      }
+    },
+    "A": {
+      "weighted": {
+        "targetSingleRestores": 26,
+        "rivalSingleRestores": 26,
+        "bothSingleRestores": 26,
+        "pairedReplacementRestores": 26,
+        "jointOnlyRestores": 0,
+        "neitherSingleNorPairRestores": 0,
+        "bothSinglesRestoreButPairDoesNot": 0,
+        "rowPattern": {
+          "both-singles-and-pair": 26
+        }
+      },
+      "final": {
+        "targetSingleRestores": 26,
+        "rivalSingleRestores": 26,
+        "bothSingleRestores": 26,
+        "pairedReplacementRestores": 26,
+        "jointOnlyRestores": 0,
+        "neitherSingleNorPairRestores": 0,
+        "bothSinglesRestoreButPairDoesNot": 0,
+        "rowPattern": {
+          "both-singles-and-pair": 26
+        }
+      }
+    }
+  },
+  "CvsAContrast": {
+    "target": {
+      "weighted": {
+        "bothRestore": 12,
+        "COnly": 0,
+        "AOnly": 14,
+        "neither": 0
+      },
+      "final": {
+        "bothRestore": 16,
+        "COnly": 0,
+        "AOnly": 10,
+        "neither": 0
+      }
+    },
+    "rival": {
+      "weighted": {
+        "bothRestore": 18,
+        "COnly": 0,
+        "AOnly": 8,
+        "neither": 0
+      },
+      "final": {
+        "bothRestore": 20,
+        "COnly": 0,
+        "AOnly": 6,
+        "neither": 0
+      }
+    },
+    "target+rival": {
+      "weighted": {
+        "bothRestore": 26,
+        "COnly": 0,
+        "AOnly": 0,
+        "neither": 0
+      },
+      "final": {
+        "bothRestore": 26,
+        "COnly": 0,
+        "AOnly": 0,
+        "neither": 0
+      }
+    }
+  },
+  "routePhase": {
+    "byRoute": {
+      "tight": 13,
+      "tightMirror": 13
+    },
+    "byPhase": {
+      "p00": 8,
+      "p10": 2,
+      "p01": 10,
+      "p11": 6
+    },
+    "byRoutePhase": {
+      "tight|p00": 4,
+      "tight|p10": 1,
+      "tight|p01": 5,
+      "tight|p11": 3,
+      "tightMirror|p00": 4,
+      "tightMirror|p10": 1,
+      "tightMirror|p01": 5,
+      "tightMirror|p11": 3
+    }
+  },
+  "interpretationRules": {
+    "targetRestoration": "candidate index equals the frozen analytic target at the specified helper stage",
+    "thirdWinner": "winner is neither the frozen analytic target nor the original D weighted/final rival",
+    "exactTies": "all candidate indices with value exactly equal to the stage maximum are retained; no tolerance added",
+    "noSuccessThreshold": true
+  }
+}

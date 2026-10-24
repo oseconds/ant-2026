@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-24 — CIC sample-profile substitution
+
+[Process log](./2026-10-24-cic-sample-profile-substitution.md) · [Evidence package](../evidence/2026-10-24-cic-sample-profile-substitution/README.md)
+
+- Replaced only the target/rival saved five-sample vectors and replayed the unchanged wide helper on the frozen 26 rows
+- C target-only restored 12 weighted / 16 final, C rival-only 18 / 20, and paired C vectors 26 / 26; A single-vector references restored all 26
+- Read-only sufficiency result only; no independent writer/operator attribution or candidate follows, Gate 2 remains MIXED / NOT QUALIFIED and Gate 3 NOT RUN
+
 ### 2026-10-24 — CIC transverse-sample diagnosis
 
 [Process log](./2026-10-24-cic-transverse-sample-diagnostic.md) · [Evidence package](../evidence/2026-10-24-cic-transverse-sample-diagnostic/README.md)
