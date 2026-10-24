@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "freshOriginMain": "8c60e4bba3bd5b476300e90a2936bfebd1f831c2",
+  "branch": "codex/ant-316-gaussian-dose-unit-movement-shadow-20261024",
+  "branchPoint": "336e8dc6e680ff5de3c256e50596581797ce0907",
+  "preregistrationCommit": "8ca0fe890d54b1f4c49b1f9f83203609451cf455",
+  "preregistrationSha256": "7e9eb7831c1d87c4852b1ea659452298c4479e27fc532b2b51d9f40e6cf48ed1",
+  "fixture": {
+    "seeds": [20261005, 20261006, 20261007],
+    "arms": ["C", "F", "G"],
+    "simulatedSecondsPerRun": 600,
+    "tickRateHz": 60,
+    "ticksPerRun": 36000,
+    "runs": 9,
+    "allRunsCompleted": true
+  },
+  "manipulation": {
+    "doseScale": 10.994459833795014,
+    "armConfigsExact": true,
+    "behaviorDefaultsEqualWithinSeed": true,
+    "initialFingerprintsEqualWithinSeed": true,
+    "observerParity": {
+      "ticksPerArm": 120,
+      "arms": ["C", "F", "G"],
+      "stateEqualEveryTick": true,
+      "rngCallsPerArm": 280,
+      "addedObservationRngCalls": 0
+    },
+    "production96FieldSyntheticByteParity": true,
+    "writerArithmeticMismatchesAcrossNaturalRuns": 0,
+    "audioBridge": null,
+    "baseSubstrate": false
+  },
+  "determinism": {
+    "manifestEntries": 56,
+    "secondGenerationManifestMatches": true,
+    "summaryByteIdentical": true,
+    "scientificManifestFileSha256": "adc2095bdbebb45d18732c2d16b3b465a2ed7b14f9965d4e954e1aeec349b2d4",
+    "summaryFileSha256": "e624166267e275dd03044f88cfa480e96d7744b0c32844492a1a822ea03c8e8d",
+    "receipt": "DETERMINISM-RECEIPT.json",
+    "runtimeWallClockExcluded": true
+  },
+  "decision": "MIXED / HOLD",
+  "runInvariants": {
+    "fieldNonfiniteSeconds": 0,
+    "surfaceNonfiniteSeconds": 0,
+    "monotonicTimeFailures": 0,
+    "plateBirthCountFailures": 0,
+    "contactCountFailures": 0,
+    "finiteAgentViolations": 0,
+    "speedCapViolations": 0,
+    "turnCapViolations": 0,
+    "collisionOverlapViolations": 0,
+    "populationCeilingViolations": 0,
+    "capTouches": 0,
+    "saturatedUpdates": 0,
+    "saturationLoss": 0
+  },
+  "tests": {
+    "syntaxCheck": "passed",
+    "selfcheck": "passed",
+    "focused": {"command": "node --test tests/ant-316-gaussian-dose-unit-movement-shadow.test.js", "passed": 3, "failed": 0},
+    "fullSuite": {"command": "npm test", "passed": 368, "failed": 0, "skipped": 0}
+  },
+  "build": {
+    "command": "npm run build",
+    "status": "passed",
+    "sandboxRetry": "First attempt returned spawn EPERM from esbuild; rerun with child-process permission succeeded.",
+    "warnings": [
+      "Rollup removed dependency PURE annotations in zod files because their positions were not interpretable.",
+      "Existing app bundle exceeds the 500 kB warning threshold after minification."
+    ]
+  },
+  "productionBoundary": {
+    "srcDiffAgainstOriginMain": false,
+    "canonicalAntReadmeDiffAgainstOriginMain": false,
+    "sourceHashesMatchPreregistration": true,
+    "realtimeOrBrowserRun": false,
+    "audioRun": false
+  },
+  "independentReview": {
+    "status": "completed",
+    "verdict": "MIXED / HOLD",
+    "artifact": "INDEPENDENT_REVIEW.md",
+    "testsOrRunsRepeatedByReviewer": false
+  }
+}

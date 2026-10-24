@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-24 — Candidate G natural movement shadow
+
+[Process log](./2026-10-24-ant-316-gaussian-dose-unit-movement-shadow.md) · [Evidence package](../evidence/2026-10-24-ant-316-gaussian-dose-unit-movement-shadow/README.md)
+
+- Three 600 s current-main natural shadows ran with C/F/G; no field-cap, finite-state, speed/turn or collision invariant failure, and the second generation reproduced all 56 scientific artifact hashes
+- G remained active and near C's travel rate, while local-strength/Hill upper-tail frequency and cumulative occupancy concentration increased; G produced 111 Plates versus C's 100, with earlier births in all seeds
+- Decision: **MOVEMENT SHADOW SUPPORTED** for absence of aggregate collapse in this cohort only; no production adoption. Review the temporary unit contract and endogenous adherence reinforcement before any production-candidate proposal
+
 ### 2026-10-24 — Pheromone representation contract feasibility
 
 [Process log](./2026-10-24-pheromone-representation-contract.md) · [Evidence package](../evidence/2026-10-24-pheromone-representation-contract/README.md)
