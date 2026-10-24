@@ -724,7 +724,7 @@ function zeroControl(rows, candidateArm) {
   return { count: rows.length, baseline: measure('C'), candidate: measure(candidateArm) };
 }
 
-function compareMetrics(rows, arm) {
+export function compareMetrics(rows, arm) {
   const by = (kind, values) => Object.fromEntries(values.map(value => [value,
     armSummary(rows.filter(row => row[kind] === value), arm)]));
   const spread = name => distribution(FAMILIES.flatMap(shape => [...new Set(rows.filter(row => row.shape === shape).map(row => row.station))].map(station => {
@@ -748,8 +748,8 @@ function compareMetrics(rows, arm) {
   };
 }
 
-function metricsForEachArm(rows) {
-  return Object.fromEntries(['C', 'D', 'E', 'F'].map(arm => {
+export function metricsForEachArm(rows, arms = ['C', 'D', 'E', 'F']) {
+  return Object.fromEntries(arms.map(arm => {
     const directional = rows.filter(row => sign(row.reference.steering) !== 0);
     const unique = rows.filter(row => row.uniqueWinner);
     return [arm, {
@@ -997,7 +997,7 @@ function loadGaussianFields(gate1Report) {
   return fields;
 }
 
-function verifyFrozenControls(preflightResult) {
+export function verifyFrozenControls(preflightResult) {
   const previousEvidence = loadPreviousEvidence(preflightResult.rows);
   const wideCensus = gzipJson(`${WIDE_ATTRIBUTION}/stage-census.json.gz`);
   const transverseRows = gzipJson(`${TRANSVERSE}/row-decomposition.json.gz`).rows;

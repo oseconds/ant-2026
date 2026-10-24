@@ -1,0 +1,80 @@
+{
+  "schema": "ant-316-gaussian-dose-unit-validation/v1",
+  "baseline": {
+    "originMain": "8c60e4bba3bd5b476300e90a2936bfebd1f831c2",
+    "FBranchPoint": "fcd450885d91b6b1aaec50cf0e9086a1e225e9d1",
+    "preregistrationCommit": "9b47601770deb8c8755c2fa47011826979f1a4d7",
+    "branch": "codex/ant-316-gaussian-dose-unit-qualification-20261024"
+  },
+  "production": {
+    "sourceHashes": {
+      "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+      "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+      "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04"
+    },
+    "productionSourceDiffFromOriginMain": [],
+    "canonicalAntReadmeChanged": false
+  },
+  "manipulation": {
+    "scale": { "numerator": 3969, "denominator": 361, "value": 10.994459833795014 },
+    "routePhaseArms": 24,
+    "frozenRows": 5544,
+    "localDirectionalRows": 4012,
+    "wideStrictUniqueRows": 5072,
+    "writes": 1848,
+    "FByteReplayExact": true,
+    "CDEFMetricParityExact": true,
+    "frozenGeometryAndQueryIdentity": true,
+    "productionSensorCrossChecks": { "localCalls": 5544, "wideCalls": 27720 },
+    "rngCalls": 0,
+    "capHits": 0,
+    "cappedNodes": 0,
+    "clampLoss": 0,
+    "maximumGNodeValue": 0.1287035197019577
+  },
+  "integral": {
+    "maximumAbsoluteResidualTo96GridConvention": 5.765245323242213e-13,
+    "maximumAbsoluteCurrentCToGDifference": 6.551430947222825e-12,
+    "maximumFtoGNodeScaleResidual": 1.2019478870528566e-8,
+    "maximumDerivedNodeScaleBoundRatio": 0.8162387547381639,
+    "maximumCentroidChange": 1.0154280749574756e-9,
+    "supportIdentical": true,
+    "boundaryCaveat": "The integral factor is qualified for the interior frozen fixture; edge/corner bilinear basis areas are half/quarter."
+  },
+  "gate2": {
+    "status": "PASS",
+    "checksPassed": 16,
+    "checksTotal": 16,
+    "decision": "QUALIFIED FOR LATER MOVEMENT SHADOW",
+    "gate3": "NOT RUN"
+  },
+  "determinism": {
+    "completeSuccessfulGenerations": 2,
+    "identicalGenerationHashManifest": true,
+    "generationHashManifestSha256": "ec3ed9796c85ab7e4a4634c2bca477c815085b0286f48e3e8bb9b679bdea722c",
+    "rasterCount": 24,
+    "rowArtifactSha256": "2b5b9b509304e15585f4da77e27eaa4e096a98a6af840644aa91f77729280ccb",
+    "profileArtifactSha256": "b830f8d9765ea7beb80e9b7ea61dc4642c586e64c809caf04d98f8bb76ad12f6"
+  },
+  "tests": {
+    "focusedCommand": "node --test --experimental-test-isolation=none tests/ant-316-gaussian-dose-unit-qualification.test.js",
+    "focusedPassed": 3,
+    "focusedFailed": 0,
+    "fullCommand": "npm test",
+    "fullPassed": 365,
+    "fullFailed": 0,
+    "buildCommand": "npm run build",
+    "buildPassed": true,
+    "buildWarnings": [
+      "Existing Zod package pure-annotation placement warnings.",
+      "Existing application chunk exceeds Vite's 500 kB warning size."
+    ]
+  },
+  "independentReview": {
+    "status": "COMPLETED",
+    "verdict": "SUPPORTS WITH CAVEATS",
+    "summaryPath": "INDEPENDENT_REVIEW.md",
+    "fixedCueOnly": true,
+    "reviewerReranTestsOrBuild": false
+  }
+}
