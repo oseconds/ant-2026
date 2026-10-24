@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-24 — Pheromone representation contract feasibility
+
+[Process log](./2026-10-24-pheromone-representation-contract.md) · [Evidence package](../evidence/2026-10-24-pheromone-representation-contract/README.md)
+
+- Proved the nonnegative exact-centroid/compact-support incompatibility at the current 96 × 96 grid and radius 0.0045
+- Distinguished nodal support, reconstructed support, chemical units, cap loss and raw-array consumers with small geometry/production probes
+- Contract must change first; no replacement candidate selected, CIC Gate 2 remains MIXED / NOT QUALIFIED and Gate 3 NOT RUN
+
 ### 2026-10-24 — CIC sample-profile substitution
 
 [Process log](./2026-10-24-cic-sample-profile-substitution.md) · [Evidence package](../evidence/2026-10-24-cic-sample-profile-substitution/README.md)
