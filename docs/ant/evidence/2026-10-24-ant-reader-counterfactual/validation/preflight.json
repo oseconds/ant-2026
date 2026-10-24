@@ -1,0 +1,106 @@
+{
+  "status": "stopped_before_candidate",
+  "reason": "The hash-validated frozen cohort contains per-query samples and geometry but not the exact production Float32 raster node arrays required by a reader-only D arm.",
+  "productionBaseline": {
+    "branch": "codex/ant-reader-counterfactual-20261024",
+    "originMain": "8c60e4bba3bd5b476300e90a2936bfebd1f831c2",
+    "sourceFiles": {
+      "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+      "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04"
+    }
+  },
+  "reusedFrozenEvidence": {
+    "sourceCommit": "ea3d382c6c849df7505e1d398cef085ca271c8b9",
+    "input": {
+      "path": "docs/ant/evidence/2026-10-24-ant-field-writer-reader-failure-attribution/inputs/station-raw.json.gz",
+      "sha256": "50547f963041e1505e1caf1bed3da27bbe36d84b0d5f26266313e60e8e573d29",
+      "bytes": 11956961,
+      "rows": 5544,
+      "uncompressedSha256": "bdab38fd13ccb8bae6689cdb7af134c52265969849d4cbfdd5c528677628e13d",
+      "rowKeys": [
+        "shape", "station", "phase", "localReference", "localProduction",
+        "localReferenceRaw", "localProductionRaw", "localDecomposition",
+        "localGeometry", "wideReference", "wideProduction", "wideDecomposition",
+        "wideGeometry", "referenceWinner", "productionWinner",
+        "referenceWinnerUnique", "productionWinnerUnique", "referenceWinnerMargin",
+        "productionWinnerMargin", "referenceRanks", "productionRanks",
+        "referenceConfidence", "productionConfidence"
+      ],
+      "gridNodeArrayPresent": false
+    },
+    "stageRows": {
+      "path": "docs/ant/evidence/2026-10-24-ant-field-writer-reader-failure-attribution/computed/abcs-stage-rows.json.gz",
+      "sha256": "a456a10a49445dbd54cd760ad7b371ffbdead6579777d2b05f89b0ddadd5678b",
+      "bytes": 7104982,
+      "rows": 5544,
+      "rowKeys": ["shape", "phase", "station", "local", "wide"],
+      "gridNodeArrayPresent": false
+    },
+    "cohort": {
+      "routeFixtures": 6,
+      "phases": ["p00", "p10", "p01", "p11"],
+      "stationsPerFixturePhase": 231,
+      "stationPhaseRows": 5544
+    }
+  },
+  "stage0": {
+    "productionReader": "gx=x*(width-1), gy=y*(height-1), then bilinear interpolation of four adjacent stored nodes",
+    "straightRepresentative": {
+      "route": "straight",
+      "station": 0.122,
+      "productionRasterBytesIdenticalAcross": ["p00", "p01"],
+      "byteIdentityProvenance": {
+        "commit": "2f00c300a9b8dc7a34d9efa5fd49cf92f024d9aa",
+        "path": "docs/ant/evidence/2026-10-24-field-analytic-reference/README.md"
+      },
+      "occupiedRow": 48,
+      "occupiedRowY": 0.5052631578947369,
+      "p00": {
+        "matchedQueryY": [0.497, 0.503],
+        "gridY": [47.215, 47.785],
+        "productionSamplesAtX0_488": [0.009520200246944863, 0.034759800901636655],
+        "inferredRowValueAtX0_488": 0.04428,
+        "localSteeringA": 0,
+        "localSteeringB": 0,
+        "localSteeringC": 0.19708966205049175
+      },
+      "p01": {
+        "localLeftC": 0.007630200197920268,
+        "localRightC": 0.007630200197920117,
+        "localSteeringC": -1.1730513378528801e-15
+      }
+    },
+    "tightRepresentative": {
+      "route": "tight",
+      "phase": "p00",
+      "station": 0.294,
+      "analyticWinnerOffset": 0,
+      "analyticFinalMargin": 1.8186870737711827,
+      "rawMaxima": {
+        "A": [0, 0, 0.06078647108559383, 0.0275097548058132, 0],
+        "B": [0, 0, 0.03201627776195625, 0.032387874470204296, 0],
+        "C": [0, 0, 0.03528578404987475, 0.041085056813513196, 0]
+      },
+      "BWinnerOffset": 0.47
+    }
+  },
+  "candidate": {
+    "selected": false,
+    "reason": "The stored-node arrays needed to evaluate any alternative on the identical production raster are absent. Stage 0 identifies bilinear sensitivity but does not uniquely determine an intra-cell reconstruction basis; selecting one without D measurements would be arbitrary.",
+    "DArmRun": false
+  },
+  "tests": {
+    "directNodeRuns": {
+      "tests/pheromone-field.test.js": {"passed": 8, "failed": 0},
+      "tests/ant-controller.test.js": {"passed": 21, "failed": 0},
+      "tests/ant-trail-following.test.js": {"passed": 8, "failed": 0},
+      "totalPassed": 37
+    },
+    "combinedNodeTestRunner": {
+      "status": "blocked_by_environment",
+      "error": "spawn EPERM"
+    },
+    "candidateTests": "not_applicable_no_candidate",
+    "fullBuild": "omitted_no_source_changes"
+  }
+}

@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-24 — Pheromone reader counterfactual preflight
+
+[Process log](./2026-10-24-ant-reader-counterfactual.md) · [Evidence package](../evidence/2026-10-24-ant-reader-counterfactual/README.md)
+
+- Confirmed how bilinear interpolation turns a one-row sparse raster into phase-dependent local samples, including the straight p00/p01 control and tight-route raw-max failure
+- Stopped before selecting a reader because the frozen A/B/C artifacts omit the exact production Float32 node arrays needed to evaluate D on identical raster bytes
+- No candidate, movement replay, free-running world, or production change; 37 focused existing tests passed via direct Node runs
+
 ### 2026-10-18 — Plate audio reassessment and live dense-mix plan
 
 [Process / next-pass plan](./2026-10-18-plate-audio-review-and-live-density-plan.md)
