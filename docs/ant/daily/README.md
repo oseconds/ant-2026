@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-24 — Raster-backed controlled pheromone fixtures
+
+[Process log](./2026-10-24-ant-raster-backed-fixture.md) · [Evidence package](../evidence/2026-10-24-ant-raster-backed-fixture/README.md)
+
+- Replayed all 24 controlled route/phase rasters with the pinned production writer; preserved complete Float32 node bytes and ordered Gaster write streams
+- All 238,392 frozen C queries and production local/wide sensor outputs matched exactly; second generation reproduced all receipts
+- Qualified the raster-backed fixture for a future reader-only C/D pass; old node arrays remain unavailable, so this capture is replay-backed rather than recovered
+- No reader candidate or production change was tested
+
 ### 2026-10-18 — Plate audio reassessment and live dense-mix plan
 
 [Process / next-pass plan](./2026-10-18-plate-audio-review-and-live-density-plan.md)
