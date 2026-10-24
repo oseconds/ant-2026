@@ -1,0 +1,74 @@
+{
+  "schema": "ant-cic-316-grid-validation/v1",
+  "baseline": {
+    "main": "8c60e4bba3bd5b476300e90a2936bfebd1f831c2",
+    "researchBranchPoint": "c3babbf4811ebede0cc4ef5615bd08317c937664",
+    "researchBranch": "codex/ant-cic-316-grid-fixed-cue-qualification-20261024",
+    "preregistrationCommit": "4a504ef24f73f2f91f12293b6a5b3579efeb6195"
+  },
+  "sourceHashes": {
+    "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+    "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+    "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41"
+  },
+  "researchToolHashes": {
+    "scripts/ant-cic-writer.js": "b681b1ccc8e099a7604e46099b0774e997c3be19f04334a9ca153a3f392ad15e",
+    "scripts/ant-cic-316-grid-qualification.js": "6b3e0a1a20fd9da2469bac3171e86faa2c99163402fbb074fb0a65c70489d224",
+    "tests/ant-cic-316-grid-qualification.test.js": "9c7a9c78964496d8ca0395334ce1956c4f65f2b8cd50bdcedd1640e14ef983d7"
+  },
+  "frozenInputs": {
+    "stationRowsSha256": "50547f963041e1505e1caf1bed3da27bbe36d84b0d5f26266313e60e8e573d29",
+    "priorGate2RowsSha256": "550f79a84837fac7dcb27f5a8a1d4ad5b9bf08b70c6f1638f5f1cf2206bb6c3f",
+    "writeStreamsSha256": "c2a15990f33d7b43e7e4761cd80b10a47eab0baec98b1dcced76f47b85cdc0ee",
+    "streamArms": 24,
+    "orderedWritesPerArm": 77,
+    "physicalWriteCount": 1848
+  },
+  "preEResults": {
+    "CAndDExactSavedParity": true,
+    "sourceRowKeysExact": 5544,
+    "strictUniqueRows": 5072,
+    "productionCWideErrors": 2378,
+    "prior96CicDWideErrors": 2378,
+    "CtoDRecovered": 92,
+    "CtoDNewErrors": 92,
+    "recoveryAndRegressionMembershipExact": true,
+    "weightedMaxFirstRows": 26,
+    "weightedMaxFirstRowKeySha256": "960def8884a5fee1be4ad0872ae0e66be508388b031a28d2ac4f09bdd8f59085",
+    "DTargetOuterToInnerSwitchRows": 26,
+    "DWeightedRivalSwitchRows": 0,
+    "EConstructedAfterTheseChecks": true
+  },
+  "candidate": {
+    "size": 316,
+    "pitch": 0.0031746031746031746,
+    "writeRadius": 0.0045,
+    "rasters": 24,
+    "rasterBytes": 9586176,
+    "allRouteStreamsUncapped": true,
+    "positiveWriteNodesWithinRadius": true,
+    "uncappedDoseAndMomentWithinDerivedFloat32Bounds": true,
+    "decayParityByteExact": true,
+    "readFootprintBeyondWriteRadius": true,
+    "readFootprintLimit": "Measured and reported; not corrected"
+  },
+  "determinism": {
+    "twoFinalRegenerations": "byte-identical scientific artifact hashes",
+    "generationHashes": {
+      "gate1": "325bfeb66b47bfe857441ab01210ef694ce35b0d1b7c9de219dd3ac6818a4615",
+      "results": "11a763cccee94226215cbfb3a2e82405ee3b709568adbdec15ddae446ae3abee",
+      "gate2Rows": "29bd7367719f5cbc2efab376bcca9b84b349ed965f72ffa86afd81904bf63ad4",
+      "targetProfile26": "3c07e1b9ff3dc88afc3e01291fa55bd7b99f31358c3a04a1a2f2f537c6f6d420"
+    }
+  },
+  "checks": {
+    "focusedQualificationTests": "3 passed",
+    "fullRepositoryTests": "358 passed, 0 failed",
+    "productionBuild": "passed; existing dependency annotation and large-chunk warnings",
+    "freshIndependentReview": "completed; reporting issues corrected; no substantive blocker; reviewer did not rerun tests",
+    "productionSrcChanged": false,
+    "canonicalAntReadmeChanged": false,
+    "movementOrNaturalRun": "not run"
+  },
+  "decision": "MIXED / NOT QUALIFIED; movement Gate 3 not run"
+}
