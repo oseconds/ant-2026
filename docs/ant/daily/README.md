@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-24 — CIC wide failure stage attribution
+
+[Process log](./2026-10-24-cic-wide-stage-attribution.md) · [Evidence package](../evidence/2026-10-24-cic-wide-stage-attribution/README.md)
+
+- Replayed the saved 5,544-row Gate 2 dataset and exactly recovered the 5,072 strict-unique census, including 92 recoveries and 92 new errors
+- New errors first diverge at raw-max diagnostic or unchanged weighted max; none first appears at Hill or score. Recovery includes max-stage and score-stage restoration
+- Kept the result read-only; CIC Gate 2 remains MIXED / NOT QUALIFIED and Gate 3 NOT RUN
+
 ### 2026-10-24 — CIC writer three-stage qualification
 
 [Process log](./2026-10-24-ant-cic-writer-qualification.md) · [Evidence package](../evidence/2026-10-24-ant-cic-writer-qualification/README.md)

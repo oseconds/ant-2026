@@ -1,0 +1,36 @@
+{
+  "passed": true,
+  "checked": [
+    "Gate 2 file SHA, byte length, and row count",
+    "frozen station input SHA and 5,544 ordered row identities",
+    "current production source hashes match saved attribution helper guards",
+    "A reference raw reads, winner, strict-unique flag, and margin parity",
+    "C production raw reads and all saved wide stage outputs exact parity",
+    "D CIC raw reads and all saved wide stage outputs exact parity",
+    "5,072 strict-unique rows, 2,378 C errors, 2,378 D errors, 92 recoveries, 92 new errors",
+    "472 analytic exact/precision ties, strict-unique flag parity, and saved C/D exact and precision-near tie counts",
+    "tight/tightMirror and p01/p11 subgroup membership",
+    "392 S analytic-zero local rows and saved 364→377/steering-MAE parity"
+  ],
+  "rowIdentity": {
+    "rowKeyDefinition": "shape|phase|station (station is the exact saved numeric value)",
+    "orderedAllRowsSha256": "ff4e573973aea9f5d42210ad22c3b06c57ec123d0478e2fbd2f0a420f08f0a44",
+    "sortedAllRowsSha256": "255167027bdff009bf6c2b9c32bea9672142a823202bca59e3cdba4163eafe06",
+    "orderedStrictUniqueRowsSha256": "a46ff149bcc4cff96fea554951d8031be45ecbdaf41ee2db853864fb64c77f68",
+    "sortedStrictUniqueRowsSha256": "779b37802e7b4f583cc069165a416e1e69aa0ad0d1ec37ad3f7e3679ee3ec357"
+  },
+  "focalMembershipHashes": {
+    "recoveredSortedSha256": "3a0ff144cc714a0a25a75f64b213586301eb498d9406dc8df2b6dc886c7ff653",
+    "newErrorsSortedSha256": "9eddf58b1d56309d893ddeb89340eec4899be71614b3e98f41eee98b39dc1e82"
+  },
+  "analyticTieAccounting": {
+    "exactTies": 472,
+    "precisionNearTiesByExistingRule": 472,
+    "savedStrictUniqueRows": 5072,
+    "savedFlagDisagreements": 0
+  },
+  "wideFinalTieCounts": {
+    "production": 0,
+    "cic": 0
+  }
+}

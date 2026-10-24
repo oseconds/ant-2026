@@ -1,0 +1,3752 @@
+{
+  "schema": "ant-cic-wide-stage-attribution/v1",
+  "startingCommits": {
+    "originMain": "8c60e4bba3bd5b476300e90a2936bfebd1f831c2",
+    "qualificationTip": "1fbfec5943c41ad6c8b3828fb48c47828d9be817",
+    "qualificationBranch": "codex/ant-cic-writer-qualification-20261024",
+    "mergeBase": "8c60e4bba3bd5b476300e90a2936bfebd1f831c2",
+    "commitsAheadOfMain": 2,
+    "attributionBranchBase": "1fbfec5943c41ad6c8b3828fb48c47828d9be817",
+    "attributionBranchName": "codex/ant-cic-wide-stage-attribution-20261024"
+  },
+  "implementationBoundary": {
+    "productionSourceChanged": false,
+    "arms": {
+      "A": "frozen analytic reference raw reads",
+      "C": "saved production raw reads and wide output",
+      "D": "saved CIC raw reads and wide output"
+    },
+    "shared": "same frozen candidate geometry, unchanged production weights/max and deterministic Gate 2 helper",
+    "operatorScope": "Gate 2 field-only diagnostic; not full stochastic controller choice"
+  },
+  "parity": {
+    "gate2RowsSha256": "550f79a84837fac7dcb27f5a8a1d4ad5b9bf08b70c6f1638f5f1cf2206bb6c3f",
+    "frozenStationRowsSha256": "50547f963041e1505e1caf1bed3da27bbe36d84b0d5f26266313e60e8e573d29",
+    "gate2Rows": 5544,
+    "frozenRows": 5544,
+    "joinedKeysExactAndOrdered": true,
+    "allRows": 5544,
+    "strictUniqueAnalyticRows": 5072,
+    "savedNonStrictUniqueRowsExcluded": 472,
+    "sourceHashes": {
+      "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+      "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+      "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41"
+    },
+    "implementationHashes": {
+      "scripts/ant-field-writer-reader-failure-attribution.js": "72c020cb2abb8dd42a6c56fa277ff9ef4bcbff26c949f45c994c001998779864",
+      "scripts/ant-cic-writer-qualification.js": "5aa9a42d23bd2eb74fb59b4093ddb85286cd98e8a386d1b4ea85a1bd5701adeb",
+      "scripts/ant-cic-writer.js": "b681b1ccc8e099a7604e46099b0774e997c3be19f04334a9ca153a3f392ad15e",
+      "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04"
+    },
+    "rowIdentity": {
+      "rowKeyDefinition": "shape|phase|station (station is the exact saved numeric value)",
+      "orderedAllRowsSha256": "ff4e573973aea9f5d42210ad22c3b06c57ec123d0478e2fbd2f0a420f08f0a44",
+      "sortedAllRowsSha256": "255167027bdff009bf6c2b9c32bea9672142a823202bca59e3cdba4163eafe06",
+      "orderedStrictUniqueRowsSha256": "a46ff149bcc4cff96fea554951d8031be45ecbdaf41ee2db853864fb64c77f68",
+      "sortedStrictUniqueRowsSha256": "779b37802e7b4f583cc069165a416e1e69aa0ad0d1ec37ad3f7e3679ee3ec357"
+    }
+  },
+  "global": {
+    "analyticUniqueRows": 5072,
+    "productionErrors": 2378,
+    "cicErrors": 2378,
+    "bothCorrect": 2602,
+    "bothWrong": 2286,
+    "recovered": 92,
+    "newErrors": 92,
+    "exactFinalScoreTies": {
+      "production": 0,
+      "cic": 0
+    },
+    "analyticTieAccounting": {
+      "exactTies": 472,
+      "precisionNearTiesByExistingRule": 472,
+      "savedStrictUniqueRows": 5072,
+      "savedFlagDisagreements": 0,
+      "rule": "saved unique flag equals exact positive analytic score margin; precision sign uses 64*EPSILON*max(1,abs(value))"
+    },
+    "precisionNearFinalTies": {
+      "production": 0,
+      "cic": 0,
+      "method": "reused qualification sign(value) rule: 64*Number.EPSILON*max(1,abs(value))"
+    },
+    "analyticScoreMargins": {
+      "recovered": {
+        "count": 92,
+        "mean": 1.6821199551612285,
+        "min": 0.009615739712330412,
+        "p50": 1.783073186692367,
+        "p90": 1.7830731866924037,
+        "max": 1.7830731866924474
+      },
+      "newErrors": {
+        "count": 92,
+        "mean": 1.7830731866923772,
+        "min": 1.7830731866922893,
+        "p50": 1.7830731866923715,
+        "p90": 1.7830731866924563,
+        "max": 1.7830731866924678
+      }
+    },
+    "firstRankDivergenceFromA": {
+      "production": {
+        "rawMaximum": 3900,
+        "weightedMaximum": 453,
+        "hillResponse": 0,
+        "fieldOnlyScore": 0,
+        "none": 719
+      },
+      "cic": {
+        "rawMaximum": 4805,
+        "weightedMaximum": 3,
+        "hillResponse": 0,
+        "fieldOnlyScore": 0,
+        "none": 264
+      }
+    },
+    "firstTargetDepartureFromAnalyticFinalWinner": {
+      "production": {
+        "rawMaximum": 2207,
+        "weightedMaximum": 1000,
+        "hillResponse": 0,
+        "fieldOnlyScore": 0,
+        "none": 1865
+      },
+      "cic": {
+        "rawMaximum": 1971,
+        "weightedMaximum": 927,
+        "hillResponse": 0,
+        "fieldOnlyScore": 0,
+        "none": 2174
+      }
+    },
+    "cVsDFirstRankDivergence": {
+      "rawMaximum": 3055,
+      "weightedMaximum": 39,
+      "hillResponse": 0,
+      "fieldOnlyScore": 0,
+      "none": 1978
+    },
+    "orderChangesBetweenConsecutiveStages": {
+      "A": {
+        "rawMaximum→weightedMaximum": 424,
+        "weightedMaximum→hillResponse": 0,
+        "hillResponse→fieldOnlyScore": 5072
+      },
+      "C": {
+        "rawMaximum→weightedMaximum": 1823,
+        "weightedMaximum→hillResponse": 0,
+        "hillResponse→fieldOnlyScore": 2583
+      },
+      "D": {
+        "rawMaximum→weightedMaximum": 1421,
+        "weightedMaximum→hillResponse": 0,
+        "hillResponse→fieldOnlyScore": 657
+      }
+    },
+    "focalMembershipHashes": {
+      "recoveredSortedSha256": "3a0ff144cc714a0a25a75f64b213586301eb498d9406dc8df2b6dc886c7ff653",
+      "newErrorsSortedSha256": "9eddf58b1d56309d893ddeb89340eec4899be71614b3e98f41eee98b39dc1e82"
+    }
+  },
+  "subgroups": {
+    "routesAndPhases": {
+      "straight": {
+        "allRows": 924,
+        "strictUniqueRows": 848,
+        "productionErrors": 0,
+        "cicErrors": 0,
+        "recovered": 0,
+        "newErrors": 0,
+        "netErrorChange": 0,
+        "recoveredStages": {
+          "count": 0,
+          "affectedArm": "C",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 0,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 0,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {},
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {},
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 0,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          }
+        },
+        "newErrorStages": {
+          "count": 0,
+          "affectedArm": "D",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 0,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 0,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {},
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {},
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 0,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          }
+        }
+      },
+      "gentle": {
+        "allRows": 924,
+        "strictUniqueRows": 844,
+        "productionErrors": 828,
+        "cicErrors": 828,
+        "recovered": 0,
+        "newErrors": 0,
+        "netErrorChange": 0,
+        "recoveredStages": {
+          "count": 0,
+          "affectedArm": "C",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 0,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 0,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {},
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {},
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 0,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          }
+        },
+        "newErrorStages": {
+          "count": 0,
+          "affectedArm": "D",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 0,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 0,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {},
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {},
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 0,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          }
+        }
+      },
+      "tight": {
+        "allRows": 924,
+        "strictUniqueRows": 844,
+        "productionErrors": 301,
+        "cicErrors": 303,
+        "recovered": 44,
+        "newErrors": 46,
+        "netErrorChange": 2,
+        "recoveredStages": {
+          "count": 44,
+          "affectedArm": "C",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 35,
+            "weightedMaximum": 9,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 27,
+            "weightedMaximum": 17,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 35,
+                "weightedMaximum": 9,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 27,
+                "weightedMaximum": 17,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {
+                "1000": 17,
+                "0000": 27
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 17,
+                  "other→target": 0,
+                  "other→other": 27
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 44
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 44
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 44,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 10,
+                "weightedMaximum": 1,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 33
+              },
+              "targetStatusSequences": {
+                "1001": 1,
+                "1111": 33,
+                "0001": 4,
+                "0111": 6
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 33,
+                  "target→other": 1,
+                  "other→target": 6,
+                  "other→other": 4
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 39,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 5
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 39,
+                  "target→other": 0,
+                  "other→target": 5,
+                  "other→other": 0
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 41,
+            "weightedMaximum": 3,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 44,
+            "mean": 1.7427673356246478,
+            "min": 0.009615739712330412,
+            "p50": 1.7830731866923721,
+            "p90": 1.7830731866924008,
+            "max": 1.7830731866924474
+          }
+        },
+        "newErrorStages": {
+          "count": 46,
+          "affectedArm": "D",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 46,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 33,
+            "weightedMaximum": 13,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 41,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 5
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 11,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 35
+              },
+              "targetStatusSequences": {
+                "1111": 35,
+                "0001": 1,
+                "0111": 10
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 35,
+                  "target→other": 0,
+                  "other→target": 10,
+                  "other→other": 1
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 45,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 1
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 45,
+                  "target→other": 0,
+                  "other→target": 1,
+                  "other→other": 0
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 46,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 33,
+                "weightedMaximum": 13,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {
+                "1000": 13,
+                "0000": 33
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 13,
+                  "other→target": 0,
+                  "other→other": 33
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 46
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 46
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 36,
+            "weightedMaximum": 10,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 46,
+            "mean": 1.783073186692377,
+            "min": 1.7830731866922893,
+            "p50": 1.7830731866923797,
+            "p90": 1.7830731866924563,
+            "max": 1.783073186692459
+          }
+        }
+      },
+      "gentleMirror": {
+        "allRows": 924,
+        "strictUniqueRows": 844,
+        "productionErrors": 828,
+        "cicErrors": 828,
+        "recovered": 0,
+        "newErrors": 0,
+        "netErrorChange": 0,
+        "recoveredStages": {
+          "count": 0,
+          "affectedArm": "C",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 0,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 0,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {},
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {},
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 0,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          }
+        },
+        "newErrorStages": {
+          "count": 0,
+          "affectedArm": "D",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 0,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 0,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {},
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {},
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 0,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          }
+        }
+      },
+      "tightMirror": {
+        "allRows": 924,
+        "strictUniqueRows": 844,
+        "productionErrors": 301,
+        "cicErrors": 303,
+        "recovered": 44,
+        "newErrors": 46,
+        "netErrorChange": 2,
+        "recoveredStages": {
+          "count": 44,
+          "affectedArm": "C",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 30,
+            "weightedMaximum": 14,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 27,
+            "weightedMaximum": 17,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 30,
+                "weightedMaximum": 14,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 27,
+                "weightedMaximum": 17,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {
+                "1000": 17,
+                "0000": 27
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 17,
+                  "other→target": 0,
+                  "other→other": 27
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 44
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 44
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 36,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 8
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 10,
+                "weightedMaximum": 1,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 33
+              },
+              "targetStatusSequences": {
+                "1001": 1,
+                "1111": 33,
+                "0001": 4,
+                "0111": 6
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 33,
+                  "target→other": 1,
+                  "other→target": 6,
+                  "other→other": 4
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 39,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 5
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 39,
+                  "target→other": 0,
+                  "other→target": 5,
+                  "other→other": 0
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 37,
+            "weightedMaximum": 7,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 44,
+            "mean": 1.7427673356246438,
+            "min": 0.009615739712330412,
+            "p50": 1.783073186692367,
+            "p90": 1.7830731866924048,
+            "max": 1.7830731866924292
+          }
+        },
+        "newErrorStages": {
+          "count": 46,
+          "affectedArm": "D",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 46,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 33,
+            "weightedMaximum": 13,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 31,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 15
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 11,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 35
+              },
+              "targetStatusSequences": {
+                "1111": 35,
+                "0001": 1,
+                "0111": 10
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 35,
+                  "target→other": 0,
+                  "other→target": 10,
+                  "other→other": 1
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 45,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 1
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 45,
+                  "target→other": 0,
+                  "other→target": 1,
+                  "other→other": 0
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 46,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 33,
+                "weightedMaximum": 13,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {
+                "1000": 13,
+                "0000": 33
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 13,
+                  "other→target": 0,
+                  "other→other": 33
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 46
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 46
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 30,
+            "weightedMaximum": 16,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 46,
+            "mean": 1.7830731866923757,
+            "min": 1.78307318669231,
+            "p50": 1.7830731866923715,
+            "p90": 1.7830731866924163,
+            "max": 1.7830731866924678
+          }
+        }
+      },
+      "sCurve": {
+        "allRows": 924,
+        "strictUniqueRows": 848,
+        "productionErrors": 120,
+        "cicErrors": 116,
+        "recovered": 4,
+        "newErrors": 0,
+        "netErrorChange": -4,
+        "recoveredStages": {
+          "count": 4,
+          "affectedArm": "C",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 1,
+            "weightedMaximum": 3,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 3,
+            "weightedMaximum": 1,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 1,
+                "weightedMaximum": 3,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 3,
+                "weightedMaximum": 1,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {
+                "1000": 1,
+                "0000": 3
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 1,
+                  "other→target": 0,
+                  "other→other": 3
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 4
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 4
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 4,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 2,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 2
+              },
+              "targetStatusSequences": {
+                "1111": 2,
+                "0111": 2
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 2,
+                  "target→other": 0,
+                  "other→target": 2,
+                  "other→other": 0
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 4,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 4,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 3,
+            "weightedMaximum": 1,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 4,
+            "mean": 0.34787758496605203,
+            "min": 0.3444490793569699,
+            "p50": 0.3484974846890503,
+            "p90": 0.35042553018778255,
+            "max": 0.35042553018778255
+          }
+        },
+        "newErrorStages": {
+          "count": 0,
+          "affectedArm": "D",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 0,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 0,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {},
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 0,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {},
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 0,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          }
+        }
+      },
+      "p00": {
+        "allRows": 1386,
+        "strictUniqueRows": 1268,
+        "productionErrors": 647,
+        "cicErrors": 645,
+        "recovered": 24,
+        "newErrors": 22,
+        "netErrorChange": -2,
+        "recoveredStages": {
+          "count": 24,
+          "affectedArm": "C",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 18,
+            "weightedMaximum": 6,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 12,
+            "weightedMaximum": 12,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 18,
+                "weightedMaximum": 6,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 12,
+                "weightedMaximum": 12,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {
+                "1000": 12,
+                "0000": 12
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 12,
+                  "other→target": 0,
+                  "other→other": 12
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 24
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 24
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 23,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 1
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 6,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 18
+              },
+              "targetStatusSequences": {
+                "1111": 18,
+                "0001": 2,
+                "0111": 4
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 18,
+                  "target→other": 0,
+                  "other→target": 4,
+                  "other→other": 2
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 22,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 2
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 22,
+                  "target→other": 0,
+                  "other→target": 2,
+                  "other→other": 0
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 19,
+            "weightedMaximum": 5,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 24,
+            "mean": 1.783073186692384,
+            "min": 1.783073186692342,
+            "p50": 1.7830731866923906,
+            "p90": 1.783073186692413,
+            "max": 1.7830731866924474
+          }
+        },
+        "newErrorStages": {
+          "count": 22,
+          "affectedArm": "D",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 22,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 14,
+            "weightedMaximum": 8,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 17,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 5
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 4,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 18
+              },
+              "targetStatusSequences": {
+                "1111": 18,
+                "0001": 2,
+                "0111": 2
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 18,
+                  "target→other": 0,
+                  "other→target": 2,
+                  "other→other": 2
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 20,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 2
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 20,
+                  "target→other": 0,
+                  "other→target": 2,
+                  "other→other": 0
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 22,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 14,
+                "weightedMaximum": 8,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {
+                "1000": 8,
+                "0000": 14
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 8,
+                  "other→target": 0,
+                  "other→other": 14
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 22
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 22
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 18,
+            "weightedMaximum": 4,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 22,
+            "mean": 1.7830731866923692,
+            "min": 1.7830731866922893,
+            "p50": 1.7830731866923681,
+            "p90": 1.783073186692396,
+            "max": 1.783073186692439
+          }
+        }
+      },
+      "p10": {
+        "allRows": 1386,
+        "strictUniqueRows": 1268,
+        "productionErrors": 657,
+        "cicErrors": 647,
+        "recovered": 24,
+        "newErrors": 14,
+        "netErrorChange": -10,
+        "recoveredStages": {
+          "count": 24,
+          "affectedArm": "C",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 18,
+            "weightedMaximum": 6,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 18,
+            "weightedMaximum": 6,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 18,
+                "weightedMaximum": 6,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 18,
+                "weightedMaximum": 6,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {
+                "1000": 6,
+                "0000": 18
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 6,
+                  "other→target": 0,
+                  "other→other": 18
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 24
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 24
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 22,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 2
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 2,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 22
+              },
+              "targetStatusSequences": {
+                "1111": 22,
+                "0001": 2
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 22,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 2
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 22,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 2
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 22,
+                  "target→other": 0,
+                  "other→target": 2,
+                  "other→other": 0
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 24,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 24,
+            "mean": 1.6352850661106981,
+            "min": 0.009615739712330412,
+            "p50": 1.783073186692364,
+            "p90": 1.7830731866923974,
+            "max": 1.7830731866924474
+          }
+        },
+        "newErrorStages": {
+          "count": 14,
+          "affectedArm": "D",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 14,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 12,
+            "weightedMaximum": 2,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 10,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 4
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 2,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 12
+              },
+              "targetStatusSequences": {
+                "1111": 12,
+                "0111": 2
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 12,
+                  "target→other": 0,
+                  "other→target": 2,
+                  "other→other": 0
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 14,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 14,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 14,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 12,
+                "weightedMaximum": 2,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {
+                "1000": 2,
+                "0000": 12
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 2,
+                  "other→target": 0,
+                  "other→other": 12
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 14
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 14
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 11,
+            "weightedMaximum": 3,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 14,
+            "mean": 1.7830731866923604,
+            "min": 1.7830731866922893,
+            "p50": 1.7830731866923597,
+            "p90": 1.7830731866924072,
+            "max": 1.7830731866924157
+          }
+        }
+      },
+      "p01": {
+        "allRows": 1386,
+        "strictUniqueRows": 1268,
+        "productionErrors": 534,
+        "cicErrors": 535,
+        "recovered": 27,
+        "newErrors": 28,
+        "netErrorChange": 1,
+        "recoveredStages": {
+          "count": 27,
+          "affectedArm": "C",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 16,
+            "weightedMaximum": 11,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 15,
+            "weightedMaximum": 12,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 16,
+                "weightedMaximum": 11,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 15,
+                "weightedMaximum": 12,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {
+                "1000": 12,
+                "0000": 15
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 12,
+                  "other→target": 0,
+                  "other→other": 15
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 27
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 27
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 23,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 4
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 8,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 19
+              },
+              "targetStatusSequences": {
+                "1111": 19,
+                "0001": 2,
+                "0111": 6
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 19,
+                  "target→other": 0,
+                  "other→target": 6,
+                  "other→other": 2
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 25,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 2
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 25,
+                  "target→other": 0,
+                  "other→target": 2,
+                  "other→other": 0
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 24,
+            "weightedMaximum": 3,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 27,
+            "mean": 1.7299274481345206,
+            "min": 0.3481382456304054,
+            "p50": 1.783073186692367,
+            "p90": 1.7830731866923974,
+            "max": 1.783073186692425
+          }
+        },
+        "newErrorStages": {
+          "count": 28,
+          "affectedArm": "D",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 28,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 18,
+            "weightedMaximum": 10,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 21,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 7
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 4,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 24
+              },
+              "targetStatusSequences": {
+                "1111": 24,
+                "0111": 4
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 24,
+                  "target→other": 0,
+                  "other→target": 4,
+                  "other→other": 0
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 28,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 28,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 28,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 18,
+                "weightedMaximum": 10,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {
+                "1000": 10,
+                "0000": 18
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 10,
+                  "other→target": 0,
+                  "other→other": 18
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 28
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 28
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 17,
+            "weightedMaximum": 11,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 28,
+            "mean": 1.7830731866923875,
+            "min": 1.78307318669231,
+            "p50": 1.783073186692384,
+            "p90": 1.7830731866924576,
+            "max": 1.7830731866924678
+          }
+        }
+      },
+      "p11": {
+        "allRows": 1386,
+        "strictUniqueRows": 1268,
+        "productionErrors": 540,
+        "cicErrors": 551,
+        "recovered": 17,
+        "newErrors": 28,
+        "netErrorChange": 11,
+        "recoveredStages": {
+          "count": 17,
+          "affectedArm": "C",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 14,
+            "weightedMaximum": 3,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 12,
+            "weightedMaximum": 5,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 14,
+                "weightedMaximum": 3,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 12,
+                "weightedMaximum": 5,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {
+                "1000": 5,
+                "0000": 12
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 5,
+                  "other→target": 0,
+                  "other→other": 12
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 17
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 17
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 16,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 1
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 6,
+                "weightedMaximum": 2,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 9
+              },
+              "targetStatusSequences": {
+                "1001": 2,
+                "1111": 9,
+                "0111": 4,
+                "0001": 2
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 9,
+                  "target→other": 2,
+                  "other→target": 4,
+                  "other→other": 2
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 13,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 4
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 13,
+                  "target→other": 0,
+                  "other→target": 4,
+                  "other→other": 0
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 14,
+            "weightedMaximum": 3,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 17,
+            "mean": 1.5297880416427658,
+            "min": 0.3444490793569699,
+            "p50": 1.7830731866923637,
+            "p90": 1.7830731866923872,
+            "max": 1.7830731866924048
+          }
+        },
+        "newErrorStages": {
+          "count": 28,
+          "affectedArm": "D",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 28,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 22,
+            "weightedMaximum": 6,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 24,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 4
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 12,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 16
+              },
+              "targetStatusSequences": {
+                "1111": 16,
+                "0111": 12
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 16,
+                  "target→other": 0,
+                  "other→target": 12,
+                  "other→other": 0
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 28,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 28,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 28,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 22,
+                "weightedMaximum": 6,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {
+                "1000": 6,
+                "0000": 22
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 6,
+                  "other→target": 0,
+                  "other→other": 22
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 28
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 28
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 20,
+            "weightedMaximum": 8,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 28,
+            "mean": 1.7830731866923792,
+            "min": 1.7830731866922893,
+            "p50": 1.7830731866923732,
+            "p90": 1.7830731866924576,
+            "max": 1.7830731866924678
+          }
+        }
+      },
+      "tight∩p01": {
+        "allRows": 231,
+        "strictUniqueRows": 211,
+        "productionErrors": 45,
+        "cicErrors": 46,
+        "recovered": 13,
+        "newErrors": 14,
+        "netErrorChange": 1,
+        "recoveredStages": {
+          "count": 13,
+          "affectedArm": "C",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 9,
+            "weightedMaximum": 4,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 7,
+            "weightedMaximum": 6,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 9,
+                "weightedMaximum": 4,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 7,
+                "weightedMaximum": 6,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {
+                "1000": 6,
+                "0000": 7
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 6,
+                  "other→target": 0,
+                  "other→other": 7
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 13
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 13
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 13,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 4,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 9
+              },
+              "targetStatusSequences": {
+                "1111": 9,
+                "0001": 1,
+                "0111": 3
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 9,
+                  "target→other": 0,
+                  "other→target": 3,
+                  "other→other": 1
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 12,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 1
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 12,
+                  "target→other": 0,
+                  "other→target": 1,
+                  "other→other": 0
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 12,
+            "weightedMaximum": 1,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 13,
+            "mean": 1.7830731866923724,
+            "min": 1.7830731866923368,
+            "p50": 1.783073186692369,
+            "p90": 1.7830731866924008,
+            "max": 1.783073186692425
+          }
+        },
+        "newErrorStages": {
+          "count": 14,
+          "affectedArm": "D",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 14,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 9,
+            "weightedMaximum": 5,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 12,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 2
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 2,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 12
+              },
+              "targetStatusSequences": {
+                "1111": 12,
+                "0111": 2
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 12,
+                  "target→other": 0,
+                  "other→target": 2,
+                  "other→other": 0
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 14,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 14,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 14,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 9,
+                "weightedMaximum": 5,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {
+                "1000": 5,
+                "0000": 9
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 5,
+                  "other→target": 0,
+                  "other→other": 9
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 14
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 14
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 9,
+            "weightedMaximum": 5,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 14,
+            "mean": 1.7830731866923941,
+            "min": 1.7830731866923286,
+            "p50": 1.783073186692394,
+            "p90": 1.7830731866924576,
+            "max": 1.783073186692459
+          }
+        }
+      },
+      "tight∩p11": {
+        "allRows": 231,
+        "strictUniqueRows": 211,
+        "productionErrors": 47,
+        "cicErrors": 54,
+        "recovered": 7,
+        "newErrors": 14,
+        "netErrorChange": 7,
+        "recoveredStages": {
+          "count": 7,
+          "affectedArm": "C",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 7,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 5,
+            "weightedMaximum": 2,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 7,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 5,
+                "weightedMaximum": 2,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {
+                "1000": 2,
+                "0000": 5
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 2,
+                  "other→target": 0,
+                  "other→other": 5
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 7
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 7
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 7,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 2,
+                "weightedMaximum": 1,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 4
+              },
+              "targetStatusSequences": {
+                "1001": 1,
+                "1111": 4,
+                "0111": 1,
+                "0001": 1
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 4,
+                  "target→other": 1,
+                  "other→target": 1,
+                  "other→other": 1
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 5,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 2
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 5,
+                  "target→other": 0,
+                  "other→target": 2,
+                  "other→other": 0
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 6,
+            "weightedMaximum": 1,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 7,
+            "mean": 1.7830731866923706,
+            "min": 1.7830731866923433,
+            "p50": 1.7830731866923717,
+            "p90": 1.7830731866923872,
+            "max": 1.7830731866923974
+          }
+        },
+        "newErrorStages": {
+          "count": 14,
+          "affectedArm": "D",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 14,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 11,
+            "weightedMaximum": 3,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 14,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 6,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 8
+              },
+              "targetStatusSequences": {
+                "1111": 8,
+                "0111": 6
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 8,
+                  "target→other": 0,
+                  "other→target": 6,
+                  "other→other": 0
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 14,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 14,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 14,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 11,
+                "weightedMaximum": 3,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {
+                "1000": 3,
+                "0000": 11
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 3,
+                  "other→target": 0,
+                  "other→other": 11
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 14
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 14
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 10,
+            "weightedMaximum": 4,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 14,
+            "mean": 1.7830731866923752,
+            "min": 1.7830731866922893,
+            "p50": 1.7830731866923681,
+            "p90": 1.7830731866924576,
+            "max": 1.783073186692459
+          }
+        }
+      },
+      "tightMirror∩p01": {
+        "allRows": 231,
+        "strictUniqueRows": 211,
+        "productionErrors": 45,
+        "cicErrors": 46,
+        "recovered": 13,
+        "newErrors": 14,
+        "netErrorChange": 1,
+        "recoveredStages": {
+          "count": 13,
+          "affectedArm": "C",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 7,
+            "weightedMaximum": 6,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 7,
+            "weightedMaximum": 6,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 7,
+                "weightedMaximum": 6,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 7,
+                "weightedMaximum": 6,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {
+                "1000": 6,
+                "0000": 7
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 6,
+                  "other→target": 0,
+                  "other→other": 7
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 13
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 13
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 9,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 4
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 4,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 9
+              },
+              "targetStatusSequences": {
+                "1111": 9,
+                "0001": 1,
+                "0111": 3
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 9,
+                  "target→other": 0,
+                  "other→target": 3,
+                  "other→other": 1
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 12,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 1
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 12,
+                  "target→other": 0,
+                  "other→target": 1,
+                  "other→other": 0
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 11,
+            "weightedMaximum": 2,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 13,
+            "mean": 1.7830731866923701,
+            "min": 1.7830731866923366,
+            "p50": 1.7830731866923664,
+            "p90": 1.7830731866923921,
+            "max": 1.7830731866924048
+          }
+        },
+        "newErrorStages": {
+          "count": 14,
+          "affectedArm": "D",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 14,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 9,
+            "weightedMaximum": 5,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 9,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 5
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 2,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 12
+              },
+              "targetStatusSequences": {
+                "1111": 12,
+                "0111": 2
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 12,
+                  "target→other": 0,
+                  "other→target": 2,
+                  "other→other": 0
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 14,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 14,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 14,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 9,
+                "weightedMaximum": 5,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {
+                "1000": 5,
+                "0000": 9
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 5,
+                  "other→target": 0,
+                  "other→other": 9
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 14
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 14
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 8,
+            "weightedMaximum": 6,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 14,
+            "mean": 1.78307318669238,
+            "min": 1.78307318669231,
+            "p50": 1.7830731866923715,
+            "p90": 1.783073186692462,
+            "max": 1.7830731866924678
+          }
+        }
+      },
+      "tightMirror∩p11": {
+        "allRows": 231,
+        "strictUniqueRows": 211,
+        "productionErrors": 47,
+        "cicErrors": 54,
+        "recovered": 7,
+        "newErrors": 14,
+        "netErrorChange": 7,
+        "recoveredStages": {
+          "count": 7,
+          "affectedArm": "C",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 6,
+            "weightedMaximum": 1,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 5,
+            "weightedMaximum": 2,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 6,
+                "weightedMaximum": 1,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 5,
+                "weightedMaximum": 2,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {
+                "1000": 2,
+                "0000": 5
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 2,
+                  "other→target": 0,
+                  "other→other": 5
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 7
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 7
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 6,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 1
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 2,
+                "weightedMaximum": 1,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 4
+              },
+              "targetStatusSequences": {
+                "1001": 1,
+                "1111": 4,
+                "0111": 1,
+                "0001": 1
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 4,
+                  "target→other": 1,
+                  "other→target": 1,
+                  "other→other": 1
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 5,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 2
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 5,
+                  "target→other": 0,
+                  "other→target": 2,
+                  "other→other": 0
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 6,
+            "weightedMaximum": 1,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 7,
+            "mean": 1.7830731866923746,
+            "min": 1.783073186692353,
+            "p50": 1.7830731866923801,
+            "p90": 1.7830731866923855,
+            "max": 1.7830731866924048
+          }
+        },
+        "newErrorStages": {
+          "count": 14,
+          "affectedArm": "D",
+          "firstRankDivergenceFromA": {
+            "rawMaximum": 14,
+            "weightedMaximum": 0,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "firstTargetDeparture": {
+            "rawMaximum": 11,
+            "weightedMaximum": 3,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "arms": {
+            "C": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 10,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 4
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 6,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 8
+              },
+              "targetStatusSequences": {
+                "1111": 8,
+                "0111": 6
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 8,
+                  "target→other": 0,
+                  "other→target": 6,
+                  "other→other": 0
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 14,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 14,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 0
+                }
+              }
+            },
+            "D": {
+              "firstRankDivergenceFromA": {
+                "rawMaximum": 14,
+                "weightedMaximum": 0,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "firstTargetDeparture": {
+                "rawMaximum": 11,
+                "weightedMaximum": 3,
+                "hillResponse": 0,
+                "fieldOnlyScore": 0,
+                "none": 0
+              },
+              "targetStatusSequences": {
+                "1000": 3,
+                "0000": 11
+              },
+              "targetTransitions": {
+                "rawMaximum→weightedMaximum": {
+                  "target→target": 0,
+                  "target→other": 3,
+                  "other→target": 0,
+                  "other→other": 11
+                },
+                "weightedMaximum→hillResponse": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 14
+                },
+                "hillResponse→fieldOnlyScore": {
+                  "target→target": 0,
+                  "target→other": 0,
+                  "other→target": 0,
+                  "other→other": 14
+                }
+              }
+            }
+          },
+          "firstCvsDDivergence": {
+            "rawMaximum": 10,
+            "weightedMaximum": 4,
+            "hillResponse": 0,
+            "fieldOnlyScore": 0,
+            "none": 0
+          },
+          "analyticScoreMargin": {
+            "count": 14,
+            "mean": 1.7830731866923828,
+            "min": 1.78307318669231,
+            "p50": 1.7830731866923748,
+            "p90": 1.783073186692462,
+            "max": 1.7830731866924678
+          }
+        }
+      }
+    },
+    "focalStages": {
+      "recovered": {
+        "count": 92,
+        "affectedArm": "C",
+        "firstRankDivergenceFromA": {
+          "rawMaximum": 66,
+          "weightedMaximum": 26,
+          "hillResponse": 0,
+          "fieldOnlyScore": 0,
+          "none": 0
+        },
+        "firstTargetDeparture": {
+          "rawMaximum": 57,
+          "weightedMaximum": 35,
+          "hillResponse": 0,
+          "fieldOnlyScore": 0,
+          "none": 0
+        },
+        "arms": {
+          "C": {
+            "firstRankDivergenceFromA": {
+              "rawMaximum": 66,
+              "weightedMaximum": 26,
+              "hillResponse": 0,
+              "fieldOnlyScore": 0,
+              "none": 0
+            },
+            "firstTargetDeparture": {
+              "rawMaximum": 57,
+              "weightedMaximum": 35,
+              "hillResponse": 0,
+              "fieldOnlyScore": 0,
+              "none": 0
+            },
+            "targetStatusSequences": {
+              "1000": 35,
+              "0000": 57
+            },
+            "targetTransitions": {
+              "rawMaximum→weightedMaximum": {
+                "target→target": 0,
+                "target→other": 35,
+                "other→target": 0,
+                "other→other": 57
+              },
+              "weightedMaximum→hillResponse": {
+                "target→target": 0,
+                "target→other": 0,
+                "other→target": 0,
+                "other→other": 92
+              },
+              "hillResponse→fieldOnlyScore": {
+                "target→target": 0,
+                "target→other": 0,
+                "other→target": 0,
+                "other→other": 92
+              }
+            }
+          },
+          "D": {
+            "firstRankDivergenceFromA": {
+              "rawMaximum": 84,
+              "weightedMaximum": 0,
+              "hillResponse": 0,
+              "fieldOnlyScore": 0,
+              "none": 8
+            },
+            "firstTargetDeparture": {
+              "rawMaximum": 22,
+              "weightedMaximum": 2,
+              "hillResponse": 0,
+              "fieldOnlyScore": 0,
+              "none": 68
+            },
+            "targetStatusSequences": {
+              "1001": 2,
+              "1111": 68,
+              "0001": 8,
+              "0111": 14
+            },
+            "targetTransitions": {
+              "rawMaximum→weightedMaximum": {
+                "target→target": 68,
+                "target→other": 2,
+                "other→target": 14,
+                "other→other": 8
+              },
+              "weightedMaximum→hillResponse": {
+                "target→target": 82,
+                "target→other": 0,
+                "other→target": 0,
+                "other→other": 10
+              },
+              "hillResponse→fieldOnlyScore": {
+                "target→target": 82,
+                "target→other": 0,
+                "other→target": 10,
+                "other→other": 0
+              }
+            }
+          }
+        },
+        "firstCvsDDivergence": {
+          "rawMaximum": 81,
+          "weightedMaximum": 11,
+          "hillResponse": 0,
+          "fieldOnlyScore": 0,
+          "none": 0
+        },
+        "analyticScoreMargin": {
+          "count": 92,
+          "mean": 1.6821199551612285,
+          "min": 0.009615739712330412,
+          "p50": 1.783073186692367,
+          "p90": 1.7830731866924037,
+          "max": 1.7830731866924474
+        }
+      },
+      "new-error": {
+        "count": 92,
+        "affectedArm": "D",
+        "firstRankDivergenceFromA": {
+          "rawMaximum": 92,
+          "weightedMaximum": 0,
+          "hillResponse": 0,
+          "fieldOnlyScore": 0,
+          "none": 0
+        },
+        "firstTargetDeparture": {
+          "rawMaximum": 66,
+          "weightedMaximum": 26,
+          "hillResponse": 0,
+          "fieldOnlyScore": 0,
+          "none": 0
+        },
+        "arms": {
+          "C": {
+            "firstRankDivergenceFromA": {
+              "rawMaximum": 72,
+              "weightedMaximum": 0,
+              "hillResponse": 0,
+              "fieldOnlyScore": 0,
+              "none": 20
+            },
+            "firstTargetDeparture": {
+              "rawMaximum": 22,
+              "weightedMaximum": 0,
+              "hillResponse": 0,
+              "fieldOnlyScore": 0,
+              "none": 70
+            },
+            "targetStatusSequences": {
+              "1111": 70,
+              "0001": 2,
+              "0111": 20
+            },
+            "targetTransitions": {
+              "rawMaximum→weightedMaximum": {
+                "target→target": 70,
+                "target→other": 0,
+                "other→target": 20,
+                "other→other": 2
+              },
+              "weightedMaximum→hillResponse": {
+                "target→target": 90,
+                "target→other": 0,
+                "other→target": 0,
+                "other→other": 2
+              },
+              "hillResponse→fieldOnlyScore": {
+                "target→target": 90,
+                "target→other": 0,
+                "other→target": 2,
+                "other→other": 0
+              }
+            }
+          },
+          "D": {
+            "firstRankDivergenceFromA": {
+              "rawMaximum": 92,
+              "weightedMaximum": 0,
+              "hillResponse": 0,
+              "fieldOnlyScore": 0,
+              "none": 0
+            },
+            "firstTargetDeparture": {
+              "rawMaximum": 66,
+              "weightedMaximum": 26,
+              "hillResponse": 0,
+              "fieldOnlyScore": 0,
+              "none": 0
+            },
+            "targetStatusSequences": {
+              "1000": 26,
+              "0000": 66
+            },
+            "targetTransitions": {
+              "rawMaximum→weightedMaximum": {
+                "target→target": 0,
+                "target→other": 26,
+                "other→target": 0,
+                "other→other": 66
+              },
+              "weightedMaximum→hillResponse": {
+                "target→target": 0,
+                "target→other": 0,
+                "other→target": 0,
+                "other→other": 92
+              },
+              "hillResponse→fieldOnlyScore": {
+                "target→target": 0,
+                "target→other": 0,
+                "other→target": 0,
+                "other→other": 92
+              }
+            }
+          }
+        },
+        "firstCvsDDivergence": {
+          "rawMaximum": 66,
+          "weightedMaximum": 26,
+          "hillResponse": 0,
+          "fieldOnlyScore": 0,
+          "none": 0
+        },
+        "analyticScoreMargin": {
+          "count": 92,
+          "mean": 1.7830731866923772,
+          "min": 1.7830731866922893,
+          "p50": 1.7830731866923715,
+          "p90": 1.7830731866924563,
+          "max": 1.7830731866924678
+        }
+      }
+    },
+    "outcomeCounts": {
+      "bothCorrect": 2602,
+      "bothWrong": 2286,
+      "recovered": 92,
+      "newErrors": 92
+    }
+  },
+  "sCurveAnalyticZeroControl": {
+    "count": 392,
+    "baseline": {
+      "falseNonzero": 364,
+      "meanAbsoluteSteering": 0.03539170573895819
+    },
+    "cic": {
+      "falseNonzero": 377,
+      "meanAbsoluteSteering": 0.017898839668476437
+    },
+    "scope": "local analytic-zero control only; excluded from strict-unique wide-winner cohort"
+  },
+  "examples": [
+    {
+      "outcome": "recovered",
+      "affectedArm": "C",
+      "firstRankDivergenceFromA": "rawMaximum",
+      "rowKey": "tight|p00|-0.014"
+    },
+    {
+      "outcome": "recovered",
+      "affectedArm": "C",
+      "firstRankDivergenceFromA": "weightedMaximum",
+      "rowKey": "tight|p00|-0.12"
+    },
+    {
+      "outcome": "new-error",
+      "affectedArm": "D",
+      "firstRankDivergenceFromA": "rawMaximum",
+      "rowKey": "tight|p00|-0.096"
+    }
+  ],
+  "decisionBoundary": "Attribution only. Gate 2 remains MIXED / NOT QUALIFIED; Gate 3 remains NOT RUN."
+}
