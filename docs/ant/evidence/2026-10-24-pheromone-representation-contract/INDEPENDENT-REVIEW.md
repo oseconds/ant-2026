@@ -26,4 +26,4 @@ The package preserves its stated limits: prior CIC outcomes remain inherited evi
 
 ## Review boundary
 
-Read the current repository instructions, ANT hub and world-model design contract; inspected `PheromoneField`, controller, Gaster deposition, material, activation and renderer consumers. No historical archive or old cue chain was opened. No full test suite, build, movement run, natural run, or replacement candidate was tested.
+Read the current repository instructions, ANT hub and world-model design contract; inspected `PheromoneField`, controller, Gaster deposition, material, activation and renderer consumers. No historical archive or old cue chain was opened. I did not rerun the full suite or build in this final packaging pass; their prior run evidence is recorded in `VALIDATION.md` and the verified logs. No movement run, natural run, or replacement candidate was tested.
