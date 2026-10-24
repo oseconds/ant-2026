@@ -37,7 +37,7 @@ These are stage-of-departure labels on saved deterministic outputs, not causal i
 
 For each focal row, retain A/C/D raw samples, weighted samples, candidate maxima, Hill responses, scores, candidate orders, margins, identity, and first-divergence labels. For the full 5,072-row census, retain compact per-stage orders, margins, target-top flags, and classifications. No result-driven threshold or candidate is permitted.
 
-Representative examples are selected mechanically: within each focal cohort, take the first row in frozen input order for each distinct first cross-arm rank-divergence stage; if a cohort has no divergence-stage example, take its first row. Include every such row, with no listening, visual, or magnitude-based selection.
+Representative examples are selected mechanically: use C as the affected arm for recovered rows and D for new-error rows; within each focal cohort, take the first row in frozen input order for each distinct first rank-divergence-from-A stage. If a cohort has no divergence-stage example, take its first row. Include every such row, with no listening, visual, or magnitude-based selection.
 
 ## Validation and stop boundary
 
