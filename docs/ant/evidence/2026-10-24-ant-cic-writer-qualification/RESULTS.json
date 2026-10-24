@@ -1,0 +1,4777 @@
+{
+  "schema": "ant-cic-writer-qualification/v1",
+  "protocolSha256": "6a4aadc894ec5175b0ba1111e5e2b82e9b81c6c9aeb8d6f5e9b16541f26eb7ca",
+  "gate1": {
+    "status": "PASS",
+    "scope": "dose and first spatial moment only"
+  },
+  "gate2": {
+    "status": "MIXED / NOT QUALIFIED",
+    "passed": false,
+    "checks": [
+      {
+        "id": "global denominators and metrics exist",
+        "passed": true
+      },
+      {
+        "id": "global local sign errors strictly decrease",
+        "passed": true
+      },
+      {
+        "id": "global local steering MAE strictly decreases",
+        "passed": true
+      },
+      {
+        "id": "global wide winner errors do not increase",
+        "passed": true
+      },
+      {
+        "id": "families:straight all three primary measures nonregress",
+        "passed": true
+      },
+      {
+        "id": "families:gentle all three primary measures nonregress",
+        "passed": true
+      },
+      {
+        "id": "families:tight all three primary measures nonregress",
+        "passed": false
+      },
+      {
+        "id": "families:gentleMirror all three primary measures nonregress",
+        "passed": true
+      },
+      {
+        "id": "families:tightMirror all three primary measures nonregress",
+        "passed": false
+      },
+      {
+        "id": "families:sCurve all three primary measures nonregress",
+        "passed": true
+      },
+      {
+        "id": "phases:p00 all three primary measures nonregress",
+        "passed": true
+      },
+      {
+        "id": "phases:p10 all three primary measures nonregress",
+        "passed": true
+      },
+      {
+        "id": "phases:p01 all three primary measures nonregress",
+        "passed": false
+      },
+      {
+        "id": "phases:p11 all three primary measures nonregress",
+        "passed": false
+      },
+      {
+        "id": "zero-control:straight false steering nonregresses",
+        "passed": true
+      },
+      {
+        "id": "zero-control:sCurveAnalyticZero false steering nonregresses",
+        "passed": false
+      }
+    ],
+    "metrics": {
+      "global": {
+        "count": 5544,
+        "directionalLocalCount": 4012,
+        "uniqueWideCount": 5072,
+        "baseline": {
+          "localSignErrors": 552,
+          "localSteeringMae": 0.06505353958993083,
+          "wideErrors": 2378
+        },
+        "candidate": {
+          "localSignErrors": 0,
+          "localSteeringMae": 0.02225485590610914,
+          "wideErrors": 2378
+        },
+        "directionalLocalSteeringMae": {
+          "baseline": 0.06313203147642335,
+          "candidate": 0.02879002208081883
+        },
+        "localRecovered": 552,
+        "localNewErrors": 0,
+        "wideRecovered": 92,
+        "wideNewErrors": 92,
+        "rawLocalMae": {
+          "baseline": 0.017335539046672375,
+          "candidate": 0.018225959650705347
+        },
+        "rawWideMae": {
+          "baseline": 0.003440027921592415,
+          "candidate": 0.003550307063838001
+        },
+        "wideAmbiguity": {
+          "baseline": {
+            "analyticUniqueRows": 5072,
+            "exactFinalTies": 0,
+            "precisionNearFinalTies": 0,
+            "finalMargin": {
+              "count": 5072,
+              "mean": 0.7744714510620757,
+              "min": 0.0006756937717953271,
+              "p50": 0.609955456834772,
+              "p90": 1.7610967005570028,
+              "max": 2.1781513799472494
+            }
+          },
+          "candidate": {
+            "analyticUniqueRows": 5072,
+            "exactFinalTies": 0,
+            "precisionNearFinalTies": 0,
+            "finalMargin": {
+              "count": 5072,
+              "mean": 0.6418444993860968,
+              "min": 0.00005978839712633688,
+              "p50": 0.5427826404443153,
+              "p90": 1.2021464361232652,
+              "max": 2.0662800491366076
+            }
+          }
+        },
+        "analyticMarginOfNewWideErrors": {
+          "count": 92,
+          "mean": 1.7830731866923772,
+          "min": 1.7830731866922893,
+          "p50": 1.7830731866923715,
+          "p90": 1.7830731866924563,
+          "max": 1.7830731866924678
+        },
+        "localContrast": {
+          "baseline": {
+            "strength": {
+              "count": 5544,
+              "mean": 0.8072917117391945,
+              "min": 0,
+              "p50": 0.8532395012533303,
+              "p90": 0.9171628916899791,
+              "max": 0.9472429520790019
+            },
+            "coherence": {
+              "count": 5544,
+              "mean": 0.7877560714125164,
+              "min": 0,
+              "p50": 0.8049239136658171,
+              "p90": 0.9999999521485345,
+              "max": 0.9999999752601237
+            },
+            "absoluteBalance": {
+              "count": 5544,
+              "mean": 0.23105418899584512,
+              "min": 0,
+              "p50": 0.19461173987390876,
+              "p90": 0.5633187656865024,
+              "max": 0.9999909347135166
+            }
+          },
+          "candidate": {
+            "strength": {
+              "count": 5544,
+              "mean": 0.7595394256067304,
+              "min": 0,
+              "p50": 0.7975274297968854,
+              "p90": 0.8745041415097465,
+              "max": 0.9241629710176948
+            },
+            "coherence": {
+              "count": 5544,
+              "mean": 0.6112260007619061,
+              "min": 0,
+              "p50": 0.6402808905825937,
+              "p90": 0.7900874437165276,
+              "max": 0.9086424297170811
+            },
+            "absoluteBalance": {
+              "count": 5544,
+              "mean": 0.13302987412363065,
+              "min": 0,
+              "p50": 0.11484668681446085,
+              "p90": 0.2625694763050586,
+              "max": 0.9999947011559701
+            }
+          }
+        }
+      },
+      "families": {
+        "straight": {
+          "count": 924,
+          "directionalLocalCount": 0,
+          "uniqueWideCount": 848,
+          "baseline": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.09827464069086227,
+            "wideErrors": 0
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 5.777649990326007e-16,
+            "wideErrors": 0
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": null,
+            "candidate": null
+          },
+          "localRecovered": 0,
+          "localNewErrors": 0,
+          "wideRecovered": 0,
+          "wideNewErrors": 0,
+          "rawLocalMae": {
+            "baseline": 0.016619320492368854,
+            "candidate": 0.015969470405032913
+          },
+          "rawWideMae": {
+            "baseline": 0.005362142676550275,
+            "candidate": 0.005364786839372032
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 848,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 848,
+                "mean": 1.1952103967486922,
+                "min": 0.10193023608807769,
+                "p50": 0.754606525049374,
+                "p90": 2.1576566467970903,
+                "max": 2.1781513799472494
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 848,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 848,
+                "mean": 1.265846358450862,
+                "min": 0.03696230734565634,
+                "p50": 0.6538609168884039,
+                "p90": 2.0069538569268923,
+                "max": 2.0662800491366076
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 924,
+                "mean": 0.8224572096626688,
+                "min": 0,
+                "p50": 0.8787154894116592,
+                "p90": 0.9445189717333641,
+                "max": 0.9445189717333641
+              },
+              "coherence": {
+                "count": 924,
+                "mean": 0.8621091896884461,
+                "min": 0,
+                "p50": 0.7900874464941732,
+                "p90": 0.9999999712891202,
+                "max": 0.9999999712891202
+              },
+              "absoluteBalance": {
+                "count": 924,
+                "mean": 0.27861112039232017,
+                "min": 0,
+                "p50": 2.948594134950545e-15,
+                "p90": 0.563318768181808,
+                "max": 0.563318768181808
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 924,
+                "mean": 0.7666665015110585,
+                "min": 0,
+                "p50": 0.7058884400112606,
+                "p90": 0.9226587073535202,
+                "max": 0.9241629710176948
+              },
+              "coherence": {
+                "count": 924,
+                "mean": 0.5589116595577681,
+                "min": 0,
+                "p50": 0.3549999851868571,
+                "p90": 0.790087444003014,
+                "max": 0.7900874444582628
+              },
+              "absoluteBalance": {
+                "count": 924,
+                "mean": 1.4640088349097428e-15,
+                "min": 0,
+                "p50": 6.514125410689965e-17,
+                "p90": 2.9377944219141867e-15,
+                "max": 2.9810838629468337e-15
+              }
+            }
+          }
+        },
+        "gentle": {
+          "count": 924,
+          "directionalLocalCount": 868,
+          "uniqueWideCount": 844,
+          "baseline": {
+            "localSignErrors": 152,
+            "localSteeringMae": 0.059255894893107224,
+            "wideErrors": 828
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.031121282736288947,
+            "wideErrors": 828
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.06225539219833855,
+            "candidate": 0.03292040490725388
+          },
+          "localRecovered": 152,
+          "localNewErrors": 0,
+          "wideRecovered": 0,
+          "wideNewErrors": 0,
+          "rawLocalMae": {
+            "baseline": 0.017309549920170083,
+            "candidate": 0.01857433530978458
+          },
+          "rawWideMae": {
+            "baseline": 0.0021405642922197547,
+            "candidate": 0.002262316826064748
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 844,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 844,
+                "mean": 0.8337387447848824,
+                "min": 0.03549429826517472,
+                "p50": 0.7078943451464753,
+                "p90": 1.5945873355551559,
+                "max": 2.1576566467970903
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 844,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 844,
+                "mean": 0.6764676529813434,
+                "min": 0.11113658420958064,
+                "p50": 0.6207059955498931,
+                "p90": 1.056314006320388,
+                "max": 1.2646047905776574
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 924,
+                "mean": 0.8072804471406356,
+                "min": 0,
+                "p50": 0.8554319325027938,
+                "p90": 0.9112339076597273,
+                "max": 0.9472429520790013
+              },
+              "coherence": {
+                "count": 924,
+                "mean": 0.7613046310564134,
+                "min": 0,
+                "p50": 0.7942930206687405,
+                "p90": 0.9407542553057112,
+                "max": 0.9999999733677045
+              },
+              "absoluteBalance": {
+                "count": 924,
+                "mean": 0.1748987353162566,
+                "min": 0,
+                "p50": 0.13189746260789395,
+                "p90": 0.4045681100729649,
+                "max": 0.9999450925885723
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 924,
+                "mean": 0.7686882265148448,
+                "min": 0,
+                "p50": 0.8096485425928588,
+                "p90": 0.8616632810971292,
+                "max": 0.9037443941496559
+              },
+              "coherence": {
+                "count": 924,
+                "mean": 0.5942983357803769,
+                "min": 0,
+                "p50": 0.6170239072231443,
+                "p90": 0.7152195842395266,
+                "max": 0.8337857109486563
+              },
+              "absoluteBalance": {
+                "count": 924,
+                "mean": 0.10306283521648377,
+                "min": 0,
+                "p50": 0.10118320433801707,
+                "p90": 0.14245877678269203,
+                "max": 0.9999947011559701
+              }
+            }
+          }
+        },
+        "tight": {
+          "count": 924,
+          "directionalLocalCount": 872,
+          "uniqueWideCount": 844,
+          "baseline": {
+            "localSignErrors": 39,
+            "localSteeringMae": 0.0575761378963037,
+            "wideErrors": 301
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.022071155065920955,
+            "wideErrors": 303
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.06028580228404731,
+            "candidate": 0.02310251991646249
+          },
+          "localRecovered": 39,
+          "localNewErrors": 0,
+          "wideRecovered": 44,
+          "wideNewErrors": 46,
+          "rawLocalMae": {
+            "baseline": 0.017996046733267934,
+            "candidate": 0.019169567453841727
+          },
+          "rawWideMae": {
+            "baseline": 0.003187995244885545,
+            "candidate": 0.003194292843862713
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 844,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 844,
+                "mean": 0.4291155794099432,
+                "min": 0.0006756937717953271,
+                "p50": 0.40095672238520713,
+                "p90": 0.8249474372781211,
+                "max": 1.0800125936480653
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 844,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 844,
+                "mean": 0.26046775139978406,
+                "min": 0.00005978839712633688,
+                "p50": 0.23022808542141115,
+                "p90": 0.5475372082536257,
+                "max": 0.7887567240864226
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 46,
+            "mean": 1.783073186692377,
+            "min": 1.7830731866922893,
+            "p50": 1.7830731866923797,
+            "p90": 1.7830731866924563,
+            "max": 1.783073186692459
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 924,
+                "mean": 0.8012397825778365,
+                "min": 0,
+                "p50": 0.8424730793839874,
+                "p90": 0.9093560816368474,
+                "max": 0.9389698792121556
+              },
+              "coherence": {
+                "count": 924,
+                "mean": 0.7866760675228053,
+                "min": 0,
+                "p50": 0.8125338612123635,
+                "p90": 0.9711284941217057,
+                "max": 0.9999999752601237
+              },
+              "absoluteBalance": {
+                "count": 924,
+                "mean": 0.29160730522823747,
+                "min": 0,
+                "p50": 0.2671734349401681,
+                "p90": 0.5276604865772141,
+                "max": 0.9999909347135166
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 924,
+                "mean": 0.7453815274783064,
+                "min": 0,
+                "p50": 0.7840695891401012,
+                "p90": 0.8394297389576935,
+                "max": 0.8704892266753174
+              },
+              "coherence": {
+                "count": 924,
+                "mean": 0.6658527777563721,
+                "min": 0,
+                "p50": 0.6869276432214272,
+                "p90": 0.7903451994066365,
+                "max": 0.8799297980910399
+              },
+              "absoluteBalance": {
+                "count": 924,
+                "mean": 0.23991222788432243,
+                "min": 0,
+                "p50": 0.24413945992457578,
+                "p90": 0.2862058603643419,
+                "max": 0.9999852807433065
+              }
+            }
+          }
+        },
+        "gentleMirror": {
+          "count": 924,
+          "directionalLocalCount": 868,
+          "uniqueWideCount": 844,
+          "baseline": {
+            "localSignErrors": 152,
+            "localSteeringMae": 0.05925589489310734,
+            "wideErrors": 828
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.031121282736289346,
+            "wideErrors": 828
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.06225539219833869,
+            "candidate": 0.03292040490725431
+          },
+          "localRecovered": 152,
+          "localNewErrors": 0,
+          "wideRecovered": 0,
+          "wideNewErrors": 0,
+          "rawLocalMae": {
+            "baseline": 0.017309549920170128,
+            "candidate": 0.018574335309784588
+          },
+          "rawWideMae": {
+            "baseline": 0.002140564292219754,
+            "candidate": 0.002262316826064738
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 844,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 844,
+                "mean": 0.8337387447848813,
+                "min": 0.03549429826517259,
+                "p50": 0.7078943451464753,
+                "p90": 1.594587335555174,
+                "max": 2.1576566467970903
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 844,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 844,
+                "mean": 0.6764676529813421,
+                "min": 0.11113658420958136,
+                "p50": 0.6207059955498931,
+                "p90": 1.056314006320415,
+                "max": 1.2646047905776574
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 924,
+                "mean": 0.8072804471406354,
+                "min": 0,
+                "p50": 0.8554319325027943,
+                "p90": 0.9112339076597268,
+                "max": 0.9472429520790019
+              },
+              "coherence": {
+                "count": 924,
+                "mean": 0.7613046310564138,
+                "min": 0,
+                "p50": 0.7942930206687407,
+                "p90": 0.9407542553057066,
+                "max": 0.9999999733677045
+              },
+              "absoluteBalance": {
+                "count": 924,
+                "mean": 0.17489873531625755,
+                "min": 0,
+                "p50": 0.13189746260789495,
+                "p90": 0.4045681100729629,
+                "max": 0.9999450925885723
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 924,
+                "mean": 0.7686882265148446,
+                "min": 0,
+                "p50": 0.8096485425928592,
+                "p90": 0.8616632810971296,
+                "max": 0.9037443941496552
+              },
+              "coherence": {
+                "count": 924,
+                "mean": 0.5942983357803778,
+                "min": 0,
+                "p50": 0.6170239072231443,
+                "p90": 0.7152195842395288,
+                "max": 0.8337857109486564
+              },
+              "absoluteBalance": {
+                "count": 924,
+                "mean": 0.1030628352164848,
+                "min": 0,
+                "p50": 0.10118320433801303,
+                "p90": 0.14245877678269675,
+                "max": 0.9999947011559701
+              }
+            }
+          }
+        },
+        "tightMirror": {
+          "count": 924,
+          "directionalLocalCount": 872,
+          "uniqueWideCount": 844,
+          "baseline": {
+            "localSignErrors": 39,
+            "localSteeringMae": 0.05757613789630383,
+            "wideErrors": 301
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.022071155065921163,
+            "wideErrors": 303
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.06028580228404743,
+            "candidate": 0.02310251991646272
+          },
+          "localRecovered": 39,
+          "localNewErrors": 0,
+          "wideRecovered": 44,
+          "wideNewErrors": 46,
+          "rawLocalMae": {
+            "baseline": 0.01799604673326791,
+            "candidate": 0.019169567453841754
+          },
+          "rawWideMae": {
+            "baseline": 0.0031879952448855505,
+            "candidate": 0.003194292843862729
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 844,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 844,
+                "mean": 0.4291155794099425,
+                "min": 0.0006756937718185307,
+                "p50": 0.4009567223852085,
+                "p90": 0.8249474372781211,
+                "max": 1.080012593648026
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 844,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 844,
+                "mean": 0.2604677513997835,
+                "min": 0.00005978839712633688,
+                "p50": 0.23022808542142736,
+                "p90": 0.5475372082536347,
+                "max": 0.7887567240864146
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 46,
+            "mean": 1.7830731866923757,
+            "min": 1.78307318669231,
+            "p50": 1.7830731866923715,
+            "p90": 1.7830731866924163,
+            "max": 1.7830731866924678
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 924,
+                "mean": 0.801239782577836,
+                "min": 0,
+                "p50": 0.8424730793839881,
+                "p90": 0.9093560816368463,
+                "max": 0.9389698792121545
+              },
+              "coherence": {
+                "count": 924,
+                "mean": 0.7866760675228057,
+                "min": 0,
+                "p50": 0.8125338612123635,
+                "p90": 0.9711284941217057,
+                "max": 0.9999999752601237
+              },
+              "absoluteBalance": {
+                "count": 924,
+                "mean": 0.29160730522823747,
+                "min": 0,
+                "p50": 0.26717343494017315,
+                "p90": 0.5276604865772139,
+                "max": 0.9999909347135166
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 924,
+                "mean": 0.7453815274783064,
+                "min": 0,
+                "p50": 0.7840695891401003,
+                "p90": 0.839429738957693,
+                "max": 0.8704892266753164
+              },
+              "coherence": {
+                "count": 924,
+                "mean": 0.6658527777563725,
+                "min": 0,
+                "p50": 0.686927643221423,
+                "p90": 0.7903451994066346,
+                "max": 0.8799297980910462
+              },
+              "absoluteBalance": {
+                "count": 924,
+                "mean": 0.23991222788432273,
+                "min": 0,
+                "p50": 0.24413945992457325,
+                "p90": 0.28620586036433954,
+                "max": 0.9999852807433065
+              }
+            }
+          }
+        },
+        "sCurve": {
+          "count": 924,
+          "directionalLocalCount": 532,
+          "uniqueWideCount": 848,
+          "baseline": {
+            "localSignErrors": 170,
+            "localSteeringMae": 0.058382531269899625,
+            "wideErrors": 120
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.02714425983223372,
+            "wideErrors": 116
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.07532313955585647,
+            "candidate": 0.0339566746897391
+          },
+          "localRecovered": 170,
+          "localNewErrors": 0,
+          "wideRecovered": 4,
+          "wideNewErrors": 0,
+          "rawLocalMae": {
+            "baseline": 0.016782720480789028,
+            "candidate": 0.01789848197194709
+          },
+          "rawWideMae": {
+            "baseline": 0.004620905778793672,
+            "candidate": 0.005023836203800906
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 848,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 848,
+                "mean": 0.9232107123857364,
+                "min": 0.0018866343301132682,
+                "p50": 0.7755077729015974,
+                "p90": 1.7858478190456617,
+                "max": 2.164632487158901
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 848,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 848,
+                "mean": 0.7080785687790221,
+                "min": 0.06088505572976324,
+                "p50": 0.640265725539221,
+                "p90": 1.2044509046958871,
+                "max": 1.7759563911189238
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 924,
+                "mean": 0.8042526013355448,
+                "min": 0,
+                "p50": 0.8527815281097645,
+                "p90": 0.9152628711775703,
+                "max": 0.9405793975519435
+              },
+              "coherence": {
+                "count": 924,
+                "mean": 0.76846584162821,
+                "min": 0,
+                "p50": 0.8177567080642388,
+                "p90": 0.9379761624158278,
+                "max": 0.9922899869191909
+              },
+              "absoluteBalance": {
+                "count": 924,
+                "mean": 0.17470193249375546,
+                "min": 0,
+                "p50": 0.1519661126074555,
+                "p90": 0.37386602608347774,
+                "max": 0.9999853981993814
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 924,
+                "mean": 0.7624305441430225,
+                "min": 0,
+                "p50": 0.7998415979662111,
+                "p90": 0.8572243697667723,
+                "max": 0.8757718071412314
+              },
+              "coherence": {
+                "count": 924,
+                "mean": 0.588142117940179,
+                "min": 0,
+                "p50": 0.5729424584499164,
+                "p90": 0.7525287458988845,
+                "max": 0.9086424297170811
+              },
+              "absoluteBalance": {
+                "count": 924,
+                "mean": 0.11222911854017197,
+                "min": 0.00013606237551948348,
+                "p50": 0.10274453374602437,
+                "p90": 0.22183567200955842,
+                "max": 0.8145726905303176
+              }
+            }
+          }
+        }
+      },
+      "phases": {
+        "p00": {
+          "count": 1386,
+          "directionalLocalCount": 1003,
+          "uniqueWideCount": 1268,
+          "baseline": {
+            "localSignErrors": 107,
+            "localSteeringMae": 0.09233349616333167,
+            "wideErrors": 647
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.02275200162637189,
+            "wideErrors": 645
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.07779805737792099,
+            "candidate": 0.0295380763085955
+          },
+          "localRecovered": 107,
+          "localNewErrors": 0,
+          "wideRecovered": 24,
+          "wideNewErrors": 22,
+          "rawLocalMae": {
+            "baseline": 0.018213472964983865,
+            "candidate": 0.019112371125141775
+          },
+          "rawWideMae": {
+            "baseline": 0.0037010573423744177,
+            "candidate": 0.00375008791618455
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 1268,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 1268,
+                "mean": 0.6243952662758451,
+                "min": 0.0006756937717953271,
+                "p50": 0.6035547163614153,
+                "p90": 1.1170738802475793,
+                "max": 2.130879346338888
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 1268,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 1268,
+                "mean": 0.4986642151882877,
+                "min": 0.00025555454094283725,
+                "p50": 0.49878614717919495,
+                "p90": 0.8896693268384115,
+                "max": 1.6933393877674068
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 22,
+            "mean": 1.7830731866923692,
+            "min": 1.7830731866922893,
+            "p50": 1.7830731866923681,
+            "p90": 1.783073186692396,
+            "max": 1.783073186692439
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 1386,
+                "mean": 0.7969686409425981,
+                "min": 0,
+                "p50": 0.8467542627007871,
+                "p90": 0.9121152306095428,
+                "max": 0.9405793975519435
+              },
+              "coherence": {
+                "count": 1386,
+                "mean": 0.8183080656465569,
+                "min": 0,
+                "p50": 0.8479138412147273,
+                "p90": 0.9999999664423971,
+                "max": 0.9999999752315966
+              },
+              "absoluteBalance": {
+                "count": 1386,
+                "mean": 0.3109294135115586,
+                "min": 0,
+                "p50": 0.273847977196825,
+                "p90": 0.563318768181808,
+                "max": 0.9999909347135166
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 1386,
+                "mean": 0.7343313794986832,
+                "min": 0,
+                "p50": 0.7839250037752833,
+                "p90": 0.8408992358258043,
+                "max": 0.8750610567172912
+              },
+              "coherence": {
+                "count": 1386,
+                "mean": 0.5677209322420488,
+                "min": 0,
+                "p50": 0.6049243938449832,
+                "p90": 0.7448578697081799,
+                "max": 0.8442376776145927
+              },
+              "absoluteBalance": {
+                "count": 1386,
+                "mean": 0.1349073859883813,
+                "min": 0,
+                "p50": 0.12421487574108327,
+                "p90": 0.26085376093606133,
+                "max": 0.4110984964713125
+              }
+            }
+          }
+        },
+        "p10": {
+          "count": 1386,
+          "directionalLocalCount": 1003,
+          "uniqueWideCount": 1268,
+          "baseline": {
+            "localSignErrors": 77,
+            "localSteeringMae": 0.09025920852654724,
+            "wideErrors": 657
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.023635817888373656,
+            "wideErrors": 647
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.07552726745904834,
+            "candidate": 0.030808222065352477
+          },
+          "localRecovered": 77,
+          "localNewErrors": 0,
+          "wideRecovered": 24,
+          "wideNewErrors": 14,
+          "rawLocalMae": {
+            "baseline": 0.017888911706046565,
+            "candidate": 0.01897345116121331
+          },
+          "rawWideMae": {
+            "baseline": 0.003686197286560399,
+            "candidate": 0.0037556728580285634
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 1268,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 1268,
+                "mean": 0.6454478989782193,
+                "min": 0.0014821971217099383,
+                "p50": 0.6057072151628214,
+                "p90": 1.1993616941433123,
+                "max": 2.153548358730503
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 1268,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 1268,
+                "mean": 0.5037880317734175,
+                "min": 0.00005978839712633688,
+                "p50": 0.5055141160309847,
+                "p90": 0.9115345041321095,
+                "max": 1.6186897523556028
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 14,
+            "mean": 1.7830731866923604,
+            "min": 1.7830731866922893,
+            "p50": 1.7830731866923597,
+            "p90": 1.7830731866924072,
+            "max": 1.7830731866924157
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 1386,
+                "mean": 0.8013604346600193,
+                "min": 0,
+                "p50": 0.8490648754159177,
+                "p90": 0.9173387983831532,
+                "max": 0.9472429520790019
+              },
+              "coherence": {
+                "count": 1386,
+                "mean": 0.8294926159284811,
+                "min": 0,
+                "p50": 0.8680197740376464,
+                "p90": 0.9999999645544696,
+                "max": 0.9999999752601237
+              },
+              "absoluteBalance": {
+                "count": 1386,
+                "mean": 0.3094180656299678,
+                "min": 0,
+                "p50": 0.2730118116051627,
+                "p90": 0.563318768181808,
+                "max": 0.9999853981993814
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 1386,
+                "mean": 0.7379600941284473,
+                "min": 0,
+                "p50": 0.7868374996937503,
+                "p90": 0.8432888417689729,
+                "max": 0.8776051342916956
+              },
+              "coherence": {
+                "count": 1386,
+                "mean": 0.5770505489422187,
+                "min": 0,
+                "p50": 0.6169469227168773,
+                "p90": 0.754351085541274,
+                "max": 0.9086424297170811
+              },
+              "absoluteBalance": {
+                "count": 1386,
+                "mean": 0.13707995141508728,
+                "min": 0,
+                "p50": 0.11903161606945681,
+                "p90": 0.26609149095261214,
+                "max": 0.3957582875692982
+              }
+            }
+          }
+        },
+        "p01": {
+          "count": 1386,
+          "directionalLocalCount": 1003,
+          "uniqueWideCount": 1268,
+          "baseline": {
+            "localSignErrors": 195,
+            "localSteeringMae": 0.04018108258263682,
+            "wideErrors": 534
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.020759745639920488,
+            "wideErrors": 535
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.05123261375272416,
+            "candidate": 0.026603222174885324
+          },
+          "localRecovered": 195,
+          "localNewErrors": 0,
+          "wideRecovered": 27,
+          "wideNewErrors": 28,
+          "rawLocalMae": {
+            "baseline": 0.016588518329210006,
+            "candidate": 0.017428754248171176
+          },
+          "rawWideMae": {
+            "baseline": 0.0031758152069555345,
+            "candidate": 0.003342382557193536
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 1268,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 1268,
+                "mean": 0.9151193344202992,
+                "min": 0.0018866343301132682,
+                "p50": 0.719078232069196,
+                "p90": 2.063645295510651,
+                "max": 2.1781513799472494
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 1268,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 1268,
+                "mean": 0.7787641852972605,
+                "min": 0.0009876474801900903,
+                "p50": 0.5846878362959361,
+                "p90": 1.9595689876253921,
+                "max": 2.0477107726465538
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 28,
+            "mean": 1.7830731866923875,
+            "min": 1.78307318669231,
+            "p50": 1.783073186692384,
+            "p90": 1.7830731866924576,
+            "max": 1.7830731866924678
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 1386,
+                "mean": 0.8167649791917032,
+                "min": 0,
+                "p50": 0.862322279862406,
+                "p90": 0.9185628951409434,
+                "max": 0.9445189717333641
+              },
+              "coherence": {
+                "count": 1386,
+                "mean": 0.7580298537041308,
+                "min": 0,
+                "p50": 0.7900874458753195,
+                "p90": 0.8870795266666998,
+                "max": 0.9999992359309589
+              },
+              "absoluteBalance": {
+                "count": 1386,
+                "mean": 0.15331315392988687,
+                "min": 0,
+                "p50": 0.14011914056060454,
+                "p90": 0.32501273594969815,
+                "max": 0.6029997582760404
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 1386,
+                "mean": 0.7815189895584242,
+                "min": 0,
+                "p50": 0.8082638322650563,
+                "p90": 0.9184330954574917,
+                "max": 0.9241629710176948
+              },
+              "coherence": {
+                "count": 1386,
+                "mean": 0.6467302927639316,
+                "min": 0,
+                "p50": 0.6633179243914595,
+                "p90": 0.7900874440833536,
+                "max": 0.8795780994289472
+              },
+              "absoluteBalance": {
+                "count": 1386,
+                "mean": 0.12797388605032853,
+                "min": 0,
+                "p50": 0.10939033021732586,
+                "p90": 0.2567189507947247,
+                "max": 0.9999947011559701
+              }
+            }
+          }
+        },
+        "p11": {
+          "count": 1386,
+          "directionalLocalCount": 1003,
+          "uniqueWideCount": 1268,
+          "baseline": {
+            "localSignErrors": 173,
+            "localSteeringMae": 0.037440371087207,
+            "wideErrors": 540
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.021871858469770446,
+            "wideErrors": 551
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.04797018731599949,
+            "candidate": 0.028210567774441964
+          },
+          "localRecovered": 173,
+          "localNewErrors": 0,
+          "wideRecovered": 17,
+          "wideNewErrors": 28,
+          "rawLocalMae": {
+            "baseline": 0.01665125318644848,
+            "candidate": 0.017389262068295646
+          },
+          "rawWideMae": {
+            "baseline": 0.0031970418504793123,
+            "candidate": 0.003353084923945287
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 1268,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 1268,
+                "mean": 0.9129233045739432,
+                "min": 0.009826540793663185,
+                "p50": 0.7087852757227311,
+                "p90": 2.054361060075367,
+                "max": 2.1719919321218555
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 1268,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 1268,
+                "mean": 0.7861615652854188,
+                "min": 0.0012777070306639882,
+                "p50": 0.5991807471838049,
+                "p90": 1.9507071051087566,
+                "max": 2.0662800491366076
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 28,
+            "mean": 1.7830731866923792,
+            "min": 1.7830731866922893,
+            "p50": 1.7830731866923732,
+            "p90": 1.7830731866924576,
+            "max": 1.7830731866924678
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 1386,
+                "mean": 0.8140727921624501,
+                "min": 0,
+                "p50": 0.8546882814301898,
+                "p90": 0.9180601937415591,
+                "max": 0.9445189717333641
+              },
+              "coherence": {
+                "count": 1386,
+                "mean": 0.745193750370892,
+                "min": 0,
+                "p50": 0.7900874382788087,
+                "p90": 0.8810800875749962,
+                "max": 0.9778059315303184
+              },
+              "absoluteBalance": {
+                "count": 1386,
+                "mean": 0.15055612291196435,
+                "min": 0,
+                "p50": 0.13304534723140551,
+                "p90": 0.31980198220453,
+                "max": 0.9999450925885723
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 1386,
+                "mean": 0.7843472392413671,
+                "min": 0,
+                "p50": 0.8090145945530656,
+                "p90": 0.9180240392761091,
+                "max": 0.9241098666798733
+              },
+              "coherence": {
+                "count": 1386,
+                "mean": 0.6534022290994346,
+                "min": 0,
+                "p50": 0.6711118074136778,
+                "p90": 0.7900874442278474,
+                "max": 0.8799297980910462
+              },
+              "absoluteBalance": {
+                "count": 1386,
+                "mean": 0.13215827304072755,
+                "min": 0,
+                "p50": 0.11145250130268311,
+                "p90": 0.2670355975869926,
+                "max": 0.9999852807433065
+              }
+            }
+          }
+        }
+      },
+      "arms": {
+        "straight|p00": {
+          "count": 231,
+          "directionalLocalCount": 0,
+          "uniqueWideCount": 212,
+          "baseline": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.19690264640853122,
+            "wideErrors": 0
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 4.768124533599542e-18,
+            "wideErrors": 0
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": null,
+            "candidate": null
+          },
+          "localRecovered": 0,
+          "localNewErrors": 0,
+          "wideRecovered": 0,
+          "wideNewErrors": 0,
+          "rawLocalMae": {
+            "baseline": 0.021020626367783936,
+            "candidate": 0.020249801544553414
+          },
+          "rawWideMae": {
+            "baseline": 0.006429101862181499,
+            "candidate": 0.006434894298972614
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 212,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 212,
+                "mean": 0.5079686043058469,
+                "min": 0.11221975101989187,
+                "p50": 0.6057072151628214,
+                "p90": 0.6597547125073092,
+                "max": 0.754606525049374
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 212,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 212,
+                "mean": 0.5746385813161974,
+                "min": 0.03696230734565634,
+                "p50": 0.5778608763787847,
+                "p90": 0.6156589605428051,
+                "max": 0.6447911184167151
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 231,
+                "mean": 0.7767563629549956,
+                "min": 0,
+                "p50": 0.8042099406937908,
+                "p90": 0.8787154894116592,
+                "max": 0.8787154894116592
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.9696969266551423,
+                "min": 0,
+                "p50": 0.9999999617188272,
+                "p90": 0.9999999712891202,
+                "max": 0.9999999712891202
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.5608801533656099,
+                "min": 0,
+                "p50": 0.5633187664786082,
+                "p90": 0.563318768181808,
+                "max": 0.563318768181808
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 231,
+                "mean": 0.657113274678187,
+                "min": 0,
+                "p50": 0.6941267722316383,
+                "p90": 0.7043858594105257,
+                "max": 0.7072494409144655
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.34424240618041285,
+                "min": 0,
+                "p50": 0.3549999847114591,
+                "p90": 0.3549999850995626,
+                "max": 0.3549999852830247
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 1.5570306517510184e-17,
+                "min": 0,
+                "p50": 0,
+                "p90": 3.238639975869837e-17,
+                "max": 6.514125410689965e-17
+              }
+            }
+          }
+        },
+        "straight|p10": {
+          "count": 231,
+          "directionalLocalCount": 0,
+          "uniqueWideCount": 212,
+          "baseline": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.1961959163549172,
+            "wideErrors": 0
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 5.035674211767949e-18,
+            "wideErrors": 0
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": null,
+            "candidate": null
+          },
+          "localRecovered": 0,
+          "localNewErrors": 0,
+          "wideRecovered": 0,
+          "wideNewErrors": 0,
+          "rawLocalMae": {
+            "baseline": 0.02099615806085414,
+            "candidate": 0.020247539001646733
+          },
+          "rawWideMae": {
+            "baseline": 0.0064258260071442894,
+            "candidate": 0.006433810639861828
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 212,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 212,
+                "mean": 0.5092028329398987,
+                "min": 0.10193023608807769,
+                "p50": 0.6057072151628214,
+                "p90": 0.6574394662582287,
+                "max": 0.7488010550303835
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 212,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 212,
+                "mean": 0.5747562131595138,
+                "min": 0.082355084948082,
+                "p50": 0.5707289829995817,
+                "p90": 0.6239545276668867,
+                "max": 0.6631992194743367
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 231,
+                "mean": 0.7739684011070397,
+                "min": 0,
+                "p50": 0.8042099406937901,
+                "p90": 0.8787154894116592,
+                "max": 0.8787154894116592
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.9567099182634147,
+                "min": 0,
+                "p50": 0.9999999598449237,
+                "p90": 0.9999999712891202,
+                "max": 0.9999999712891202
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.5535643282036741,
+                "min": 0,
+                "p50": 0.5633187664786082,
+                "p90": 0.563318768181808,
+                "max": 0.563318768181808
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 231,
+                "mean": 0.6571878706571274,
+                "min": 0,
+                "p50": 0.6937132729382037,
+                "p90": 0.7040785944733151,
+                "max": 0.7070925856509959
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.34885269507261696,
+                "min": 0,
+                "p50": 0.3549999847114591,
+                "p90": 0.3549999850283012,
+                "max": 0.3549999852284629
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 1.6904954186867314e-17,
+                "min": 0,
+                "p50": 0,
+                "p90": 3.262364894817734e-17,
+                "max": 6.514125410689965e-17
+              }
+            }
+          }
+        },
+        "straight|p01": {
+          "count": 231,
+          "directionalLocalCount": 0,
+          "uniqueWideCount": 212,
+          "baseline": {
+            "localSignErrors": 0,
+            "localSteeringMae": 1.140910580838309e-15,
+            "wideErrors": 0
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 1.1514341252173433e-15,
+            "wideErrors": 0
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": null,
+            "candidate": null
+          },
+          "localRecovered": 0,
+          "localNewErrors": 0,
+          "wideRecovered": 0,
+          "wideNewErrors": 0,
+          "rawLocalMae": {
+            "baseline": 0.012226688878564207,
+            "candidate": 0.011684959944383623
+          },
+          "rawWideMae": {
+            "baseline": 0.004298193480519569,
+            "candidate": 0.004295127117545688
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 212,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 212,
+                "mean": 1.8795150411983768,
+                "min": 0.4771193708828,
+                "p50": 2.1576566467970903,
+                "p90": 2.1576566467970903,
+                "max": 2.1781513799472494
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 212,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 212,
+                "mean": 1.9550861811979234,
+                "min": 0.2835467264103566,
+                "p50": 1.9705552610269153,
+                "p90": 2.0160212312821884,
+                "max": 2.0477107726465538
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 231,
+                "mean": 0.871463756132243,
+                "min": 0,
+                "p50": 0.9061179248912237,
+                "p90": 0.9445189717333641,
+                "max": 0.9445189717333641
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.7661453936271788,
+                "min": 0,
+                "p50": 0.790087440806613,
+                "p90": 0.7900874464941732,
+                "max": 0.7900874464941732
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 2.8974867831652423e-15,
+                "min": 0,
+                "p50": 2.9074613965903592e-15,
+                "p90": 2.931736927024217e-15,
+                "max": 2.948594134950545e-15
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 231,
+                "mean": 0.8770289115848376,
+                "min": 0,
+                "p50": 0.9196590187390842,
+                "p90": 0.9231907300164487,
+                "max": 0.9241629710176948
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.766145395767116,
+                "min": 0,
+                "p50": 0.7900874437165276,
+                "p90": 0.7900874442201794,
+                "max": 0.7900874444582628
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 2.904965006514284e-15,
+                "min": 0,
+                "p50": 2.9178904647623893e-15,
+                "p90": 2.9450934956770407e-15,
+                "max": 2.973029200991539e-15
+              }
+            }
+          }
+        },
+        "straight|p11": {
+          "count": 231,
+          "directionalLocalCount": 0,
+          "uniqueWideCount": 212,
+          "baseline": {
+            "localSignErrors": 0,
+            "localSteeringMae": 1.136170743687897e-15,
+            "wideErrors": 0
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 1.1498220721676926e-15,
+            "wideErrors": 0
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": null,
+            "candidate": null
+          },
+          "localRecovered": 0,
+          "localNewErrors": 0,
+          "wideRecovered": 0,
+          "wideNewErrors": 0,
+          "rawLocalMae": {
+            "baseline": 0.01223380866227171,
+            "candidate": 0.011695581129548611
+          },
+          "rawWideMae": {
+            "baseline": 0.004295449356355556,
+            "candidate": 0.004295315301108229
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 212,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 212,
+                "mean": 1.8841551085506203,
+                "min": 0.8042157347449426,
+                "p50": 2.132671828316406,
+                "p90": 2.1576566467970903,
+                "max": 2.1719919321218555
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 212,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 212,
+                "mean": 1.958904458129801,
+                "min": 0.5656418253949322,
+                "p50": 1.962046656152805,
+                "p90": 2.0258019555518865,
+                "max": 2.0662800491366076
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 231,
+                "mean": 0.867640318456396,
+                "min": 0,
+                "p50": 0.9061179248912233,
+                "p90": 0.9445189717333641,
+                "max": 0.9445189717333641
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.7558845202080382,
+                "min": 0,
+                "p50": 0.7900874396929649,
+                "p90": 0.7900874464941732,
+                "max": 0.7900874464941732
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 2.859975438756049e-15,
+                "min": 0,
+                "p50": 2.907159493342307e-15,
+                "p90": 2.9361455643459217e-15,
+                "max": 2.965716586280741e-15
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 231,
+                "mean": 0.8753359491240811,
+                "min": 0,
+                "p50": 0.9195150562727378,
+                "p90": 0.9230860599526105,
+                "max": 0.9241098666798733
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.7764061412109358,
+                "min": 0,
+                "p50": 0.7900874437165276,
+                "p90": 0.7900874441277016,
+                "max": 0.7900874443874565
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 2.918595072420313e-15,
+                "min": 2.8502540963651228e-15,
+                "p50": 2.918310833209306e-15,
+                "p90": 2.942806712198269e-15,
+                "max": 2.9810838629468337e-15
+              }
+            }
+          }
+        },
+        "gentle|p00": {
+          "count": 231,
+          "directionalLocalCount": 217,
+          "uniqueWideCount": 211,
+          "baseline": {
+            "localSignErrors": 32,
+            "localSteeringMae": 0.07048699294609131,
+            "wideErrors": 207
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.03237933654071648,
+            "wideErrors": 207
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.07426532447264923,
+            "candidate": 0.03420591643396151
+          },
+          "localRecovered": 32,
+          "localNewErrors": 0,
+          "wideRecovered": 0,
+          "wideNewErrors": 0,
+          "rawLocalMae": {
+            "baseline": 0.01773104658590842,
+            "candidate": 0.018863611273140353
+          },
+          "rawWideMae": {
+            "baseline": 0.002229051479769459,
+            "candidate": 0.002310911559746288
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.7596244491908123,
+                "min": 0.05864170852666275,
+                "p50": 0.6397564280244088,
+                "p90": 1.4647077922917566,
+                "max": 1.940774789623175
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.6266568177167182,
+                "min": 0.14864139137247087,
+                "p50": 0.5216459160997331,
+                "p90": 1.0242079501646402,
+                "max": 1.1787815513137312
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 231,
+                "mean": 0.7966259087737138,
+                "min": 0,
+                "p50": 0.8495680417491738,
+                "p90": 0.9100285234789801,
+                "max": 0.9374966608503775
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.7592318428642449,
+                "min": 0,
+                "p50": 0.7822583887140524,
+                "p90": 0.9996354815446875,
+                "max": 0.9999999732872118
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.20923772968707216,
+                "min": 0,
+                "p50": 0.1493327352103077,
+                "p90": 0.5472748204015255,
+                "max": 0.6386772718148525
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 231,
+                "mean": 0.75659715877003,
+                "min": 0,
+                "p50": 0.8077911848108648,
+                "p90": 0.8468085427806252,
+                "max": 0.8738663145340104
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.5775591904893466,
+                "min": 0,
+                "p50": 0.6063879551725665,
+                "p90": 0.6990531503959124,
+                "max": 0.7905540962175766
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.1057882058656102,
+                "min": 0.0018378513980583746,
+                "p50": 0.10437449569192757,
+                "p90": 0.15027942302853173,
+                "max": 0.19507036797456112
+              }
+            }
+          }
+        },
+        "gentle|p10": {
+          "count": 231,
+          "directionalLocalCount": 217,
+          "uniqueWideCount": 211,
+          "baseline": {
+            "localSignErrors": 34,
+            "localSteeringMae": 0.06761094240546724,
+            "wideErrors": 207
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.03155667972920876,
+            "wideErrors": 207
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.07138414867088196,
+            "candidate": 0.03349255476759032
+          },
+          "localRecovered": 34,
+          "localNewErrors": 0,
+          "wideRecovered": 0,
+          "wideNewErrors": 0,
+          "rawLocalMae": {
+            "baseline": 0.017214981559805796,
+            "candidate": 0.018788098544698144
+          },
+          "rawWideMae": {
+            "baseline": 0.0021730393159895257,
+            "candidate": 0.002317768499298006
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.8318969519524146,
+                "min": 0.12498775320966382,
+                "p50": 0.6958159889610782,
+                "p90": 1.5945873355551559,
+                "max": 2.1535483587304847
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.6427162149088628,
+                "min": 0.2645233356918024,
+                "p50": 0.5715394081037712,
+                "p90": 1.0343701923645918,
+                "max": 1.1709038780314398
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 231,
+                "mean": 0.8117267213357957,
+                "min": 0,
+                "p50": 0.861714612309854,
+                "p90": 0.9215666035138039,
+                "max": 0.9472429520790013
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.7936012848267657,
+                "min": 0,
+                "p50": 0.827832328339671,
+                "p90": 0.999630135277835,
+                "max": 0.9999999733677045
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.18991900293059794,
+                "min": 0,
+                "p50": 0.1239223900752114,
+                "p90": 0.5403593212137805,
+                "max": 0.6424769282654764
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 231,
+                "mean": 0.7609760746858959,
+                "min": 0,
+                "p50": 0.8069870807751466,
+                "p90": 0.8511348956803254,
+                "max": 0.8776051342916948
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.5905903090887272,
+                "min": 0,
+                "p50": 0.6169469227168767,
+                "p90": 0.7072359933448975,
+                "max": 0.8337857109486563
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.1037073041617303,
+                "min": 0.006244327847647686,
+                "p50": 0.102641040976528,
+                "p90": 0.14637700468560916,
+                "max": 0.2148307549880686
+              }
+            }
+          }
+        },
+        "gentle|p01": {
+          "count": 231,
+          "directionalLocalCount": 217,
+          "uniqueWideCount": 211,
+          "baseline": {
+            "localSignErrors": 40,
+            "localSteeringMae": 0.051888325745434706,
+            "wideErrors": 207
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.030575906649918164,
+            "wideErrors": 207
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.05384094064470163,
+            "candidate": 0.032240262048595036
+          },
+          "localRecovered": 40,
+          "localNewErrors": 0,
+          "wideRecovered": 0,
+          "wideNewErrors": 0,
+          "rawLocalMae": {
+            "baseline": 0.016967452110912672,
+            "candidate": 0.01826748069609024
+          },
+          "rawWideMae": {
+            "baseline": 0.0020521287655702355,
+            "candidate": 0.002203097700435862
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.8773865259731153,
+                "min": 0.03549429826517472,
+                "p50": 0.8158615260176489,
+                "p90": 1.684705116556658,
+                "max": 2.0808573051713277
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.7135707333612377,
+                "min": 0.11113658420958064,
+                "p50": 0.7026304411589226,
+                "p90": 1.0611555638326422,
+                "max": 1.1255420231555486
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 231,
+                "mean": 0.8121137809588463,
+                "min": 0,
+                "p50": 0.8639727348466729,
+                "p90": 0.909345965730612,
+                "max": 0.936047465845978
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.7596026223923966,
+                "min": 0,
+                "p50": 0.8028012507841867,
+                "p90": 0.8935725685119249,
+                "max": 0.9999992359309589
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.163502234953925,
+                "min": 0,
+                "p50": 0.13628514158099697,
+                "p90": 0.2982204002674616,
+                "max": 0.6029997582760404
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 231,
+                "mean": 0.7776429477820748,
+                "min": 0,
+                "p50": 0.8150277843621793,
+                "p90": 0.883911484639191,
+                "max": 0.9037443941496559
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.6047847555829146,
+                "min": 0,
+                "p50": 0.6246603138864931,
+                "p90": 0.7352082659071594,
+                "max": 0.8263951318410354
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.10277138378690487,
+                "min": 0,
+                "p50": 0.09913630462297496,
+                "p90": 0.1327809205747388,
+                "max": 0.9999947011559701
+              }
+            }
+          }
+        },
+        "gentle|p11": {
+          "count": 231,
+          "directionalLocalCount": 217,
+          "uniqueWideCount": 211,
+          "baseline": {
+            "localSignErrors": 46,
+            "localSteeringMae": 0.047037318475435526,
+            "wideErrors": 207
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.029973208025312528,
+            "wideErrors": 207
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.049531155005121334,
+            "candidate": 0.03174288637886879
+          },
+          "localRecovered": 46,
+          "localNewErrors": 0,
+          "wideRecovered": 0,
+          "wideNewErrors": 0,
+          "rawLocalMae": {
+            "baseline": 0.01732471942405319,
+            "candidate": 0.018378150725209718
+          },
+          "rawWideMae": {
+            "baseline": 0.0021080376075498,
+            "candidate": 0.002217489544778811
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.8660470520231894,
+                "min": 0.15036422232113378,
+                "p50": 0.7319987779939833,
+                "p90": 1.6678567556573483,
+                "max": 2.1576566467970903
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.7229268459385592,
+                "min": 0.274175062821899,
+                "p50": 0.708314088092878,
+                "p90": 1.0715844849880918,
+                "max": 1.2646047905776574
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 231,
+                "mean": 0.8086553774941888,
+                "min": 0,
+                "p50": 0.8498322926514705,
+                "p90": 0.8988473170105304,
+                "max": 0.9359786354243474
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.7327827741422468,
+                "min": 0,
+                "p50": 0.7756896805457463,
+                "p90": 0.871097144789313,
+                "max": 0.9578450011022551
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.13693597369343166,
+                "min": 0,
+                "p50": 0.11826667469554118,
+                "p90": 0.25376513395429406,
+                "max": 0.9999450925885723
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 231,
+                "mean": 0.77953672482138,
+                "min": 0,
+                "p50": 0.8108897692188902,
+                "p90": 0.8847565775565253,
+                "max": 0.903662765936271
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.60425908796052,
+                "min": 0,
+                "p50": 0.615503344753712,
+                "p90": 0.7466976277770803,
+                "max": 0.826519873513117
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.09998444705168982,
+                "min": 0,
+                "p50": 0.09810095259198928,
+                "p90": 0.1390586656190593,
+                "max": 0.9999580478674539
+              }
+            }
+          }
+        },
+        "tight|p00": {
+          "count": 231,
+          "directionalLocalCount": 218,
+          "uniqueWideCount": 211,
+          "baseline": {
+            "localSignErrors": 14,
+            "localSteeringMae": 0.07829660057459514,
+            "wideErrors": 102
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.019665271736458094,
+            "wideErrors": 101
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.08201934111098899,
+            "candidate": 0.02054222015287894
+          },
+          "localRecovered": 14,
+          "localNewErrors": 0,
+          "wideRecovered": 12,
+          "wideNewErrors": 11,
+          "rawLocalMae": {
+            "baseline": 0.0184242778084229,
+            "candidate": 0.019698872713622462
+          },
+          "rawWideMae": {
+            "baseline": 0.0035162612858126315,
+            "candidate": 0.003328765183501923
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.4423417377796447,
+                "min": 0.0006756937717953271,
+                "p50": 0.4486630683355278,
+                "p90": 0.8239010591680221,
+                "max": 1.0563017944685393
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.22404243760890236,
+                "min": 0.00025555454095638197,
+                "p50": 0.19805679576739876,
+                "p90": 0.45978766377808333,
+                "max": 0.6861431943665981
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 11,
+            "mean": 1.783073186692368,
+            "min": 1.7830731866922893,
+            "p50": 1.7830731866923653,
+            "p90": 1.783073186692396,
+            "max": 1.783073186692439
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 231,
+                "mean": 0.8036543323452793,
+                "min": 0,
+                "p50": 0.8477608752084823,
+                "p90": 0.9133418028175997,
+                "max": 0.9389698792121556
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.8064780042734978,
+                "min": 0,
+                "p50": 0.8282663881869828,
+                "p90": 0.9999999624155709,
+                "max": 0.9999999752315966
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.3478169919251565,
+                "min": 0,
+                "p50": 0.32680237415510716,
+                "p90": 0.6906192069564993,
+                "max": 0.9999909347135166
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 231,
+                "mean": 0.7294483484082361,
+                "min": 0,
+                "p50": 0.7726490545502653,
+                "p90": 0.8216094919560964,
+                "max": 0.8510386518605229
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.640687416727385,
+                "min": 0,
+                "p50": 0.6640562663162499,
+                "p90": 0.7625998909132967,
+                "max": 0.8241038805122696
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.237669344243303,
+                "min": 0.004371142456201546,
+                "p50": 0.24226009806522122,
+                "p90": 0.28027129223341996,
+                "max": 0.3460292759806226
+              }
+            }
+          }
+        },
+        "tight|p10": {
+          "count": 231,
+          "directionalLocalCount": 218,
+          "uniqueWideCount": 211,
+          "baseline": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.07771661052349638,
+            "wideErrors": 107
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.023195503472120356,
+            "wideErrors": 102
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.08095944741024023,
+            "candidate": 0.024176720266464665
+          },
+          "localRecovered": 0,
+          "localNewErrors": 0,
+          "wideRecovered": 12,
+          "wideNewErrors": 7,
+          "rawLocalMae": {
+            "baseline": 0.017945268322037227,
+            "candidate": 0.019358038834228437
+          },
+          "rawWideMae": {
+            "baseline": 0.003518292254168853,
+            "candidate": 0.003340045754969341
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.4370755694772612,
+                "min": 0.0014821971217099383,
+                "p50": 0.39526460456283374,
+                "p90": 0.8502692053353152,
+                "max": 1.0777854481801283
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.22160066368526873,
+                "min": 0.00005978839712633688,
+                "p50": 0.1790416094449599,
+                "p90": 0.4846957215442828,
+                "max": 0.714925774671423
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 7,
+            "mean": 1.7830731866923604,
+            "min": 1.7830731866922893,
+            "p50": 1.7830731866923797,
+            "p90": 1.7830731866924072,
+            "max": 1.7830731866924157
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 231,
+                "mean": 0.8050986245503785,
+                "min": 0,
+                "p50": 0.8490836645783401,
+                "p90": 0.9173387983831536,
+                "max": 0.9368980953149886
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.8307027623294149,
+                "min": 0,
+                "p50": 0.8670034034858847,
+                "p90": 0.99999996036787,
+                "max": 0.9999999752601237
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.369481938686285,
+                "min": 0,
+                "p50": 0.3266998470178982,
+                "p90": 0.682397380509823,
+                "max": 0.7623877864722124
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 231,
+                "mean": 0.7360437809929236,
+                "min": 0,
+                "p50": 0.7815876433959085,
+                "p90": 0.8301644993216747,
+                "max": 0.8466476843002959
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.6495026245440283,
+                "min": 0,
+                "p50": 0.6833166238818555,
+                "p90": 0.7751207610849826,
+                "max": 0.8661577707248386
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.2458165911171375,
+                "min": 0,
+                "p50": 0.2491628961529394,
+                "p90": 0.29325756354395166,
+                "max": 0.3957582875692951
+              }
+            }
+          }
+        },
+        "tight|p01": {
+          "count": 231,
+          "directionalLocalCount": 218,
+          "uniqueWideCount": 211,
+          "baseline": {
+            "localSignErrors": 22,
+            "localSteeringMae": 0.037793915155979164,
+            "wideErrors": 45
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.020706674333924605,
+            "wideErrors": 46
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.0398812793728461,
+            "candidate": 0.021744271956695486
+          },
+          "localRecovered": 22,
+          "localNewErrors": 0,
+          "wideRecovered": 13,
+          "wideNewErrors": 14,
+          "rawLocalMae": {
+            "baseline": 0.017892779538655073,
+            "candidate": 0.018928374454558552
+          },
+          "rawWideMae": {
+            "baseline": 0.002842595852461201,
+            "candidate": 0.0030450311923710892
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.41407827537445824,
+                "min": 0.0029164401867967094,
+                "p50": 0.3759263418740154,
+                "p90": 0.7870482492236109,
+                "max": 1.0800125936480653
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.29315052698427896,
+                "min": 0.000987647480212961,
+                "p50": 0.2704514056962602,
+                "p90": 0.5651791251816753,
+                "max": 0.7654477481613525
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 14,
+            "mean": 1.7830731866923941,
+            "min": 1.7830731866923286,
+            "p50": 1.783073186692394,
+            "p90": 1.7830731866924576,
+            "max": 1.783073186692459
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 231,
+                "mean": 0.7982771638405409,
+                "min": 0,
+                "p50": 0.8420858359793237,
+                "p90": 0.900195839519326,
+                "max": 0.9193797310163054
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.7492943079345629,
+                "min": 0,
+                "p50": 0.7922370123451784,
+                "p90": 0.8796360408608522,
+                "max": 0.966427610346868
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.21069884652759893,
+                "min": 0,
+                "p50": 0.2224936307035069,
+                "p90": 0.3550617533686788,
+                "max": 0.4459083925602636
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 231,
+                "mean": 0.7543250218720509,
+                "min": 0,
+                "p50": 0.789273032224519,
+                "p90": 0.855343438615636,
+                "max": 0.8696032291802476
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.6809107503926612,
+                "min": 0,
+                "p50": 0.6964231715392404,
+                "p90": 0.8263966666533455,
+                "max": 0.8795780994289407
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.22972911887874012,
+                "min": 0.0009093777277277005,
+                "p50": 0.24075854818554462,
+                "p90": 0.2775602617014783,
+                "max": 0.32503975798878354
+              }
+            }
+          }
+        },
+        "tight|p11": {
+          "count": 231,
+          "directionalLocalCount": 218,
+          "uniqueWideCount": 211,
+          "baseline": {
+            "localSignErrors": 3,
+            "localSteeringMae": 0.03649742533114419,
+            "wideErrors": 47
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.02471717072118069,
+            "wideErrors": 54
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.038283141242113974,
+            "candidate": 0.025946867289810813
+          },
+          "localRecovered": 3,
+          "localNewErrors": 0,
+          "wideRecovered": 7,
+          "wideNewErrors": 14,
+          "rawLocalMae": {
+            "baseline": 0.01772186126395651,
+            "candidate": 0.01869298381295716
+          },
+          "rawWideMae": {
+            "baseline": 0.002874831587099535,
+            "candidate": 0.0030633292446085596
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.42296673500841026,
+                "min": 0.009826540793663185,
+                "p50": 0.37983345571743643,
+                "p90": 0.8202229263944755,
+                "max": 1.0799747050874964
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.3030773773206856,
+                "min": 0.0012777070306639882,
+                "p50": 0.2760920324663622,
+                "p90": 0.6009666639968012,
+                "max": 0.7887567240864226
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 14,
+            "mean": 1.7830731866923752,
+            "min": 1.7830731866922893,
+            "p50": 1.7830731866923681,
+            "p90": 1.7830731866924576,
+            "max": 1.783073186692459
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 231,
+                "mean": 0.7979290095751458,
+                "min": 0,
+                "p50": 0.834523067104759,
+                "p90": 0.9011218060259754,
+                "max": 0.9288665592398809
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.7602291955537489,
+                "min": 0,
+                "p50": 0.7889662807087665,
+                "p90": 0.916121797155067,
+                "max": 0.9720511983536292
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.23843144377390946,
+                "min": 0,
+                "p50": 0.23631551210962642,
+                "p90": 0.376870096178168,
+                "max": 0.5279663412985378
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 231,
+                "mean": 0.7617089586400161,
+                "min": 0,
+                "p50": 0.7927622631104398,
+                "p90": 0.8573684515186263,
+                "max": 0.8704892266753174
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.6923103193614171,
+                "min": 0,
+                "p50": 0.7145969976574587,
+                "p90": 0.8315814814498265,
+                "max": 0.8799297980910399
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.24643385729810827,
+                "min": 0.009582918457476776,
+                "p50": 0.24681356083497244,
+                "p90": 0.3004382391174865,
+                "max": 0.9999852807433065
+              }
+            }
+          }
+        },
+        "gentleMirror|p00": {
+          "count": 231,
+          "directionalLocalCount": 217,
+          "uniqueWideCount": 211,
+          "baseline": {
+            "localSignErrors": 32,
+            "localSteeringMae": 0.07048699294609134,
+            "wideErrors": 207
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.03237933654071648,
+            "wideErrors": 207
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.07426532447264932,
+            "candidate": 0.034205916433961515
+          },
+          "localRecovered": 32,
+          "localNewErrors": 0,
+          "wideRecovered": 0,
+          "wideNewErrors": 0,
+          "rawLocalMae": {
+            "baseline": 0.01773104658590846,
+            "candidate": 0.01886361127314034
+          },
+          "rawWideMae": {
+            "baseline": 0.002229051479769461,
+            "candidate": 0.0023109115597462794
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.7596244491908132,
+                "min": 0.05864170852665806,
+                "p50": 0.6397564280244246,
+                "p90": 1.4647077922917564,
+                "max": 1.940774789623177
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.6266568177167182,
+                "min": 0.14864139137247412,
+                "p50": 0.5216459160997331,
+                "p90": 1.0242079501646437,
+                "max": 1.178781551313748
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 231,
+                "mean": 0.7966259087737128,
+                "min": 0,
+                "p50": 0.849568041749172,
+                "p90": 0.9100285234789788,
+                "max": 0.9374966608503781
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.7592318428642449,
+                "min": 0,
+                "p50": 0.7822583887140494,
+                "p90": 0.9996354815446844,
+                "max": 0.9999999732872118
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.20923772968707197,
+                "min": 0,
+                "p50": 0.14933273521030985,
+                "p90": 0.5472748204015297,
+                "max": 0.6386772718148498
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 231,
+                "mean": 0.75659715877003,
+                "min": 0,
+                "p50": 0.8077911848108633,
+                "p90": 0.8468085427806257,
+                "max": 0.8738663145340112
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.5775591904893462,
+                "min": 0,
+                "p50": 0.6063879551725656,
+                "p90": 0.6990531503959192,
+                "max": 0.7905540962175714
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.10578820586561023,
+                "min": 0.0018378513980549696,
+                "p50": 0.10437449569192793,
+                "p90": 0.15027942302852873,
+                "max": 0.19507036797455235
+              }
+            }
+          }
+        },
+        "gentleMirror|p10": {
+          "count": 231,
+          "directionalLocalCount": 217,
+          "uniqueWideCount": 211,
+          "baseline": {
+            "localSignErrors": 34,
+            "localSteeringMae": 0.0676109424054673,
+            "wideErrors": 207
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.031556679729208774,
+            "wideErrors": 207
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.07138414867088201,
+            "candidate": 0.033492554767590346
+          },
+          "localRecovered": 34,
+          "localNewErrors": 0,
+          "wideRecovered": 0,
+          "wideNewErrors": 0,
+          "rawLocalMae": {
+            "baseline": 0.01721498155980579,
+            "candidate": 0.018788098544698126
+          },
+          "rawWideMae": {
+            "baseline": 0.002173039315989531,
+            "candidate": 0.002317768499298
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.8318969519524155,
+                "min": 0.12498775320966382,
+                "p50": 0.6958159889611097,
+                "p90": 1.594587335555174,
+                "max": 2.153548358730503
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.6427162149088628,
+                "min": 0.26452333569179903,
+                "p50": 0.5715394081037659,
+                "p90": 1.0343701923646063,
+                "max": 1.1709038780314418
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 231,
+                "mean": 0.8117267213357962,
+                "min": 0,
+                "p50": 0.8617146123098536,
+                "p90": 0.9215666035138046,
+                "max": 0.9472429520790019
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.7936012848267652,
+                "min": 0,
+                "p50": 0.8278323283396773,
+                "p90": 0.9996301352778318,
+                "max": 0.9999999733677045
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.18991900293059844,
+                "min": 0,
+                "p50": 0.12392239007521173,
+                "p90": 0.5403593212137805,
+                "max": 0.6424769282654816
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 231,
+                "mean": 0.7609760746858957,
+                "min": 0,
+                "p50": 0.8069870807751462,
+                "p90": 0.8511348956803266,
+                "max": 0.8776051342916956
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.5905903090887274,
+                "min": 0,
+                "p50": 0.6169469227168773,
+                "p90": 0.7072359933448993,
+                "max": 0.8337857109486564
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.10370730416173038,
+                "min": 0.0062443278476377005,
+                "p50": 0.10264104097651894,
+                "p90": 0.14637700468560821,
+                "max": 0.21483075498806978
+              }
+            }
+          }
+        },
+        "gentleMirror|p01": {
+          "count": 231,
+          "directionalLocalCount": 217,
+          "uniqueWideCount": 211,
+          "baseline": {
+            "localSignErrors": 40,
+            "localSteeringMae": 0.05188832574543501,
+            "wideErrors": 207
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.030575906649918928,
+            "wideErrors": 207
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.053840940644701955,
+            "candidate": 0.032240262048595855
+          },
+          "localRecovered": 40,
+          "localNewErrors": 0,
+          "wideRecovered": 0,
+          "wideNewErrors": 0,
+          "rawLocalMae": {
+            "baseline": 0.01696745211091265,
+            "candidate": 0.01826748069609025
+          },
+          "rawWideMae": {
+            "baseline": 0.0020521287655702234,
+            "candidate": 0.0022030977004358523
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.8773865259731124,
+                "min": 0.03549429826517259,
+                "p50": 0.8158615260176285,
+                "p90": 1.6847051165566416,
+                "max": 2.0808573051713397
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.7135707333612344,
+                "min": 0.11113658420958136,
+                "p50": 0.7026304411589166,
+                "p90": 1.0611555638326258,
+                "max": 1.1255420231555306
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 231,
+                "mean": 0.8121137809588466,
+                "min": 0,
+                "p50": 0.8639727348466716,
+                "p90": 0.9093459657306145,
+                "max": 0.9360474658459775
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.7596026223923968,
+                "min": 0,
+                "p50": 0.8028012507841834,
+                "p90": 0.8935725685119251,
+                "max": 0.9999992359309589
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.1635022349539262,
+                "min": 0,
+                "p50": 0.1362851415809929,
+                "p90": 0.298220400267462,
+                "max": 0.6029997582760369
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 231,
+                "mean": 0.7776429477820747,
+                "min": 0,
+                "p50": 0.8150277843621785,
+                "p90": 0.8839114846391902,
+                "max": 0.9037443941496552
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.6047847555829156,
+                "min": 0,
+                "p50": 0.6246603138864961,
+                "p90": 0.7352082659071515,
+                "max": 0.8263951318410376
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.1027713837869069,
+                "min": 0,
+                "p50": 0.09913630462297619,
+                "p90": 0.13278092057474106,
+                "max": 0.9999947011559701
+              }
+            }
+          }
+        },
+        "gentleMirror|p11": {
+          "count": 231,
+          "directionalLocalCount": 217,
+          "uniqueWideCount": 211,
+          "baseline": {
+            "localSignErrors": 46,
+            "localSteeringMae": 0.04703731847543579,
+            "wideErrors": 207
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.029973208025313284,
+            "wideErrors": 207
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.04953115500512161,
+            "candidate": 0.03174288637886959
+          },
+          "localRecovered": 46,
+          "localNewErrors": 0,
+          "wideRecovered": 0,
+          "wideNewErrors": 0,
+          "rawLocalMae": {
+            "baseline": 0.017324719424053177,
+            "candidate": 0.018378150725209704
+          },
+          "rawWideMae": {
+            "baseline": 0.002108037607549786,
+            "candidate": 0.0022174895447787993
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.8660470520231881,
+                "min": 0.150364222321146,
+                "p50": 0.7319987779939836,
+                "p90": 1.6678567556573451,
+                "max": 2.1576566467970903
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.7229268459385554,
+                "min": 0.27417506282190046,
+                "p50": 0.7083140880928711,
+                "p90": 1.071584484988068,
+                "max": 1.2646047905776574
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 231,
+                "mean": 0.8086553774941886,
+                "min": 0,
+                "p50": 0.8498322926514704,
+                "p90": 0.8988473170105301,
+                "max": 0.9359786354243477
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.7327827741422474,
+                "min": 0,
+                "p50": 0.7756896805457384,
+                "p90": 0.8710971447893129,
+                "max": 0.9578450011022525
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.13693597369343288,
+                "min": 0,
+                "p50": 0.11826667469553107,
+                "p90": 0.25376513395429395,
+                "max": 0.9999450925885723
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 231,
+                "mean": 0.7795367248213798,
+                "min": 0,
+                "p50": 0.8108897692188908,
+                "p90": 0.8847565775565245,
+                "max": 0.9036627659362705
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.6042590879605213,
+                "min": 0,
+                "p50": 0.6155033447537063,
+                "p90": 0.7466976277770823,
+                "max": 0.826519873513119
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.09998444705169184,
+                "min": 0,
+                "p50": 0.09810095259199333,
+                "p90": 0.1390586656190605,
+                "max": 0.9999580478674539
+              }
+            }
+          }
+        },
+        "tightMirror|p00": {
+          "count": 231,
+          "directionalLocalCount": 218,
+          "uniqueWideCount": 211,
+          "baseline": {
+            "localSignErrors": 14,
+            "localSteeringMae": 0.07829660057459539,
+            "wideErrors": 102
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.019665271736458236,
+            "wideErrors": 101
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.08201934111098924,
+            "candidate": 0.020542220152879088
+          },
+          "localRecovered": 14,
+          "localNewErrors": 0,
+          "wideRecovered": 12,
+          "wideNewErrors": 11,
+          "rawLocalMae": {
+            "baseline": 0.01842427780842293,
+            "candidate": 0.019698872713622487
+          },
+          "rawWideMae": {
+            "baseline": 0.003516261285812632,
+            "candidate": 0.0033287651835019264
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.4423417377796444,
+                "min": 0.0006756937718185307,
+                "p50": 0.44866306833555936,
+                "p90": 0.8239010591680112,
+                "max": 1.056301794468555
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.22404243760890355,
+                "min": 0.00025555454094283725,
+                "p50": 0.1980567957674017,
+                "p90": 0.45978766377808267,
+                "max": 0.6861431943666065
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 11,
+            "mean": 1.7830731866923706,
+            "min": 1.7830731866923417,
+            "p50": 1.7830731866923681,
+            "p90": 1.7830731866923872,
+            "max": 1.7830731866924023
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 231,
+                "mean": 0.803654332345279,
+                "min": 0,
+                "p50": 0.8477608752084819,
+                "p90": 0.913341802817601,
+                "max": 0.9389698792121545
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.8064780042734978,
+                "min": 0,
+                "p50": 0.8282663881870015,
+                "p90": 0.9999999624155709,
+                "max": 0.9999999752315966
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.34781699192515686,
+                "min": 0,
+                "p50": 0.32680237415511143,
+                "p90": 0.6906192069564949,
+                "max": 0.9999909347135166
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 231,
+                "mean": 0.7294483484082358,
+                "min": 0,
+                "p50": 0.772649054550266,
+                "p90": 0.8216094919560963,
+                "max": 0.8510386518605211
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.6406874167273853,
+                "min": 0,
+                "p50": 0.6640562663162543,
+                "p90": 0.7625998909132965,
+                "max": 0.8241038805122725
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.23766934424330338,
+                "min": 0.004371142456211964,
+                "p50": 0.24226009806522258,
+                "p90": 0.2802712922334162,
+                "max": 0.3460292759806221
+              }
+            }
+          }
+        },
+        "tightMirror|p10": {
+          "count": 231,
+          "directionalLocalCount": 218,
+          "uniqueWideCount": 211,
+          "baseline": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.07771661052349657,
+            "wideErrors": 107
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.023195503472120474,
+            "wideErrors": 102
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.08095944741024043,
+            "candidate": 0.02417672026646479
+          },
+          "localRecovered": 0,
+          "localNewErrors": 0,
+          "wideRecovered": 12,
+          "wideNewErrors": 7,
+          "rawLocalMae": {
+            "baseline": 0.01794526832203724,
+            "candidate": 0.01935803883422846
+          },
+          "rawWideMae": {
+            "baseline": 0.003518292254168853,
+            "candidate": 0.003340045754969337
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.4370755694772609,
+                "min": 0.0014821971217655605,
+                "p50": 0.39526460456283374,
+                "p90": 0.8502692053353509,
+                "max": 1.0777854481801408
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.2216006636852686,
+                "min": 0.00005978839712633688,
+                "p50": 0.17904160944495945,
+                "p90": 0.48469572154428103,
+                "max": 0.7149257746714266
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 7,
+            "mean": 1.7830731866923597,
+            "min": 1.7830731866923313,
+            "p50": 1.7830731866923584,
+            "p90": 1.7830731866923761,
+            "max": 1.7830731866923881
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 231,
+                "mean": 0.8050986245503788,
+                "min": 0,
+                "p50": 0.8490836645783426,
+                "p90": 0.9173387983831532,
+                "max": 0.9368980953149882
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.830702762329415,
+                "min": 0,
+                "p50": 0.8670034034858833,
+                "p90": 0.99999996036787,
+                "max": 0.9999999752601237
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.3694819386862851,
+                "min": 0,
+                "p50": 0.32669984701789484,
+                "p90": 0.6823973805098239,
+                "max": 0.7623877864722148
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 231,
+                "mean": 0.7360437809929238,
+                "min": 0,
+                "p50": 0.781587643395911,
+                "p90": 0.8301644993216728,
+                "max": 0.8466476843002939
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.6495026245440286,
+                "min": 0,
+                "p50": 0.6833166238818557,
+                "p90": 0.7751207610849742,
+                "max": 0.8661577707248387
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.24581659111713752,
+                "min": 0,
+                "p50": 0.24916289615293966,
+                "p90": 0.2932575635439501,
+                "max": 0.3957582875692982
+              }
+            }
+          }
+        },
+        "tightMirror|p01": {
+          "count": 231,
+          "directionalLocalCount": 218,
+          "uniqueWideCount": 211,
+          "baseline": {
+            "localSignErrors": 22,
+            "localSteeringMae": 0.0377939151559791,
+            "wideErrors": 45
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.020706674333924886,
+            "wideErrors": 46
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.039881279372846024,
+            "candidate": 0.021744271956695788
+          },
+          "localRecovered": 22,
+          "localNewErrors": 0,
+          "wideRecovered": 13,
+          "wideNewErrors": 14,
+          "rawLocalMae": {
+            "baseline": 0.01789277953865503,
+            "candidate": 0.018928374454558517
+          },
+          "rawWideMae": {
+            "baseline": 0.002842595852461216,
+            "candidate": 0.0030450311923711027
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.41407827537445596,
+                "min": 0.00291644018679027,
+                "p50": 0.3759263418740256,
+                "p90": 0.7870482492236285,
+                "max": 1.080012593648026
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.293150526984277,
+                "min": 0.0009876474801900903,
+                "p50": 0.27045140569626047,
+                "p90": 0.565179125181663,
+                "max": 0.7654477481613756
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 14,
+            "mean": 1.78307318669238,
+            "min": 1.78307318669231,
+            "p50": 1.7830731866923715,
+            "p90": 1.783073186692462,
+            "max": 1.7830731866924678
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 231,
+                "mean": 0.7982771638405411,
+                "min": 0,
+                "p50": 0.8420858359793247,
+                "p90": 0.900195839519325,
+                "max": 0.919379731016307
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.7492943079345631,
+                "min": 0,
+                "p50": 0.7922370123451695,
+                "p90": 0.8796360408608586,
+                "max": 0.9664276103468677
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.21069884652759888,
+                "min": 0,
+                "p50": 0.22249363070351252,
+                "p90": 0.3550617533686806,
+                "max": 0.44590839256026243
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 231,
+                "mean": 0.7543250218720509,
+                "min": 0,
+                "p50": 0.7892730322245187,
+                "p90": 0.8553434386156344,
+                "max": 0.8696032291802471
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.6809107503926611,
+                "min": 0,
+                "p50": 0.6964231715392489,
+                "p90": 0.8263966666533452,
+                "max": 0.8795780994289472
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.22972911887874034,
+                "min": 0.0009093777277248954,
+                "p50": 0.24075854818554648,
+                "p90": 0.27756026170147785,
+                "max": 0.3250397579887824
+              }
+            }
+          }
+        },
+        "tightMirror|p11": {
+          "count": 231,
+          "directionalLocalCount": 218,
+          "uniqueWideCount": 211,
+          "baseline": {
+            "localSignErrors": 3,
+            "localSteeringMae": 0.03649742533114437,
+            "wideErrors": 47
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.02471717072118099,
+            "wideErrors": 54
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.03828314124211416,
+            "candidate": 0.025946867289811132
+          },
+          "localRecovered": 3,
+          "localNewErrors": 0,
+          "wideRecovered": 7,
+          "wideNewErrors": 14,
+          "rawLocalMae": {
+            "baseline": 0.017721861263956497,
+            "candidate": 0.018692983812957125
+          },
+          "rawWideMae": {
+            "baseline": 0.0028748315870995456,
+            "candidate": 0.0030633292446085756
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.4229667350084081,
+                "min": 0.009826540793663185,
+                "p50": 0.37983345571744465,
+                "p90": 0.8202229263944545,
+                "max": 1.0799747050874946
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 211,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 211,
+                "mean": 0.30307737732068385,
+                "min": 0.0012777070306665417,
+                "p50": 0.27609203246636366,
+                "p90": 0.600966663996805,
+                "max": 0.7887567240864146
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 14,
+            "mean": 1.7830731866923828,
+            "min": 1.78307318669231,
+            "p50": 1.7830731866923748,
+            "p90": 1.783073186692462,
+            "max": 1.7830731866924678
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 231,
+                "mean": 0.7979290095751457,
+                "min": 0,
+                "p50": 0.834523067104758,
+                "p90": 0.9011218060259758,
+                "max": 0.9288665592398807
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.7602291955537491,
+                "min": 0,
+                "p50": 0.7889662807087664,
+                "p90": 0.9161217971550681,
+                "max": 0.9720511983536293
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.23843144377390976,
+                "min": 0,
+                "p50": 0.23631551210962382,
+                "p90": 0.37687009617816825,
+                "max": 0.5279663412985374
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 231,
+                "mean": 0.761708958640016,
+                "min": 0,
+                "p50": 0.7927622631104416,
+                "p90": 0.8573684515186247,
+                "max": 0.8704892266753164
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.6923103193614175,
+                "min": 0,
+                "p50": 0.7145969976574662,
+                "p90": 0.8315814814498286,
+                "max": 0.8799297980910462
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.24643385729810832,
+                "min": 0.009582918457474134,
+                "p50": 0.24681356083496625,
+                "p90": 0.30043823911748646,
+                "max": 0.9999852807433065
+              }
+            }
+          }
+        },
+        "sCurve|p00": {
+          "count": 231,
+          "directionalLocalCount": 133,
+          "uniqueWideCount": 212,
+          "baseline": {
+            "localSignErrors": 15,
+            "localSteeringMae": 0.05953114353008611,
+            "wideErrors": 29
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.032422793203882215,
+            "wideErrors": 29
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.0754877293573962,
+            "candidate": 0.04379635201899832
+          },
+          "localRecovered": 15,
+          "localNewErrors": 0,
+          "wideRecovered": 0,
+          "wideNewErrors": 0,
+          "rawLocalMae": {
+            "baseline": 0.01594956263345642,
+            "candidate": 0.01729945723277164
+          },
+          "rawWideMae": {
+            "baseline": 0.004286616660900983,
+            "candidate": 0.004786279711638347
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 212,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 212,
+                "mean": 0.8340288802990515,
+                "min": 0.04018848577063022,
+                "p50": 0.7098298325881122,
+                "p90": 1.6235781107586402,
+                "max": 2.130879346338888
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 212,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 212,
+                "mean": 0.714564905058032,
+                "min": 0.09284149852733084,
+                "p50": 0.6439600887203578,
+                "p90": 1.198953447380205,
+                "max": 1.6933393877674068
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 231,
+                "mean": 0.8044950004626021,
+                "min": 0,
+                "p50": 0.8557683194580439,
+                "p90": 0.9227390874526844,
+                "max": 0.9405793975519435
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.8087317729487169,
+                "min": 0,
+                "p50": 0.8465006927870701,
+                "p90": 0.9445385792795445,
+                "max": 0.9717346896870658
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.19058688447928393,
+                "min": 0.002636766204216132,
+                "p50": 0.16644890194159256,
+                "p90": 0.39150334097620915,
+                "max": 0.45515695258028704
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 231,
+                "mean": 0.77678398795738,
+                "min": 0,
+                "p50": 0.8160519683585109,
+                "p90": 0.8610558854632476,
+                "max": 0.8750610567172912
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.6255899728384133,
+                "min": 0,
+                "p50": 0.651952581819617,
+                "p90": 0.780478843358608,
+                "max": 0.8442376776145927
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.12252921571246049,
+                "min": 0.0031812872335652107,
+                "p50": 0.10816688753008047,
+                "p90": 0.2275550886874716,
+                "max": 0.4110984964713125
+              }
+            }
+          }
+        },
+        "sCurve|p10": {
+          "count": 231,
+          "directionalLocalCount": 133,
+          "uniqueWideCount": 212,
+          "baseline": {
+            "localSignErrors": 9,
+            "localSteeringMae": 0.054704228946439004,
+            "wideErrors": 29
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.03231054092758348,
+            "wideErrors": 29
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.07123917043156365,
+            "candidate": 0.04378817989650902
+          },
+          "localRecovered": 9,
+          "localNewErrors": 0,
+          "wideRecovered": 0,
+          "wideNewErrors": 0,
+          "rawLocalMae": {
+            "baseline": 0.016016812411739197,
+            "candidate": 0.01730089320777936
+          },
+          "rawWideMae": {
+            "baseline": 0.004308694571901316,
+            "candidate": 0.0047845979997748886
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 212,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 212,
+                "mean": 0.8253326947066042,
+                "min": 0.02300183995702826,
+                "p50": 0.6831098024756209,
+                "p90": 1.5381979169456281,
+                "max": 2.0763161520541287
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 212,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 212,
+                "mean": 0.7179867185478885,
+                "min": 0.1811139667429685,
+                "p50": 0.6410014079942848,
+                "p90": 1.1994687585604733,
+                "max": 1.6186897523556028
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 231,
+                "mean": 0.800543515080731,
+                "min": 0,
+                "p50": 0.8484817264462067,
+                "p90": 0.921133258440953,
+                "max": 0.9404478746066275
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.7716376829951084,
+                "min": 0,
+                "p50": 0.8204666996595795,
+                "p90": 0.9438861326576763,
+                "max": 0.9527800216470008
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.18414218234236904,
+                "min": 0,
+                "p50": 0.1454580906807716,
+                "p90": 0.3932498610527303,
+                "max": 0.9999853981993814
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 231,
+                "mean": 0.7765329827559184,
+                "min": 0,
+                "p50": 0.8148838305174968,
+                "p90": 0.864321623456268,
+                "max": 0.8729221850463692
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.6332647313151893,
+                "min": 0,
+                "p50": 0.6668557542087715,
+                "p90": 0.7856839592316561,
+                "max": 0.9086424297170811
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.1234319179327869,
+                "min": 0.00244438679100431,
+                "p50": 0.11356466039691115,
+                "p90": 0.22662485343186178,
+                "max": 0.25164463675572063
+              }
+            }
+          }
+        },
+        "sCurve|p01": {
+          "count": 231,
+          "directionalLocalCount": 133,
+          "uniqueWideCount": 212,
+          "baseline": {
+            "localSignErrors": 71,
+            "localSteeringMae": 0.061722013692992274,
+            "wideErrors": 30
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.02199331187183529,
+            "wideErrors": 29
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.07993312441820268,
+            "candidate": 0.0241372596932351
+          },
+          "localRecovered": 71,
+          "localNewErrors": 0,
+          "wideRecovered": 1,
+          "wideNewErrors": 0,
+          "rawLocalMae": {
+            "baseline": 0.017583957797560338,
+            "candidate": 0.018495855243346047
+          },
+          "rawWideMae": {
+            "baseline": 0.004967248525150742,
+            "candidate": 0.0052629104400016965
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 212,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 212,
+                "mean": 1.0231885902934421,
+                "min": 0.0018866343301132682,
+                "p50": 0.8968468663482813,
+                "p90": 1.896652026588523,
+                "max": 2.164632487158901
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 212,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 212,
+                "mean": 0.6988601164016962,
+                "min": 0.06088505572976324,
+                "p50": 0.6321359363993762,
+                "p90": 1.2044509046958871,
+                "max": 1.7759563911189238
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 231,
+                "mean": 0.8083442294192066,
+                "min": 0,
+                "p50": 0.8544264227057876,
+                "p90": 0.9041678006880685,
+                "max": 0.9258774595473266
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.7642398679436864,
+                "min": 0,
+                "p50": 0.8154686721544145,
+                "p90": 0.9262186626788536,
+                "max": 0.9922899869191909
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.17147676061626885,
+                "min": 0,
+                "p50": 0.15613515756448929,
+                "p90": 0.3635995200046883,
+                "max": 0.5357201919669228
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 231,
+                "mean": 0.748149086457456,
+                "min": 0,
+                "p50": 0.7880901883981224,
+                "p90": 0.8506556294447009,
+                "max": 0.8757718071412314
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.5428453488653191,
+                "min": 0,
+                "p50": 0.544832862897549,
+                "p90": 0.6823228734630254,
+                "max": 0.782005068761328
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.1028423109706757,
+                "min": 0.00013606237551948348,
+                "p50": 0.09952308252842787,
+                "p90": 0.1696160023721882,
+                "max": 0.8145726905303176
+              }
+            }
+          }
+        },
+        "sCurve|p11": {
+          "count": 231,
+          "directionalLocalCount": 133,
+          "uniqueWideCount": 212,
+          "baseline": {
+            "localSignErrors": 75,
+            "localSteeringMae": 0.05757273891008123,
+            "wideErrors": 32
+          },
+          "candidate": {
+            "localSignErrors": 0,
+            "localSteeringMae": 0.021850393325633908,
+            "wideErrors": 29
+          },
+          "directionalLocalSteeringMae": {
+            "baseline": 0.07463253401626352,
+            "candidate": 0.02410490715021397
+          },
+          "localRecovered": 75,
+          "localNewErrors": 0,
+          "wideRecovered": 3,
+          "wideNewErrors": 0,
+          "rawLocalMae": {
+            "baseline": 0.01758054908039996,
+            "candidate": 0.018497722203891755
+          },
+          "rawWideMae": {
+            "baseline": 0.0049210633572216046,
+            "candidate": 0.005261556663788674
+          },
+          "wideAmbiguity": {
+            "baseline": {
+              "analyticUniqueRows": 212,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 212,
+                "mean": 1.0102926842438442,
+                "min": 0.05132049682586792,
+                "p50": 0.8867920845831107,
+                "p90": 1.850080738699132,
+                "max": 2.0806453467906465
+              }
+            },
+            "candidate": {
+              "analyticUniqueRows": 212,
+              "exactFinalTies": 0,
+              "precisionNearFinalTies": 0,
+              "finalMargin": {
+                "count": 212,
+                "mean": 0.70090253510847,
+                "min": 0.14172676394397282,
+                "p50": 0.6378275971038259,
+                "p90": 1.2091833450316103,
+                "max": 1.7545422467722798
+              }
+            }
+          },
+          "analyticMarginOfNewWideErrors": {
+            "count": 0,
+            "mean": null,
+            "min": null,
+            "p50": null,
+            "p90": null,
+            "max": null
+          },
+          "localContrast": {
+            "baseline": {
+              "strength": {
+                "count": 231,
+                "mean": 0.8036276603796414,
+                "min": 0,
+                "p50": 0.8510286157493693,
+                "p90": 0.9030255205943043,
+                "max": 0.9266501263952436
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.7292540426253274,
+                "min": 0,
+                "p50": 0.790324269491425,
+                "p90": 0.9034164164888028,
+                "max": 0.9778059315303184
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.15260190253709924,
+                "min": 0,
+                "p50": 0.14398104534254813,
+                "p90": 0.30361085325509535,
+                "max": 0.5047667203781887
+              }
+            },
+            "candidate": {
+              "strength": {
+                "count": 231,
+                "mean": 0.7482561194013361,
+                "min": 0,
+                "p50": 0.7862672995687366,
+                "p90": 0.85207266585922,
+                "max": 0.8658883684969069
+              },
+              "coherence": {
+                "count": 231,
+                "mean": 0.5508684187417938,
+                "min": 0,
+                "p50": 0.548440202639053,
+                "p90": 0.7014357558096411,
+                "max": 0.8141519443429213
+              },
+              "absoluteBalance": {
+                "count": 231,
+                "mean": 0.10011302954476503,
+                "min": 0.0008088478816456792,
+                "p50": 0.10198386062084215,
+                "p90": 0.1747265657975648,
+                "max": 0.3524475972119876
+              }
+            }
+          }
+        }
+      },
+      "zeroControls": {
+        "straight": {
+          "count": 924,
+          "baseline": {
+            "falseNonzero": 445,
+            "falseSteeringMae": 0.09827464069086227
+          },
+          "candidate": {
+            "falseNonzero": 0,
+            "falseSteeringMae": 5.777649990326007e-16
+          }
+        },
+        "sCurveAnalyticZero": {
+          "count": 392,
+          "baseline": {
+            "falseNonzero": 364,
+            "falseSteeringMae": 0.03539170573895819
+          },
+          "candidate": {
+            "falseNonzero": 377,
+            "falseSteeringMae": 0.017898839668476437
+          }
+        }
+      },
+      "phaseSteeringSpread": {
+        "baseline": {
+          "count": 1386,
+          "mean": 0.11702189913686926,
+          "min": 0,
+          "p50": 0.09367175988131247,
+          "p90": 0.22274861718494396,
+          "max": 0.2504956860007073
+        },
+        "candidate": {
+          "count": 1386,
+          "mean": 0.018504288537014312,
+          "min": 0,
+          "p50": 0.016643408479948454,
+          "p90": 0.04133698422325402,
+          "max": 0.05884753432896145
+        }
+      },
+      "mirrorSteeringResidual": {
+        "baseline": {
+          "count": 1848,
+          "mean": 1.1677395393376022e-15,
+          "min": 0,
+          "p50": 8.803721640582296e-16,
+          "p90": 2.67841304690819e-15,
+          "max": 6.480926906249351e-15
+        },
+        "candidate": {
+          "count": 1848,
+          "mean": 9.29112080695585e-16,
+          "min": 0,
+          "p50": 7.077671781985373e-16,
+          "p90": 2.0920765120280294e-15,
+          "max": 5.162537064506978e-15
+        }
+      }
+    },
+    "rasters": [
+      {
+        "id": "straight|p00",
+        "baseline": {
+          "mass": 2.0700000524520874,
+          "peak": 0.05400000140070915,
+          "supportNodes": 45,
+          "cappedNodes": 0
+        },
+        "candidate": {
+          "mass": 2.0699999975040555,
+          "peak": 0.024974999949336052,
+          "supportNodes": 90,
+          "cappedNodes": 0
+        },
+        "sha256": "272b464be48dad0b2630728d3132865d7e2fd471046f3124fc2c37728bf8b27c"
+      },
+      {
+        "id": "straight|p10",
+        "baseline": {
+          "mass": 2.0700000543147326,
+          "peak": 0.05400000140070915,
+          "supportNodes": 44,
+          "cappedNodes": 0
+        },
+        "candidate": {
+          "mass": 2.0699999983189628,
+          "peak": 0.025110000744462013,
+          "supportNodes": 92,
+          "cappedNodes": 0
+        },
+        "sha256": "2a8b1a0ce39c4c79f0d9041d17c3cd309af3677e4f867ac4cee629bd0ae80163"
+      },
+      {
+        "id": "straight|p01",
+        "baseline": {
+          "mass": 2.0700000524520874,
+          "peak": 0.05400000140070915,
+          "supportNodes": 45,
+          "cappedNodes": 0
+        },
+        "candidate": {
+          "mass": 2.0699999975040555,
+          "peak": 0.049949999898672104,
+          "supportNodes": 45,
+          "cappedNodes": 0
+        },
+        "sha256": "3514d43b377a757e9eff02a24191a6a012a834b1241dae9c0a568013e9059b56"
+      },
+      {
+        "id": "straight|p11",
+        "baseline": {
+          "mass": 2.0700000543147326,
+          "peak": 0.05400000140070915,
+          "supportNodes": 44,
+          "cappedNodes": 0
+        },
+        "candidate": {
+          "mass": 2.0699999983189628,
+          "peak": 0.050220001488924026,
+          "supportNodes": 46,
+          "cappedNodes": 0
+        },
+        "sha256": "7070d7b806f656b08ced0a502fa99ae1958ddc6d6cc4e113ec4536f3da158f63"
+      },
+      {
+        "id": "gentle|p00",
+        "baseline": {
+          "mass": 2.0699945334345102,
+          "peak": 0.05400000140070915,
+          "supportNodes": 49,
+          "cappedNodes": 0
+        },
+        "candidate": {
+          "mass": 2.069994474448322,
+          "peak": 0.044857610017061234,
+          "supportNodes": 108,
+          "cappedNodes": 0
+        },
+        "sha256": "e9725c63c5adbbcc4a3c908a31a0f978147867f5096350bc1a39eee7f6d75dfa"
+      },
+      {
+        "id": "gentle|p10",
+        "baseline": {
+          "mass": 2.06999452970922,
+          "peak": 0.08100000023841858,
+          "supportNodes": 45,
+          "cappedNodes": 0
+        },
+        "candidate": {
+          "mass": 2.0699944702946595,
+          "peak": 0.0467224083840847,
+          "supportNodes": 103,
+          "cappedNodes": 0
+        },
+        "sha256": "1277619b2a5b0e4bc31f73441825467a06612bf5ffadc6176f3da52e81854815"
+      },
+      {
+        "id": "gentle|p01",
+        "baseline": {
+          "mass": 2.0699945334345102,
+          "peak": 0.05400000140070915,
+          "supportNodes": 46,
+          "cappedNodes": 0
+        },
+        "candidate": {
+          "mass": 2.0699944729640265,
+          "peak": 0.04683303087949753,
+          "supportNodes": 102,
+          "cappedNodes": 0
+        },
+        "sha256": "72f657b06f274e596e9a95e86f64872a7dcc3e633f46037e1d0eac9547986572"
+      },
+      {
+        "id": "gentle|p11",
+        "baseline": {
+          "mass": 2.0699945334345102,
+          "peak": 0.05400000140070915,
+          "supportNodes": 50,
+          "cappedNodes": 0
+        },
+        "candidate": {
+          "mass": 2.0699944890948245,
+          "peak": 0.04683109000325203,
+          "supportNodes": 105,
+          "cappedNodes": 0
+        },
+        "sha256": "b1d91973a7141dbce50d82643b5528e974fc4b7b3b8b36bda3d3f026317723bb"
+      },
+      {
+        "id": "tight|p00",
+        "baseline": {
+          "mass": 2.0699655544012785,
+          "peak": 0.05400000140070915,
+          "supportNodes": 46,
+          "cappedNodes": 0
+        },
+        "candidate": {
+          "mass": 2.069965496648365,
+          "peak": 0.044200196862220764,
+          "supportNodes": 110,
+          "cappedNodes": 0
+        },
+        "sha256": "4712ec5d56f17adb8a5e2352edea1737903f86d4b4b3aee972267f665c835428"
+      },
+      {
+        "id": "tight|p10",
+        "baseline": {
+          "mass": 2.0699655525386333,
+          "peak": 0.05400000140070915,
+          "supportNodes": 45,
+          "cappedNodes": 0
+        },
+        "candidate": {
+          "mass": 2.0699654912768892,
+          "peak": 0.044515375047922134,
+          "supportNodes": 107,
+          "cappedNodes": 0
+        },
+        "sha256": "0193ae4a4ea3f212215a557e434886951781bfcd359e206ad0fb1f2d9c0d2bca"
+      },
+      {
+        "id": "tight|p01",
+        "baseline": {
+          "mass": 2.0699655544012785,
+          "peak": 0.05400000140070915,
+          "supportNodes": 49,
+          "cappedNodes": 0
+        },
+        "candidate": {
+          "mass": 2.0699655042390077,
+          "peak": 0.047792479395866394,
+          "supportNodes": 101,
+          "cappedNodes": 0
+        },
+        "sha256": "88733ee26850377aed8ce3c922f3a8e2e35019e70c8336a66f044361bf7b131c"
+      },
+      {
+        "id": "tight|p11",
+        "baseline": {
+          "mass": 2.0699655525386333,
+          "peak": 0.05400000140070915,
+          "supportNodes": 52,
+          "cappedNodes": 0
+        },
+        "candidate": {
+          "mass": 2.0699655062098827,
+          "peak": 0.048478856682777405,
+          "supportNodes": 102,
+          "cappedNodes": 0
+        },
+        "sha256": "2c4fc5824c483f8b33c834e862f7b1dcb4f4d3ebd7618fc38b7a050110bc1c51"
+      },
+      {
+        "id": "gentleMirror|p00",
+        "baseline": {
+          "mass": 2.0699945334345102,
+          "peak": 0.05400000140070915,
+          "supportNodes": 49,
+          "cappedNodes": 0
+        },
+        "candidate": {
+          "mass": 2.069994474448322,
+          "peak": 0.044857610017061234,
+          "supportNodes": 108,
+          "cappedNodes": 0
+        },
+        "sha256": "303991ced919d458146eceea16a130115868bfea98947e5358fb68e466388e92"
+      },
+      {
+        "id": "gentleMirror|p10",
+        "baseline": {
+          "mass": 2.06999452970922,
+          "peak": 0.08100000023841858,
+          "supportNodes": 45,
+          "cappedNodes": 0
+        },
+        "candidate": {
+          "mass": 2.0699944702946595,
+          "peak": 0.0467224083840847,
+          "supportNodes": 103,
+          "cappedNodes": 0
+        },
+        "sha256": "e001ce7d20188faed48c9590889d825f0bdc553fed4b314d3209c38d03defead"
+      },
+      {
+        "id": "gentleMirror|p01",
+        "baseline": {
+          "mass": 2.0699945334345102,
+          "peak": 0.05400000140070915,
+          "supportNodes": 46,
+          "cappedNodes": 0
+        },
+        "candidate": {
+          "mass": 2.0699944729640265,
+          "peak": 0.04683303087949753,
+          "supportNodes": 102,
+          "cappedNodes": 0
+        },
+        "sha256": "5e5fd78934eb51630958254f03791e1e525c1198a227ce94e2b93ba1278cb49d"
+      },
+      {
+        "id": "gentleMirror|p11",
+        "baseline": {
+          "mass": 2.0699945334345102,
+          "peak": 0.05400000140070915,
+          "supportNodes": 50,
+          "cappedNodes": 0
+        },
+        "candidate": {
+          "mass": 2.0699944890948245,
+          "peak": 0.04683109000325203,
+          "supportNodes": 105,
+          "cappedNodes": 0
+        },
+        "sha256": "0adaf4cb4223e9e4471a45eec1cd7f263f48c5bb0f38620f27432148628b0c75"
+      },
+      {
+        "id": "tightMirror|p00",
+        "baseline": {
+          "mass": 2.0699655544012785,
+          "peak": 0.05400000140070915,
+          "supportNodes": 46,
+          "cappedNodes": 0
+        },
+        "candidate": {
+          "mass": 2.069965496648365,
+          "peak": 0.044200196862220764,
+          "supportNodes": 110,
+          "cappedNodes": 0
+        },
+        "sha256": "d0ae62fa32ce783923b77b8888eb0d97520b440f0c3cadea343d5d9366a49672"
+      },
+      {
+        "id": "tightMirror|p10",
+        "baseline": {
+          "mass": 2.0699655525386333,
+          "peak": 0.05400000140070915,
+          "supportNodes": 45,
+          "cappedNodes": 0
+        },
+        "candidate": {
+          "mass": 2.0699654912768892,
+          "peak": 0.044515375047922134,
+          "supportNodes": 107,
+          "cappedNodes": 0
+        },
+        "sha256": "0825e42d91ccd87f3f6f0fc919e8958d0a6ebafb12e9c2658108b4fe115e3dcc"
+      },
+      {
+        "id": "tightMirror|p01",
+        "baseline": {
+          "mass": 2.0699655544012785,
+          "peak": 0.05400000140070915,
+          "supportNodes": 49,
+          "cappedNodes": 0
+        },
+        "candidate": {
+          "mass": 2.0699655042390077,
+          "peak": 0.047792479395866394,
+          "supportNodes": 101,
+          "cappedNodes": 0
+        },
+        "sha256": "6b4fa8a3a255e4f7e4c21a3749152e910c767db8ffca07b2e76339454d7d777f"
+      },
+      {
+        "id": "tightMirror|p11",
+        "baseline": {
+          "mass": 2.0699655525386333,
+          "peak": 0.05400000140070915,
+          "supportNodes": 52,
+          "cappedNodes": 0
+        },
+        "candidate": {
+          "mass": 2.0699655062098827,
+          "peak": 0.048478856682777405,
+          "supportNodes": 102,
+          "cappedNodes": 0
+        },
+        "sha256": "1627892f21a686cd78bfbe690c86111cd06448b60c8d6cc2f9328e9843b25b47"
+      },
+      {
+        "id": "sCurve|p00",
+        "baseline": {
+          "mass": 2.0699923615902662,
+          "peak": 0.05400000140070915,
+          "supportNodes": 46,
+          "cappedNodes": 0
+        },
+        "candidate": {
+          "mass": 2.0699923042784576,
+          "peak": 0.044451404362916946,
+          "supportNodes": 105,
+          "cappedNodes": 0
+        },
+        "sha256": "e317041476567ed81717e0d6164d67fc5cea6487f78ff9121f849ddf9186901b"
+      },
+      {
+        "id": "sCurve|p10",
+        "baseline": {
+          "mass": 2.0699923615902662,
+          "peak": 0.05400000140070915,
+          "supportNodes": 48,
+          "cappedNodes": 0
+        },
+        "candidate": {
+          "mass": 2.069992305128835,
+          "peak": 0.044877052307128906,
+          "supportNodes": 104,
+          "cappedNodes": 0
+        },
+        "sha256": "127dc0312fa097ec41ebbee9d018f21f0f582c866da33671f4987930c25d0b62"
+      },
+      {
+        "id": "sCurve|p01",
+        "baseline": {
+          "mass": 2.0699923615902662,
+          "peak": 0.05400000140070915,
+          "supportNodes": 48,
+          "cappedNodes": 0
+        },
+        "candidate": {
+          "mass": 2.0699923076966797,
+          "peak": 0.045902788639068604,
+          "supportNodes": 101,
+          "cappedNodes": 0
+        },
+        "sha256": "8d5ce811eaa173281bd0426b906d3675996927268a5cce84b8fe1958169e8755"
+      },
+      {
+        "id": "sCurve|p11",
+        "baseline": {
+          "mass": 2.0699923615902662,
+          "peak": 0.05400000140070915,
+          "supportNodes": 49,
+          "cappedNodes": 0
+        },
+        "candidate": {
+          "mass": 2.0699923156518523,
+          "peak": 0.04671349376440048,
+          "supportNodes": 99,
+          "cappedNodes": 0
+        },
+        "sha256": "398d4f00cf9434d38daf2907d70d9b383fad00ee2ae125e3456d16e48f4be45b"
+      }
+    ]
+  },
+  "gate3": {
+    "status": "NOT RUN",
+    "reason": "Fixed cue advancement gate failed."
+  },
+  "rowArtifact": {
+    "path": "gate2/rows.json.gz",
+    "sha256": "550f79a84837fac7dcb27f5a8a1d4ad5b9bf08b70c6f1638f5f1cf2206bb6c3f",
+    "bytes": 6762367,
+    "rows": 5544
+  }
+}

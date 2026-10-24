@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-24 — CIC writer three-stage qualification
+
+[Process log](./2026-10-24-ant-cic-writer-qualification.md) · [Evidence package](../evidence/2026-10-24-ant-cic-writer-qualification/README.md)
+
+- New preregistration for one dose/centroid-preserving four-node writer; no retrospective acceptance of earlier CIC results
+- Gate 1 PASS; Gate 2 MIXED / NOT QUALIFIED despite local-cue gains; wide/zero-cue regression guards fail
+- Gate 3 movement NOT RUN; production and world laws remain unchanged
+
 ### 2026-10-18 — Plate audio reassessment and live dense-mix plan
 
 [Process / next-pass plan](./2026-10-18-plate-audio-review-and-live-density-plan.md)

@@ -1,6 +1,12 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
+# Preserve the preregistered CIC writer sources and byte-hashed frozen inputs.
+scripts/ant-cic-writer* -text
+tests/ant-cic-writer* -text
+scripts/ant-field-writer-reader-failure-attribution.js -text
+docs/ant/evidence/2026-10-24-ant-cic-writer-qualification/** -text
+
 # Keep this run's source and byte-hashed evidence stable across Windows worktrees.
 scripts/ant-natural-nodule-opportunity.js text eol=lf
 tests/ant-natural-nodule-opportunity.test.js text eol=lf
