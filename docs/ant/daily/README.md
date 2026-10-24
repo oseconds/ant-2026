@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-24 — CIC transverse-sample diagnosis
+
+[Process log](./2026-10-24-cic-transverse-sample-diagnostic.md) · [Evidence package](../evidence/2026-10-24-cic-transverse-sample-diagnostic/README.md)
+
+- Reused saved A/C/D rows and traced all five transverse samples for the 26 weighted-max-first new errors and all 92 recovered rows
+- All 26 harmful rows switch the target max from an outer low-weight sample to an inner sample while the rival max sample stays fixed; the 14 inverse recoveries mostly switch the rival sample
+- Read-only attribution only; CIC Gate 2 remains MIXED / NOT QUALIFIED and Gate 3 NOT RUN
+
 ### 2026-10-24 — CIC wide failure stage attribution
 
 [Process log](./2026-10-24-cic-wide-stage-attribution.md) · [Evidence package](../evidence/2026-10-24-cic-wide-stage-attribution/README.md)

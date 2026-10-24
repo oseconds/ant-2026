@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "checks": [
+    "fresh origin/main and previous commit provenance pinned",
+    "Gate 2 rows, frozen station inputs, prior census, and prior focal artifact byte hashes match receipts",
+    "5,544 row identity join, 5,072 strict-unique denominator, C/D 2,378 mismatches, 92 recoveries, 92 new errors",
+    "all 26 primary keys match the full prior census target-departure rule",
+    "all 118 analyzed primary/recovered A/C/D raw and weighted sample vectors match frozen geometry and source outputs exactly",
+    "production AntController source and existing attribution helper hashes match pinned values",
+    "saved helper raw/weighted/Hill/score values and candidate orders recompute exactly",
+    "recovered 14 weighted-restored, 68 held, and 10 score-restored cohorts partition all 92 recovery rows"
+  ],
+  "counts": {
+    "gateRowsBytes": 6762367,
+    "gateRowsSha256": "550f79a84837fac7dcb27f5a8a1d4ad5b9bf08b70c6f1638f5f1cf2206bb6c3f",
+    "frozenRowsSha256": "50547f963041e1505e1caf1bed3da27bbe36d84b0d5f26266313e60e8e573d29",
+    "priorCensusSha256": "384e4ec7982e336db432ea98ea8006934cf6b2276ac145b9a3e84b0ae8645d25",
+    "priorFocalSha256": "d15db82408c08819956218c472192e3dffeebe084a081d8720e63b2af696291c",
+    "rowJoin": {
+      "gateRows": 5544,
+      "frozenRows": 5544,
+      "strictUnique": 5072,
+      "orderedIdentitySha256": "ff4e573973aea9f5d42210ad22c3b06c57ec123d0478e2fbd2f0a420f08f0a44"
+    },
+    "global": {
+      "productionErrors": 2378,
+      "cicErrors": 2378,
+      "recovered": 92,
+      "newErrors": 92
+    }
+  },
+  "focalMembership": {
+    "primaryCount": 26,
+    "primarySortedKeysSha256": "960def8884a5fee1be4ad0872ae0e66be508388b031a28d2ac4f09bdd8f59085",
+    "allRecoveredCount": 92,
+    "allRecoveredSortedKeysSha256": "3a0ff144cc714a0a25a75f64b213586301eb498d9406dc8df2b6dc886c7ff653",
+    "recoveredPartition": {
+      "weightRestored": 14,
+      "held": 68,
+      "scoreRestored": 10
+    }
+  }
+}

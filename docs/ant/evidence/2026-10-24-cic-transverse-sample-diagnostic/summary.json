@@ -1,0 +1,1852 @@
+{
+  "schema": "ant-cic-transverse-sample-diagnostic/v1",
+  "baseline": {
+    "main": "8c60e4bba3bd5b476300e90a2936bfebd1f831c2",
+    "previousAttributionCommit": "05c855cac06dd3659abfc1502e91071980ecc00b",
+    "qualificationCommit": "1fbfec5943c41ad6c8b3828fb48c47828d9be817"
+  },
+  "inputs": {
+    "priorGate2RowsSha256": "550f79a84837fac7dcb27f5a8a1d4ad5b9bf08b70c6f1638f5f1cf2206bb6c3f",
+    "frozenStationRowsSha256": "50547f963041e1505e1caf1bed3da27bbe36d84b0d5f26266313e60e8e573d29",
+    "previousStageCensusSha256": "384e4ec7982e336db432ea98ea8006934cf6b2276ac145b9a3e84b0ae8645d25",
+    "previousFocalRowsSha256": "d15db82408c08819956218c472192e3dffeebe084a081d8720e63b2af696291c",
+    "rowJoin": {
+      "gateRows": 5544,
+      "frozenRows": 5544,
+      "strictUnique": 5072,
+      "orderedIdentitySha256": "ff4e573973aea9f5d42210ad22c3b06c57ec123d0478e2fbd2f0a420f08f0a44"
+    },
+    "previousGlobalCounts": {
+      "productionErrors": 2378,
+      "cicErrors": 2378,
+      "recovered": 92,
+      "newErrors": 92
+    }
+  },
+  "cohorts": {
+    "primary": {
+      "count": 26,
+      "sortedKeysSha256": "960def8884a5fee1be4ad0872ae0e66be508388b031a28d2ac4f09bdd8f59085",
+      "byRoute": {
+        "tight": 13,
+        "tightMirror": 13
+      },
+      "byPhase": {
+        "p00": 8,
+        "p10": 2,
+        "p01": 10,
+        "p11": 6
+      },
+      "byRoutePhase": {
+        "tight|p00": 4,
+        "tight|p10": 1,
+        "tight|p01": 5,
+        "tight|p11": 3,
+        "tightMirror|p00": 4,
+        "tightMirror|p10": 1,
+        "tightMirror|p01": 5,
+        "tightMirror|p11": 3
+      }
+    },
+    "recoveredWeightRestored": {
+      "count": 14,
+      "sortedKeysSha256": "15eace94e16dde2291056cea881af40e28edf9d16120619ecbbc3efd4c6fbee3",
+      "byRoute": {
+        "tight": 6,
+        "tightMirror": 6,
+        "sCurve": 2
+      },
+      "byPhase": {
+        "p00": 4,
+        "p01": 6,
+        "p11": 4
+      },
+      "byRoutePhase": {
+        "tight|p00": 2,
+        "tight|p01": 3,
+        "tight|p11": 1,
+        "tightMirror|p00": 2,
+        "tightMirror|p01": 3,
+        "tightMirror|p11": 1,
+        "sCurve|p11": 2
+      }
+    },
+    "recoveredHeld": {
+      "count": 68,
+      "sortedKeysSha256": "6026c5c671987a438c42e4ffc83ad226d6e6964694ba6ebb361f4b24536d3a43",
+      "byRoute": {
+        "tight": 33,
+        "tightMirror": 33,
+        "sCurve": 2
+      },
+      "byPhase": {
+        "p00": 18,
+        "p10": 22,
+        "p01": 19,
+        "p11": 9
+      },
+      "byRoutePhase": {
+        "tight|p00": 9,
+        "tight|p10": 11,
+        "tight|p01": 9,
+        "tight|p11": 4,
+        "tightMirror|p00": 9,
+        "tightMirror|p10": 11,
+        "tightMirror|p01": 9,
+        "tightMirror|p11": 4,
+        "sCurve|p01": 1,
+        "sCurve|p11": 1
+      }
+    },
+    "recoveredScoreRestored": {
+      "count": 10,
+      "sortedKeysSha256": "73866751cc743a94b2c38df97846f987f464f44bb739b616656fca0dd271f474",
+      "byRoute": {
+        "tight": 5,
+        "tightMirror": 5
+      },
+      "byPhase": {
+        "p00": 2,
+        "p10": 2,
+        "p01": 2,
+        "p11": 4
+      },
+      "byRoutePhase": {
+        "tight|p00": 1,
+        "tight|p10": 1,
+        "tight|p01": 1,
+        "tight|p11": 2,
+        "tightMirror|p00": 1,
+        "tightMirror|p10": 1,
+        "tightMirror|p01": 1,
+        "tightMirror|p11": 2
+      }
+    },
+    "allRecovered": {
+      "count": 92,
+      "sortedKeysSha256": "3a0ff144cc714a0a25a75f64b213586301eb498d9406dc8df2b6dc886c7ff653"
+    }
+  },
+  "productionSampling": {
+    "candidateOffsets": [
+      -0.92,
+      -0.47,
+      0,
+      0.47,
+      0.92
+    ],
+    "transverseSampleOffsets": [
+      -1,
+      -0.5,
+      0,
+      0.5,
+      1
+    ],
+    "weights": [
+      0.55,
+      0.775,
+      1,
+      0.775,
+      0.55
+    ],
+    "weightingFormula": "weighted[s] = raw[s] × (1 − abs(SENSOR_OFFSETS[s]) × 0.45)",
+    "weightedMax": "maximum of the five weighted values per candidate, matching AntController.senseTrail()",
+    "rawMaximumScope": "diagnostic only; not a production choice"
+  },
+  "transition": {
+    "classification": {
+      "exclusiveTypeCounts": {
+        "target-sample-switch": 26
+      },
+      "targetSampleSetChanged": 26,
+      "rivalSampleSetChanged": 0,
+      "targetAndRivalChanged": 0,
+      "neitherChanged": 0,
+      "exactMaxSampleTieRows": 0,
+      "rawToWeightedTargetLeadCrossing": 26,
+      "rawToWeightedTargetLosses": 26,
+      "rawToWeightedTargetRestorations": 0
+    },
+    "recoveredCohorts": {
+      "weightRestored": {
+        "exclusiveTypeCounts": {
+          "rival-sample-switch": 13,
+          "mixed-or-exact-tie": 1
+        },
+        "targetSampleSetChanged": 1,
+        "rivalSampleSetChanged": 14,
+        "targetAndRivalChanged": 1,
+        "neitherChanged": 0,
+        "exactMaxSampleTieRows": 0,
+        "rawToWeightedTargetLeadCrossing": 14,
+        "rawToWeightedTargetLosses": 0,
+        "rawToWeightedTargetRestorations": 14
+      },
+      "held": {
+        "exclusiveTypeCounts": {
+          "target-sample-switch": 6,
+          "rival-sample-switch": 17,
+          "mixed-or-exact-tie": 5,
+          "no-candidate-order-crossing": 40
+        },
+        "targetSampleSetChanged": 11,
+        "rivalSampleSetChanged": 22,
+        "targetAndRivalChanged": 5,
+        "neitherChanged": 40,
+        "exactMaxSampleTieRows": 0,
+        "rawToWeightedTargetLeadCrossing": 0,
+        "rawToWeightedTargetLosses": 0,
+        "rawToWeightedTargetRestorations": 0
+      },
+      "scoreRestored": {
+        "exclusiveTypeCounts": {
+          "target-sample-switch": 2,
+          "no-candidate-order-crossing": 8
+        },
+        "targetSampleSetChanged": 2,
+        "rivalSampleSetChanged": 0,
+        "targetAndRivalChanged": 0,
+        "neitherChanged": 8,
+        "exactMaxSampleTieRows": 0,
+        "rawToWeightedTargetLeadCrossing": 2,
+        "rawToWeightedTargetLosses": 2,
+        "rawToWeightedTargetRestorations": 0
+      }
+    },
+    "byRoute": {
+      "straight": {},
+      "gentle": {},
+      "tight": {
+        "target-sample-switch": 13
+      },
+      "gentleMirror": {},
+      "tightMirror": {
+        "target-sample-switch": 13
+      },
+      "sCurve": {}
+    },
+    "byPhase": {
+      "p00": {
+        "target-sample-switch": 8
+      },
+      "p10": {
+        "target-sample-switch": 2
+      },
+      "p01": {
+        "target-sample-switch": 10
+      },
+      "p11": {
+        "target-sample-switch": 6
+      }
+    },
+    "byRoutePhase": {
+      "straight|p00": {
+        "count": 0,
+        "types": {}
+      },
+      "straight|p10": {
+        "count": 0,
+        "types": {}
+      },
+      "straight|p01": {
+        "count": 0,
+        "types": {}
+      },
+      "straight|p11": {
+        "count": 0,
+        "types": {}
+      },
+      "gentle|p00": {
+        "count": 0,
+        "types": {}
+      },
+      "gentle|p10": {
+        "count": 0,
+        "types": {}
+      },
+      "gentle|p01": {
+        "count": 0,
+        "types": {}
+      },
+      "gentle|p11": {
+        "count": 0,
+        "types": {}
+      },
+      "tight|p00": {
+        "count": 4,
+        "types": {
+          "target-sample-switch": 4
+        }
+      },
+      "tight|p10": {
+        "count": 1,
+        "types": {
+          "target-sample-switch": 1
+        }
+      },
+      "tight|p01": {
+        "count": 5,
+        "types": {
+          "target-sample-switch": 5
+        }
+      },
+      "tight|p11": {
+        "count": 3,
+        "types": {
+          "target-sample-switch": 3
+        }
+      },
+      "gentleMirror|p00": {
+        "count": 0,
+        "types": {}
+      },
+      "gentleMirror|p10": {
+        "count": 0,
+        "types": {}
+      },
+      "gentleMirror|p01": {
+        "count": 0,
+        "types": {}
+      },
+      "gentleMirror|p11": {
+        "count": 0,
+        "types": {}
+      },
+      "tightMirror|p00": {
+        "count": 4,
+        "types": {
+          "target-sample-switch": 4
+        }
+      },
+      "tightMirror|p10": {
+        "count": 1,
+        "types": {
+          "target-sample-switch": 1
+        }
+      },
+      "tightMirror|p01": {
+        "count": 5,
+        "types": {
+          "target-sample-switch": 5
+        }
+      },
+      "tightMirror|p11": {
+        "count": 3,
+        "types": {
+          "target-sample-switch": 3
+        }
+      },
+      "sCurve|p00": {
+        "count": 0,
+        "types": {}
+      },
+      "sCurve|p10": {
+        "count": 0,
+        "types": {}
+      },
+      "sCurve|p01": {
+        "count": 0,
+        "types": {}
+      },
+      "sCurve|p11": {
+        "count": 0,
+        "types": {}
+      }
+    }
+  },
+  "maxContributors": {
+    "A": {
+      "target": {
+        "rawMaximum": {
+          "buckets": [
+            {
+              "sensorOffset": -1,
+              "sampleIndex": 0,
+              "count": 0
+            },
+            {
+              "sensorOffset": -0.5,
+              "sampleIndex": 1,
+              "count": 13
+            },
+            {
+              "sensorOffset": 0,
+              "sampleIndex": 2,
+              "count": 0
+            },
+            {
+              "sensorOffset": 0.5,
+              "sampleIndex": 3,
+              "count": 13
+            },
+            {
+              "sensorOffset": 1,
+              "sampleIndex": 4,
+              "count": 0
+            }
+          ],
+          "rowsWithExactSampleTies": 0
+        },
+        "weightedMaximum": {
+          "buckets": [
+            {
+              "sensorOffset": -1,
+              "sampleIndex": 0,
+              "count": 0
+            },
+            {
+              "sensorOffset": -0.5,
+              "sampleIndex": 1,
+              "count": 13
+            },
+            {
+              "sensorOffset": 0,
+              "sampleIndex": 2,
+              "count": 0
+            },
+            {
+              "sensorOffset": 0.5,
+              "sampleIndex": 3,
+              "count": 13
+            },
+            {
+              "sensorOffset": 1,
+              "sampleIndex": 4,
+              "count": 0
+            }
+          ],
+          "rowsWithExactSampleTies": 0
+        }
+      },
+      "weightedRival": {
+        "rawMaximum": {
+          "buckets": [
+            {
+              "sensorOffset": -1,
+              "sampleIndex": 0,
+              "count": 13
+            },
+            {
+              "sensorOffset": -0.5,
+              "sampleIndex": 1,
+              "count": 0
+            },
+            {
+              "sensorOffset": 0,
+              "sampleIndex": 2,
+              "count": 0
+            },
+            {
+              "sensorOffset": 0.5,
+              "sampleIndex": 3,
+              "count": 0
+            },
+            {
+              "sensorOffset": 1,
+              "sampleIndex": 4,
+              "count": 13
+            }
+          ],
+          "rowsWithExactSampleTies": 0
+        },
+        "weightedMaximum": {
+          "buckets": [
+            {
+              "sensorOffset": -1,
+              "sampleIndex": 0,
+              "count": 13
+            },
+            {
+              "sensorOffset": -0.5,
+              "sampleIndex": 1,
+              "count": 0
+            },
+            {
+              "sensorOffset": 0,
+              "sampleIndex": 2,
+              "count": 0
+            },
+            {
+              "sensorOffset": 0.5,
+              "sampleIndex": 3,
+              "count": 0
+            },
+            {
+              "sensorOffset": 1,
+              "sampleIndex": 4,
+              "count": 13
+            }
+          ],
+          "rowsWithExactSampleTies": 0
+        }
+      }
+    },
+    "C": {
+      "target": {
+        "rawMaximum": {
+          "buckets": [
+            {
+              "sensorOffset": -1,
+              "sampleIndex": 0,
+              "count": 6
+            },
+            {
+              "sensorOffset": -0.5,
+              "sampleIndex": 1,
+              "count": 7
+            },
+            {
+              "sensorOffset": 0,
+              "sampleIndex": 2,
+              "count": 0
+            },
+            {
+              "sensorOffset": 0.5,
+              "sampleIndex": 3,
+              "count": 7
+            },
+            {
+              "sensorOffset": 1,
+              "sampleIndex": 4,
+              "count": 6
+            }
+          ],
+          "rowsWithExactSampleTies": 0
+        },
+        "weightedMaximum": {
+          "buckets": [
+            {
+              "sensorOffset": -1,
+              "sampleIndex": 0,
+              "count": 0
+            },
+            {
+              "sensorOffset": -0.5,
+              "sampleIndex": 1,
+              "count": 8
+            },
+            {
+              "sensorOffset": 0,
+              "sampleIndex": 2,
+              "count": 10
+            },
+            {
+              "sensorOffset": 0.5,
+              "sampleIndex": 3,
+              "count": 8
+            },
+            {
+              "sensorOffset": 1,
+              "sampleIndex": 4,
+              "count": 0
+            }
+          ],
+          "rowsWithExactSampleTies": 0
+        }
+      },
+      "weightedRival": {
+        "rawMaximum": {
+          "buckets": [
+            {
+              "sensorOffset": -1,
+              "sampleIndex": 0,
+              "count": 9
+            },
+            {
+              "sensorOffset": -0.5,
+              "sampleIndex": 1,
+              "count": 4
+            },
+            {
+              "sensorOffset": 0,
+              "sampleIndex": 2,
+              "count": 0
+            },
+            {
+              "sensorOffset": 0.5,
+              "sampleIndex": 3,
+              "count": 4
+            },
+            {
+              "sensorOffset": 1,
+              "sampleIndex": 4,
+              "count": 9
+            }
+          ],
+          "rowsWithExactSampleTies": 0
+        },
+        "weightedMaximum": {
+          "buckets": [
+            {
+              "sensorOffset": -1,
+              "sampleIndex": 0,
+              "count": 3
+            },
+            {
+              "sensorOffset": -0.5,
+              "sampleIndex": 1,
+              "count": 10
+            },
+            {
+              "sensorOffset": 0,
+              "sampleIndex": 2,
+              "count": 0
+            },
+            {
+              "sensorOffset": 0.5,
+              "sampleIndex": 3,
+              "count": 10
+            },
+            {
+              "sensorOffset": 1,
+              "sampleIndex": 4,
+              "count": 3
+            }
+          ],
+          "rowsWithExactSampleTies": 0
+        }
+      }
+    },
+    "D": {
+      "target": {
+        "rawMaximum": {
+          "buckets": [
+            {
+              "sensorOffset": -1,
+              "sampleIndex": 0,
+              "count": 13
+            },
+            {
+              "sensorOffset": -0.5,
+              "sampleIndex": 1,
+              "count": 0
+            },
+            {
+              "sensorOffset": 0,
+              "sampleIndex": 2,
+              "count": 0
+            },
+            {
+              "sensorOffset": 0.5,
+              "sampleIndex": 3,
+              "count": 0
+            },
+            {
+              "sensorOffset": 1,
+              "sampleIndex": 4,
+              "count": 13
+            }
+          ],
+          "rowsWithExactSampleTies": 0
+        },
+        "weightedMaximum": {
+          "buckets": [
+            {
+              "sensorOffset": -1,
+              "sampleIndex": 0,
+              "count": 0
+            },
+            {
+              "sensorOffset": -0.5,
+              "sampleIndex": 1,
+              "count": 13
+            },
+            {
+              "sensorOffset": 0,
+              "sampleIndex": 2,
+              "count": 0
+            },
+            {
+              "sensorOffset": 0.5,
+              "sampleIndex": 3,
+              "count": 13
+            },
+            {
+              "sensorOffset": 1,
+              "sampleIndex": 4,
+              "count": 0
+            }
+          ],
+          "rowsWithExactSampleTies": 0
+        }
+      },
+      "weightedRival": {
+        "rawMaximum": {
+          "buckets": [
+            {
+              "sensorOffset": -1,
+              "sampleIndex": 0,
+              "count": 0
+            },
+            {
+              "sensorOffset": -0.5,
+              "sampleIndex": 1,
+              "count": 13
+            },
+            {
+              "sensorOffset": 0,
+              "sampleIndex": 2,
+              "count": 0
+            },
+            {
+              "sensorOffset": 0.5,
+              "sampleIndex": 3,
+              "count": 13
+            },
+            {
+              "sensorOffset": 1,
+              "sampleIndex": 4,
+              "count": 0
+            }
+          ],
+          "rowsWithExactSampleTies": 0
+        },
+        "weightedMaximum": {
+          "buckets": [
+            {
+              "sensorOffset": -1,
+              "sampleIndex": 0,
+              "count": 0
+            },
+            {
+              "sensorOffset": -0.5,
+              "sampleIndex": 1,
+              "count": 13
+            },
+            {
+              "sensorOffset": 0,
+              "sampleIndex": 2,
+              "count": 0
+            },
+            {
+              "sensorOffset": 0.5,
+              "sampleIndex": 3,
+              "count": 13
+            },
+            {
+              "sensorOffset": 1,
+              "sampleIndex": 4,
+              "count": 0
+            }
+          ],
+          "rowsWithExactSampleTies": 0
+        }
+      }
+    }
+  },
+  "cicVsProductionProfile": {
+    "primaryHarmful": {
+      "primaryTargetCandidate": [
+        {
+          "sampleIndex": 0,
+          "sensorOffset": -1,
+          "weight": 0.55,
+          "rawMean": {
+            "A": 0.0038614213074573103,
+            "C": 0.012188453784262478,
+            "D": 0.014460819114966031
+          },
+          "weightedMean": {
+            "A": 0.0021237817191015205,
+            "C": 0.006703649581344363,
+            "D": 0.007953450513231318
+          },
+          "rawDMinusC": {
+            "mean": 0.0022723653307035537,
+            "greater": 14,
+            "equal": 10,
+            "lower": 2
+          },
+          "weightedDMinusC": {
+            "mean": 0.001249800931886954,
+            "greater": 14,
+            "equal": 10,
+            "lower": 2
+          }
+        },
+        {
+          "sampleIndex": 1,
+          "sensorOffset": -0.5,
+          "weight": 0.775,
+          "rawMean": {
+            "A": 0.030946586196671788,
+            "C": 0.014421532095175604,
+            "D": 0.012580270164533688
+          },
+          "weightedMean": {
+            "A": 0.02398360430242064,
+            "C": 0.011176687373761094,
+            "D": 0.009749709377513608
+          },
+          "rawDMinusC": {
+            "mean": -0.001841261930641916,
+            "greater": 2,
+            "equal": 2,
+            "lower": 22
+          },
+          "weightedDMinusC": {
+            "mean": -0.0014269779962474852,
+            "greater": 2,
+            "equal": 2,
+            "lower": 22
+          }
+        },
+        {
+          "sampleIndex": 2,
+          "sensorOffset": 0,
+          "weight": 1,
+          "rawMean": {
+            "A": 0,
+            "C": 0.02079811201620206,
+            "D": 0.014831079640787373
+          },
+          "weightedMean": {
+            "A": 0,
+            "C": 0.02079811201620206,
+            "D": 0.014831079640787373
+          },
+          "rawDMinusC": {
+            "mean": -0.005967032375414689,
+            "greater": 4,
+            "equal": 0,
+            "lower": 22
+          },
+          "weightedDMinusC": {
+            "mean": -0.005967032375414689,
+            "greater": 4,
+            "equal": 0,
+            "lower": 22
+          }
+        },
+        {
+          "sampleIndex": 3,
+          "sensorOffset": 0.5,
+          "weight": 0.775,
+          "rawMean": {
+            "A": 0.030946586196671403,
+            "C": 0.014421532095175556,
+            "D": 0.01258027016453365
+          },
+          "weightedMean": {
+            "A": 0.023983604302420337,
+            "C": 0.011176687373761051,
+            "D": 0.009749709377513578
+          },
+          "rawDMinusC": {
+            "mean": -0.0018412619306419045,
+            "greater": 2,
+            "equal": 2,
+            "lower": 22
+          },
+          "weightedDMinusC": {
+            "mean": -0.0014269779962474759,
+            "greater": 2,
+            "equal": 2,
+            "lower": 22
+          }
+        },
+        {
+          "sampleIndex": 4,
+          "sensorOffset": 1,
+          "weight": 0.55,
+          "rawMean": {
+            "A": 0.0038614213074575385,
+            "C": 0.012188453784262428,
+            "D": 0.014460819114965995
+          },
+          "weightedMean": {
+            "A": 0.0021237817191016462,
+            "C": 0.006703649581344335,
+            "D": 0.007953450513231299
+          },
+          "rawDMinusC": {
+            "mean": 0.002272365330703567,
+            "greater": 14,
+            "equal": 10,
+            "lower": 2
+          },
+          "weightedDMinusC": {
+            "mean": 0.0012498009318869618,
+            "greater": 14,
+            "equal": 10,
+            "lower": 2
+          }
+        }
+      ],
+      "primaryWeightedRivalCandidate": [
+        {
+          "sampleIndex": 0,
+          "sensorOffset": -1,
+          "weight": 0.55,
+          "rawMean": {
+            "A": 0.015224911778784576,
+            "C": 0.012874347486627717,
+            "D": 0.011370134209886591
+          },
+          "weightedMean": {
+            "A": 0.00837370147833152,
+            "C": 0.007080891117645246,
+            "D": 0.006253573815437625
+          },
+          "rawDMinusC": {
+            "mean": -0.0015042132767411262,
+            "greater": 2,
+            "equal": 13,
+            "lower": 11
+          },
+          "weightedDMinusC": {
+            "mean": -0.0008273173022076195,
+            "greater": 2,
+            "equal": 13,
+            "lower": 11
+          }
+        },
+        {
+          "sampleIndex": 1,
+          "sensorOffset": -0.5,
+          "weight": 0.775,
+          "rawMean": {
+            "A": 0.009136994404150807,
+            "C": 0.010538476111958293,
+            "D": 0.013532160496234798
+          },
+          "weightedMean": {
+            "A": 0.007081170663216873,
+            "C": 0.008167318986767678,
+            "D": 0.010487424384581966
+          },
+          "rawDMinusC": {
+            "mean": 0.002993684384276503,
+            "greater": 15,
+            "equal": 11,
+            "lower": 0
+          },
+          "weightedDMinusC": {
+            "mean": 0.0023201053978142913,
+            "greater": 15,
+            "equal": 11,
+            "lower": 0
+          }
+        },
+        {
+          "sampleIndex": 2,
+          "sensorOffset": 0,
+          "weight": 1,
+          "rawMean": {
+            "A": 0,
+            "C": 0.004647018498501616,
+            "D": 0.010659957972417743
+          },
+          "weightedMean": {
+            "A": 0,
+            "C": 0.004647018498501616,
+            "D": 0.010659957972417743
+          },
+          "rawDMinusC": {
+            "mean": 0.006012939473916124,
+            "greater": 26,
+            "equal": 0,
+            "lower": 0
+          },
+          "weightedDMinusC": {
+            "mean": 0.006012939473916124,
+            "greater": 26,
+            "equal": 0,
+            "lower": 0
+          }
+        },
+        {
+          "sampleIndex": 3,
+          "sensorOffset": 0.5,
+          "weight": 0.775,
+          "rawMean": {
+            "A": 0.00913699440415072,
+            "C": 0.010538476111958342,
+            "D": 0.013532160496234803
+          },
+          "weightedMean": {
+            "A": 0.007081170663216809,
+            "C": 0.008167318986767716,
+            "D": 0.010487424384581974
+          },
+          "rawDMinusC": {
+            "mean": 0.002993684384276461,
+            "greater": 15,
+            "equal": 11,
+            "lower": 0
+          },
+          "weightedDMinusC": {
+            "mean": 0.0023201053978142575,
+            "greater": 15,
+            "equal": 11,
+            "lower": 0
+          }
+        },
+        {
+          "sampleIndex": 4,
+          "sensorOffset": 1,
+          "weight": 0.55,
+          "rawMean": {
+            "A": 0.015224911778784536,
+            "C": 0.012874347486627706,
+            "D": 0.011370134209886577
+          },
+          "weightedMean": {
+            "A": 0.008373701478331495,
+            "C": 0.007080891117645238,
+            "D": 0.0062535738154376195
+          },
+          "rawDMinusC": {
+            "mean": -0.0015042132767411275,
+            "greater": 2,
+            "equal": 13,
+            "lower": 11
+          },
+          "weightedDMinusC": {
+            "mean": -0.00082731730220762,
+            "greater": 2,
+            "equal": 13,
+            "lower": 11
+          }
+        }
+      ]
+    },
+    "recoveredWeightRestored": {
+      "target": [
+        {
+          "sampleIndex": 0,
+          "sensorOffset": -1,
+          "weight": 0.55,
+          "rawMean": {
+            "A": 0.0033097896921063094,
+            "C": 0.009710613745558145,
+            "D": 0.009640827474192993
+          },
+          "weightedMean": {
+            "A": 0.0018203843306584706,
+            "C": 0.00534083756005698,
+            "D": 0.0053024551108061466
+          },
+          "rawDMinusC": {
+            "mean": -0.0000697862713651519,
+            "greater": 6,
+            "equal": 5,
+            "lower": 3
+          },
+          "weightedDMinusC": {
+            "mean": -0.000038382449250833304,
+            "greater": 6,
+            "equal": 5,
+            "lower": 3
+          }
+        },
+        {
+          "sampleIndex": 1,
+          "sensorOffset": -0.5,
+          "weight": 0.775,
+          "rawMean": {
+            "A": 0.02652564531143271,
+            "C": 0.010195204977629796,
+            "D": 0.012964136226511033
+          },
+          "weightedMean": {
+            "A": 0.02055737511636035,
+            "C": 0.007901283857663092,
+            "D": 0.010047205575546055
+          },
+          "rawDMinusC": {
+            "mean": 0.0027689312488812386,
+            "greater": 13,
+            "equal": 0,
+            "lower": 1
+          },
+          "weightedDMinusC": {
+            "mean": 0.00214592171788296,
+            "greater": 13,
+            "equal": 0,
+            "lower": 1
+          }
+        },
+        {
+          "sampleIndex": 2,
+          "sensorOffset": 0,
+          "weight": 1,
+          "rawMean": {
+            "A": 0,
+            "C": 0.0030117843133346325,
+            "D": 0.013206981015888356
+          },
+          "weightedMean": {
+            "A": 0,
+            "C": 0.0030117843133346325,
+            "D": 0.013206981015888356
+          },
+          "rawDMinusC": {
+            "mean": 0.010195196702553725,
+            "greater": 14,
+            "equal": 0,
+            "lower": 0
+          },
+          "weightedDMinusC": {
+            "mean": 0.010195196702553725,
+            "greater": 14,
+            "equal": 0,
+            "lower": 0
+          }
+        },
+        {
+          "sampleIndex": 3,
+          "sensorOffset": 0.5,
+          "weight": 0.775,
+          "rawMean": {
+            "A": 0.0393740794562746,
+            "C": 0.015090669114223663,
+            "D": 0.015701616681600267
+          },
+          "weightedMean": {
+            "A": 0.03051491157861282,
+            "C": 0.011695268563523337,
+            "D": 0.012168752928240207
+          },
+          "rawDMinusC": {
+            "mean": 0.0006109475673766038,
+            "greater": 11,
+            "equal": 0,
+            "lower": 3
+          },
+          "weightedDMinusC": {
+            "mean": 0.0004734843647168678,
+            "greater": 11,
+            "equal": 0,
+            "lower": 3
+          }
+        },
+        {
+          "sampleIndex": 4,
+          "sensorOffset": 1,
+          "weight": 0.55,
+          "rawMean": {
+            "A": 0.003309789692106511,
+            "C": 0.014073597065968722,
+            "D": 0.012392158976289291
+          },
+          "weightedMean": {
+            "A": 0.0018203843306585814,
+            "C": 0.007740478386282797,
+            "D": 0.006815687436959113
+          },
+          "rawDMinusC": {
+            "mean": -0.0016814380896794279,
+            "greater": 6,
+            "equal": 3,
+            "lower": 5
+          },
+          "weightedDMinusC": {
+            "mean": -0.0009247909493236853,
+            "greater": 6,
+            "equal": 3,
+            "lower": 5
+          }
+        }
+      ],
+      "rival": [
+        {
+          "sampleIndex": 0,
+          "sensorOffset": -1,
+          "weight": 0.55,
+          "rawMean": {
+            "A": 0.02698762728486197,
+            "C": 0.014149921240621073,
+            "D": 0.014902671981705237
+          },
+          "weightedMean": {
+            "A": 0.014843195006674087,
+            "C": 0.0077824566823415904,
+            "D": 0.008196469589937881
+          },
+          "rawDMinusC": {
+            "mean": 0.0007527507410841637,
+            "greater": 4,
+            "equal": 6,
+            "lower": 4
+          },
+          "weightedDMinusC": {
+            "mean": 0.0004140129075962901,
+            "greater": 4,
+            "equal": 6,
+            "lower": 4
+          }
+        },
+        {
+          "sampleIndex": 1,
+          "sensorOffset": -0.5,
+          "weight": 0.775,
+          "rawMean": {
+            "A": 0.007831709489271851,
+            "C": 0.016293078313537514,
+            "D": 0.013251294640382803
+          },
+          "weightedMean": {
+            "A": 0.006069574854185686,
+            "C": 0.012627135692991573,
+            "D": 0.010269753346296673
+          },
+          "rawDMinusC": {
+            "mean": -0.0030417836731547127,
+            "greater": 4,
+            "equal": 3,
+            "lower": 7
+          },
+          "weightedDMinusC": {
+            "mean": -0.0023573823466949027,
+            "greater": 4,
+            "equal": 3,
+            "lower": 7
+          }
+        },
+        {
+          "sampleIndex": 2,
+          "sensorOffset": 0,
+          "weight": 1,
+          "rawMean": {
+            "A": 0,
+            "C": 0.007252257259491415,
+            "D": 0.008228207121659907
+          },
+          "weightedMean": {
+            "A": 0,
+            "C": 0.007252257259491415,
+            "D": 0.008228207121659907
+          },
+          "rawDMinusC": {
+            "mean": 0.0009759498621684912,
+            "greater": 6,
+            "equal": 0,
+            "lower": 8
+          },
+          "weightedDMinusC": {
+            "mean": 0.0009759498621684912,
+            "greater": 6,
+            "equal": 0,
+            "lower": 8
+          }
+        },
+        {
+          "sampleIndex": 3,
+          "sensorOffset": 0.5,
+          "weight": 0.775,
+          "rawMean": {
+            "A": 0.007831709489271985,
+            "C": 0.010823308988492817,
+            "D": 0.010222181418022478
+          },
+          "weightedMean": {
+            "A": 0.006069574854185787,
+            "C": 0.008388064466081934,
+            "D": 0.00792219059896742
+          },
+          "rawDMinusC": {
+            "mean": -0.0006011275704703413,
+            "greater": 4,
+            "equal": 5,
+            "lower": 5
+          },
+          "weightedDMinusC": {
+            "mean": -0.00046587386711451447,
+            "greater": 4,
+            "equal": 5,
+            "lower": 5
+          }
+        },
+        {
+          "sampleIndex": 4,
+          "sensorOffset": 1,
+          "weight": 0.55,
+          "rawMean": {
+            "A": 0.013049924381815445,
+            "C": 0.010031705056500513,
+            "D": 0.01112517247947664
+          },
+          "weightedMean": {
+            "A": 0.007177458409998494,
+            "C": 0.005517437781075283,
+            "D": 0.006118844863712151
+          },
+          "rawDMinusC": {
+            "mean": 0.0010934674229761264,
+            "greater": 4,
+            "equal": 8,
+            "lower": 2
+          },
+          "weightedDMinusC": {
+            "mean": 0.0006014070826368697,
+            "greater": 4,
+            "equal": 8,
+            "lower": 2
+          }
+        }
+      ]
+    },
+    "recoveredHeld": {
+      "target": [
+        {
+          "sampleIndex": 0,
+          "sensorOffset": -1,
+          "weight": 0.55,
+          "rawMean": {
+            "A": 0.0037478500925322827,
+            "C": 0.015841812875236356,
+            "D": 0.013178453823188954
+          },
+          "weightedMean": {
+            "A": 0.0020613175508927555,
+            "C": 0.008712997081379998,
+            "D": 0.0072481496027539255
+          },
+          "rawDMinusC": {
+            "mean": -0.0026633590520474025,
+            "greater": 18,
+            "equal": 20,
+            "lower": 30
+          },
+          "weightedDMinusC": {
+            "mean": -0.0014648474786260713,
+            "greater": 18,
+            "equal": 20,
+            "lower": 30
+          }
+        },
+        {
+          "sampleIndex": 1,
+          "sensorOffset": -0.5,
+          "weight": 0.775,
+          "rawMean": {
+            "A": 0.03003639248500454,
+            "C": 0.014980676699245273,
+            "D": 0.015001424257721345
+          },
+          "weightedMean": {
+            "A": 0.02327820417587852,
+            "C": 0.011610024441915083,
+            "D": 0.011626103799734042
+          },
+          "rawDMinusC": {
+            "mean": 0.000020747558476073377,
+            "greater": 45,
+            "equal": 5,
+            "lower": 18
+          },
+          "weightedDMinusC": {
+            "mean": 0.000016079357818957037,
+            "greater": 45,
+            "equal": 5,
+            "lower": 18
+          }
+        },
+        {
+          "sampleIndex": 2,
+          "sensorOffset": 0,
+          "weight": 1,
+          "rawMean": {
+            "A": 0,
+            "C": 0.00771377192372491,
+            "D": 0.01249059204375876
+          },
+          "weightedMean": {
+            "A": 0,
+            "C": 0.00771377192372491,
+            "D": 0.01249059204375876
+          },
+          "rawDMinusC": {
+            "mean": 0.004776820120033849,
+            "greater": 54,
+            "equal": 0,
+            "lower": 14
+          },
+          "weightedDMinusC": {
+            "mean": 0.004776820120033849,
+            "greater": 54,
+            "equal": 0,
+            "lower": 14
+          }
+        },
+        {
+          "sampleIndex": 3,
+          "sensorOffset": 0.5,
+          "weight": 0.775,
+          "rawMean": {
+            "A": 0.03268924436037352,
+            "C": 0.0159274694691,
+            "D": 0.01553561930005007
+          },
+          "weightedMean": {
+            "A": 0.025334164379289485,
+            "C": 0.012343788838552496,
+            "D": 0.012040104957538803
+          },
+          "rawDMinusC": {
+            "mean": -0.0003918501690499269,
+            "greater": 43,
+            "equal": 5,
+            "lower": 20
+          },
+          "weightedDMinusC": {
+            "mean": -0.0003036838810136933,
+            "greater": 43,
+            "equal": 5,
+            "lower": 20
+          }
+        },
+        {
+          "sampleIndex": 4,
+          "sensorOffset": 1,
+          "weight": 0.55,
+          "rawMean": {
+            "A": 0.0037478500925324223,
+            "C": 0.016888749901796646,
+            "D": 0.013738151513048026
+          },
+          "weightedMean": {
+            "A": 0.002061317550892833,
+            "C": 0.009288812445988158,
+            "D": 0.007555983332176415
+          },
+          "rawDMinusC": {
+            "mean": -0.0031505983887486246,
+            "greater": 18,
+            "equal": 18,
+            "lower": 32
+          },
+          "weightedDMinusC": {
+            "mean": -0.0017328291138117434,
+            "greater": 18,
+            "equal": 18,
+            "lower": 32
+          }
+        }
+      ],
+      "rival": [
+        {
+          "sampleIndex": 0,
+          "sensorOffset": -1,
+          "weight": 0.55,
+          "rawMean": {
+            "A": 0.01764592086916808,
+            "C": 0.013270778970958498,
+            "D": 0.013537502079282166
+          },
+          "weightedMean": {
+            "A": 0.009705256478042445,
+            "C": 0.007298928434027174,
+            "D": 0.007445626143605191
+          },
+          "rawDMinusC": {
+            "mean": 0.0002667231083236698,
+            "greater": 24,
+            "equal": 29,
+            "lower": 15
+          },
+          "weightedDMinusC": {
+            "mean": 0.00014669770957801852,
+            "greater": 24,
+            "equal": 29,
+            "lower": 15
+          }
+        },
+        {
+          "sampleIndex": 1,
+          "sensorOffset": -0.5,
+          "weight": 0.775,
+          "rawMean": {
+            "A": 0.00886825927461689,
+            "C": 0.01717765682873099,
+            "D": 0.014396180483201149
+          },
+          "weightedMean": {
+            "A": 0.0068729009378280925,
+            "C": 0.013312684042266518,
+            "D": 0.011157039874480891
+          },
+          "rawDMinusC": {
+            "mean": -0.0027814763455298428,
+            "greater": 31,
+            "equal": 3,
+            "lower": 34
+          },
+          "weightedDMinusC": {
+            "mean": -0.002155644167785628,
+            "greater": 31,
+            "equal": 3,
+            "lower": 34
+          }
+        },
+        {
+          "sampleIndex": 2,
+          "sensorOffset": 0,
+          "weight": 1,
+          "rawMean": {
+            "A": 0,
+            "C": 0.006470995849448783,
+            "D": 0.00724108774081619
+          },
+          "weightedMean": {
+            "A": 0,
+            "C": 0.006470995849448783,
+            "D": 0.00724108774081619
+          },
+          "rawDMinusC": {
+            "mean": 0.0007700918913674077,
+            "greater": 28,
+            "equal": 0,
+            "lower": 40
+          },
+          "weightedDMinusC": {
+            "mean": 0.0007700918913674077,
+            "greater": 28,
+            "equal": 0,
+            "lower": 40
+          }
+        },
+        {
+          "sampleIndex": 3,
+          "sensorOffset": 0.5,
+          "weight": 0.775,
+          "rawMean": {
+            "A": 0.008868259274616923,
+            "C": 0.016108562184902114,
+            "D": 0.01377724314789401
+          },
+          "weightedMean": {
+            "A": 0.006872900937828116,
+            "C": 0.012484135693299134,
+            "D": 0.010677363439617856
+          },
+          "rawDMinusC": {
+            "mean": -0.0023313190370081007,
+            "greater": 31,
+            "equal": 5,
+            "lower": 32
+          },
+          "weightedDMinusC": {
+            "mean": -0.0018067722536812781,
+            "greater": 31,
+            "equal": 5,
+            "lower": 32
+          }
+        },
+        {
+          "sampleIndex": 4,
+          "sensorOffset": 1,
+          "weight": 0.55,
+          "rawMean": {
+            "A": 0.014777120255879383,
+            "C": 0.012322596875189473,
+            "D": 0.012798017946341712
+          },
+          "weightedMean": {
+            "A": 0.008127416140733663,
+            "C": 0.006777428281354211,
+            "D": 0.00703890987048794
+          },
+          "rawDMinusC": {
+            "mean": 0.0004754210711522382,
+            "greater": 24,
+            "equal": 31,
+            "lower": 13
+          },
+          "weightedDMinusC": {
+            "mean": 0.000261481589133731,
+            "greater": 24,
+            "equal": 31,
+            "lower": 13
+          }
+        }
+      ]
+    },
+    "recoveredScoreRestored": {
+      "target": [
+        {
+          "sampleIndex": 0,
+          "sensorOffset": -1,
+          "weight": 0.55,
+          "rawMean": {
+            "A": 0.003089137045966194,
+            "C": 0.01365124620129,
+            "D": 0.012149720883658026
+          },
+          "weightedMean": {
+            "A": 0.001699025375281407,
+            "C": 0.007508185410709502,
+            "D": 0.006682346486011915
+          },
+          "rawDMinusC": {
+            "mean": -0.0015015253176319761,
+            "greater": 1,
+            "equal": 5,
+            "lower": 4
+          },
+          "weightedDMinusC": {
+            "mean": -0.0008258389246975868,
+            "greater": 1,
+            "equal": 5,
+            "lower": 4
+          }
+        },
+        {
+          "sampleIndex": 1,
+          "sensorOffset": -0.5,
+          "weight": 0.775,
+          "rawMean": {
+            "A": 0.025434615917077824,
+            "C": 0.014176748920630417,
+            "D": 0.014246546948917329
+          },
+          "weightedMean": {
+            "A": 0.019711827335735312,
+            "C": 0.010986980413488574,
+            "D": 0.01104107388541093
+          },
+          "rawDMinusC": {
+            "mean": 0.00006979802828691317,
+            "greater": 6,
+            "equal": 0,
+            "lower": 4
+          },
+          "weightedDMinusC": {
+            "mean": 0.00005409347192235781,
+            "greater": 6,
+            "equal": 0,
+            "lower": 4
+          }
+        },
+        {
+          "sampleIndex": 2,
+          "sensorOffset": 0,
+          "weight": 1,
+          "rawMean": {
+            "A": 0,
+            "C": 0.004025467233323881,
+            "D": 0.009052277400453057
+          },
+          "weightedMean": {
+            "A": 0,
+            "C": 0.004025467233323881,
+            "D": 0.009052277400453057
+          },
+          "rawDMinusC": {
+            "mean": 0.005026810167129178,
+            "greater": 10,
+            "equal": 0,
+            "lower": 0
+          },
+          "weightedDMinusC": {
+            "mean": 0.005026810167129178,
+            "greater": 10,
+            "equal": 0,
+            "lower": 0
+          }
+        },
+        {
+          "sampleIndex": 3,
+          "sensorOffset": 0.5,
+          "weight": 0.775,
+          "rawMean": {
+            "A": 0.025434615917077963,
+            "C": 0.014176748920630455,
+            "D": 0.014246546948917341
+          },
+          "weightedMean": {
+            "A": 0.01971182733573542,
+            "C": 0.010986980413488605,
+            "D": 0.011041073885410937
+          },
+          "rawDMinusC": {
+            "mean": 0.00006979802828688359,
+            "greater": 6,
+            "equal": 0,
+            "lower": 4
+          },
+          "weightedDMinusC": {
+            "mean": 0.00005409347192233452,
+            "greater": 6,
+            "equal": 0,
+            "lower": 4
+          }
+        },
+        {
+          "sampleIndex": 4,
+          "sensorOffset": 1,
+          "weight": 0.55,
+          "rawMean": {
+            "A": 0.003089137045966226,
+            "C": 0.013651246201290018,
+            "D": 0.012149720883658035
+          },
+          "weightedMean": {
+            "A": 0.0016990253752814245,
+            "C": 0.007508185410709511,
+            "D": 0.006682346486011921
+          },
+          "rawDMinusC": {
+            "mean": -0.0015015253176319829,
+            "greater": 1,
+            "equal": 5,
+            "lower": 4
+          },
+          "weightedDMinusC": {
+            "mean": -0.000825838924697591,
+            "greater": 1,
+            "equal": 5,
+            "lower": 4
+          }
+        }
+      ],
+      "rival": [
+        {
+          "sampleIndex": 0,
+          "sensorOffset": -1,
+          "weight": 0.55,
+          "rawMean": {
+            "A": 0.01217992942302789,
+            "C": 0.012912859993593387,
+            "D": 0.01177297151608135
+          },
+          "weightedMean": {
+            "A": 0.006698961182665339,
+            "C": 0.007102072996476363,
+            "D": 0.006475134333844744
+          },
+          "rawDMinusC": {
+            "mean": -0.001139888477512035,
+            "greater": 3,
+            "equal": 4,
+            "lower": 3
+          },
+          "weightedDMinusC": {
+            "mean": -0.000626938662631619,
+            "greater": 3,
+            "equal": 4,
+            "lower": 3
+          }
+        },
+        {
+          "sampleIndex": 1,
+          "sensorOffset": -0.5,
+          "weight": 0.775,
+          "rawMean": {
+            "A": 0.0073095955233205695,
+            "C": 0.015064199167934842,
+            "D": 0.013340986943217299
+          },
+          "weightedMean": {
+            "A": 0.005664936530573443,
+            "C": 0.011674754355149504,
+            "D": 0.010339264880993407
+          },
+          "rawDMinusC": {
+            "mean": -0.0017232122247175436,
+            "greater": 4,
+            "equal": 2,
+            "lower": 4
+          },
+          "weightedDMinusC": {
+            "mean": -0.001335489474156096,
+            "greater": 4,
+            "equal": 2,
+            "lower": 4
+          }
+        },
+        {
+          "sampleIndex": 2,
+          "sensorOffset": 0,
+          "weight": 1,
+          "rawMean": {
+            "A": 0,
+            "C": 0.00618243797519202,
+            "D": 0.006052647725915053
+          },
+          "weightedMean": {
+            "A": 0,
+            "C": 0.00618243797519202,
+            "D": 0.006052647725915053
+          },
+          "rawDMinusC": {
+            "mean": -0.0001297902492769675,
+            "greater": 4,
+            "equal": 0,
+            "lower": 6
+          },
+          "weightedDMinusC": {
+            "mean": -0.0001297902492769675,
+            "greater": 4,
+            "equal": 0,
+            "lower": 6
+          }
+        },
+        {
+          "sampleIndex": 3,
+          "sensorOffset": 0.5,
+          "weight": 0.775,
+          "rawMean": {
+            "A": 0.0073095955233206805,
+            "C": 0.015064199167934843,
+            "D": 0.013340986943217299
+          },
+          "weightedMean": {
+            "A": 0.005664936530573528,
+            "C": 0.011674754355149504,
+            "D": 0.010339264880993407
+          },
+          "rawDMinusC": {
+            "mean": -0.0017232122247175445,
+            "greater": 4,
+            "equal": 2,
+            "lower": 4
+          },
+          "weightedDMinusC": {
+            "mean": -0.0013354894741560972,
+            "greater": 4,
+            "equal": 2,
+            "lower": 4
+          }
+        },
+        {
+          "sampleIndex": 4,
+          "sensorOffset": 1,
+          "weight": 0.55,
+          "rawMean": {
+            "A": 0.012179929423027671,
+            "C": 0.012912859993593383,
+            "D": 0.011772971516081355
+          },
+          "weightedMean": {
+            "A": 0.0066989611826652196,
+            "C": 0.0071020729964763624,
+            "D": 0.0064751343338447466
+          },
+          "rawDMinusC": {
+            "mean": -0.001139888477512029,
+            "greater": 3,
+            "equal": 4,
+            "lower": 3
+          },
+          "weightedDMinusC": {
+            "mean": -0.0006269386626316157,
+            "greater": 3,
+            "equal": 4,
+            "lower": 3
+          }
+        }
+      ]
+    }
+  },
+  "savedRowValidation": {
+    "priorFocalRows": 184,
+    "analyzedFocalRows": 118,
+    "exactRawSampleValuesCompared": 8850,
+    "exactWeightedSampleValuesCompared": 8850,
+    "exactGeometryReadRecordsCompared": 2950,
+    "helperStageOutputsRecomputedPerArm": 1416
+  },
+  "interpretationBoundary": "Saved-data decomposition only. It locates the first target departure in existing stages; it does not isolate independent causal contributions of CIC representation, query geometry, weighting, or max."
+}
