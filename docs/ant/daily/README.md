@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-24 — QAKR reader-only counterfactual
+
+[Process log](./2026-10-24-ant-reader-qakr-counterfactual.md) · [Evidence package](../evidence/2026-10-24-ant-reader-qakr-counterfactual/README.md)
+
+- Kept all 24 qualified raster byte arrays fixed between bilinear C and one preregistered QAKR reader; revalidated all 238,392 C reads and saved sensor outputs exactly
+- QAKR slightly lowers raw MAE and a few wide winner failures, while local sign errors and phase sensitivity rise; straight false steering also grows
+- Decision: **MIXED / RESEARCH-ONLY**, not qualified for movement shadow; production bilinear retained and no second reader tested
+
 ### 2026-10-18 — Plate audio reassessment and live dense-mix plan
 
 [Process / next-pass plan](./2026-10-18-plate-audio-review-and-live-density-plan.md)

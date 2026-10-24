@@ -1,0 +1,142 @@
+{
+  "constants": {
+    "width": 96,
+    "height": 96,
+    "h": 0.010526315789473684,
+    "sigma": 0.00225,
+    "radius": 0.0045,
+    "z": 0.000027503796260271834,
+    "erfTerms": 24,
+    "readerOrder": 24
+  },
+  "quadrature": {
+    "candidateOrder": 24,
+    "convergenceProbes": [
+      {
+        "offsetCells": [
+          0,
+          0
+        ],
+        "order12": 1,
+        "order24": 1,
+        "order48": 1,
+        "diff12To24": 0,
+        "diff24To48": 0
+      },
+      {
+        "offsetCells": [
+          0.5,
+          0
+        ],
+        "order12": 0.49999999999938827,
+        "order24": 0.4999999999999999,
+        "order48": 0.4999999999999998,
+        "diff12To24": 6.116218642659987e-13,
+        "diff24To48": -1.1102230246251565e-16
+      },
+      {
+        "offsetCells": [
+          0.5,
+          0.5
+        ],
+        "order12": 0.24999999999969413,
+        "order24": 0.24999999999999994,
+        "order48": 0.2499999999999999,
+        "diff12To24": 3.0581093213299937e-13,
+        "diff24To48": -5.551115123125783e-17
+      },
+      {
+        "offsetCells": [
+          0.9275,
+          0
+        ],
+        "order12": 0,
+        "order24": 0,
+        "order48": 0,
+        "diff12To24": 0,
+        "diff24To48": 0
+      },
+      {
+        "offsetCells": [
+          0.7071067811865476,
+          0.7071067811865476
+        ],
+        "order12": 0.013842343661531564,
+        "order24": 0.013842343661531559,
+        "order48": 0.013842343661531559,
+        "diff12To24": -5.204170427930421e-18,
+        "diff24To48": 0
+      },
+      {
+        "offsetCells": [
+          0.1,
+          0.3
+        ],
+        "order12": 0.8526036064246684,
+        "order24": 0.8526036101931008,
+        "order48": 0.8526036101931003,
+        "diff12To24": 3.768432454975823e-9,
+        "diff24To48": -5.551115123125783e-16
+      }
+    ]
+  },
+  "finiteNonnegative": true,
+  "zeroRaster": {
+    "values": [
+      0,
+      0,
+      0
+    ],
+    "exactZero": true
+  },
+  "constantRaster": {
+    "input": 3.25,
+    "samples": [
+      {
+        "x": 0.5,
+        "y": 0.5,
+        "value": 3.2499999999999574
+      },
+      {
+        "x": 0.5038947368421053,
+        "y": 0.4977894736842105,
+        "value": 3.2499999999999853
+      },
+      {
+        "x": 0.001,
+        "y": 0.001,
+        "value": 3.249999999999999
+      },
+      {
+        "x": 0,
+        "y": 0.5,
+        "value": 3.249999999999943
+      },
+      {
+        "x": 1,
+        "y": 1,
+        "value": 3.25
+      }
+    ],
+    "interiorMaxAbsError": 4.263256414560601e-14,
+    "boundaryMaxAbsError": 5.684341886080802e-14
+  },
+  "symmetry": {
+    "rasterXReflectionResidual": 3.979039320256561e-13,
+    "rasterYReflectionResidual": 0,
+    "rasterRotation90Residual": 0,
+    "basis": {
+      "xReflectionResidual": -4.440892098500626e-16,
+      "yReflectionResidual": 0,
+      "rotation90Residual": -7.771561172376096e-16
+    }
+  },
+  "gridNode": {
+    "expected": 7,
+    "observed": 7,
+    "exact": true
+  },
+  "deterministicRepeat": true,
+  "rngCalls": 0,
+  "passed": true
+}
