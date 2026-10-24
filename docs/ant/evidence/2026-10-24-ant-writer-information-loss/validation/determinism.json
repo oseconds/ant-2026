@@ -1,0 +1,49 @@
+{
+  "schema": "ant-writer-information-loss-determinism-v1",
+  "baselineCommit": "8c60e4bba3bd5b476300e90a2936bfebd1f831c2",
+  "run1EqualsRun2": true,
+  "run1Run2Files": [
+    {
+      "Path": "computed/displacement-sweeps.json.gz",
+      "SHA256": "6b508789ff77f505a2535eadc2e83a82f8d9965c5e3ce0228802e3443e163f36",
+      "Bytes": 13563
+    },
+    {
+      "Path": "computed/route-local-windows.json.gz",
+      "SHA256": "c82dc7d91201723c0f0050e5e398bf59afc945075ad87caa5276857078ee47cf",
+      "Bytes": 239869
+    },
+    {
+      "Path": "computed/route-writes.json.gz",
+      "SHA256": "8133476037e73e190eec830b36475bf5b3bd22b319df469ca26dfa18d0b5a5e5",
+      "Bytes": 40037
+    },
+    {
+      "Path": "computed/single-dab-samples.json.gz",
+      "SHA256": "7a674ea1dcdadc2ad9939e9c36c7a417d2863cb3246296e57f1c7176e66c5a52",
+      "Bytes": 315250
+    },
+    {
+      "Path": "computed/summary.json",
+      "SHA256": "502d70f6e006802b81a4ccefa727539cd3e7dc81ebc3d690717372fafcfdb2cc",
+      "Bytes": 432793
+    },
+    {
+      "Path": "validation/source-and-raster-parity.json",
+      "SHA256": "fbf3a995249fcd2003d27c092b26fcb29f1b3ba5557153b0faed359c6393960a",
+      "Bytes": 1077
+    }
+  ],
+  "productionSourceHashes": {
+    "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+    "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+    "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04"
+  },
+  "runnerSha256": "a81f319e7d3a8d16876736ab75da861a106e9af7f9804f6545f57031e70ced8b",
+  "testSha256": "164acff2222ab03cf957725180dd758ed0eb5a0481e0d57cd8aa61bd8d36241a",
+  "focusedTests": {
+    "command": "node --experimental-test-isolation=none --test tests/ant-writer-information-loss.test.js tests/pheromone-field.test.js tests/ant-gaster-deposition.test.js tests/ant-gaster-integration.test.js tests/ant-controller.test.js",
+    "failed": 0,
+    "passed": 43
+  }
+}

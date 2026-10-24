@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-24 — Production pheromone writer information loss
+
+[Process log](./2026-10-24-ant-writer-information-loss.md) · [Evidence package](../evidence/2026-10-24-ant-writer-information-loss/README.md)
+
+- Exact production replays show the one-node writer maps many subcell positions, some short orientations, and two translated straight route pairs to identical Float32 rasters
+- Accepted dose is preserved in the uncapped assays while point first moment and local tangent detail are quantized before reader/sensor processing
+- Decision: one later moment-preserving writer-only candidate is justified for fixed-geometry qualification; no algorithm or movement claim selected
+
 ### 2026-10-18 — Plate audio reassessment and live dense-mix plan
 
 [Process / next-pass plan](./2026-10-18-plate-audio-review-and-live-density-plan.md)
