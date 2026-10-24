@@ -1,0 +1,79 @@
+{
+  "schema": "ant-316-gaussian-fixed-cue-validation/v1",
+  "baseline": {
+    "originMain": "8c60e4bba3bd5b476300e90a2936bfebd1f831c2",
+    "researchBranchPoint": "4a23ca73d13cd64e7e1afa6604d5b83d7f8dad57",
+    "branch": "codex/ant-316-gaussian-fixed-cue-qualification-20261024",
+    "preregistrationCommit": "10ba70e3e2dd5577f5598695710c0fdd908fd800"
+  },
+  "productionBoundary": {
+    "sourceModified": false,
+    "sourceDiffAgainstOriginMain": "clean",
+    "canonicalAntReadmeModified": false,
+    "sourceHashesMatchBaseline": true
+  },
+  "studyHelperBoundary": {
+    "gate2Helper": "scripts/ant-cic-writer-qualification.js",
+    "blobAtResearchBranchPoint": "6277f57debbbdaa185d2bb71d3fff5e365448155",
+    "blobAtCurrentHead": "6277f57debbbdaa185d2bb71d3fff5e365448155",
+    "unchangedSincePreregistration": true
+  },
+  "preOutcomeOrder": {
+    "savedCDEAndPriorCohortsVerifiedBeforeFConstruction": true,
+    "runnerFunction": "verifyFrozenControls",
+    "orderCorrection": "Applied after independent review; full fixed-cue regeneration reproduced identical scientific hashes."
+  },
+  "artifactLineEndings": {
+    "scopedAttributesAdded": true,
+    "textArtifacts": "LF",
+    "f32leAndGzipArtifacts": "binary"
+  },
+  "focusedValidation": {
+    "command": "node --test tests/ant-316-gaussian-fixed-cue-qualification.test.js",
+    "passed": 4,
+    "failed": 0,
+    "result": "PASS"
+  },
+  "fullValidation": {
+    "tests": {
+      "command": "npm test",
+      "passed": 362,
+      "failed": 0,
+      "skipped": 0,
+      "result": "PASS"
+    },
+    "build": {
+      "command": "npm run build",
+      "result": "PASS",
+      "warnings": [
+        "Rollup removed two unrecognized @__PURE__ comment annotations in node_modules/zod/v4.",
+        "Vite reported the existing app bundle exceeds 500 kB after minification."
+      ]
+    }
+  },
+  "frozenInputParity": {
+    "rows": 5544,
+    "localRawQueriesExact": 99792,
+    "wideRawQueriesExact": 138600,
+    "CDEGateMetricsAndSensorStagesExact": true,
+    "strictUniqueWideDenominator": 5072,
+    "wideErrors": { "C": 2378, "D": 2378, "E": 1017 }
+  },
+  "candidateF": {
+    "routePhaseRasters": 24,
+    "allRasterHashesMatchRepeatGeneration": true,
+    "RngCalls": 0,
+    "finiteAndNonnegative": true,
+    "decision": "MIXED / NOT QUALIFIED"
+  },
+  "independentReview": {
+    "status": "completed",
+    "scope": "fresh read-only review of preregistration, candidate runner, saved evidence, unchanged Gate 2 evaluator, and production PheromoneField semantics",
+    "result": "No blocking issue found. Reviewer confirmed the saved-control validation now precedes F construction, the fixed-cue result and Gate 2 failures are unchanged, and all 41 manifest entries match file size and SHA-256."
+  },
+  "limitations": [
+    "The frozen analytic field is an engineering reference, not biological ground truth.",
+    "The legacy node-sum dose convention does not establish physical chemical-mass units at 316 resolution.",
+    "No movement, natural run, or production adoption was evaluated."
+  ]
+}

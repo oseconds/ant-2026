@@ -1,0 +1,2391 @@
+{
+  "schema": "ant-316-gaussian-gate1/v1",
+  "status": "PASS",
+  "passed": true,
+  "candidate": {
+    "grid": [
+      316,
+      316
+    ],
+    "pitch": 0.0031746031746031746,
+    "radius": 0.0045,
+    "sigma": 0.00225,
+    "writer": "inherited production PheromoneField.depositPoint/depositBrush",
+    "reader": "inherited production bilinear sample"
+  },
+  "singleDab": {
+    "method": {
+      "latticePerAxis": 1001,
+      "pointCount": 1002001,
+      "cell": [
+        157,
+        157
+      ],
+      "amountPerPoint": 1,
+      "radius": 0.0045,
+      "sigma": 0.00225,
+      "equation": "exp(-distance^2/(2*sigma^2)); support distance <= radius; normalize included nodes"
+    },
+    "formulaParity": {
+      "comparisons": 6326216,
+      "nonExact": 0
+    },
+    "fallback": {
+      "testedPositions": 1002001,
+      "emptySupportCount": 0,
+      "theoreticalNearestNodeBound": 0.002244783432338246,
+      "radius": 0.0045
+    },
+    "supportNodeCount": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 89921,
+      "5": 43424,
+      "6": 332916,
+      "7": 534064,
+      "8": 1616,
+      "9": 60,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0
+    },
+    "maximumSourceToPositiveNodeDistance": 0.004499999720052648,
+    "minimumObservedRadiusMargin": 2.799473517584028e-10,
+    "maximumAbsoluteStoredDoseResidual": 4.470348358154297e-8,
+    "distributions": {
+      "support": {
+        "count": 1002001,
+        "mean": 6.313582521374729,
+        "min": 4,
+        "p50": 7,
+        "p90": 7,
+        "max": 9
+      },
+      "storedDoseResidual": {
+        "count": 1002001,
+        "mean": 2.0537408254785788e-11,
+        "min": -4.470348358154297e-8,
+        "p50": 0,
+        "p90": 1.4901161193847656e-8,
+        "max": 4.470348358154297e-8
+      },
+      "centroidError": {
+        "count": 1002001,
+        "mean": 0.0001227726669653687,
+        "min": 0,
+        "p50": 0.00011785333265700857,
+        "p90": 0.00020816620848657604,
+        "max": 0.0003106341845862115
+      },
+      "centroidErrorX": {
+        "count": 1002001,
+        "mean": 4.2547426744689885e-19,
+        "min": -0.0003106341845861005,
+        "p50": 0,
+        "p90": 0.00012462998666995517,
+        "max": 0.0003106341845862115
+      },
+      "centroidErrorY": {
+        "count": 1002001,
+        "mean": 8.809754949141388e-19,
+        "min": -0.0003106341845861005,
+        "p50": 0,
+        "p90": 0.00012462998666995517,
+        "max": 0.000310634184586156
+      },
+      "sourceReadValue": {
+        "count": 1002001,
+        "mean": 0.2719668608941493,
+        "min": 0.23650309076657874,
+        "p50": 0.2657879630761145,
+        "p90": 0.30680217952057676,
+        "max": 0.3619298964738856
+      },
+      "peakValue": {
+        "count": 1002001,
+        "mean": 0.3116126411053599,
+        "min": 0.25,
+        "p50": 0.30687829852104187,
+        "p90": 0.34568527340888977,
+        "max": 0.37423765659332275
+      },
+      "peakOffsetMin": {
+        "count": 1002001,
+        "mean": 0.0012137558833486928,
+        "min": 0,
+        "p50": 0.0012657871792562906,
+        "p90": 0.0017693934944980985,
+        "max": 0.0022447834323382383
+      },
+      "peakOffsetMax": {
+        "count": 1002001,
+        "mean": 0.0012137558833486928,
+        "min": 0,
+        "p50": 0.0012657871792562906,
+        "p90": 0.0017693934944980985,
+        "max": 0.0022447834323382383
+      },
+      "secondMomentTrace": {
+        "count": 1002001,
+        "mean": 0.000006922783621503682,
+        "min": 0.000005039052658100241,
+        "p50": 0.000007379964395403074,
+        "p90": 0.000007471360665945805,
+        "max": 0.00000856668320192315
+      },
+      "anisotropy": {
+        "count": 1002001,
+        "mean": 0.11987268383536595,
+        "min": 0,
+        "p50": 0.08493918654685882,
+        "p90": 0.2543333166851494,
+        "max": 0.25927525078250113
+      },
+      "maxNodeDistance": {
+        "count": 1002001,
+        "mean": 0.004096589445927928,
+        "min": 0.0022447834323382383,
+        "p50": 0.0042749659457402365,
+        "p90": 0.004462523320554798,
+        "max": 0.004499999720052648
+      }
+    },
+    "namedSubcellPhases": {
+      "p00": {
+        "source": {
+          "x": 0.4984126984126984,
+          "y": 0.4984126984126984,
+          "fractionX": 0,
+          "fractionY": 0
+        },
+        "supportNodes": 9,
+        "sourceReadValue": 0.3306082487106323,
+        "peakValue": 0.3306082487106323,
+        "peakOffsetRange": [
+          0,
+          0
+        ],
+        "centroidError": 5.551115123125783e-17,
+        "secondMomentTrace": 0.00000856668320192315,
+        "anisotropy": 0,
+        "maximumNodeDistance": 0.004489566864676477,
+        "storedDoseResidual": 0
+      },
+      "p10": {
+        "source": {
+          "x": 0.5,
+          "y": 0.4984126984126984,
+          "fractionX": 0.5,
+          "fractionY": 0
+        },
+        "supportNodes": 6,
+        "sourceReadValue": 0.2874927222728729,
+        "peakValue": 0.2874927222728729,
+        "peakOffsetRange": [
+          0.0015873015873015817,
+          0.0015873015873015817
+        ],
+        "centroidError": 0,
+        "secondMomentTrace": 0.0000068028679525336396,
+        "anisotropy": 0.25927525078250113,
+        "maximumNodeDistance": 0.003549314249999654,
+        "storedDoseResidual": 2.9802322387695312e-8
+      },
+      "p01": {
+        "source": {
+          "x": 0.4984126984126984,
+          "y": 0.5,
+          "fractionX": 0,
+          "fractionY": 0.5
+        },
+        "supportNodes": 6,
+        "sourceReadValue": 0.2874927222728729,
+        "peakValue": 0.2874927222728729,
+        "peakOffsetRange": [
+          0.0015873015873015817,
+          0.0015873015873015817
+        ],
+        "centroidError": 0,
+        "secondMomentTrace": 0.0000068028679525336396,
+        "anisotropy": 0.25927525078250113,
+        "maximumNodeDistance": 0.003549314249999654,
+        "storedDoseResidual": 2.9802322387695312e-8
+      },
+      "p11": {
+        "source": {
+          "x": 0.5,
+          "y": 0.5,
+          "fractionX": 0.5,
+          "fractionY": 0.5
+        },
+        "supportNodes": 4,
+        "sourceReadValue": 0.25,
+        "peakValue": 0.25,
+        "peakOffsetRange": [
+          0.0022447834323382383,
+          0.0022447834323382383
+        ],
+        "centroidError": 0,
+        "secondMomentTrace": 0.000005039052658100241,
+        "anisotropy": 0,
+        "maximumNodeDistance": 0.0022447834323382383,
+        "storedDoseResidual": 0
+      }
+    }
+  },
+  "doseAndCentroid": {
+    "doseLevels": [
+      0.000001,
+      0.027,
+      1
+    ],
+    "phases": [
+      "p00",
+      "p10",
+      "p01",
+      "p11"
+    ],
+    "writes": 49152,
+    "storedDoseResidual": {
+      "count": 49152,
+      "mean": -3.1982428709068137e-10,
+      "min": -2.9802322387695312e-8,
+      "p50": 0,
+      "p90": 7.450580596923828e-9,
+      "max": 2.9802322387695312e-8
+    },
+    "centroidError": {
+      "count": 49152,
+      "mean": 0.00012273154474131767,
+      "min": 0.0000011970120397808956,
+      "p50": 0.00011792962378562564,
+      "p90": 0.00020833366044835627,
+      "max": 0.00029389067065288386
+    },
+    "positiveNodeVisitsByPhase": {
+      "p00": 77592,
+      "p10": 77592,
+      "p01": 77592,
+      "p11": 77592
+    },
+    "maxSourceToNodeDistance": 0.004499010670970954,
+    "maximumDerivedBoundRatio": 0.5798559909881785,
+    "pass": true
+  },
+  "boundary": {
+    "cases": [
+      {
+        "name": "corner00",
+        "source": {
+          "x": 0,
+          "y": 0
+        },
+        "accepted": 1,
+        "expectedSupport": 4,
+        "storedDose": 0.9999999850988388,
+        "capNodes": 0,
+        "centroid": {
+          "x": 0.0008566762374437525,
+          "y": 0.0008566762374437525
+        },
+        "centroidError": 0.0012115231535557087
+      },
+      {
+        "name": "corner10",
+        "source": {
+          "x": 1,
+          "y": 0
+        },
+        "accepted": 1,
+        "expectedSupport": 4,
+        "storedDose": 0.9999999850988388,
+        "capNodes": 0,
+        "centroid": {
+          "x": 0.9991433237625563,
+          "y": 0.0008566762374437525
+        },
+        "centroidError": 0.001211523153555655
+      },
+      {
+        "name": "corner01",
+        "source": {
+          "x": 0,
+          "y": 1
+        },
+        "accepted": 1,
+        "expectedSupport": 4,
+        "storedDose": 0.9999999850988388,
+        "capNodes": 0,
+        "centroid": {
+          "x": 0.0008566762374437525,
+          "y": 0.9991433237625563
+        },
+        "centroidError": 0.001211523153555655
+      },
+      {
+        "name": "corner11",
+        "source": {
+          "x": 1,
+          "y": 1
+        },
+        "accepted": 1,
+        "expectedSupport": 4,
+        "storedDose": 0.9999999850988388,
+        "capNodes": 0,
+        "centroid": {
+          "x": 0.9991433237625563,
+          "y": 0.9991433237625563
+        },
+        "centroidError": 0.0012115231535556013
+      },
+      {
+        "name": "edgeTop",
+        "source": {
+          "x": 0.5,
+          "y": 0
+        },
+        "accepted": 1,
+        "expectedSupport": 4,
+        "storedDose": 1.0000000298023224,
+        "capNodes": 0,
+        "centroid": {
+          "x": 0.5,
+          "y": 0.0008566762464526136
+        },
+        "centroidError": 0.0008566762464526136
+      },
+      {
+        "name": "edgeBottom",
+        "source": {
+          "x": 0.5,
+          "y": 1
+        },
+        "accepted": 1,
+        "expectedSupport": 4,
+        "storedDose": 1.0000000298023224,
+        "capNodes": 0,
+        "centroid": {
+          "x": 0.5,
+          "y": 0.9991433237535474
+        },
+        "centroidError": 0.0008566762464525812
+      },
+      {
+        "name": "edgeLeft",
+        "source": {
+          "x": 0,
+          "y": 0.5
+        },
+        "accepted": 1,
+        "expectedSupport": 4,
+        "storedDose": 1.0000000298023224,
+        "capNodes": 0,
+        "centroid": {
+          "x": 0.0008566762464526136,
+          "y": 0.5
+        },
+        "centroidError": 0.0008566762464526136
+      },
+      {
+        "name": "edgeRight",
+        "source": {
+          "x": 1,
+          "y": 0.5
+        },
+        "accepted": 1,
+        "expectedSupport": 4,
+        "storedDose": 1.0000000298023224,
+        "capNodes": 0,
+        "centroid": {
+          "x": 0.9991433237535474,
+          "y": 0.5
+        },
+        "centroidError": 0.0008566762464525812
+      },
+      {
+        "name": "nearCorner00",
+        "source": {
+          "x": 9.313225746154785e-10,
+          "y": 9.313225746154785e-10
+        },
+        "accepted": 1,
+        "expectedSupport": 4,
+        "storedDose": 0.9999999925494194,
+        "capNodes": 0,
+        "centroid": {
+          "x": 0.0008566766331558459,
+          "y": 0.0008566766331558459
+        },
+        "centroidError": 0.001211522396088102
+      },
+      {
+        "name": "nearCorner10",
+        "source": {
+          "x": 0.9999999990686774,
+          "y": 9.313225746154785e-10
+        },
+        "accepted": 1,
+        "expectedSupport": 4,
+        "storedDose": 0.9999999925494194,
+        "capNodes": 0,
+        "centroid": {
+          "x": 0.9991433233668442,
+          "y": 0.0008566766331558459
+        },
+        "centroidError": 0.0012115223960880738
+      },
+      {
+        "name": "nearCorner01",
+        "source": {
+          "x": 9.313225746154785e-10,
+          "y": 0.9999999990686774
+        },
+        "accepted": 1,
+        "expectedSupport": 4,
+        "storedDose": 0.9999999925494194,
+        "capNodes": 0,
+        "centroid": {
+          "x": 0.0008566766331558459,
+          "y": 0.9991433233668442
+        },
+        "centroidError": 0.0012115223960880738
+      },
+      {
+        "name": "nearCorner11",
+        "source": {
+          "x": 0.9999999990686774,
+          "y": 0.9999999990686774
+        },
+        "accepted": 1,
+        "expectedSupport": 4,
+        "storedDose": 0.9999999925494194,
+        "capNodes": 0,
+        "centroid": {
+          "x": 0.9991433233668442,
+          "y": 0.9991433233668442
+        },
+        "centroidError": 0.0012115223960880459
+      }
+    ],
+    "outside": {
+      "accepted": 0,
+      "unchanged": true
+    },
+    "claim": "boundary dose/moment is measured; interior guarantee is not extended to clipping"
+  },
+  "frozenStreams": {
+    "count": 24,
+    "totalWrites": 1848,
+    "arms": [
+      {
+        "id": "straight|p00",
+        "writeCount": 77,
+        "nodeStoreComparisons": 410,
+        "supportNodeCountPerWrite": {
+          "4": 26,
+          "6": 51
+        },
+        "maxSourceToActiveNodeDistance": 0.00448102856853183,
+        "requestedDose": 2.069999999999996,
+        "acceptedDose": 2.069999999999996,
+        "storedNodeSum": 2.0700000040233135,
+        "storedMinusAccepted": 4.023317679013871e-9,
+        "derivedUncappedFloat32Bound": 1.47992747520642e-7,
+        "capLossNotRedistributed": false,
+        "cappedNodes": 0,
+        "peak": 0.008575384505093098,
+        "activeNodes": 290,
+        "centroid": {
+          "x": 0.4629985895842713,
+          "y": 0.5000000000000001
+        },
+        "requestedDoseCentroid": {
+          "x": 0.46299130434782665,
+          "y": 0.5
+        },
+        "centroidErrorFromPhysicalSource": 0.000007285236444665166,
+        "raster": {
+          "file": "docs/ant/evidence/2026-10-24-cic-316-gaussian-fixed-cue-qualification/gate1/rasters/straight-p00.f32le",
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "5424211ff159a91ff2567ead84ab1196df07f8d40f16b3cb9355cfb327392b10",
+          "mass": 2.0700000040233135,
+          "peak": 0.008575384505093098,
+          "supportNodes": 290,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.4629985895842713,
+            "y": 0.5000000000000001
+          }
+        }
+      },
+      {
+        "id": "straight|p10",
+        "writeCount": 77,
+        "nodeStoreComparisons": 412,
+        "supportNodeCountPerWrite": {
+          "4": 25,
+          "6": 52
+        },
+        "maxSourceToActiveNodeDistance": 0.0044872792144009434,
+        "requestedDose": 2.069999999999996,
+        "acceptedDose": 2.069999999999996,
+        "storedNodeSum": 2.0699999942444265,
+        "storedMinusAccepted": -5.755569354448653e-9,
+        "derivedUncappedFloat32Bound": 1.4738779872125444e-7,
+        "capLossNotRedistributed": false,
+        "cappedNodes": 0,
+        "peak": 0.009242654778063297,
+        "activeNodes": 292,
+        "centroid": {
+          "x": 0.46826583673116307,
+          "y": 0.4999999999999998
+        },
+        "requestedDoseCentroid": {
+          "x": 0.4682544622425634,
+          "y": 0.5
+        },
+        "centroidErrorFromPhysicalSource": 0.000011374488599669164,
+        "raster": {
+          "file": "docs/ant/evidence/2026-10-24-cic-316-gaussian-fixed-cue-qualification/gate1/rasters/straight-p10.f32le",
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "c38049fe6a83c25d6c4e5e29428d37176ef13d8f2c2e6a591d041585f2ad21a8",
+          "mass": 2.0699999942444265,
+          "peak": 0.009242654778063297,
+          "supportNodes": 292,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.46826583673116307,
+            "y": 0.4999999999999998
+          }
+        }
+      },
+      {
+        "id": "straight|p01",
+        "writeCount": 77,
+        "nodeStoreComparisons": 518,
+        "supportNodeCountPerWrite": {
+          "6": 21,
+          "7": 56
+        },
+        "maxSourceToActiveNodeDistance": 0.004499367301607241,
+        "requestedDose": 2.069999999999996,
+        "acceptedDose": 2.069999999999996,
+        "storedNodeSum": 2.0700000011129305,
+        "storedMinusAccepted": 1.112934633340501e-9,
+        "derivedUncappedFloat32Bound": 1.4508434229565357e-7,
+        "capLossNotRedistributed": false,
+        "cappedNodes": 0,
+        "peak": 0.010298565030097961,
+        "activeNodes": 416,
+        "centroid": {
+          "x": 0.46298939107169634,
+          "y": 0.5052546065976568
+        },
+        "requestedDoseCentroid": {
+          "x": 0.46299130434782665,
+          "y": 0.5052631578947375
+        },
+        "centroidErrorFromPhysicalSource": 0.000008762722597139485,
+        "raster": {
+          "file": "docs/ant/evidence/2026-10-24-cic-316-gaussian-fixed-cue-qualification/gate1/rasters/straight-p01.f32le",
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "612626964160d8cc8f5ac133de9efae9a8814882c33a296f43d988ca1b310623",
+          "mass": 2.0700000011129305,
+          "peak": 0.010298565030097961,
+          "supportNodes": 416,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.46298939107169634,
+            "y": 0.5052546065976568
+          }
+        }
+      },
+      {
+        "id": "straight|p11",
+        "writeCount": 77,
+        "nodeStoreComparisons": 518,
+        "supportNodeCountPerWrite": {
+          "6": 21,
+          "7": 56
+        },
+        "maxSourceToActiveNodeDistance": 0.004497526923747294,
+        "requestedDose": 2.069999999999996,
+        "acceptedDose": 2.069999999999996,
+        "storedNodeSum": 2.070000003790483,
+        "storedMinusAccepted": 3.790487035360002e-9,
+        "derivedUncappedFloat32Bound": 1.4516180474877227e-7,
+        "capLossNotRedistributed": false,
+        "cappedNodes": 0,
+        "peak": 0.011021476238965988,
+        "activeNodes": 415,
+        "centroid": {
+          "x": 0.4682461908990323,
+          "y": 0.5052586636264326
+        },
+        "requestedDoseCentroid": {
+          "x": 0.4682544622425634,
+          "y": 0.5052631578947375
+        },
+        "centroidErrorFromPhysicalSource": 0.000009413478177928702,
+        "raster": {
+          "file": "docs/ant/evidence/2026-10-24-cic-316-gaussian-fixed-cue-qualification/gate1/rasters/straight-p11.f32le",
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "ab567837e2c43164b79d1ce701f0ca3266aa5169c6aadfda3efecb6d37e95cf1",
+          "mass": 2.070000003790483,
+          "peak": 0.011021476238965988,
+          "supportNodes": 415,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.4682461908990323,
+            "y": 0.5052586636264326
+          }
+        }
+      },
+      {
+        "id": "gentle|p00",
+        "writeCount": 77,
+        "nodeStoreComparisons": 475,
+        "supportNodeCountPerWrite": {
+          "4": 7,
+          "5": 7,
+          "6": 29,
+          "7": 34
+        },
+        "maxSourceToActiveNodeDistance": 0.004491784117325818,
+        "requestedDose": 2.069994480004414,
+        "acceptedDose": 2.069994480004414,
+        "storedNodeSum": 2.069994477322325,
+        "storedMinusAccepted": -2.682088773298119e-9,
+        "derivedUncappedFloat32Bound": 1.440418807382137e-7,
+        "capLossNotRedistributed": false,
+        "cappedNodes": 0,
+        "peak": 0.011564154177904129,
+        "activeNodes": 374,
+        "centroid": {
+          "x": 0.44442471821679513,
+          "y": 0.555502309709965
+        },
+        "requestedDoseCentroid": {
+          "x": 0.44442744637828113,
+          "y": 0.5555021533915373
+        },
+        "centroidErrorFromPhysicalSource": 0.0000027326361895627765,
+        "raster": {
+          "file": "docs/ant/evidence/2026-10-24-cic-316-gaussian-fixed-cue-qualification/gate1/rasters/gentle-p00.f32le",
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "954e88c3d39093147183fa3c573387d0e7857d2f5314fa6f6dfa100a9d857aa9",
+          "mass": 2.069994477322325,
+          "peak": 0.011564154177904129,
+          "supportNodes": 374,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.44442471821679513,
+            "y": 0.555502309709965
+          }
+        }
+      },
+      {
+        "id": "gentle|p10",
+        "writeCount": 77,
+        "nodeStoreComparisons": 481,
+        "supportNodeCountPerWrite": {
+          "4": 7,
+          "5": 4,
+          "6": 29,
+          "7": 37
+        },
+        "maxSourceToActiveNodeDistance": 0.004498502145804957,
+        "requestedDose": 2.069994480004414,
+        "acceptedDose": 2.069994480004414,
+        "storedNodeSum": 2.069994483375922,
+        "storedMinusAccepted": 3.3715079617024912e-9,
+        "derivedUncappedFloat32Bound": 1.45355091729552e-7,
+        "capLossNotRedistributed": false,
+        "cappedNodes": 0,
+        "peak": 0.011506169103085995,
+        "activeNodes": 377,
+        "centroid": {
+          "x": 0.44967618514946545,
+          "y": 0.5554842040531156
+        },
+        "requestedDoseCentroid": {
+          "x": 0.44969060427301816,
+          "y": 0.5555021533915373
+        },
+        "centroidErrorFromPhysicalSource": 0.000023023680718011862,
+        "raster": {
+          "file": "docs/ant/evidence/2026-10-24-cic-316-gaussian-fixed-cue-qualification/gate1/rasters/gentle-p10.f32le",
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "5e81d39cc76efb26821c1c02bc7dfefe070065cbb5f151a9a2af16380e2db45f",
+          "mass": 2.069994483375922,
+          "peak": 0.011506169103085995,
+          "supportNodes": 377,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.44967618514946545,
+            "y": 0.5554842040531156
+          }
+        }
+      },
+      {
+        "id": "gentle|p01",
+        "writeCount": 77,
+        "nodeStoreComparisons": 494,
+        "supportNodeCountPerWrite": {
+          "4": 6,
+          "5": 1,
+          "6": 25,
+          "7": 45
+        },
+        "maxSourceToActiveNodeDistance": 0.004498151717481245,
+        "requestedDose": 2.069994480004414,
+        "acceptedDose": 2.069994480004414,
+        "storedNodeSum": 2.0699944775551558,
+        "storedMinusAccepted": -2.4492581296442495e-9,
+        "derivedUncappedFloat32Bound": 1.4634877257549205e-7,
+        "capLossNotRedistributed": false,
+        "cappedNodes": 0,
+        "peak": 0.010285425931215286,
+        "activeNodes": 382,
+        "centroid": {
+          "x": 0.44441432486087845,
+          "y": 0.5607651680475839
+        },
+        "requestedDoseCentroid": {
+          "x": 0.44442744637828113,
+          "y": 0.5607653112862739
+        },
+        "centroidErrorFromPhysicalSource": 0.000013122299199118315,
+        "raster": {
+          "file": "docs/ant/evidence/2026-10-24-cic-316-gaussian-fixed-cue-qualification/gate1/rasters/gentle-p01.f32le",
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "24ac943921b4c57153de5d99bf06aa1e12deb617e35031a3ea2fa3bf297fba26",
+          "mass": 2.0699944775551558,
+          "peak": 0.010285425931215286,
+          "supportNodes": 382,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.44441432486087845,
+            "y": 0.5607651680475839
+          }
+        }
+      },
+      {
+        "id": "gentle|p11",
+        "writeCount": 77,
+        "nodeStoreComparisons": 487,
+        "supportNodeCountPerWrite": {
+          "4": 9,
+          "5": 1,
+          "6": 23,
+          "7": 44
+        },
+        "maxSourceToActiveNodeDistance": 0.00449013980172311,
+        "requestedDose": 2.069994480004414,
+        "acceptedDose": 2.069994480004414,
+        "storedNodeSum": 2.0699944789521396,
+        "storedMinusAccepted": -1.0522742677210317e-9,
+        "derivedUncappedFloat32Bound": 1.4632496106023235e-7,
+        "capLossNotRedistributed": false,
+        "cappedNodes": 0,
+        "peak": 0.00995626486837864,
+        "activeNodes": 377,
+        "centroid": {
+          "x": 0.44968213121016043,
+          "y": 0.5607912529651339
+        },
+        "requestedDoseCentroid": {
+          "x": 0.44969060427301816,
+          "y": 0.5607653112862739
+        },
+        "centroidErrorFromPhysicalSource": 0.000027290355370778348,
+        "raster": {
+          "file": "docs/ant/evidence/2026-10-24-cic-316-gaussian-fixed-cue-qualification/gate1/rasters/gentle-p11.f32le",
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "922b3337ae453a873783949008f37114d11f79ed2fd5d0cd649782daf4bc1cc1",
+          "mass": 2.0699944789521396,
+          "peak": 0.00995626486837864,
+          "supportNodes": 377,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.44968213121016043,
+            "y": 0.5607912529651339
+          }
+        }
+      },
+      {
+        "id": "tight|p00",
+        "writeCount": 77,
+        "nodeStoreComparisons": 475,
+        "supportNodeCountPerWrite": {
+          "4": 11,
+          "6": 31,
+          "7": 35
+        },
+        "maxSourceToActiveNodeDistance": 0.0044983683171343665,
+        "requestedDose": 2.069965500172497,
+        "acceptedDose": 2.069965500172497,
+        "storedNodeSum": 2.0699655013158917,
+        "storedMinusAccepted": 1.1433947122441168e-9,
+        "derivedUncappedFloat32Bound": 1.4532953900350586e-7,
+        "capLossNotRedistributed": false,
+        "cappedNodes": 0,
+        "peak": 0.010563334450125694,
+        "activeNodes": 373,
+        "centroid": {
+          "x": 0.3793537780057774,
+          "y": 0.5861601662903305
+        },
+        "requestedDoseCentroid": {
+          "x": 0.37933563967212397,
+          "y": 0.5861669794311024
+        },
+        "centroidErrorFromPhysicalSource": 0.00001937570733937347,
+        "raster": {
+          "file": "docs/ant/evidence/2026-10-24-cic-316-gaussian-fixed-cue-qualification/gate1/rasters/tight-p00.f32le",
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "2f103ab3bc793cfb6eb752dbbd646fabba4d3d5a2b0fa90e6f579c7aa3ec7a3e",
+          "mass": 2.0699655013158917,
+          "peak": 0.010563334450125694,
+          "supportNodes": 373,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.3793537780057774,
+            "y": 0.5861601662903305
+          }
+        }
+      },
+      {
+        "id": "tight|p10",
+        "writeCount": 77,
+        "nodeStoreComparisons": 486,
+        "supportNodeCountPerWrite": {
+          "4": 7,
+          "5": 1,
+          "6": 30,
+          "7": 39
+        },
+        "maxSourceToActiveNodeDistance": 0.004493143175958514,
+        "requestedDose": 2.069965500172497,
+        "acceptedDose": 2.069965500172497,
+        "storedNodeSum": 2.069965501781553,
+        "storedMinusAccepted": 1.609055999551856e-9,
+        "derivedUncappedFloat32Bound": 1.456861321682246e-7,
+        "capLossNotRedistributed": false,
+        "cappedNodes": 0,
+        "peak": 0.010248891077935696,
+        "activeNodes": 375,
+        "centroid": {
+          "x": 0.38462478784785487,
+          "y": 0.5861896203065484
+        },
+        "requestedDoseCentroid": {
+          "x": 0.38459879756686094,
+          "y": 0.5861669794311024
+        },
+        "centroidErrorFromPhysicalSource": 0.0000344688837519443,
+        "raster": {
+          "file": "docs/ant/evidence/2026-10-24-cic-316-gaussian-fixed-cue-qualification/gate1/rasters/tight-p10.f32le",
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "4388b4e439171e0543fe1874027a045b99f56fbbc4bdaf3fcf7c1502d430255c",
+          "mass": 2.069965501781553,
+          "peak": 0.010248891077935696,
+          "supportNodes": 375,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.38462478784785487,
+            "y": 0.5861896203065484
+          }
+        }
+      },
+      {
+        "id": "tight|p01",
+        "writeCount": 77,
+        "nodeStoreComparisons": 481,
+        "supportNodeCountPerWrite": {
+          "4": 11,
+          "5": 2,
+          "6": 22,
+          "7": 41,
+          "8": 1
+        },
+        "maxSourceToActiveNodeDistance": 0.004499140126987324,
+        "requestedDose": 2.069965500172497,
+        "acceptedDose": 2.069965500172497,
+        "storedNodeSum": 2.0699654968921095,
+        "storedMinusAccepted": -3.280387517179406e-9,
+        "derivedUncappedFloat32Bound": 1.4588215067520628e-7,
+        "capLossNotRedistributed": false,
+        "cappedNodes": 0,
+        "peak": 0.011254603043198586,
+        "activeNodes": 376,
+        "centroid": {
+          "x": 0.3793348843587528,
+          "y": 0.5914113824147422
+        },
+        "requestedDoseCentroid": {
+          "x": 0.37933563967212397,
+          "y": 0.5914301373258393
+        },
+        "centroidErrorFromPhysicalSource": 0.000018770114239039454,
+        "raster": {
+          "file": "docs/ant/evidence/2026-10-24-cic-316-gaussian-fixed-cue-qualification/gate1/rasters/tight-p01.f32le",
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "235d3c402c25a0652be5ff7919e153d705ccc6a5cc6149802425f2422b52df29",
+          "mass": 2.0699654968921095,
+          "peak": 0.011254603043198586,
+          "supportNodes": 376,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.3793348843587528,
+            "y": 0.5914113824147422
+          }
+        }
+      },
+      {
+        "id": "tight|p11",
+        "writeCount": 77,
+        "nodeStoreComparisons": 487,
+        "supportNodeCountPerWrite": {
+          "4": 5,
+          "5": 4,
+          "6": 29,
+          "7": 39
+        },
+        "maxSourceToActiveNodeDistance": 0.004498289199709747,
+        "requestedDose": 2.069965500172497,
+        "acceptedDose": 2.069965500172497,
+        "storedNodeSum": 2.0699655003263615,
+        "storedMinusAccepted": 1.538644767151709e-10,
+        "derivedUncappedFloat32Bound": 1.4603016331207542e-7,
+        "capLossNotRedistributed": false,
+        "cappedNodes": 0,
+        "peak": 0.009737102314829826,
+        "activeNodes": 378,
+        "centroid": {
+          "x": 0.38457156240659685,
+          "y": 0.5914310589378143
+        },
+        "requestedDoseCentroid": {
+          "x": 0.38459879756686094,
+          "y": 0.5914301373258393
+        },
+        "centroidErrorFromPhysicalSource": 0.00002725074904004441,
+        "raster": {
+          "file": "docs/ant/evidence/2026-10-24-cic-316-gaussian-fixed-cue-qualification/gate1/rasters/tight-p11.f32le",
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "3b8c11eccd1b346a98dc78e9365638c61d8c1b5b17a968b30ca6f1b8301d6d8b",
+          "mass": 2.0699655003263615,
+          "peak": 0.009737102314829826,
+          "supportNodes": 378,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.38457156240659685,
+            "y": 0.5914310589378143
+          }
+        }
+      },
+      {
+        "id": "gentleMirror|p00",
+        "writeCount": 77,
+        "nodeStoreComparisons": 475,
+        "supportNodeCountPerWrite": {
+          "4": 7,
+          "5": 7,
+          "6": 29,
+          "7": 34
+        },
+        "maxSourceToActiveNodeDistance": 0.004491784117325818,
+        "requestedDose": 2.069994480004414,
+        "acceptedDose": 2.069994480004414,
+        "storedNodeSum": 2.069994477322325,
+        "storedMinusAccepted": -2.682088773298119e-9,
+        "derivedUncappedFloat32Bound": 1.4404188073821378e-7,
+        "capLossNotRedistributed": false,
+        "cappedNodes": 0,
+        "peak": 0.011564154177904129,
+        "activeNodes": 374,
+        "centroid": {
+          "x": 0.44442471821679463,
+          "y": 0.4444976902900349
+        },
+        "requestedDoseCentroid": {
+          "x": 0.44442744637828113,
+          "y": 0.444497846608464
+        },
+        "centroidErrorFromPhysicalSource": 0.000002732636190144121,
+        "raster": {
+          "file": "docs/ant/evidence/2026-10-24-cic-316-gaussian-fixed-cue-qualification/gate1/rasters/gentleMirror-p00.f32le",
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "9408532f62a3503c8d9175e2cce844eac03b0b0d8a0af1442bc98bfa90d67b7f",
+          "mass": 2.069994477322325,
+          "peak": 0.011564154177904129,
+          "supportNodes": 374,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.44442471821679463,
+            "y": 0.4444976902900349
+          }
+        }
+      },
+      {
+        "id": "gentleMirror|p10",
+        "writeCount": 77,
+        "nodeStoreComparisons": 481,
+        "supportNodeCountPerWrite": {
+          "4": 7,
+          "5": 4,
+          "6": 29,
+          "7": 37
+        },
+        "maxSourceToActiveNodeDistance": 0.004498502145804957,
+        "requestedDose": 2.069994480004414,
+        "acceptedDose": 2.069994480004414,
+        "storedNodeSum": 2.069994483375922,
+        "storedMinusAccepted": 3.3715079617024912e-9,
+        "derivedUncappedFloat32Bound": 1.4535509172955205e-7,
+        "capLossNotRedistributed": false,
+        "cappedNodes": 0,
+        "peak": 0.011506169103085995,
+        "activeNodes": 377,
+        "centroid": {
+          "x": 0.4496761851494652,
+          "y": 0.4445157959468847
+        },
+        "requestedDoseCentroid": {
+          "x": 0.4496906042730181,
+          "y": 0.444497846608464
+        },
+        "centroidErrorFromPhysicalSource": 0.00002302368071733718,
+        "raster": {
+          "file": "docs/ant/evidence/2026-10-24-cic-316-gaussian-fixed-cue-qualification/gate1/rasters/gentleMirror-p10.f32le",
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "428d0fa98ed93dd79565ddd9217a67ebc1745b5a87125de485bfbe81b6910941",
+          "mass": 2.069994483375922,
+          "peak": 0.011506169103085995,
+          "supportNodes": 377,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.4496761851494652,
+            "y": 0.4445157959468847
+          }
+        }
+      },
+      {
+        "id": "gentleMirror|p01",
+        "writeCount": 77,
+        "nodeStoreComparisons": 486,
+        "supportNodeCountPerWrite": {
+          "4": 4,
+          "5": 5,
+          "6": 31,
+          "7": 37
+        },
+        "maxSourceToActiveNodeDistance": 0.004496863236307449,
+        "requestedDose": 2.069994480004414,
+        "acceptedDose": 2.069994480004414,
+        "storedNodeSum": 2.0699944796506315,
+        "storedMinusAccepted": -3.5378233675942283e-10,
+        "derivedUncappedFloat32Bound": 1.4591498840718412e-7,
+        "capLossNotRedistributed": false,
+        "cappedNodes": 0,
+        "peak": 0.011228776536881924,
+        "activeNodes": 379,
+        "centroid": {
+          "x": 0.44442567741003336,
+          "y": 0.44977365520244084
+        },
+        "requestedDoseCentroid": {
+          "x": 0.44442744637828113,
+          "y": 0.4497610045032009
+        },
+        "centroidErrorFromPhysicalSource": 0.000012773779390658643,
+        "raster": {
+          "file": "docs/ant/evidence/2026-10-24-cic-316-gaussian-fixed-cue-qualification/gate1/rasters/gentleMirror-p01.f32le",
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "8babf5c9ce87f81e418552a64e59d4f6913d7f9dfb942957bc939e59345da939",
+          "mass": 2.0699944796506315,
+          "peak": 0.011228776536881924,
+          "supportNodes": 379,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.44442567741003336,
+            "y": 0.44977365520244084
+          }
+        }
+      },
+      {
+        "id": "gentleMirror|p11",
+        "writeCount": 77,
+        "nodeStoreComparisons": 482,
+        "supportNodeCountPerWrite": {
+          "4": 11,
+          "5": 3,
+          "6": 18,
+          "7": 45
+        },
+        "maxSourceToActiveNodeDistance": 0.004480382793393118,
+        "requestedDose": 2.069994480004414,
+        "acceptedDose": 2.069994480004414,
+        "storedNodeSum": 2.0699944787775166,
+        "storedMinusAccepted": -1.226897250461434e-9,
+        "derivedUncappedFloat32Bound": 1.4469097929783784e-7,
+        "capLossNotRedistributed": false,
+        "cappedNodes": 0,
+        "peak": 0.01011801976710558,
+        "activeNodes": 383,
+        "centroid": {
+          "x": 0.44970999373347703,
+          "y": 0.4497723776409178
+        },
+        "requestedDoseCentroid": {
+          "x": 0.4496906042730181,
+          "y": 0.4497610045032009
+        },
+        "centroidErrorFromPhysicalSource": 0.000022478866484248068,
+        "raster": {
+          "file": "docs/ant/evidence/2026-10-24-cic-316-gaussian-fixed-cue-qualification/gate1/rasters/gentleMirror-p11.f32le",
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "9c1022311fb2b8e06ba712be613d0f64eeca1ab0ba668d0e1aae452793d7c19d",
+          "mass": 2.0699944787775166,
+          "peak": 0.01011801976710558,
+          "supportNodes": 383,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.44970999373347703,
+            "y": 0.4497723776409178
+          }
+        }
+      },
+      {
+        "id": "tightMirror|p00",
+        "writeCount": 77,
+        "nodeStoreComparisons": 475,
+        "supportNodeCountPerWrite": {
+          "4": 11,
+          "6": 31,
+          "7": 35
+        },
+        "maxSourceToActiveNodeDistance": 0.004498368317134398,
+        "requestedDose": 2.0699655001724975,
+        "acceptedDose": 2.0699655001724975,
+        "storedNodeSum": 2.0699655013158917,
+        "storedMinusAccepted": 1.143394268154907e-9,
+        "derivedUncappedFloat32Bound": 1.4532953900350586e-7,
+        "capLossNotRedistributed": false,
+        "cappedNodes": 0,
+        "peak": 0.010563334450125694,
+        "activeNodes": 373,
+        "centroid": {
+          "x": 0.37935377800577763,
+          "y": 0.4138398337096696
+        },
+        "requestedDoseCentroid": {
+          "x": 0.3793356396721239,
+          "y": 0.4138330205688987
+        },
+        "centroidErrorFromPhysicalSource": 0.000019375707339281948,
+        "raster": {
+          "file": "docs/ant/evidence/2026-10-24-cic-316-gaussian-fixed-cue-qualification/gate1/rasters/tightMirror-p00.f32le",
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "e14fba99688ee4b75b3539d1de7abde85134c60277255b04b0e3ec005c658825",
+          "mass": 2.0699655013158917,
+          "peak": 0.010563334450125694,
+          "supportNodes": 373,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.37935377800577763,
+            "y": 0.4138398337096696
+          }
+        }
+      },
+      {
+        "id": "tightMirror|p10",
+        "writeCount": 77,
+        "nodeStoreComparisons": 486,
+        "supportNodeCountPerWrite": {
+          "4": 7,
+          "5": 1,
+          "6": 30,
+          "7": 39
+        },
+        "maxSourceToActiveNodeDistance": 0.00449314317595845,
+        "requestedDose": 2.0699655001724975,
+        "acceptedDose": 2.0699655001724975,
+        "storedNodeSum": 2.069965501781553,
+        "storedMinusAccepted": 1.6090555554626462e-9,
+        "derivedUncappedFloat32Bound": 1.4568613216822453e-7,
+        "capLossNotRedistributed": false,
+        "cappedNodes": 0,
+        "peak": 0.010248891077935696,
+        "activeNodes": 375,
+        "centroid": {
+          "x": 0.384624787847855,
+          "y": 0.4138103796934509
+        },
+        "requestedDoseCentroid": {
+          "x": 0.3845987975668609,
+          "y": 0.4138330205688987
+        },
+        "centroidErrorFromPhysicalSource": 0.00003446888375323667,
+        "raster": {
+          "file": "docs/ant/evidence/2026-10-24-cic-316-gaussian-fixed-cue-qualification/gate1/rasters/tightMirror-p10.f32le",
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "d7df436a65a81b9cbcec7d437a5287ab5adad5d817d74054a233423fda7725f2",
+          "mass": 2.069965501781553,
+          "peak": 0.010248891077935696,
+          "supportNodes": 375,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.384624787847855,
+            "y": 0.4138103796934509
+          }
+        }
+      },
+      {
+        "id": "tightMirror|p01",
+        "writeCount": 77,
+        "nodeStoreComparisons": 482,
+        "supportNodeCountPerWrite": {
+          "4": 6,
+          "5": 6,
+          "6": 27,
+          "7": 38
+        },
+        "maxSourceToActiveNodeDistance": 0.004497854536369828,
+        "requestedDose": 2.0699655001724975,
+        "acceptedDose": 2.0699655001724975,
+        "storedNodeSum": 2.0699655022472143,
+        "storedMinusAccepted": 2.0747168427703855e-9,
+        "derivedUncappedFloat32Bound": 1.4589656758731477e-7,
+        "capLossNotRedistributed": false,
+        "cappedNodes": 0,
+        "peak": 0.01170621532946825,
+        "activeNodes": 374,
+        "centroid": {
+          "x": 0.37935099436611985,
+          "y": 0.4190988592525065
+        },
+        "requestedDoseCentroid": {
+          "x": 0.3793356396721239,
+          "y": 0.41909617846363556
+        },
+        "centroidErrorFromPhysicalSource": 0.000015586957903308753,
+        "raster": {
+          "file": "docs/ant/evidence/2026-10-24-cic-316-gaussian-fixed-cue-qualification/gate1/rasters/tightMirror-p01.f32le",
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "ecd1118558ab7e4485fac878ee149518f6d0642e552455a6e4ea3ea83338e780",
+          "mass": 2.0699655022472143,
+          "peak": 0.01170621532946825,
+          "supportNodes": 374,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.37935099436611985,
+            "y": 0.4190988592525065
+          }
+        }
+      },
+      {
+        "id": "tightMirror|p11",
+        "writeCount": 77,
+        "nodeStoreComparisons": 487,
+        "supportNodeCountPerWrite": {
+          "4": 8,
+          "5": 1,
+          "6": 26,
+          "7": 42
+        },
+        "maxSourceToActiveNodeDistance": 0.004485203600953195,
+        "requestedDose": 2.0699655001724975,
+        "acceptedDose": 2.0699655001724975,
+        "storedNodeSum": 2.0699655059725046,
+        "storedMinusAccepted": 5.8000071412322995e-9,
+        "derivedUncappedFloat32Bound": 1.4503760948128332e-7,
+        "capLossNotRedistributed": false,
+        "cappedNodes": 0,
+        "peak": 0.011199919506907463,
+        "activeNodes": 381,
+        "centroid": {
+          "x": 0.3845942852043118,
+          "y": 0.41909116119066175
+        },
+        "requestedDoseCentroid": {
+          "x": 0.3845987975668609,
+          "y": 0.41909617846363556
+        },
+        "centroidErrorFromPhysicalSource": 0.00000674792144795949,
+        "raster": {
+          "file": "docs/ant/evidence/2026-10-24-cic-316-gaussian-fixed-cue-qualification/gate1/rasters/tightMirror-p11.f32le",
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "1c68937fd3af49db11b5e9e78438831b5f5a26b98d9db679f8f2164cef70ec71",
+          "mass": 2.0699655059725046,
+          "peak": 0.011199919506907463,
+          "supportNodes": 381,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.3845942852043118,
+            "y": 0.41909116119066175
+          }
+        }
+      },
+      {
+        "id": "sCurve|p00",
+        "writeCount": 77,
+        "nodeStoreComparisons": 493,
+        "supportNodeCountPerWrite": {
+          "4": 6,
+          "5": 2,
+          "6": 25,
+          "7": 43,
+          "8": 1
+        },
+        "maxSourceToActiveNodeDistance": 0.004498864531677893,
+        "requestedDose": 2.0699923086053444,
+        "acceptedDose": 2.0699923086053444,
+        "storedNodeSum": 2.069992310134694,
+        "storedMinusAccepted": 1.5293495359003373e-9,
+        "derivedUncappedFloat32Bound": 1.4525956680005494e-7,
+        "capLossNotRedistributed": false,
+        "cappedNodes": 0,
+        "peak": 0.010774685069918633,
+        "activeNodes": 388,
+        "centroid": {
+          "x": 0.4596979806671937,
+          "y": 0.4967802092895252
+        },
+        "requestedDoseCentroid": {
+          "x": 0.4596916225555695,
+          "y": 0.4967729872483609
+        },
+        "centroidErrorFromPhysicalSource": 0.000009622030035542823,
+        "raster": {
+          "file": "docs/ant/evidence/2026-10-24-cic-316-gaussian-fixed-cue-qualification/gate1/rasters/sCurve-p00.f32le",
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "6908c9eb1863eebd383c7f43c6861cd6e032c28f1b9b59bb2730a75985ca3cf7",
+          "mass": 2.069992310134694,
+          "peak": 0.010774685069918633,
+          "supportNodes": 388,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.4596979806671937,
+            "y": 0.4967802092895252
+          }
+        }
+      },
+      {
+        "id": "sCurve|p10",
+        "writeCount": 77,
+        "nodeStoreComparisons": 491,
+        "supportNodeCountPerWrite": {
+          "4": 4,
+          "5": 4,
+          "6": 28,
+          "7": 41
+        },
+        "maxSourceToActiveNodeDistance": 0.004485226032781716,
+        "requestedDose": 2.0699923086053444,
+        "acceptedDose": 2.0699923086053444,
+        "storedNodeSum": 2.06999230873771,
+        "storedMinusAccepted": 1.3236567397711951e-10,
+        "derivedUncappedFloat32Bound": 1.4468812757078593e-7,
+        "capLossNotRedistributed": false,
+        "cappedNodes": 0,
+        "peak": 0.010849162936210632,
+        "activeNodes": 388,
+        "centroid": {
+          "x": 0.46495425891204156,
+          "y": 0.4967500056675623
+        },
+        "requestedDoseCentroid": {
+          "x": 0.4649547804503066,
+          "y": 0.4967729872483609
+        },
+        "centroidErrorFromPhysicalSource": 0.000022987497866554954,
+        "raster": {
+          "file": "docs/ant/evidence/2026-10-24-cic-316-gaussian-fixed-cue-qualification/gate1/rasters/sCurve-p10.f32le",
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "a3bf90e11ca75fcf6f9cf347fb6496881e1369a1e4fc055224edb7cf9f2bcc37",
+          "mass": 2.06999230873771,
+          "peak": 0.010849162936210632,
+          "supportNodes": 388,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.46495425891204156,
+            "y": 0.4967500056675623
+          }
+        }
+      },
+      {
+        "id": "sCurve|p01",
+        "writeCount": 77,
+        "nodeStoreComparisons": 478,
+        "supportNodeCountPerWrite": {
+          "4": 9,
+          "5": 7,
+          "6": 21,
+          "7": 39,
+          "8": 1
+        },
+        "maxSourceToActiveNodeDistance": 0.0044940417708445625,
+        "requestedDose": 2.0699923086053444,
+        "acceptedDose": 2.0699923086053444,
+        "storedNodeSum": 2.069992310833186,
+        "storedMinusAccepted": 2.227841466861946e-9,
+        "derivedUncappedFloat32Bound": 1.4554463356885633e-7,
+        "capLossNotRedistributed": false,
+        "cappedNodes": 0,
+        "peak": 0.01099830400198698,
+        "activeNodes": 368,
+        "centroid": {
+          "x": 0.45970016007262504,
+          "y": 0.5020313573158128
+        },
+        "requestedDoseCentroid": {
+          "x": 0.4596916225555695,
+          "y": 0.5020361451430979
+        },
+        "centroidErrorFromPhysicalSource": 0.000009788385341076165,
+        "raster": {
+          "file": "docs/ant/evidence/2026-10-24-cic-316-gaussian-fixed-cue-qualification/gate1/rasters/sCurve-p01.f32le",
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "f2bbad3a1e15088c94ab204691b6f445c321a2fcaa8328c3fb6de16e1f4a4a1b",
+          "mass": 2.069992310833186,
+          "peak": 0.01099830400198698,
+          "supportNodes": 368,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.45970016007262504,
+            "y": 0.5020313573158128
+          }
+        }
+      },
+      {
+        "id": "sCurve|p11",
+        "writeCount": 77,
+        "nodeStoreComparisons": 483,
+        "supportNodeCountPerWrite": {
+          "4": 6,
+          "5": 5,
+          "6": 28,
+          "7": 38
+        },
+        "maxSourceToActiveNodeDistance": 0.004490343681221101,
+        "requestedDose": 2.0699923086053444,
+        "acceptedDose": 2.0699923086053444,
+        "storedNodeSum": 2.0699923085048795,
+        "storedMinusAccepted": -1.0046496967675012e-10,
+        "derivedUncappedFloat32Bound": 1.4523111433050768e-7,
+        "capLossNotRedistributed": false,
+        "cappedNodes": 0,
+        "peak": 0.011630862951278687,
+        "activeNodes": 375,
+        "centroid": {
+          "x": 0.4649648987852918,
+          "y": 0.5020598217681116
+        },
+        "requestedDoseCentroid": {
+          "x": 0.4649547804503066,
+          "y": 0.5020361451430979
+        },
+        "centroidErrorFromPhysicalSource": 0.0000257480732271627,
+        "raster": {
+          "file": "docs/ant/evidence/2026-10-24-cic-316-gaussian-fixed-cue-qualification/gate1/rasters/sCurve-p11.f32le",
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "03db85533b5ed084fe88e047587a684e314b83f48df26ae3a63f069e73c861e9",
+          "mass": 2.0699923085048795,
+          "peak": 0.011630862951278687,
+          "supportNodes": 375,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.4649648987852918,
+            "y": 0.5020598217681116
+          }
+        }
+      }
+    ]
+  },
+  "readFootprint": {
+    "method": "257 × 257 fixed query lattice over source ±(R + 2h)",
+    "source": {
+      "x": 0.498412698415655,
+      "y": 0.498412698415655
+    },
+    "nonzeroSamples": 22201,
+    "maximumSampledDistance": 0.008870226658143493,
+    "valueAtMaximumDistance": 0.00002657363057895776,
+    "exceedsWriteRadius": true
+  },
+  "capDecay": {
+    "cap": {
+      "requested": 1,
+      "accepted": 1,
+      "storedIncrement": 0.6793919801712036,
+      "loss": 0.3206080198287964,
+      "cappedNodes": 1,
+      "originalSharesNotRedistributed": true
+    },
+    "decay": {
+      "halfLifeSeconds": 15,
+      "elapsedSeconds": 3.75,
+      "exactSamples": 1030,
+      "inheritedProductionMethod": true,
+      "passed": true
+    }
+  },
+  "shortSegmentOrientation": {
+    "contract": {
+      "fixture": "representation-contract equal two-point orthogonal pair",
+      "center": {
+        "x": 0.5105263157894737,
+        "y": 0.5105263157894737
+      },
+      "physicalSegmentLength": 0.005263157894736842,
+      "totalRequestedDose": 1,
+      "dosePerEndpoint": 0.5,
+      "orientations": [
+        {
+          "id": "horizontal",
+          "angleRad": 0
+        },
+        {
+          "id": "plus45",
+          "angleRad": 0.7853981633974483
+        },
+        {
+          "id": "vertical",
+          "angleRad": 1.5707963267948966
+        },
+        {
+          "id": "minus45",
+          "angleRad": -0.7853981633974483
+        }
+      ],
+      "orientationsUseSamePhysicalCoordinatesAcrossArms": true,
+      "principalAxisUndefinedRule": "eigen gap <= 64*Number.EPSILON*max(trace, Number.MIN_VALUE) marks angle undefined; numerical descriptor only"
+    },
+    "arms": {
+      "C": {
+        "horizontal": {
+          "endpoints": [
+            {
+              "x": 0.5078947368421053,
+              "y": 0.5105263157894737
+            },
+            {
+              "x": 0.5131578947368421,
+              "y": 0.5105263157894737
+            }
+          ],
+          "width": 96,
+          "height": 96,
+          "byteLength": 36864,
+          "sha256": "306b360f80ed9f0c91f3dbd76fa40da585d0641ef6ee949c174843670363a06e",
+          "mass": 1,
+          "peak": 0.5,
+          "supportNodes": 2,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.5105263157894737,
+            "y": 0.5157894736842106
+          },
+          "secondMoment": {
+            "xx": 0.00002770083102493092,
+            "yy": 0,
+            "xy": 0,
+            "trace": 0.00002770083102493092,
+            "eigenGap": 0.00002770083102493092,
+            "anisotropy": 1,
+            "principalAxisAngleRad": 0,
+            "undefinedAtNumericalFloor": false,
+            "numericalFloor": 3.936524851856535e-19
+          },
+          "orientationErrorRad": 0
+        },
+        "plus45": {
+          "endpoints": [
+            {
+              "x": 0.5086655084705618,
+              "y": 0.5086655084705618
+            },
+            {
+              "x": 0.5123871231083856,
+              "y": 0.5123871231083856
+            }
+          ],
+          "width": 96,
+          "height": 96,
+          "byteLength": 36864,
+          "sha256": "ad2cf503602afb91b593f9202c610425941484f7a9cb694b9de82a04c89928ba",
+          "mass": 1,
+          "peak": 0.5,
+          "supportNodes": 2,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.5105263157894737,
+            "y": 0.5105263157894737
+          },
+          "secondMoment": {
+            "xx": 0.00002770083102493092,
+            "yy": 0.00002770083102493092,
+            "xy": 0.00002770083102493092,
+            "trace": 0.00005540166204986184,
+            "eigenGap": 0.00005540166204986184,
+            "anisotropy": 1,
+            "principalAxisAngleRad": 0.7853981633974483,
+            "undefinedAtNumericalFloor": false,
+            "numericalFloor": 7.87304970371307e-19
+          },
+          "orientationErrorRad": 0
+        },
+        "vertical": {
+          "endpoints": [
+            {
+              "x": 0.5105263157894737,
+              "y": 0.5078947368421053
+            },
+            {
+              "x": 0.5105263157894737,
+              "y": 0.5131578947368421
+            }
+          ],
+          "width": 96,
+          "height": 96,
+          "byteLength": 36864,
+          "sha256": "d74abbfc646fa09d85586c40dac3ba296cd070a1ef68149a51c1b6e6823f68d3",
+          "mass": 1,
+          "peak": 0.5,
+          "supportNodes": 2,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.5157894736842106,
+            "y": 0.5105263157894737
+          },
+          "secondMoment": {
+            "xx": 0,
+            "yy": 0.00002770083102493092,
+            "xy": 0,
+            "trace": 0.00002770083102493092,
+            "eigenGap": 0.00002770083102493092,
+            "anisotropy": 1,
+            "principalAxisAngleRad": 1.5707963267948966,
+            "undefinedAtNumericalFloor": false,
+            "numericalFloor": 3.936524851856535e-19
+          },
+          "orientationErrorRad": 0
+        },
+        "minus45": {
+          "endpoints": [
+            {
+              "x": 0.5086655084705618,
+              "y": 0.5123871231083856
+            },
+            {
+              "x": 0.5123871231083856,
+              "y": 0.5086655084705618
+            }
+          ],
+          "width": 96,
+          "height": 96,
+          "byteLength": 36864,
+          "sha256": "707ce89dc6350844795dcbaff5a5bb7a80e4d4eebf874aba957f251fc901443d",
+          "mass": 1,
+          "peak": 0.5,
+          "supportNodes": 2,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.5105263157894737,
+            "y": 0.5105263157894737
+          },
+          "secondMoment": {
+            "xx": 0.00002770083102493092,
+            "yy": 0.00002770083102493092,
+            "xy": -0.00002770083102493092,
+            "trace": 0.00005540166204986184,
+            "eigenGap": 0.00005540166204986184,
+            "anisotropy": 1,
+            "principalAxisAngleRad": -0.7853981633974483,
+            "undefinedAtNumericalFloor": false,
+            "numericalFloor": 7.87304970371307e-19
+          },
+          "orientationErrorRad": 0
+        }
+      },
+      "D": {
+        "horizontal": {
+          "endpoints": [
+            {
+              "x": 0.5078947368421053,
+              "y": 0.5105263157894737
+            },
+            {
+              "x": 0.5131578947368421,
+              "y": 0.5105263157894737
+            }
+          ],
+          "width": 96,
+          "height": 96,
+          "byteLength": 36864,
+          "sha256": "eb8a69233ed56dcfdce0808725337ea9d5bf769a63be0db87550cbaaf0caf0fe",
+          "mass": 1,
+          "peak": 0.25,
+          "supportNodes": 4,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.5105263157894737,
+            "y": 0.5105263157894737
+          },
+          "secondMoment": {
+            "xx": 0.00002770083102493092,
+            "yy": 0.00002770083102493092,
+            "xy": 0,
+            "trace": 0.00005540166204986184,
+            "eigenGap": 0,
+            "anisotropy": 0,
+            "principalAxisAngleRad": null,
+            "undefinedAtNumericalFloor": true,
+            "numericalFloor": 7.87304970371307e-19
+          },
+          "orientationErrorRad": null
+        },
+        "plus45": {
+          "endpoints": [
+            {
+              "x": 0.5086655084705618,
+              "y": 0.5086655084705618
+            },
+            {
+              "x": 0.5123871231083856,
+              "y": 0.5123871231083856
+            }
+          ],
+          "width": 96,
+          "height": 96,
+          "byteLength": 36864,
+          "sha256": "8e2a581ee54363eb600ab81460bfb5979478851a12bfda5285e604a06e0679a0",
+          "mass": 1,
+          "peak": 0.28125,
+          "supportNodes": 4,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.5105263157894737,
+            "y": 0.5105263157894737
+          },
+          "secondMoment": {
+            "xx": 0.00002770083102493092,
+            "yy": 0.00002770083102493092,
+            "xy": 0.000003462603878116364,
+            "trace": 0.00005540166204986184,
+            "eigenGap": 0.000006925207756232728,
+            "anisotropy": 0.12499999999999997,
+            "principalAxisAngleRad": 0.7853981633974483,
+            "undefinedAtNumericalFloor": false,
+            "numericalFloor": 7.87304970371307e-19
+          },
+          "orientationErrorRad": 0
+        },
+        "vertical": {
+          "endpoints": [
+            {
+              "x": 0.5105263157894737,
+              "y": 0.5078947368421053
+            },
+            {
+              "x": 0.5105263157894737,
+              "y": 0.5131578947368421
+            }
+          ],
+          "width": 96,
+          "height": 96,
+          "byteLength": 36864,
+          "sha256": "eb8a69233ed56dcfdce0808725337ea9d5bf769a63be0db87550cbaaf0caf0fe",
+          "mass": 1,
+          "peak": 0.25,
+          "supportNodes": 4,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.5105263157894737,
+            "y": 0.5105263157894737
+          },
+          "secondMoment": {
+            "xx": 0.00002770083102493092,
+            "yy": 0.00002770083102493092,
+            "xy": 0,
+            "trace": 0.00005540166204986184,
+            "eigenGap": 0,
+            "anisotropy": 0,
+            "principalAxisAngleRad": null,
+            "undefinedAtNumericalFloor": true,
+            "numericalFloor": 7.87304970371307e-19
+          },
+          "orientationErrorRad": null
+        },
+        "minus45": {
+          "endpoints": [
+            {
+              "x": 0.5086655084705618,
+              "y": 0.5123871231083856
+            },
+            {
+              "x": 0.5123871231083856,
+              "y": 0.5086655084705618
+            }
+          ],
+          "width": 96,
+          "height": 96,
+          "byteLength": 36864,
+          "sha256": "429a6609717fa38e9223b0fd1928f22a80eb9417d64aeaf6c8cc703d850d56e2",
+          "mass": 1,
+          "peak": 0.28125,
+          "supportNodes": 4,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.5105263157894737,
+            "y": 0.5105263157894737
+          },
+          "secondMoment": {
+            "xx": 0.00002770083102493092,
+            "yy": 0.00002770083102493092,
+            "xy": -0.000003462603878116364,
+            "trace": 0.00005540166204986184,
+            "eigenGap": 0.000006925207756232728,
+            "anisotropy": 0.12499999999999997,
+            "principalAxisAngleRad": -0.7853981633974483,
+            "undefinedAtNumericalFloor": false,
+            "numericalFloor": 7.87304970371307e-19
+          },
+          "orientationErrorRad": 0
+        }
+      },
+      "E": {
+        "horizontal": {
+          "endpoints": [
+            {
+              "x": 0.5078947368421053,
+              "y": 0.5105263157894737
+            },
+            {
+              "x": 0.5131578947368421,
+              "y": 0.5105263157894737
+            }
+          ],
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "094e89505b6c6a49eb3066822b1f4abe59079ee2d0f0b565b2e20e3acebcda88",
+          "mass": 0.9999999803258106,
+          "peak": 0.40252768993377686,
+          "supportNodes": 8,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.5105263157802635,
+            "y": 0.5105263157858071
+          },
+          "secondMoment": {
+            "xx": 0.000008144839875610142,
+            "yy": 0.000001514507523705702,
+            "xy": -1.7396376459616462e-14,
+            "trace": 0.000009659347399315844,
+            "eigenGap": 0.00000663033235190444,
+            "anisotropy": 0.6864161809082522,
+            "principalAxisAngleRad": -2.6237563271801413e-9,
+            "undefinedAtNumericalFloor": false,
+            "numericalFloor": 1.3726758253534177e-19
+          },
+          "orientationErrorRad": 2.6237563271801413e-9
+        },
+        "plus45": {
+          "endpoints": [
+            {
+              "x": 0.5086655084705618,
+              "y": 0.5086655084705618
+            },
+            {
+              "x": 0.5123871231083856,
+              "y": 0.5123871231083856
+            }
+          ],
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "b3999db51a83bedc44db02c4a756975a09f68b2ecaae42bf7c51d65feb5cf34d",
+          "mass": 1.0000000149011612,
+          "peak": 0.29673099517822266,
+          "supportNodes": 7,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.5105263157820045,
+            "y": 0.5105263157820045
+          },
+          "secondMoment": {
+            "xx": 0.000005565339296943317,
+            "yy": 0.000005565339296943317,
+            "xy": 0.000003462603921679165,
+            "trace": 0.000011130678593886634,
+            "eigenGap": 0.00000692520784335833,
+            "anisotropy": 0.6221730135269471,
+            "principalAxisAngleRad": 0.7853981633974483,
+            "undefinedAtNumericalFloor": false,
+            "numericalFloor": 1.5817645637933188e-19
+          },
+          "orientationErrorRad": 0
+        },
+        "vertical": {
+          "endpoints": [
+            {
+              "x": 0.5105263157894737,
+              "y": 0.5078947368421053
+            },
+            {
+              "x": 0.5105263157894737,
+              "y": 0.5131578947368421
+            }
+          ],
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "334cb0126f3b582f637c3c663cf024bd7efc4884285bb7ee834bd872fef7d2cc",
+          "mass": 0.9999999803258106,
+          "peak": 0.40252768993377686,
+          "supportNodes": 8,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.5105263157858071,
+            "y": 0.5105263157802635
+          },
+          "secondMoment": {
+            "xx": 0.000001514507523705702,
+            "yy": 0.000008144839875610142,
+            "xy": -1.7396376671374705e-14,
+            "trace": 0.000009659347399315844,
+            "eigenGap": 0.00000663033235190444,
+            "anisotropy": 0.6864161809082522,
+            "principalAxisAngleRad": -1.5707963241711402,
+            "undefinedAtNumericalFloor": false,
+            "numericalFloor": 1.3726758253534177e-19
+          },
+          "orientationErrorRad": 2.623756323316684e-9
+        },
+        "minus45": {
+          "endpoints": [
+            {
+              "x": 0.5086655084705618,
+              "y": 0.5123871231083856
+            },
+            {
+              "x": 0.5123871231083856,
+              "y": 0.5086655084705618
+            }
+          ],
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "6ec3f4c4dab875bbd847efe6906e018c95703f36ac4e5d1a6d6a38b97c299303",
+          "mass": 1.0000000149011612,
+          "peak": 0.230360746383667,
+          "supportNodes": 7,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.5105263157820044,
+            "y": 0.5105263157820044
+          },
+          "secondMoment": {
+            "xx": 0.000005565339296943317,
+            "yy": 0.000005565339296943318,
+            "xy": -0.000003462603902751232,
+            "trace": 0.000011130678593886636,
+            "eigenGap": 0.000006925207805502464,
+            "anisotropy": 0.6221730101259086,
+            "principalAxisAngleRad": -0.7853981633974484,
+            "undefinedAtNumericalFloor": false,
+            "numericalFloor": 1.581764563793319e-19
+          },
+          "orientationErrorRad": 1.1102230246251565e-16
+        }
+      },
+      "F": {
+        "horizontal": {
+          "endpoints": [
+            {
+              "x": 0.5078947368421053,
+              "y": 0.5105263157894737
+            },
+            {
+              "x": 0.5131578947368421,
+              "y": 0.5105263157894737
+            }
+          ],
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "f0402d4beb825ae69260667e2b27bf4a4798355cf263fc5f296fd084b90ce74b",
+          "mass": 0.9999999906867743,
+          "peak": 0.17471712827682495,
+          "supportNodes": 12,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.5105395900653222,
+            "y": 0.5105141222066569
+          },
+          "secondMoment": {
+            "xx": 0.0000105993247602427,
+            "yy": 0.0000037850077279949503,
+            "xy": 4.126153414413742e-7,
+            "trace": 0.00001438433248823765,
+            "eigenGap": 0.000006864103896063411,
+            "anisotropy": 0.4771930780713199,
+            "principalAxisAngleRad": 0.060257806091744144,
+            "undefinedAtNumericalFloor": false,
+            "numericalFloor": 2.0441365916550537e-19
+          },
+          "orientationErrorRad": 0.060257806091744144
+        },
+        "plus45": {
+          "endpoints": [
+            {
+              "x": 0.5086655084705618,
+              "y": 0.5086655084705618
+            },
+            {
+              "x": 0.5123871231083856,
+              "y": 0.5123871231083856
+            }
+          ],
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "5eba1703be7fe1b661967e264df943d1baccf398d2d59c80a543a905f484f4ad",
+          "mass": 1.0000000074505806,
+          "peak": 0.20775873959064484,
+          "supportNodes": 9,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.5106085481189145,
+            "y": 0.5106085481189144
+          },
+          "secondMoment": {
+            "xx": 0.000006683936466090841,
+            "yy": 0.000006683936466090842,
+            "xy": 0.0000040515886558851345,
+            "trace": 0.000013367872932181684,
+            "eigenGap": 0.000008103177311770269,
+            "anisotropy": 0.6061680383169084,
+            "principalAxisAngleRad": 0.7853981633974484,
+            "undefinedAtNumericalFloor": false,
+            "numericalFloor": 1.8996890009051532e-19
+          },
+          "orientationErrorRad": 1.1102230246251565e-16
+        },
+        "vertical": {
+          "endpoints": [
+            {
+              "x": 0.5105263157894737,
+              "y": 0.5078947368421053
+            },
+            {
+              "x": 0.5105263157894737,
+              "y": 0.5131578947368421
+            }
+          ],
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "6cfb0e19fc05c3a0c4fd6903cd4d8ad22a1e4fba082496880acbf4fc4f29a9f4",
+          "mass": 0.9999999906867743,
+          "peak": 0.17471712827682495,
+          "supportNodes": 12,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.510514122206657,
+            "y": 0.5105395900653222
+          },
+          "secondMoment": {
+            "xx": 0.00000378500772799495,
+            "yy": 0.0000105993247602427,
+            "xy": 4.1261534144137377e-7,
+            "trace": 0.00001438433248823765,
+            "eigenGap": 0.000006864103896063412,
+            "anisotropy": 0.47719307807131994,
+            "principalAxisAngleRad": 1.5105385207031525,
+            "undefinedAtNumericalFloor": false,
+            "numericalFloor": 2.0441365916550537e-19
+          },
+          "orientationErrorRad": 0.060257806091744026
+        },
+        "minus45": {
+          "endpoints": [
+            {
+              "x": 0.5086655084705618,
+              "y": 0.5123871231083856
+            },
+            {
+              "x": 0.5123871231083856,
+              "y": 0.5086655084705618
+            }
+          ],
+          "width": 316,
+          "height": 316,
+          "byteLength": 399424,
+          "sha256": "c12e515065bf2fc856193b29f26d298e54c5e628ec40a0257d17ce7bc4ebedd4",
+          "mass": 0.9999999962747097,
+          "peak": 0.17620031535625458,
+          "supportNodes": 11,
+          "cappedNodes": 0,
+          "centroid": {
+            "x": 0.5105456956596824,
+            "y": 0.5105456956596826
+          },
+          "secondMoment": {
+            "xx": 0.000007321310424483596,
+            "yy": 0.000007321310424483597,
+            "xy": -0.000003993135736890054,
+            "trace": 0.000014642620848967193,
+            "eigenGap": 0.000007986271473780107,
+            "anisotropy": 0.545412706929676,
+            "principalAxisAngleRad": -0.7853981633974484,
+            "undefinedAtNumericalFloor": false,
+            "numericalFloor": 2.080841575344606e-19
+          },
+          "orientationErrorRad": 1.1102230246251565e-16
+        }
+      }
+    },
+    "pairwiseDistinguishability": {
+      "C": [
+        {
+          "first": "horizontal",
+          "second": "plus45",
+          "exactRasterIdentity": false,
+          "sameSupportSet": false,
+          "rasterL1": 1
+        },
+        {
+          "first": "horizontal",
+          "second": "vertical",
+          "exactRasterIdentity": false,
+          "sameSupportSet": false,
+          "rasterL1": 1
+        },
+        {
+          "first": "horizontal",
+          "second": "minus45",
+          "exactRasterIdentity": false,
+          "sameSupportSet": false,
+          "rasterL1": 1
+        },
+        {
+          "first": "plus45",
+          "second": "vertical",
+          "exactRasterIdentity": false,
+          "sameSupportSet": false,
+          "rasterL1": 1
+        },
+        {
+          "first": "plus45",
+          "second": "minus45",
+          "exactRasterIdentity": false,
+          "sameSupportSet": false,
+          "rasterL1": 2
+        },
+        {
+          "first": "vertical",
+          "second": "minus45",
+          "exactRasterIdentity": false,
+          "sameSupportSet": false,
+          "rasterL1": 1
+        }
+      ],
+      "D": [
+        {
+          "first": "horizontal",
+          "second": "plus45",
+          "exactRasterIdentity": false,
+          "sameSupportSet": true,
+          "rasterL1": 0.125
+        },
+        {
+          "first": "horizontal",
+          "second": "vertical",
+          "exactRasterIdentity": true,
+          "sameSupportSet": true,
+          "rasterL1": 0
+        },
+        {
+          "first": "horizontal",
+          "second": "minus45",
+          "exactRasterIdentity": false,
+          "sameSupportSet": true,
+          "rasterL1": 0.125
+        },
+        {
+          "first": "plus45",
+          "second": "vertical",
+          "exactRasterIdentity": false,
+          "sameSupportSet": true,
+          "rasterL1": 0.125
+        },
+        {
+          "first": "plus45",
+          "second": "minus45",
+          "exactRasterIdentity": false,
+          "sameSupportSet": true,
+          "rasterL1": 0.25
+        },
+        {
+          "first": "vertical",
+          "second": "minus45",
+          "exactRasterIdentity": false,
+          "sameSupportSet": true,
+          "rasterL1": 0.125
+        }
+      ],
+      "E": [
+        {
+          "first": "horizontal",
+          "second": "plus45",
+          "exactRasterIdentity": false,
+          "sameSupportSet": false,
+          "rasterL1": 1.0456622865749523
+        },
+        {
+          "first": "horizontal",
+          "second": "vertical",
+          "exactRasterIdentity": false,
+          "sameSupportSet": false,
+          "rasterL1": 1.3975068831350654
+        },
+        {
+          "first": "horizontal",
+          "second": "minus45",
+          "exactRasterIdentity": false,
+          "sameSupportSet": false,
+          "rasterL1": 0.988098080153577
+        },
+        {
+          "first": "plus45",
+          "second": "vertical",
+          "exactRasterIdentity": false,
+          "sameSupportSet": false,
+          "rasterL1": 1.0456622865749523
+        },
+        {
+          "first": "plus45",
+          "second": "minus45",
+          "exactRasterIdentity": false,
+          "sameSupportSet": false,
+          "rasterL1": 1.1869239807128906
+        },
+        {
+          "first": "vertical",
+          "second": "minus45",
+          "exactRasterIdentity": false,
+          "sameSupportSet": false,
+          "rasterL1": 0.988098080153577
+        }
+      ],
+      "F": [
+        {
+          "first": "horizontal",
+          "second": "plus45",
+          "exactRasterIdentity": false,
+          "sameSupportSet": false,
+          "rasterL1": 0.6335163693875074
+        },
+        {
+          "first": "horizontal",
+          "second": "vertical",
+          "exactRasterIdentity": false,
+          "sameSupportSet": false,
+          "rasterL1": 0.7269613035023212
+        },
+        {
+          "first": "horizontal",
+          "second": "minus45",
+          "exactRasterIdentity": false,
+          "sameSupportSet": false,
+          "rasterL1": 0.6402672696858644
+        },
+        {
+          "first": "plus45",
+          "second": "vertical",
+          "exactRasterIdentity": false,
+          "sameSupportSet": false,
+          "rasterL1": 0.6335163693875074
+        },
+        {
+          "first": "plus45",
+          "second": "minus45",
+          "exactRasterIdentity": false,
+          "sameSupportSet": false,
+          "rasterL1": 0.9654075242578983
+        },
+        {
+          "first": "vertical",
+          "second": "minus45",
+          "exactRasterIdentity": false,
+          "sameSupportSet": false,
+          "rasterL1": 0.6402672696858644
+        }
+      ]
+    },
+    "CIC96OrthogonalAlias": {
+      "first": "horizontal",
+      "second": "vertical",
+      "exactRasterIdentity": true,
+      "sameSupportSet": true,
+      "rasterL1": 0
+    }
+  }
+}
