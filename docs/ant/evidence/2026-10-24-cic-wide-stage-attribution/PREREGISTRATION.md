@@ -37,6 +37,8 @@ These are stage-of-departure labels on saved deterministic outputs, not causal i
 
 For each focal row, retain A/C/D raw samples, weighted samples, candidate maxima, Hill responses, scores, candidate orders, margins, identity, and first-divergence labels. For the full 5,072-row census, retain compact per-stage orders, margins, target-top flags, and classifications. No result-driven threshold or candidate is permitted.
 
+Representative examples are selected mechanically: within each focal cohort, take the first row in frozen input order for each distinct first cross-arm rank-divergence stage; if a cohort has no divergence-stage example, take its first row. Include every such row, with no listening, visual, or magnitude-based selection.
+
 ## Validation and stop boundary
 
 Before interpreting counts, verify the recorded Gate 2 artifact SHA and row count, the frozen input SHA and row-key identity, source hashes, saved C/D/analytic winners, strict-unique and tie accounting, `2,378 / 5,072` for both C and D, and the exact 92 recovered / 92 new-error memberships. Recompute A/C/D stage values only from the saved raw values and the unchanged helper plus the exact frozen geometry; require exact numeric parity to saved C/D scores and winners. If any essential parity fails, stop and report the boundary as inconclusive.
