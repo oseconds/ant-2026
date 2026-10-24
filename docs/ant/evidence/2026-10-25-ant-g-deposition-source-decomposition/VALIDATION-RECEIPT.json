@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "repository": {
+    "freshFetchSucceeded": true,
+    "originMain": "8c60e4bba3bd5b476300e90a2936bfebd1f831c2",
+    "branch": "codex/ant-g-deposition-source-decomposition-20261025",
+    "parentBranch": "codex/ant-316-gaussian-dose-unit-movement-shadow-20261024",
+    "parentCommit": "6c44253f7f1d6bb99653afe791bf257577a94e78",
+    "preregistrationCommit": "2526facfcf0feb4287964769c205123d1189109c"
+  },
+  "productionUnchanged": {
+    "src": true,
+    "canonicalAntReadme": true,
+    "sourceHashesMatchPinnedReceipt": true
+  },
+  "parentEvidence": {
+    "manifestFiles": 56,
+    "verifiedFiles": 56,
+    "parentRunExactParity": {
+      "armSummaries": 9,
+      "rawArchiveBytes": 9,
+      "checkpointMapBytes": 45
+    }
+  },
+  "observer": {
+    "arms": ["C", "F", "G"],
+    "ticksPerArmInObserverOnOffCheck": 120,
+    "stateAndRngEqualEveryTick": true,
+    "additionalObserverRngCalls": 0,
+    "sourceRateMismatches": 0,
+    "missingPairedTrailState": 0,
+    "originalMethodCallCountPerInvocation": 1
+  },
+  "doseClosure": {
+    "maximumAbsoluteResidual": 6.821210263296962e-11,
+    "maximumDerivedFloatingPointBound": 1.0053399781855307e-5,
+    "allWithinDerivedBound": true,
+    "saturationLossAcrossNineRuns": 0,
+    "fieldBoundaryRejectionReportedSeparately": true
+  },
+  "determinism": {
+    "fullThreeSeedCausalProtocolReplayedTwice": true,
+    "scientificSummarySha256First": "943d3b4f9e19d0663610df618bfdb5475921439df7553d72166a137c49556802",
+    "scientificSummarySha256Second": "943d3b4f9e19d0663610df618bfdb5475921439df7553d72166a137c49556802",
+    "allNinePerSecondGzipArtifactsByteIdenticalAcrossRuns": true,
+    "dataManifestEntriesVerified": 11,
+    "dataManifestSha256": "f1678a91e68d31fd0ad5f663405c45572e72a995569e9c2d3874d57734a925fb"
+  },
+  "currentPassCodeHashes": {
+    "scripts/ant-g-deposition-source-decomposition.js": "51945ccd5fc4a6d5dd60bd08655a45dcf86d221601d7d30efebfe16f5c2f2776",
+    "tests/ant-g-deposition-source-decomposition.test.js": "0f507ec5f723079bd764418fa2e60a15438135c4ba2faab16c995dd092f8964d"
+  },
+  "checks": {
+    "nodeSyntaxCheck": "passed",
+    "observerSelfcheck": "passed",
+    "sourceDecompositionFocusedTest": "2/2 passed",
+    "parentMovementShadowFocusedTest": "3/3 passed",
+    "gitDiffCheck": "passed",
+    "fullRepositorySuite": "not run; production source and runtime behavior were unchanged",
+    "build": "not run; production source and runtime behavior were unchanged"
+  },
+  "interpretationBoundary": "The component split is exact source accounting on each arm's realized movement chunks. C/F/G trajectories diverge under feedback; this does not identify independent causal mediation by reinforcement or occupancy."
+}
