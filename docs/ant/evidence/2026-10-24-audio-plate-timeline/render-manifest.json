@@ -1,0 +1,223 @@
+{
+  "status": "rendered",
+  "presetId": "ant-audio-plate-timeline-research-v1",
+  "input": {
+    "captureFile": "continuous-natural-0-180s.json",
+    "sourcePcm": "continuous-natural-0-180s.wav",
+    "sourceAudio": "continuous-natural-0-180s-audio.webm",
+    "captureJsonSha256": "53b6937d7356fd7ff75897b42ab35c6120a9a2efa894d3c8995c5e7991b831c0",
+    "floatWavSha256": "ece3f0b79ea2fc3f0bfeef477dedea5f1ed5a4a0498b3dbdf582e4e716d53179",
+    "finalGainWebmSha256": "0681ccc81480be2de4afd5ad8f11ee6c0c96cb29587a1b446f89dffeb8cf0034",
+    "decoded": {
+      "sampleRate": 48000,
+      "frames": 8651520,
+      "durationSeconds": 180.24,
+      "format": "IEEE float32 stereo"
+    }
+  },
+  "sourceHashes": {
+    "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+    "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+    "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+    "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+    "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+    "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+    "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd",
+    "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+    "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+    "src/lib/renderers/AntRenderer.js": "36f76459cc5323b846e04b8bced95b19a4d382c645303dbb9b49aa1050354566",
+    "src/lib/audio/AntAudioBridge.js": "aeb4965f53e103e183ff635d6a861d70979c8e909ec59222d673ae2fd15c8c67",
+    "src/lib/audio/AntEnvironmentAudioBridge.js": "8650a38789ce3053232765131fef77dc9334bc43ff79acccec01a589a4a73a6d",
+    "src/lib/audio/AudioEngine.js": "99cc29fe3c30c1425615f846c13846b3e25e187cb30a2c8859ba4fb1c9d53387",
+    "src/lib/audio/SurfaceAudioBridge.js": "ef87c14015067f7cad512e0675716239b1707e441eb28cfd9175d28b0ef28215",
+    "src/lib/models/plate/PlateModel.js": "b18aa8693d9dbe74ca83204529be54c1be5b23f9d30241dc256faf2f1a337130",
+    "src/lib/models/sphere/SphereModel.js": "f4bfe47016211d1bd21b5ea0d20e49bbe431834daadde3193b25bf52a666e7ef",
+    "static/worklets/surface-plate.worklet.js": "14c7461f1412f0d6897a6683d46e582dbb80711f2ba74e8ea53e026895eeea5e",
+    "scripts/stratigraphy-motion-evidence.js": "a3043459898064d48931c9ecf04352a23d4b71d18d311659d4c4f63a49aed35a",
+    "scripts/audio-snapshot-renderer.js": "7c70b069b2bdf160dcb7a70ae63eb31a703fd6344d6a03e766d740fda84c16bc",
+    "scripts/stratigraphy-audio-overview.js": "b7aad6a08e09138dd83d696b2eb1b4bdff4c8113bc74e8c242df6b0cea6ca6e6"
+  },
+  "researchToolHashes": {
+    "scripts/ant-audio-plate-timeline.js": "c0a0d61b24c0f5e2c5967da867424e15ed6206f63bca50ee3d8471ba4e8595d8",
+    "scripts/ant-audio-plate-timeline-render.js": "f2e815ed97ad63449570d1cb95c92b355296aa150f33e4f18284f276dd62ae50"
+  },
+  "fixedAudioPreset": {
+    "id": "ant-stratigraphy-audio-overview-v1",
+    "width": 1800,
+    "height": 1200,
+    "fftSize": 1024,
+    "window": "Hann",
+    "hopSize": 256,
+    "frequencyMinHz": 0,
+    "frequencyMaxHz": 8000,
+    "minDbfs": -100,
+    "maxDbfs": 0,
+    "gamma": 1,
+    "waveformAmplitudeMin": -1,
+    "waveformAmplitudeMax": 1,
+    "waveformBackgroundLuminance": 255,
+    "waveformLineLuminance": 24,
+    "waveformAxisLuminance": 180,
+    "waveformLineWidth": 1,
+    "channelMode": "separate L/R",
+    "contactBucketSeconds": 10,
+    "contactStripHeightPx": 28,
+    "contactCountAtFullHeight": 2400,
+    "spectrogramWidth": 1760,
+    "spectrogramHeightPerChannel": 326,
+    "zoom": {
+      "durationSeconds": 10,
+      "width": 1200,
+      "height": 1000,
+      "waveformAmplitudeMin": -1,
+      "waveformAmplitudeMax": 1,
+      "waveformBackgroundLuminance": 255,
+      "waveformLineLuminance": 24,
+      "waveformAxisLuminance": 180,
+      "waveformLineWidth": 1,
+      "minDbfs": -100,
+      "maxDbfs": 0,
+      "fftSize": 1024,
+      "window": "Hann",
+      "hopSize": 256,
+      "frequencyMinHz": 0,
+      "frequencyMaxHz": 8000,
+      "gamma": 1,
+      "note": "Exactly 10 decoded-audio seconds, selected from simulation milestones; actual simulation span and contact timing are mapped through clock anchors. No normalization or padding."
+    },
+    "spectrogramAggregation": "maximum fixed-dBFS frame value per overview pixel column and frequency row",
+    "contactScale": "2400 individual FOOT_CONTACT contacts per 10-second bucket fills the fixed 28-pixel strip",
+    "grayscale": "fixed linear mapping from -100..0 dBFS; gamma 1; no content normalization",
+    "zoomSelection": {
+      "180": [
+        "0-10 s",
+        "85-95 s",
+        "170-180 s"
+      ],
+      "600": [
+        "0-10 s",
+        "first plate-birth neighborhood",
+        "densest contact bucket",
+        "590-600 s"
+      ]
+    }
+  },
+  "capture": {
+    "seed": 20261005,
+    "simulationStartMs": 0,
+    "simulationEndMs": 180233.33333331998,
+    "simulationSeconds": 180.23333333332,
+    "wallSeconds": 180.25559999999405,
+    "audioContextSeconds": 180.25066666666666,
+    "clockAnchorCount": 722,
+    "eventCounts": {
+      "total": 8992,
+      "footContactGroups": 8990,
+      "individualFootContacts": 26678,
+      "plateBirths": 2,
+      "noduleBirths": 0
+    },
+    "rngObserverCallDelta": 0
+  },
+  "zooms": [
+    {
+      "index": 0,
+      "reason": "first Plate-birth neighborhood",
+      "audioDurationSeconds": 10,
+      "baseStartSeconds": 98.01666666667376,
+      "collisionOffsetSeconds": 0,
+      "requestedStartSeconds": 98.01666666667376,
+      "simulationStartSeconds": 98.0166560374206,
+      "simulationEndSeconds": 108.02410239362557,
+      "plateCountStart": 0,
+      "plateCountEnd": 1,
+      "contactGroups": 577,
+      "individualFeet": 1707,
+      "plateBirths": 1,
+      "sampleRange": [
+        4705672,
+        5185672
+      ]
+    },
+    {
+      "index": 1,
+      "reason": "densest FOOT_CONTACT bucket",
+      "audioDurationSeconds": 10,
+      "baseStartSeconds": 170,
+      "collisionOffsetSeconds": 0,
+      "requestedStartSeconds": 170,
+      "simulationStartSeconds": 169.99999722960254,
+      "simulationEndSeconds": 180.00614704456044,
+      "plateCountStart": 2,
+      "plateCountEnd": 2,
+      "contactGroups": 671,
+      "individualFeet": 1996,
+      "plateBirths": 0,
+      "sampleRange": [
+        8160802,
+        8640802
+      ]
+    },
+    {
+      "index": 2,
+      "reason": "late window (shifted -20.0s to avoid overlap)",
+      "audioDurationSeconds": 10,
+      "baseStartSeconds": 170.23333333332,
+      "collisionOffsetSeconds": -20,
+      "requestedStartSeconds": 150.23333333332,
+      "simulationStartSeconds": 150.2333125554119,
+      "simulationEndSeconds": 160.2333125554061,
+      "plateCountStart": 1,
+      "plateCountEnd": 2,
+      "contactGroups": 578,
+      "individualFeet": 1696,
+      "plateBirths": 1,
+      "sampleRange": [
+        7212031,
+        7692031
+      ]
+    }
+  ],
+  "renderHashes": {
+    "overview": {
+      "path": "timeline-overview.png",
+      "sha256": "23658876a1f3691897e3c2665c89add3e7d3b1df88492c2dee41644eaec8993e"
+    },
+    "zooms": {
+      "path": "zoom-details.png",
+      "sha256": "c4209a952f2a6b37dc3773192c8a7e063f67816337ef6c55bac7a92f2efce74d"
+    },
+    "audio": {
+      "path": "audio/continuous-final-gain.webm",
+      "sha256": "0681ccc81480be2de4afd5ad8f11ee6c0c96cb29587a1b446f89dffeb8cf0034"
+    },
+    "snapshotA": {
+      "path": "spatial/A-early.png",
+      "sha256": "76185156c433fd881454a92486e10e41d1ed72db2e92a4c65f09ff5b2a183316"
+    },
+    "snapshotB": {
+      "path": "spatial/B-formation.png",
+      "sha256": "feb14b1f8b7abe3cdd18678fdd8a5db9a1f4727c09ff9076b029fb5a69dd63e3"
+    },
+    "snapshotC": {
+      "path": "spatial/C-late.png",
+      "sha256": "c89669ad719e7442cdecc95ee4083a86e69d346cfacd091bfd97a072b6286afe"
+    },
+    "capture": {
+      "path": "capture/events-and-timeline.json.gz",
+      "sha256": "25cfd0e7bca5ab464393ee42147cd761b06b293b0b024b2ac2f4a81172435ed4"
+    },
+    "validation": {
+      "path": "validation/capture-validation.json",
+      "sha256": "53f2747677cd2d2784b4739fbe0326795e73324992d47c91e369a8bbeaddb486"
+    },
+    "audioMetrics": {
+      "path": "audio-metrics.json",
+      "sha256": "24ccda169c0a8081282d2771355ec3f3a34550b22b91ad5a2824c71f823e5b6d"
+    },
+    "clockHealth": {
+      "path": "clock-health.json",
+      "sha256": "bc5e94964895677739e5c37eddfd3ce8e380fed105449a71d4c12df64bc83a2b"
+    }
+  }
+}

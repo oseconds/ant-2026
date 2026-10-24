@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-24 — Synchronized audio / Plate timeline observation
+
+[Process log](./2026-10-24-audio-plate-timeline.md) · [Evidence package](../evidence/2026-10-24-audio-plate-timeline/README.md)
+
+- Captured one 180-second current-production natural run with continuous stereo audio, FOOT_CONTACT events, Plate births, sampled colony state, and three spatial snapshots
+- The fixed-scale timeline shows a silent-to-textured transition near the first Plate birth and later audio variation between births; temporal alignment does not establish causality
+- Decision: **MIXED**; two births are visible landmarks, while formation is sparse and late in this single run
+
 ### 2026-10-18 — Plate audio reassessment and live dense-mix plan
 
 [Process / next-pass plan](./2026-10-18-plate-audio-review-and-live-density-plan.md)

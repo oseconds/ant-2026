@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { appendFile, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { execFile } from 'node:child_process';
@@ -9,14 +10,53 @@ import { STRATIGRAPHY_AUDIO_PRESET } from './audio-snapshot-renderer.js';
 
 // Read-only evidence harness. It uses normal AntController ticks for catch-up and
 // restores the application's real RAF update before each synchronized capture.
-const seed = 20261005;
+const argv = process.argv.slice(2);
+const option = (name, fallback) => {
+  const inline = argv.find(value => value.startsWith(`${name}=`));
+  if (inline) return inline.slice(name.length + 1);
+  const index = argv.indexOf(name);
+  return index >= 0 ? argv[index + 1] ?? fallback : fallback;
+};
+const positiveOption = (name, fallback) => {
+  const value = Number(option(name, fallback));
+  if (!Number.isFinite(value) || value <= 0) throw new RangeError(`${name} must be positive.`);
+  return value;
+};
+const seed = Math.floor(positiveOption('--seed', 20261005));
+const continuousSeconds = positiveOption('--seconds', 600);
+const watchdogSeconds = positiveOption('--watchdog-seconds', 2400);
+const continuousName = option('--name', `continuous-natural-0-${continuousSeconds}s`);
+const useProductionControllerDefaults = argv.includes('--production-defaults');
 const step = 1 / 60;
 const clipSeconds = 20;
 const detailSeconds = STRATIGRAPHY_AUDIO_PRESET.durationSeconds;
 const volume = 0.35;
 const runId = new Date().toISOString().replace(/[:.]/g, '-');
-const outDir = resolve('test-results', `stratigraphy-motion-${runId}`);
+const outDir = resolve(option('--output-dir', resolve('test-results', `stratigraphy-motion-${runId}`)));
 await mkdir(outDir, { recursive: true });
+const hashFile = async path => createHash('sha256').update(await readFile(resolve(path))).digest('hex');
+const sourceHashes = Object.fromEntries(await Promise.all([
+  'src/lib/agents/ant/AntController.js',
+  'src/lib/agents/ant/AntAgent.js',
+  'src/lib/agents/ant/GasterDeposition.js',
+  'src/lib/agents/ant/PheromoneField.js',
+  'src/lib/agents/ant/GaitController.js',
+  'src/lib/agents/ant/SurfaceField.js',
+  'src/lib/agents/ant/ColonyActivation.js',
+  'src/lib/agents/ant/TrailPlateBirth.js',
+  'src/lib/agents/ant/MaterialStratigraphy.js',
+  'src/lib/renderers/AntRenderer.js',
+  'src/lib/audio/AntAudioBridge.js',
+  'src/lib/audio/AntEnvironmentAudioBridge.js',
+  'src/lib/audio/AudioEngine.js',
+  'src/lib/audio/SurfaceAudioBridge.js',
+  'src/lib/models/plate/PlateModel.js',
+  'src/lib/models/sphere/SphereModel.js',
+  'static/worklets/surface-plate.worklet.js',
+  'scripts/stratigraphy-motion-evidence.js',
+  'scripts/audio-snapshot-renderer.js',
+  'scripts/stratigraphy-audio-overview.js'
+].map(async path => [path, await hashFile(path)])));
 const server = await createServer({ server: { host: '127.0.0.1', port: 0, strictPort: false }, logLevel: 'error' });
 let browser;
 
@@ -49,14 +89,15 @@ try {
       };
     });
     await page.goto(`http://127.0.0.1:${port}`, { waitUntil: 'networkidle' });
-    await page.evaluate(async initialSeed => {
+    await page.evaluate(async ({ initialSeed, productionDefaults }) => {
       const { app } = await import('/src/main.js');
       await app.ready;
       const { AntController } = await import('/src/lib/agents/ant/AntController.js');
       const { AntEnvironmentAudioBridge } = await import('/src/lib/audio/AntEnvironmentAudioBridge.js');
-      let rng = initialSeed >>> 0;
-      const random = () => { rng = (Math.imul(rng, 1664525) + 1013904223) >>> 0; return rng / 0x100000000; };
-      app.lab.registry.ant = options => new AntController({ ...options, materialLocomotionResistance: false, random,
+      let rng = initialSeed >>> 0, rngCalls = 0;
+      const random = () => { rngCalls += 1; rng = (Math.imul(rng, 1664525) + 1013904223) >>> 0; return rng / 0x100000000; };
+      app.lab.registry.ant = options => new AntController({ ...options,
+        ...(productionDefaults ? {} : { materialLocomotionResistance: false }), random,
         audioBridge: new AntEnvironmentAudioBridge({ audioEngine: options.audioEngine, workletBaseUrl: options.workletBaseUrl }) });
       await app.selectModel('ant');
       const model = app.lab.model;
@@ -74,28 +115,33 @@ try {
         return result;
       };
       model.update = () => false;
-      window.__stratEvidence = { app, seed: initialSeed, events: [], birthEvents: [], contactCount: 0 };
+      window.__stratEvidence = { app, seed: initialSeed, events: [], birthEvents: [], contactCount: 0,
+        rngCalls: () => rngCalls, observationRngCalls: 0 };
       model.subscribe(event => {
+        const rngCallsBeforeObservation = rngCalls;
         if (event.type === 'plate-birth') {
           const descriptor = event.payload?.descriptor || event.payload;
           const eventRecord = { type: 'plate-birth', simulationTimeMs: descriptor?.bornAtSimulationTimeMs ?? model.simulationTimeMs,
-            payload: descriptor };
+            performanceTimeMs: performance.now(), payload: descriptor };
           window.__stratEvidence.birthEvents.push({ timeMs: eventRecord.simulationTimeMs, descriptor });
           window.__stratEvidence.events.push(eventRecord);
         }
         if (event.type === 'sphere-birth') {
           const descriptor = event.payload;
           window.__stratEvidence.events.push({ type: 'sphere-birth',
-            simulationTimeMs: descriptor?.bornAtSimulationTimeMs ?? model.simulationTimeMs, payload: descriptor });
+            simulationTimeMs: descriptor?.bornAtSimulationTimeMs ?? model.simulationTimeMs,
+            performanceTimeMs: performance.now(), payload: descriptor });
         }
         if (event.type === 'foot-contact') {
           window.__stratEvidence.contactCount += event.payload?.contacts?.length || 0;
           window.__stratEvidence.events.push({ type: event.payload?.type || 'FOOT_CONTACT',
-            simulationTimeMs: event.payload?.simulationTimeMs ?? model.simulationTimeMs, payload: event.payload });
+            simulationTimeMs: event.payload?.simulationTimeMs ?? model.simulationTimeMs,
+            performanceTimeMs: performance.now(), payload: event.payload });
         }
+        window.__stratEvidence.observationRngCalls += rngCalls - rngCallsBeforeObservation;
       });
-      model.setAudioVolume?.(0.35);
-    }, seed);
+      if (!productionDefaults) model.setAudioVolume?.(0.35);
+    }, { initialSeed: seed, productionDefaults: useProductionControllerDefaults });
     await page.waitForSelector('#simulation-canvas');
     await page.evaluate(() => {
       if (window.__stratProbe.contexts.length !== 0 || window.__stratProbe.worklets.length !== 0) {
@@ -130,7 +176,9 @@ try {
   async function readState(page) {
     return page.evaluate(() => {
       const model = window.__stratEvidence.app.lab.model;
+      const rngCallsBeforeObservation = window.__stratEvidence.rngCalls();
       const snapshot = model.getSnapshot();
+      window.__stratEvidence.observationRngCalls += window.__stratEvidence.rngCalls() - rngCallsBeforeObservation;
       const stratigraphy = snapshot.stratigraphy || {};
       const topology = stratigraphy.stratigraphy || {};
       const plates = model.trailPlateBirth?.getPlates?.() || [];
@@ -173,6 +221,7 @@ try {
           maskCells: plate.mask?.reduce?.((sum, value) => sum + (value ? 1 : 0), 0) || 0,
           pathLength: plate.principalPath?.length || 0, pickups: plate.pickups, source: plate.source, target: plate.target })),
         layerCount: layers.plateCount || 0,
+        exposedPlateCount: topology.plateHistory?.filter?.(plate => plate.exposedCellCount > 0).length ?? null,
         layerState: topology.plateHistory || [],
         layerSummary: layers,
         nodules: nodules.map(nodule => ({ id: nodule.id, bornAtSimulationTimeMs: nodule.bornAtSimulationTimeMs,
@@ -385,17 +434,22 @@ try {
     return metadata;
   }
 
-  async function recordContinuousRun({ targetSeconds = 600, watchdogSeconds = 2400,
-    name = 'continuous-natural-0-600s' } = {}) {
+  async function recordContinuousRun({ targetSeconds = continuousSeconds, watchdogSeconds: runWatchdogSeconds = watchdogSeconds,
+    name = continuousName } = {}) {
     const { page, context } = await openDefault();
+    const ffmpegPath = process.env.FFMPEG_PATH || 'ffmpeg';
+    const runExecFile = promisify(execFile);
     const audioWebmPath = resolve(outDir, `${name}-audio.webm`);
     const videoPath = resolve(outDir, `${name}-video.webm`);
     const sidecarPath = resolve(outDir, `${name}.json`);
+    const earlySnapshotPath = resolve(outDir, `${name}-spatial-A-early.png`);
+    const lateSnapshotPath = resolve(outDir, `${name}-spatial-C-late.png`);
+    const formationSnapshotPath = resolve(outDir, `${name}-spatial-B-formation.png`);
     await writeFile(audioWebmPath, Buffer.alloc(0));
     await writeFile(videoPath, Buffer.alloc(0));
     try {
       const startState = await readState(page);
-      await page.locator('#ant-volume').evaluate((slider, value) => {
+      if (!useProductionControllerDefaults) await page.locator('#ant-volume').evaluate((slider, value) => {
         slider.value = String(value); slider.dispatchEvent(new Event('input', { bubbles: true }));
         slider.dispatchEvent(new Event('change', { bubbles: true }));
       }, Math.round(volume * 100));
@@ -405,6 +459,7 @@ try {
         return bridge?.enabled && !bridge.loading && bridge.worklet;
       }, null, { timeout: 15000 });
       await page.screenshot({ path: resolve(outDir, `${name}-start.png`), fullPage: true });
+      await page.locator('#simulation-canvas').screenshot({ path: earlySnapshotPath });
       const setup = await page.evaluate(async ({ targetMs, watchdogMs }) => {
         const model = window.__stratEvidence.app.lab.model;
         const audio = model.audioBridge;
@@ -439,10 +494,12 @@ try {
           const audioSampleIndex = Math.max(0, Math.round((audioContext.currentTime - capture.startAudioContextTime) * audioContext.sampleRate));
           const previous = capture.anchors.at(-1);
           const record = { simulationTimeMs: model.simulationTimeMs, audioSampleIndex,
-            audioContextTimeSeconds: audioContext.currentTime - capture.startAudioContextTime };
+            audioContextTimeSeconds: audioContext.currentTime - capture.startAudioContextTime,
+            wallElapsedMs: performance.now() - capture.startedAt };
           if (!previous || record.simulationTimeMs > previous.simulationTimeMs) capture.anchors.push(record);
         };
-        capture.anchors.push({ simulationTimeMs: model.simulationTimeMs, audioSampleIndex: 0, audioContextTimeSeconds: 0 });
+        capture.anchors.push({ simulationTimeMs: model.simulationTimeMs, audioSampleIndex: 0,
+          audioContextTimeSeconds: 0, wallElapsedMs: 0 });
         let lastTimeline = model.simulationTimeMs;
         const stop = reason => {
           if (capture.completed) return;
@@ -465,12 +522,17 @@ try {
         capture.timer = setInterval(() => {
           sampleAnchor();
           if (model.simulationTimeMs - lastTimeline >= 10000) {
+            const rngCallsBeforeObservation = window.__stratEvidence.rngCalls();
             const state = model.getSnapshot();
+            window.__stratEvidence.observationRngCalls += window.__stratEvidence.rngCalls() - rngCallsBeforeObservation;
             capture.timeline.push({ simulationTimeMs: state.analysis.simulationTimeMs,
               audioSampleIndex: Math.max(0, Math.round((audioContext.currentTime - capture.startAudioContextTime) * audioContext.sampleRate)),
+              audioContextTimeSeconds: audioContext.currentTime - capture.startAudioContextTime,
+              wallElapsedMs: performance.now() - capture.startedAt,
               population: state.analysis.population, totalSpawned: state.analysis.totalSpawned,
               totalRetired: state.analysis.totalRetired, activation: state.analysis.colonyActivation?.activation ?? null,
               plateCount: state.stratigraphy?.layers?.plateCount || 0,
+              exposedPlateCount: state.stratigraphy?.stratigraphy?.plateHistory?.filter?.(plate => plate.exposedCellCount > 0).length ?? null,
               exposedCellCount: state.stratigraphy?.layers?.exposedCellCount || 0,
               buriedLayerCellCount: state.stratigraphy?.layers?.buriedLayerCellCount || 0,
               noduleCount: state.stratigraphy?.nodules?.length || 0,
@@ -498,10 +560,17 @@ try {
           processorDiagnosticsStart: capture.startProcessorDiagnostics,
           processorDiagnosticsInitial: audio.surface?.diagnostics || {},
           connectedContextCount: window.__stratProbe.contexts.length };
-      }, { targetMs: targetSeconds * 1000, watchdogMs: watchdogSeconds * 1000 });
+      }, { targetMs: targetSeconds * 1000, watchdogMs: runWatchdogSeconds * 1000 });
       await writeFile(sidecarPath, JSON.stringify({ status: 'recording', seed, targetSimulationTimeMs: targetSeconds * 1000,
         setup, startState, artifacts: { audioWebm: `${name}-audio.webm`, video: `${name}-video.webm`,
-          startScreenshot: `${name}-start.png` }, note: `The browser-owned timer stops at ${targetSeconds} seconds of simulation time or after ${watchdogSeconds} wall seconds.` }, null, 2));
+          startScreenshot: `${name}-start.png`, earlySpatialSnapshot: `${name}-spatial-A-early.png` },
+        captureSettings: { productionControllerDefaults: useProductionControllerDefaults,
+          materialLocomotionResistance: useProductionControllerDefaults ? 'AntController constructor default' : false,
+          audioVolumeAtStart: startState.audio?.volume ?? null,
+          audioOutputGainAtStart: setup.outputGain,
+          baseSubstrateEnabledAtStart: startState.audio?.baseSubstrateEnabled ?? null,
+          stateObservationCadenceSeconds: 10, clockAnchorCadenceMs: 250 },
+        sourceHashes, note: `The browser-owned timer stops at ${targetSeconds} seconds of simulation time or after ${runWatchdogSeconds} wall seconds.` }, null, 2));
 
       const anchors = [], events = [], timeline = [];
       let lastProgress = -1;
@@ -559,7 +628,11 @@ try {
       const finalBrowser = await page.evaluate(() => {
         const capture = window.__stratEvidence.longCapture;
         const model = window.__stratEvidence.app.lab.model;
+        const rngCallsBeforeObservation = window.__stratEvidence.rngCalls();
+        const finalAnalysis = model.getSnapshot().analysis;
+        window.__stratEvidence.observationRngCalls += window.__stratEvidence.rngCalls() - rngCallsBeforeObservation;
         return { wallDurationMs: capture.stoppedAt - capture.startedAt,
+          captureStartedAtPerformanceMs: capture.startedAt,
           simulationStartMs: capture.startSimulationTimeMs, simulationEndMs: capture.endSimulationTimeMs,
           audioContextDurationSeconds: capture.endAudioContextTime - capture.startAudioContextTime,
           contacts: capture.endContacts - capture.startContacts,
@@ -569,27 +642,79 @@ try {
           perf: { calls: capture.endPerf.calls - capture.startPerf.calls,
             totalMs: capture.endPerf.totalMs - capture.startPerf.totalMs,
             maxUpdateMs: model.__stratigraphyPerf.recording?.maxMs ?? null },
-          finalState: model.getSnapshot().analysis, mode: model.audioBridge.mode,
+          rng: { totalInjectedCalls: window.__stratEvidence.rngCalls(),
+            observerCallDelta: window.__stratEvidence.observationRngCalls },
+          finalState: finalAnalysis, mode: model.audioBridge.mode,
           volume: model.audioBridge.volume, outputGain: model.audioBridge.worklet?.gainNode?.gain?.value ?? null,
           sampleRate: window.__stratProbe.contexts.at(-1)?.sampleRate ?? null,
           processorErrors: window.__stratProbe.processorErrors,
           workletMessages: window.__stratProbe.worklets.at(-1)?.messages.map(message => ({ atPerformanceMs: message.at, ...message.data })) || [] };
       });
       await page.screenshot({ path: resolve(outDir, `${name}-end.png`), fullPage: true });
+      await page.locator('#simulation-canvas').screenshot({ path: lateSnapshotPath });
       const finalState = await readState(page);
       const footGroups = events.filter(event => event.type === 'FOOT_CONTACT');
       const individualFeet = footGroups.reduce((sum, event) => sum + (Array.isArray(event.payload?.contacts) ? event.payload.contacts.length : 0), 0);
       const eventCounts = { total: events.length, footContactGroups: footGroups.length, individualFootContacts: individualFeet,
         plateBirths: events.filter(event => event.type === 'plate-birth').length,
         noduleBirths: events.filter(event => event.type === 'sphere-birth').length };
+      const wallForSimulationMs = timeMs => {
+        if (timeMs <= anchors[0].simulationTimeMs) return anchors[0].wallElapsedMs;
+        for (let index = 1; index < anchors.length; index += 1) {
+          const left = anchors[index - 1], right = anchors[index];
+          if (timeMs <= right.simulationTimeMs) {
+            const ratio = (timeMs - left.simulationTimeMs) / (right.simulationTimeMs - left.simulationTimeMs);
+            return left.wallElapsedMs + ratio * (right.wallElapsedMs - left.wallElapsedMs);
+          }
+        }
+        return anchors.at(-1).wallElapsedMs;
+      };
+      const simulationForWallElapsedMs = timeMs => {
+        if (timeMs <= anchors[0].wallElapsedMs) return anchors[0].simulationTimeMs;
+        for (let index = 1; index < anchors.length; index += 1) {
+          const left = anchors[index - 1], right = anchors[index];
+          if (timeMs <= right.wallElapsedMs) {
+            const ratio = (timeMs - left.wallElapsedMs) / (right.wallElapsedMs - left.wallElapsedMs);
+            return left.simulationTimeMs + ratio * (right.simulationTimeMs - left.simulationTimeMs);
+          }
+        }
+        return anchors.at(-1).simulationTimeMs;
+      };
+      const firstBirth = events.find(event => event.type === 'plate-birth');
+      const formationSimulationTimeMs = firstBirth?.simulationTimeMs ?? finalBrowser.simulationStartMs
+        + (finalBrowser.simulationEndMs - finalBrowser.simulationStartMs) / 2;
+      const formationWallElapsedMs = firstBirth?.performanceTimeMs !== undefined
+        ? firstBirth.performanceTimeMs - finalBrowser.captureStartedAtPerformanceMs + 100
+        : wallForSimulationMs(formationSimulationTimeMs);
+      const formationFrameOffsetSeconds = Math.max(0, Math.min(finalBrowser.wallDurationMs / 1000,
+        formationWallElapsedMs / 1000));
+      await runExecFile(ffmpegPath, ['-hide_banner', '-loglevel', 'error', '-y', '-i', videoPath,
+        '-ss', formationFrameOffsetSeconds.toFixed(6), '-frames:v', '1', '-update', '1', formationSnapshotPath],
+      { maxBuffer: 8 * 1024 * 1024 });
+      const spatialSnapshots = [
+        { label: 'A', reason: firstBirth ? 'early before first Plate birth' : 'early; no Plate birth occurred',
+          simulationTimeMs: finalBrowser.simulationStartMs, image: `${name}-spatial-A-early.png` },
+        { label: 'B', reason: firstBirth ? 'first Plate birth neighborhood' : 'run midpoint; no Plate birth occurred',
+          simulationTimeMs: formationSimulationTimeMs,
+          frameSimulationTimeMs: simulationForWallElapsedMs(formationFrameOffsetSeconds * 1000),
+          image: `${name}-spatial-B-formation.png`, videoOffsetSeconds: formationFrameOffsetSeconds },
+        { label: 'C', reason: 'near run end', simulationTimeMs: finalBrowser.simulationEndMs,
+          image: `${name}-spatial-C-late.png` }
+      ];
       const browserEvidencePath = resolve(outDir, `${name}-browser-evidence.json`);
       await writeFile(browserEvidencePath, JSON.stringify({ status: 'captured-awaiting-audio-conversion', seed,
         targetSimulationTimeMs: targetSeconds * 1000, setup, startState, end: finalBrowser, finalState,
         simulationDurationSeconds: (finalBrowser.simulationEndMs - finalBrowser.simulationStartMs) / 1000,
         wallDurationSeconds: finalBrowser.wallDurationMs / 1000, clockAnchorIntervalMs: 250,
-        clockAnchors: anchors, events, timeline, eventCounts,
+        clockAnchors: anchors, events, timeline, eventCounts, spatialSnapshots, sourceHashes,
+        captureSettings: { productionControllerDefaults: useProductionControllerDefaults,
+          materialLocomotionResistance: useProductionControllerDefaults ? 'AntController constructor default' : false,
+          audioVolumeAtStart: startState.audio?.volume ?? null, audioOutputGainAtStart: setup.outputGain,
+          baseSubstrateEnabledAtStart: startState.audio?.baseSubstrateEnabled ?? null,
+          stateObservationCadenceSeconds: 10, clockAnchorCadenceMs: 250,
+          contactRowSemantic: 'FOOT_CONTACT event groups are reported separately from individual contacts.' },
         provenance: { capture: 'Real Chrome synchronized Canvas/WebM and final-gain stereo WebM; browser evidence is persisted before PCM conversion.',
-          audio: 'The final-gain stereo WebM is the source for float32 WAV conversion; UI gain was 35 percent.',
+          audio: `The final-gain stereo WebM is the source for float32 WAV conversion; the existing UI default volume (${startState.audio?.volume ?? 'unknown'}) was preserved.`,
           clockMap: '250 ms timer anchors map simulation time to AudioContext sample index. FOOT_CONTACT events retain gait payload timestamps.',
           processorDiagnostics: 'Processor telemetry is requested at 10-second timeline checkpoints and arrives asynchronously; message timestamps use performance.now.' } }, null, 2));
       const lifecyclePath = resolve(outDir, `${name}-paused-audio-lifecycle.json`);
@@ -679,8 +804,6 @@ try {
           freshContactsOnlyAfterResume: afterResume.newFootContactGroups > 0,
           freshWorkletStrikeCount: afterResume.diagnostics?.strikes ?? null } };
       await writeFile(lifecyclePath, JSON.stringify(lifecycle, null, 2));
-      const ffmpegPath = process.env.FFMPEG_PATH || 'ffmpeg';
-      const runExecFile = promisify(execFile);
       const wavPath = resolve(outDir, `${name}.wav`);
       const ffmpegResult = await runExecFile(ffmpegPath, ['-y', '-i', audioWebmPath, '-map', '0:a:0', '-vn',
         '-ac', '2', '-ar', String(finalBrowser.sampleRate || setup.sampleRate), '-c:a', 'pcm_f32le', wavPath],
@@ -690,18 +813,24 @@ try {
         formatTag: wavBytes.readUInt16LE(20), channels: wavBytes.readUInt16LE(22), sampleRate: wavBytes.readUInt32LE(24),
         bitsPerSample: wavBytes.readUInt16LE(34), bytes: wavBytes.length };
       await writeFile(sidecarPath, JSON.stringify({ status: finalBrowser.simulationEndMs >= targetSeconds * 1000 ? 'completed' : 'watchdog-stopped',
-        seed, targetSimulationTimeMs: targetSeconds * 1000, setup, startState, end: finalBrowser,
+        seed, targetSimulationTimeMs: targetSeconds * 1000, setup, startState, end: finalBrowser, finalState,
         simulationDurationSeconds: (finalBrowser.simulationEndMs - finalBrowser.simulationStartMs) / 1000,
         wallDurationSeconds: finalBrowser.wallDurationMs / 1000,
         clockAnchorIntervalMs: 250,
         browserSampleRate: finalBrowser.sampleRate, wav: { path: `${name}.wav`, header: wavHeader,
           ffmpeg: `${ffmpegPath} ... -c:a pcm_f32le`, conversionStdout: ffmpegResult.stdout.trim() },
-        clockAnchors: anchors, events, timeline,
-        eventCounts,
+        clockAnchors: anchors, events, timeline, eventCounts, spatialSnapshots, sourceHashes,
+        captureSettings: { productionControllerDefaults: useProductionControllerDefaults,
+          materialLocomotionResistance: useProductionControllerDefaults ? 'AntController constructor default' : false,
+          audioVolumeAtStart: startState.audio?.volume ?? null, audioOutputGainAtStart: setup.outputGain,
+          baseSubstrateEnabledAtStart: startState.audio?.baseSubstrateEnabled ?? null,
+          stateObservationCadenceSeconds: 10, clockAnchorCadenceMs: 250,
+          contactRowSemantic: 'FOOT_CONTACT event groups are reported separately from individual contacts.' },
         provenance: { simulation: 'Real system Chrome requestAnimationFrame from time zero; seeded RNG and original ANT defaults; no hand-placed agents, material, or contact events.',
-          capture: `Audio and canvas video MediaRecorders started together and stopped by an in-page browser timer when model.simulationTimeMs reached ${targetSeconds * 1000}; ${watchdogSeconds}s wall watchdog.`,
-          audio: 'Float32 stereo WAV decoded from actual WebM audio captured as a parallel tap on the selected final gain; gain and original output path remained unchanged.',
+          capture: `Audio and canvas video MediaRecorders started together and stopped by an in-page browser timer when model.simulationTimeMs reached ${targetSeconds * 1000}; ${runWatchdogSeconds}s wall watchdog.`,
+          audio: `Float32 stereo WAV decoded from actual WebM audio captured as a parallel tap on the selected final gain; UI volume ${startState.audio?.volume ?? 'unknown'} and the original output path remained unchanged.`,
           clockMap: 'Browser anchors are sampled by a 250 ms timer and map model simulationTimeMs to AudioContext sample index; exact FOOT_CONTACT event timestamps use gait payload simulationTimeMs.',
+          rngAudit: 'Event observers and getSnapshot reads compare injected LCG call counts before/after; observer delta is reported in end.rng.',
           limit: 'Audio timing anchors include codec/recorder offset uncertainty; raw PCM is actual recorded signal with no synthesis or stitching.' } }, null, 2));
       return { sidecarPath, browserEvidencePath, lifecyclePath, audioWebmPath, videoPath, wavPath,
         status: finalBrowser.simulationEndMs >= targetSeconds * 1000 ? 'completed' : 'watchdog-stopped' };
