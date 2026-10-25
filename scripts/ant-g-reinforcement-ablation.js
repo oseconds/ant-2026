@@ -71,7 +71,7 @@ function captureFor(seed, arm, seconds = SECONDS) {
   return { seed, arm, seconds, secondsData: Array.from({ length: seconds }, (_, index) => emptySecond(index + 1)),
     controller: null, context: null, tick: 0, ablation: null, pending: null,
     sourceMismatchCount: 0, missingTrailStateCount: 0, maxRateError: 0, maxChunkClosureError: 0,
-    occupancy: createOccupancyObserver(), occupancyPerSecond: [], occupancyCheckpoints: [] };
+    occupancy: createOccupancyObserver(), occupancyPerSecond: [], occupancyCheckpoints: [], occupancyMaps: new Map() };
 }
 function activeSecond(capture) { return capture?.context ? capture.secondsData[capture.context.second - 1] : null; }
 
@@ -142,7 +142,13 @@ AntController.prototype.tick = function observedTick(dt) {
     const occupancy = observeOccupancyTick(capture.occupancy, this.agents);
     if (occupancy) {
       capture.occupancyPerSecond.push(occupancy);
-      if (CHECKPOINTS.includes(occupancy.second)) capture.occupancyCheckpoints.push(occupancy);
+      if (CHECKPOINTS.includes(occupancy.second)) {
+        capture.occupancyCheckpoints.push(occupancy);
+        capture.occupancyMaps.set(occupancy.second, {
+          cumulativeAntSeconds: Array.from(capture.occupancy.cumulative, value => value * DT),
+          recent30sAntSeconds: Array.from(capture.occupancy.recent, value => value * DT)
+        });
+      }
     }
     return result;
   }
@@ -331,13 +337,21 @@ function normalizeResult(result, arm) {
   }
   return normalized;
 }
-async function relabelR0Files(result, output) {
+async function relabelR0Files(result, output, capture) {
   const names = [result.timelineFile, ...result.checkpointMapFiles];
   for (const oldName of names) {
     const oldPath = resolve(output, oldName), bytes = await readFile(oldPath);
     const payload = JSON.parse(gunzipSync(bytes));
     assert.equal(payload.arm, 'G');
     payload.arm = 'G-R0';
+    if (payload.occupancy) {
+      const corrected = capture.occupancyMaps.get(payload.seconds);
+      assert(corrected, 'corrected tick-level occupancy exists for each checkpoint map');
+      assert.deepEqual(payload.occupancy.cumulativeAntSeconds, corrected.cumulativeAntSeconds,
+        'cumulative checkpoint occupancy map matches the independent observer exactly');
+      payload.occupancy.cumulativeAntSeconds = corrected.cumulativeAntSeconds;
+      payload.occupancy.recent30sAntSeconds = corrected.recent30sAntSeconds;
+    }
     const newName = oldName.replace('-G-', '-G-R0-');
     await writeFile(resolve(output, newName), gzipSync(JSON.stringify(payload), { level: 6, mtime: 0 }));
     await rm(oldPath);
@@ -444,9 +458,12 @@ async function runOne(seed, arm, output, priorG, priorSourceG, earlyMask) {
   finally { activeCapture = null; activeArm = 'G'; }
   assert.equal(capture.tick, SECONDS * 60);
   assert(capture.ablation, 'initialization records the declared ablation');
+  assert.equal(result.defaults.pheromone.reinforcementGain, arm === 'G-R0' ? 0 : 5,
+    'the intended gain is the only initialized arm difference');
+  let sourceParentParity = null;
   if (arm === 'G-R0') {
     assert.equal(capture.ablation.before, 5); assert.equal(capture.ablation.after, 0);
-    await relabelR0Files(result, output);
+    await relabelR0Files(result, output, capture);
   }
   const closure = closeAccounting(capture, result);
   assert.equal(capture.sourceMismatchCount, 0, 'chunk source rate matches the actual rate supplied to deposition');
@@ -485,6 +502,9 @@ async function runOne(seed, arm, output, priorG, priorSourceG, earlyMask) {
           'parent G source checkpoint ' + checkpoint.seconds + ' ' + sourceKey);
       }
     }
+    sourceParentParity = { sourceTotalsExact: true,
+      checkpoints: priorSourceG.checkpoints.map(checkpoint => checkpoint.seconds),
+      allCheckpointComponentsExact: true };
   }
   const sourceRows = capture.secondsData.map(snapshotSecond);
   const sourceCheckpoints = CHECKPOINTS.map(seconds => through(capture.secondsData, seconds));
@@ -503,9 +523,12 @@ async function runOne(seed, arm, output, priorG, priorSourceG, earlyMask) {
       'independent tick observer cumulative top-10 share matches the frozen runner');
     assert.equal(point.cumulative.normalizedEntropy, runnerPoint.occupancy.cumulative.normalizedEntropy,
       'independent tick observer cumulative entropy matches the frozen runner');
+    runnerPoint.occupancy.recent30sCoverage = point.recent30s.coverage;
+    runnerPoint.occupancy.recent30s = point.recent30s;
   }
   normalized.correctedOccupancyCheckpoints = capture.occupancyCheckpoints;
-  return { result: normalized, source, rawFiles: [normalized.timelineFile, ...normalized.checkpointMapFiles] };
+  return { result: normalized, source, sourceParentParity,
+    rawFiles: [normalized.timelineFile, ...normalized.checkpointMapFiles] };
 }
 
 function deterministicJson(value) {
@@ -544,8 +567,18 @@ export async function runFullPass(outputDir) {
     controllerSourceSha256: sources['src/lib/agents/ant/AntController.js'],
     gasterDepositionSourceSha256: sources['src/lib/agents/ant/GasterDeposition.js'],
     parentMovementRunnerSha256: await fileHash(resolve(ROOT, 'scripts/ant-316-gaussian-dose-unit-movement-shadow.js')),
+    researchToolHashes: { runner: await fileHash(resolve(ROOT, 'scripts/ant-g-reinforcement-ablation.js')),
+      focusedTest: await fileHash(resolve(ROOT, 'tests/ant-g-reinforcement-ablation.test.js')) },
+    ablation: 'after ordinary init and before tick one, set only state.pheromone.reinforcementGain from 5 to 0',
+    observerRngCalls: 0,
     recentOccupancyCorrection: 'independent read-only 60 Hz occupancy counter; reset each second and roll a 30-second bucket; cumulative values must match the frozen runner exactly',
-    preregistrationSha256, parent };
+    preregistrationSha256,
+    parentEvidence: { movementSummarySha256: parent.movementSummarySha256,
+      movementManifestSha256: parent.movementManifestSha256,
+      movementFilesVerified: parent.movementFilesVerified,
+      sourceDecompositionSummarySha256: parent.sourceDecompositionSummarySha256,
+      sourceDecompositionManifestSha256: parent.sourceDecompositionManifestSha256 },
+    productionSourceHashes: sources };
   const files = await readdir(outputDir).catch(() => []);
   assert.equal(files.length, 0, 'use a fresh empty evidence data directory');
   await mkdir(outputDir, { recursive: true });
@@ -579,7 +612,8 @@ export async function runFullPass(outputDir) {
         parentG: { resultEqual: true, rawTimelineSha256: await fileHash(resolve(scratch, 'seed' + seed + '-G-raw.json.gz')),
           rawTimelineParentSha256: await fileHash(resolve(ROOT, PARENT, 'data/seed' + seed + '-G-raw.json.gz')),
           checkpointMapsEqual: false },
-        sourceClosure: { G: intact.source.chunkAccounting, 'G-R0': ablated.source.chunkAccounting } });
+        sourceClosure: { G: intact.source.chunkAccounting, 'G-R0': ablated.source.chunkAccounting },
+        sourceParentParity: intact.sourceParentParity });
       const sourceGName = 'seed' + seed + '-G-source-accounting.json.gz';
       const sourceR0Name = 'seed' + seed + '-G-R0-source-accounting.json.gz';
       const gReceipt = await writeGzip(resolve(outputDir, sourceGName), intact.source);
