@@ -1,6 +1,6 @@
 # ANT — Current Architecture, Evidence and Research Boundary
 
-**Current repository state: 2026-10-18**
+**Current repository state: 2026-10-25**
 
 이 문서는 ANT의 **현재 verified state**를 위한 GitHub-side hub다. 과정은 [daily logs](daily/README.md), 실험별 원본과 재현 자료는 [evidence packages](evidence/)에 둔다.
 
@@ -55,13 +55,20 @@ af9c417  Record ANT social graph baseline evidence
 
 `PheromoneField`는 shared environmental memory다.
 
-- 96×96 grid
-- 15 s half-life
+- production field: normalized `[0,1]²` world에 놓인 316×316 Float32 nodal values
+- compact Gaussian writer: `R=0.0045`, `σ=0.00225`; 15 s half-life; point-signal cap 8
+- ordinary bilinear reads; point/segment requests and returns remain in authored source-dose units (`depositPoint()` / `depositSegment()` return the accepted in-domain request, not cap-surviving storage)
+- field writer 내부에서만 `3969/361` reference-area coefficient conversion 적용
+- `nodeSum`와 legacy `totalMass` / `analysis.pheromoneMass`는 resolution-dependent native coefficient sum; `reconstructedIntegral`은 edge-weighted bilinear reference integral이며 calibrated chemical mass가 아님
 - gaster rear에서 실제 이동 거리 기반 deposition
 - short-range evidence 기반 `trailAdherence`
 - founder refinement는 low-evidence 새 commitment와 baseline deposition만 약하게 낮춤
 
-Founder pass 이후 behavior를 더 튜닝해서 branch/procession을 만들지 않는다.
+Local/far sensor half-saturation (`0.018` / `0.035`), activation half-saturation (`0.04`), TrailPlateBirth chemical half-saturation/threshold (`0.04` / `0.30`), adherence, movement, recruitment, material, renderer absolute mapping, and audio contracts were not retuned for G. Boundary truncation and node saturation remain exceptions to the interior reference-integral convention. [G production adoption contract and receipts](evidence/2026-10-25-g-production-adoption/README.md).
+
+The fixed-cue and three-seed 600 s evidence matched the production-shaped candidate before adoption. The refined representation preserves more spatial source-position/orientation information in the controlled assays; this is an engineering result, not biological validation. G's occupancy concentration and higher sensor-response operating range are observed characteristics, not established improvements. A short Audio-Off browser run was viable, while rare long RAF gaps remain unattributed. Audio-On and exhibition-duration reliability remain unverified. The previous 96×96 production is now historical comparison evidence, not a current production alternative.
+
+Founder pass 이후 behavior를 더 튜닝해서 branch/procession을 만들지 않는다. G does not resolve movement angular-feedback limits, natural collective-route qualification, material saturation, or mature AudioWorklet realtime collapse.
 
 ### Mechanical memory
 
