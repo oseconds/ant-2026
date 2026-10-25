@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
@@ -228,7 +229,7 @@ async function collectSeed(seed, baselineSummary, baselineRawBytes) {
     const output = resolve(EVIDENCE, 'data', `seed-${seed}.json.gz`);
     await writeFile(output, gz);
     return { seed, raw, rawSha256: hash(gz), baselineRawSha256: previousRawSha256,
-      traceChecks, initialStateSha256, events, output };
+      traceChecks, initialStateSha256, events, directCaptureValidation, output };
   } finally {
     unsubscribe();
     await controller.destroy();
@@ -271,11 +272,11 @@ function csv(rows, columns) {
 }
 
 export function makeTimeSvg(timeBins) {
-  const width = 1200, height = 510, left = 76, right = 26, panelHeight = 176;
+  const width = 1200, height = 560, left = 76, right = 26, panelHeight = 150;
   const plotWidth = width - left - right;
   const panels = [
     { key: 'allValidSurfaceFootResponses', y: 64, title: 'All valid SurfaceField foot responses' },
-    { key: 'routedStrikes', y: 292, title: 'Born Surface strikes posted to surface-plate-processor' }
+    { key: 'routedStrikes', y: 325, title: 'Born Surface strikes posted to surface-plate-processor' }
   ];
   const x = index => left + (index + 0.5) * plotWidth / 10;
   const y = (base, value) => base + panelHeight - value * panelHeight;
@@ -302,7 +303,7 @@ export function makeTimeSvg(timeBins) {
       parts.push(`<circle cx="${x(index)}" cy="${y(panel.y, rows[index].quantiles.p50)}" r="4" fill="#164e63"/>`);
     }
   }
-  parts.push('<text x="600" y="503" text-anchor="middle" font-family="Arial" font-size="11">Vertical bars: p05–p95; line: p50. Fixed hardness axis 0–1. Time bins 60 s.</text>', '</svg>');
+  parts.push('<text x="600" y="542" text-anchor="middle" font-family="Arial" font-size="11">Vertical bars: p05–p95; line: p50. Fixed hardness axis 0–1. Time bins 60 s.</text>', '</svg>');
   return `${parts.join('\n')}\n`;
 }
 
@@ -311,7 +312,7 @@ function summarizeAll(seedResults) {
     simulationTimeMs: row.simulationTimeMs, hardness: row.message.payload.hardness })));
   const pooledResponses = seedResults.flatMap(result => result.raw.allValidSurfaceFootResponses);
   const perSeed = seedResults.map(({ seed, raw, rawSha256, baselineRawSha256, traceChecks,
-    initialStateSha256, events }) => {
+    initialStateSha256, events, directCaptureValidation }) => {
     const routed = summarizePopulation(raw.routedStrikes.map(row => ({ simulationTimeMs: row.simulationTimeMs,
       hardness: row.message.payload.hardness })));
     const all = summarizePopulation(raw.allValidSurfaceFootResponses);
@@ -320,7 +321,8 @@ function summarizeAll(seedResults) {
         routedStrikes: summarizeTimeBins(raw.routedStrikes.map(row => ({ simulationTimeMs: row.simulationTimeMs,
           hardness: row.message.payload.hardness }))),
         allValidSurfaceFootResponses: summarizeTimeBins(raw.allValidSurfaceFootResponses) },
-      provenance: { rawSha256, baselineRawSha256, initialStateSha256, events, traceChecks } };
+      provenance: { rawSha256, baselineRawSha256, initialStateSha256, events, traceChecks,
+        directCaptureValidation } };
   });
   const pooledRouted = summarizePopulation(pooledStrikes);
   const pooledAll = summarizePopulation(pooledResponses);
@@ -337,6 +339,15 @@ async function shaFiles() {
     'scripts/ant-g-production-candidate-natural.js')));
   result['scripts/ant-g-natural-hardness-distribution.js'] = hash(await readFile(fileURLToPath(import.meta.url)));
   return result;
+}
+
+function verifyProductionSourcesUnchanged() {
+  const changed = execFileSync('git', ['diff', '--name-only', 'origin/main', '--', 'src', 'static/worklets'],
+    { encoding: 'utf8' }).trim().split(/\r?\n/).filter(Boolean);
+  const untracked = execFileSync('git', ['ls-files', '--others', '--exclude-standard', '--', 'src', 'static/worklets'],
+    { encoding: 'utf8' }).trim().split(/\r?\n/).filter(Boolean);
+  assert.deepEqual([...changed, ...untracked], [], 'production source and worklets must remain unchanged');
+  return { baseline: 'origin/main', changedFiles: [], untrackedFiles: [] };
 }
 
 function selfCheck() {
@@ -359,6 +370,7 @@ async function main() {
   const baselineSummary = JSON.parse(await readFile(resolve(BASELINE, 'data/SUMMARY.json'), 'utf8'));
   assert.equal(baselineSummary.seconds, SECONDS);
   assert.deepEqual(baselineSummary.scenarios.map(row => row.seed), SEEDS);
+  const sourceDiff = verifyProductionSourcesUnchanged();
   await mkdir(resolve(EVIDENCE, 'data'), { recursive: true });
   const seedResults = [];
   for (const seed of SEEDS) {
@@ -374,10 +386,11 @@ async function main() {
     productionBaseline: { savedGCandidateReview: 'docs/ant/evidence/2026-10-25-g-production-candidate-review',
       sourceFiles: await shaFiles(), inputSummarySha256: hash(await readFile(resolve(BASELINE, 'data/SUMMARY.json'))) },
     ...summaryData,
-    validation: { seeds: seedResults.map(({ seed, traceChecks, initialStateSha256, events,
-      rawSha256, baselineRawSha256 }) => ({ seed, traceChecks, initialStateSha256, events, rawSha256, baselineRawSha256 })),
+    validation: { seeds: seedResults.map(({ seed, traceChecks, initialStateSha256, events, directCaptureValidation,
+      rawSha256, baselineRawSha256 }) => ({ seed, traceChecks, initialStateSha256, events, rawSha256,
+      baselineRawSha256, directCaptureValidation })),
       allTracesMatchSavedG: seedResults.every(result => Object.values(result.traceChecks).every(Boolean)),
-      sourceAndWorkletUnchanged: true } };
+      sourceDiff, sourceAndWorkletUnchanged: true } };
   assert.equal(summary.validation.allTracesMatchSavedG, true);
   const plates = plateSummaries(seedResults);
   const timeRows = [];
@@ -396,9 +409,10 @@ async function main() {
   await writeFile(resolve(EVIDENCE, 'plate-summary.csv'), csv(plates, plateColumns));
   await writeFile(resolve(EVIDENCE, 'hardness-time.svg'), makeTimeSvg(summary.pooled.timeBins));
   await writeFile(resolve(EVIDENCE, 'VALIDATION.json'), `${JSON.stringify({ schema: summary.schema,
-    rawFiles: seedResults.map(({ seed, rawSha256, baselineRawSha256, traceChecks }) => ({ seed, rawSha256, baselineRawSha256, traceChecks })),
+    rawFiles: seedResults.map(({ seed, rawSha256, baselineRawSha256, traceChecks, directCaptureValidation }) => ({
+      seed, rawSha256, baselineRawSha256, traceChecks, directCaptureValidation })),
     selfCheck: selfCheck(), allTracesMatchSavedG: summary.validation.allTracesMatchSavedG,
-    sourceAndWorkletUnchanged: true }, null, 2)}\n`);
+    sourceDiff, sourceAndWorkletUnchanged: true }, null, 2)}\n`);
   console.log(JSON.stringify({ output: EVIDENCE, pooled: {
     routedCount: summary.pooled.routedStrikes.count,
     routedP50: summary.pooled.routedStrikes.quantiles.p50,
