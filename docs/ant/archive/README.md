@@ -41,6 +41,12 @@ The ChatGPT-upload suffixes `(1)`/`(2)` were removed from filenames for this arc
 
 [Authored formation law and world-model clarification](2026-10-11-authored-formation-law-and-world-model-clarification.md) preserves the independent review synthesis that followed the Dimensional Formation discussion. It records the narrower causal interpretation that current ANT already has an authored corridor-to-Plate formation law, treats **C1 Structural Commitment** as a world-acceptance/physical-interpretation boundary rather than a new substance, parks C2 and any new retained-relation ontology, and reframes Dimensional Formation as descriptive/artistic grammar. It also records the broader project-level shift from “what new material state should be formed?” toward **“what should retained history change later?”**. **Review-derived archive only; no production change, new W1 mechanism, material→organism feedback or roadmap adoption is implied.**
 
+## 2026-10-26 Argon High × Astra High independent review synthesis
+
+[Independent artistic/research reviews: Argon High and Astra High (2026-10-26)](2026-10-26-independent-review-argon-high-astra-high.md) archives a comparison of the two reviews, including Argon's successive corrections (material-range interpretation, Nodule frequency and decay, dense audio/runtime performance claims), Astra's authored-selection and audience-time framing, and **unadopted** research/artistic candidates such as hardness-shaped contact, selective layer listening, lithification, pre-aged entry, and visit-to-visit persistence.
+
+This is a conversation-derived **review synthesis, not the full verbatim transcripts**, not an independent rerun of every evidence sidecar, and not an adopted next-pass plan. Its links to pre-G branch-only research do not confer production status. Current implementation claims must be rechecked against actual `main` and `../README.md`.
+
 ## 2026-10-06 and 2026-10-07 chronology
 
 Date-specific development history already lives in the canonical daily logs and evidence, so it is **not duplicated** into this archive:
