@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-26 — G natural hardness distribution
+
+[Process log](./2026-10-26-g-natural-hardness-distribution.md) · [Evidence package](../evidence/2026-10-26-g-natural-hardness-distribution/README.md)
+
+- Captured the actual Born Surface `strike` posts and all valid SurfaceField hardness responses in three matched 600 s production-G runs
+- Routed strikes had a higher low-tail/central hardness distribution than all responses; both populations shifted upward over simulation time
+- No hardness-to-pulse mapping was tested; the fixed 3 ms production pulse and current ignored-hardness worklet remain unchanged
+
 ### 2026-10-25 — Candidate G production adoption
 
 [Adoption record](../evidence/2026-10-25-g-production-adoption/README.md)

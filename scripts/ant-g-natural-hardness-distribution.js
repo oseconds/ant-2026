@@ -18,7 +18,8 @@ const HISTOGRAM_BINS = 10;
 const TIME_BIN_SECONDS = 60;
 const TIME_END_TOLERANCE_MS = 1e-6;
 const SOURCE_FILES = Object.freeze([
-  'src/lib/agents/ant/AntController.js', 'src/lib/agents/ant/SurfaceField.js',
+  'src/lib/agents/ant/AntController.js', 'src/lib/agents/ant/PheromoneField.js',
+  'src/lib/agents/ant/GasterDeposition.js', 'src/lib/agents/ant/SurfaceField.js',
   'src/lib/agents/ant/TrailPlateBirth.js', 'src/lib/agents/ant/MaterialStratigraphy.js',
   'src/lib/agents/ant/GaitController.js', 'src/lib/audio/SurfaceAudioBridge.js',
   'src/lib/audio/AntEnvironmentAudioBridge.js', 'src/lib/audio/compileSurfaceTopology.js',
