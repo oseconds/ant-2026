@@ -45,7 +45,9 @@ The ChatGPT-upload suffixes `(1)`/`(2)` were removed from filenames for this arc
 
 [Independent artistic/research reviews: Argon High and Astra High (2026-10-26)](2026-10-26-independent-review-argon-high-astra-high.md) archives a comparison of the two reviews, including Argon's successive corrections (material-range interpretation, Nodule frequency and decay, dense audio/runtime performance claims), Astra's authored-selection and audience-time framing, and **unadopted** research/artistic candidates such as hardness-shaped contact, selective layer listening, lithification, pre-aged entry, and visit-to-visit persistence.
 
-This is a conversation-derived **review synthesis, not the full verbatim transcripts**, not an independent rerun of every evidence sidecar, and not an adopted next-pass plan. Its links to pre-G branch-only research do not confer production status. Current implementation claims must be rechecked against actual `main` and `../README.md`.
+This is a conversation-derived **review synthesis, not the reviewer original texts**, not an independent rerun of every evidence sidecar, and not an adopted next-pass plan. Its links to pre-G branch-only research do not confer production status. Current implementation claims must be rechecked against actual `main` and `../README.md`.
+
+**[Original review texts (user-pasted transcription): Argon High A1–A4 + Astra High S1](2026-10-26-independent-review-originals/README.md)** are archived separately from the synthesis, including earlier claims subsequently corrected or retracted. They are not independently exported Gemini messages; byte-for-byte fidelity to the provider's original export was not tested.
 
 ## 2026-10-06 and 2026-10-07 chronology
 
