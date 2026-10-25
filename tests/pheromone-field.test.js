@@ -8,12 +8,12 @@ const end = { x: 0.82, y: 0.47 };
 test('stationary agents deposit no signal while traveled distance deposits finite field mass', () => {
   const field = new PheromoneField({ width: 64, height: 64 });
   assert.equal(field.depositSegment(start, start), 0);
-  assert.equal(field.getSnapshot().totalMass, 0);
+  assert.equal(field.getSnapshot().reconstructedIntegral, 0);
 
   const amount = field.depositSegment(start, end, { amountPerUnitDistance: 2, radius: 0.025 });
   const snapshot = field.getSnapshot();
   assert.ok(Math.abs(amount - 1.28) < 1e-12);
-  assert.ok(Math.abs(snapshot.totalMass - amount) < 1e-4);
+  assert.ok(Math.abs(snapshot.reconstructedIntegral - amount / 95 ** 2) < 1e-10);
   assert.ok(field.sample(0.5, 0.47) > 0);
   assert.ok(field.sample(0.5, 0.7) < field.sample(0.5, 0.47));
 });
@@ -33,7 +33,7 @@ test('segment deposition is approximately stable under path subdivision', () => 
 
   const a = whole.getSnapshot();
   const b = subdivided.getSnapshot();
-  assert.ok(Math.abs(a.totalMass - b.totalMass) < 1e-4);
+  assert.ok(Math.abs(a.reconstructedIntegral - b.reconstructedIntegral) < 1e-10);
   const meanAbsoluteDifference = a.values.reduce((sum, value, index) => sum + Math.abs(value - b.values[index]), 0) / a.values.length;
   assert.ok(meanAbsoluteDifference < 0.00002, `mean field difference was ${meanAbsoluteDifference}`);
 });
@@ -95,17 +95,63 @@ test('segments outside the field leave no edge trail while crossing travel depos
   assert.equal(crossing.sample(0.75, 0.5), 0, 'the outside portion cannot form an edge trail');
 });
 
-test('point deposition preserves a fixed amount with the existing brush and ignores outside points', () => {
+test('point deposition preserves authored dose in the reference-area integral and rejects outside points', () => {
   const field = new PheromoneField({ width: 48, height: 48 });
   assert.equal(field.depositPoint({ x: 0.5, y: 0.5 }, { amount: 0.25, radius: 0.02 }), 0.25);
-  assert.ok(Math.abs(field.getSnapshot().totalMass - 0.25) < 1e-6);
+  assert.ok(Math.abs(field.getSnapshot().reconstructedIntegral - 0.25 / 95 ** 2) < 1e-10);
   assert.ok(field.sample(0.5, 0.5) > field.sample(0.53, 0.5));
 
-  const beforeOutside = field.getSnapshot().totalMass;
+  const beforeOutside = field.getSnapshot().reconstructedIntegral;
   assert.equal(field.depositPoint({ x: 1.001, y: 0.5 }, { amount: 0.5, radius: 0.02 }), 0);
-  assert.equal(field.getSnapshot().totalMass, beforeOutside, 'outside points do not create edge deposits');
+  assert.equal(field.getSnapshot().reconstructedIntegral, beforeOutside, 'outside points do not create edge deposits');
   assert.throws(() => field.depositPoint({ x: Number.NaN, y: 0.5 }, { amount: 0.5 }), /finite/);
   assert.throws(() => field.depositPoint({ x: 0.5, y: 0.5 }, { amount: -1 }), /non-negative/);
+});
+
+test('default field uses G resolution and distinguishes node sum from bilinear integral', () => {
+  const defaultField = new PheromoneField();
+  assert.equal(defaultField.width, 316);
+  assert.equal(defaultField.height, 316);
+  const field = new PheromoneField({ width: 2, height: 2 });
+  field.values.set([1, 2, 3, 4]);
+  const snapshot = field.getSnapshot();
+  assert.equal(snapshot.nodeSum, 10);
+  assert.equal(snapshot.totalMass, snapshot.nodeSum, 'legacy totalMass remains a native node-sum alias');
+  assert.equal(snapshot.reconstructedIntegral, 2.5);
+});
+
+test('316-grid point and segment writers convert authored dose once and keep return values in source units', () => {
+  const pointField = new PheromoneField();
+  assert.equal(pointField.depositPoint({ x: 0.5, y: 0.5 }, { amount: 0.4 }), 0.4);
+  assert.ok(Math.abs(pointField.getSnapshot().reconstructedIntegral - 0.4 / 95 ** 2) < 1e-10);
+
+  const segmentField = new PheromoneField();
+  const amount = segmentField.depositSegment({ x: 0.3, y: 0.5 }, { x: 0.7, y: 0.5 }, {
+    amountPerUnitDistance: 2
+  });
+  assert.ok(Math.abs(amount - 0.8) < 1e-12);
+  assert.ok(Math.abs(segmentField.getSnapshot().reconstructedIntegral - amount / 95 ** 2) < 1e-10);
+
+  const capped = new PheromoneField({ maxValue: 0.01 });
+  assert.equal(capped.depositPoint({ x: 0.5, y: 0.5 }, { amount: 10 }), 10,
+    'return remains authored request and does not claim actual stored increment');
+  assert.ok(capped.values.some(value => value === Math.fround(0.01)));
+  assert.ok(capped.getSnapshot().reconstructedIntegral < 10 / 95 ** 2,
+    'cap loss is not hidden by the request return');
+});
+
+test('boundary truncation and cap loss remain outside the interior reference-integral guarantee', () => {
+  const boundary = new PheromoneField();
+  assert.equal(boundary.depositPoint({ x: 0, y: 0.5 }, { amount: 0.4 }), 0.4,
+    'an in-domain boundary source retains its authored return');
+  assert.ok(boundary.values.some(value => value > 0), 'truncated Gaussian support is renormalized onto in-domain nodes');
+  assert.ok(boundary.getSnapshot().reconstructedIntegral < 0.4 / 95 ** 2,
+    'edge basis area makes the bilinear integral smaller than the interior convention');
+
+  const capped = new PheromoneField({ maxValue: 0.01 });
+  capped.depositPoint({ x: 0.5, y: 0.5 }, { amount: 10 });
+  assert.ok(capped.getSnapshot().reconstructedIntegral < 10 / 95 ** 2,
+    'per-node saturation loses integral without redistribution');
 });
 
 test('default half-life is fifteen seconds and abandoned traces retain one sixteenth after one minute', () => {

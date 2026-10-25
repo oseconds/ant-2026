@@ -148,6 +148,20 @@ test('population has equal agents with stable individual personalities and share
   await controller.destroy();
 });
 
+test('controller analysis exposes reference integral and labels the legacy node-sum alias explicitly', async () => {
+  const controller = new AntController({ random: seededRandom(13) });
+  await controller.init();
+  controller.field.depositPoint({ x: 0.5, y: 0.5 }, { amount: 0.5 });
+  const snapshot = controller.getSnapshot();
+  assert.equal(snapshot.pheromone.width, 316);
+  assert.equal(snapshot.analysis.pheromoneNodeSum, snapshot.pheromone.nodeSum);
+  assert.equal(snapshot.analysis.pheromoneReconstructedIntegral, snapshot.pheromone.reconstructedIntegral);
+  assert.equal(snapshot.analysis.pheromoneMass, snapshot.pheromone.nodeSum,
+    'legacy pheromoneMass remains a native node-sum compatibility alias');
+  assert.ok(Math.abs(snapshot.analysis.pheromoneReconstructedIntegral - 0.5 / 95 ** 2) < 1e-10);
+  await controller.destroy();
+});
+
 test('ants enter one at a time from a common region with irregular delays and distinct headings', async () => {
   const controller = new AntController({ random: seededRandom(61),
     state: { population: { activationFeedback: false } } });
