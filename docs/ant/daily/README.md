@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-25 — Pheromone project decision
+
+[Process log](./2026-10-25-pheromone-project-decision.md) · [Evidence synthesis](../evidence/2026-10-25-pheromone-project-decision/README.md)
+
+- A common authored point-signal / legacy-reference-integral contract makes G coherent across raw-array and scalar readers; no consumer-specific threshold compensation
+- Concentration is not an established pathology; corrected G/H/I recent metrics replace invalid original window fields, with no corrected C recent comparison
+- Headed Chrome C/G60-second screens retained about57 FPS and simulation/wall near1; advance G only to production-candidate review, with production/adoption unchanged
+
 ### 2026-10-24 — Candidate G natural movement shadow
 
 [Process log](./2026-10-24-ant-316-gaussian-dose-unit-movement-shadow.md) · [Evidence package](../evidence/2026-10-24-ant-316-gaussian-dose-unit-movement-shadow/README.md)
