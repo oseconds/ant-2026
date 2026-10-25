@@ -2,7 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { LocalOccupancy } from '../src/lib/agents/ant/LocalOccupancy.js';
 import {
-  auditTickOrder, computeTickBudget, observedSegmentEnd, occupancyStats, selfChecks, sourceSecondIndex
+  auditTickOrder, computeReferenceBudgetAllocation, computeTickBudget, decodeReferenceBudgets,
+  encodeReferenceBudgets, observerParity, observedSegmentEnd, occupancyStats, selfChecks, sourceSecondIndex
 } from '../scripts/ant-g-adherence-coupling-control.js';
 
 test('H uniform multiplier preserves the intact reinforcement budget', () => {
@@ -19,6 +20,26 @@ test('H uniform multiplier preserves the intact reinforcement budget', () => {
 test('zero travel or zero adherence budget yields no uniform reinforcement', () => {
   assert.equal(computeTickBudget([{ distance: 0, A: 1 }]).uniform, 0);
   assert.equal(computeTickBudget([{ distance: 0.1, A: 0 }]).uniform, 0);
+});
+
+test('frozen G budget allocation depends on travel, not current adherence', () => {
+  const chunks = [{ distance: 0.02, A: 0.1 }, { distance: 0.03, A: 0.85 }, { distance: 0, A: 1 }];
+  const first = computeReferenceBudgetAllocation(chunks, 0.137);
+  const changedA = computeReferenceBudgetAllocation(chunks.map(item => ({ ...item,
+    A: 1 - item.A, intactReinforcement: 1e9 })), 0.137);
+  assert.deepEqual(changedA, first);
+  assert(Math.abs(first.delivered - 0.137) <= first.bound);
+  assert.equal(first.allocatable, true);
+  assert.equal(computeReferenceBudgetAllocation([{ distance: 0 }], 0).uniform, 0);
+  assert.equal(computeReferenceBudgetAllocation([{ distance: 0 }], 1).allocatable, false);
+});
+
+test('frozen budget binary format round-trips exact binary64 values', () => {
+  const values = [0, Number.MIN_VALUE, 0.1, 3.141592653589793];
+  const bytes = encodeReferenceBudgets(values);
+  assert.equal(bytes.length, values.length * 8);
+  assert.deepEqual(decodeReferenceBudgets(bytes, values.length), values);
+  assert.throws(() => encodeReferenceBudgets([0, -1]), /finite nonnegative/);
 });
 
 test('source ledger assigns ticks 1 through 60 to the first second', () => {
@@ -61,4 +82,11 @@ test('research helper self-checks pass', async () => {
   const result = await selfChecks();
   assert.equal(result.zeroTravelAndBudget, true);
   assert.equal(result.observerRngCalls, 0);
+});
+
+test('I observer adds no RNG or state changes with frozen per-tick budgets', async () => {
+  const receipt = await observerParity(20261005, 'I', 120, Array(36_000).fill(0.02));
+  assert.equal(receipt.equalEveryTick, true);
+  assert.equal(receipt.initialStateEqual, true);
+  assert.equal(receipt.observerAddedRngCalls, 0);
 });

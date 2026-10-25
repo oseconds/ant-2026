@@ -24,6 +24,7 @@ export const OCCUPANCY_SIZE = 64;
 const OCCUPANCY_WINDOW = 30;
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const PACKAGE = 'docs/ant/evidence/2026-10-25-ant-g-adherence-coupling-control';
+const AGGREGATE_PACKAGE = 'docs/ant/evidence/2026-10-25-ant-g-aggregate-adherence-budget-control';
 const G_PARENT = 'docs/ant/evidence/2026-10-24-ant-316-gaussian-dose-unit-movement-shadow';
 const R0_PARENT = 'docs/ant/evidence/2026-10-25-ant-g-reinforcement-ablation';
 const SOURCE_FILES = [
@@ -109,6 +110,48 @@ export function computeTickBudget(chunks) {
     movingAnts: moving.length, operationCount };
 }
 
+export class ReferenceBudgetUnallocatableError extends Error {
+  constructor(seed, tick, referenceBudget, travel) {
+    super(`positive frozen G budget cannot be allocated at zero travel: seed=${seed} tick=${tick}`);
+    this.name = 'ReferenceBudgetUnallocatableError';
+    this.seed = seed; this.tick = tick; this.referenceBudget = referenceBudget; this.travel = travel;
+  }
+}
+
+export function computeReferenceBudgetAllocation(chunks, referenceBudget) {
+  assert(Number.isFinite(referenceBudget) && referenceBudget >= 0,
+    'frozen reference budget is finite and nonnegative');
+  const moving = chunks.filter(({ distance }) => distance > 0);
+  const travel = kahan(moving.map(item => item.distance));
+  if (referenceBudget > 0 && travel === 0) return { allocatable: false, travel, referenceBudget };
+  const uniform = referenceBudget > 0 && travel > 0
+    ? referenceBudget / (AMOUNT_PER_DISTANCE * travel) : 0;
+  const requested = kahan(moving.map(item => item.distance * AMOUNT_PER_DISTANCE * uniform));
+  const operationCount = moving.length * 12 + 20;
+  const unitRoundoff = Number.EPSILON / 2;
+  const gamma = operationCount * unitRoundoff / (1 - operationCount * unitRoundoff);
+  const bound = gamma * (Math.abs(referenceBudget) + Math.abs(requested));
+  return { allocatable: true, travel, referenceBudget, budget: referenceBudget, uniform,
+    delivered: requested, residual: requested - referenceBudget, bound,
+    movingAnts: moving.length, operationCount };
+}
+
+export function encodeReferenceBudgets(values) {
+  assert(Array.isArray(values) && values.every(value => Number.isFinite(value) && value >= 0),
+    'reference budgets are finite nonnegative numbers');
+  const bytes = Buffer.alloc(values.length * 8);
+  values.forEach((value, index) => bytes.writeDoubleLE(value, index * 8));
+  return bytes;
+}
+
+export function decodeReferenceBudgets(bytes, count) {
+  assert(Buffer.isBuffer(bytes) && bytes.length === count * 8, 'reference budget byte length matches count');
+  const values = Array.from({ length: count }, (_, index) => bytes.readDoubleLE(index * 8));
+  assert(values.every(value => Number.isFinite(value) && value >= 0),
+    'decoded reference budgets are finite and nonnegative');
+  return values;
+}
+
 export function observedSegmentEnd(from, to) {
   const dx = to.x - from.x, dy = to.y - from.y;
   let fraction = 1;
@@ -189,13 +232,30 @@ function predictedTravel(agent, displacement, scale) {
   return Math.hypot(to.x - from.x, to.y - from.y);
 }
 
-function makeRun({ seed, arm, observation = true }) {
+function makeRun({ seed, arm, observation = true, referenceBudgets = null }) {
   return { seed, arm, observation, controller: null, tick: 0, current: null,
+    referenceBudgets,
     sourceSeconds: Array.from({ length: SECONDS }, (_, index) => emptySourceSecond(index + 1)),
     occupancy: createOccupancyObserver(), occupancyPerSecond: [], occupancyCheckpoints: [],
+    fieldWriteCheckpoints: [],
     actualTravelMismatchCount: 0, rateMismatchCount: 0,
     maxTravelError: 0, maxRateError: 0, maxBudgetResidual: 0, maxBudgetBound: 0,
     pending: null, sourceChunks: 0 };
+}
+
+function captureFieldCheckpoint(run, seconds) {
+  const stats = run.controller.field.writeStats;
+  assert(stats, 'research field write counters are available');
+  let pendingAmount = 0, pendingDistance = 0;
+  for (const state of run.controller.gasterDeposition.ants.values()) {
+    pendingAmount += state.amount; pendingDistance += state.distance;
+  }
+  const accrued = sourceThrough(run.sourceSeconds, seconds).totalDose;
+  run.fieldWriteCheckpoints.push({ second: seconds, ...structuredClone(stats),
+    pendingDabDoseUnscaled: pendingAmount, pendingDabDoseScaled: pendingAmount * DOSE_SCALE,
+    pendingDabDistance: pendingDistance,
+    accruedRequestedDoseScaled: accrued * DOSE_SCALE,
+    closureResidualScaled: accrued * DOSE_SCALE - stats.requestedDose - pendingAmount * DOSE_SCALE });
 }
 
 AntController.prototype.init = async function hControlInit(...args) {
@@ -222,38 +282,52 @@ AntController.prototype.init = async function hControlInit(...args) {
       const distance = predictedTravel(agent, displacements[index], scales[index]);
       return { id: agent.id, distance, E: trail.E, A: trail.A,
         baseline: distance * AMOUNT_PER_DISTANCE * baselineMultiplier(trail.E),
-        intactReinforcement: distance * AMOUNT_PER_DISTANCE * reinforcementMultiplier(trail.A),
+        intactReinforcement: run.arm === 'I' ? null
+          : distance * AMOUNT_PER_DISTANCE * reinforcementMultiplier(trail.A),
         originalMultiplier: displacements[index].depositionMultiplier };
     });
-    const budget = computeTickBudget(chunks);
+    if (run.arm === 'I') assert.equal(run.referenceBudgets?.length, SECONDS * TICK_RATE,
+      'I receives one frozen G reference budget per tick');
+    const budget = run.arm === 'I'
+      ? computeReferenceBudgetAllocation(chunks, run.referenceBudgets[run.tick - 1])
+      : computeTickBudget(chunks);
+    if (run.arm === 'I' && !budget.allocatable) {
+      throw new ReferenceBudgetUnallocatableError(run.seed, run.tick, budget.referenceBudget, budget.travel);
+    }
     const source = run.sourceSeconds[sourceSecondIndex(run.tick)];
     assert(source, 'source ledger stays within the frozen replay');
     const baseline = kahan(chunks.map(item => item.baseline));
-    const delivered = run.arm === 'H' ? budget.delivered
+    const sharedAllocation = run.arm === 'H' || run.arm === 'I';
+    const delivered = sharedAllocation ? budget.delivered
       : kahan(chunks.map(item => item.intactReinforcement));
     const total = baseline + delivered;
-    const ledgerTick = { tick: run.tick, movingAnts: budget.movingAnts, travel: budget.travel,
-      baselineBudget: baseline, intactLawReinforcementBudget: budget.budget,
-      deliveredReinforcementBudget: delivered, totalBudget: total,
-      uniformMultiplier: run.arm === 'H' ? budget.uniform : null,
-      residual: delivered - budget.budget, bound: budget.bound };
+    const ledgerTick = run.arm === 'I'
+      ? { tick: run.tick, movingAnts: budget.movingAnts, travel: budget.travel,
+        baselineBudget: baseline, frozenGReferenceBudget: budget.referenceBudget,
+        requestedReinforcementBudget: delivered, totalBudget: total, uniformMultiplier: budget.uniform,
+        residual: delivered - budget.referenceBudget, bound: budget.bound }
+      : { tick: run.tick, movingAnts: budget.movingAnts, travel: budget.travel,
+        baselineBudget: baseline, intactLawReinforcementBudget: budget.budget,
+        deliveredReinforcementBudget: delivered, totalBudget: total,
+        uniformMultiplier: run.arm === 'H' ? budget.uniform : null,
+        residual: delivered - budget.budget, bound: budget.bound };
     source.chunks += budget.movingAnts; source.movingAnts += budget.movingAnts;
     source.travel += budget.travel; source.baselineDose += baseline;
     source.reinforcementDose += delivered; source.totalDose += total;
-    source.uniforms.push(run.arm === 'H' ? budget.uniform : null);
+    source.uniforms.push(sharedAllocation ? budget.uniform : null);
     source.ticks.push(ledgerTick);
     run.sourceChunks += budget.movingAnts;
     run.maxBudgetResidual = Math.max(run.maxBudgetResidual, Math.abs(ledgerTick.residual));
     run.maxBudgetBound = Math.max(run.maxBudgetBound, budget.bound);
-    if (run.arm === 'H') assert(Math.abs(ledgerTick.residual) <= budget.bound,
-      'H reinforcement budget closes within the per-tick derived roundoff bound');
+    if (sharedAllocation) assert(Math.abs(ledgerTick.residual) <= budget.bound,
+      run.arm + ' reinforcement budget closes within the per-tick derived roundoff bound');
 
     const highBin = Math.ceil(HIGH_ADHERENCE * HISTOGRAM_BINS);
     for (const item of chunks) {
       if (item.distance <= 0) continue;
       const bin = Math.min(HISTOGRAM_BINS - 1, Math.floor(item.A * HISTOGRAM_BINS));
       source.travelByABin[bin] += item.distance;
-      const reinf = run.arm === 'H' ? item.distance * AMOUNT_PER_DISTANCE * budget.uniform
+      const reinf = sharedAllocation ? item.distance * AMOUNT_PER_DISTANCE * budget.uniform
         : item.intactReinforcement;
       source.reinforcementByABin[bin] += reinf;
       if (bin >= highBin) {
@@ -262,10 +336,10 @@ AntController.prototype.init = async function hControlInit(...args) {
       }
     }
     tick.expectedByAnt = new Map(chunks.map((item, index) => {
-      const multiplier = run.arm === 'H'
+      const multiplier = sharedAllocation
         ? baselineMultiplier(item.E) + budget.uniform
         : item.originalMultiplier;
-      if (run.arm === 'H') displacements[index].depositionMultiplier = multiplier;
+      if (sharedAllocation) displacements[index].depositionMultiplier = multiplier;
       const expectedRate = this.state.pheromone.amountPerUnitDistance * multiplier;
       return [item.id, { distance: item.distance, expectedRate, seen: false }];
     }));
@@ -301,6 +375,9 @@ AntController.prototype.tick = function hControlTick(dt) {
     assert.equal(tick.actualByAnt.size, tick.expectedByAnt.size, "each ant's actual deposition call was observed");
     for (const [id, expected] of tick.expectedByAnt) assert(expected.seen, 'actual chunk seen for ' + id);
     observeOccupancy(run, this.agents);
+    if (run.tick % TICK_RATE === 0 && CHECKPOINTS.includes(run.tick / TICK_RATE)) {
+      captureFieldCheckpoint(run, run.tick / TICK_RATE);
+    }
     return result;
   } finally { run.current = null; }
 };
@@ -388,7 +465,8 @@ function makeSourceArtifact(run, result) {
   return { seed: run.seed, arm: run.arm, seconds: SECONDS, tickRate: TICK_RATE,
     highAdherenceRule: 'A >= 0.75; 40 bins over [0,1]', doseScale: DOSE_SCALE,
     total, checkpoints, perSecond: run.sourceSeconds,
-    uniformMultiplier: run.arm === 'H' ? summarizeUniform(run.sourceSeconds) : null,
+    uniformMultiplier: run.arm === 'H' || run.arm === 'I' ? summarizeUniform(run.sourceSeconds) : null,
+    fieldWriteCheckpoints: run.fieldWriteCheckpoints,
     chunkAccounting: { accruedUnscaledChunkDose: total.totalDose, baselineDose: total.baselineDose,
       reinforcementDose: total.reinforcementDose, fieldRequestedDoseScaled: fieldRequestedScaled,
       fieldRequestedDoseNormalized: fieldRequestedScaled / DOSE_SCALE, pendingUnscaledDabDose: pendingUnscaled,
@@ -426,25 +504,364 @@ function withinDerivedRoundoff(a, b, operationCount) {
   return Math.abs(a - b) <= gamma * (Math.abs(a) + Math.abs(b));
 }
 
+function extractGReferenceBudgets(source) {
+  assert.equal(source.arm, 'G');
+  assert.equal(source.seconds, SECONDS); assert.equal(source.tickRate, TICK_RATE);
+  assert.equal(source.perSecond.length, SECONDS);
+  const values = [];
+  for (const [secondIndex, second] of source.perSecond.entries()) {
+    assert.equal(second.second, secondIndex + 1);
+    assert.equal(second.ticks.length, TICK_RATE);
+    for (const tick of second.ticks) {
+      assert.equal(tick.tick, values.length + 1);
+      assert(Number.isFinite(tick.intactLawReinforcementBudget) && tick.intactLawReinforcementBudget >= 0);
+      values.push(tick.intactLawReinforcementBudget);
+    }
+  }
+  assert.equal(values.length, SECONDS * TICK_RATE);
+  return values;
+}
+
+async function currentSourceHashes(parents) {
+  const hashes = {};
+  for (const path of SOURCE_FILES) hashes[path] = await fileHash(resolve(ROOT, path));
+  hashes['docs/ant/README.md'] = await fileHash(resolve(ROOT, 'docs/ant/README.md'));
+  hashes['scripts/ant-g-adherence-coupling-control.js'] = await fileHash(resolve(ROOT,
+    'scripts/ant-g-adherence-coupling-control.js'));
+  hashes['tests/ant-g-adherence-coupling-control.test.js'] = await fileHash(resolve(ROOT,
+    'tests/ant-g-adherence-coupling-control.test.js'));
+  hashes[AGGREGATE_PACKAGE + '/PREREGISTRATION.md'] = await fileHash(resolve(ROOT,
+    AGGREGATE_PACKAGE, 'PREREGISTRATION.md'));
+  for (const [path, expected] of Object.entries(parents.movementSummary.sourceHashes)) {
+    hashes[path] ??= await fileHash(resolve(ROOT, path));
+    assert.equal(hashes[path], expected, 'current source matches validated G parent: ' + path);
+  }
+  return hashes;
+}
+
+async function writeChecksumManifest(directory) {
+  const names = (await readdir(directory)).filter(name => name !== 'SHA256SUMS.json').sort();
+  const manifest = {};
+  for (const name of names) manifest[name] = await fileHash(join(directory, name));
+  await writeFile(join(directory, 'SHA256SUMS.json'), JSON.stringify(manifest, null, 2) + '\n');
+  return manifest;
+}
+
+async function generateFrozenBudgetPackage(outputDir) {
+  const files = await readdir(outputDir).catch(() => []);
+  assert.equal(files.length, 0, 'frozen budget output directory is fresh');
+  await mkdir(outputDir, { recursive: true });
+  const parents = await parentInputs();
+  const sourceHashes = await currentSourceHashes(parents);
+  const scratch = await mkdtemp(join(tmpdir(), 'ant-g-budget-freeze-'));
+  assert(resolve(scratch).startsWith(resolve(tmpdir())));
+  const budgets = [], replayChecks = [];
+  try {
+    for (const seed of SEEDS) {
+      const parent = parents.gBySeed.get(seed), hSource = parents.gSources.get(seed).hPass;
+      const parentG = await runOne(seed, 'G', scratch, parents.cEarlyMasks.get(seed));
+      assert.equal(parentG.result.initialStateSha256, parent.initialStateSha256);
+      assert.deepEqual(normalizeResult(parentG.result), parent, 'fresh G freeze replay matches parent summary');
+      const oldRaw = await readFile(join(parents.movementData, parent.timelineFile));
+      const newRaw = await readFile(join(scratch, parentG.result.timelineFile));
+      assert(oldRaw.equals(newRaw), 'fresh G freeze raw timeline is byte-identical to parent');
+      const mapChecks = [];
+      for (const mapName of parent.checkpointMapFiles) {
+        const old = await readFile(join(parents.movementData, mapName));
+        const fresh = await readFile(join(scratch, mapName));
+        assert(old.equals(fresh), 'fresh G freeze checkpoint map is byte-identical: ' + mapName);
+        mapChecks.push({ file: mapName, sha256: hash(old), byteEqual: true });
+      }
+      const freshBudgets = extractGReferenceBudgets(parentG.source);
+      const validatedBudgets = extractGReferenceBudgets(hSource);
+      assert.deepEqual(freshBudgets, validatedBudgets,
+        'fresh parent G replay matches prior validated per-tick budget series exactly');
+      assert.deepEqual(parentG.source.occupancyPerSecond, hSource.occupancyPerSecond,
+        'fresh G corrected occupancy matches H-pass G reference');
+      const binary = encodeReferenceBudgets(freshBudgets);
+      const file = 'seed' + seed + '-G-reinforcement-budget.f64le';
+      await writeFile(join(outputDir, file), binary);
+      const checkpointBudgets = CHECKPOINTS.map(seconds => ({ seconds,
+        cumulativeUnscaledDose: kahan(freshBudgets.slice(0, seconds * TICK_RATE)) }));
+      budgets.push({ seed, file, count: freshBudgets.length, byteLength: binary.length,
+        byteOrder: 'little-endian', scalar: 'IEEE-754 binary64', sha256: hash(binary),
+        checkpointBudgets, parentGSourceFile: 'seed' + seed + '-G-source-accounting.json.gz',
+        parentGSourceSha256: await fileHash(join(parents.hData,
+          'seed' + seed + '-G-source-accounting.json.gz')) });
+      replayChecks.push({ seed, resultSummaryExact: true, initialFingerprint: parentG.result.initialStateSha256,
+        rawTimelineByteEqual: true, checkpointMaps: mapChecks, freshVsHPassBudgetsExact: true,
+        correctedOccupancyExact: true, ticks: freshBudgets.length });
+    }
+  } finally { await rm(scratch, { recursive: true, force: true }); }
+  const summary = { schemaVersion: 1, freshMain: '8c60e4bba3bd5b476300e90a2936bfebd1f831c2',
+    parentHTip: 'd7326467016478670afc10d0407c9d641cc6b1c2', seeds: SEEDS, seconds: SECONDS,
+    tickRate: TICK_RATE, checkpoints: CHECKPOINTS, sourceHashes, parentManifests: parents.manifests,
+    budgetDefinition: 'sum of each intact-G tick intactLawReinforcementBudget before doseScale', budgets };
+  await writeFile(join(outputDir, 'BUDGETS.json'), JSON.stringify(summary, null, 2) + '\n');
+  const validation = { freshGParentReplay: replayChecks, allSeriesFiniteNonnegative: true,
+    seriesLengthPerSeed: SECONDS * TICK_RATE, floatEncoding: 'IEEE-754 binary64 little-endian',
+    productionSourceUnchanged: true };
+  await writeFile(join(outputDir, 'VALIDATION.json'), JSON.stringify(validation, null, 2) + '\n');
+  const manifest = await writeChecksumManifest(outputDir);
+  return { summary, validation, manifest };
+}
+
+export async function freezeReferenceBudgets(outputDir = resolve(ROOT, AGGREGATE_PACKAGE,
+  'data/frozen-g-budgets')) {
+  const primary = await generateFrozenBudgetPackage(outputDir);
+  const repeatDir = await mkdtemp(join(tmpdir(), 'ant-g-budget-repeat-'));
+  assert(resolve(repeatDir).startsWith(resolve(tmpdir())));
+  try {
+    const repeated = await generateFrozenBudgetPackage(repeatDir);
+    assert.deepEqual(repeated.manifest, primary.manifest, 'second frozen budget package manifest matches');
+    for (const name of Object.keys(primary.manifest)) {
+      assert((await readFile(join(outputDir, name))).equals(await readFile(join(repeatDir, name))),
+        'second frozen budget package bytes match: ' + name);
+    }
+    const receipt = { deterministicSecondGeneration: true,
+      manifestSha256: hash(Buffer.from(JSON.stringify(primary.manifest, null, 2) + '\n')),
+      comparedFiles: Object.keys(primary.manifest).sort() };
+    await writeFile(join(outputDir, 'DETERMINISM.json'), JSON.stringify(receipt, null, 2) + '\n');
+    const manifest = await writeChecksumManifest(outputDir);
+    return { ...primary, determinism: receipt, manifest };
+  } finally { await rm(repeatDir, { recursive: true, force: true }); }
+}
+
+export async function loadFrozenReferenceBudgets(directory = resolve(ROOT, AGGREGATE_PACKAGE,
+  'data/frozen-g-budgets')) {
+  const manifest = JSON.parse(await readFile(join(directory, 'SHA256SUMS.json'), 'utf8'));
+  for (const [name, expected] of Object.entries(manifest)) {
+    assert.equal(await fileHash(join(directory, name)), expected, 'frozen budget manifest SHA: ' + name);
+  }
+  const determinism = JSON.parse(await readFile(join(directory, 'DETERMINISM.json'), 'utf8'));
+  assert.equal(determinism.deterministicSecondGeneration, true);
+  const summary = JSON.parse(await readFile(join(directory, 'BUDGETS.json'), 'utf8'));
+  assert.deepEqual(summary.seeds, SEEDS); assert.equal(summary.seconds, SECONDS);
+  assert.equal(summary.tickRate, TICK_RATE);
+  const values = new Map();
+  for (const item of summary.budgets) {
+    assert.equal(item.count, SECONDS * TICK_RATE);
+    const bytes = await readFile(join(directory, item.file));
+    assert.equal(bytes.length, SECONDS * TICK_RATE * 8);
+    assert.equal(hash(bytes), item.sha256);
+    values.set(item.seed, decodeReferenceBudgets(bytes, item.count));
+  }
+  assert.deepEqual([...values.keys()], SEEDS);
+  return { summary, manifest, values, manifestSha256: await fileHash(join(directory, 'SHA256SUMS.json')) };
+}
+
+function summarizeArm(result, source) {
+  const checkpoints = CHECKPOINTS.map(seconds => {
+    const state = result.checkpoints.find(item => item.seconds === seconds);
+    const dose = source.checkpoints.find(item => item.throughSeconds === seconds);
+    const occupancy = source.occupancyCheckpoints.find(item => item.second === seconds);
+    const fieldWrite = source.fieldWriteCheckpoints?.find(item => item.second === seconds) ?? null;
+    assert(state && dose && occupancy, 'arm has each frozen checkpoint');
+    const writer = state.field.writer;
+    return { seconds,
+      movement: { population: state.activePopulation, recruited: state.recruitedThisSecond,
+        retired: state.totalRetired, travel: state.totalRealizedTravel,
+        travelPerActiveAntSecond: state.travelPerActiveAntSecond, speedMean: state.speed.mean,
+        angularVelocityMean: state.angularVelocity.mean, blockedFrames: state.blockedFrames,
+        newlyBlockedFrames: state.newlyBlockedFrames },
+      occupancy: { cumulativeCoverage: occupancy.cumulative.coverage,
+        cumulativeTop10Share: occupancy.cumulative.top10PercentMassShare,
+        cumulativeEntropy: occupancy.cumulative.normalizedEntropy,
+        recent30sCoverage: occupancy.recent30s?.coverage ?? null,
+        recent30sEntropy: occupancy.recent30s?.normalizedEntropy ?? null },
+      source: { baselineDose: dose.baselineDose, reinforcementDose: dose.reinforcementDose,
+        totalDose: dose.totalDose, reinforcementPerTravel: dose.reinforcementDosePerTravel,
+        totalPerTravel: dose.totalDosePerTravel,
+        scaled: dose.scaled, highA: dose.highAdherence,
+        E: dose.E, A: dose.A, A2: dose.A2, farHillMean: state.farHill.mean },
+      field: { maxNode: state.field.max, maxNodeEver: state.field.maxNodeValueEver,
+        cap: state.field.cap, finite: state.field.finite,
+        writes: { pointWrites: writer.pointWrites, segmentWrites: writer.segmentWrites,
+          requestedDoseScaled: writer.requestedDose, acceptedDoseScaled: writer.acceptedDose,
+          boundaryRejectedDoseScaled: writer.boundaryRejectedDose,
+          capTouchCount: writer.capTouchCount, saturatedUpdateCount: writer.saturatedUpdateCount,
+          saturationLossScaled: writer.saturationLoss,
+          pendingDabDoseScaled: fieldWrite?.pendingDabDoseScaled
+            ?? dose.scaled.total - writer.requestedDose,
+          pendingDabDistance: fieldWrite?.pendingDabDistance ?? null,
+          pendingSource: fieldWrite ? 'captured from GasterDeposition state'
+            : 'derived accrued scaled dose minus emitted writer requests' } },
+      world: { contacts: state.contacts, plateCount: state.plateCount,
+        plateBirthTimesSeconds: state.plateBirthTimesSeconds, surface: state.surface,
+        activation: state.activation, material: state.material } };
+  });
+  return { sourceConfig: result.sourceConfig, initialStateSha256: result.initialStateSha256,
+    movement: { totalDistance: result.movement.totalDistance,
+      activeAntSeconds: result.movement.activeAntSeconds,
+      travelPerActiveAntSecond: result.movement.travelPerActiveAntSecond,
+      speed: result.movement.speed, angularVelocity: result.movement.angularVelocity,
+      blockedFrames: result.movement.blockedFrames, newlyBlockedFrames: result.movement.newlyBlockedFrames,
+      retired: result.movement.retired, recruited: result.movement.recruited,
+      finiteViolations: result.movement.finiteViolations,
+      speedCapViolations: result.movement.speedCapViolations,
+      turnCapViolations: result.movement.turnCapViolations,
+      overlapViolations: result.movement.overlapViolations,
+      populationCeilingViolations: result.movement.populationCeilingViolations },
+    trail: { localStrength: result.trail.localStrength, localCoherence: result.trail.localCoherence,
+      localSteering: result.trail.localSteering, adherence: result.trail.adherence,
+      confidence: result.trail.confidence, farHill: result.trail.farHill },
+    source: { total: source.total, uniformMultiplier: source.uniformMultiplier,
+      chunkAccounting: source.chunkAccounting, observer: source.observer },
+    fieldWrites: result.fieldWrites, events: result.events, checkpoints };
+}
+
+function verifyIReferenceBudgets(source, referenceBudgets) {
+  const ticks = source.perSecond.flatMap(second => second.ticks);
+  assert.equal(ticks.length, referenceBudgets.length);
+  let unallocatable = 0, maximumResidual = 0, maximumBound = 0;
+  for (let index = 0; index < ticks.length; index += 1) {
+    const tick = ticks[index], expected = referenceBudgets[index];
+    assert.equal(tick.tick, index + 1);
+    assert.equal(tick.frozenGReferenceBudget, expected, 'I reads frozen reference value only');
+    assert(!Object.hasOwn(tick, 'intactLawReinforcementBudget'), 'I ledger does not derive current A budget');
+    if (expected > 0 && tick.travel === 0) unallocatable += 1;
+    assert(Math.abs(tick.residual) <= tick.bound, 'I per-tick requested reinforcement closes against reference');
+    maximumResidual = Math.max(maximumResidual, Math.abs(tick.residual));
+    maximumBound = Math.max(maximumBound, tick.bound);
+  }
+  assert.equal(unallocatable, 0, 'every positive frozen budget was allocatable');
+  return { ticks: ticks.length, positiveBudgetZeroTravelTicks: unallocatable,
+    maximumAbsoluteResidual: maximumResidual, maximumDerivedBound: maximumBound,
+    allTickRequestsWithinBound: true, budgetSource: 'frozen same-seed G binary64 series' };
+}
+
+export async function runIPass(outputDir = resolve(ROOT, AGGREGATE_PACKAGE, 'data/i-results'),
+  frozenDir = resolve(ROOT, AGGREGATE_PACKAGE, 'data/frozen-g-budgets')) {
+  const files = await readdir(outputDir).catch(() => []);
+  assert.equal(files.length, 0, 'I result output directory is fresh');
+  await mkdir(outputDir, { recursive: true });
+  const frozen = await loadFrozenReferenceBudgets(frozenDir);
+  const parents = await parentInputs();
+  const sourceHashes = await currentSourceHashes(parents);
+  assert.deepEqual(frozen.summary.sourceHashes, sourceHashes,
+    'frozen reference and I use identical pinned sources, preregistration, and validation code');
+  const hValidation = JSON.parse(await readFile(join(parents.hData, 'VALIDATION.json'), 'utf8'));
+  assert(hValidation.scenarios.H.every(item => item.perTickBudgetClosure && item.observerAddedRngCalls === 0),
+    'reused H contextual parent validation is complete');
+  const scratch = await mkdtemp(join(tmpdir(), 'ant-g-budget-i-'));
+  const repeatScratch = await mkdtemp(join(tmpdir(), 'ant-g-budget-i-repeat-'));
+  assert([scratch, repeatScratch].every(path => resolve(path).startsWith(resolve(tmpdir()))));
+  const validation = { frozenBudgets: { manifestSha256: frozen.manifestSha256,
+      deterministicSecondGeneration: true }, parentG: [], HContext: { reusedValidatedArchive: true,
+      manifestSha256: parents.manifests.h.manifestSha256 }, I: [], observerParity: [], deterministicRepeat: [] };
+  const scenarios = [];
+  try {
+    for (const seed of SEEDS) {
+      const reference = frozen.values.get(seed), parent = parents.gBySeed.get(seed);
+      assert.equal(reference.length, SECONDS * TICK_RATE);
+      const hScenario = parents.hResults.get(seed);
+      const hGSource = parents.gSources.get(seed).hPass;
+      const hSource = parents.hSources.get(seed);
+      const gBudgets = extractGReferenceBudgets(hGSource);
+      assert.deepEqual(reference, gBudgets, 'frozen budget series equals validated G context');
+      assert.equal(hScenario.arms.find(arm => arm.arm === 'G').initialStateSha256, parent.initialStateSha256);
+      validation.parentG.push({ seed, initialStateSha256: parent.initialStateSha256,
+        referenceSeriesMatchesValidatedG: true, referenceTicks: reference.length });
+      try {
+        const parity = await observerParity(seed, 'I', 120, reference);
+        assert.equal(parity.observerAddedRngCalls, 0);
+        validation.observerParity.push(parity);
+        const item = await runOne(seed, 'I', scratch, parents.cEarlyMasks.get(seed), SECONDS, true, reference);
+        assert.equal(item.result.initialStateSha256, parent.initialStateSha256,
+          'I starts from same initial state fingerprint as G/H for this seed');
+        assert.equal(item.source.observer.addedRngCalls, 0);
+        assert.equal(item.source.observer.actualTravelMismatchCount, 0);
+        assert.equal(item.source.observer.rateMismatchCount, 0);
+        const budgetReceipt = verifyIReferenceBudgets(item.source, reference);
+        assert.equal(item.source.uniformMultiplier.count, SECONDS * TICK_RATE);
+        assert.equal(item.source.chunkAccounting.reinforcementDose,
+          item.source.total.reinforcementDose);
+        const outputFiles = await relabelArmFiles(item.result, scratch, item.source, 'I');
+        await copyFiles(outputFiles, scratch, outputDir);
+        const sourceFile = 'seed' + seed + '-I-source-accounting.json.gz';
+        const sourceSha = await writeGzip(join(outputDir, sourceFile), item.source);
+        const iSummary = summarizeArm(item.result, item.source);
+        const gSummary = summarizeArm(parent, hGSource);
+        const hResult = hScenario.arms.find(arm => arm.arm === 'H');
+        const hSummary = summarizeArm(hResult, hSource);
+        validation.I.push({ seed, initialFingerprintMatchesG: true, frozenBudgetIndependentOfCurrentA: true,
+          budgetReceipt, sourceAccountingCloses: item.source.chunkAccounting.withinDerivedBound,
+          observerAddedRngCalls: 0, outputFiles, sourceFile, sourceSha });
+        scenarios.push({ seed, initialStateSha256: item.result.initialStateSha256,
+          arms: { G: gSummary, H: hSummary, I: iSummary } });
+
+        const repeat = await runOne(seed, 'I', repeatScratch, parents.cEarlyMasks.get(seed),
+          SECONDS, true, reference);
+        await relabelArmFiles(repeat.result, repeatScratch, repeat.source, 'I');
+        assert.deepEqual(normalizeResult(repeat.result), normalizeResult(item.result), 'deterministic I result');
+        const repeatNames = [repeat.result.timelineFile, ...repeat.result.checkpointMapFiles];
+        const primaryNames = [item.result.timelineFile, ...item.result.checkpointMapFiles];
+        for (let index = 0; index < repeatNames.length; index += 1) {
+          const repeatedBytes = await readFile(join(repeatScratch, repeatNames[index]));
+          const primaryBytes = await readFile(join(outputDir, primaryNames[index]));
+          assert(repeatedBytes.equals(primaryBytes), 'deterministic I timeline/map bytes: ' + primaryNames[index]);
+        }
+        assert(deterministicGzip(repeat.source).equals(await readFile(join(outputDir, sourceFile))),
+          'deterministic I source ledger bytes: ' + sourceFile);
+        validation.deterministicRepeat.push({ seed, resultEqual: true,
+          rawAndMapsByteEqual: true, sourceLedgerByteEqual: true });
+        await rm(repeatScratch, { recursive: true, force: true });
+        await mkdir(repeatScratch, { recursive: true });
+      } catch (error) {
+        if (!(error instanceof ReferenceBudgetUnallocatableError)) throw error;
+        const inconclusive = { decision: 'INCONCLUSIVE — REFERENCE BUDGET NOT ALLOCATABLE',
+          seed: error.seed, tick: error.tick, referenceBudget: error.referenceBudget, travel: error.travel,
+          frozenManifestSha256: frozen.manifestSha256, noCarryOrInjectionApplied: true };
+        await writeFile(join(outputDir, 'INCONCLUSIVE.json'), JSON.stringify(inconclusive, null, 2) + '\n');
+        await writeFile(join(outputDir, 'VALIDATION.json'), JSON.stringify(validation, null, 2) + '\n');
+        await writeChecksumManifest(outputDir);
+        return inconclusive;
+      }
+    }
+    const summary = { schemaVersion: 1, freshMain: '8c60e4bba3bd5b476300e90a2936bfebd1f831c2',
+      parentHTip: 'd7326467016478670afc10d0407c9d641cc6b1c2', frozenBudgetManifestSha256: frozen.manifestSha256,
+      seeds: SEEDS, seconds: SECONDS, tickRate: TICK_RATE, checkpoints: CHECKPOINTS,
+      candidate: { arm: 'I', representation: 'G 316x316 Gaussian, R=0.0045, sigma=0.00225',
+        scale: DOSE_SCALE, baseline: '0.5*(0.75+0.25E)',
+        reinforcementAllocation: 'uniform by actual travel',
+        reinforcementBudget: 'frozen same-seed intact-G per-tick accrued reinforcement request' },
+      sourceHashes, parentManifests: parents.manifests, validation, scenarios };
+    await writeFile(join(outputDir, 'SUMMARY.json'), JSON.stringify(summary, null, 2) + '\n');
+    await writeFile(join(outputDir, 'VALIDATION.json'), JSON.stringify(validation, null, 2) + '\n');
+    const manifest = await writeChecksumManifest(outputDir);
+    return { summary, validation, manifest };
+  } finally {
+    activeRun = null;
+    await rm(scratch, { recursive: true, force: true });
+    await rm(repeatScratch, { recursive: true, force: true });
+  }
+}
+
 async function verifyManifest(directory) {
   const manifest = JSON.parse(await readFile(join(directory, 'SHA256SUMS.json'), 'utf8'));
   for (const [name, expected] of Object.entries(manifest)) assert.equal(await fileHash(join(directory, name)), expected, name + ' manifest SHA');
   return { entries: Object.keys(manifest).length, manifestSha256: await fileHash(join(directory, 'SHA256SUMS.json')) };
 }
 
-async function parentInputs() {
+export async function parentInputs() {
   const movementData = resolve(ROOT, G_PARENT, 'data');
   const r0Data = resolve(ROOT, R0_PARENT, 'data');
+  const hData = resolve(ROOT, PACKAGE, 'data');
   const movementManifest = await verifyManifest(movementData);
   const r0Manifest = await verifyManifest(r0Data);
+  const hManifest = await verifyManifest(hData);
   const movementSummary = JSON.parse(await readFile(join(movementData, 'SUMMARY.json'), 'utf8'));
   const r0Summary = JSON.parse(await readFile(join(r0Data, 'SUMMARY.json'), 'utf8'));
+  const hSummary = JSON.parse(await readFile(join(hData, 'SUMMARY.json'), 'utf8'));
   assert.equal(movementSummary.freshMain, '8c60e4bba3bd5b476300e90a2936bfebd1f831c2');
   assert.deepEqual(movementSummary.seeds, SEEDS); assert.deepEqual(movementSummary.arms, ['C', 'F', 'G']);
   assert.equal(movementSummary.seconds, SECONDS); assert.equal(movementSummary.tickRate, TICK_RATE);
   assert.deepEqual(r0Summary.seeds, SEEDS); assert.equal(r0Summary.seconds, SECONDS);
+  assert.equal(hSummary.freshMain, '8c60e4bba3bd5b476300e90a2936bfebd1f831c2');
+  assert.deepEqual(hSummary.seeds, SEEDS); assert.equal(hSummary.seconds, SECONDS);
+  assert.equal(hSummary.tickRate, TICK_RATE);
   const gBySeed = new Map(movementSummary.scenarios.map(item => [item.seed, item.arms.find(arm => arm.arm === 'G')]));
-  const cRaw = new Map();
+  const cRaw = new Map(), gSources = new Map(), hSources = new Map(), hResults = new Map();
   for (const seed of SEEDS) {
     const c = movementSummary.scenarios.find(item => item.seed === seed).arms.find(arm => arm.arm === 'C');
     const raw = await readGzip(join(movementData, c.timelineFile));
@@ -452,13 +869,20 @@ async function parentInputs() {
     cRaw.set(seed, Uint8Array.from(raw.earlyRouteMask));
     const priorG = await readGzip(join(r0Data, 'seed' + seed + '-G-source-accounting.json.gz'));
     assert.equal(priorG.arm, 'G');
+    const hG = await readGzip(join(hData, 'seed' + seed + '-G-source-accounting.json.gz'));
+    const hH = await readGzip(join(hData, 'seed' + seed + '-H-source-accounting.json.gz'));
+    assert.equal(hG.arm, 'G'); assert.equal(hH.arm, 'H');
+    gSources.set(seed, { hPass: hG, r0Pass: priorG }); hSources.set(seed, hH);
+    hResults.set(seed, hSummary.scenarios.find(item => item.seed === seed));
   }
-  return { movementData, r0Data, movementSummary, r0Summary, gBySeed, cEarlyMasks: cRaw,
-    manifests: { movement: movementManifest, gR0: r0Manifest } };
+  return { movementData, r0Data, hData, movementSummary, r0Summary, hSummary, gBySeed,
+    gSources, hSources, hResults, cEarlyMasks: cRaw,
+    manifests: { movement: movementManifest, gR0: r0Manifest, h: hManifest } };
 }
 
-async function runOne(seed, kind, output, earlyMask, seconds = SECONDS, observation = true) {
-  const run = makeRun({ seed, arm: kind, observation });
+export async function runOne(seed, kind, output, earlyMask, seconds = SECONDS, observation = true,
+  referenceBudgets = null) {
+  const run = makeRun({ seed, arm: kind, observation, referenceBudgets });
   activeRun = run;
   try {
     const result = await executeScenario(seed, 'G', seconds, output, earlyMask);
@@ -472,34 +896,40 @@ async function runOne(seed, kind, output, earlyMask, seconds = SECONDS, observat
     return { run, result, source };
   } catch (error) {
     activeRun = null;
+    error.partialResearchRun = run;
     throw error;
   }
 }
 
-async function relabelHFiles(result, output, source) {
+export async function relabelArmFiles(result, output, source, arm) {
+  assert(['H', 'I'].includes(arm));
   const names = [result.timelineFile, ...result.checkpointMapFiles];
   const renamed = [];
   for (const oldName of names) {
     const oldPath = join(output, oldName), payload = JSON.parse(gunzipSync(await readFile(oldPath)));
-    assert.equal(payload.arm, 'G'); payload.arm = 'H';
+    assert.equal(payload.arm, 'G'); payload.arm = arm;
     if (payload.occupancy) {
       const corrected = source.occupancyCheckpoints.find(item => item.second === payload.seconds);
       assert(corrected, 'independent 60 Hz occupancy map exists at each checkpoint');
       payload.occupancy.cumulativeAntSeconds = corrected.cumulativeAntSeconds;
       payload.occupancy.recent30sAntSeconds = corrected.recent30sAntSeconds;
     }
-    const newName = oldName.replaceAll('-G-', '-H-');
+    const newName = oldName.replaceAll('-G-', '-' + arm + '-');
     await writeGzip(join(output, newName), payload);
     await rm(oldPath);
     renamed.push(newName);
   }
-  result.arm = 'H';
-  result.timelineFile = result.timelineFile.replaceAll('-G-', '-H-');
-  result.checkpointMapFiles = result.checkpointMapFiles.map(name => name.replaceAll('-G-', '-H-'));
-  for (const point of result.checkpoints) point.maps = point.maps.replaceAll('-G-', '-H-');
-  result.sourceConfig = { ...result.sourceConfig, reinforcementAllocation: 'tick-total-preserving uniform by actual travel' };
+  result.arm = arm;
+  result.timelineFile = result.timelineFile.replaceAll('-G-', '-' + arm + '-');
+  result.checkpointMapFiles = result.checkpointMapFiles.map(name => name.replaceAll('-G-', '-' + arm + '-'));
+  for (const point of result.checkpoints) point.maps = point.maps.replaceAll('-G-', '-' + arm + '-');
+  result.sourceConfig = { ...result.sourceConfig, reinforcementAllocation: arm === 'H'
+    ? 'tick-total-preserving uniform by actual travel'
+    : 'uniform by actual travel using frozen same-seed G per-tick budget' };
   return renamed;
 }
+
+async function relabelHFiles(result, output, source) { return relabelArmFiles(result, output, source, 'H'); }
 
 async function copyFiles(names, from, to) {
   for (const name of names) await writeFile(join(to, name), await readFile(join(from, name)));
@@ -516,10 +946,11 @@ function compareCorrectedOccupancy(result, source) {
   }
 }
 
-async function observerParity(seed, arm, ticks = 120) {
+export async function observerParity(seed, arm, ticks = 120, referenceBudgets = null) {
   const enabled = createController(seed, 'G', { observe: true });
   const disabled = createController(seed, 'G', { observe: false });
-  const first = makeRun({ seed, arm, observation: true }), second = makeRun({ seed, arm, observation: false });
+  const first = makeRun({ seed, arm, observation: true, referenceBudgets });
+  const second = makeRun({ seed, arm, observation: false, referenceBudgets });
   try {
     activeRun = first; await enabled.controller.init();
     activeRun = second; await disabled.controller.init();
@@ -546,6 +977,12 @@ export async function selfChecks() {
   const budget = computeTickBudget(chunks);
   assert(budget.budget > 0 && budget.uniform > 0);
   assert(Math.abs(budget.residual) <= budget.bound);
+  const reference = computeReferenceBudgetAllocation(chunks, 0.037);
+  assert(reference.allocatable && Math.abs(reference.residual) <= reference.bound);
+  assert.deepEqual(computeReferenceBudgetAllocation(chunks.map(item => ({ ...item, A: 1 - item.A })), 0.037),
+    reference, 'frozen allocation depends on travel, not current adherence');
+  assert.equal(computeReferenceBudgetAllocation([{ distance: 0, A: 1 }], 0).uniform, 0);
+  assert.equal(computeReferenceBudgetAllocation([{ distance: 0, A: 1 }], 0.1).allocatable, false);
   assert.equal(computeTickBudget([{ distance: 0, A: 1 }]).uniform, 0);
   assert.equal(computeTickBudget([{ distance: 0.1, A: 0 }]).uniform, 0);
   assert.deepEqual(observedSegmentEnd({ x: 0.9, y: 0.2 }, { x: 1.1, y: 0.2 }), { x: 1, y: 0.2 });
@@ -553,6 +990,9 @@ export async function selfChecks() {
   assert.equal(sourceBin(0.75), 30);
   return { derivedUniformBudget: { budget: budget.budget, delivered: budget.delivered,
       residual: budget.residual, bound: budget.bound }, zeroTravelAndBudget: true,
+    referenceBudgetAllocation: { target: reference.referenceBudget, delivered: reference.delivered,
+      residual: reference.residual, bound: reference.bound, independentOfA: true,
+      positiveBudgetZeroTravel: 'unallocatable' },
     exitClip: 'passed', highAdherenceBin: sourceBin(0.75), observerRngCalls: 0 };
 }
 
@@ -739,6 +1179,23 @@ async function main() {
     const index = arg.indexOf('='); return index < 0 ? [arg, true] : [arg.slice(0, index), arg.slice(index + 1)];
   }));
   if (args.has('--selfcheck')) { console.log(JSON.stringify(await selfChecks(), null, 2)); return; }
+  if (args.has('--freeze-g-reference')) {
+    const output = resolve(String(args.get('--output') || resolve(ROOT, AGGREGATE_PACKAGE,
+      'data/frozen-g-budgets')));
+    const result = await freezeReferenceBudgets(output);
+    console.log(JSON.stringify({ output, deterministic: result.determinism.deterministicSecondGeneration,
+      seeds: result.summary.budgets.map(item => ({ seed: item.seed, file: item.file, sha256: item.sha256 })) }, null, 2));
+    return;
+  }
+  if (args.has('--run-i')) {
+    const output = resolve(String(args.get('--output') || resolve(ROOT, AGGREGATE_PACKAGE, 'data/i-results')));
+    const frozen = resolve(String(args.get('--frozen') || resolve(ROOT, AGGREGATE_PACKAGE,
+      'data/frozen-g-budgets')));
+    const result = await runIPass(output, frozen);
+    console.log(JSON.stringify({ output, decision: result.decision || 'completed',
+      scenarios: result.summary?.scenarios?.length ?? 0, validation: result.validation }, null, 2));
+    return;
+  }
   assert(args.has('--run'), 'pass --run to begin the preregistered natural replay');
   const output = resolve(String(args.get('--output') || resolve(ROOT, PACKAGE, 'data')));
   const result = await runFullPass(output);
