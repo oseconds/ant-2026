@@ -18,9 +18,9 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 [Adoption record](../evidence/2026-10-25-g-production-adoption/README.md)
 
-- Adopted the independently reviewed 316×316 Gaussian G representation after exact source, fixed-cue, natural-conformance, and diagnostic-contract checks
+- Prepared the independently reviewed 316×316 Gaussian G adoption after exact source, fixed-cue, natural-conformance, and diagnostic-contract checks; remote main integration is pending
 - Carried forward the validated near-stop test-contract correction; movement implementation and constants remain unchanged
-- Closed the pheromone representation research line; the next bounded question returns to natural collective-route persistence and turnover under current production
+- Plan to close the pheromone representation research line after remote verification; next bounded question returns to natural collective-route persistence and turnover
 - Audio-On and exhibition-duration reliability remain unverified deployment questions
 
 ### 2026-10-18 — Plate audio reassessment and live dense-mix plan
