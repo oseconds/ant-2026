@@ -4,4 +4,6 @@ Ran preregistered G vs H for seeds `20261005`, `20261006`, and `20261007` throug
 
 H did not consistently broaden occupancy. At 600 s its cumulative top-10% share stayed near G in all seeds; it rose in two and fell by only `.00028` in the third. Cumulative and corrected recent-30 s coverage/entropy split across seeds. Movement continued without invariant violations or cap/saturation. Decision: **MIXED**. Direct own-A allocation was not necessary for similar top-10% concentration in this cohort, but H's shared budget still depends on aggregate A and divergent paths changed total dose. No production change or gain candidate follows.
 
+Independent review accepted the manipulation and decision with wording corrections. The evidence now separates requested dose accrued into the dab path from field-accepted dose, clarifies that H's high-A reinforcement share is travel weighted by the tick-specific `U(t)`, and reports first differences at the recorded one-second resolution. Boundary-rejected scaled requests were small but nonzero in each arm/seed; they do not affect the within-H requested-budget equality.
+
 See [evidence package](../evidence/2026-10-25-ant-g-adherence-coupling-control/README.md). Production source and canonical ANT guide remain unchanged.

@@ -42,7 +42,7 @@ Source audit checked `AntController.tick()` order: all local reads and intention
 
 ## Budget and source results
 
-Per-seed dose values below are scale-normalized accrued requested doses before the G area factor `S = 3969/361 = 10.994459833795014`. Actual representation input is this amount multiplied by `S`. Baseline remains local in both arms. H's delivered reinforcement matched its own intact-law `B` on all 36,000 ticks per seed.
+Per-seed dose values below are scale-normalized requested doses accrued into the deposition/dab path before the G area factor `S = 3969/361 = 10.994459833795014`. Actual scaled requests are these amounts multiplied by `S`; they are not all accepted by the field writer at domain boundaries. Baseline remains local in both arms. H's requested reinforcement accrued into the dab path matched its own intact-law `B` on all 36,000 ticks per seed.
 
 | Seed | G baseline | G reinforcement | G total | H baseline | H reinforcement | H total | H/G total change |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -51,13 +51,13 @@ Per-seed dose values below are scale-normalized accrued requested doses before t
 | 20261007 | 1,292.902 | 6,859.952 | 8,152.854 | 1,322.915 | 7,308.933 | 8,631.848 | +5.88% |
 | Pooled | 3,871.408 | 20,889.811 | 24,761.219 | 3,938.370 | 21,925.870 | 25,864.240 | +4.45% |
 
-Pooled scale-multiplied source amounts were `272,236.230` for G and `284,363.352` for H. The cross-arm total differs because paths, E/A states, and travel diverged. This does not violate H's per-tick budget contract.
+Pooled scale-multiplied requested source amounts were `272,236.230` for G and `284,363.352` for H. The source-accounting artifacts separately record field-accepted input and boundary-rejected scaled requests. Rejected amounts for G/H were `19.808/30.372`, `1.404/37.175`, and `9.386/40.475` for seeds 20261005/06/07. The cross-arm requested total differs because paths, E/A states, and travel diverged. This does not violate H's per-tick requested-budget contract.
 
-For H, the largest absolute per-tick `delivered − B` residual by seed was `8.33e−17`, `5.55e−17`, and `5.55e−17`; corresponding derived roundoff bounds were `2.23e−14`, `2.33e−14`, and `2.47e−14`. All ticks passed. Source accrued-dose closure against scaled writer requests plus pending dabs also passed its derived floating-point bound.
+For H, the largest absolute per-tick accrued-request-minus-`B` residual by seed was `8.33e−17`, `5.55e−17`, and `5.55e−17`; corresponding derived roundoff bounds were `2.23e−14`, `2.33e−14`, and `2.47e−14`. All ticks passed. Source accrued-dose closure against scaled writer requests plus pending dabs also passed its derived floating-point bound.
 
 ## High-adherence allocation
 
-The frozen 40-bin convention uses `A ≥ 0.75` as bins 30–39. H's per-tick multiplier was uniform across movers; the pooled share of reinforcement delivered during high-A movement therefore tracks the travel-by-A distribution, with remaining differences from U varying by tick. G's quadratic allocation concentrates more reinforcement in high-A travel.
+The frozen 40-bin convention uses `A ≥ 0.75` as bins 30–39. H's per-tick multiplier was uniform across movers; its pooled high-A reinforcement share is travel weighted by the tick-specific `U(t)`, rather than the unweighted pooled travel share. G's quadratic allocation concentrates more reinforcement in high-A travel.
 
 | Seed | G travel at A≥.75 | G reinforcement at A≥.75 | H travel at A≥.75 | H reinforcement at A≥.75 | H U p50 / p90 / p99 / max |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -116,7 +116,7 @@ At 600 s, H top-10% share stayed close to G: it rose by `.00344` and `.00589` in
 
 Across 30/60/120/300/600 s checkpoints, far-Hill means were higher under H in most comparisons and at 600 s in all three seeds. Whole-run local `E`, `A`, `A²`, and far-Hill means were also higher under H in all three seeds. These are outcomes on divergent trajectories, not independent mediation estimates.
 
-The first exact per-second difference in reinforcement/baseline source buckets and E/A aggregates appeared at seconds 2, 3, and 2 by seed. Cumulative occupancy coverage first differed at seconds 4, 3, and 4. Far-Hill was retained at the fixed 30-second checkpoints, so this dataset cannot establish a finer far-response ordering. Temporal order is descriptive only.
+The first per-second difference in adherence-bin reinforcement allocation appeared at seconds 2/2/2 for seeds 20261005/06/07. Scalar reinforcement/baseline source totals and E/A/A² aggregates first differed at seconds 2/3/2; cumulative occupancy coverage first differed at seconds 4/3/4. For seed 20261006, source-total and occupancy differences begin in the same one-second bin, so their within-bin order is unknown. Far-Hill was retained at fixed 30-second checkpoints, so this dataset cannot establish a finer far-response ordering. These timings are descriptive, not mediation evidence.
 
 ## Downstream world and field audit
 
@@ -142,6 +142,7 @@ At 600 s, `SurfaceField` sum / maximum was seed 20261005 G/H `2,604.666/.9798` a
 - H budget closed within the derived roundoff bound on all `108,000` ticks. Predicted post-collision travel and actual `GasterDeposition.advance()` travel/rate matched exactly.
 - All three H full replays reproduced their normalized summaries, raw timeline gzip, checkpoint maps, and source ledger gzip byte-for-byte.
 - All simulation finite, speed, turn, overlap, and population-ceiling violations were zero. No cap or saturation event occurred.
+- Independent review accepted the manipulation and `MIXED` result with wording corrections. The report now distinguishes requested/accrued dab dose from field-accepted dose, states that H's high-A share is travel weighted by `U(t)`, and keeps per-second event ordering within its one-second resolution.
 - Focused tests: `node --test tests/ant-g-adherence-coupling-control.test.js` passed 8/8. Full suite/build skipped because production/runtime source was unchanged.
 - SHA manifest covers 44 data files, plus itself. See [data/SHA256SUMS.json](data/SHA256SUMS.json), SHA-256 `7b50c2c5cabd395e61d1acfeb7b7f901bda10ec2eee624d3fa149d8b71292f70`.
 
