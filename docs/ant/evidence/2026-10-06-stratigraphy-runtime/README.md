@@ -73,7 +73,7 @@ $env:CHECK_PRODUCTION='1'
 npm run test:browser
 Remove-Item Env:CHECK_PRODUCTION
 node scripts/stratigraphy-regression-freeze.js
-node scripts/stratigraphy-long-run-evidence.js
+node scripts/stratigraphy-long-run-evidence.js --output=test-results/ant-stratigraphy-natural-runs.json
 $env:CHROME_EXECUTABLE_PATH=$env:BROWSER_EXECUTABLE_PATH
 node scripts/surface-topology-scaling-evidence.js
 node scripts/stratigraphy-motion-evidence.js --continuous

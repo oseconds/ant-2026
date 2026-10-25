@@ -25,7 +25,9 @@ const evidence = {
     sampleCadenceSeconds: sampleTimes,
     durationSeconds: seconds,
     seeds,
-    field: { width: 96, height: 96, halfLifeSeconds: 15, radius: 0.0045, amountPerUnitDistance: 4.5, reinforcementGain: 5 },
+    field: { width: 316, height: 316, halfLifeSeconds: 15, radius: 0.0045, amountPerUnitDistance: 4.5,
+      reinforcementGain: 5, sourceDoseScale: 3969 / 361 },
+    deliveredDoseMetric: 'bilinear reconstructed-integral increase divided by authored intended dose / 95^2',
     dabSpacing: 0.006,
     simulationStepSeconds: 1 / 60
   },
@@ -50,7 +52,7 @@ async function runScenario(seed, mode) {
   const counters = {
     intendedDose: 0,
     generatedDose: 0,
-    deliveredFieldMass: 0,
+    deliveredReferenceIntegral: 0,
     retirementFlushDose: 0,
     actualThoraxDistance: 0,
     contactGroups: 0,
@@ -137,10 +139,10 @@ function instrumentField(field, counters) {
   const depositBrush = field.depositBrush.bind(field);
   field.depositBrush = (x, y, amount, radius, sigma, support) => {
     const bounds = brushBounds(field, x, y, support);
-    const before = sumRegion(field, bounds);
+    const before = reconstructedIntegralRegion(field, bounds);
     const result = depositBrush(x, y, amount, radius, sigma, support);
-    const after = sumRegion(field, bounds);
-    counters.deliveredFieldMass += Math.max(0, after - before);
+    const after = reconstructedIntegralRegion(field, bounds);
+    counters.deliveredReferenceIntegral += Math.max(0, after - before);
     return result;
   };
 }
@@ -178,7 +180,8 @@ function makeSample(controller, counters, requestedSeconds) {
     activePopulation: agents.length,
     totalSpawned: controller.totalSpawned,
     totalRetired: controller.totalRetired,
-    pheromoneTotalMass: snapshot.totalMass,
+    pheromoneNodeSum: snapshot.nodeSum,
+    pheromoneReconstructedIntegral: snapshot.reconstructedIntegral,
     meanTrailAdherence: agents.length ? adherence / agents.length : 0,
     meanSpeed: counters.speedSamples ? counters.speedSum / counters.speedSamples : 0,
     maxSpeedObserved: counters.maximumSpeed,
@@ -190,11 +193,11 @@ function makeSample(controller, counters, requestedSeconds) {
     actualThoraxDistance: counters.actualThoraxDistance,
     intendedWeightedDose: counters.intendedDose,
     generatedDepositDose: counters.generatedDose,
-    deliveredFieldMassIncrease: counters.deliveredFieldMass,
+    deliveredReferenceIntegralIncrease: counters.deliveredReferenceIntegral,
     pendingDose,
     retirementFlushDose: counters.retirementFlushDose,
-    deliveredPerIntendedDose: counters.intendedDose > 0
-      ? counters.deliveredFieldMass / counters.intendedDose : 0,
+    reconstructedIntegralRatioToAuthoredReferenceDose: counters.intendedDose > 0
+      ? counters.deliveredReferenceIntegral / (counters.intendedDose / 95 ** 2) : 0,
     finiteStates: counters.finiteStates && snapshot.values.every(Number.isFinite)
   };
 }
@@ -211,8 +214,8 @@ function compareFixedPathDose() {
   const expectedDose = 4.5 * (0.5 + 5 * 0.02 + 5 * 0.7 / 2) * totalDistance;
   const continuous = new GasterDeposition({ mode: 'continuous', spacing });
   const dab = new GasterDeposition({ mode: 'dab', spacing });
-  const continuousField = new PheromoneField({ width: 96, height: 96, decayHalfLifeSeconds: 15 });
-  const dabField = new PheromoneField({ width: 96, height: 96, decayHalfLifeSeconds: 15 });
+  const continuousField = new PheromoneField({ decayHalfLifeSeconds: 15 });
+  const dabField = new PheromoneField({ decayHalfLifeSeconds: 15 });
   const apply = (field, deposits) => {
     for (const deposit of deposits) {
       if (deposit.type === 'segment') field.depositSegment(deposit.from, deposit.to, {
@@ -240,19 +243,22 @@ function compareFixedPathDose() {
     dabField.depositPoint(deposit.position, { amount: deposit.amount, radius });
   }
 
-  const continuousMass = continuousField.getSnapshot().totalMass;
-  const dabMass = dabField.getSnapshot().totalMass;
-  const relativeDifference = Math.abs(continuousMass - dabMass) / expectedDose;
+  const continuousIntegral = continuousField.getSnapshot().reconstructedIntegral;
+  const dabIntegral = dabField.getSnapshot().reconstructedIntegral;
+  const expectedReferenceIntegral = expectedDose / 95 ** 2;
+  const relativeDifference = Math.abs(continuousIntegral - dabIntegral) / expectedReferenceIntegral;
   assert.ok(relativeDifference < 1e-5, `fixed-path dose mismatch ${relativeDifference}`);
   return {
     totalThoraxDistance: totalDistance,
+    grid: { width: continuousField.width, height: continuousField.height },
     continuousMovementChunk: 0.002,
     dabMovementChunk: 0.003,
     weightProfile: 'adherence² increases linearly from 0.02 to 0.72 over the fixed path',
     expectedWeightedDose: expectedDose,
-    continuousFieldMass: continuousMass,
-    dabFieldMass: dabMass,
-    relativeMassDifference: relativeDifference,
+    expectedReferenceIntegral,
+    continuousReconstructedIntegral: continuousIntegral,
+    dabReconstructedIntegral: dabIntegral,
+    relativeIntegralDifference: relativeDifference,
     passed: true
   };
 }
@@ -270,7 +276,8 @@ function compareScenarios(scenarios) {
         continuous: modeSummary(a),
         dab: modeSummary(b),
         relativeDifference: {
-          pheromoneMass: relativeDifference(a.pheromoneTotalMass, b.pheromoneTotalMass),
+          pheromoneReferenceIntegral: relativeDifference(
+            a.pheromoneReconstructedIntegral, b.pheromoneReconstructedIntegral),
           intendedDosePerDistance: relativeDifference(
             a.actualThoraxDistance ? a.intendedWeightedDose / a.actualThoraxDistance : 0,
             b.actualThoraxDistance ? b.intendedWeightedDose / b.actualThoraxDistance : 0),
@@ -288,10 +295,11 @@ function modeSummary(sample) {
     activePopulation: sample.activePopulation,
     totalSpawned: sample.totalSpawned,
     totalRetired: sample.totalRetired,
-    pheromoneTotalMass: sample.pheromoneTotalMass,
+    pheromoneNodeSum: sample.pheromoneNodeSum,
+    pheromoneReconstructedIntegral: sample.pheromoneReconstructedIntegral,
     intendedWeightedDose: sample.intendedWeightedDose,
-    deliveredFieldMassIncrease: sample.deliveredFieldMassIncrease,
-    deliveredPerIntendedDose: sample.deliveredPerIntendedDose,
+    deliveredReferenceIntegralIncrease: sample.deliveredReferenceIntegralIncrease,
+    reconstructedIntegralRatioToAuthoredReferenceDose: sample.reconstructedIntegralRatioToAuthoredReferenceDose,
     actualThoraxDistance: sample.actualThoraxDistance,
     intendedDosePerDistance: sample.actualThoraxDistance
       ? sample.intendedWeightedDose / sample.actualThoraxDistance : 0,
@@ -320,13 +328,17 @@ function brushBounds(field, x, y, support) {
   };
 }
 
-function sumRegion(field, bounds) {
+function reconstructedIntegralRegion(field, bounds) {
   let total = 0;
   for (let y = bounds.minY; y <= bounds.maxY; y += 1) {
     const row = y * field.width;
-    for (let x = bounds.minX; x <= bounds.maxX; x += 1) total += field.values[row + x];
+    const wy = y === 0 || y === field.height - 1 ? 0.5 : 1;
+    for (let x = bounds.minX; x <= bounds.maxX; x += 1) {
+      const wx = x === 0 || x === field.width - 1 ? 0.5 : 1;
+      total += field.values[row + x] * wx * wy;
+    }
   }
-  return total;
+  return total / ((field.width - 1) * (field.height - 1));
 }
 
 function sumDepositAmounts(deposits) {

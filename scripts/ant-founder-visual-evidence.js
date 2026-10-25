@@ -16,7 +16,7 @@ const SCALES = {
   occupancy: { maximum: 5, knee: 0.05, ticks: [0, 0.05, 0.1, 0.5, 1, 5], unit: 'ant-seconds / cell, last 30 s', transform: 'log1p(value / 0.05)' },
   coverage: { unit: 'ever visited, ant center', transform: 'binary cumulative ant-seconds > 0' }
 };
-const out = resolve(String(args.get('--output') || 'docs/ant/evidence/2026-10-07-founder-effect-refinement'));
+const out = resolve(String(args.get('--output') || 'test-results/ant-founder-visual-evidence'));
 const before = resolve(String(args.get('--before') || resolve(out, 'before')));
 const after = resolve(String(args.get('--after') || resolve(out, 'after')));
 
@@ -53,7 +53,7 @@ async function renderMaps(browser) {
   const report = { scales: SCALES, seeds: [], normalization: 'No frame, seed, variant or clip maximum is used.',
     chromeCrosscheck: [],
     crossEngineLimit: 'Node maps and Chrome snapshots are independent natural runs using the same controller source, initial seed and 60 Hz defaults. Small numerical differences can diverge routes and RNG scheduling; exact grid equality is reported, not assumed.',
-    coordinates: 'Pheromone nodes x=column/95,y=row/95. Occupancy ant-center samples use round(x*63),round(y*63). x right, y down; square normalized domain [0,1].',
+    coordinates: 'Pheromone nodes use x=column/(width-1),y=row/(height-1), with each map carrying its field dimensions. Occupancy ant-center samples use round(x*63),round(y*63). x right, y down; square normalized domain [0,1].',
     occupancy: 'Recent 30 completed one-second buckets, each containing every 60 Hz ant-center sample. Cumulative coverage is the fraction of cells with cumulativeAntSeconds > 0.' };
   try {
     for (const seed of SEEDS) {
@@ -227,9 +227,24 @@ async function browserRuns(browser) {
           });
           const captured = await page.evaluate(async () => {
             const { model, renderer, state } = window.__founderVisual, snapshot = model.getSnapshot();
+            const p = snapshot.pheromone;
+            const nodeSum = p.nodeSum ?? p.totalMass ?? p.values.reduce((sum, value) => sum + value, 0);
+            let reconstructedIntegral = p.reconstructedIntegral;
+            if (!Number.isFinite(reconstructedIntegral)) {
+              let weightedSum = 0;
+              for (let y = 0; y < p.height; y += 1) {
+                const wy = y === 0 || y === p.height - 1 ? 0.5 : 1;
+                for (let x = 0; x < p.width; x += 1) {
+                  const wx = x === 0 || x === p.width - 1 ? 0.5 : 1;
+                  weightedSum += p.values[y * p.width + x] * wx * wy;
+                }
+              }
+              reconstructedIntegral = weightedSum / ((p.width - 1) * (p.height - 1));
+            }
             const data = { seconds: snapshot.analysis.simulationTimeMs / 1000, ...state(),
               population: snapshot.analysis.population, spawned: snapshot.analysis.totalSpawned, retired: snapshot.analysis.totalRetired,
-              plateCount: snapshot.surfacePlates.plates.length, pheromoneMass: snapshot.pheromone.totalMass,
+              plateCount: snapshot.surfacePlates.plates.length,
+              pheromone: { width: p.width, height: p.height, nodeSum, reconstructedIntegral },
               audioEnabled: snapshot.audio.enabled, pheromone: Array.from(snapshot.pheromone.values),
               agents: snapshot.agents.map(ant => ({ id: ant.id, x: ant.x, y: ant.y, vx: ant.vx, vy: ant.vy, heading: ant.heading, adherence: ant.trailAdherence })) };
             document.querySelector('#state').textContent = `${data.seconds.toFixed(2)} simulated seconds · ${data.population} ants · ${data.plateCount} natural Plates · audio Off`;

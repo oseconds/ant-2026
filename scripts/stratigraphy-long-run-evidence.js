@@ -14,7 +14,7 @@ const intervalSeconds = positiveNumber(options.get('--interval') || '10', '--int
 const skipParity = options.has('--skip-parity');
 const skipExtended = options.has('--skip-extended');
 const outputPath = resolve(options.get('--output')
-  || 'docs/ant/evidence/2026-10-06-stratigraphy-runtime/natural-runs.json');
+  || 'test-results/ant-stratigraphy-natural-runs.json');
 
 const report = {
   provenance: {
@@ -26,6 +26,8 @@ const report = {
     extendedSeconds,
     intervalSeconds,
     stepSeconds: 1 / 60,
+    pheromone: { width: 316, height: 316, sourceDoseScale: 3969 / 361,
+      writer: 'compact Gaussian R=0.0045 sigma=0.00225; bilinear reader' },
     technicalCeilings: { trailPlateBirths: TRAIL_PLATE_MAX_BIRTHS,
       materialPlates: MATERIAL_STRATIGRAPHY_MAX_PLATES,
       nodules: MATERIAL_STRATIGRAPHY_MAX_NODULES, eviction: false },
@@ -158,7 +160,10 @@ async function runScenario(seed, seconds, { materialEnabled = true } = {}) {
       surface: { totalFootContacts: snapshot.surface.totalFootContacts,
         maximum: surface.maximum, totalMass: snapshot.surface.totalMass,
         nonFiniteCount: surface.nonFiniteCount },
-      pheromone: { totalMass: snapshot.analysis.pheromoneMass, hash: digest(snapshot.pheromone.values),
+      pheromone: { width: snapshot.pheromone.width, height: snapshot.pheromone.height,
+        nodeSum: snapshot.pheromone.nodeSum,
+        reconstructedIntegral: snapshot.pheromone.reconstructedIntegral,
+        hash: digest(snapshot.pheromone.values),
         nonFiniteCount: pheromone.nonFiniteCount },
       activation: snapshot.analysis.colonyActivation,
       birthCount: descriptors.length,

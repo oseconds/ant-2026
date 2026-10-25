@@ -25,7 +25,8 @@ const evidence = {
     feedbackModes: feedbackModes.map(enabled => enabled ? 'on' : 'off'),
     baselineSeedLimit: args.get('--feedback') === 'both' ? 1 : null,
     populationFeedbackSetting: 'population.activationFeedback',
-    field: { width: 96, height: 96, halfLifeSeconds: 15 },
+    field: { width: 316, height: 316, halfLifeSeconds: 15, sourceDoseScale: 3969 / 361,
+      writer: 'compact Gaussian R=0.0045 sigma=0.00225; bilinear reader' },
     depositionMode,
     simulationStepSeconds: 1 / 60
   },
@@ -253,7 +254,8 @@ function captureSnapshot(controller, snapshot, activation, contact, spawnStats) 
     populationTarget: snapshot.state.population.count,
     totalSpawned: snapshot.analysis.totalSpawned,
     totalRetired: snapshot.analysis.totalRetired,
-    pheromoneMass: snapshot.analysis.pheromoneMass,
+    pheromoneNodeSum: pheromone.nodeSum,
+    pheromoneReconstructedIntegral: pheromone.reconstructedIntegral,
     meanTrailAdherence: agents.length
       ? agents.reduce((sum, agent) => sum + agent.trailAdherence, 0) / agents.length : 0,
     meanSpeed: snapshot.analysis.meanSpeed,
@@ -474,7 +476,7 @@ function spawnSummary(sum, count, minimum, maximum, maxPerTick) {
 
 function compactSample(sample) {
   return Object.fromEntries(['simulationTimeSeconds', 'activePopulation', 'totalSpawned', 'totalRetired',
-    'pheromoneMass', 'meanTrailAdherence', 'maximumLiveSpeed', 'minimumPhysicalSurfaceGap',
+    'pheromoneNodeSum', 'pheromoneReconstructedIntegral', 'meanTrailAdherence', 'maximumLiveSpeed', 'minimumPhysicalSurfaceGap',
     'desiredPopulation', 'localEvidence', 'recruitmentLimit', 'footContactGroups',
     'malformedFootContacts', 'outOfBoundsFootContacts', 'outOfBoundsFootPoints',
     'footContactCentroidMismatches'].map(key => [key, sample[key]]));

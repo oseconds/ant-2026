@@ -25,6 +25,10 @@
 - Independent adoption review: pending final read-only review.
 - Production-source comparison against Candidate G: all three Git blobs match exactly; no production source was changed after the comparison.
 - Production runtime-source diff against `origin/main` is limited to the reviewed three files: `PheromoneField.js`, `AntController.js` analysis fields, and `src/main.js` diagnostic label.
+- Adoption review corrected eight reusable evidence paths for the G default: `surface-long-run-evidence.js`, `ant-deposition-evidence.js`, `ant-long-run-evidence.js`, `ant-founder-controlled-probes.js`, `ant-founder-evidence.js`, `ant-founder-visual-evidence.js`, `surface-audio-evidence.js`, and `stratigraphy-long-run-evidence.js`. Corrections cover stale 96-grid metadata/indexing, native node sum versus authored dose, explicit node-sum/reference-integral diagnostics, and safe rerun destinations. Existing historical packets were not rewritten; no natural, audio, or browser runner was executed. Syntax checks and the two founder evidence selfchecks pass.
+- After all eight runner edits, `npm test` passed 339/339 and `npm run build` passed; Rollup dependency-annotation and Vite large-chunk advisories remain. Both commands first hit sandbox `spawn EPERM`; the unchanged commands passed when rerun with child-process permission. `git diff --check` passed.
+- `node --check` passed for all eight edited runners. The founder evidence and visual-evidence `--selfcheck` commands passed.
+- One-tick seed-61 deposition-runner smoke passed: the fixed-path reference-integral check differed by about `9.6e-9` relative to the expected authored reference integral. Its temporary JSON output was removed. No long natural-run output was generated.
 
 ## Integration verification
 

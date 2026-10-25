@@ -135,7 +135,8 @@ try {
         surface: { width: snapshot.surface?.width, height: snapshot.surface?.height,
           totalMass: snapshot.surface?.totalMass, maxValue: snapshot.surface?.maxValue,
           totalFootContacts: snapshot.surface?.totalFootContacts },
-        pheromoneMass: snapshot.pheromone?.totalMass ?? snapshot.analysis.pheromoneMass,
+        pheromone: snapshot.pheromone ? { width: snapshot.pheromone.width, height: snapshot.pheromone.height,
+          nodeSum: snapshot.pheromone.nodeSum, reconstructedIntegral: snapshot.pheromone.reconstructedIntegral } : null,
         pheromoneHash: hashFloat32(snapshot.pheromone?.values), surfaceHash: hashFloat32(snapshot.surface?.values),
         plates: plates.map(p => p), plateAgesSeconds: ages,
         footContactEvents: contacts.length, birthEvents: births.length,
@@ -165,13 +166,15 @@ try {
       const context = canvas.getContext('2d');
       context.fillStyle = '#fff'; context.fillRect(0, 0, canvas.width, canvas.height);
       const panels = [
-        { x: 20, title: 'Pheromone · raw field, grayscale scaled to snapshot maximum', data: snapshot.pheromone.values, max: snapshot.pheromone.maxValue },
-        { x: 410, title: 'SurfaceField · support grid at natural birth', data: snapshot.surface.values, max: snapshot.surface.maxValue },
-        { x: 800, title: 'Candidate + frozen plate · 96×96', data: null }
+        { x: 20, title: `Pheromone · ${snapshot.pheromone.width}×${snapshot.pheromone.height}, grayscale scaled to snapshot maximum`,
+          data: snapshot.pheromone.values, width: snapshot.pheromone.width, height: snapshot.pheromone.height, max: snapshot.pheromone.maxValue },
+        { x: 410, title: `SurfaceField · ${snapshot.surface.width}×${snapshot.surface.height} support grid at natural birth`,
+          data: snapshot.surface.values, width: snapshot.surface.width, height: snapshot.surface.height, max: snapshot.surface.maxValue },
+        { x: 800, title: 'Candidate + frozen plate · 96×96', data: null, width: 96, height: 96 }
       ];
       for (const panel of panels) {
         context.fillStyle = '#222'; context.font = '13px sans-serif'; context.fillText(panel.title, panel.x, 18);
-        const side = 360, cell = side / 96, top = 38;
+        const side = 360, cellWidth = side / panel.width, cellHeight = side / panel.height, top = 38;
         context.fillStyle = '#fafafa'; context.fillRect(panel.x, top, side, side);
         if (panel.data) {
           const values = panel.data;
@@ -180,7 +183,8 @@ try {
             if (value <= 0) continue;
             const gray = Math.round(255 * (1 - Math.max(0, Math.min(1, value / (panel.max || 1)))));
             context.fillStyle = `rgb(${gray},${gray},${gray})`;
-            context.fillRect(panel.x + (index % 96) * cell, top + Math.floor(index / 96) * cell, Math.ceil(cell), Math.ceil(cell));
+            context.fillRect(panel.x + (index % panel.width) * cellWidth,
+              top + Math.floor(index / panel.width) * cellHeight, cellWidth, cellHeight);
           }
         }
         if (panel.x === 800) {
@@ -189,18 +193,20 @@ try {
           for (let index = 0; index < 96 * 96; index += 1) {
             if (candidateMask[index]) {
               context.fillStyle = 'rgba(255,145,0,.38)';
-              context.fillRect(panel.x + (index % 96) * cell, top + Math.floor(index / 96) * cell, Math.ceil(cell), Math.ceil(cell));
+              context.fillRect(panel.x + (index % panel.width) * cellWidth,
+                top + Math.floor(index / panel.width) * cellHeight, cellWidth, cellHeight);
             }
             if (frozenMask[index]) {
               context.fillStyle = 'rgba(0,90,210,.52)';
-              context.fillRect(panel.x + (index % 96) * cell, top + Math.floor(index / 96) * cell, Math.ceil(cell), Math.ceil(cell));
+              context.fillRect(panel.x + (index % panel.width) * cellWidth,
+                top + Math.floor(index / panel.width) * cellHeight, cellWidth, cellHeight);
             }
           }
           const skeleton = candidate?.skeletonIndices || candidate?.path || plate?.principalPath || [];
           context.fillStyle = '#9c1212';
           for (const index of skeleton) {
-            const x = panel.x + (index % 96 + .5) * cell;
-            const y = top + (Math.floor(index / 96) + .5) * cell;
+            const x = panel.x + (index % panel.width + .5) * cellWidth;
+            const y = top + (Math.floor(index / panel.width) + .5) * cellHeight;
             context.fillRect(x - 1.2, y - 1.2, 2.4, 2.4);
           }
           context.fillStyle = '#111';
@@ -560,7 +566,7 @@ try {
   const matchedLegacy = results.find(result => result.label === 'legacy-comparison-180s');
   const matchedBorn = results.find(result => result.label === 'bornsurface-late-180s');
   const fingerprint = result => JSON.stringify({ ants: result.stateAtStart.ants,
-    surface: result.stateAtStart.surface, pheromoneMass: result.stateAtStart.pheromoneMass });
+    surface: result.stateAtStart.surface, pheromone: result.stateAtStart.pheromone });
   await writeFile(resolve(outDir, 'run-summary.json'), JSON.stringify({ seed, volumePercent, recordSeconds,
     discovered: { firstBirth, secondBirth: twoBirths }, clips: results.map(result => ({ label: result.label,
       simulationStartMs: result.recording.simulationStartMs, simulationEndMs: result.recording.simulationEndMs,

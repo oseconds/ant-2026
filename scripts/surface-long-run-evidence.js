@@ -18,7 +18,7 @@ const seeds = parseSeeds(args.get('--seeds') || '20261005,20261006,20261007');
 const durationSeconds = positiveNumber(args.get('--seconds'), 600);
 const sampleIntervalSeconds = positiveNumber(args.get('--interval'), 10);
 const outputPath = resolve(args.get('--output')
-  || 'docs/ant/evidence/2026-10-05-surface-plates/long-run-evidence.json');
+  || 'test-results/ant-surface-long-run-evidence.json');
 const ticks = Math.round(durationSeconds * 60);
 const sampleIntervalTicks = Math.max(1, Math.round(sampleIntervalSeconds * 60));
 
@@ -30,7 +30,8 @@ const report = {
     durationSeconds,
     sampleIntervalSeconds,
     simulationStepSeconds: 1 / 60,
-    pheromone: { width: 96, height: 96, halfLifeSeconds: 15 },
+    pheromone: { width: 316, height: 316, halfLifeSeconds: 15,
+      sourceDoseScale: 3969 / 361, writer: 'compact Gaussian R=0.0045 sigma=0.00225; bilinear reader' },
     surface: { width: 96, height: 96, halfLifeSeconds: 1800, contactDose: 0.025, radius: 0.012 },
     plateBirthThresholds: {
       chemical: TRAIL_PLATE_CHEMICAL_THRESHOLD,
@@ -219,6 +220,7 @@ function captureTimeline(controller, contacts, simulationTimeSeconds, birthAnaly
   const surface = snapshot.surface;
   const surfaceStats = summarizeField(surface.values);
   const pheromoneStats = summarizeField(snapshot.pheromone.values);
+  delete pheromoneStats.totalMass;
   const candidate = birthAnalysis ? controller.trailPlateBirth.getSnapshot().candidate : null;
   const frontier = birthAnalysis ? measureQualificationFrontier(controller.trailPlateBirth, controller.surfaceField) : null;
   const activation = snapshot.analysis.colonyActivation;
@@ -232,7 +234,13 @@ function captureTimeline(controller, contacts, simulationTimeSeconds, birthAnaly
       ? snapshot.agents.reduce((sum, ant) => sum + ant.trailAdherence, 0) / snapshot.agents.length : 0,
     meanSpeed: snapshot.analysis.meanSpeed,
     minimumPhysicalSurfaceGap: snapshot.analysis.minSeparation,
-    pheromone: { totalMass: snapshot.analysis.pheromoneMass, ...pheromoneStats },
+    pheromone: {
+      width: snapshot.pheromone.width,
+      height: snapshot.pheromone.height,
+      nodeSum: snapshot.pheromone.nodeSum,
+      reconstructedIntegral: snapshot.pheromone.reconstructedIntegral,
+      ...pheromoneStats
+    },
     surface: { totalFootContacts: surface.totalFootContacts, ...surfaceStats },
     activation,
     footContactGroups: contacts.groups,

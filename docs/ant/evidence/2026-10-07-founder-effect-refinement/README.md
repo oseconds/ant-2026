@@ -227,14 +227,14 @@ node scripts/ant-founder-evidence.js --source=test-results/founder-baseline --ou
 node scripts/ant-founder-evidence.js --source=. --output=test-results/founder-reproduction/after --seeds=20261005,20261006,20261007 --seconds=600
 node scripts/ant-founder-visual-evidence.js --before=test-results/founder-reproduction/before --after=test-results/founder-reproduction/after --output=test-results/founder-reproduction --maps-only
 node scripts/ant-founder-visual-evidence.js --output=test-results/founder-reproduction --browser-only
-node scripts/ant-founder-controlled-probes.js
+node scripts/ant-founder-controlled-probes.js --output=test-results/founder-reproduction/controlled-probes.json
 npm test
 npm run build
 npm run test:browser
 npm run test:browser -- --production
 ```
 
-The controlled-probe command intentionally writes its fixed packet path in this directory; copy the old packet first when rerunning. Node was v22.23.2. Installed Playwright and system Chrome are reused.
+Reruns default to ignored `test-results/` paths, so they do not overwrite these frozen packets. The current founder runners record each pheromone grid's actual dimensions and separate native node sum from reconstructed/reference integral; historical outputs above retain the 96-grid semantics captured at the time. Node was v22.23.2. Installed Playwright and system Chrome are reused.
 
 ## 11. Orchestration report
 

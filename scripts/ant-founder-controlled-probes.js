@@ -8,13 +8,15 @@ const paths = {
   baseline: resolve('test-results/founder-baseline/src/lib/agents/ant/AntController.js'),
   current: resolve('src/lib/agents/ant/AntController.js')
 };
-const output = resolve('docs/ant/evidence/2026-10-07-founder-effect-refinement/controlled-probes.json');
+const output = resolve(process.argv.slice(2).find(arg => arg.startsWith('--output='))?.slice(9)
+  || 'test-results/ant-founder-controlled-probes.json');
 const dt = 1 / 60, seeds = [19, 61, 193, 20261005, 20261006];
 const controllers = {}, sourceHashes = {};
 for (const [label, path] of Object.entries(paths)) {
   controllers[label] = (await import(pathToFileURL(path).href)).AntController;
   sourceHashes[label] = createHash('sha256').update(await readFile(path)).digest('hex');
 }
+assert.equal(bilinearIntegral([1, 1, 1, 1], 2, 2), 1, 'constant field integral');
 
 async function fixture(label, seed, continuous = false) {
   let value = seed >>> 0, draws = 0;
@@ -46,11 +48,15 @@ async function uniformProbe(label, signal) {
   c.field.sample = () => signal;
   const near = c.senseLocalTrail(a), beforeDraws = f.draws();
   c.tick(dt);
+  const field = c.field.getSnapshot();
+  const nodeSum = field.nodeSum ?? field.values.reduce((sum, value) => sum + value, 0);
+  const reconstructedIntegral = field.reconstructedIntegral ?? bilinearIntegral(field.values, field.width, field.height);
   const result = { signal, near, choice: a.intentHeading, confidence: a.trailConfidence,
     adherence: a.trailAdherence, decisionSeconds: a.decisionRemaining, commitmentSeconds: a.committedRemaining,
     effectiveHoldSeconds: Math.min(a.decisionRemaining, a.committedRemaining), draws: f.draws() - beforeDraws,
-    ...f.measures(), deliveredMass: c.field.getSnapshot().totalMass };
+    ...f.measures(), pheromoneNodeSum: nodeSum, pheromoneReconstructedIntegral: reconstructedIntegral };
   result.ratePerTravel = result.intendedDose / result.distance;
+  result.reconstructedIntegralRatioToAuthoredReferenceDose = reconstructedIntegral / (result.intendedDose / 95 ** 2);
   await c.destroy(); return result;
 }
 
@@ -104,8 +110,21 @@ for (let i = 0; i < 3; i++) {
   assert.ok(Math.abs(c.decisionSeconds / b.decisionSeconds - (.8 + .2 * e)) < 1e-12);
   assert.ok(Math.abs(c.commitmentSeconds / b.commitmentSeconds - (.8 + .2 * e)) < 1e-12);
   assert.ok(Math.abs(c.ratePerTravel / b.ratePerTravel - (.75 + .25 * e)) < 1e-12);
-  assert.ok(Math.abs(c.deliveredMass / c.intendedDose - 1) < 1e-6, 'actual field delivery');
+  assert.ok(Math.abs(c.reconstructedIntegralRatioToAuthoredReferenceDose - 1) < 1e-6,
+    'field integral follows the authored reference-area dose contract');
 }
 await mkdir(dirname(output), { recursive: true });
 await writeFile(output, `${JSON.stringify(evidence, null, 2)}\n`);
 console.log(JSON.stringify({ output, uniformCases: 6, matureCases: 10, farOnlyCases: 2, assertionsPassed: true }));
+
+function bilinearIntegral(values, width, height) {
+  let weightedSum = 0;
+  for (let y = 0; y < height; y += 1) {
+    const wy = y === 0 || y === height - 1 ? 0.5 : 1;
+    for (let x = 0; x < width; x += 1) {
+      const wx = x === 0 || x === width - 1 ? 0.5 : 1;
+      weightedSum += values[y * width + x] * wx * wy;
+    }
+  }
+  return weightedSum / ((width - 1) * (height - 1));
+}

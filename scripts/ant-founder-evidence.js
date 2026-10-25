@@ -45,7 +45,7 @@ async function main() {
       persistentEndpoints: 'At 1 Hz, exact boundary endpoint cell identities from the current qualifying candidate are tracked. Missing/unqualified cells reset their age. Persistent20sEndpointCount requires at least 20 seconds between first and current consecutive observations (21 samples). It is an exact-grid temporal endpoint proxy: cell shifts reset it, and it does not establish a persistent whole branch or social graph.',
       earlyRoute: 'The 30 s pheromone >= 0.04 mask outside radius 0.12 around the entrance is frozen per run. Later dose and contact shares within it measure early-route retention, not individual-founder causality.',
       earlyRouteDose: 'Spatial dose share uses the gaster rear endpoint of each accrued movement chunk, before deferred dabs are emitted; it is an endpoint approximation.',
-      maps: 'Raw unchanged 96x96 pheromone/surface and 64x64 occupancy grids; render with identical absolute scales across variants.',
+      maps: 'Raw pheromone grids retain each controller field’s recorded dimensions; SurfaceField maps are 96x96 and occupancy maps are 64x64. Render with identical absolute scales across variants.',
       randomPairing: 'Same seed is an initial-condition pairing. Changed movement/recruitment can diverge RNG call paths; state and call count are recorded.',
       raw: 'Gzip archive contains all natural Plate descriptors/birth records, 1 Hz positions and one actual FOOT_CONTACT sample per occupied simulation-second; all contact events are hashed.'
     }, scenarios: []
@@ -55,7 +55,8 @@ async function main() {
     report.scenarios.push(scenario);
     const final = scenario.checkpoints.at(-1);
     console.log(JSON.stringify({ seed, wallSeconds: scenario.wallSeconds,
-      population: final.activePopulation, mass: final.pheromoneMass, plates: final.plateCount,
+      population: final.activePopulation, pheromoneNodeSum: final.pheromoneNodeSum,
+      pheromoneReconstructedIntegral: final.pheromoneReconstructedIntegral, plates: final.plateCount,
       firstPlateSeconds: final.firstPlateSeconds, doseConservationError: final.dose.conservationError,
       invariants: scenario.invariants }));
   }
@@ -254,9 +255,14 @@ async function runScenario(AntController, seed, seconds, output) {
       const adherenceValues = agents.map(agent => agent.trailAdherence);
       const commitmentValues = agents.map(agent => Math.max(0, agent.committedRemaining));
       const mapName = `seed${seed}-${second}s-maps.json`;
+      const pheromoneNodeSum = snapshot.pheromone.nodeSum ?? snapshot.pheromone.totalMass
+        ?? snapshot.pheromone.values.reduce((sum, value) => sum + value, 0);
+      const pheromoneReconstructedIntegral = snapshot.pheromone.reconstructedIntegral
+        ?? bilinearIntegral(snapshot.pheromone.values, snapshot.pheromone.width, snapshot.pheromone.height);
       const point = {
         seconds: second, activePopulation: agents.length, spawned: controller.totalSpawned,
-        retired: controller.totalRetired, pheromoneMass: snapshot.pheromone.totalMass,
+        retired: controller.totalRetired, pheromoneNodeSum,
+        pheromoneReconstructedIntegral,
         adherence: distribution(adherenceValues), absoluteEvidence: distribution(evidenceValues),
         commitmentRemainingSeconds: distribution(commitmentValues, 2),
         clockIntervals: { scheduled: statistics.decisionClock.count,
@@ -272,10 +278,13 @@ async function runScenario(AntController, seed, seconds, output) {
           earlyRouteDoseShare: ratio(dose.earlyRoute, dose.post30Dose),
           earlyRouteFootShare: ratio(contacts.earlyRouteFeet, contacts.post30Feet) },
         chemical: { ...concentration(snapshot.pheromone.values),
+          nodeSum: pheromoneNodeSum,
+          reconstructedIntegral: pheromoneReconstructedIntegral,
           coverageAbove004: snapshot.pheromone.values.filter(v => v >= CHEMICAL_THRESHOLD).length / snapshot.pheromone.values.length,
           persistent30sCells: persistent?.reduce((sum, v) => sum + v, 0) ?? null,
           persistent30sRegionCount: persistent ? componentCount(persistent, snapshot.pheromone.width, 20) : null,
-          earlyRouteMassShare: earlyMask ? ratio(snapshot.pheromone.values.reduce((sum, v, i) => sum + v * earlyMask[i], 0), snapshot.pheromone.totalMass) : null },
+          earlyRouteNodeSumShare: earlyMask ? ratio(snapshot.pheromone.values
+            .reduce((sum, value, i) => sum + value * earlyMask[i], 0), pheromoneNodeSum) : null },
         occupancy: { cumulative: concentration(cumulative), recent30s: concentration(recent),
           cumulativeCoverage: cumulative.filter(v => v > 0).length / cumulative.length,
           recent30sCoverage: recent.filter(v => v > 0).length / recent.length },
@@ -396,11 +405,22 @@ function persistentMask(masks) {
   return Uint8Array.from(masks[0], (value, i) => value && masks.every(mask => mask[i]) ? 1 : 0);
 }
 function concentration(values) {
-  const sorted = Array.from(values).sort((a, b) => b - a), mass = sorted.reduce((sum, v) => sum + v, 0);
+  const sorted = Array.from(values).sort((a, b) => b - a), valueSum = sorted.reduce((sum, v) => sum + v, 0);
   let entropy = 0;
-  if (mass > 0) for (const value of sorted) if (value > 0) { const p = value / mass; entropy -= p * Math.log(p); }
-  return { total: mass, normalizedEntropy: mass > 0 ? entropy / Math.log(values.length) : null,
-    top10PercentMassShare: mass > 0 ? sorted.slice(0, Math.ceil(values.length * 0.1)).reduce((sum, v) => sum + v, 0) / mass : null };
+  if (valueSum > 0) for (const value of sorted) if (value > 0) { const p = value / valueSum; entropy -= p * Math.log(p); }
+  return { valueSum, normalizedEntropy: valueSum > 0 ? entropy / Math.log(values.length) : null,
+    top10PercentValueShare: valueSum > 0 ? sorted.slice(0, Math.ceil(values.length * 0.1)).reduce((sum, v) => sum + v, 0) / valueSum : null };
+}
+function bilinearIntegral(values, width, height) {
+  let weightedSum = 0;
+  for (let y = 0; y < height; y += 1) {
+    const wy = y === 0 || y === height - 1 ? 0.5 : 1;
+    for (let x = 0; x < width; x += 1) {
+      const wx = x === 0 || x === width - 1 ? 0.5 : 1;
+      weightedSum += values[y * width + x] * wx * wy;
+    }
+  }
+  return weightedSum / ((width - 1) * (height - 1));
 }
 function histogram(maximum) { return { count: 0, sum: 0, minimum: null, maximum: null, range: [0, maximum], bins: Array(20).fill(0), overflow: 0 }; }
 function add(stats, value) {
@@ -428,6 +448,9 @@ function finiteOrNull(value) { return Number.isFinite(value) ? value : null; }
 function digest(value) { return createHash('sha256').update(value).digest('hex'); }
 
 function selfcheck() {
+  assert.equal(bilinearIntegral([1, 1, 1, 1], 2, 2), 1);
+  assert.equal(concentration([1, 1, 1, 1]).valueSum, 4);
+  assert.equal(concentration([1, 1, 1, 1]).top10PercentValueShare, 0.25);
   assert.equal(concentration([1, 1, 1, 1]).normalizedEntropy, 1);
   assert.equal(concentration([4, 0, 0, 0]).normalizedEntropy, 0);
   assert.equal(componentCount(Uint8Array.from([1, 0, 0, 1]), 2, 2), 1);
