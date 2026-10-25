@@ -88,7 +88,9 @@ function eventBirthRow(plate) {
   return { id: plate.id, bornAtSimulationTimeMs: plate.bornAtSimulationTimeMs,
     source: plate.source, target: plate.target, geodesicLength: plate.geodesicLength,
     grid: plate.grid ? { width: plate.grid.width, height: plate.grid.height } : null,
-    maskSha256: plate.mask ? hash(Buffer.from(plate.mask.buffer, plate.mask.byteOffset, plate.mask.byteLength)) : null };
+    maskSha256: plate.mask ? hash(ArrayBuffer.isView(plate.mask)
+      ? Buffer.from(plate.mask.buffer, plate.mask.byteOffset, plate.mask.byteLength)
+      : Buffer.from(plate.mask)) : null };
 }
 
 function responseMatchKey(timeMs, position, hardness) {
