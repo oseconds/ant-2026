@@ -154,7 +154,8 @@ S0는 60 Hz에서 encounter start/end, duration, minimum distance와 stable ID�
 
 | 영역 | 상태 |
 | --- | --- |
-| ANT movement / gait / pheromone | frozen baseline |
+| ANT movement / gait | founder-refined baseline; local material locomotion resistance adopted; no new behavior tuning |
+| pheromone field | **G 316×316 adopted in production (2026-10-25)**; natural route persistence/turnover remains open |
 | founder refinement | adopted |
 | SurfaceField / Plate birth / stratigraphy | active, frozen qualification |
 | sonic baseline | 3 ms / 75 ms / ×50 damping |
@@ -162,8 +163,8 @@ S0는 60 Hz에서 encounter start/end, duration, minimum distance와 stable ID�
 | S0–S2c social observation / validation | complete; parked diagnostic baseline |
 | persistent pioneer-like organization | not demonstrated |
 | spectral diagnostics | SKIP at current gate |
-| current architecture pass | W1 vitality shadow |
-| next world-model pass | W2 episodic crystallization + material character shadow |
+| current research boundary | **no active W1→W2→W3 mandatory sequence**; vitality / episodic formation / richer character are hypotheses, not queued production passes |
+| open evidence questions (not adopted roadmap) | natural G route persistence/turnover, long-horizon openness, web Audio On clock/dense-mix/realtime behavior |
 | target sound concept | world itself as sounding body; Base Substrate calibration preserved but not conceptual default |
 | social feedback / graph→Plate coupling | not justified; parked |
 
@@ -173,7 +174,7 @@ S0는 60 Hz에서 encounter start/end, duration, minimum distance와 stable ID�
 
 ## Documentation map
 
-- [ANT current architecture / verified baseline / roadmap](docs/ant/README.md)
+- [ANT current decisions / evidence baselines / web artwork questions / viewing evidence](docs/ant/README.md#review-handoff--decisions-baselines-web-experience-viewing-evidence-2026-10-25)
 - [ANT persistent-world design contract](docs/ant/world-model.md)
 - [ANT daily experiment/process logs](docs/ant/daily/README.md)
 - [ANT evidence packages](docs/ant/evidence/)

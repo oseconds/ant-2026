@@ -1,5 +1,7 @@
 # Synthetic Plate shape capability listening session
 
+> **Later status (2026-10-18; canonical as of 2026-10-25):** The preparation-stage “No human listening result collected yet” wording below belongs to this experiment's earlier stage. The [completed synthetic blind export](../../subjective-listening/2026-10-18-synthetic-plate-shape-capability-subjective-listening.json) has one listener reporting differences in **five of six real pairs**. The hidden A/A's original `different=yes / confidence=5` is **unchanged**; a separate [interpretation-only correction](../../subjective-listening/2026-10-18-synthetic-plate-shape-capability-corrections.json) records the intended `different=no / confidence=5` response. See the [current decision register](../../README.md#review-handoff--decisions-baselines-web-experience-viewing-evidence-2026-10-25). This supports limited exploratory geometry-response capability, not general identification or live-world audibility. **Original exports and preparation text remain intact.**
+
 > **Listening order:** complete and export the natural cross-Plate blind session at [`2026-10-13-plate-sonic-individuality/cross-plate-listening.html`](../2026-10-13-plate-sonic-individuality/cross-plate-listening.html) before opening this session. Revealing synthetic shape/audio associations first may bias judgments about natural Plates.
 
 After that session is complete, open the [synthetic shape blind viewer](synthetic-shape-listening.html).

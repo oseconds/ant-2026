@@ -1,5 +1,7 @@
 # ANT Plate sonic individuality — 2026-10-13
 
+> **Later status (2026-10-18; canonical as of 2026-10-25):** This package records the **2026-10-13 pre-listening measurement and viewer preparation**, so its original “not tested” wording below is historically scoped. The [completed natural blind listening export](../../subjective-listening/2026-10-13-plate-sonic-individuality-subjective-listening.json) reports one listener judging all **six selected real p50 pairs different**, with the hidden **A/A judged no-difference**. See the [current decision register](../../README.md#review-handoff--decisions-baselines-web-experience-viewing-evidence-2026-10-25): Plate sonic individuality is **supported enough for now**, not a general population/live-world audibility finding; automatic character retuning is parked. **Raw results and this as-of report are preserved.**
+
 ## Decision
 
 **Selected current-law Plates already have distinct isolated measured responses. No system-wide primary identity bottleneck is demonstrated.** Geometry remains a strong source of spectral variation when every selected Plate uses the same observed median material. The natural material range contributes small frequency shifts and substantial accumulated phase differences, but little level or decay-envelope variation. This does not establish human audible discrimination.

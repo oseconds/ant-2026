@@ -40,6 +40,64 @@ af9c417  Record ANT social graph baseline evidence
 
 그 이후 커밋은 daily/documentation을 추가할 수 있으므로 **repository HEAD와 latest implementation baseline을 구분**한다.
 
+## Review handoff — decisions, baselines, web experience, viewing evidence (2026-10-25)
+
+이 절은 **독립 검토자가 먼저 읽을 현재 판정과 자료 범위**를 연결한다. 아래 verdict는 한정된 실험의 현재 판정이며, 실험 당시 작성된 README의 시점별 표현을 소급 변경하지 않는다. `docs/ant/README.md`와 현 `main` 구현이 현재 상태의 기준이고, branch-only 연구는 production 채택과 구분한다.
+
+### A. Current decision register
+
+| 질문 | 현재 판정 · 적용 범위 | 근거 | 다시 열 조건 |
+| --- | --- | --- | --- |
+| G pheromone은 production인가? | **ADOPTED.** 316×316 Gaussian field. 고정 입력 parity 및 세 seed의 저장된 G 600 s 궤적 일치가 확인됐다. 자연 경로의 미학·장기 전시 성능까지 검증된 것은 아니다. | [G adoption](evidence/2026-10-25-g-production-adoption/README.md) · [validation](evidence/2026-10-25-g-production-adoption/VALIDATION.md) | 새로운 G production 결함; 별도로 natural route persistence/turnover에 관한 사전 정의된 관찰 |
+| Plate의 형성은 자생적 물질 법칙인가? | `TrailPlateBirth`는 현재 **authored source→boundary corridor selection law**다. 행동의 흔적을 기록하지만 어떤 역사를 영구 물질로 선택할지는 저술되어 있다. | [movement/material morphology audit](evidence/2026-10-08-movement-material-morphology/README.md) · [production source](../../src/lib/agents/ant/TrailPlateBirth.js) | 현재 G history를 선택기 전후로 계량했을 때 작품에 중요한 구체적 정보 손실이 확인되는 경우 |
+| 자연 Plate의 차이를 들을 수 있는가? | **2026-10-18 완료**: 자연 Plate 12개의 선택된 p50 비교 **6/6**에서 단일 청취자가 `different=yes`, 숨겨진 A/A는 `no`. Isolated/level-matched 조건이며 일반적 인식률이나 live mix 청취를 증명하지 않는다. | [original subjective export](subjective-listening/2026-10-13-plate-sonic-individuality-subjective-listening.json) · [as-of measurement](evidence/2026-10-13-plate-sonic-individuality/README.md) | 동일 Plate의 다른 접촉 위치 인식, 다른 청취자, 실제 dense mix에서 구분 가능성을 묻는 별도 질문 |
+| Synthetic geometry의 차이를 들을 수 있는가? | **2026-10-18 완료**: 실제 비교 **5/6**에서 단일 청취자가 차이를 보고. A/A raw export는 `different=yes / confidence=5` 그대로, 별도 interpretation-only correction에서 의도한 응답을 `no / 5`로 기록한다. | [raw export](subjective-listening/2026-10-18-synthetic-plate-shape-capability-subjective-listening.json) · [correction](subjective-listening/2026-10-18-synthetic-plate-shape-capability-corrections.json) · [prepared experiment](evidence/2026-10-18-synthetic-plate-shape-capability/README.md) | 일반화·semantic shape 식별·실제 mixed-world 청취를 주장할 때 |
+| 일반적인 Plate individuality 재설계가 필요한가? | 현재 역할에는 **supported enough for now**. 새로운 excitation, pickup, material range, selector를 자동으로 탐색하지 않는다. Native material→median 치환의 작은 broad ERB 변화는 Plate 전체의 지각 불가능을 뜻하지 않는다. | [current audio status](#physical-audio) · [material ERB](evidence/2026-10-14-plate-erb-material-contribution/README.md) | 명확한 production/artistic 청취 실패가 기존 geometry/contact/field 및 mix 조건으로 설명되지 않을 때 |
+| Live dense mix는 개별 응답을 전달하는가? | **청각적 판단은 열림.** Pre-G 별도 연구 branch에서 8-Plate full-coupled focal/rest 분해 완료: 500 ms 구간 1,231개 중 742개(60.3%)에서 rest 합산 에너지가 focal보다 컸다. 이것만으로 perceptual masking을 확정하지 않는다. | [branch-only dense overlap](https://github.com/oseconds/ant-2026/blob/aea6601f6fc5c4d241fae7376f0f6cd59d11101f/docs/ant/evidence/2026-10-18-natural-dense-readout-overlap/README.md) · [main의 이전 계획](daily/2026-10-18-plate-audio-review-and-live-density-plan.md) | 청취/브라우저 출력 조건에서 구분 가능성을 확인하거나 G의 현재 자연 mix로 일반화할 때 |
+| 성숙한 실시간 Audio On이 보장되는가? | **아직 아님.** 2026-10-06 pre-G Chrome 자연 30-Plate 구간에서 audio/wall=0.1304, 9,806/9,806 nodes awake. 2026-10-21 branch 전시 연구도 20/30-Plate Full/Z-off가 실시간 미달. **현재 G Audio-On 웹 신뢰성은 미검증**이다. | [natural runtime](evidence/2026-10-06-runtime-recheck/README.md) · [branch-only exhibition study](https://github.com/oseconds/ant-2026/blob/aea6601f6fc5c4d241fae7376f0f6cd59d11101f/docs/ant/evidence/2026-10-21-exhibition-audio-runtime/README.md) · [G adoption limit](evidence/2026-10-25-g-production-adoption/README.md) | 대상 웹 브라우저/기기와 Audio On 시점·world age를 명시한 실제 재검증 |
+| 장기 축적/포화는 작품의 실패인가? | **작가 판단 미확정.** Append-only material, 256 Plate/32 Nodule ceiling은 구현 사실. 이전 96-grid의 세 seed 600 s에서 Nodule cap은 관측되었으나 현재 G의 장기 openness/turnover는 확정되지 않았다. 침묵·정체·포화는 자동 실패도 자동 성공도 아니다. | [Nodule opportunity, pre-G](evidence/2026-10-13-natural-nodule-opportunity/README.md) · [G adoption open question](evidence/2026-10-25-g-production-adoption/README.md) | 작가가 허용할 세계 수명/갱신 기준과 실제 G 장기 관찰이 준비됐을 때 |
+
+S0–S2c 사회 관측은 read-only/parked이고, vitality/episodic formation은 현재 필수 roadmap이 아니다. 과거의 부정적 실험도 [현재 경계](#current-production-boundary-and-future-hypotheses)와 개별 evidence에 남긴다.
+
+### B. Evidence baselines — never silently transfer natural outcomes
+
+| 증거 묶음 / 기준 | 현재 G와의 관계 | 유효하게 재사용할 것 · 재확인할 것 |
+| --- | --- | --- |
+| **Current** `main@fc5e81c7`, [G adoption](evidence/2026-10-25-g-production-adoption/README.md) (2026-10-25) | 현재 production 316-grid. 채택 이전 연구 G의 저장된 세 seed 600 s와 exact conformance. | 구현/API·고정 cue·저장 궤적 일치가 확인됨. 경로의 시간적 지속/갱신, 장기 material 및 G Audio On 신뢰성은 별도 질문. |
+| **Pre-G / 96-grid** `eb84b7c` [morphology audit](evidence/2026-10-08-movement-material-morphology/README.md), `d45823d` [sonic corpus](evidence/2026-10-13-plate-sonic-individuality/README.md) | 선택기의 구조와 물리 음향 law에 관한 많은 설명은 계속 참고 가능. 하지만 G는 chemical input의 공간 분포를 바꾸었다. | 선택기 저술 구조·frozen waveform·해당 corpus 청취 결과는 그대로. 600 s born counts/coverage, 해당 corpus가 G에서도 같은 비율로 생성된다는 주장 금지. |
+| **Pre-G branch-only** [8-Plate dense readout](https://github.com/oseconds/ant-2026/blob/aea6601f6fc5c4d241fae7376f0f6cd59d11101f/docs/ant/evidence/2026-10-18-natural-dense-readout-overlap/README.md) 및 [2026-10-21 exhibition audio](https://github.com/oseconds/ant-2026/blob/aea6601f6fc5c4d241fae7376f0f6cd59d11101f/docs/ant/evidence/2026-10-21-exhibition-audio-runtime/README.md) (당시 `8c60e4b` source) | branch evidence는 main에 채택된 production 실험이 아니며, pre-G workload를 사용한다. | Full-coupled focal/rest 에너지 분해, 20/30 Plate latency/throughput 한계를 해당 조건에 귀속. 현재 G 결과 또는 perceptual masking 검증으로 자동 이월하지 않는다. |
+| **Historical real Chrome viewing** `d281d34` [2026-10-06 recorded runtime](evidence/2026-10-06-stratigraphy-runtime/README.md) | Founder/G 도입 이전 웹 시청각 기록. 현재 G 대표 장면 아님. | 실제 화면, final stereo tap, world-age/audio-clock 불일치와 누락을 확인하는 역사적 감상 사례. |
+| **Research counterfactual** [2 h spatial dynamics](https://github.com/oseconds/ant-2026/blob/9fcd96205ff8a5c671be26e2e024524c0e9345d1/docs/ant/evidence/2026-10-22-spatial-dynamics/REPORT.md) | pre-G 연구 후보; production movement change 아님. | 120 min material coverage의 반례는 해당 baseline에만 적용. G 2 h 성과로 인용 금지. |
+
+규칙을 그대로 둬도 G에서 그 규칙이 **받는 입력의 분포와 자연 실행 결과**는 달라질 수 있다. 과거 evidence의 실행 SHA, seed, duration, audio state를 유지해서 인용하고, 현재 G와 동일 자연 결과라는 연결은 별도 conformance/측정 없이는 하지 않는다.
+
+### C. Artwork / audience intent — web first (review frame, not added mechanism)
+
+**주 감상 매체는 웹이며, 전시는 제시 방식의 확장이다.** 현재 앱은 페이지 진입 시 로컬 ANT 세계를 생성하고 페이지 종료 시 해제한다. 모델 내부에서 개미 없이도 material이 남는다는 지속성과, 탭/방문을 넘어 *같은 세계를 재접속*하는 웹 서비스는 다른 의미다. 후자는 현재 production 기능으로 주장하지 않는다. 또한 소리를 나중에 켜면 현재 topology에 새 AudioWorklet을 연결하며 과거 contact PCM이나 이전 vibration state를 이어 재생하지 않는다. [app lifecycle](../../src/main.js) · [ANT controller](../../src/lib/agents/ant/AntController.js) · [audio bridge](../../src/lib/audio/SurfaceAudioBridge.js).
+
+**관객 경험을 점검할 질문 (Astra 후속 예술적 해석; 작가의 최종 acceptance criteria 아님):**
+1. **현재와 남은 과거:** 자주 지나가는 곳, 지금 한산하지만 남은 흔적, 새 활동이 오래된 구조와 만나는 곳의 차이가 진단 overlay 없이도 일부 느껴지는가?
+2. **세계의 소리:** 같은 종류의 접촉이 지금까지 남은 material state에 의해 다르게 반응한다는 연결이 실제 브라우저의 Audio On 청취에서 느껴지는가? Isolated Plate 청취와 full mix 청취를 구별한다.
+3. **세계와 머무르는 시간:** 짧은 방문, 오래 켜둔 세션, 처음에는 Audio Off였다가 나중에 켜는 세션에서 의도된 속도·침묵·변화가 각각 성립하는가?
+
+**허용 상태와 실패의 구분:** 첫 Plate 이전의 침묵, 느린 축적, 활동의 편중, 장기 포화는 작품의 가능한 상태이지 자동 품질 불량이 아니다. 하지만 의도된 침묵과 AudioWorklet underrun, 선택된 축적과 의도치 않은 cap 정지, 느린 세계와 RAF gap으로 누락된 wall time은 서로 구분하여 보고해야 한다. 전자들의 허용 수준·유한한 세계/갱신되는 세계의 선택은 **작가 결정 대기**이고, 작품을 '더 복잡하게' 만드는 것이 목표라고 미리 가정하지 않는다.
+
+**웹 시간 경계:** `AntController.update()`는 RAF frame elapsed를 최대 100 ms로 제한하므로 백그라운드 탭에서 외부 경과 시간만큼 world age가 자동 진행한다고 보장할 수 없다. 화면·세계·AudioContext의 세 clock 대응 및 현재 G에서의 browser behavior는 아직 관측/정책을 분리해야 하는 질문이다. 새로운 analytic fast-forward나 persistent server를 이 문서에서 채택하지 않는다.
+
+### D. Representative viewing evidence — existing assets and gaps
+
+독립 예술 검토에는 좋은 장면만이 아니라 시작·형성·성숙과 **작가가 아쉽게 느낀 구간**을 함께 제시한다. **현재 G production을 대표하는 world-age/seed/실제 웹 화면/원본 소리 동기화 패킷은 이 정리에서 선정·검증되지 않았다.** 아래 기존 파일은 전부 pre-G 참고 기록이다. 영상과 오디오는 별도 파일이며, 원본 audio clock이 시뮬레이션 시간을 따라가지 못한 구간을 임의 스트레치·보간하지 않았다.
+
+| 기존 브라우저 참고 구간 (모두 seed `20261005`, pre-G 2026-10-06) | 시각 및 실제 출력 자료 | 동기화/편집·해석 주의 |
+| --- | --- | --- |
+| **Opening** world age `0–20 s` | [Chrome motion 20 s](evidence/2026-10-06-stratigraphy-runtime/motion/opening-motion-20s.webm) · [mapped original stereo WAV](evidence/2026-10-06-stratigraphy-runtime/motion/opening-mapped-original-audio.wav) | 같은 구간의 native output 약 20.03 s. 독립 음원/영상 파일, 녹음 후 별도 대체 효과음 없음. |
+| **First Plate** `119.0167–139.0167 s` | [Chrome motion 20 s](evidence/2026-10-06-stratigraphy-runtime/motion/first-plate-motion-20s.webm) · [mapped original stereo WAV](evidence/2026-10-06-stratigraphy-runtime/motion/first-plate-mapped-original-audio.wav) | 해당 interval native audio 20 s. 현재 G의 첫 Plate 생성 시점이라고 인용하지 않는다. |
+| **Late stack** `580.2167–600.2167 s` | [Chrome motion 20 s](evidence/2026-10-06-stratigraphy-runtime/motion/late-stack-motion-20s.webm) · [mapped original stereo WAV](evidence/2026-10-06-stratigraphy-runtime/motion/late-stack-mapped-original-audio.wav) | **20 s 영상에 native audio 약 2.30 s만 대응**: mature realtime failure의 시각/청각 간극을 보존한 증거. 동기화된 20 s soundscape로 제시 금지. |
+
+[2026-10-06 capture report](evidence/2026-10-06-stratigraphy-runtime/README.md) · [clock/provenance manifest](evidence/2026-10-06-stratigraphy-runtime/motion/continuous-natural-0-600s-curated-manifest.json). 이 오래된 시청각 자료만으로 **현재 G에서 관객에게 무엇이 전달되는지** 판단하지 않는다.
+
+향후 현재 G 대표 구간을 선정할 때 최소 기록: **actual git SHA / seed / model-time interval / browser+device / Audio On 시각 / captured sim·wall·audio clock alignment / 실제 canvas와 native output / crop·편집·시간 보정 유무 / 해당 구간을 보는 열린 관람 질문**. 확보 전에는 `not captured`라고 적는다. 시각·청각 동시 기록이 불가능한 mature 구간은 그 불일치 자체를 보고하고, 임의로 정상화한 결과를 원본이라고 표시하지 않는다.
+
 ## Architecture
 
 ### Agent / movement
