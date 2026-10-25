@@ -113,7 +113,10 @@ export class AntController {
             gait: this.gaitController.getSnapshot(agent),
             bodyPose: this.bodyPoseController.getSnapshot(agent)
         }));
-        const field = this.field?.getSnapshot() || { width: 0, height: 0, values: new Float32Array(), maxValue: 0, totalMass: 0 };
+        const field = this.field?.getSnapshot() || {
+            width: 0, height: 0, values: new Float32Array(), maxValue: 0,
+            nodeSum: 0, reconstructedIntegral: 0, totalMass: 0
+        };
         let speedTotal = 0;
         for (const agent of agents) speedTotal += Math.hypot(agent.vx, agent.vy);
         return {
@@ -138,6 +141,9 @@ export class AntController {
                 totalSpawned: this.totalSpawned,
                 totalRetired: this.totalRetired,
                 meanSpeed: agents.length ? speedTotal / agents.length : 0,
+                pheromoneNodeSum: field.nodeSum,
+                pheromoneReconstructedIntegral: field.reconstructedIntegral,
+                // Compatibility alias for the native node sum, not a mass integral.
                 pheromoneMass: field.totalMass,
                 simulationTimeMs: this.simulationTimeMs,
                 colonyActivation: {

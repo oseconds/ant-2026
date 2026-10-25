@@ -107,14 +107,15 @@ test('continuous and dab modes preserve adherence-weighted dose across different
     dabField.depositPoint(deposit.position, { amount: deposit.amount, radius });
   }
 
-  const continuousMass = continuousField.getSnapshot().totalMass;
-  const dabMass = dabField.getSnapshot().totalMass;
-  assert.ok(Math.abs(continuousMass - expectedDose) < 1e-5,
-    `continuous mass ${continuousMass} should match integrated weighted distance ${expectedDose}`);
-  assert.ok(Math.abs(dabMass - expectedDose) < 1e-5,
-    `dab mass ${dabMass} should match integrated weighted distance ${expectedDose}`);
-  assert.ok(Math.abs(continuousMass - dabMass) / expectedDose < 1e-5,
-    `continuous ${continuousMass} and dab ${dabMass} totals should agree`);
+  const continuousIntegral = continuousField.getSnapshot().reconstructedIntegral;
+  const dabIntegral = dabField.getSnapshot().reconstructedIntegral;
+  const expectedReferenceIntegral = expectedDose / 95 ** 2;
+  assert.ok(Math.abs(continuousIntegral - expectedReferenceIntegral) < 1e-9,
+    `continuous reference integral ${continuousIntegral} should match authored dose ${expectedDose}`);
+  assert.ok(Math.abs(dabIntegral - expectedReferenceIntegral) < 1e-9,
+    `dab reference integral ${dabIntegral} should match authored dose ${expectedDose}`);
+  assert.ok(Math.abs(continuousIntegral - dabIntegral) / expectedReferenceIntegral < 1e-5,
+    `continuous ${continuousIntegral} and dab ${dabIntegral} integrals should agree`);
   assert.notDeepEqual([...continuousField.values], [...dabField.values],
     'the experiment changes the spatial distribution while preserving total weighted dose');
 });

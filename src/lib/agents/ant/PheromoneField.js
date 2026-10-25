@@ -1,5 +1,6 @@
-const DEFAULT_WIDTH = 96;
-const DEFAULT_HEIGHT = 96;
+const DEFAULT_WIDTH = 316;
+const DEFAULT_HEIGHT = 316;
+const SOURCE_REFERENCE_INTERVALS = 95;
 const DEFAULT_HALF_LIFE_SECONDS = 15;
 const DEFAULT_MAX_VALUE = 8;
 const DEFAULT_AMOUNT_PER_UNIT_DISTANCE = 4.5;
@@ -21,6 +22,7 @@ export class PheromoneField {
     this.height = integerInRange(height, 2, 512, 'height');
     this.decayHalfLifeSeconds = positiveFinite(decayHalfLifeSeconds, 'decayHalfLifeSeconds');
     this.maxValue = positiveFinite(maxValue, 'maxValue');
+    this.sourceDoseScale = (this.width - 1) * (this.height - 1) / SOURCE_REFERENCE_INTERVALS ** 2;
     this.values = new Float32Array(this.width * this.height);
   }
 
@@ -47,9 +49,8 @@ export class PheromoneField {
   }
 
   /**
-   * Deposit along a traveled segment. Amount is proportional to distance,
-   * independent of elapsed time and approximately independent of frame rate.
-   * The Gaussian brush distributes each length slice across nearby cells.
+   * Deposit along a traveled segment. Inputs and return use authored source
+   * dose; this field applies its resolution conversion to stored coefficients.
    */
   depositSegment(from, to, {
     amountPerUnitDistance = DEFAULT_AMOUNT_PER_UNIT_DISTANCE,
@@ -73,7 +74,8 @@ export class PheromoneField {
     const stepSize = cellSize * 0.5;
     const sampleCount = Math.max(1, Math.ceil(distance / stepSize));
     const totalAmount = distance * amountPerUnitDistance;
-    const sliceAmount = totalAmount / sampleCount;
+    const coefficientAmountPerUnitDistance = amountPerUnitDistance * this.sourceDoseScale;
+    const sliceAmount = distance * coefficientAmountPerUnitDistance / sampleCount;
     const sigma = radius * 0.5;
     const support = radius;
 
@@ -84,13 +86,13 @@ export class PheromoneField {
     return totalAmount;
   }
 
-  /** Deposit a fixed amount at one in-domain normalized point with the shared brush. */
+  /** Return the authored in-domain request, not the capped stored increment. */
   depositPoint(position, { amount, radius = DEFAULT_RADIUS } = {}) {
     const location = point(position, 'position');
     amount = nonNegativeFinite(amount, 'amount');
     radius = positiveFinite(radius, 'radius');
     if (location.x < 0 || location.x > 1 || location.y < 0 || location.y > 1 || amount === 0) return 0;
-    this.depositBrush(location.x, location.y, amount, radius, radius * 0.5, radius);
+    this.depositBrush(location.x, location.y, amount * this.sourceDoseScale, radius, radius * 0.5, radius);
     return amount;
   }
 
@@ -107,14 +109,28 @@ export class PheromoneField {
   /** Returns detached typed data for renderers or diagnostics. */
   getSnapshot() {
     const values = this.values.slice();
-    let totalMass = 0;
-    for (let index = 0; index < values.length; index += 1) totalMass += values[index];
+    let nodeSum = 0;
+    let bilinearWeightedSum = 0;
+    for (let row = 0; row < this.height; row += 1) {
+      const wy = row === 0 || row === this.height - 1 ? 0.5 : 1;
+      for (let column = 0; column < this.width; column += 1) {
+        const value = values[row * this.width + column];
+        const wx = column === 0 || column === this.width - 1 ? 0.5 : 1;
+        nodeSum += value;
+        bilinearWeightedSum += value * wx * wy;
+      }
+    }
+    const reconstructedIntegral = bilinearWeightedSum
+      / ((this.width - 1) * (this.height - 1));
     return {
       width: this.width,
       height: this.height,
       values,
       maxValue: this.maxValue,
-      totalMass
+      nodeSum,
+      reconstructedIntegral,
+      // Compatibility alias: this has always been a native coefficient sum.
+      totalMass: nodeSum
     };
   }
 

@@ -104,12 +104,29 @@ test('short-lived trail signal cannot become a persistent plate and real fields 
 
   const field = new PheromoneField();
   field.depositSegment({ x: 0.025, y: TRAIL_PLATE_SOURCE_ORIGIN.y }, { x: 0.66, y: TRAIL_PLATE_SOURCE_ORIGIN.y });
+  assert.equal(field.width, 316, 'material analysis accepts the production candidate field dimensions');
+  for (const [x, y] of [[0.031, 0.718], [0.327, 0.72], [0.659, 0.723], [0, 0.72]]) {
+    assert.equal(field.sample(x, y), rawBilinear(field.values, field.width, field.height, x, y),
+      'raw-array bilinear reads use the same G signal as field.sample()');
+  }
   let sensingSamples = 0;
   field.sample = () => { sensingSamples += 1; return 0; };
   const system = new TrailPlateBirth();
   system.advance({ pheromone: field, surface: { sampleSupport: () => 0 }, simulationTimeMs: 0 });
   assert.equal(sensingSamples, 0, 'the birth analysis reads the field grid without calling the locomotion sampler');
 });
+
+function rawBilinear(values, width, height, x, y) {
+  if (x < 0 || x > 1 || y < 0 || y > 1) return 0;
+  const gx = x * (width - 1), gy = y * (height - 1);
+  const x0 = Math.floor(gx), y0 = Math.floor(gy);
+  const x1 = Math.min(width - 1, x0 + 1), y1 = Math.min(height - 1, y0 + 1);
+  const tx = gx - x0, ty = gy - y0;
+  const mix = (a, b, t) => a + (b - a) * t;
+  const top = mix(values[y0 * width + x0], values[y0 * width + x1], tx);
+  const bottom = mix(values[y1 * width + x0], values[y1 * width + x1], tx);
+  return mix(top, bottom, ty);
+}
 
 test('transverse route support changes ribbon width while retaining bounded physical geometry', () => {
   const narrow = new TrailPlateBirth();
