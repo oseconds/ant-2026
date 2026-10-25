@@ -2,12 +2,12 @@
 
 ## Decision
 
-**ADOPT G — remote integration pending.** The user authorized production adoption after the candidate passed the independent readiness review. The adoption branch was cut from freshly fetched `origin/main` `8c60e4bba3bd5b476300e90a2936bfebd1f831c2`; research histories were not merged wholesale.
+**ADOPTED G.** The user authorized production adoption after the candidate passed the independent readiness review. The adoption branch was cut from freshly fetched `origin/main` `8c60e4bba3bd5b476300e90a2936bfebd1f831c2`; it was integrated to `origin/main` by non-force fast-forward at `fe9618db21910393e464d8f619665f340d9599e9`. Research histories were not merged wholesale.
 
 ## What changed
 
-- Prepared integration of the reviewed 316×316 Gaussian field and reference-area source conversion. The point-signal and authored source-dose API contract is explicit; native node sum is separated from the reconstructed/reference integral.
-- Updated only the ANT chemical-memory section of the canonical hub in the adoption branch to reflect G and its qualification limits.
+- Integrated the reviewed 316×316 Gaussian field and reference-area source conversion. The point-signal and authored source-dose API contract is explicit; native node sum is separated from the reconstructed/reference integral.
+- Updated only the ANT chemical-memory section of the canonical hub to reflect G and its qualification limits.
 - Included the validated test-only near-stop correction. Production movement code and authored movement constants remain unchanged.
 - Preserved the production-candidate, near-stop, and readiness evidence packages, and added this adoption record.
 - Corrected eight reusable evidence paths' stale 96×96 provenance/indexing, node-sum/source-dose comparisons, or unsafe historical-output defaults. No natural, audio, or browser runner was executed and no historical result was regenerated.

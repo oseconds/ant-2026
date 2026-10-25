@@ -5,8 +5,8 @@
 - Previous `origin/main`: `8c60e4bba3bd5b476300e90a2936bfebd1f831c2`.
 - Adoption branch: `codex/ant-g-production-adoption-20261025`.
 - The branch was based directly on the freshly fetched previous main; only reviewed G production changes, the validated near-stop test correction, and associated review/test evidence were brought forward.
-- Adoption branch commit: pending final commit.
-- Integrated `origin/main` commit: pending integration verification.
+- Adoption branch tip at production integration: `fe9618db21910393e464d8f619665f340d9599e9`.
+- Integrated `origin/main` commit: `fe9618db21910393e464d8f619665f340d9599e9` (non-force fast-forward from the previous main).
 
 ## Source and fixture conformance
 
@@ -37,10 +37,10 @@
 
 ## Integration verification
 
-- Push/merge method: pending.
-- Adoption branch commit: pending.
-- Post-integration `origin/main` SHA: pending.
-- Final smoke/source check from remote main: pending.
+- Push/merge method: adoption branch pushed, then direct non-force fast-forward push to `main`; no PR required.
+- Fresh fetch confirmed remote `origin/main` and local `HEAD` both at `fe9618db21910393e464d8f619665f340d9599e9` immediately after integration.
+- Final merged-tree smoke: `npm test` passed 339/339 (0 failed); `npm run build` passed. Existing Rollup annotation and large-chunk warnings remain.
+- Final adoption receipt is a documentation-only descendant of the integration commit; the final remote tip is the commit containing this validation record.
 
 ## Limits
 
