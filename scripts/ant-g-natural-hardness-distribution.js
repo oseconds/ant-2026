@@ -15,6 +15,7 @@ const SECONDS = 600;
 const TICKS = SECONDS * 60;
 const HISTOGRAM_BINS = 10;
 const TIME_BIN_SECONDS = 60;
+const TIME_END_TOLERANCE_MS = 1e-6;
 const SOURCE_FILES = Object.freeze([
   'src/lib/agents/ant/AntController.js', 'src/lib/agents/ant/SurfaceField.js',
   'src/lib/agents/ant/TrailPlateBirth.js', 'src/lib/agents/ant/MaterialStratigraphy.js',
@@ -57,7 +58,7 @@ export function summarizeTimeBins(rows, durationSeconds = SECONDS) {
     endSeconds: (index + 1) * TIME_BIN_SECONDS, values: [] }));
   for (const row of rows) {
     assert(Number.isFinite(row.simulationTimeMs) && row.simulationTimeMs >= 0
-      && row.simulationTimeMs <= durationSeconds * 1000, 'time outside fixed run');
+      && row.simulationTimeMs <= durationSeconds * 1000 + TIME_END_TOLERANCE_MS, 'time outside fixed run');
     const index = Math.min(count - 1, Math.floor(row.simulationTimeMs / (TIME_BIN_SECONDS * 1000)));
     bins[index].values.push(row.hardness);
   }
@@ -195,7 +196,8 @@ async function collectSeed(seed, baselineSummary, baselineRawBytes) {
       contactsBySecond.push({ seconds: second, ...currentContacts });
       currentContacts = { groups: 0, feet: 0 };
     }
-    assert.equal(controller.simulationTimeMs, SECONDS * 1000);
+    assert(Math.abs(controller.simulationTimeMs - SECONDS * 1000) <= TIME_END_TOLERANCE_MS,
+      'fixed tick accumulation ends at 600 s within floating-point tolerance');
     assert.equal(controller.surfaceField.totalFootContacts, footResponses.length);
     const events = { contactStreamSha256: contactHash.digest('hex'), plateBirthStreamSha256: birthHash.digest('hex') };
     const previousRaw = JSON.parse(gunzipSync(baselineRawBytes).toString('utf8'));

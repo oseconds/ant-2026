@@ -27,7 +27,7 @@ The capture port only copies already-posted messages. The run must reproduce sav
 
 - Hardness domain: `[0,1]`; non-finite or out-of-range values fail validation.
 - Fixed histogram: ten equal-width bins of `0.1`; bins are left-closed/right-open, with `1.0` included in the final bin.
-- Time bins: ten fixed 60 s intervals `[0,60) ... [540,600]`; a value exactly at 600 s belongs to the last bin.
+- Time bins: ten fixed 60 s intervals `[0,60) ... [540,600]`; a value exactly at 600 s belongs to the last bin. Permit `1e-6 ms` only for accumulated fixed-tick floating-point drift at the final endpoint and assign that value to the last bin; do not retime stored samples.
 - Quantiles: linearly interpolated Type 7 (`p × (n−1)`). Standard deviation is population standard deviation (`N` denominator).
 - For each population report count, min/max, mean, standard deviation, p01/p05/p25/p50/p75/p95/p99, and the fixed histogram.
 - For each time bin report count and the same quantiles. Plate summaries report count, median, p25, p75, and IQR.
