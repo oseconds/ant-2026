@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "freshMain": "8c60e4bba3bd5b476300e90a2936bfebd1f831c2",
+  "parentHTip": "d7326467016478670afc10d0407c9d641cc6b1c2",
+  "seeds": [
+    20261005,
+    20261006,
+    20261007
+  ],
+  "seconds": 600,
+  "tickRate": 60,
+  "checkpoints": [
+    30,
+    60,
+    120,
+    300,
+    600
+  ],
+  "sourceHashes": {
+    "src/lib/agents/ant/AntController.js": "e287939aaccc60187695a920d31a87b2f6660eada9699953d60d05ef90f4bb04",
+    "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+    "src/lib/agents/ant/PheromoneField.js": "412798ea9276888bf5bbb28130ae319d970c36f411d6f066e48cff1b478c4afd",
+    "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+    "src/lib/agents/ant/LocalOccupancy.js": "df22dd38e9af8078ebcb1d225ca2a5eaf579e994d2d4a00ce9ceeefa2403ff16",
+    "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+    "src/lib/agents/ant/BodyPoseController.js": "2ec4cc12c12ae301ea07056889c3be9255b1b1e155b7724cd3366278d60ace8e",
+    "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd",
+    "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+    "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+    "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+    "scripts/ant-founder-evidence.js": "cae43004eff62ecea6f981bd966c7f73b5346a3d4b6468af3f34836e084dd34d",
+    "scripts/ant-316-gaussian-dose-unit-movement-shadow.js": "e54cc637f1ada1faa1ae71e0e729c1761be3fd2542466d07fa3189ca7284a570",
+    "scripts/ant-g-reinforcement-ablation.js": "c5b59a6b0656131698d929f1898271aa6dab58341af4ec749319681eeb541978",
+    "tests/ant-316-gaussian-dose-unit-movement-shadow.test.js": "48aca300de1633c3c2c7e9e4a9d50e81ee5c5c6f50e3c6a502fbe4c308f4bb08",
+    "docs/ant/README.md": "0c93aad8d6d5908a192ef2f416e3d7ff2743da8c91c258cbd220abc335a768cb",
+    "scripts/ant-g-adherence-coupling-control.js": "f9ebf09ae7dd943534a70c05fd59db9f3d78faa59dc7966f0e39b3a85b44fbe8",
+    "tests/ant-g-adherence-coupling-control.test.js": "4e1ae413ff632a6053ce09f9f12b5b1ce4c3599b3a01a70d51da942e601d4824",
+    "docs/ant/evidence/2026-10-25-ant-g-aggregate-adherence-budget-control/PREREGISTRATION.md": "2cf671701337eb3e2815711721f4f8df9e5afd53e50f13b199f52a9e00942136"
+  },
+  "parentManifests": {
+    "movement": {
+      "entries": 56,
+      "manifestSha256": "adc2095bdbebb45d18732c2d16b3b465a2ed7b14f9965d4e954e1aeec349b2d4"
+    },
+    "gR0": {
+      "entries": 27,
+      "manifestSha256": "18389a5930064cc96d75348debed8427cb0c24553880c96259af5d2d13a034e7"
+    },
+    "h": {
+      "entries": 44,
+      "manifestSha256": "7b50c2c5cabd395e61d1acfeb7b7f901bda10ec2eee624d3fa149d8b71292f70"
+    }
+  },
+  "budgetDefinition": "sum of each intact-G tick intactLawReinforcementBudget before doseScale",
+  "budgets": [
+    {
+      "seed": 20261005,
+      "file": "seed20261005-G-reinforcement-budget.f64le",
+      "count": 36000,
+      "byteLength": 288000,
+      "byteOrder": "little-endian",
+      "scalar": "IEEE-754 binary64",
+      "sha256": "acdef13c7581cfb98896e5ed542cc1af53ab58e2ee1fe789a2eb018d2e736352",
+      "checkpointBudgets": [
+        {
+          "seconds": 30,
+          "cumulativeUnscaledDose": 58.3004379474775
+        },
+        {
+          "seconds": 60,
+          "cumulativeUnscaledDose": 195.46743578011527
+        },
+        {
+          "seconds": 120,
+          "cumulativeUnscaledDose": 679.9434704368933
+        },
+        {
+          "seconds": 300,
+          "cumulativeUnscaledDose": 2937.9946584426084
+        },
+        {
+          "seconds": 600,
+          "cumulativeUnscaledDose": 6782.8808415543435
+        }
+      ],
+      "parentGSourceFile": "seed20261005-G-source-accounting.json.gz",
+      "parentGSourceSha256": "d5a993eb9b82086a7c1cd9c3934cc12ecf911670c64349bbb9360b64d658d3ce"
+    },
+    {
+      "seed": 20261006,
+      "file": "seed20261006-G-reinforcement-budget.f64le",
+      "count": 36000,
+      "byteLength": 288000,
+      "byteOrder": "little-endian",
+      "scalar": "IEEE-754 binary64",
+      "sha256": "bde279eeef6fc4dce0ff21d70c787a92d49b96182e5aa3c01c095f7a836aacfc",
+      "checkpointBudgets": [
+        {
+          "seconds": 30,
+          "cumulativeUnscaledDose": 57.45047430696725
+        },
+        {
+          "seconds": 60,
+          "cumulativeUnscaledDose": 246.46721560429475
+        },
+        {
+          "seconds": 120,
+          "cumulativeUnscaledDose": 984.2137631565523
+        },
+        {
+          "seconds": 300,
+          "cumulativeUnscaledDose": 3379.155295501313
+        },
+        {
+          "seconds": 600,
+          "cumulativeUnscaledDose": 7246.977671919978
+        }
+      ],
+      "parentGSourceFile": "seed20261006-G-source-accounting.json.gz",
+      "parentGSourceSha256": "bc588d9f34e32b781094f286715d57e150c379532135e5aa6db4a7c9cb5719bc"
+    },
+    {
+      "seed": 20261007,
+      "file": "seed20261007-G-reinforcement-budget.f64le",
+      "count": 36000,
+      "byteLength": 288000,
+      "byteOrder": "little-endian",
+      "scalar": "IEEE-754 binary64",
+      "sha256": "bee232e64963b7a2cbe8abc24148c576cdb87e9d6d17cfb638932d04420e7553",
+      "checkpointBudgets": [
+        {
+          "seconds": 30,
+          "cumulativeUnscaledDose": 57.23626417977361
+        },
+        {
+          "seconds": 60,
+          "cumulativeUnscaledDose": 216.4602828984719
+        },
+        {
+          "seconds": 120,
+          "cumulativeUnscaledDose": 751.5067749112084
+        },
+        {
+          "seconds": 300,
+          "cumulativeUnscaledDose": 3015.3469959635704
+        },
+        {
+          "seconds": 600,
+          "cumulativeUnscaledDose": 6859.952362947817
+        }
+      ],
+      "parentGSourceFile": "seed20261007-G-source-accounting.json.gz",
+      "parentGSourceSha256": "38c9ad9038b38125bd1a2bf4a88db55172f704d7a300578737aed34472f068f6"
+    }
+  ]
+}
