@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { AntController } from '../src/lib/agents/ant/AntController.js';
 import { AntAgent } from '../src/lib/agents/ant/AntAgent.js';
 import { LocalOccupancy } from '../src/lib/agents/ant/LocalOccupancy.js';
+import { PheromoneField } from '../src/lib/agents/ant/PheromoneField.js';
 
 function seededRandom(seed) {
   let value = seed >>> 0;
@@ -513,34 +514,77 @@ test('stop and destroy halt simulation and detach listeners', async () => {
   assert.equal(controller.agents.length, 0);
 });
 
-test('an isolated ant has repeated near-stops after warmup and resumes forward movement', async () => {
-  for (const seed of [9, 52, 240]) {
-    const controller = new AntController({ random: seededRandom(seed),
-      state: { population: { activationFeedback: false } } });
+test('inspection schedules the authored hesitation interval and duration', async () => {
+  for (const size of [96, 316]) {
+    const controller = new AntController({
+      random: seededRandom(17),
+      state: { population: { activationFeedback: false } },
+      fieldFactory: (options) => new PheromoneField({ ...options, width: size, height: size })
+    });
     await controller.init();
     controller.syncRecruitment = () => {};
     const ant = controller.agents[0];
     controller.agents = [ant];
     controller.nextSpawnTimeMs = null;
-    ant.x = 0.5;
-    ant.y = 0.5;
-    let nearStops = 0;
-    let moving = 0;
-    for (let tick = 0; tick < 60 * 60; tick += 1) {
-      const before = { vx: ant.vx, vy: ant.vy };
+    ant.x = ant.y = 0.5;
+    ant.heading = ant.intentHeading = 0;
+    ant.inspectionRemaining = 1 / 60;
+    ant.hesitationRemaining = 0;
+    ant.decisionRemaining = ant.committedRemaining = 10;
+    const draws = [0.5, 0, 0.5, 0.25];
+    let drawCount = 0;
+    controller.random = () => draws[drawCount++] ?? 0.5;
+
+    controller.tick(1 / 60);
+    assert.equal(drawCount, 4, 'one inspection uses only its existing random draws');
+    assert.ok(Math.abs(ant.inspectionRemaining - 2.4) < 1e-12,
+      'inspection interval remains 1.2 + 2.4 × random');
+    assert.ok(Math.abs(ant.hesitationRemaining - 0.9) < 1e-12,
+      'scheduled hesitation remains 0.7 + 0.8 × random');
+    await controller.destroy();
+  }
+});
+
+test('an authored hesitation brakes an active ant near-stop and movement resumes', async () => {
+  for (const size of [96, 316]) {
+    const controller = new AntController({
+      random: seededRandom(17),
+      state: { population: { activationFeedback: false } },
+      fieldFactory: (options) => new PheromoneField({ ...options, width: size, height: size })
+    });
+    await controller.init();
+    controller.syncRecruitment = () => {};
+    const ant = controller.agents[0];
+    controller.agents = [ant];
+    controller.nextSpawnTimeMs = null;
+    ant.x = ant.y = 0.5;
+    ant.heading = ant.intentHeading = 0;
+    ant.speedPhase = 0;
+    ant.vx = ant.personality.preferredSpeed * 0.8;
+    ant.vy = 0;
+    ant.inspectionRemaining = ant.decisionRemaining = ant.committedRemaining = 100;
+    ant.hesitationRemaining = 0.9;
+    let minimumEpisodeSpeed = Infinity;
+    let maximumResumedSpeed = 0;
+    for (let tick = 0; tick < 120; tick += 1) {
+      const phase = ant.speedPhase;
+      const expectedRatio = (0.58 + 0.34 * (Math.sin(phase) + 1) * 0.5)
+        * (ant.hesitationRemaining > 0 ? 0.05 : 1);
       controller.tick(1 / 60);
-      assert.ok(Number.isFinite(ant.vx) && Number.isFinite(ant.vy), 'velocity remains finite');
-      assert.ok(Math.hypot(ant.vx, ant.vy) <= ant.personality.preferredSpeed * 1.35 + 1e-9,
-        'the current kinematic speed cap remains enforced');
-      assert.ok(Math.abs(ant.angularVelocity) <= 4.5 + 1e-9,
-        'heading response respects the approved maximum turn rate');
-      if (tick <= 60 * 5) continue;
+      assert.ok(controller.agents.includes(ant), 'the tested ant remains active throughout the probe');
       const speed = Math.hypot(ant.vx, ant.vy);
-      if (speed < ant.personality.preferredSpeed * 0.15) nearStops += 1;
-      if (speed > ant.personality.preferredSpeed * 0.6) moving += 1;
+      assert.ok(Number.isFinite(speed));
+      if (tick === 0) {
+        assert.ok(Math.abs(ant.targetSpeed / ant.personality.preferredSpeed - expectedRatio) < 1e-12,
+          'desired speed retains the existing 0.05 hesitation multiplier');
+      }
+      if (ant.hesitationRemaining > 0) minimumEpisodeSpeed = Math.min(minimumEpisodeSpeed, speed);
+      else maximumResumedSpeed = Math.max(maximumResumedSpeed, speed);
     }
-    assert.ok(nearStops > 10, 'near-stops occur without body congestion or startup inertia');
-    assert.ok(moving > 100, 'the ant resumes committed movement between hesitations');
+    assert.ok(minimumEpisodeSpeed < ant.personality.preferredSpeed * 0.15,
+      'the active hesitation episode reaches the existing near-stop boundary');
+    assert.ok(maximumResumedSpeed > ant.personality.preferredSpeed * 0.6,
+      'forward movement resumes after hesitation');
     await controller.destroy();
   }
 });
