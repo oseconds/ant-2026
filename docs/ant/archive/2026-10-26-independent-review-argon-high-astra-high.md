@@ -2,7 +2,7 @@
 
 > **Status:** archived review synthesis / interpretive record / **not an adopted roadmap**  
 > **Scope:** 사용자가 제공한 Argon High의 단계별 독립 리뷰·반박 재검토 및 Astra High 독립 리뷰와 이에 대한 후속 비교 대화  
-> **Source preservation:** 리뷰 전문을 그대로 복사한 전사본이 **아니라 요지·대립·정정·열린 질문을 재구성한 기록**. 리뷰어가 말했다는 사실과 실제 코드/실험이 입증한 사실을 구분한다.  
+> **Source preservation:** 이 문서는 리뷰 전문이 아닌 **요지·대립·정정·열린 질문의 재구성**이다. [Argon High 4단계 및 Astra High 원문 전사](2026-10-26-independent-review-originals/README.md)는 별도 폴더에 보관했다. 사용자 채팅 붙여넣기 기반이며 서비스 원본 export와의 byte-exact 동일성은 검증하지 않았다. 리뷰어의 기술적 진술과 코드/evidence가 입증한 사실을 구분한다.  
 > **Code changes / new experiments:** none. 이 문서 자체로 production, audio law, 관람 계약 또는 차기 pass를 채택하지 않는다.
 
 현재 프로젝트 상태의 기준은 언제나 [`docs/ant/README.md`](../README.md), 현재 `main` 코드 및 [evidence](../evidence/)이고, [`world-model.md`](../world-model.md)는 별도 설계 계약이다. `archive/**`는 일반 구현·연구 검토의 기본 입력에서 제외한다. 이 문서는 **2026-10-26에 존재했던 논의의 역사적 기록**으로만 읽는다.
@@ -141,3 +141,13 @@ Argon의 **stratigraphic listening / acoustic horizon**과 Astra의 **C. 세계�
 - [G 후보/연구 결과와 production의 경계](../README.md#review-handoff--decisions-baselines-web-experience-viewing-evidence-2026-10-25)
 
 **Do not use this archived interpretation to override newer source/evidence or to infer that any suggested feature was adopted.**
+
+## Source-text originals (unmodified arguments, including later-retracted claims)
+
+- [Argon High — initial bundle-limited review](2026-10-26-independent-review-originals/argon-high-01-initial-review-original.md)
+- [Argon High — expanded code/evidence review](2026-10-26-independent-review-originals/argon-high-02-expanded-source-review-original.md)
+- [Argon High — first rebuttal response](2026-10-26-independent-review-originals/argon-high-03-first-rebuttal-original.md)
+- [Argon High — second rebuttal response](2026-10-26-independent-review-originals/argon-high-04-second-rebuttal-original.md)
+- [Astra High — independent review](2026-10-26-independent-review-originals/astra-high-review-original.md)
+
+These are preserved reviewer statements, **not** corrections applied to production. The separately interpreted and corrected synthesis above remains historical, not the project's current plan.
