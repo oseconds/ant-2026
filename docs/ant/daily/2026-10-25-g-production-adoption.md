@@ -12,6 +12,7 @@
 - Preserved the production-candidate, near-stop, and readiness evidence packages, and added this adoption record.
 - Corrected eight reusable evidence paths' stale 96×96 provenance/indexing, node-sum/source-dose comparisons, or unsafe historical-output defaults. No natural, audio, or browser runner was executed and no historical result was regenerated.
 - Final validation after those runner corrections passed: `npm test` 339/339, build, `git diff --check`, `node --check` for all eight edited runners, and both founder evidence selfchecks. The default test/build attempts hit sandbox `spawn EPERM`; identical reruns with child-process permission passed. A one-tick seed-61 deposition-runner smoke passed its fixed-path reference-integral check (~`9.6e-9` relative error); its temporary output was deleted.
+- Fresh adoption review caught and resolved one visual-evidence checkpoint metadata overwrite; the final read-only review approved fast-forward. The final metadata correction passed that runner's syntax and selfcheck; no browser capture was run.
 
 ## Validation and evidence boundary
 

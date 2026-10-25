@@ -22,13 +22,18 @@
 - Full `npm test`: 339/339 pass.
 - `npm run build`: pass. Existing Rollup dependency-annotation and Vite large-chunk advisories remain.
 - `git diff --check` and `git diff --check origin/main`: pass after the documentation edits.
-- Independent adoption review: pending final read-only review.
+- Final independent read-only adoption review: approved fast-forward after correcting the visual evidence runner's duplicate-key and missing `audioEnabled` checkpoint field. See [`INDEPENDENT-REVIEW.md`](INDEPENDENT-REVIEW.md). The reviewer did not rerun tests/build or launch the browser capture.
 - Production-source comparison against Candidate G: all three Git blobs match exactly; no production source was changed after the comparison.
 - Production runtime-source diff against `origin/main` is limited to the reviewed three files: `PheromoneField.js`, `AntController.js` analysis fields, and `src/main.js` diagnostic label.
 - Adoption review corrected eight reusable evidence paths for the G default: `surface-long-run-evidence.js`, `ant-deposition-evidence.js`, `ant-long-run-evidence.js`, `ant-founder-controlled-probes.js`, `ant-founder-evidence.js`, `ant-founder-visual-evidence.js`, `surface-audio-evidence.js`, and `stratigraphy-long-run-evidence.js`. Corrections cover stale 96-grid metadata/indexing, native node sum versus authored dose, explicit node-sum/reference-integral diagnostics, and safe rerun destinations. Existing historical packets were not rewritten; no natural, audio, or browser runner was executed. Syntax checks and the two founder evidence selfchecks pass.
 - After all eight runner edits, `npm test` passed 339/339 and `npm run build` passed; Rollup dependency-annotation and Vite large-chunk advisories remain. Both commands first hit sandbox `spawn EPERM`; the unchanged commands passed when rerun with child-process permission. `git diff --check` passed.
 - `node --check` passed for all eight edited runners. The founder evidence and visual-evidence `--selfcheck` commands passed.
 - One-tick seed-61 deposition-runner smoke passed: the fixed-path reference-integral check differed by about `9.6e-9` relative to the expected authored reference integral. Its temporary JSON output was removed. No long natural-run output was generated.
+
+## Final review correction
+
+- The independent reviewer found that a duplicate `pheromone` property discarded diagnostic metadata in `ant-founder-visual-evidence.js`. The corrected object retains dimensions, `nodeSum`, `reconstructedIntegral`, and values until the values are hashed; it also retains `audioEnabled` for the existing Audio-Off assertion.
+- `node --check scripts/ant-founder-visual-evidence.js` and `node scripts/ant-founder-visual-evidence.js --selfcheck` passed after this correction. The browser capture was not rerun because this was a metadata-only runner fix, not a production or browser-runtime change.
 
 ## Integration verification
 

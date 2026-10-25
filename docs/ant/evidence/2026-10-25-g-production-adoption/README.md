@@ -24,10 +24,11 @@ No sensor, Hill response, confidence/adherence, movement, deposition reinforceme
 - Candidate review evidence: [production-candidate review](../2026-10-25-g-production-candidate-review/README.md).
 - Test correction evidence: [near-stop fixture validity](../2026-10-25-near-stop-fixture-validity/README.md).
 - Final pre-adoption review: [G readiness review](../2026-10-25-g-final-adoption-readiness/README.md).
+- Final read-only adoption review: [independent review](INDEPENDENT-REVIEW.md).
 - Exact production source comparison: [`SOURCE-CONFORMANCE.json`](SOURCE-CONFORMANCE.json).
 - Adoption review corrected eight reusable evidence paths for the current G default: stale 96-grid provenance, node-sum/source-dose comparisons, 96-grid debug indexing, or defaults that could overwrite frozen evidence. The affected runners are `surface-long-run-evidence.js`, `ant-deposition-evidence.js`, `ant-long-run-evidence.js`, `ant-founder-controlled-probes.js`, `ant-founder-evidence.js`, `ant-founder-visual-evidence.js`, `surface-audio-evidence.js`, and `stratigraphy-long-run-evidence.js`. They now report actual dimensions and distinguish native `nodeSum` from `reconstructedIntegral`; scripts that write frozen-history paths now default to ignored `test-results/`. Existing historical packets were not rewritten. No natural, audio, or browser runner was executed.
 
-The reviewed production-source Git blobs are unchanged from Candidate G. The only behavior-test correction replaces the invalid stochastic near-stop count with deterministic inspection/braking/resumption contract checks and active-agent lifecycle validation. Production movement code and constants are unchanged.
+The reviewed production-source Git blobs are unchanged from Candidate G. The only behavior-test correction replaces the invalid stochastic near-stop count with deterministic inspection/braking/resumption contract checks and active-agent lifecycle validation. Production movement code and constants are unchanged. The final adoption review found no production blocker; it corrected a duplicate-key and missing audio-state field in the visual evidence runner before approving fast-forward.
 
 ## Inherited qualification and interpretation
 

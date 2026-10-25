@@ -244,8 +244,9 @@ async function browserRuns(browser) {
             const data = { seconds: snapshot.analysis.simulationTimeMs / 1000, ...state(),
               population: snapshot.analysis.population, spawned: snapshot.analysis.totalSpawned, retired: snapshot.analysis.totalRetired,
               plateCount: snapshot.surfacePlates.plates.length,
-              pheromone: { width: p.width, height: p.height, nodeSum, reconstructedIntegral },
-              audioEnabled: snapshot.audio.enabled, pheromone: Array.from(snapshot.pheromone.values),
+              pheromone: { width: p.width, height: p.height, nodeSum, reconstructedIntegral,
+                values: Array.from(snapshot.pheromone.values) },
+              audioEnabled: snapshot.audio.enabled,
               agents: snapshot.agents.map(ant => ({ id: ant.id, x: ant.x, y: ant.y, vx: ant.vx, vy: ant.vy, heading: ant.heading, adherence: ant.trailAdherence })) };
             document.querySelector('#state').textContent = `${data.seconds.toFixed(2)} simulated seconds · ${data.population} ants · ${data.plateCount} natural Plates · audio Off`;
             renderer.render(snapshot);
@@ -256,8 +257,8 @@ async function browserRuns(browser) {
           assert.equal(captured.audioEnabled, false);
           const filename = `chrome-${variant}-seed${seed}-${seconds}s.png`;
           await page.screenshot({ path: resolve(out, filename), fullPage: true });
-          captured.pheromoneSha256 = digest(JSON.stringify(captured.pheromone));
-          delete captured.pheromone;
+          captured.pheromoneSha256 = digest(JSON.stringify(captured.pheromone.values));
+          delete captured.pheromone.values;
           metadata.checkpoints.push({ ...captured, image: filename });
           console.log(`Chrome ${variant} seed ${seed}: ${seconds} s, ${captured.population} ants, ${captured.plateCount} natural Plates.`);
         }
