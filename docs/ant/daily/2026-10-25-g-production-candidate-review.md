@@ -1,0 +1,7 @@
+# 2026-10-25 — Candidate G production-candidate review
+
+Started a clean candidate branch from freshly fetched `origin/main` (`8c60e4bba3bd5b476300e90a2936bfebd1f831c2`) after verifying the project decision at `c45e1845bd86a5a6f1082b5c67ef6f521cd860c1`. Integrated only qualified G's 316×316 representation and source-dose conversion, made the public return units explicit, and separated native node sum from the trapezoid-weighted bilinear reference integral. Canonical README and unrelated work remained untouched.
+
+The 24 fixed rasters and all 238,392 raw sensor queries matched saved G exactly. Three 600 s natural replays matched parent G checkpoints and event streams; no cap or saturation occurred. Consumers retained their thresholds and world-coordinate bilinear reads. Full tests reported 337/338 pass: the isolated-ant near-stop contract failed for seed 240 (`nearStops=0`, `moving=3126`) and was not relaxed. Build passed. A headed 840 s Audio-Off browser run had no page/console/network errors and stayed finite, but recorded occasional long RAF gaps; comparison to the previous screen is not controlled enough to attribute them.
+
+Decision: **G PRODUCTION CANDIDATE HOLD**. Smallest next step: resolve the isolated-ant near-stop behavior contract and rerun production-candidate validation; no representation or gain experiment was started. Details and receipts are in `docs/ant/evidence/2026-10-25-g-production-candidate-review/`.
