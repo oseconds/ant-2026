@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { quantile, summarizeHardness, summarizeTimeBins } from '../scripts/ant-g-natural-hardness-distribution.js';
+import { makeTimeSvg, quantile, summarizeHardness, summarizeTimeBins } from '../scripts/ant-g-natural-hardness-distribution.js';
 
 test('fixed hardness histogram keeps 1.0 in its final equal-width bin', () => {
   const result = summarizeHardness([0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]);
@@ -31,4 +31,12 @@ test('time bins include the 600 second endpoint in the final interval', () => {
 test('hardness summary rejects non-finite and out-of-range values', () => {
   assert.throws(() => summarizeHardness([Number.NaN]), /outside \[0,1\]/);
   assert.throws(() => summarizeHardness([1.01]), /outside \[0,1\]/);
+});
+
+test('time plot renders both registered population series', () => {
+  const bins = Array.from({ length: 10 }, (_, index) => ({ startSeconds: index * 60,
+    endSeconds: (index + 1) * 60, count: 1, quantiles: { p05: 0.1, p50: 0.5, p95: 0.9 } }));
+  const svg = makeTimeSvg({ allValidSurfaceFootResponses: bins, routedStrikes: bins });
+  assert.match(svg, /All valid SurfaceField foot responses/);
+  assert.match(svg, /Born Surface strikes posted to surface-plate-processor/);
 });

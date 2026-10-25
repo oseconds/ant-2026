@@ -270,11 +270,11 @@ function csv(rows, columns) {
   return `${columns.join(',')}\n${rows.map(row => columns.map(key => quote(row[key])).join(',')).join('\n')}\n`;
 }
 
-function makeTimeSvg(timeBins) {
+export function makeTimeSvg(timeBins) {
   const width = 1200, height = 510, left = 76, right = 26, panelHeight = 176;
   const plotWidth = width - left - right;
   const panels = [
-    { key: 'allFootResponses', y: 64, title: 'All valid SurfaceField foot responses' },
+    { key: 'allValidSurfaceFootResponses', y: 64, title: 'All valid SurfaceField foot responses' },
     { key: 'routedStrikes', y: 292, title: 'Born Surface strikes posted to surface-plate-processor' }
   ];
   const x = index => left + (index + 0.5) * plotWidth / 10;
