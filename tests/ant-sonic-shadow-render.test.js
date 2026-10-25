@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import { compileSurfaceTopology } from '../src/lib/audio/compileSurfaceTopology.js';
-import { encodeStereoFloatWav, instrumentSurfaceSchedule, renderSurface, sha256 } from '../scripts/ant-sonic-shadow-render.js';
+import { encodeStereoFloatWav, instrumentSurfaceSchedule, reconstructSurfaceReadout, renderSurface, sha256 } from '../scripts/ant-sonic-shadow-render.js';
 
 const source = readFileSync(new URL('../static/worklets/surface-plate.worklet.js', import.meta.url), 'utf8');
 function plate(id = 'route') {
@@ -94,6 +94,46 @@ test('field observation does not change rendered PCM and empty topology remains 
   assert.equal(empty.fields.frames, 64);
   assert.equal(empty.fieldsFinite, true);
   assert.ok([...empty.pcm.left, ...empty.pcm.right].every(value => value === 0));
+});
+
+test('aligned pickup windows retain only requested continuous-replay physics samples', () => {
+  const input = { source, topology: topology(plate()), events: [{ frame: 137, message: strike }], frames: 2048,
+    pickupWindows: [{ name: 'middle', startFrame: 512, endFrame: 1024 }] };
+  const full = renderSurface(input), withoutFields = renderSurface({ ...input, captureFields: false });
+  const window = withoutFields.pickupWindows[0];
+  assert.equal(window.left.length, 64);
+  assert.equal(window.right.length, 64);
+  assert.deepEqual(window.left, full.rawPickup.left.slice(63, 127));
+  assert.deepEqual(window.right, full.rawPickup.right.slice(63, 127));
+  assert.deepEqual(withoutFields.pcm, full.pcm);
+  assert.equal('fields' in withoutFields, false);
+  assert.throws(() => renderSurface({ ...input, pickupWindows: [{ name: 'unaligned', startFrame: 1, endFrame: 8 }] }), /physics-aligned/);
+});
+
+test('6 kHz continuous replay reconstructs the exact 48 kHz production readout', () => {
+  const events = [{ frame: 0, message: strike }, { frame: 137, message: strike },
+    { frame: 511, message: strike }, { frame: 2048, message: strike }];
+  const full = renderSurface({ source, topology: topology(plate()), events, frames: 4096, sampleRate: 48_000,
+    pickupWindows: [{ name: 'middle', startFrame: 512, endFrame: 1024 }] });
+  const physics = renderSurface({ source, topology: topology(plate()),
+    events: events.map(event => ({ ...event, frame: Math.floor(event.frame / 8) })), frames: 512, sampleRate: 6_000,
+    pickupWindows: [{ name: 'middle', startFrame: 64, endFrame: 128 }],
+    physicsOutputWindows: [{ name: 'all', startPhysicsFrame: 0, endPhysicsFrame: 512 }] });
+  const reconstructed = reconstructSurfaceReadout(physics.physicsOutputWindows[0], { outputFrames: 4096 });
+  assert.deepEqual(reconstructed, full.pcm);
+  assert.deepEqual(physics.pickupWindows[0].left, full.pickupWindows[0].left);
+  assert.deepEqual(physics.pickupWindows[0].right, full.pickupWindows[0].right);
+  assert.deepEqual(physics.telemetry, full.telemetry);
+  for (let index = 0; index < events.length; index++) {
+    const sampleFrame = full.renderedFrameReceipts[index].frame, physicsFrame = physics.renderedFrameReceipts[index].frame;
+    assert.equal(physicsFrame, Math.floor(sampleFrame / 8));
+    assert(sampleFrame >= physicsFrame * 8 && sampleFrame < physicsFrame * 8 + 8);
+  }
+  assert.deepEqual(physics.renderedFrameReceipts.map(row => row.message),
+    full.renderedFrameReceipts.map(row => row.message));
+  assert.deepEqual(physics.current, full.current);
+  assert.throws(() => reconstructSurfaceReadout(physics.physicsOutputWindows[0], {
+    outputStartFrame: 1, outputFrames: 8 }), /aligned/);
 });
 
 test('worklet instrumentation fails closed when a production anchor changes', () => {
