@@ -47,3 +47,9 @@ Verdict is one of `SUPPORTED FOR LISTENING`, `MIXED`, `NEGATIVE`, or `INCONCLUSI
 ## Stop and validation
 
 Do not edit production `src/`, `static/worklets/`, or `docs/ant/README.md`; do not change the baseline 3 ms pulse or test another mapping. Run harness self-checks, focused research tests, source/worklet diff audit, natural trace parity, continuous A/B replay, render repeat determinism, and `git diff --check`. Full suite/build are not required unless shared production/runtime files change.
+
+## Preregistration amendment — exact-rate output reconstruction
+
+The first 48 kHz orchestration attempt completed the frozen natural input capture and parity checks, but was stopped before producing or inspecting any A/B acoustic result because its per-audio-frame JavaScript replay was prohibitively slow. No candidate output was retained or evaluated.
+
+For the same continuous replay, the reference harness may instead run the unchanged worklet solver at its exact 6 kHz physics rate, with every captured message frame mapped from 48 kHz by exact division by eight. It must assert zero frame-rounding error. It will capture the worklet's post-physics `outputL`/`outputR` values for the three fixed windows and reconstruct the production 48 kHz output by the exact existing `process()` interpolation: for each physics result, emit eight Float32 samples `previous + (current - previous) × s/8`, `s=1..8`, starting with previous zero. The A arm's reconstructed 48 kHz PCM must match the existing 48 kHz renderer bit-for-bit on a deterministic short continuous fixture, including event receipts and solver telemetry, before any natural A/B window output is generated. If that gate fails, stop as inconclusive and do not use the reduced-rate path. This changes only the offline computation route; worklet source, physics rate, input stream, A/B pulse rule, windows, gain, and metrics remain fixed.
