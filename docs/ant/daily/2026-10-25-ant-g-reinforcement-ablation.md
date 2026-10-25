@@ -1,0 +1,7 @@
+# Candidate G reinforcement ablation
+
+Ran the preregistered 600 s G vs G-R0 natural ablation for seeds `20261005`, `20261006`, and `20261007`. G reproduced its parent movement, raw timelines, checkpoint maps, and source ledgers exactly. G-R0 set only reinforcement gain `5 → 0`; it retained the baseline deposition term, G scale, 316 Gaussian representation, and all movement/world laws. Observer parity and source accounting passed; no cap hits or invariant violations occurred. Two full paired replays produced identical artifact hashes.
+
+Removing `5 × A²` did not remove cumulative occupancy concentration. At 600 s G-R0 had higher top-10% occupancy share in all seeds (`.560/.525/.626` vs `.418/.416/.419`) and lower corrected recent-30 s coverage/entropy in all three. G-R0 still moved at a similar per-active-ant travel rate, though its population, total travel, recruitment, contacts, and Plate births fell. The result supports **REINFORCEMENT NOT SUFFICIENT TO EXPLAIN CONCENTRATION**, not “reinforcement has no causal effect.” The much lower dose is not matched, so the ablation cannot separate A dependence from added pheromone quantity.
+
+The inherited movement runner's recent-occupancy buffer was not reset each second. Its rolling-window fields are invalid; an addendum and independent 60 Hz observer now replace those fields and check cumulative parity. See [evidence](../evidence/2026-10-25-ant-g-reinforcement-ablation/README.md). No production source or canonical ANT guide changed.

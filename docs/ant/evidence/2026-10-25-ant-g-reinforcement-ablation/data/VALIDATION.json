@@ -1,0 +1,395 @@
+{
+  "schemaVersion": 1,
+  "deterministicScientificSummary": {
+    "firstSha256": "1e6d14a8c545a42b1a243b8c0c8fb68521f83476e15adce4cb028b03d8bc4d63",
+    "secondSha256": "1e6d14a8c545a42b1a243b8c0c8fb68521f83476e15adce4cb028b03d8bc4d63",
+    "byteEqual": true
+  },
+  "scenarios": [
+    {
+      "seed": 20261005,
+      "initialPair": {
+        "seed": 20261005,
+        "normalizedInitialStateSha256": "f480c2fd61e34c4975539e50bdac3c3511aa4b73192473b317d6760e274f02fd",
+        "ablationNativeInitialStateSha256": "a45a7e075e97b42057e10e1ccd8a912e2575c1946cf049d6f2d2c5a8d0cca85f",
+        "rngState": 789722141,
+        "rngCalls": 16,
+        "gainBeforeOverride": 5,
+        "gainAfterOverride": 0,
+        "equalAfterNormalizingOnlyGain": true,
+        "field": {
+          "widthG": 316,
+          "widthR0": 316,
+          "doseScaleG": 10.994459833795014,
+          "doseScaleR0": 10.994459833795014,
+          "bothEmpty": true
+        }
+      },
+      "observerChecks": [
+        {
+          "arm": "G",
+          "seed": 20261005,
+          "ticks": 120,
+          "equalEveryTick": true,
+          "rngCalls": 280,
+          "observerCalls": {
+            "local": 276,
+            "far": 75,
+            "intention": 276
+          },
+          "observerAddedRngCalls": 0
+        },
+        {
+          "arm": "G-R0",
+          "seed": 20261005,
+          "ticks": 120,
+          "equalEveryTick": true,
+          "rngCalls": 280,
+          "observerCalls": {
+            "local": 276,
+            "far": 75,
+            "intention": 276
+          },
+          "observerAddedRngCalls": 0
+        }
+      ],
+      "parentG": {
+        "resultEqual": true,
+        "rawTimelineSha256": "779ca57afc2742cc2931855c66fbbe449749b9aa35cd56e7b65d7c7b6112e553",
+        "rawTimelineParentSha256": "779ca57afc2742cc2931855c66fbbe449749b9aa35cd56e7b65d7c7b6112e553",
+        "checkpointMapsEqual": true,
+        "rawTimelineByteEqual": true
+      },
+      "sourceClosure": {
+        "G": {
+          "closure": {
+            "accruedUnscaledChunkDose": 8057.601994611318,
+            "fieldRequestedDoseScaled": 88583.7093428474,
+            "fieldRequestedDoseNormalized": 8057.1224673136585,
+            "pendingUnscaledDabDose": 0.47952729772911107,
+            "accountedUnscaledDose": 8057.601994611387,
+            "residual": -6.912159733474255e-11,
+            "derivedFloatingPointBound": 0.000010053399781855307,
+            "withinDerivedBound": true,
+            "boundaryRejectedDoseScaled": 19.807934612740034,
+            "fieldAcceptedDoseScaled": 88563.90140823463,
+            "saturationLossScaled": 0,
+            "capTouchCount": 0,
+            "saturatedUpdateCount": 0,
+            "pointWrites": 100882,
+            "pendingDistance": 0.04007169774802503,
+            "pendingAntCount": 19
+          },
+          "sourceMismatchCount": 0,
+          "missingTrailStateCount": 0,
+          "maxRateError": 0,
+          "maxChunkClosureError": 1.3877787807814457e-17
+        },
+        "G-R0": {
+          "closure": {
+            "accruedUnscaledChunkDose": 884.7467768635394,
+            "fieldRequestedDoseScaled": 9726.792014634104,
+            "fieldRequestedDoseNormalized": 884.699399668156,
+            "pendingUnscaledDabDose": 0.047377195397058286,
+            "accountedUnscaledDose": 884.7467768635531,
+            "residual": -1.375610736431554e-11,
+            "derivedFloatingPointBound": 7.973357633078481e-7,
+            "withinDerivedBound": true,
+            "boundaryRejectedDoseScaled": 4.691946048986415,
+            "fieldAcceptedDoseScaled": 9722.100068585107,
+            "saturationLossScaled": 0,
+            "capTouchCount": 0,
+            "saturatedUpdateCount": 0,
+            "pointWrites": 76228,
+            "pendingDistance": 0.02326115936442004,
+            "pendingAntCount": 11
+          },
+          "sourceMismatchCount": 0,
+          "missingTrailStateCount": 0,
+          "maxRateError": 0,
+          "maxChunkClosureError": 8.673617379884035e-19
+        }
+      },
+      "sourceParentParity": {
+        "sourceTotalsExact": true,
+        "checkpoints": [
+          30,
+          60,
+          120,
+          300,
+          600
+        ],
+        "allCheckpointComponentsExact": true
+      },
+      "sourceArtifacts": {
+        "G": {
+          "file": "seed20261005-G-source-accounting.json.gz",
+          "sha256": "4da7d53140d333f36e30a6c760c0fe1bfcafc211a199f807129c29df0586fff1",
+          "deterministic": true
+        },
+        "G-R0": {
+          "file": "seed20261005-G-R0-source-accounting.json.gz",
+          "sha256": "9b6f96f1fbc43a98fd7200cb6076ed8595530131b0e039874f6ffc65869c6d91",
+          "deterministic": true
+        }
+      }
+    },
+    {
+      "seed": 20261006,
+      "initialPair": {
+        "seed": 20261006,
+        "normalizedInitialStateSha256": "535de53424a7fdb6182d3ed6ecc78972a44bf54836a5d7cabe665d0437784ac4",
+        "ablationNativeInitialStateSha256": "7b464e7855e8d810e9ca5cc591ab8976ae57b05838fe5393e4c8e2f0e22a053a",
+        "rngState": 2791585886,
+        "rngCalls": 16,
+        "gainBeforeOverride": 5,
+        "gainAfterOverride": 0,
+        "equalAfterNormalizingOnlyGain": true,
+        "field": {
+          "widthG": 316,
+          "widthR0": 316,
+          "doseScaleG": 10.994459833795014,
+          "doseScaleR0": 10.994459833795014,
+          "bothEmpty": true
+        }
+      },
+      "observerChecks": [
+        {
+          "arm": "G",
+          "seed": 20261006,
+          "ticks": 120,
+          "equalEveryTick": true,
+          "rngCalls": 198,
+          "observerCalls": {
+            "local": 225,
+            "far": 50,
+            "intention": 225
+          },
+          "observerAddedRngCalls": 0
+        },
+        {
+          "arm": "G-R0",
+          "seed": 20261006,
+          "ticks": 120,
+          "equalEveryTick": true,
+          "rngCalls": 198,
+          "observerCalls": {
+            "local": 225,
+            "far": 50,
+            "intention": 225
+          },
+          "observerAddedRngCalls": 0
+        }
+      ],
+      "parentG": {
+        "resultEqual": true,
+        "rawTimelineSha256": "1f07fe6efac07659014096bfe59be8c8faa6b074203bbd76c13f3c377e3b2d52",
+        "rawTimelineParentSha256": "1f07fe6efac07659014096bfe59be8c8faa6b074203bbd76c13f3c377e3b2d52",
+        "checkpointMapsEqual": true,
+        "rawTimelineByteEqual": true
+      },
+      "sourceClosure": {
+        "G": {
+          "closure": {
+            "accruedUnscaledChunkDose": 8550.763234354157,
+            "fieldRequestedDoseScaled": 93999.83959292217,
+            "fieldRequestedDoseNormalized": 8549.74605518894,
+            "pendingUnscaledDabDose": 1.0171791652420585,
+            "accountedUnscaledDose": 8550.763234354183,
+            "residual": -2.546585164964199e-11,
+            "derivedFloatingPointBound": 0.000010950924427021162,
+            "withinDerivedBound": true,
+            "boundaryRejectedDoseScaled": 1.4044994025961584,
+            "fieldAcceptedDoseScaled": 93998.43509351957,
+            "saturationLossScaled": 0,
+            "capTouchCount": 0,
+            "saturatedUpdateCount": 0,
+            "pointWrites": 102664,
+            "pendingDistance": 0.07867463850288779,
+            "pendingAntCount": 22
+          },
+          "sourceMismatchCount": 0,
+          "missingTrailStateCount": 0,
+          "maxRateError": 0,
+          "maxChunkClosureError": 1.3877787807814457e-17
+        },
+        "G-R0": {
+          "closure": {
+            "accruedUnscaledChunkDose": 814.5787994028577,
+            "fieldRequestedDoseScaled": 8954.92617710449,
+            "fieldRequestedDoseNormalized": 814.4944192327338,
+            "pendingUnscaledDabDose": 0.08438017011405873,
+            "accountedUnscaledDose": 814.5787994028478,
+            "residual": 9.890754881780595e-12,
+            "derivedFloatingPointBound": 7.015923143368014e-7,
+            "withinDerivedBound": true,
+            "boundaryRejectedDoseScaled": 6.500267786993641,
+            "fieldAcceptedDoseScaled": 8948.425909317502,
+            "saturationLossScaled": 0,
+            "capTouchCount": 0,
+            "saturatedUpdateCount": 0,
+            "pointWrites": 71069,
+            "pendingDistance": 0.03975081814304549,
+            "pendingAntCount": 13
+          },
+          "sourceMismatchCount": 0,
+          "missingTrailStateCount": 0,
+          "maxRateError": 0,
+          "maxChunkClosureError": 8.673617379884035e-19
+        }
+      },
+      "sourceParentParity": {
+        "sourceTotalsExact": true,
+        "checkpoints": [
+          30,
+          60,
+          120,
+          300,
+          600
+        ],
+        "allCheckpointComponentsExact": true
+      },
+      "sourceArtifacts": {
+        "G": {
+          "file": "seed20261006-G-source-accounting.json.gz",
+          "sha256": "44a35c0c768b29d6f2eb064cca31e4a652cca6e67e9a9f92e400f7aba53cf982",
+          "deterministic": true
+        },
+        "G-R0": {
+          "file": "seed20261006-G-R0-source-accounting.json.gz",
+          "sha256": "dcea01db379fbacac8dd51f3f3b6135cb1716394e85f55c0b38dbbc768e242c1",
+          "deterministic": true
+        }
+      }
+    },
+    {
+      "seed": 20261007,
+      "initialPair": {
+        "seed": 20261007,
+        "normalizedInitialStateSha256": "7443298f0591a3355f73485061e0a6dabbcdd98cac80ef8797f046adcf37f627",
+        "ablationNativeInitialStateSha256": "10de8ac24cf92a90e363229ea1ffe23b803957fa6339bfa7823c9e297d003bb1",
+        "rngState": 498482335,
+        "rngCalls": 16,
+        "gainBeforeOverride": 5,
+        "gainAfterOverride": 0,
+        "equalAfterNormalizingOnlyGain": true,
+        "field": {
+          "widthG": 316,
+          "widthR0": 316,
+          "doseScaleG": 10.994459833795014,
+          "doseScaleR0": 10.994459833795014,
+          "bothEmpty": true
+        }
+      },
+      "observerChecks": [
+        {
+          "arm": "G",
+          "seed": 20261007,
+          "ticks": 120,
+          "equalEveryTick": true,
+          "rngCalls": 316,
+          "observerCalls": {
+            "local": 275,
+            "far": 85,
+            "intention": 275
+          },
+          "observerAddedRngCalls": 0
+        },
+        {
+          "arm": "G-R0",
+          "seed": 20261007,
+          "ticks": 120,
+          "equalEveryTick": true,
+          "rngCalls": 316,
+          "observerCalls": {
+            "local": 275,
+            "far": 85,
+            "intention": 275
+          },
+          "observerAddedRngCalls": 0
+        }
+      ],
+      "parentG": {
+        "resultEqual": true,
+        "rawTimelineSha256": "771e22508f63aa91a847636b8ae4a7202dae5cdc2316e0c7c48b517ad2c1dbc9",
+        "rawTimelineParentSha256": "771e22508f63aa91a847636b8ae4a7202dae5cdc2316e0c7c48b517ad2c1dbc9",
+        "checkpointMapsEqual": true,
+        "rawTimelineByteEqual": true
+      },
+      "sourceClosure": {
+        "G": {
+          "closure": {
+            "accruedUnscaledChunkDose": 8152.853958708232,
+            "fieldRequestedDoseScaled": 89626.53300386704,
+            "fieldRequestedDoseNormalized": 8151.972389618543,
+            "pendingUnscaledDabDose": 0.8815690896370808,
+            "accountedUnscaledDose": 8152.8539587081805,
+            "residual": 5.184119800105691e-11,
+            "derivedFloatingPointBound": 0.00001036225362543959,
+            "withinDerivedBound": true,
+            "boundaryRejectedDoseScaled": 9.385685840205774,
+            "fieldAcceptedDoseScaled": 89617.14731802685,
+            "saturationLossScaled": 0,
+            "capTouchCount": 0,
+            "saturatedUpdateCount": 0,
+            "pointWrites": 102233,
+            "pendingDistance": 0.06456639170012642,
+            "pendingAntCount": 21
+          },
+          "sourceMismatchCount": 0,
+          "missingTrailStateCount": 0,
+          "maxRateError": 0,
+          "maxChunkClosureError": 1.3877787807814457e-17
+        },
+        "G-R0": {
+          "closure": {
+            "accruedUnscaledChunkDose": 840.5537622633332,
+            "fieldRequestedDoseScaled": 9240.356302228793,
+            "fieldRequestedDoseNormalized": 840.4556878570405,
+            "pendingUnscaledDabDose": 0.09807440628356713,
+            "accountedUnscaledDose": 840.5537622633241,
+            "residual": 9.094947017729282e-12,
+            "derivedFloatingPointBound": 7.374025201968759e-7,
+            "withinDerivedBound": true,
+            "boundaryRejectedDoseScaled": 2.9107183528182663,
+            "fieldAcceptedDoseScaled": 9237.445583875973,
+            "saturationLossScaled": 0,
+            "capTouchCount": 0,
+            "saturatedUpdateCount": 0,
+            "pointWrites": 72064,
+            "pendingDistance": 0.04945981401555792,
+            "pendingAntCount": 15
+          },
+          "sourceMismatchCount": 0,
+          "missingTrailStateCount": 0,
+          "maxRateError": 0,
+          "maxChunkClosureError": 8.673617379884035e-19
+        }
+      },
+      "sourceParentParity": {
+        "sourceTotalsExact": true,
+        "checkpoints": [
+          30,
+          60,
+          120,
+          300,
+          600
+        ],
+        "allCheckpointComponentsExact": true
+      },
+      "sourceArtifacts": {
+        "G": {
+          "file": "seed20261007-G-source-accounting.json.gz",
+          "sha256": "2d108cbd3c5f739e214120d03d6c4b6843c8117123c5aa23814358ffe51b3fef",
+          "deterministic": true
+        },
+        "G-R0": {
+          "file": "seed20261007-G-R0-source-accounting.json.gz",
+          "sha256": "d50ea7cca69c190a472d2047e2ca81a60e1544f46e39742097532ba627e6ced0",
+          "deterministic": true
+        }
+      }
+    }
+  ],
+  "productionSourceUnchanged": true
+}
