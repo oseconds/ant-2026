@@ -2,7 +2,7 @@
 
 ## Decision
 
-**ADOPT G.** The user explicitly authorized production adoption after the independent readiness review. This record documents the selected candidate and its integration into `origin/main`; it does not introduce a new representation experiment.
+**ADOPT G — remote integration pending.** The user explicitly authorized production adoption after the independent readiness review. This package records the selected candidate; its integration receipt will be completed only after `origin/main` is updated and verified. It does not introduce a new representation experiment.
 
 ## Adopted production contract
 
@@ -44,4 +44,4 @@ The broader ANT question to resume is natural collective-route qualification und
 
 ## Integration receipt
 
-The final adoption branch commit and verified `origin/main` SHA are recorded in [`VALIDATION.md`](VALIDATION.md). The pheromone representation is closed as an active research line, subject to the reopen condition above.
+The adoption branch commit and final `origin/main` SHA will be recorded in [`VALIDATION.md`](VALIDATION.md) after remote integration. The pheromone representation is intended to close as an active research line once that integration is verified, subject to the reopen condition above.
