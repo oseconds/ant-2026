@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "aeefa12d8de9da400cb8a2a3d4b5080a21ba0292",
+  "branch": "codex/ant-material-rediscovery-shadow-20261026",
+  "seed": 20261005,
+  "productionDefaults": true,
+  "output": {
+    "width": 640,
+    "height": 640,
+    "pixelRatio": 1
+  },
+  "rendererCandidates": [
+    "A uses AntRenderer default production presentation",
+    "B uses materialPresentation=surface",
+    "C uses materialPresentation=textured"
+  ],
+  "sample": {
+    "frameTicks": 6,
+    "frameRate": 10,
+    "totalTicks": 6841,
+    "firstPlateTimeMs": 84016.66666666823,
+    "stopTimeMs": 114016.66666667696,
+    "stopRule": "exactly 30 model seconds after the first controller plate-birth event",
+    "firstPlateAndEndpointSnapshots": [
+      {
+        "name": "initial",
+        "tick": 0,
+        "simulationTimeMs": 0,
+        "stateSha256": "c0377c03cfa5126ed0068fad9d7bde95ba42c9c2ea57a91cc047658e04ac49aa"
+      },
+      {
+        "name": "pre-first-plate",
+        "tick": 5040,
+        "simulationTimeMs": 84000.00000000156,
+        "stateSha256": "e9cb8ed661d8ea33a37c1d6a8f5f1e019dee3450363a3d67032fc8862eb930cf"
+      },
+      {
+        "name": "post-first-plate",
+        "tick": 5041,
+        "simulationTimeMs": 84016.66666666823,
+        "stateSha256": "e64bd372341bd208a8343409d55480a0894692dbac6034965775f9dafb7d8ad4"
+      },
+      {
+        "name": "retained-plus-15s",
+        "tick": 5941,
+        "simulationTimeMs": 99016.6666666726,
+        "stateSha256": "f412c296a2405cd2fe08d5f8255164a84b581bdc68eb9dd809f8a9a2685297eb"
+      },
+      {
+        "name": "endpoint",
+        "tick": 6841,
+        "simulationTimeMs": 114016.66666667696,
+        "stateSha256": "46875778d582c43245896abf71bec6400bee12adbc60ca3dea899cb2912d7a2a"
+      }
+    ]
+  },
+  "parity": {
+    "oneControllerRun": true,
+    "sameDetachedSnapshotRenderedByAThenBThenC": true,
+    "rendererStateMutationChecks": true,
+    "uniqueFrameStateSha256Count": 1142,
+    "rngFinal": {
+      "state": 1842689773,
+      "calls": 46432
+    },
+    "eventCounts": {
+      "footContact": 4061,
+      "plateBirth": 2,
+      "noduleBirth": 0,
+      "error": 0
+    },
+    "finalSnapshotSha256": "46875778d582c43245896abf71bec6400bee12adbc60ca3dea899cb2912d7a2a"
+  },
+  "audio": {
+    "audioBridgeAttached": false,
+    "enabled": false,
+    "boundary": "AntController has no audio input path; its optional AudioBridge receives emitted contact/material updates. No AudioBridge, AudioEngine, worklet, or DSP capture was instantiated."
+  },
+  "measurements": {
+    "nativeCanvas": [
+      {
+        "width": 640,
+        "height": 640
+      },
+      {
+        "width": 640,
+        "height": 640
+      },
+      {
+        "width": 640,
+        "height": 640
+      }
+    ],
+    "materialImages": [
+      {
+        "materialCellCount": 677,
+        "meanAlpha": 10.658788774002954,
+        "textureCellCount": 0
+      },
+      {
+        "materialCellCount": 677,
+        "meanAlpha": 19.32939438700148,
+        "textureCellCount": 0
+      },
+      {
+        "materialCellCount": 677,
+        "meanAlpha": 18.785819793205317,
+        "textureCellCount": 46
+      }
+    ],
+    "finalPixelDiffs": {
+      "A-B": {
+        "changedPixels": 35689,
+        "changedInSourceMask": 29452,
+        "changedWithinOneCellBand": 35689,
+        "changedOutsideOneCellBand": 0,
+        "changedWithinTwoCellBand": 35689,
+        "changedOutsideTwoCellBand": 0
+      },
+      "B-C": {
+        "changedPixels": 5983,
+        "changedInSourceMask": 1989,
+        "changedWithinOneCellBand": 5771,
+        "changedOutsideOneCellBand": 212,
+        "changedWithinTwoCellBand": 5983,
+        "changedOutsideTwoCellBand": 0
+      }
+    }
+  },
+  "videoEncoding": {
+    "command": "ffmpeg image2pipe PNG at 10 fps to libvpx-vp9 lossless WebM; no audio",
+    "videos": {
+      "A": {
+        "codec_name": "vp9",
+        "width": 640,
+        "height": 640,
+        "avg_frame_rate": "10/1",
+        "nb_read_frames": "1142",
+        "bytes": 16343385
+      },
+      "B": {
+        "codec_name": "vp9",
+        "width": 640,
+        "height": 640,
+        "avg_frame_rate": "10/1",
+        "nb_read_frames": "1142",
+        "bytes": 16338427
+      },
+      "C": {
+        "codec_name": "vp9",
+        "width": 640,
+        "height": 640,
+        "avg_frame_rate": "10/1",
+        "nb_read_frames": "1142",
+        "bytes": 16339695
+      }
+    }
+  },
+  "baselineSourceHashes": {
+    "src/lib/renderers/AntRenderer.js": "fef5e33578a6afd0cfaaf3b775df697b07c1dac887c267c10482f0a786ccf4f7",
+    "src/lib/agents/ant/AntController.js": "605beff62c2b5d1fa7e1d611efae9daba6ee5973f712a571a552f592cb79ee79",
+    "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+    "src/lib/agents/ant/TrailPlateBirth.js": "cb6c28081264d672d6393b64f0d0dc9fdea017fb1fda261ab8a87d879f031a67"
+  },
+  "liveSourceHashes": {
+    "src/lib/renderers/AntRenderer.js": "003ea0127355dcb27a14c251ccef207ebf84e9d76af6ddf15cc0eb6584a06b4b",
+    "src/lib/agents/ant/AntController.js": "b5a6344ebed52962a1749d612b0140b6a4249817f159758e13f166877078e9f4",
+    "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+    "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860"
+  },
+  "tools": {
+    "node": "v22.23.2",
+    "chromium": "156.0.8078.48",
+    "ffmpeg": "ffmpeg version 9.0-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+  },
+  "runnerSha256": "a958aeb27881adb74b85c6664160809ac064231a2988d41f65a643dadcfe3e73"
+}

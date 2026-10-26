@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-26 — Material rediscovery shadow
+
+[Process log](./2026-10-26-material-rediscovery-shadow.md) · [Evidence and review assets](../evidence/2026-10-26-material-rediscovery-shadow/README.md)
+
+- Rendered production, surface-only and surface-plus-fixed-texture candidates from the same production snapshot stream; production behavior and pheromone display stayed fixed
+- Technical parity, endpoint measurements, native-size review assets, tests and build passed
+- Artistic place-rediscovery result remains **inconclusive / awaiting artist review**; no production adoption
+
 ### 2026-10-25 — Candidate G production adoption
 
 [Adoption record](../evidence/2026-10-25-g-production-adoption/README.md)

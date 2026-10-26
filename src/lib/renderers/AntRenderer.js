@@ -8,8 +8,11 @@ import { BODY_GEOMETRY } from '../agents/ant/BodyPoseController.js';
  * model/controller. No p5 object is created until `init()` is called.
  */
 export class AntRenderer {
-    constructor(canvas, { loadP5 = () => import('p5') } = {}) {
+    constructor(canvas, { loadP5 = () => import('p5'), materialPresentation = 'production' } = {}) {
         if (!canvas) throw new TypeError('AntRenderer requires a canvas element');
+        if (!['production', 'surface', 'textured'].includes(materialPresentation)) {
+            throw new TypeError('materialPresentation must be production, surface, or textured');
+        }
         this.canvas = canvas;
         this.canvasParent = canvas.parentElement || null;
         this.canvasId = canvas.getAttribute ? canvas.getAttribute('id') : (canvas.id || null);
@@ -17,6 +20,7 @@ export class AntRenderer {
             .filter((attribute) => attribute.name?.startsWith('aria-'))
             .map((attribute) => [attribute.name, attribute.value]);
         this.loadP5 = loadP5;
+        this.materialPresentation = materialPresentation;
         this.instance = null;
         this.snapshot = null;
         this.fieldImage = null;
@@ -226,11 +230,16 @@ function drawSnapshot(p, snapshot, renderer) {
             image.loadPixels();
             for (let index = 0; index < topology.topLayerByCell.length; index += 1) {
                 const depthCount = topology.layerCountByCell?.[index] || 1;
+                const hasMaterial = topology.topLayerByCell[index] >= 0;
+                let alpha = renderer.materialPresentation === 'production'
+                    ? Math.min(21, 9 + depthCount * 1.25)
+                    : Math.min(30, 18 + depthCount);
+                if (hasMaterial && renderer.materialPresentation === 'textured'
+                    && isTexturedMaterialCell(index, material.width)) alpha = Math.max(0, alpha - 8);
                 image.pixels[index * 4] = 100;
                 image.pixels[index * 4 + 1] = 100;
                 image.pixels[index * 4 + 2] = 100;
-                image.pixels[index * 4 + 3] = topology.topLayerByCell[index] >= 0
-                    ? Math.min(21, 9 + depthCount * 1.25) : 0;
+                image.pixels[index * 4 + 3] = hasMaterial ? alpha : 0;
             }
             image.updatePixels();
             renderer.materialImage = image;
@@ -689,6 +698,14 @@ export function pheromoneValueToAlpha(value) {
 function smoothstep(min, max, value) {
     const t = Math.min(1, Math.max(0, (value - min) / (max - min)));
     return t * t * (3 - 2 * t);
+}
+
+function isTexturedMaterialCell(index, width) {
+    const x = index % width, y = Math.floor(index / width);
+    let hash = (Math.imul(x + 1, 73856093) ^ Math.imul(y + 1, 19349663)) >>> 0;
+    hash = Math.imul(hash ^ (hash >>> 13), 1274126177) >>> 0;
+    hash = (hash ^ (hash >>> 16)) >>> 0;
+    return (hash & 15) === 0;
 }
 
 function isPoint(value) {

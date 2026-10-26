@@ -185,6 +185,37 @@ test('historical plate masks draw beneath live pheromone and cache frozen geomet
   await renderer.destroy();
 });
 
+test('material rediscovery candidates add restrained contrast and coordinate-stable light texture only inside material', async () => {
+  const width = 64, height = 64;
+  const cells = Array.from({ length: 32 * 32 }, (_, localIndex) => [
+    Math.floor(localIndex / 32) * width + localIndex % 32, 1
+  ]);
+  const snapshot = makeMaterialSnapshot(width, height, cells, 1);
+  const production = await renderMaterialPixels(snapshot);
+  const surface = await renderMaterialPixels(snapshot, 'surface');
+  const textured = await renderMaterialPixels(snapshot, 'textured');
+
+  for (const [index] of cells) {
+    const offset = index * 4;
+    assert.deepEqual([...production.slice(offset, offset + 3)], [100, 100, 100]);
+    assert.equal(production[offset + 3], 10, 'default retains production alpha');
+    assert.equal(surface[offset + 3], 19, 'B uses its preregistered one-layer alpha');
+    assert.ok(textured[offset + 3] <= surface[offset + 3], 'C never darkens the B surface');
+    assert.ok([surface[offset + 3], surface[offset + 3] - 8].includes(textured[offset + 3]));
+  }
+  const textureCells = cells.filter(([index]) => textured[index * 4 + 3] < surface[index * 4 + 3]);
+  assert.ok(textureCells.length >= 40 && textureCells.length <= 90, 'C marks a sparse coordinate-fixed subset');
+
+  const later = makeMaterialSnapshot(width, height, [...cells, [32 * width, 1]], 2);
+  const texturedLater = await renderMaterialPixels(later, 'textured');
+  for (const [index] of cells) {
+    assert.equal(texturedLater[index * 4 + 3], textured[index * 4 + 3],
+      `a later material birth must not move existing texture at cell ${index}`);
+  }
+  assert.ok([11, 19].includes(texturedLater[(32 * width) * 4 + 3]),
+    'the added cell uses only its own fixed world coordinate');
+});
+
 test('articulated ants draw snapshot gait legs and a four-part body without mutating the snapshot', async () => {
   const calls = [];
   const parent = makeParent();
@@ -392,6 +423,31 @@ function makeP5(calls, { deferSetup = false, manualSetup = false, failSetup = fa
 }
 
 function movingAnt(id, x, y, heading) { return { id, x, y, heading, radius: 0.006 }; }
+
+function makeMaterialSnapshot(width, height, cells, revision) {
+  const topLayerByCell = new Int32Array(width * height).fill(-1);
+  const layerCountByCell = new Uint16Array(width * height);
+  for (const [index, count] of cells) {
+    topLayerByCell[index] = 0;
+    layerCountByCell[index] = count;
+  }
+  return { agents: [], pheromone: { width: 0, height: 0, values: new Float32Array() },
+    stratigraphy: { width, height, revision,
+      stratigraphy: { topLayerByCell, layerCountByCell } } };
+}
+
+async function renderMaterialPixels(snapshot, materialPresentation = 'production') {
+  const calls = [];
+  const renderer = new AntRenderer(makeCanvas(makeParent()), {
+    materialPresentation,
+    loadP5: async () => ({ default: makeP5(calls) })
+  });
+  await renderer.init({ width: 640, height: 640 });
+  renderer.render(snapshot);
+  const pixels = new Uint8ClampedArray(renderer.materialImage.pixels);
+  await renderer.destroy();
+  return pixels;
+}
 
 function makeParent() {
   return {
