@@ -356,6 +356,31 @@ test('sharp material scopes nearest filtering and retains identical source pixel
   await renderer.destroy();
 });
 
+test('faint and edge material views scope native filtering and leave pheromone smoothing unchanged', async () => {
+  const calls = [];
+  const snapshot = makeMaterialSnapshot(96, 96, [[48 * 96 + 48, 1]], 1);
+  snapshot.pheromone = { width: 2, height: 2, values: new Float32Array([0, 0.1, 0, 0.1]) };
+  const before = [...snapshot.stratigraphy.stratigraphy.topLayerByCell];
+  const renderer = new AntRenderer(makeCanvas(makeParent()), {
+    materialPresentation: 'presence-20-directional-edge', loadP5: async () => ({ default: makeP5(calls) })
+  });
+  await renderer.init({ width: 640, height: 640 });
+  await renderer.render(snapshot);
+  const surface = renderer.materialSurface, fill = renderer.materialImage, edge = renderer.materialEdgeImage;
+  const draws = calls.filter(([name]) => name === 'image');
+  assert.equal(draws.length, 3, 'fill and edge draw before pheromone');
+  assert.equal(draws[0].at(-1).smoothing, false);
+  assert.equal(draws[1].at(-1).smoothing, false);
+  assert.equal(draws.at(-1).at(-1).smoothing, true);
+  assert.equal(draws.at(-1).at(-1).quality, 'high');
+  await renderer.render(structuredClone(snapshot));
+  assert.equal(renderer.materialSurface, surface, 'same detached topology reuses cached surface');
+  assert.equal(renderer.materialImage, fill);
+  assert.equal(renderer.materialEdgeImage, edge);
+  assert.deepEqual([...snapshot.stratigraphy.stratigraphy.topLayerByCell], before);
+  await renderer.destroy();
+});
+
 test('native identity cache distinguishes dimensions and reset worlds with the same revision', async () => {
   const calls = [];
   const renderer = new AntRenderer(makeCanvas(makeParent()), {

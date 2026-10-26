@@ -1,0 +1,5 @@
+# Attempt 04 — media acquisition completed; final validation stopped
+
+This run reached tick 6301 and wrote five complete 1,052-frame lossless videos plus all 20 milestone PNGs into the package root. H1 first-Plate timing and renderer/state checks ran before endpoint decoding. The final ffmpeg RGB decode attempted to return a 640×640×3 raw frame (1,228,800 bytes) through Node `execFileSync`'s default output buffer and stopped with `ENOBUFS` at the 1 MiB limit. All media writers had closed successfully. The complete media is retained in the package root.
+
+The exact acquisition runner is preserved here. It did not finish writing its frame-map or metadata sidecars, and its in-memory acquisition trace was lost on exit. A later deterministic H1 metadata replay will compare every saved milestone PNG byte-for-byte, match the prior H1 frame/RNG traces and record that replay as metadata recovery. It will not re-encode or overwrite the retained media. No artist reviewed these assets during acquisition.

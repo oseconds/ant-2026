@@ -1,0 +1,11 @@
+# 2026-10-27 — Material silhouette / edge-depth shadow
+
+Fetched fresh `origin/main` at `aeefa12d8de9da400cb8a2a3d4b5080a21ba0292`, read the ANT guide and current renderer/evidence, then branched `codex/ant-material-silhouette-relief-shadow-20261026` from research parent `01bbef5f5e7a82aaa4774ca866d14312332e9323`. The prior material-identity artist response is preserved verbatim in its original evidence package. Production defaults, H1 laws, world state, pheromone and ant presentation remain unchanged.
+
+Registered five neutral views before capture: existing soft alpha-96, existing sharp alpha-96, sharp flat alpha-20, alpha-20 with fixed 2-pixel interior edge band (RGB 80 / alpha 64), then the same band with centered directional grayscale modulation. No texture, hatching, stipple, grain, height input, off-support drawing or temporal effect.
+
+One seed `20261005` H1 isotropic current-G world supplied all five views. First Plate: tick 4501 / 75.016666667 s; +30 endpoint: tick 6301 / 105.016666667 s. At +30: 2 Plates, 967 occupied material cells, 39,697 nonzero pheromone cells. The tick-4500 pre-birth state has zero Plates; its live capture event counter already includes the subsequent birth, so the state/tick/RNG anchors define that boundary.
+
+The first media acquisition wrote five complete videos and 20 native checkpoint PNGs, then failed during an endpoint RGB post-process buffer read. A deterministic metadata-only replay later matched all checkpoint PNG bytes and prior H1 state/RNG trace, verified saved media hashes and FFmpeg endpoints, and wrote the durable capture/manipulation records without re-encoding. Attempts and partial products remain in the package. Technical validity does not establish an artistic reading.
+
+All support, alpha, renderer RNG/state/event parity and repeat-render checks passed; Views 1/2 match the parent checkpoint PNGs. D/E mean white-composite boundary-darkness mismatch is 0.001421 immediately after birth and 0.000642 at +15/+30 s. Focused tests 17/17, full `npm test` 356/356, build passed. Neutral review page is ready; artist's free-description response is pending. No candidate is selected, no production value changes, and no H0/mature-world follow-up is in scope. [Evidence package](../evidence/2026-10-26-material-silhouette-relief-shadow/README.md).

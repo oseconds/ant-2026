@@ -1,5 +1,6 @@
 import { BODY_GEOMETRY } from '../agents/ant/BodyPoseController.js';
 import { buildMaterialIdentity } from './antMaterialIdentity.js';
+import { buildMaterialSurface } from './antMaterialSurface.js';
 
 /**
  * p5 instance-mode view for the ANT experiment.
@@ -12,6 +13,7 @@ export class AntRenderer {
     constructor(canvas, { loadP5 = () => import('p5'), materialPresentation = 'production' } = {}) {
         if (!canvas) throw new TypeError('AntRenderer requires a canvas element');
         if (!['production', 'surface', 'textured', 'presence-96', 'presence-96-sharp',
+            'presence-20-sharp', 'presence-20-edge', 'presence-20-directional-edge',
             'identity-fine-shuffled', 'identity-fine-registered', 'identity-coarse-shuffled'].includes(materialPresentation)) {
             throw new TypeError('materialPresentation must be a supported material view');
         }
@@ -29,6 +31,9 @@ export class AntRenderer {
         this.fieldSize = null;
         this.plateImages = new WeakMap();
         this.materialImage = null;
+        this.materialEdgeImage = null;
+        this.materialSurface = null;
+        this.materialSurfaceKey = null;
         this.materialRevision = null;
         this.materialIdentity = null;
         this.materialIdentityKey = null;
@@ -132,6 +137,9 @@ export class AntRenderer {
         this.fieldImage = null;
         this.plateImages = new WeakMap();
         this.materialImage = null;
+        this.materialEdgeImage = null;
+        this.materialSurface = null;
+        this.materialSurfaceKey = null;
         this.materialRevision = null;
         this.materialIdentity = null;
         this.materialIdentityKey = null;
@@ -233,7 +241,24 @@ function drawSnapshot(p, snapshot, renderer) {
         && topology?.topLayerByCell?.length && material.width > 0 && material.height > 0) {
         const nativeIdentity = renderer.materialPresentation.startsWith('identity-');
         const sharpFlat = renderer.materialPresentation === 'presence-96-sharp';
-        if (nativeIdentity) {
+        const nativeSurface = renderer.materialPresentation.startsWith('presence-20-');
+        if (nativeSurface) {
+            const key = JSON.stringify([material.revision, material.width, material.height, width, height,
+                renderer.pixelRatio, renderer.materialPresentation, topology.topLayerByCell.join(',')]);
+            if (!renderer.materialImage || renderer.materialSurfaceKey !== key) {
+                const surface = buildMaterialSurface(material, width, height, renderer.materialPresentation);
+                const makeImage = (pixels) => {
+                    const image = p.createImage(width, height);
+                    image.loadPixels(); image.pixels.set(pixels); image.updatePixels();
+                    return image;
+                };
+                renderer.materialSurface = surface;
+                renderer.materialImage = makeImage(surface.fillPixels);
+                renderer.materialEdgeImage = renderer.materialPresentation === 'presence-20-sharp'
+                    ? null : makeImage(surface.edgePixels);
+                renderer.materialSurfaceKey = key;
+            }
+        } else if (nativeIdentity) {
             // Detached snapshots and reset worlds can share revisions but have different geometry.
             const key = JSON.stringify([material.revision, width, height, renderer.pixelRatio,
                 renderer.materialPresentation, topology.topLayerByCell.join(','), material.plates]);
@@ -275,13 +300,14 @@ function drawSnapshot(p, snapshot, renderer) {
                 renderer.materialRevision = revision;
             }
         }
-        if (sharpFlat || nativeIdentity) {
+        if (sharpFlat || nativeIdentity || nativeSurface) {
             const context = p.drawingContext;
             const smoothing = context?.imageSmoothingEnabled;
             const quality = context?.imageSmoothingQuality;
             try {
                 if (context) context.imageSmoothingEnabled = false;
                 p.image(renderer.materialImage, 0, 0, width, height);
+                if (renderer.materialEdgeImage) p.image(renderer.materialEdgeImage, 0, 0, width, height);
             } finally {
                 if (context) {
                     context.imageSmoothingEnabled = smoothing;

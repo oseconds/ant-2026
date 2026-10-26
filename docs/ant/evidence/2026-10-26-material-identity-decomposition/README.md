@@ -2,7 +2,7 @@
 
 ## Decision and provenance
 
-**Native comparison assets are technically usable; human review is pending.** The five-condition matrix is preserved. C/D are closely matched in mean ink/alpha but not identical after clipping. C/E also differ in realized contrast, so this is not a pure texture-frequency experiment. No artistic ranking or production adoption is made.
+**Native comparison assets were technically usable; artist review was received after capture.** The five-condition matrix is preserved. C/D are closely matched in mean ink/alpha but not identical after clipping. C/E also differ in realized contrast, so this is not a pure texture-frequency experiment. No artistic ranking or production adoption is made. The later response is preserved verbatim in [ARTIST-REVIEW.md](ARTIST-REVIEW.md).
 
 - Fresh main: `aeefa12d8de9da400cb8a2a3d4b5080a21ba0292`.
 - Research parent: `bee3a6908b36e23c826e1fde00d461b426c75992`.
@@ -99,6 +99,6 @@ The acquisition runner refuses overwrite and is closed for this pass. Its `--rec
 
 ## Human and artistic status
 
-**PENDING.** No artist response to A–E is present and no candidate is selected. Technical differences, exact reproducibility and decoded pixels do not establish identity separation.
+**Artist response received; no candidate selected.** The artist reported that all non-production views felt strange; C/D read like texture, E was excessive, and no non-production view felt like a different material or depth. B felt less alienating and C was the tentative closest identity reference, with the silhouette treatment unresolved. This is limited to these specific views and does not generally falsify texture families. Technical differences, exact reproducibility and decoded pixels do not establish identity separation. See the verbatim [artist response](ARTIST-REVIEW.md).
 
 First collect free description. Only afterward distinguish visibility, distinction from the trail, another kind of mark/state, and retained-history interpretation; also ask about ant readability, road/network, block-grid, noise, moiré and apparent flicker. A C/E difference is already confounded with realized contrast. A C/D difference remains conditional on clipping and the discrete graph-axis mapping. This early two-Plate H1 window does not establish mature accumulation, H0 transfer, history recognition or production suitability. Do not add a style or tune a parameter after seeing the response within this pass.

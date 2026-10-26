@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-27 — Material silhouette / edge-depth shadow
+
+[Process log](./2026-10-27-material-silhouette-relief-shadow.md) · [Evidence and neutral review assets](../evidence/2026-10-26-material-silhouette-relief-shadow/README.md)
+
+- Compared five renderer-only material views over one H1 state stream: existing soft/sharp references, faint flat fill, uniform interior boundary band, and a directional edge grayscale cue
+- Same-state/RNG/event checks, support bounds, repeat-render bytes, endpoint media, focused/full tests and build passed
+- Artist free-description review remains pending; no style, heading, or production choice was made
+
 ### 2026-10-26 — Heading × material visibility shadow
 
 [Process log](./2026-10-26-heading-material-visibility-shadow.md) · [2×2 evidence and review assets](../evidence/2026-10-26-heading-material-visibility-shadow/README.md)

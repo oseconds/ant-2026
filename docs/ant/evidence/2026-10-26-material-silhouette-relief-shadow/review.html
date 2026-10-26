@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ANT view comparison</title>
+<style>
+body{font:16px system-ui,sans-serif;max-width:1400px;margin:2rem auto;padding:0 1rem;color:#222}h1{font-size:1.5rem}fieldset{margin:1rem 0;padding:1rem}label{margin-right:1rem}#players{display:flex;gap:1rem;overflow-x:auto;align-items:start}figure{margin:0;flex:none;width:640px}video,img{display:block;width:640px;height:640px;object-fit:contain;background:#111}[hidden]{display:none!important}figcaption{margin:.4rem 0}button,select,input{font:inherit}textarea{width:min(100%,640px);height:7rem}#error{color:#a00;white-space:pre-wrap}#status{min-height:1.5em}details{margin-top:1rem}
+</style>
+</head>
+<body>
+<h1>ANT view comparison</h1>
+<p>두 화면을 비교해 보세요. 첫 기록 전에는 아래 자유 서술만 작성해 주세요.</p>
+<p id="error" role="alert"></p><p id="status" aria-live="polite">화면을 불러오는 중…</p>
+<fieldset><legend>화면 선택</legend>
+<label>왼쪽 <select id="left" aria-label="왼쪽 화면"></select></label>
+<label>오른쪽 <select id="right" aria-label="오른쪽 화면"></select></label>
+</fieldset>
+<div id="players">
+<figure><figcaption>View <span id="leftName">1</span></figcaption><video id="leftVideo" muted playsinline preload="none" hidden></video><img id="leftStill" hidden alt=""></figure>
+<figure><figcaption>View <span id="rightName">2</span></figcaption><video id="rightVideo" muted playsinline preload="none" hidden></video><img id="rightStill" hidden alt=""></figure>
+</div>
+<p><button id="play" disabled>재생</button> <button id="pause" disabled>일시 정지</button>
+<label>기준 순간부터 (초) <input id="time" type="number" min="-1" max="30" step="0.1" value="15" disabled></label></p>
+<p><button data-milestone="-0.1" disabled>직전</button>
+<button data-milestone="0" disabled>직후</button>
+<button data-milestone="15" disabled>+15초</button>
+<button data-milestone="30" disabled>+30초</button></p>
+<section><h2>첫 기록</h2>
+<label for="memo">무엇이 달라 보였고, 어떤 것이 자연스럽거나 이상하게 느껴졌는지 자유롭게 적어 주세요.</label><br>
+<textarea id="memo"></textarea><br>
+<button id="record" disabled>첫 기록 저장 후 추가 질문 열기</button>
+</section>
+<details id="questions" hidden><summary>추가 질문</summary>
+<p>어느 화면에서 처음으로 별도 surface가 보였나요, 아니면 모두 길의 농도 차이로 보였나요?</p>
+<p>개미의 움직임을 따라가기는 각 화면에서 어떻게 달랐나요?</p>
+<p>화면이 선택 영역, 지도, 도로망 또는 위쪽 목표와 부채꼴 인상을 만들었나요?</p>
+<p>화면이 다르게 보였다면, 단순한 가시성 차이였나요 아니면 남아 있는 면처럼 느껴졌나요?</p>
+</details>
+<p><button id="download" disabled>기록 JSON 다운로드</button></p>
+<script>
+(() => {
+  const ids=[1,2,3,4,5], left=document.querySelector('#left'), right=document.querySelector('#right');
+  ids.forEach(id=>{for(const select of [left,right]){const option=document.createElement('option');option.value=id;option.textContent=`View ${id}`;select.append(option)}});
+  right.value='2';
+  const lv=document.querySelector('#leftVideo'),rv=document.querySelector('#rightVideo'),time=document.querySelector('#time');
+  const status=document.querySelector('#status'),error=document.querySelector('#error'),memo=document.querySelector('#memo');
+  const milestones={'-0.1':'pre-first-plate','0':'post-first-plate','15':'first-plate-plus-15s','30':'first-plate-plus-30s'};
+  let offset=75.1,ready=false,selectedMilestone=15,syncing=false;
+  function waitMetadata(video){return new Promise((resolve,reject)=>{if(video.readyState>=1)return resolve();video.addEventListener('loadedmetadata',resolve,{once:true});video.addEventListener('error',()=>reject(Error(`Could not load ${video.currentSrc}`)),{once:true});video.load()})}
+  function setPair(){lv.src=`video/view-${left.value}.webm`;rv.src=`video/view-${right.value}.webm`;document.querySelector('#leftName').textContent=left.value;document.querySelector('#rightName').textContent=right.value}
+  function showStills(){if(selectedMilestone===null)return;for(const [video,image,select] of [[lv,document.querySelector('#leftStill'),left],[rv,document.querySelector('#rightStill'),right]]){video.hidden=true;image.src=`stills/view-${select.value}-${milestones[selectedMilestone]}.png`;image.alt=`View ${select.value} still`;image.hidden=false}}
+  function showVideos(){for(const [video,image] of [[lv,document.querySelector('#leftStill')],[rv,document.querySelector('#rightStill')]]){video.hidden=false;image.hidden=true}}
+  function seek(t){if(!ready||!Number.isFinite(t))return;const duration=Math.min(lv.duration||Infinity,rv.duration||Infinity);t=Math.max(0,Math.min(duration,Math.round(t*10)/10));time.value=(t-offset).toFixed(1);for(const video of [lv,rv]){video.pause();if(video.readyState>=1)video.currentTime=t}}
+  async function seeked(){await Promise.all([lv,rv].map(video=>video.seeking?new Promise(resolve=>video.addEventListener('seeked',resolve,{once:true})):Promise.resolve()))}
+  window.reviewReady=(async()=>{setPair();ready=true;for(const button of document.querySelectorAll('#play,#pause,[data-milestone]'))button.disabled=false;time.disabled=false;time.value='15';showStills();status.textContent='준비됐습니다. 영상은 음소거 상태입니다.'})();
+  left.onchange=right.onchange=()=>{if(!ready)return;lv.pause();rv.pause();setPair();showStills()};
+  time.onchange=async()=>{selectedMilestone=null;showVideos();await Promise.all([lv,rv].map(waitMetadata));seek(offset+Number(time.value));await seeked()};
+  document.querySelectorAll('[data-milestone]').forEach(button=>button.onclick=()=>{selectedMilestone=Number(button.dataset.milestone);time.value=button.dataset.milestone;showStills();seek(offset+selectedMilestone)});
+  document.querySelector('#play').onclick=async()=>{const t=Math.round((offset+Number(time.value))*10)/10;showVideos();try{await Promise.all([lv,rv].map(waitMetadata));seek(t);await seeked();await Promise.all([lv.play(),rv.play()])}catch(e){lv.pause();rv.pause();error.textContent=`Playback failed: ${e.message}`}};
+  document.querySelector('#pause').onclick=()=>{lv.pause();rv.pause()};
+  const record=document.querySelector('#record'),questions=document.querySelector('#questions'),download=document.querySelector('#download');
+  memo.oninput=()=>{record.disabled=!memo.value.trim()};
+  record.onclick=()=>{if(!memo.value.trim())return;questions.hidden=false;download.disabled=false;record.textContent='첫 기록 저장됨. 추가 질문을 열 수 있습니다.';record.disabled=true};
+  download.onclick=()=>{const entry={views:[`View ${left.value}`,`View ${right.value}`],firstObservation:memo.value,additionalQuestionsRevealed:!questions.hidden,downloadedAt:new Date().toISOString()};const link=document.createElement('a');link.href=URL.createObjectURL(new Blob([JSON.stringify(entry,null,2)],{type:'application/json'}));link.download='ant-view-observation.json';link.click();URL.revokeObjectURL(link.href)};
+  lv.addEventListener('timeupdate',()=>{if(!lv.paused)time.value=(Math.round(((lv.currentTime+rv.currentTime)/2-offset)*10)/10).toFixed(1)});
+  setInterval(()=>{if(ready&&!lv.paused&&!rv.paused&&!syncing){const d=rv.currentTime-lv.currentTime;if(Math.abs(d)>.1){syncing=true;(d>0?lv:rv).currentTime=(d>0?rv:lv).currentTime;setTimeout(()=>syncing=false,120)}}},250);
+})();
+</script>
+</body>
+</html>
