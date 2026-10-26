@@ -10,8 +10,8 @@ import { BODY_GEOMETRY } from '../agents/ant/BodyPoseController.js';
 export class AntRenderer {
     constructor(canvas, { loadP5 = () => import('p5'), materialPresentation = 'production' } = {}) {
         if (!canvas) throw new TypeError('AntRenderer requires a canvas element');
-        if (!['production', 'surface', 'textured'].includes(materialPresentation)) {
-            throw new TypeError('materialPresentation must be production, surface, or textured');
+        if (!['production', 'surface', 'textured', 'presence-96'].includes(materialPresentation)) {
+            throw new TypeError('materialPresentation must be a supported material view');
         }
         this.canvas = canvas;
         this.canvasParent = canvas.parentElement || null;
@@ -229,11 +229,15 @@ function drawSnapshot(p, snapshot, renderer) {
             const image = p.createImage(material.width, material.height);
             image.loadPixels();
             for (let index = 0; index < topology.topLayerByCell.length; index += 1) {
-                const depthCount = topology.layerCountByCell?.[index] || 1;
                 const hasMaterial = topology.topLayerByCell[index] >= 0;
-                let alpha = renderer.materialPresentation === 'production'
-                    ? Math.min(21, 9 + depthCount * 1.25)
-                    : Math.min(30, 18 + depthCount);
+                let alpha;
+                if (renderer.materialPresentation === 'presence-96') alpha = 96;
+                else {
+                    const depthCount = topology.layerCountByCell?.[index] || 1;
+                    alpha = renderer.materialPresentation === 'production'
+                        ? Math.min(21, 9 + depthCount * 1.25)
+                        : Math.min(30, 18 + depthCount);
+                }
                 if (hasMaterial && renderer.materialPresentation === 'textured'
                     && isTexturedMaterialCell(index, material.width)) alpha = Math.max(0, alpha - 8);
                 image.pixels[index * 4] = 100;

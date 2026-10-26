@@ -216,6 +216,19 @@ test('material rediscovery candidates add restrained contrast and coordinate-sta
     'the added cell uses only its own fixed world coordinate');
 });
 
+test('strong material presence keeps RGB and mask fixed while using alpha 96 for every occupied cell', async () => {
+  const width = 64, cells = [[width + 1, 1], [2 * width + 2, 5]];
+  const pixels = await renderMaterialPixels(makeMaterialSnapshot(width, width, cells, 1), 'presence-96');
+  const occupied = new Set(cells.map(([index]) => index));
+  for (let index = 0; index < width * width; index += 1) {
+    const offset = index * 4;
+    if (occupied.has(index)) {
+      assert.deepEqual([...pixels.slice(offset, offset + 3)], [100, 100, 100]);
+      assert.equal(pixels[offset + 3], 96);
+    } else assert.equal(pixels[offset + 3], 0);
+  }
+});
+
 test('articulated ants draw snapshot gait legs and a four-part body without mutating the snapshot', async () => {
   const calls = [];
   const parent = makeParent();

@@ -226,6 +226,33 @@ test('ants enter one at a time from a common region with irregular delays and di
   await controller.destroy();
 });
 
+test('isotropic diagnostic changes only accepted heading and reuses the production heading draw', async () => {
+  const makeCountingRandom = () => {
+    const values = Array.from({ length: 64 }, (_, index) => index === 0 ? 0.25 : index === 1 ? 0.5 : index === 2 ? 0.75 : 0.37);
+    let calls = 0;
+    const random = () => values[calls++];
+    random.calls = () => calls;
+    return random;
+  };
+  const productionRandom = makeCountingRandom(), isotropicRandom = makeCountingRandom();
+  const state = { population: { activationFeedback: false } };
+  const production = new AntController({ random: productionRandom, state });
+  const isotropic = new AntController({ random: isotropicRandom, state, acceptedHeadingMode: 'isotropic-diagnostic' });
+  await production.init();
+  await isotropic.init();
+
+  assert.equal(productionRandom.calls(), 16);
+  assert.equal(isotropicRandom.calls(), productionRandom.calls());
+  assert.deepEqual([isotropic.agents[0].x, isotropic.agents[0].y], [production.agents[0].x, production.agents[0].y]);
+  assert.deepEqual(isotropic.agents[0].personality, production.agents[0].personality);
+  assert.equal(isotropic.nextSpawnTimeMs, production.nextSpawnTimeMs);
+  assert.equal(production.agents[0].heading, -Math.PI / 2 + (0.75 * 2 - 1) * 0.3);
+  assert.ok(Math.abs(isotropic.agents[0].heading - (Math.PI / 2)) < 1e-12);
+  assert.throws(() => new AntController({ acceptedHeadingMode: 'north-ish' }), /acceptedHeadingMode/);
+  await production.destroy();
+  await isotropic.destroy();
+});
+
 test('occupied spawn space delays entry without allocating an overlapping agent or skipping an ID', async () => {
   const controller = new AntController({ random: seededRandom(71) });
   await controller.init();

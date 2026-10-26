@@ -55,4 +55,4 @@ Please judge these questions from the assets, not from the measurements: can a v
 - `npm run build`: **pass**. Vite reported existing Zod annotation notices and the existing 1,161.66 kB app-chunk size warning.
 - Capture runner: `node scripts/ant-material-rediscovery-shadow.js`.
 
-The runner checks the preregistered starting commit/branch, refuses to overwrite prior capture output, checks same-state rendering, verifies video dimensions/frame counts, and bounds the candidate pixel differences. The artist's perceptual review remains outstanding; no candidate is adopted into production by this pass.
+The runner checks the preregistered starting commit/branch, refuses to overwrite prior capture output, checks same-state rendering, verifies video dimensions/frame counts, and bounds the candidate pixel differences. The artist later reported not readily seeing differences among A/B/C; this qualitative response is preserved in the [separate feedback record](./ARTIST-REVIEW.md). No candidate is adopted into production by this pass.

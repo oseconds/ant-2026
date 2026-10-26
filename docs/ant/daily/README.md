@@ -14,13 +14,23 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-26 — Heading × material visibility shadow
+
+[Process log](./2026-10-26-heading-material-visibility-shadow.md) · [2×2 evidence and review assets](../evidence/2026-10-26-heading-material-visibility-shadow/README.md)
+
+- Compared current production fixed-north heading with a temporary isotropic accepted-heading control, crossed with production material and fixed-alpha-96 material
+- H0 exactly reproduces the prior current-G state/video stream; each heading's paired material renderers share identical snapshots and RNG
+- H1 changes the early world and material footprint under the matched seed; interpretation of material legibility and route character awaits artist review
+- No production heading/material choice was made
+
 ### 2026-10-26 — Material rediscovery shadow
 
 [Process log](./2026-10-26-material-rediscovery-shadow.md) · [Evidence and review assets](../evidence/2026-10-26-material-rediscovery-shadow/README.md)
 
 - Rendered production, surface-only and surface-plus-fixed-texture candidates from the same production snapshot stream; production behavior and pheromone display stayed fixed
 - Technical parity, endpoint measurements, native-size review assets, tests and build passed
-- Artistic place-rediscovery result remains **inconclusive / awaiting artist review**; no production adoption
+- Later artist feedback said the A/B/C visual differences were not readily apparent; it is preserved in the evidence package and motivates the heading × material follow-up
+- This feedback is qualitative and does not establish objective image equivalence or preference
 
 ### 2026-10-25 — Candidate G production adoption
 

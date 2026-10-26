@@ -63,9 +63,13 @@ export class AntController {
         gaitController = new GaitController(), bodyPoseController = new BodyPoseController(),
         gasterDeposition = null, surfaceField = new SurfaceField(),
         trailPlateBirth = new TrailPlateBirth(), materialStratigraphy = new MaterialStratigraphy(),
-        materialLocomotionResistance = true, audioBridge = null } = {}) {
+        materialLocomotionResistance = true, audioBridge = null, acceptedHeadingMode = 'production' } = {}) {
+        if (!['production', 'isotropic-diagnostic'].includes(acceptedHeadingMode)) {
+            throw new TypeError('acceptedHeadingMode must be production or isotropic-diagnostic');
+        }
         this.state = normalizeState(state || {});
         this.random = random;
+        this.acceptedHeadingMode = acceptedHeadingMode;
         this.fieldFactory = fieldFactory;
         this.listeners = new Set();
         this.destroyed = false;
@@ -461,9 +465,13 @@ export class AntController {
             const y = SPAWN_CENTER.y + Math.sin(angle) * distance;
             if (this.agents.some(agent => Math.hypot(x - agent.x, y - agent.y)
                 < radius + agent.radius + SPAWN_CLEARANCE)) continue;
+            const headingSample = this.random();
+            const heading = this.acceptedHeadingMode === 'isotropic-diagnostic'
+                ? wrapAngle(-Math.PI + TAU * headingSample)
+                : SPAWN_HEADING + (headingSample * 2 - 1) * SPAWN_HEADING_SPREAD;
             this.agents.push(new AntAgent({
                 id: 'ant-' + this.nextAgentId++, x, y, radius, random: this.random,
-                heading: SPAWN_HEADING + signed(this.random) * SPAWN_HEADING_SPREAD
+                heading
             }));
             this.totalSpawned += 1;
             if (this.agents.length < this.recruitmentLimit) this.scheduleNextSpawn();

@@ -14,6 +14,6 @@ The first Plate occurred at `84.0166667 s`; capture ended at `114.0166667 s`. Th
 
 ## Decision
 
-Candidate manipulation is valid, production preservation passes, and the synchronized native-size videos/stills are usable for review. Artistic success is **inconclusive / awaiting artist review**. The early two-Plate window does not establish mature-terrain behavior. Production remains unchanged.
+Candidate manipulation is valid, production preservation passes, and the synchronized native-size videos/stills are usable for review. The artist later said the A/B/C differences were not readily apparent; the exact response and its limits are recorded in [ARTIST-REVIEW.md](../evidence/2026-10-26-material-rediscovery-shadow/ARTIST-REVIEW.md). This qualitative result does not establish image equivalence or preference. The early two-Plate window does not establish mature-terrain behavior. Production remains unchanged.
 
 See the [evidence report](../evidence/2026-10-26-material-rediscovery-shadow/README.md) and [synchronized review page](../evidence/2026-10-26-material-rediscovery-shadow/review.html).
