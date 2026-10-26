@@ -22,6 +22,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 - Routed strikes had a higher low-tail/central hardness distribution than all responses; both populations shifted upward over simulation time
 - No hardness-to-pulse mapping was tested; the fixed 3 ms production pulse and current ignored-hardness worklet remain unchanged
 
+### 2026-10-26 — G hardness-driven contact pulse shadow
+
+[Process log](./2026-10-26-g-hardness-pulse-shadow.md) · [Evidence package](../evidence/2026-10-26-g-hardness-pulse-shadow/README.md)
+
+- Three natural G message streams passed world and actual routed-payload parity; fixed windows show changing input hardness and derived pulse durations
+- The corrected full continuous A/B renderer reached 240 CPU min per job with 0/6 seed-arm renders and 0/2 repeat renders complete; all workers stopped
+- Decision: **INCONCLUSIVE**. No A/B acoustic metrics, listening assets, or production audio changes
+
 ### 2026-10-25 — Candidate G production adoption
 
 [Adoption record](../evidence/2026-10-25-g-production-adoption/README.md)

@@ -1,0 +1,60 @@
+{
+  "verdict": "INCONCLUSIVE",
+  "reason": "No continuous replay arm completed before the user-authorized cutoff of 240 CPU minutes per arm.",
+  "freshMain": "4f0f8624c47ed310d7a6a4a37d43e3d0e7756b4b",
+  "reusedHardnessEvidence": {
+    "branch": "codex/ant-g-natural-hardness-distribution-20261026",
+    "commit": "6149a4b43764ef582df32e85765b98e588ec3505"
+  },
+  "capturedInputManifest": "data/message-stream-manifest.json",
+  "renderPlan": {
+    "distinctSeedArmJobs": 6,
+    "repeatJobs": 2,
+    "totalJobs": 8,
+    "completedDistinctSeedArmJobs": 0,
+    "completedRepeatJobs": 0,
+    "continuousFromSeconds": 0,
+    "continuousThroughSeconds": 550,
+    "windowsSeconds": [[120, 130], [300, 310], [540, 550]],
+    "perJobCpuLimitMinutes": 240
+  },
+  "cutoffProcessCpuSeconds": [
+    { "pid": 29352, "cpuSeconds": 14419.05 },
+    { "pid": 34332, "cpuSeconds": 14421.95 },
+    { "pid": 39308, "cpuSeconds": 14419.33 },
+    { "pid": 50316, "cpuSeconds": 14418.34 },
+    { "pid": 51324, "cpuSeconds": 14420.77 },
+    { "pid": 53588, "cpuSeconds": 14420.81 },
+    { "pid": 70024, "cpuSeconds": 14420.19 },
+    { "pid": 76152, "cpuSeconds": 14419.50 }
+  ],
+  "workerTermination": "All eight render workers were intentionally stopped after crossing the cutoff. Their termination exit code is not a completed-render result.",
+  "completedValidations": {
+    "naturalCaptureSeeds": [20261005, 20261006, 20261007],
+    "simulatedSecondsPerSeed": 600,
+    "tickRateHz": 60,
+    "actualSurfaceAudioBridgePosts": true,
+    "frozenStrikePayloadParity": true,
+    "worldTraceEventAndRngParity": true,
+    "monotonicPortPostTimes": true,
+    "finiteInRangeHardness": true,
+    "syntheticExactRateWorkletParity": true,
+    "candidateEnvelopeSelfCheck": true,
+    "focusedTests": {
+      "beforeReplay": "9/9 passed",
+      "afterCutoff": "9/9 passed with --experimental-test-isolation=none",
+      "defaultIsolation": "spawn EPERM before tests started"
+    },
+    "scriptSyntaxChecks": "passed",
+    "gitDiffCheck": "passed",
+    "productionSourceAndWorkletChanged": false
+  },
+  "notProduced": [
+    "completed A/B PCM windows",
+    "natural A/B acoustic metrics",
+    "worklet render telemetry for natural windows",
+    "listening WAVs or viewer",
+    "human listening judgment"
+  ],
+  "additionalRerun": "Prohibited by the user after the cutoff; none started."
+}
