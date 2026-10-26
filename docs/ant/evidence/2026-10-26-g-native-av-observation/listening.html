@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ko">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ANT — viewing</title>
+<style>
+body{font:16px system-ui,sans-serif;max-width:760px;margin:2rem auto;padding:0 1rem;color:#222}video{display:block;width:100%;height:auto;background:#000}textarea{box-sizing:border-box;width:100%;min-height:7rem;margin:.5rem 0}button{padding:.5rem .8rem}
+</style>
+<h1>ANT — viewing</h1>
+<video controls playsinline preload="metadata" src="attempt-02/native-av-indexed.webm"></video>
+<label for="notes">무엇이 달라졌고, 무엇을 따라갈 수 있었나요? 짚을 수 있는 순간이나 위치가 있으면 함께 적어 주세요.</label>
+<textarea id="notes"></textarea>
+<button id="download" type="button">Download notes</button>
+<script>
+const video = document.querySelector('video');
+video.volume = 1;
+video.playbackRate = 1;
+document.querySelector('#download').addEventListener('click', () => {
+  const note = document.querySelector('#notes').value;
+  if (!note.trim()) return;
+  const blob = new Blob([JSON.stringify({ recordedAt: new Date().toISOString(), timeSeconds: video.currentTime, note }, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = Object.assign(document.createElement('a'), { href: url, download: 'ant-viewing-notes.json' });
+  link.click();
+  URL.revokeObjectURL(url);
+});
+</script>
+</html>

@@ -1,0 +1,53 @@
+{
+  "source": "native-av.webm",
+  "indexed": "native-av-indexed.webm",
+  "operation": "FFmpeg WebM remux; video and audio stream-copy only",
+  "command": "ffmpeg -y -copyts -i native-av.webm -map 0:v:0 -map 0:a:0 -c copy -copyts -avoid_negative_ts disabled -map_metadata 0 -f webm native-av-indexed.webm",
+  "sourceSha256": "325eead6c99eaddd35a595c5b5be00ba30730f70a3d63f88e541b6a2bb78c3f1",
+  "indexedSha256": "1ec3c025d8f90404f3d0eec64ed643883daef62fe151236f6f6274bc57f322ca",
+  "sourceBytes": 25675170,
+  "indexedBytes": 25669308,
+  "container": "WebM / Matroska",
+  "containerDurationSeconds": 116.274,
+  "streams": [
+    {
+      "index": 0,
+      "type": "video",
+      "codec": "VP8",
+      "dimensions": "640x640",
+      "packets": 3487,
+      "packetPayloadSha256InOrderMatches": true,
+      "ptsDtsUnchanged": true,
+      "ptsOffsetMilliseconds": 0,
+      "maxAbsPtsDifferenceMilliseconds": 0,
+      "maxAbsDtsDifferenceMilliseconds": 0,
+      "timestampDeltaSequenceMatches": true,
+      "packetDurationFieldDifferences": 41
+    },
+    {
+      "index": 1,
+      "type": "audio",
+      "codec": "Opus",
+      "sampleRateHz": 48000,
+      "channels": 2,
+      "packets": 1937,
+      "packetPayloadSha256InOrderMatches": true,
+      "ptsDtsUnchanged": true,
+      "ptsOffsetMilliseconds": 0,
+      "maxAbsPtsDifferenceMilliseconds": 0,
+      "maxAbsDtsDifferenceMilliseconds": 0,
+      "timestampDeltaSequenceMatches": true,
+      "startPtsMilliseconds": 43,
+      "packetDurationFieldDifferences": 0
+    }
+  ],
+  "verification": {
+    "method": "ffprobe -show_packets -show_data_hash sha256",
+    "packetCountsUnchanged": true,
+    "allPacketPayloadHashesMatchInStreamOrder": true,
+    "allPacketPtsDtsMatchInStreamOrder": true,
+    "audioVideoOffsetCompensation": "none",
+    "reencodingResamplingGainNormalizationOrTimeStretch": "none",
+    "sourceCaptureModified": false
+  }
+}

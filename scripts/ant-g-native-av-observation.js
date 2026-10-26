@@ -1,0 +1,247 @@
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import { gzipSync } from 'node:zlib';
+import { execFileSync } from 'node:child_process';
+import { preview } from 'vite';
+import { chromium } from 'playwright';
+import { installNativeAvObserver } from './ant-g-native-av-page.js';
+import { PCM_TAP_SOURCE, encodeStereoFloatWav, dataUrlPayload } from './ant-g-native-av-pcm.js';
+
+const BASELINE = '4f0f8624c47ed310d7a6a4a37d43e3d0e7756b4b';
+const OUT = resolve('docs/ant/evidence/2026-10-26-g-native-av-observation/attempt-02');
+const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
+const git = (...args) => execFileSync('git', args, { encoding: 'utf8' }).trim();
+assert.equal(git('rev-parse', 'origin/main'), BASELINE);
+assert.equal(git('diff', BASELINE, '--', 'src', 'static'), '');
+await mkdir(OUT, { recursive: true });
+// A rerun must be a deliberate new pass, never an overwrite or scene search.
+for (const name of ['capture.json', 'capture-failure.json', 'native-av.webm', 'native-stereo-f32.wav.gz',
+  'sidecar.json.gz', 'world-final.json.gz']) await assert.rejects(readFile(resolve(OUT, name)), { code: 'ENOENT' });
+const originalWorklet = await readFile('static/worklets/surface-plate.worklet.js');
+assert.deepEqual(await readFile('dist/worklets/surface-plate.worklet.js'), originalWorklet);
+const provenance = { baseline: BASELINE, startingHead: git('rev-parse', 'HEAD'), branch: git('branch', '--show-current'),
+  runnerSha256: sha256(await readFile('scripts/ant-g-native-av-observation.js')),
+  seed: 20261005, maxModelSeconds: 180, maxWallSeconds: 240, viewport: { width: 1280, height: 900 },
+  workletSha256: sha256(originalWorklet), outputPath: 'unchanged final production gain, parallel WebM and Float32 taps',
+  node: process.version, createdAtUtc: new Date().toISOString(), bundleExposure: null };
+const server = await preview({ logLevel: 'error', preview: { host: '127.0.0.1', port: 0 } });
+let browser;
+try {
+  browser = await chromium.launch({ headless: false,
+    executablePath: process.env.BROWSER_EXECUTABLE_PATH || 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+    ignoreDefaultArgs: ['--mute-audio'], args: ['--window-size=1280,1000'] });
+  provenance.browser = browser.version();
+  const context = await browser.newContext({ viewport: provenance.viewport, deviceScaleFactor: 1 });
+  const page = await context.newPage();
+  const errors = [];
+  page.on('pageerror', error => errors.push(String(error)));
+  await page.route('**/assets/index-*.js', async route => {
+    const response = await route.fetch();
+    const original = await response.text();
+    const match = original.match(/([\w$]+)\(document\.getElementById\("app"\)\);?\s*$/);
+    assert.ok(match, 'Exactly one final production app mount is required');
+    const needle = `${match[1]}(document.getElementById("app"))`;
+    assert.equal(original.split(needle).length - 1, 1);
+    const body = original.replace(needle, `globalThis.__nativeAvApp=${needle}`);
+    assert.equal(body.replace('globalThis.__nativeAvApp=', ''), original);
+    provenance.bundleExposure = { url: route.request().url(), originalSha256: sha256(original), servedSha256: sha256(body), needle };
+    await route.fulfill({ response, body });
+  });
+  await page.goto(`http://127.0.0.1:${server.httpServer.address().port}`, { waitUntil: 'networkidle' });
+  await page.bringToFront();
+  await page.waitForFunction(() => Boolean(globalThis.__nativeAvApp));
+  await page.evaluate(async ({ observerSource }) => {
+    const app = globalThis.__nativeAvApp;
+    await app.ready;
+    const originalFactory = app.lab.registry.ant;
+    app.lab.registry.ant = options => {
+      const model = originalFactory(options);
+      let state = 20261005, calls = 0;
+      model.random = () => { calls++; state = (Math.imul(state, 1664525) + 1013904223) >>> 0; return state / 4294967296; };
+      model.__randomState = () => ({ state, calls });
+      const update = model.update;
+      model.__release = false;
+      model.__ticks = 0;
+      model.update = function (timestamp) {
+        const r = globalThis.__nativeAv;
+        if (r && !r.stopped) r.rafTimes.push(timestamp);
+        return this.__release ? update.call(this, timestamp) : false;
+      };
+      const tick = model.tick;
+      model.tick = function (...args) {
+        const r = globalThis.__nativeAv;
+        if (r?.stopped) return;
+        this.__ticks++;
+        const result = tick.apply(this, args);
+        if (this.__ticks >= 10800) void r?.stop?.('180-model-second-limit');
+        else if (r?.firstPlateMs !== undefined && this.simulationTimeMs >= r.firstPlateMs + 30000)
+          void r.stop('first-plate-plus-30s');
+        return result;
+      };
+      return model;
+    };
+    await app.selectModel('ant');
+    const model = app.lab.model;
+    if (model.simulationTimeMs !== 0 || !model.materialLocomotionResistance) throw new Error('Incorrect zero-origin or production resistance');
+    const install = (0, eval)(`(${observerSource})`);
+    globalThis.__nativeAv = { app, model, install, errors: [], calibration: [], anchors: [], rafTimes: [], diagnostics: [], births: [], chunks: [], stopped: false };
+  }, { observerSource: installNativeAvObserver.toString() });
+  await page.locator('[data-action="ant-audio"]').click();
+  await page.waitForFunction(() => {
+    const model = __nativeAv.model;
+    return model.audioBridge.enabled && !model.audioBridge.loading && model.audioBridge.surface.worklet;
+  });
+  await page.evaluate(async ({ pcmSource }) => {
+    const r = __nativeAv, m = r.model, engine = r.app.lab.audio;
+    const ac = engine.context, gain = m.audioBridge.surface.worklet.gainNode;
+    if (ac.state !== 'running' || m.simulationTimeMs !== 0) throw new Error('Initial audio gesture was not ready at model zero');
+    if (m.audioBridge.volume !== 1 || Math.abs(gain.gain.value - .7) > 1e-6) throw new Error('Default native output gain changed');
+    r.ac = ac;
+    r.conditions = { sampleRate: ac.sampleRate, audioOnModelMs: m.simulationTimeMs,
+      volume: m.audioBridge.volume, finalGain: gain.gain.value, modelState: m.getState(),
+      materialLocomotionResistance: m.materialLocomotionResistance, renderer: 'production defaults, no diagnostic overlay',
+      canvas: { width: document.querySelector('#simulation-canvas').width, height: document.querySelector('#simulation-canvas').height },
+      baseLatency: ac.baseLatency, outputLatency: ac.outputLatency, hardwareAudibility: 'not measured' };
+    r.anchor = () => ({ performanceMs: performance.now(), modelMs: m.simulationTimeMs,
+      audioSeconds: ac.currentTime, state: ac.state, visible: document.visibilityState, focused: document.hasFocus(),
+      outputTimestamp: ac.getOutputTimestamp?.() ?? null });
+    const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+    for (let i = 0; i < 11; i++) { r.calibration.push({ phase: 'tap-off-empty-topology', ...r.anchor() }); await wait(200); }
+    const url = URL.createObjectURL(new Blob([pcmSource], { type: 'text/javascript' }));
+    await ac.audioWorklet.addModule(url); URL.revokeObjectURL(url);
+    const tap = new AudioWorkletNode(ac, 'ant-native-pcm-tap', {
+      numberOfInputs: 1, numberOfOutputs: 1, outputChannelCount: [2], channelCount: 2, channelCountMode: 'explicit' });
+    r.tap = tap;
+    tap.onprocessorerror = () => r.errors.push('PCM tap processorerror');
+    tap.port.onmessage = ({ data }) => {
+      if (data.type === 'pcm-chunk') r.chunks.push(data);
+      if (data.type === 'pcm-start') { r.pcmStart = data; r.startPcmResolve?.(data); }
+      if (data.type === 'pcm-stop') { r.pcmStop = data; r.stopPcmResolve?.(data); }
+    };
+    gain.connect(tap); tap.connect(ac.destination); // The tap outputs only zero; original audio connection stays intact.
+    const media = ac.createMediaStreamDestination(); gain.connect(media);
+    const video = document.querySelector('#simulation-canvas').captureStream(30);
+    const stream = new MediaStream([...video.getVideoTracks(), ...media.stream.getAudioTracks()]);
+    const mimeType = 'video/webm;codecs=vp8,opus';
+    if (!MediaRecorder.isTypeSupported(mimeType)) throw new Error('Native combined VP8/Opus capture unavailable');
+    r.recorder = new MediaRecorder(stream, { mimeType, videoBitsPerSecond: 3500000, audioBitsPerSecond: 192000 });
+    r.videoChunks = [];
+    r.recorder.ondataavailable = event => { if (event.data.size) r.videoChunks.push(event.data); };
+    r.recorder.onerror = event => r.errors.push(`MediaRecorder: ${event.error?.message}`);
+    r.recorderStopped = new Promise(resolve => r.recorder.addEventListener('stop', resolve, { once: true }));
+    tap.port.postMessage({ type: 'start' });
+    await new Promise(resolve => { r.startPcmResolve = resolve; });
+    r.recorder.start(1000); r.recorderStartAnchor = r.anchor();
+    for (let i = 0; i < 11; i++) { r.calibration.push({ phase: 'tap-on-empty-topology', ...r.anchor() }); await wait(200); }
+    r.captureStart = r.anchor(); // Includes the short tap-on calibration lead-in; model still at zero.
+    r.observer = r.install(m, { audioContext: ac });
+    r.start = r.anchor();
+    r.recordingClockOrigins = { modelStart: r.start, pcmStart: r.pcmStart,
+      recorderStart: r.recorderStartAnchor, estimatedModelStartContextFrame: Math.round(r.start.audioSeconds * ac.sampleRate),
+      contextFrameQuantization: 128 };
+    const scatter = phase => {
+      const a = r.calibration.filter(x => x.phase === phase), origin = a[0];
+      const values = a.map(x => (x.performanceMs - origin.performanceMs) / 1000 - (x.audioSeconds - origin.audioSeconds));
+      return Math.max(...values) - Math.min(...values);
+    };
+    r.clockToleranceSeconds = Math.max(scatter('tap-off-empty-topology'), scatter('tap-on-empty-topology')) + 256 / ac.sampleRate;
+    r.lastGate = r.start; r.badWindows = 0;
+    r.stop = async reason => {
+      if (r.stopped) return;
+      r.stopped = true; r.stopReason = reason; m.__release = false;
+      clearInterval(r.timer); clearTimeout(r.watchdog);
+      r.end = r.anchor(); r.anchors.push(r.end);
+      r.final = { ticks: m.__ticks, rng: m.__randomState(), fingerprint: r.observer.fingerprint() };
+      r.observer.restore();
+      const done = new Promise(resolve => { r.stopPcmResolve = resolve; });
+      r.tap.port.postMessage({ type: 'stop' }); r.recorder.stop();
+      await Promise.all([done, r.recorderStopped]);
+      r.finished = true;
+    };
+    const port = m.audioBridge.surface.worklet.node.port;
+    let pending = null;
+    port.addEventListener('message', ({ data }) => {
+      if (data.type === 'diagnostics') {
+        r.diagnostics.push({ request: pending, receipt: r.anchor(), payload: data.payload }); pending = null;
+      }
+    }); port.start();
+    m.subscribe(event => {
+      if (event.type === 'plate-birth') {
+        r.births.push({ kind: 'plate', id: event.payload.id, modelMs: event.payload.bornAtSimulationTimeMs, ...r.anchor() });
+        r.firstPlateMs ??= event.payload.bornAtSimulationTimeMs;
+      }
+      if (event.type === 'sphere-birth') r.births.push({ kind: 'nodule', id: event.payload.id, ...r.anchor() });
+      if (event.type === 'error') r.errors.push(event.payload?.message ?? 'model error');
+    });
+    let seconds = 0;
+    r.anchors.push(r.start);
+    r.timer = setInterval(() => {
+      const a = r.anchor(); r.anchors.push(a); seconds++;
+      if (a.visible !== 'visible' || !a.focused) { void r.stop('foreground-lost'); return; }
+      if (a.state !== 'running' || r.errors.length) { void r.stop('audio-or-capture-error'); return; }
+      if (seconds % 5 === 0) {
+        const old = r.lastGate;
+        const wall = (a.performanceMs - old.performanceMs) / 1000;
+        const audio = a.audioSeconds - old.audioSeconds;
+        r.badWindows = wall - audio > r.clockToleranceSeconds ? r.badWindows + 1 : 0;
+        r.lastGate = a;
+        if (!pending) { pending = a; m.audioBridge.requestDiagnostics(); }
+        if (r.badWindows >= 3) { void r.stop('sustained-audio-clock-deficit'); return; }
+      }
+      if (r.firstPlateMs !== undefined && a.modelMs >= r.firstPlateMs + 30000) void r.stop('first-plate-plus-30s');
+      else if (a.modelMs >= 180000) void r.stop('180-model-second-limit');
+    }, 1000);
+    r.watchdog = setTimeout(() => { void r.stop('240-wall-second-limit'); }, 240000);
+    m.__release = true;
+  }, { pcmSource: PCM_TAP_SOURCE });
+  console.log(JSON.stringify({ phase: 'capturing', out: OUT, seed: 20261005 }));
+  // Polls reveal only completion; perceptual material remains unlabelled until human notes.
+  await page.waitForFunction(() => __nativeAv.finished, null, { timeout: 255000, polling: 1000 });
+  const metadata = await page.evaluate(() => {
+    const r = __nativeAv;
+    return { conditions: r.conditions, calibration: r.calibration, start: r.start, end: r.end,
+      recordingClockOrigins: r.recordingClockOrigins, recorderStartAnchor: r.recorderStartAnchor,
+      rafTimes: r.rafTimes, clockToleranceSeconds: r.clockToleranceSeconds,
+      stopReason: r.stopReason, anchors: r.anchors, diagnostics: r.diagnostics, births: r.births,
+      pcmStart: r.pcmStart, pcmStop: r.pcmStop, chunkCount: r.chunks.length,
+      observerCostMs: r.observer.data.observerCostMs, errors: r.errors,
+      trackSettings: r.recorder.stream.getTracks().map(track => ({ kind: track.kind, settings: track.getSettings() })) };
+  });
+  const blobBase64 = async expression => page.evaluate(async expression => {
+    const blob = (0, eval)(expression);
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader(); reader.onload = () => resolve(String(reader.result));
+      reader.onerror = reject; reader.readAsDataURL(blob);
+    });
+  }, expression);
+  const webm = Buffer.from(dataUrlPayload(await blobBase64('new Blob(__nativeAv.videoChunks, {type: __nativeAv.recorder.mimeType})')), 'base64');
+  assert.deepEqual([...webm.subarray(0, 4)], [0x1a, 0x45, 0xdf, 0xa3], 'WebM EBML header is required before browser disposal');
+  await writeFile(resolve(OUT, 'native-av.webm'), webm);
+  const chunks = [];
+  for (let i = 0; i < metadata.chunkCount; i++) {
+    const info = await page.evaluate(i => { const c = __nativeAv.chunks[i]; return { startFrame: c.startFrame, endFrame: c.endFrame, length: c.left.length }; }, i);
+    const bytes = Buffer.from(dataUrlPayload(await blobBase64(`new Blob([__nativeAv.chunks[${i}].left.buffer,__nativeAv.chunks[${i}].right.buffer])`)), 'base64');
+    chunks.push({ startFrame: info.startFrame, endFrame: info.endFrame,
+      left: new Float32Array(bytes.buffer, bytes.byteOffset, info.length),
+      right: new Float32Array(bytes.buffer, bytes.byteOffset + info.length * 4, info.length) });
+  }
+  const wav = encodeStereoFloatWav(chunks, metadata.conditions.sampleRate);
+  await writeFile(resolve(OUT, 'native-stereo-f32.wav.gz'), gzipSync(wav));
+  const sidecar = await page.evaluate(() => __nativeAv.observer.data);
+  const final = await page.evaluate(() => __nativeAv.final);
+  await writeFile(resolve(OUT, 'sidecar.json.gz'), gzipSync(JSON.stringify(sidecar)));
+  await writeFile(resolve(OUT, 'world-final.json.gz'), gzipSync(JSON.stringify(final)));
+  provenance.assets = { webm: { bytes: webm.length, sha256: sha256(webm) },
+    floatWav: { bytes: wav.length, sha256: sha256(wav), compression: 'gzip lossless container only' } };
+  await writeFile(resolve(OUT, 'capture.json'), JSON.stringify({ ...provenance, ...metadata, pageErrors: errors }, null, 2) + '\n');
+  console.log(JSON.stringify({ phase: 'saved', stopReason: metadata.stopReason, modelMs: metadata.end.modelMs,
+    wallSeconds: (metadata.end.performanceMs - metadata.start.performanceMs) / 1000, errors: [...errors, ...metadata.errors] }));
+} catch (error) {
+  await writeFile(resolve(OUT, 'capture-failure.json'), JSON.stringify({ ...provenance, error: String(error), stack: error.stack }, null, 2) + '\n');
+  throw error;
+} finally {
+  await browser?.close();
+  await server.httpServer.close();
+}
