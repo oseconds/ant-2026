@@ -15,4 +15,12 @@ Consequential findings and resolutions:
 9. The indexed WebM is a stream-copy derivative, not byte-identical to the original. Packet payload hashes and PTS/DTS are preserved; 41 video packet duration fields differ.
 10. Timed observer callback cost is not total recorder overhead. Empty-topology calibration is not a loaded-world benchmark. Hardware audibility and exact AV synchronization remain unmeasured.
 
-Final technical acceptance: attempt 02 provides usable native browser AV and exact same-Chrome world/observer parity within these limits. The stricter clock result is post-capture evidence. Human first-listening notes are still required before state interpretation or a mechanism recommendation. No production adoption is supported by this review.
+Technical-stage acceptance: attempt 02 provides usable native browser AV and exact same-Chrome world/observer parity within these limits. The stricter clock result is post-capture evidence. At that review stage human first-listening notes were still required. No production adoption is supported by this review.
+
+## After the human first response
+
+The user subsequently supplied the raw first response. A separate fresh High reviewer examined the response, post-hoc script/data, timing interpretation and next-direction decision. The reviewer accepted the bounded onset correspondence and non-monotonic density comparison, while rejecting source/location or retained-history recognition claims. They requested that the quantile label state the actual `floor((n - 1) * q)` index formula; this was corrected without changing the measured values.
+
+An initial derived-analysis draft incorrectly used model release as media origin. Before any post-hoc result was delivered, it was corrected to recorder-start performance time, keeping source model, controller post, PCM context and media clocks distinct. The corrected source aligns the onset window near 86.26 s and explicitly leaves millisecond ordering unresolved. Raw acquisition files were not changed.
+
+The independent reviewer considered the proposed same-video sound On/Off comparison defensible for this listener's experience, with recognition/order/expectation caveats and no general audience inference. It remains proposed only. No new mechanism or further capture was run.

@@ -1,12 +1,12 @@
-# Current G native AV observation — capture complete, human observation pending
+# Current G native AV observation — bounded capture and first observation
 
 ## Current decision
 
-**Technical capture: usable within the stated timing limits. Perceptual scale: not measured. Post-hoc state interpretation: deferred until first human notes. No production mechanism is selected or implemented.**
+**Technical capture: usable within the stated timing limits. One human first response is recorded, followed by bounded state comparison. Visual attention moved from an individual ant to the wider canvas; sound onset and tentative impact-density change were heard without source/location attribution. No retained-history recognition or production mechanism is established.**
 
-The initial request required an unlabelled human viewing/listening response before state comparison. The agent cannot substitute waveform measurements or source knowledge for having heard an event. A neutral [viewer](listening.html) and the unchanged native material are available. Human first notes were requested in the chat before any state-to-perception interpretation. No response has yet been recorded in this package.
+The initial request required an unlabelled human viewing/listening response before state comparison. A neutral [viewer](listening.html) and native material were offered; the user's [raw first response](FIRST-OBSERVATION.json) was received before post-hoc interpretation. The agent does not substitute waveform measurements or source knowledge for having heard an event. [Post-hoc comparison and decision](POSTHOC.md).
 
-The single next priority is to complete that first unlabelled viewing/listening and then compare the reported moments with the existing sidecar. It would be premature to select selective listening, persistence, pre-aged entry or a new excitation mechanism from this package alone.
+The single next priority is a short **sound On/Off comparison of the same existing native AV window**, asking what the sound changes in following or experiencing the scene. This tests the role of the current global sound before requiring source localization or adding selective listening. It is proposed only; no new viewer mode, physical mechanism or comparison run was implemented.
 
 ## Canonical source and scope
 
@@ -78,7 +78,7 @@ Sidecar compaction is the original response's pre-contact sample. Pheromone is s
 
 ## Perceptual and artistic status
 
-[First observation status](FIRST-OBSERVATION.json): **pending human response**. No contact-, region-, or world-texture-scale result is claimed. No source/sidecar correlation has been presented as a heard relationship. Post-hoc causal attribution would remain limited by co-varying contact density, compaction, topology and world age even after a response.
+[First observation](FIRST-OBSERVATION.json): **one response collected before state comparison**. The user tracked an individual ant, then scanned the population; reported movement/trail impressions and an apparent upward goal; heard onset near media 86 s and tentatively more frequent impacts. They could not tell why/where the sound arose or whether ants caused it. This is mixed evidence: visual activity and auditory changes are legible, while their causal/place relation is not legible in this response. It is not proof that the whole sound was perceived as one global sounding body. [Measured post-hoc detail](attempt-02/POSTHOC.json) and [bounded interpretation](POSTHOC.md).
 
 This early two-minute encounter does not measure mature 20–30 Plate Audio-On reliability, general audience recognition, material-age hearing, persistence value or selective-readout value. A negative response would apply to this window and playback level, not all retained history. Individual-contact recognition is not an artistic success threshold.
 
@@ -102,6 +102,7 @@ Do not run that capture command again in this closed acquisition pass. Recheck e
 ```powershell
 node scripts/verify-ant-g-native-av-browser-parity.js
 node scripts/verify-ant-g-native-av-observation.js
+node scripts/ant-g-native-av-posthoc.js
 ```
 
 These are world-only parity and file/clock checks, not AudioWorklet replay. Full production tests were not rerun because production code is unchanged. [Independent technical review](INDEPENDENT-REVIEW.md) and [chronology](../../daily/2026-10-26-g-native-av-observation.md) preserve corrections and limits.

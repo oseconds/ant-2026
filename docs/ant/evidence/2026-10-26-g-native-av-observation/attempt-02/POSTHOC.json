@@ -1,0 +1,751 @@
+{
+  "scope": "descriptive post-hoc measurements from attempt-02 capture only; no replay, render, or causal/perceptual inference",
+  "parity": {
+    "source": "BROWSER-PARITY.json",
+    "exactWorldParity": true,
+    "ticks": 6841,
+    "contactEvents": 12042,
+    "actualStrikePosts": 631
+  },
+  "clocks": {
+    "mediaZero": "recorderStartAnchor.performanceMs; approximately aligned to indexed video PTS (native and indexed video PTS are unchanged)",
+    "recorderStartAnchor": {
+      "performanceMs": 3143.800000011921,
+      "audioSeconds": 2.0613333333333332,
+      "estimatedContextFrame": 98944,
+      "outputTimestampContextTimeSeconds": 1.9838849999999997,
+      "outputTimestampPerformanceMs": 3141.5,
+      "anchorPerformancePairDeltaMs": 2.300000011920929
+    },
+    "eventToMedia": "(event.performanceTimeMs - recorderStartAnchor.performanceMs) / 1000; source simulationTimeMs is a separate model clock",
+    "pcmToMedia": "(absolute PCM read-buffer frame - recorder-start currentFrame) / 48000; independent of the WebM Opus render clock",
+    "pcmCapture": {
+      "firstFrame": 98944,
+      "endFrame": 5678464,
+      "recorderStartFrame": 98944,
+      "frames": 5579520,
+      "sampleRate": 48000,
+      "channels": 2,
+      "floatFormat": "IEEE Float32",
+      "posthocClockToleranceSeconds": 0.022933333357174544,
+      "contextFrameQuantizationSeconds": 0.0026666666666666666,
+      "videoFrameToleranceSeconds": 0.059,
+      "recorderStartAnchorPairDeltaMs": 2.300000011920929,
+      "uncertaintyNote": "posthoc clock tolerance, video frame tolerance, and recorder-start anchor pairing are separate; no exact millisecond cross-clock ordering claim"
+    },
+    "recorderLeadSeconds": 2.2211000000238417,
+    "sourceVideoDurationSeconds": 116.274,
+    "sourceAudioStartPtsSeconds": 0.043
+  },
+  "firstPlate": {
+    "birth": {
+      "id": "trail-plate-1",
+      "modelSeconds": 84.01666666666823,
+      "mediaSeconds": 86.25910000002384
+    },
+    "firstActualStrikeBridgePost": {
+      "eventId": 2725,
+      "postOrder": 1,
+      "sourceEventSimulationSeconds": 84.03095179233553,
+      "controllerTickEntrySimulationSeconds": 84.01666666666823,
+      "bridgePostMediaSeconds": 86.27069999998808,
+      "plateId": "trail-plate-1",
+      "sourceFootEvent": {
+        "simulationSeconds": 84.03095179233553,
+        "performanceMediaSeconds": 86.27040000003576,
+        "antId": "ant-43",
+        "contactGroup": "B",
+        "legId": "FR",
+        "positionMatchesPayload": true
+      }
+    },
+    "firstPostHasFootEvent": true
+  },
+  "materialBirths": [
+    {
+      "kind": "plate",
+      "id": "trail-plate-1",
+      "modelSeconds": 84.01666666666823,
+      "estimatedMediaSeconds": 86.25910000002384
+    },
+    {
+      "kind": "plate",
+      "id": "trail-plate-2",
+      "modelSeconds": 106.01666666667464,
+      "estimatedMediaSeconds": 108.2595
+    }
+  ],
+  "pcmOnset": {
+    "firstCapturedSampleFrame": 98944,
+    "firstCapturedSampleMediaSeconds": 0,
+    "firstNonzeroSampleFrame": 4239367,
+    "firstNonzeroMediaSeconds": 86.2588125,
+    "firstNonzeroMinusEstimatedBirthMs": -0.2875000238304892,
+    "exactNonzeroSamplesBeforeMediaZero": 0,
+    "exactNonzeroSamplesBeforeEstimatedFirstBirthMediaTime": 14,
+    "crossClockOrdering": "unresolved at stated posthoc and video-frame clock tolerances"
+  },
+  "bins": [
+    {
+      "startMediaSeconds": 0,
+      "endMediaSeconds": 5,
+      "contactEvents": 72,
+      "actualStrikePosts": 0,
+      "strikePostsPerContactEvent": 0,
+      "exposedContactEvents": 0,
+      "exposedFraction": 0,
+      "localL": {
+        "p50": 0,
+        "p90": 0,
+        "max": 0
+      },
+      "preContactCompaction": {
+        "p50": 0.004780755363475005,
+        "p90": 0.017084652510594482
+      },
+      "rawPheromonePostGasterPreNextTick": {
+        "p50": 0,
+        "p90": 0
+      },
+      "pcm": {
+        "frames": 240000,
+        "rmsNativeGain": 0,
+        "peakNativeGain": 0
+      }
+    },
+    {
+      "startMediaSeconds": 5,
+      "endMediaSeconds": 10,
+      "contactEvents": 429,
+      "actualStrikePosts": 0,
+      "strikePostsPerContactEvent": 0,
+      "exposedContactEvents": 0,
+      "exposedFraction": 0,
+      "localL": {
+        "p50": 0,
+        "p90": 0,
+        "max": 0
+      },
+      "preContactCompaction": {
+        "p50": 0.013103058605945572,
+        "p90": 0.03732763553972214
+      },
+      "rawPheromonePostGasterPreNextTick": {
+        "p50": 0,
+        "p90": 0.002346232344870425
+      },
+      "pcm": {
+        "frames": 240000,
+        "rmsNativeGain": 0,
+        "peakNativeGain": 0
+      }
+    },
+    {
+      "startMediaSeconds": 10,
+      "endMediaSeconds": 15,
+      "contactEvents": 411,
+      "actualStrikePosts": 0,
+      "strikePostsPerContactEvent": 0,
+      "exposedContactEvents": 0,
+      "exposedFraction": 0,
+      "localL": {
+        "p50": 0,
+        "p90": 0,
+        "max": 0
+      },
+      "preContactCompaction": {
+        "p50": 0.012964109820101374,
+        "p90": 0.047799934106265526
+      },
+      "rawPheromonePostGasterPreNextTick": {
+        "p50": 0,
+        "p90": 0.00442042436103173
+      },
+      "pcm": {
+        "frames": 240000,
+        "rmsNativeGain": 0,
+        "peakNativeGain": 0
+      }
+    },
+    {
+      "startMediaSeconds": 15,
+      "endMediaSeconds": 20,
+      "contactEvents": 420,
+      "actualStrikePosts": 0,
+      "strikePostsPerContactEvent": 0,
+      "exposedContactEvents": 0,
+      "exposedFraction": 0,
+      "localL": {
+        "p50": 0,
+        "p90": 0,
+        "max": 0
+      },
+      "preContactCompaction": {
+        "p50": 0.012427100953710366,
+        "p90": 0.06337687279885293
+      },
+      "rawPheromonePostGasterPreNextTick": {
+        "p50": 0,
+        "p90": 0.0252530609312372
+      },
+      "pcm": {
+        "frames": 240000,
+        "rmsNativeGain": 0,
+        "peakNativeGain": 0
+      }
+    },
+    {
+      "startMediaSeconds": 20,
+      "endMediaSeconds": 25,
+      "contactEvents": 347,
+      "actualStrikePosts": 0,
+      "strikePostsPerContactEvent": 0,
+      "exposedContactEvents": 0,
+      "exposedFraction": 0,
+      "localL": {
+        "p50": 0,
+        "p90": 0,
+        "max": 0
+      },
+      "preContactCompaction": {
+        "p50": 0.016738221692530135,
+        "p90": 0.08514063080598815
+      },
+      "rawPheromonePostGasterPreNextTick": {
+        "p50": 0,
+        "p90": 0.08713085039496475
+      },
+      "pcm": {
+        "frames": 240000,
+        "rmsNativeGain": 0,
+        "peakNativeGain": 0
+      }
+    },
+    {
+      "startMediaSeconds": 25,
+      "endMediaSeconds": 30,
+      "contactEvents": 416,
+      "actualStrikePosts": 0,
+      "strikePostsPerContactEvent": 0,
+      "exposedContactEvents": 0,
+      "exposedFraction": 0,
+      "localL": {
+        "p50": 0,
+        "p90": 0,
+        "max": 0
+      },
+      "preContactCompaction": {
+        "p50": 0.02325053323262003,
+        "p90": 0.09427678808721805
+      },
+      "rawPheromonePostGasterPreNextTick": {
+        "p50": 0,
+        "p90": 0.11777663371877779
+      },
+      "pcm": {
+        "frames": 240000,
+        "rmsNativeGain": 0,
+        "peakNativeGain": 0
+      }
+    },
+    {
+      "startMediaSeconds": 30,
+      "endMediaSeconds": 35,
+      "contactEvents": 426,
+      "actualStrikePosts": 0,
+      "strikePostsPerContactEvent": 0,
+      "exposedContactEvents": 0,
+      "exposedFraction": 0,
+      "localL": {
+        "p50": 0,
+        "p90": 0,
+        "max": 0
+      },
+      "preContactCompaction": {
+        "p50": 0.02666557599208528,
+        "p90": 0.07123178499115738
+      },
+      "rawPheromonePostGasterPreNextTick": {
+        "p50": 0,
+        "p90": 0.03756095419353103
+      },
+      "pcm": {
+        "frames": 240000,
+        "rmsNativeGain": 0,
+        "peakNativeGain": 0
+      }
+    },
+    {
+      "startMediaSeconds": 35,
+      "endMediaSeconds": 40,
+      "contactEvents": 415,
+      "actualStrikePosts": 0,
+      "strikePostsPerContactEvent": 0,
+      "exposedContactEvents": 0,
+      "exposedFraction": 0,
+      "localL": {
+        "p50": 0,
+        "p90": 0,
+        "max": 0
+      },
+      "preContactCompaction": {
+        "p50": 0.02355751143032119,
+        "p90": 0.06954510466079902
+      },
+      "rawPheromonePostGasterPreNextTick": {
+        "p50": 0,
+        "p90": 0.062050843921834235
+      },
+      "pcm": {
+        "frames": 240000,
+        "rmsNativeGain": 0,
+        "peakNativeGain": 0
+      }
+    },
+    {
+      "startMediaSeconds": 40,
+      "endMediaSeconds": 45,
+      "contactEvents": 406,
+      "actualStrikePosts": 0,
+      "strikePostsPerContactEvent": 0,
+      "exposedContactEvents": 0,
+      "exposedFraction": 0,
+      "localL": {
+        "p50": 0,
+        "p90": 0,
+        "max": 0
+      },
+      "preContactCompaction": {
+        "p50": 0.03584689032603442,
+        "p90": 0.16022577151242978
+      },
+      "rawPheromonePostGasterPreNextTick": {
+        "p50": 0,
+        "p90": 0.11783225441511813
+      },
+      "pcm": {
+        "frames": 240000,
+        "rmsNativeGain": 0,
+        "peakNativeGain": 0
+      }
+    },
+    {
+      "startMediaSeconds": 45,
+      "endMediaSeconds": 50,
+      "contactEvents": 479,
+      "actualStrikePosts": 0,
+      "strikePostsPerContactEvent": 0,
+      "exposedContactEvents": 0,
+      "exposedFraction": 0,
+      "localL": {
+        "p50": 0,
+        "p90": 0,
+        "max": 0
+      },
+      "preContactCompaction": {
+        "p50": 0.06652964963770899,
+        "p90": 0.161545834197245
+      },
+      "rawPheromonePostGasterPreNextTick": {
+        "p50": 0.0030301598199523657,
+        "p90": 0.1359419823659769
+      },
+      "pcm": {
+        "frames": 240000,
+        "rmsNativeGain": 0,
+        "peakNativeGain": 0
+      }
+    },
+    {
+      "startMediaSeconds": 50,
+      "endMediaSeconds": 55,
+      "contactEvents": 539,
+      "actualStrikePosts": 0,
+      "strikePostsPerContactEvent": 0,
+      "exposedContactEvents": 0,
+      "exposedFraction": 0,
+      "localL": {
+        "p50": 0,
+        "p90": 0,
+        "max": 0
+      },
+      "preContactCompaction": {
+        "p50": 0.05556484321869108,
+        "p90": 0.13737659595592136
+      },
+      "rawPheromonePostGasterPreNextTick": {
+        "p50": 0.0006726209933674289,
+        "p90": 0.11750078334505648
+      },
+      "pcm": {
+        "frames": 240000,
+        "rmsNativeGain": 0,
+        "peakNativeGain": 0
+      }
+    },
+    {
+      "startMediaSeconds": 55,
+      "endMediaSeconds": 60,
+      "contactEvents": 519,
+      "actualStrikePosts": 0,
+      "strikePostsPerContactEvent": 0,
+      "exposedContactEvents": 0,
+      "exposedFraction": 0,
+      "localL": {
+        "p50": 0,
+        "p90": 0,
+        "max": 0
+      },
+      "preContactCompaction": {
+        "p50": 0.052746239308159346,
+        "p90": 0.1342545888326774
+      },
+      "rawPheromonePostGasterPreNextTick": {
+        "p50": 0.0017808921401228938,
+        "p90": 0.11287467312199281
+      },
+      "pcm": {
+        "frames": 240000,
+        "rmsNativeGain": 0,
+        "peakNativeGain": 0
+      }
+    },
+    {
+      "startMediaSeconds": 60,
+      "endMediaSeconds": 65,
+      "contactEvents": 603,
+      "actualStrikePosts": 0,
+      "strikePostsPerContactEvent": 0,
+      "exposedContactEvents": 0,
+      "exposedFraction": 0,
+      "localL": {
+        "p50": 0,
+        "p90": 0,
+        "max": 0
+      },
+      "preContactCompaction": {
+        "p50": 0.04829519275453981,
+        "p90": 0.16148620453450346
+      },
+      "rawPheromonePostGasterPreNextTick": {
+        "p50": 0.0010507493972438723,
+        "p90": 0.1361946182318041
+      },
+      "pcm": {
+        "frames": 240000,
+        "rmsNativeGain": 0,
+        "peakNativeGain": 0
+      }
+    },
+    {
+      "startMediaSeconds": 65,
+      "endMediaSeconds": 70,
+      "contactEvents": 685,
+      "actualStrikePosts": 0,
+      "strikePostsPerContactEvent": 0,
+      "exposedContactEvents": 0,
+      "exposedFraction": 0,
+      "localL": {
+        "p50": 0,
+        "p90": 0,
+        "max": 0
+      },
+      "preContactCompaction": {
+        "p50": 0.05151661851227041,
+        "p90": 0.15786384196357867
+      },
+      "rawPheromonePostGasterPreNextTick": {
+        "p50": 0.0000072182253330674425,
+        "p90": 0.09821916113060646
+      },
+      "pcm": {
+        "frames": 240000,
+        "rmsNativeGain": 0,
+        "peakNativeGain": 0
+      }
+    },
+    {
+      "startMediaSeconds": 70,
+      "endMediaSeconds": 75,
+      "contactEvents": 594,
+      "actualStrikePosts": 0,
+      "strikePostsPerContactEvent": 0,
+      "exposedContactEvents": 0,
+      "exposedFraction": 0,
+      "localL": {
+        "p50": 0,
+        "p90": 0,
+        "max": 0
+      },
+      "preContactCompaction": {
+        "p50": 0.05310372654539884,
+        "p90": 0.1652198860576971
+      },
+      "rawPheromonePostGasterPreNextTick": {
+        "p50": 0.0004969205287426843,
+        "p90": 0.13301737088948679
+      },
+      "pcm": {
+        "frames": 240000,
+        "rmsNativeGain": 0,
+        "peakNativeGain": 0
+      }
+    },
+    {
+      "startMediaSeconds": 75,
+      "endMediaSeconds": 80,
+      "contactEvents": 567,
+      "actualStrikePosts": 0,
+      "strikePostsPerContactEvent": 0,
+      "exposedContactEvents": 0,
+      "exposedFraction": 0,
+      "localL": {
+        "p50": 0,
+        "p90": 0,
+        "max": 0
+      },
+      "preContactCompaction": {
+        "p50": 0.09356917588542737,
+        "p90": 0.2675888494141769
+      },
+      "rawPheromonePostGasterPreNextTick": {
+        "p50": 0.005044918510598169,
+        "p90": 0.2367391843383059
+      },
+      "pcm": {
+        "frames": 240000,
+        "rmsNativeGain": 0,
+        "peakNativeGain": 0
+      }
+    },
+    {
+      "startMediaSeconds": 80,
+      "endMediaSeconds": 85,
+      "contactEvents": 630,
+      "actualStrikePosts": 0,
+      "strikePostsPerContactEvent": 0,
+      "exposedContactEvents": 0,
+      "exposedFraction": 0,
+      "localL": {
+        "p50": 0,
+        "p90": 0,
+        "max": 0
+      },
+      "preContactCompaction": {
+        "p50": 0.10930867305799256,
+        "p90": 0.219135512218657
+      },
+      "rawPheromonePostGasterPreNextTick": {
+        "p50": 0.0176074227928693,
+        "p90": 0.2928588459029544
+      },
+      "pcm": {
+        "frames": 240000,
+        "rmsNativeGain": 0,
+        "peakNativeGain": 0
+      }
+    },
+    {
+      "startMediaSeconds": 85,
+      "endMediaSeconds": 90,
+      "contactEvents": 581,
+      "actualStrikePosts": 69,
+      "strikePostsPerContactEvent": 0.11876075731497418,
+      "exposedContactEvents": 69,
+      "exposedFraction": 0.11876075731497418,
+      "localL": {
+        "p50": 0,
+        "p90": 1,
+        "max": 1
+      },
+      "preContactCompaction": {
+        "p50": 0.09401371084057877,
+        "p90": 0.27584684204895155
+      },
+      "rawPheromonePostGasterPreNextTick": {
+        "p50": 0.02146134174090967,
+        "p90": 0.2544171395230766
+      },
+      "pcm": {
+        "frames": 240000,
+        "rmsNativeGain": 0.010843963789310702,
+        "peakNativeGain": 0.0737583190202713
+      }
+    },
+    {
+      "startMediaSeconds": 90,
+      "endMediaSeconds": 95,
+      "contactEvents": 645,
+      "actualStrikePosts": 50,
+      "strikePostsPerContactEvent": 0.07751937984496124,
+      "exposedContactEvents": 50,
+      "exposedFraction": 0.07751937984496124,
+      "localL": {
+        "p50": 0,
+        "p90": 0,
+        "max": 1
+      },
+      "preContactCompaction": {
+        "p50": 0.09184326596062459,
+        "p90": 0.2405656130299163
+      },
+      "rawPheromonePostGasterPreNextTick": {
+        "p50": 0.00651769958381661,
+        "p90": 0.19982899466162068
+      },
+      "pcm": {
+        "frames": 240000,
+        "rmsNativeGain": 0.010189938282155978,
+        "peakNativeGain": 0.0714368149638176
+      }
+    },
+    {
+      "startMediaSeconds": 95,
+      "endMediaSeconds": 100,
+      "contactEvents": 554,
+      "actualStrikePosts": 28,
+      "strikePostsPerContactEvent": 0.05054151624548736,
+      "exposedContactEvents": 28,
+      "exposedFraction": 0.05054151624548736,
+      "localL": {
+        "p50": 0,
+        "p90": 0,
+        "max": 1
+      },
+      "preContactCompaction": {
+        "p50": 0.07710911391202624,
+        "p90": 0.2732830903638654
+      },
+      "rawPheromonePostGasterPreNextTick": {
+        "p50": 0.0018957043464394234,
+        "p90": 0.18347548135188402
+      },
+      "pcm": {
+        "frames": 240000,
+        "rmsNativeGain": 0.005634124711809057,
+        "peakNativeGain": 0.03722023218870163
+      }
+    },
+    {
+      "startMediaSeconds": 100,
+      "endMediaSeconds": 105,
+      "contactEvents": 689,
+      "actualStrikePosts": 114,
+      "strikePostsPerContactEvent": 0.16545718432510886,
+      "exposedContactEvents": 114,
+      "exposedFraction": 0.16545718432510886,
+      "localL": {
+        "p50": 0,
+        "p90": 1,
+        "max": 1
+      },
+      "preContactCompaction": {
+        "p50": 0.1357219933672676,
+        "p90": 0.31346042549578335
+      },
+      "rawPheromonePostGasterPreNextTick": {
+        "p50": 0.0198729543996502,
+        "p90": 0.2567321975117282
+      },
+      "pcm": {
+        "frames": 240000,
+        "rmsNativeGain": 0.01183495359301286,
+        "peakNativeGain": 0.05035523325204849
+      }
+    },
+    {
+      "startMediaSeconds": 105,
+      "endMediaSeconds": 110,
+      "contactEvents": 671,
+      "actualStrikePosts": 106,
+      "strikePostsPerContactEvent": 0.15797317436661698,
+      "exposedContactEvents": 106,
+      "exposedFraction": 0.15797317436661698,
+      "localL": {
+        "p50": 0,
+        "p90": 1,
+        "max": 2
+      },
+      "preContactCompaction": {
+        "p50": 0.1085036993035769,
+        "p90": 0.3119639265233943
+      },
+      "rawPheromonePostGasterPreNextTick": {
+        "p50": 0.008514591680221211,
+        "p90": 0.20796304449518
+      },
+      "pcm": {
+        "frames": 240000,
+        "rmsNativeGain": 0.01493792736450469,
+        "peakNativeGain": 0.08121086657047272
+      }
+    },
+    {
+      "startMediaSeconds": 110,
+      "endMediaSeconds": 115,
+      "contactEvents": 755,
+      "actualStrikePosts": 192,
+      "strikePostsPerContactEvent": 0.2543046357615894,
+      "exposedContactEvents": 192,
+      "exposedFraction": 0.2543046357615894,
+      "localL": {
+        "p50": 0,
+        "p90": 1,
+        "max": 2
+      },
+      "preContactCompaction": {
+        "p50": 0.0991581689283188,
+        "p90": 0.32814467648944895
+      },
+      "rawPheromonePostGasterPreNextTick": {
+        "p50": 0.007950867680744643,
+        "p90": 0.2562433865943355
+      },
+      "pcm": {
+        "frames": 240000,
+        "rmsNativeGain": 0.02297203386726392,
+        "peakNativeGain": 0.10136868059635162
+      }
+    },
+    {
+      "startMediaSeconds": 115,
+      "endMediaSeconds": 116.274,
+      "contactEvents": 189,
+      "actualStrikePosts": 72,
+      "strikePostsPerContactEvent": 0.38095238095238093,
+      "exposedContactEvents": 72,
+      "exposedFraction": 0.38095238095238093,
+      "localL": {
+        "p50": 0,
+        "p90": 2,
+        "max": 2
+      },
+      "preContactCompaction": {
+        "p50": 0.15324267633288866,
+        "p90": 0.353641883886064
+      },
+      "rawPheromonePostGasterPreNextTick": {
+        "p50": 0.03085870646375745,
+        "p90": 0.28775958034611737
+      },
+      "pcm": {
+        "frames": 59520,
+        "rmsNativeGain": 0.020415500600709954,
+        "peakNativeGain": 0.0771103948354721
+      }
+    }
+  ],
+  "finalOnlySnapshot": {
+    "activeAgents": 16,
+    "limitation": "single final snapshot; does not establish a temporal population trace"
+  },
+  "definitions": {
+    "contactEvents": "one observed FOOT_CONTACT record per individual foot event",
+    "actualStrikePosts": "observed worklet bridge strike messages; not all contacts are strikes",
+    "exposedFraction": "contacts whose observed exposedPlateId is non-null divided by contacts",
+    "strikePostsPerContactEvent": "timestamp-bin count ratio; post/event causal pairing is separately available by eventId",
+    "pcmRms": "raw Float32 samples at captured final gain, no normalization; RMS over both channels",
+    "nonzero": "exact floating point nonzero detection, not an audibility threshold",
+    "quantiles": "sorted order-statistic at index floor((n - 1) * q), without interpolation; descriptive only"
+  }
+}
