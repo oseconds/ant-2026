@@ -336,6 +336,52 @@ test('antenna engagement changes only its own antenna and remains in the articul
   assert.deepEqual(rightActive.slice(0, 2), neutral.slice(0, 2), 'right engagement leaves the left antenna unchanged');
 });
 
+test('sharp material scopes nearest filtering and retains identical source pixels', async () => {
+  const snapshot = makeMaterialSnapshot(96, 96, [[96 + 1, 1]], 1);
+  snapshot.pheromone = { width: 2, height: 2, values: new Float32Array([0, .1, 0, .1]) };
+  const baseline = await renderMaterialPixels(snapshot, 'presence-96');
+  const calls = [];
+  const renderer = new AntRenderer(makeCanvas(makeParent()), {
+    materialPresentation: 'presence-96-sharp', loadP5: async () => ({ default: makeP5(calls) })
+  });
+  await renderer.init({ width: 640, height: 640 });
+  const repaint = renderer.render(snapshot);
+  assert.equal(typeof repaint?.then, 'function', 'capture must be able to await draw completion');
+  await repaint;
+  assert.deepEqual(renderer.materialImage.pixels, baseline);
+  const draws = calls.filter(([name]) => name === 'image');
+  assert.equal(draws[0].at(-1).smoothing, false);
+  assert.equal(draws.at(-1).at(-1).smoothing, true, 'pheromone retains smoothing');
+  assert.equal(draws.at(-1).at(-1).quality, 'high');
+  await renderer.destroy();
+});
+
+test('native identity cache distinguishes dimensions and reset worlds with the same revision', async () => {
+  const calls = [];
+  const renderer = new AntRenderer(makeCanvas(makeParent()), {
+    materialPresentation: 'identity-fine-registered', loadP5: async () => ({ default: makeP5(calls) })
+  });
+  await renderer.init({ width: 64, height: 64 });
+  const snapshot = makeMaterialSnapshot(96, 96, [[48 * 96 + 48, 1]], 1);
+  snapshot.stratigraphy.plates = [{ id: 'p1', bornAtSimulationTimeMs: 0, grid: { width: 96, height: 96 },
+    mask: Array.from(snapshot.stratigraphy.stratigraphy.topLayerByCell, x => x >= 0 ? 1 : 0),
+    centerline: [{ index: 0, x: 0, y: .5 }, { index: 1, x: 1, y: .5 }], edges: [[0, 1]], principalPath: [0, 1] }];
+  await renderer.render(snapshot);
+  const image = renderer.materialImage;
+  await renderer.render(structuredClone(snapshot));
+  assert.equal(renderer.materialImage, image, 'equivalent detached snapshots reuse the bitmap');
+  renderer.resize(80, 80);
+  await renderer.render(snapshot);
+  assert.equal(renderer.materialImage.width, 80);
+  const reset = structuredClone(snapshot);
+  reset.stratigraphy.stratigraphy.topLayerByCell.fill(-1);
+  reset.stratigraphy.plates = [];
+  await renderer.render(reset);
+  assert.ok(renderer.materialImage.pixels.every(x => x === 0), 'same revision does not reuse another world bitmap');
+  assert.equal(renderer.materialIdentity.stats.nominalCenterCount, 0);
+  await renderer.destroy();
+});
+
 test('destroy cancels initialization while the p5 module is still loading', async () => {
   let finishLoading;
   let constructed = false;
@@ -382,8 +428,10 @@ function makeP5(calls, { deferSetup = false, manualSetup = false, failSetup = fa
       const p = {
         P2D: '2d', ROUND: 'round', width: 0, height: 0,
         drawingContext: {
-          set imageSmoothingEnabled(value) { calls.push(['imageSmoothingEnabled', value]); },
-          set imageSmoothingQuality(value) { calls.push(['imageSmoothingQuality', value]); }
+          get imageSmoothingEnabled() { return this.smoothing ?? true; },
+          set imageSmoothingEnabled(value) { this.smoothing = value; calls.push(['imageSmoothingEnabled', value]); },
+          get imageSmoothingQuality() { return this.quality ?? 'low'; },
+          set imageSmoothingQuality(value) { this.quality = value; calls.push(['imageSmoothingQuality', value]); }
         },
         pixelDensity: (...args) => calls.push(['pixelDensity', ...args]),
         createCanvas: (...args) => {
@@ -395,15 +443,15 @@ function makeP5(calls, { deferSetup = false, manualSetup = false, failSetup = fa
           }
         },
         noLoop: () => calls.push(['noLoop']),
-        redraw: () => { calls.push(['redraw']); p.draw(); },
-        resizeCanvas: (...args) => calls.push(['resizeCanvas', ...args]),
+        redraw: () => { calls.push(['redraw']); p.draw(); return Promise.resolve(); },
+        resizeCanvas: (...args) => { p.width = args[0]; p.height = args[1]; calls.push(['resizeCanvas', ...args]); },
         background: (...args) => calls.push(['background', ...args]),
         createImage: (width, height) => {
           const image = { width, height, pixels: new Uint8ClampedArray(width * height * 4), loadPixels() {}, updatePixels() {} };
           calls.push(['createImage', image]);
           return image;
         },
-        image: (...args) => calls.push(['image', ...args]),
+        image: (...args) => calls.push(['image', ...args, { smoothing: p.drawingContext.imageSmoothingEnabled, quality: p.drawingContext.imageSmoothingQuality }]),
         noStroke: () => calls.push(['noStroke']), stroke: (...args) => calls.push(['stroke', ...args]),
         strokeWeight: (...args) => calls.push(['strokeWeight', ...args]),
         strokeCap: (...args) => calls.push(['strokeCap', ...args]),

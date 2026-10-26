@@ -1,0 +1,1320 @@
+{
+  "schemaVersion": 1,
+  "branch": "codex/ant-material-identity-decomposition-20261026",
+  "startCommit": "bee3a6908b36e23c826e1fde00d461b426c75992",
+  "currentMainCommit": "aeefa12d8de9da400cb8a2a3d4b5080a21ba0292",
+  "seed": 20261005,
+  "headingMode": "isotropic-diagnostic",
+  "identityDirectionNote": "D uses nearest 8-neighbor graph segments; modulo pi yields at most four axial orientations and does not represent continuous gait direction.",
+  "canvas": {
+    "width": 640,
+    "height": 640,
+    "pixelRatio": 1
+  },
+  "frameRate": 10,
+  "frameTicks": 6,
+  "maxTick": 6301,
+  "firstPlateVideoOffsetSeconds": 75.1,
+  "world": {
+    "initialStateSha256": "467885f91971732a8f45d5d0eaef8ed0debd560b2f4c25334831f98a0f9991d8",
+    "milestones": [
+      {
+        "name": "pre-first-plate",
+        "tick": 4500,
+        "simulationTimeMs": 74999.99999999894,
+        "stateSha256": "ec4e8a19ca3454dabc5c47f4a492420216a0951970f3395d74da1a0737a5e74b",
+        "fullStateSha256": "265824f347d668543f097e62e54420a321ed4028e59f04a932a70945a19ce8b0",
+        "rng": {
+          "state": 3922471284,
+          "calls": 29149
+        },
+        "eventCounts": {
+          "footContact": 2838,
+          "plateBirth": 1,
+          "noduleBirth": 0,
+          "error": 0
+        }
+      },
+      {
+        "name": "post-first-plate",
+        "tick": 4501,
+        "simulationTimeMs": 75016.66666666561,
+        "stateSha256": "856b980da0eddb14579a9dc5bdae05e144be73cb55abc6ba2c85d626634379f5",
+        "fullStateSha256": "49251deb3b36d413355a00a68c1c864ab20a040212c12258c17dafb2c05f2339",
+        "rng": {
+          "state": 359640800,
+          "calls": 29177
+        },
+        "eventCounts": {
+          "footContact": 2838,
+          "plateBirth": 1,
+          "noduleBirth": 0,
+          "error": 0
+        }
+      },
+      {
+        "name": "first-plate-plus-15s",
+        "tick": 5401,
+        "simulationTimeMs": 90016.66666666997,
+        "stateSha256": "bfdefb2388e707a40fdadaa1dc416b49b3e6915010e84cfe51b994ca385060d9",
+        "fullStateSha256": "c0d732144c46981c08d89a94f6610b030351f7be8b2c26086a5186f28b953ad2",
+        "rng": {
+          "state": 3109478481,
+          "calls": 36932
+        },
+        "eventCounts": {
+          "footContact": 3572,
+          "plateBirth": 2,
+          "noduleBirth": 0,
+          "error": 0
+        }
+      },
+      {
+        "name": "first-plate-plus-30s",
+        "tick": 6301,
+        "simulationTimeMs": 105016.66666667434,
+        "stateSha256": "e7125d13b1681d749c393601863cd15e8361fead9c1aecd4238c9dcd04323a65",
+        "fullStateSha256": "2645503a43b47f1822cf0ee1f79b2c51a3548589a0bed906cc258aab39d68310",
+        "rng": {
+          "state": 3450053109,
+          "calls": 45352
+        },
+        "eventCounts": {
+          "footContact": 4353,
+          "plateBirth": 2,
+          "noduleBirth": 0,
+          "error": 0
+        }
+      }
+    ],
+    "rerenderChecks": [
+      {
+        "name": "pre-first-plate",
+        "allFiveCanvasPngBytesStable": true,
+        "allFiveMaterialPixelsStable": true,
+        "cacheIdentityStable": true
+      },
+      {
+        "name": "post-first-plate",
+        "allFiveCanvasPngBytesStable": true,
+        "allFiveMaterialPixelsStable": true,
+        "cacheIdentityStable": true
+      },
+      {
+        "name": "first-plate-plus-15s",
+        "allFiveCanvasPngBytesStable": true,
+        "allFiveMaterialPixelsStable": true,
+        "cacheIdentityStable": true
+      },
+      {
+        "name": "first-plate-plus-30s",
+        "allFiveCanvasPngBytesStable": true,
+        "allFiveMaterialPixelsStable": true,
+        "cacheIdentityStable": true
+      }
+    ],
+    "tickCount": 6301,
+    "firstPlateTick": 4501,
+    "firstPlateTimeMs": 75016.66666666561,
+    "firstPlateVideoOffsetSeconds": 75.1,
+    "endTimeMs": 105016.66666667434,
+    "rngFinal": {
+      "state": 3450053109,
+      "calls": 45352
+    },
+    "eventCounts": {
+      "footContact": 4353,
+      "plateBirth": 2,
+      "noduleBirth": 0,
+      "error": 0
+    },
+    "materialLocomotionResistance": true,
+    "audioBridgeAttached": false,
+    "audioEnabled": false,
+    "finalSnapshotSha256": "e7125d13b1681d749c393601863cd15e8361fead9c1aecd4238c9dcd04323a65",
+    "frameCount": 1052
+  },
+  "materials": {
+    "A": "presence-96",
+    "B": "presence-96-sharp",
+    "C": "identity-fine-shuffled",
+    "D": "identity-fine-registered",
+    "E": "identity-coarse-shuffled"
+  },
+  "measurements": [
+    {
+      "name": "pre-first-plate",
+      "tick": 4500,
+      "conditions": {
+        "A": {
+          "supportPixels": 0,
+          "canonicalSupportPixels": 0,
+          "offSupportPixels": 0,
+          "alpha": {
+            "mean": 0,
+            "stdev": 0,
+            "q10": 0,
+            "q50": 0,
+            "q90": 0
+          },
+          "materialWhiteCompositeMeanDarkness": 0,
+          "primitiveCount": null,
+          "nominalAngleHistogram": null,
+          "visibleCenterAngleHistogram": null,
+          "clippedContributionAngleWeights": null,
+          "inkFraction": null,
+          "primitiveDimensions": null
+        },
+        "B": {
+          "supportPixels": 0,
+          "canonicalSupportPixels": 0,
+          "offSupportPixels": 0,
+          "alpha": {
+            "mean": 0,
+            "stdev": 0,
+            "q10": 0,
+            "q50": 0,
+            "q90": 0
+          },
+          "materialWhiteCompositeMeanDarkness": 0,
+          "primitiveCount": null,
+          "nominalAngleHistogram": null,
+          "visibleCenterAngleHistogram": null,
+          "clippedContributionAngleWeights": null,
+          "inkFraction": null,
+          "primitiveDimensions": null
+        },
+        "C": {
+          "supportPixels": 0,
+          "canonicalSupportPixels": 0,
+          "offSupportPixels": 0,
+          "alpha": {
+            "mean": 0,
+            "stdev": 0,
+            "q10": 0,
+            "q50": 0,
+            "q90": 0
+          },
+          "materialWhiteCompositeMeanDarkness": 0,
+          "primitiveCount": 0,
+          "nominalAngleHistogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "visibleCenterAngleHistogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "clippedContributionAngleWeights": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "inkFraction": 0,
+          "primitiveDimensions": {}
+        },
+        "D": {
+          "supportPixels": 0,
+          "canonicalSupportPixels": 0,
+          "offSupportPixels": 0,
+          "alpha": {
+            "mean": 0,
+            "stdev": 0,
+            "q10": 0,
+            "q50": 0,
+            "q90": 0
+          },
+          "materialWhiteCompositeMeanDarkness": 0,
+          "primitiveCount": 0,
+          "nominalAngleHistogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "visibleCenterAngleHistogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "clippedContributionAngleWeights": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "inkFraction": 0,
+          "primitiveDimensions": {}
+        },
+        "E": {
+          "supportPixels": 0,
+          "canonicalSupportPixels": 0,
+          "offSupportPixels": 0,
+          "alpha": {
+            "mean": 0,
+            "stdev": 0,
+            "q10": 0,
+            "q50": 0,
+            "q90": 0
+          },
+          "materialWhiteCompositeMeanDarkness": 0,
+          "primitiveCount": 0,
+          "nominalAngleHistogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "visibleCenterAngleHistogram": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "clippedContributionAngleWeights": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "inkFraction": 0,
+          "primitiveDimensions": {}
+        }
+      },
+      "sourceABPixelsEqual": true,
+      "independentResamplingAudit": {
+        "actualAFilteringVsBAlphaPixels": 0,
+        "BCanonicalCenterAlphaMismatches": 0,
+        "method": "independent transparent Canvas2D drawImage smoothing on for A and off for B"
+      },
+      "finalComposite": {
+        "A": {
+          "meanDarkness": 9.482565917968742,
+          "rmsLuminance": 247.1745071204044,
+          "nonwhitePixels": 71964
+        },
+        "B": {
+          "meanDarkness": 9.482565917968742,
+          "rmsLuminance": 247.1745071204044,
+          "nonwhitePixels": 71964
+        },
+        "C": {
+          "meanDarkness": 9.482565917968742,
+          "rmsLuminance": 247.1745071204044,
+          "nonwhitePixels": 71964
+        },
+        "D": {
+          "meanDarkness": 9.482565917968742,
+          "rmsLuminance": 247.1745071204044,
+          "nonwhitePixels": 71964
+        },
+        "E": {
+          "meanDarkness": 9.482565917968742,
+          "rmsLuminance": 247.1745071204044,
+          "nonwhitePixels": 71964
+        }
+      }
+    },
+    {
+      "name": "post-first-plate",
+      "tick": 4501,
+      "conditions": {
+        "A": {
+          "supportPixels": 45986,
+          "canonicalSupportPixels": 30757,
+          "offSupportPixels": 15229,
+          "alpha": {
+            "mean": 64.71195581263864,
+            "stdev": 35.2183978798838,
+            "q10": 8,
+            "q50": 80,
+            "q90": 99
+          },
+          "materialWhiteCompositeMeanDarkness": 39.33471823905325,
+          "primitiveCount": null,
+          "nominalAngleHistogram": null,
+          "visibleCenterAngleHistogram": null,
+          "clippedContributionAngleWeights": null,
+          "inkFraction": null,
+          "primitiveDimensions": null
+        },
+        "B": {
+          "supportPixels": 30757,
+          "canonicalSupportPixels": 30757,
+          "offSupportPixels": 0,
+          "alpha": {
+            "mean": 96,
+            "stdev": 0,
+            "q10": 96,
+            "q50": 96,
+            "q90": 96
+          },
+          "materialWhiteCompositeMeanDarkness": 58.35294117644346,
+          "primitiveCount": null,
+          "nominalAngleHistogram": null,
+          "visibleCenterAngleHistogram": null,
+          "clippedContributionAngleWeights": null,
+          "inkFraction": null,
+          "primitiveDimensions": null
+        },
+        "C": {
+          "supportPixels": 30757,
+          "canonicalSupportPixels": 30757,
+          "offSupportPixels": 0,
+          "alpha": {
+            "mean": 94.0078681275807,
+            "stdev": 33.68715483409769,
+            "q10": 64,
+            "q50": 88,
+            "q90": 128
+          },
+          "materialWhiteCompositeMeanDarkness": 57.142037489321325,
+          "primitiveCount": 1932,
+          "nominalAngleHistogram": [
+            862,
+            0,
+            153,
+            382,
+            0,
+            0,
+            139,
+            0,
+            152,
+            244,
+            0,
+            0
+          ],
+          "visibleCenterAngleHistogram": [
+            862,
+            0,
+            153,
+            382,
+            0,
+            0,
+            139,
+            0,
+            152,
+            244,
+            0,
+            0
+          ],
+          "clippedContributionAngleWeights": [
+            54224,
+            0,
+            8607,
+            21496,
+            0,
+            0,
+            8752,
+            0,
+            8612,
+            13678,
+            0,
+            0
+          ],
+          "inkFraction": 0.23443646974672433,
+          "primitiveDimensions": {
+            "4x1": 1932
+          }
+        },
+        "D": {
+          "supportPixels": 30757,
+          "canonicalSupportPixels": 30757,
+          "offSupportPixels": 0,
+          "alpha": {
+            "mean": 94.0848587313457,
+            "stdev": 33.70217896536024,
+            "q10": 64,
+            "q50": 88,
+            "q90": 128
+          },
+          "materialWhiteCompositeMeanDarkness": 57.1888356994516,
+          "primitiveCount": 1932,
+          "nominalAngleHistogram": [
+            862,
+            0,
+            153,
+            382,
+            0,
+            0,
+            139,
+            0,
+            152,
+            244,
+            0,
+            0
+          ],
+          "visibleCenterAngleHistogram": [
+            862,
+            0,
+            153,
+            382,
+            0,
+            0,
+            139,
+            0,
+            152,
+            244,
+            0,
+            0
+          ],
+          "clippedContributionAngleWeights": [
+            54544,
+            0,
+            8550,
+            21544,
+            0,
+            0,
+            8800,
+            0,
+            8498,
+            13729,
+            0,
+            0
+          ],
+          "inkFraction": 0.23503795883863837,
+          "primitiveDimensions": {
+            "4x1": 1932
+          }
+        },
+        "E": {
+          "supportPixels": 30757,
+          "canonicalSupportPixels": 30757,
+          "offSupportPixels": 0,
+          "alpha": {
+            "mean": 91.98322333127417,
+            "stdev": 47.68098767430398,
+            "q10": 64,
+            "q50": 64,
+            "q90": 192
+          },
+          "materialWhiteCompositeMeanDarkness": 55.911371044519385,
+          "primitiveCount": 210,
+          "nominalAngleHistogram": [
+            94,
+            0,
+            16,
+            42,
+            0,
+            0,
+            15,
+            0,
+            16,
+            27,
+            0,
+            0
+          ],
+          "visibleCenterAngleHistogram": [
+            94,
+            0,
+            16,
+            42,
+            0,
+            0,
+            15,
+            0,
+            16,
+            27,
+            0,
+            0
+          ],
+          "clippedContributionAngleWeights": [
+            49072,
+            0,
+            8390,
+            20930,
+            0,
+            0,
+            7128,
+            0,
+            8223,
+            13842,
+            0,
+            0
+          ],
+          "inkFraction": 0.21861893227557955,
+          "primitiveDimensions": {
+            "12x3": 210
+          }
+        }
+      },
+      "sourceABPixelsEqual": true,
+      "independentResamplingAudit": {
+        "actualAFilteringVsBAlphaPixels": 41550,
+        "BCanonicalCenterAlphaMismatches": 0,
+        "method": "independent transparent Canvas2D drawImage smoothing on for A and off for B"
+      },
+      "finalComposite": {
+        "A": {
+          "meanDarkness": 13.212834472656255,
+          "rmsLuminance": 244.03636685372933,
+          "nonwhitePixels": 90388
+        },
+        "B": {
+          "meanDarkness": 13.175075683593747,
+          "rmsLuminance": 244.12739944677355,
+          "nonwhitePixels": 83488
+        },
+        "C": {
+          "meanDarkness": 13.120029296875003,
+          "rmsLuminance": 244.21719669211717,
+          "nonwhitePixels": 83488
+        },
+        "D": {
+          "meanDarkness": 13.124577636718755,
+          "rmsLuminance": 244.21344718431155,
+          "nonwhitePixels": 83488
+        },
+        "E": {
+          "meanDarkness": 13.0301513671875,
+          "rmsLuminance": 244.33498363622763,
+          "nonwhitePixels": 83488
+        }
+      }
+    },
+    {
+      "name": "first-plate-plus-15s",
+      "tick": 5401,
+      "conditions": {
+        "A": {
+          "supportPixels": 59414,
+          "canonicalSupportPixels": 43055,
+          "offSupportPixels": 16359,
+          "alpha": {
+            "mean": 69.9125122025112,
+            "stdev": 34.00463842947748,
+            "q10": 10,
+            "q50": 91,
+            "q90": 98
+          },
+          "materialWhiteCompositeMeanDarkness": 42.49584075053914,
+          "primitiveCount": null,
+          "nominalAngleHistogram": null,
+          "visibleCenterAngleHistogram": null,
+          "clippedContributionAngleWeights": null,
+          "inkFraction": null,
+          "primitiveDimensions": null
+        },
+        "B": {
+          "supportPixels": 43055,
+          "canonicalSupportPixels": 43055,
+          "offSupportPixels": 0,
+          "alpha": {
+            "mean": 96,
+            "stdev": 0,
+            "q10": 96,
+            "q50": 96,
+            "q90": 96
+          },
+          "materialWhiteCompositeMeanDarkness": 58.35294117642774,
+          "primitiveCount": null,
+          "nominalAngleHistogram": null,
+          "visibleCenterAngleHistogram": null,
+          "clippedContributionAngleWeights": null,
+          "inkFraction": null,
+          "primitiveDimensions": null
+        },
+        "C": {
+          "supportPixels": 43055,
+          "canonicalSupportPixels": 43055,
+          "offSupportPixels": 0,
+          "alpha": {
+            "mean": 94.20415747299965,
+            "stdev": 33.50104817631343,
+            "q10": 64,
+            "q50": 88,
+            "q90": 128
+          },
+          "materialWhiteCompositeMeanDarkness": 57.2613506208389,
+          "primitiveCount": 4080,
+          "nominalAngleHistogram": [
+            1947,
+            0,
+            303,
+            784,
+            0,
+            0,
+            303,
+            0,
+            274,
+            469,
+            0,
+            0
+          ],
+          "visibleCenterAngleHistogram": [
+            1343,
+            0,
+            197,
+            500,
+            0,
+            0,
+            204,
+            0,
+            160,
+            301,
+            0,
+            0
+          ],
+          "clippedContributionAngleWeights": [
+            84496,
+            0,
+            11111,
+            28232,
+            0,
+            0,
+            12800,
+            0,
+            9073,
+            16843,
+            0,
+            0
+          ],
+          "inkFraction": 0.23596998025780977,
+          "primitiveDimensions": {
+            "4x1": 4080
+          }
+        },
+        "D": {
+          "supportPixels": 43055,
+          "canonicalSupportPixels": 43055,
+          "offSupportPixels": 0,
+          "alpha": {
+            "mean": 94.2011845314133,
+            "stdev": 33.62816938703109,
+            "q10": 64,
+            "q50": 88,
+            "q90": 128
+          },
+          "materialWhiteCompositeMeanDarkness": 57.259543538699,
+          "primitiveCount": 4080,
+          "nominalAngleHistogram": [
+            1947,
+            0,
+            303,
+            784,
+            0,
+            0,
+            303,
+            0,
+            274,
+            469,
+            0,
+            0
+          ],
+          "visibleCenterAngleHistogram": [
+            1203,
+            0,
+            193,
+            527,
+            0,
+            0,
+            242,
+            0,
+            198,
+            342,
+            0,
+            0
+          ],
+          "clippedContributionAngleWeights": [
+            76000,
+            0,
+            10924,
+            29702,
+            0,
+            0,
+            15376,
+            0,
+            11130,
+            19407,
+            0,
+            0
+          ],
+          "inkFraction": 0.23594675415166647,
+          "primitiveDimensions": {
+            "4x1": 4080
+          }
+        },
+        "E": {
+          "supportPixels": 43055,
+          "canonicalSupportPixels": 43055,
+          "offSupportPixels": 0,
+          "alpha": {
+            "mean": 92.28605272326095,
+            "stdev": 47.788248180314866,
+            "q10": 64,
+            "q50": 64,
+            "q90": 192
+          },
+          "materialWhiteCompositeMeanDarkness": 56.09544381217508,
+          "primitiveCount": 446,
+          "nominalAngleHistogram": [
+            213,
+            0,
+            33,
+            86,
+            0,
+            0,
+            33,
+            0,
+            29,
+            52,
+            0,
+            0
+          ],
+          "visibleCenterAngleHistogram": [
+            145,
+            0,
+            22,
+            55,
+            0,
+            0,
+            18,
+            0,
+            19,
+            34,
+            0,
+            0
+          ],
+          "clippedContributionAngleWeights": [
+            77400,
+            0,
+            11118,
+            27827,
+            0,
+            0,
+            9216,
+            0,
+            9573,
+            17098,
+            0,
+            0
+          ],
+          "inkFraction": 0.22098478690047613,
+          "primitiveDimensions": {
+            "12x3": 446
+          }
+        }
+      },
+      "sourceABPixelsEqual": true,
+      "independentResamplingAudit": {
+        "actualAFilteringVsBAlphaPixels": 47066,
+        "BCanonicalCenterAlphaMismatches": 0,
+        "method": "independent transparent Canvas2D drawImage smoothing on for A and off for B"
+      },
+      "finalComposite": {
+        "A": {
+          "meanDarkness": 15.565048828124986,
+          "rmsLuminance": 241.9466057303017,
+          "nonwhitePixels": 104596
+        },
+        "B": {
+          "meanDarkness": 15.52927734375001,
+          "rmsLuminance": 242.04457766726566,
+          "nonwhitePixels": 96864
+        },
+        "C": {
+          "meanDarkness": 15.462827148437498,
+          "rmsLuminance": 242.16421410232536,
+          "nonwhitePixels": 96864
+        },
+        "D": {
+          "meanDarkness": 15.460839843749994,
+          "rmsLuminance": 242.16602801993744,
+          "nonwhitePixels": 96864
+        },
+        "E": {
+          "meanDarkness": 15.337695312499989,
+          "rmsLuminance": 242.33405839744236,
+          "nonwhitePixels": 96864
+        }
+      },
+      "unchangedExposure": {
+        "C": {
+          "comparedPixels": 375307,
+          "mismatches": 0
+        },
+        "D": {
+          "comparedPixels": 375307,
+          "mismatches": 0
+        },
+        "E": {
+          "comparedPixels": 375307,
+          "mismatches": 0
+        }
+      }
+    },
+    {
+      "name": "first-plate-plus-30s",
+      "tick": 6301,
+      "conditions": {
+        "A": {
+          "supportPixels": 59414,
+          "canonicalSupportPixels": 43055,
+          "offSupportPixels": 16359,
+          "alpha": {
+            "mean": 69.9125122025112,
+            "stdev": 34.00463842947748,
+            "q10": 10,
+            "q50": 91,
+            "q90": 98
+          },
+          "materialWhiteCompositeMeanDarkness": 42.49584075053914,
+          "primitiveCount": null,
+          "nominalAngleHistogram": null,
+          "visibleCenterAngleHistogram": null,
+          "clippedContributionAngleWeights": null,
+          "inkFraction": null,
+          "primitiveDimensions": null
+        },
+        "B": {
+          "supportPixels": 43055,
+          "canonicalSupportPixels": 43055,
+          "offSupportPixels": 0,
+          "alpha": {
+            "mean": 96,
+            "stdev": 0,
+            "q10": 96,
+            "q50": 96,
+            "q90": 96
+          },
+          "materialWhiteCompositeMeanDarkness": 58.35294117642774,
+          "primitiveCount": null,
+          "nominalAngleHistogram": null,
+          "visibleCenterAngleHistogram": null,
+          "clippedContributionAngleWeights": null,
+          "inkFraction": null,
+          "primitiveDimensions": null
+        },
+        "C": {
+          "supportPixels": 43055,
+          "canonicalSupportPixels": 43055,
+          "offSupportPixels": 0,
+          "alpha": {
+            "mean": 94.20415747299965,
+            "stdev": 33.50104817631343,
+            "q10": 64,
+            "q50": 88,
+            "q90": 128
+          },
+          "materialWhiteCompositeMeanDarkness": 57.2613506208389,
+          "primitiveCount": 4080,
+          "nominalAngleHistogram": [
+            1947,
+            0,
+            303,
+            784,
+            0,
+            0,
+            303,
+            0,
+            274,
+            469,
+            0,
+            0
+          ],
+          "visibleCenterAngleHistogram": [
+            1343,
+            0,
+            197,
+            500,
+            0,
+            0,
+            204,
+            0,
+            160,
+            301,
+            0,
+            0
+          ],
+          "clippedContributionAngleWeights": [
+            84496,
+            0,
+            11111,
+            28232,
+            0,
+            0,
+            12800,
+            0,
+            9073,
+            16843,
+            0,
+            0
+          ],
+          "inkFraction": 0.23596998025780977,
+          "primitiveDimensions": {
+            "4x1": 4080
+          }
+        },
+        "D": {
+          "supportPixels": 43055,
+          "canonicalSupportPixels": 43055,
+          "offSupportPixels": 0,
+          "alpha": {
+            "mean": 94.2011845314133,
+            "stdev": 33.62816938703109,
+            "q10": 64,
+            "q50": 88,
+            "q90": 128
+          },
+          "materialWhiteCompositeMeanDarkness": 57.259543538699,
+          "primitiveCount": 4080,
+          "nominalAngleHistogram": [
+            1947,
+            0,
+            303,
+            784,
+            0,
+            0,
+            303,
+            0,
+            274,
+            469,
+            0,
+            0
+          ],
+          "visibleCenterAngleHistogram": [
+            1203,
+            0,
+            193,
+            527,
+            0,
+            0,
+            242,
+            0,
+            198,
+            342,
+            0,
+            0
+          ],
+          "clippedContributionAngleWeights": [
+            76000,
+            0,
+            10924,
+            29702,
+            0,
+            0,
+            15376,
+            0,
+            11130,
+            19407,
+            0,
+            0
+          ],
+          "inkFraction": 0.23594675415166647,
+          "primitiveDimensions": {
+            "4x1": 4080
+          }
+        },
+        "E": {
+          "supportPixels": 43055,
+          "canonicalSupportPixels": 43055,
+          "offSupportPixels": 0,
+          "alpha": {
+            "mean": 92.28605272326095,
+            "stdev": 47.788248180314866,
+            "q10": 64,
+            "q50": 64,
+            "q90": 192
+          },
+          "materialWhiteCompositeMeanDarkness": 56.09544381217508,
+          "primitiveCount": 446,
+          "nominalAngleHistogram": [
+            213,
+            0,
+            33,
+            86,
+            0,
+            0,
+            33,
+            0,
+            29,
+            52,
+            0,
+            0
+          ],
+          "visibleCenterAngleHistogram": [
+            145,
+            0,
+            22,
+            55,
+            0,
+            0,
+            18,
+            0,
+            19,
+            34,
+            0,
+            0
+          ],
+          "clippedContributionAngleWeights": [
+            77400,
+            0,
+            11118,
+            27827,
+            0,
+            0,
+            9216,
+            0,
+            9573,
+            17098,
+            0,
+            0
+          ],
+          "inkFraction": 0.22098478690047613,
+          "primitiveDimensions": {
+            "12x3": 446
+          }
+        }
+      },
+      "sourceABPixelsEqual": true,
+      "independentResamplingAudit": {
+        "actualAFilteringVsBAlphaPixels": 47066,
+        "BCanonicalCenterAlphaMismatches": 0,
+        "method": "independent transparent Canvas2D drawImage smoothing on for A and off for B"
+      },
+      "finalComposite": {
+        "A": {
+          "meanDarkness": 16.983769531250005,
+          "rmsLuminance": 240.7016261921853,
+          "nonwhitePixels": 114674
+        },
+        "B": {
+          "meanDarkness": 16.9479052734375,
+          "rmsLuminance": 240.79889489614175,
+          "nonwhitePixels": 107164
+        },
+        "C": {
+          "meanDarkness": 16.879267578124995,
+          "rmsLuminance": 240.9219082179431,
+          "nonwhitePixels": 107164
+        },
+        "D": {
+          "meanDarkness": 16.876855468749994,
+          "rmsLuminance": 240.92444420893204,
+          "nonwhitePixels": 107164
+        },
+        "E": {
+          "meanDarkness": 16.774458007812513,
+          "rmsLuminance": 241.07949331024935,
+          "nonwhitePixels": 107164
+        }
+      },
+      "unchangedExposure": {
+        "C": {
+          "comparedPixels": 375307,
+          "mismatches": 0
+        },
+        "D": {
+          "comparedPixels": 375307,
+          "mismatches": 0
+        },
+        "E": {
+          "comparedPixels": 375307,
+          "mismatches": 0
+        }
+      }
+    }
+  ],
+  "videos": {
+    "A": {
+      "profile": "Profile 1",
+      "codec_type": "video",
+      "width": 640,
+      "height": 640,
+      "pix_fmt": "gbrp",
+      "color_range": "pc",
+      "color_space": "gbr",
+      "nb_read_frames": "1052",
+      "formatDuration": "105.200000",
+      "audioStreams": 0,
+      "bytes": 74689737
+    },
+    "B": {
+      "profile": "Profile 1",
+      "codec_type": "video",
+      "width": 640,
+      "height": 640,
+      "pix_fmt": "gbrp",
+      "color_range": "pc",
+      "color_space": "gbr",
+      "nb_read_frames": "1052",
+      "formatDuration": "105.200000",
+      "audioStreams": 0,
+      "bytes": 74498740
+    },
+    "C": {
+      "profile": "Profile 1",
+      "codec_type": "video",
+      "width": 640,
+      "height": 640,
+      "pix_fmt": "gbrp",
+      "color_range": "pc",
+      "color_space": "gbr",
+      "nb_read_frames": "1052",
+      "formatDuration": "105.200000",
+      "audioStreams": 0,
+      "bytes": 75995314
+    },
+    "D": {
+      "profile": "Profile 1",
+      "codec_type": "video",
+      "width": 640,
+      "height": 640,
+      "pix_fmt": "gbrp",
+      "color_range": "pc",
+      "color_space": "gbr",
+      "nb_read_frames": "1052",
+      "formatDuration": "105.200000",
+      "audioStreams": 0,
+      "bytes": 75876739
+    },
+    "E": {
+      "profile": "Profile 1",
+      "codec_type": "video",
+      "width": 640,
+      "height": 640,
+      "pix_fmt": "gbrp",
+      "color_range": "pc",
+      "color_space": "gbr",
+      "nb_read_frames": "1052",
+      "formatDuration": "105.200000",
+      "audioStreams": 0,
+      "bytes": 75328938
+    }
+  },
+  "audio": {
+    "bridgeAttached": false,
+    "enabled": false,
+    "captured": false
+  },
+  "metadataCollection": "deterministic same-H1 metadata replay; all 20 existing PNGs byte-equal; native media unchanged; not an original acquisition trace",
+  "mediaAcquisition": "attempt-02; loop and media finalized before manifest-scoping failure",
+  "metadataWallMs": 52739,
+  "sourceHashesAtBaseline": {
+    "src/lib/agents/ant/AntController.js": "e4c9d70c7eb982d46bfdc0d5d1d5d2c356860709b8c52640b3aa5fa6bf4bc778",
+    "src/lib/agents/ant/AntAgent.js": "9469ec558da3a74f99ad6088024cdb72350e834484e2d397eab24261b286b4e5",
+    "src/lib/agents/ant/BodyPoseController.js": "2ec4cc12c12ae301ea07056889c3be9255b1b1e155b7724cd3366278d60ace8e",
+    "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd",
+    "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+    "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+    "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+    "src/lib/agents/ant/PheromoneField.js": "7a046d334b12e049ceab0db98a390b8319b69fc6918729edae36af9f18877b2f",
+    "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+    "src/lib/agents/ant/TrailPlateBirth.js": "cb6c28081264d672d6393b64f0d0dc9fdea017fb1fda261ab8a87d879f031a67",
+    "src/lib/renderers/AntRenderer.js": "9da6f48a283b093be43f1e564ed706441f42b06b0133074cfbdb57a8fa53e16f",
+    "src/lib/renderers/antMaterialIdentity.js": null
+  },
+  "sourceHashesAtStart": {
+    "src/lib/agents/ant/AntController.js": "4da61193188aad1f6e11d60b7f59ec8a2cdbca6319b13eac7e64a23edbb95f60",
+    "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+    "src/lib/agents/ant/BodyPoseController.js": "2ec4cc12c12ae301ea07056889c3be9255b1b1e155b7724cd3366278d60ace8e",
+    "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd",
+    "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+    "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+    "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+    "src/lib/agents/ant/PheromoneField.js": "b68e98b5d916950487da67237a0d0277451d3b930971c1d8a35e92fd7d6f9837",
+    "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+    "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+    "src/lib/renderers/AntRenderer.js": "fc7e2ec9b09b8fa53edfcac95e1b48961263e88f54dbea9ed15b8fc5f7e6bdc0",
+    "src/lib/renderers/antMaterialIdentity.js": "954a0be5a18a7636547c469d14607e88f167aa812974192d5445d056718557c4"
+  },
+  "sourceHashesAtEnd": {
+    "src/lib/agents/ant/AntController.js": "4da61193188aad1f6e11d60b7f59ec8a2cdbca6319b13eac7e64a23edbb95f60",
+    "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+    "src/lib/agents/ant/BodyPoseController.js": "2ec4cc12c12ae301ea07056889c3be9255b1b1e155b7724cd3366278d60ace8e",
+    "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd",
+    "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+    "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+    "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+    "src/lib/agents/ant/PheromoneField.js": "b68e98b5d916950487da67237a0d0277451d3b930971c1d8a35e92fd7d6f9837",
+    "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+    "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+    "src/lib/renderers/AntRenderer.js": "fc7e2ec9b09b8fa53edfcac95e1b48961263e88f54dbea9ed15b8fc5f7e6bdc0",
+    "src/lib/renderers/antMaterialIdentity.js": "954a0be5a18a7636547c469d14607e88f167aa812974192d5445d056718557c4"
+  },
+  "acquisitionSourcesUnchanged": true,
+  "toolVersions": {
+    "node": "v22.23.2",
+    "chromium": "156.0.8078.48",
+    "ffmpeg": "ffmpeg version 9.0-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+  },
+  "runnerSha256": "86a2fc79228d80f656a215416731900ca71f134e1e124b67cfdcc9a35f9acf38"
+}

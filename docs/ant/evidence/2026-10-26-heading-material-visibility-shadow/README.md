@@ -2,7 +2,7 @@
 
 ## Question and boundary
 
-Does production fixed-north accepted heading create route bundling that makes retained material harder to read? This is a 2×2 diagnostic, not a production heading or material selection. H1 is a temporary isotropic control; M1 is a strong material-presence positive control. Artistic interpretation remains pending.
+Does production fixed-north accepted heading create route bundling that makes retained material harder to read? This is a 2×2 diagnostic, not a production heading or material selection. H1 is a temporary isotropic control; M1 is a strong material-presence positive control. A subsequent [artist response](ARTIST-REVIEW.md) reports clear visibility and motivates identity research; it does not select a production heading or establish retained-history recognition.
 
 ## Registered conditions
 
@@ -49,7 +49,9 @@ At +30 s, H0 had 677 occupied material cells and H1 had 967. M0 mean stored mate
 - [Frame maps](./frame-map-H0.csv) · [H1 frame map](./frame-map-H1.csv) · [heading samples](./heading-distributions.json) · [pixel measurements](./pixel-measurements.json) · [media checksums](./MEDIA-SHA256.txt).
 - Browser smoke verified all four videos and all 16 native stills load; shared seek at Plate +15 s reached the correct per-world offsets with no page errors. See [review-page-check.json](./review-page-check.json).
 
-## Human review pending
+## Review questions and subsequent artist response
+
+The subsequently supplied response is preserved verbatim in [ARTIST-REVIEW.md](ARTIST-REVIEW.md). The original questions below remain the review brief; the response does not answer each question independently.
 
 Please judge from the synchronized assets:
 

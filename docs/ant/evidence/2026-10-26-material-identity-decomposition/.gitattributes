@@ -1,0 +1,5 @@
+* -text
+# Preserve exact captured Windows source bytes while retaining whitespace checks.
+sources/AntRenderer.js.txt whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Raw command output retains its original formatting; receipts verify exact bytes.
+*.log -diff

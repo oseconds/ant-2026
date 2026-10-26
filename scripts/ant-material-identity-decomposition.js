@@ -1,0 +1,376 @@
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { execFileSync, spawn, spawnSync } from 'node:child_process';
+import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { once } from 'node:events';
+import { createServer } from 'vite';
+import { chromium } from 'playwright';
+
+const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
+const START = 'bee3a6908b36e23c826e1fde00d461b426c75992';
+const MAIN = 'aeefa12d8de9da400cb8a2a3d4b5080a21ba0292';
+const BRANCH = 'codex/ant-material-identity-decomposition-20261026';
+const OUTPUT = resolve(ROOT, 'docs/ant/evidence/2026-10-26-material-identity-decomposition');
+const PRIOR = resolve(ROOT, 'docs/ant/evidence/2026-10-26-heading-material-visibility-shadow');
+const SOURCE_PATHS = ['src/lib/agents/ant/AntController.js', 'src/lib/agents/ant/AntAgent.js',
+  'src/lib/agents/ant/BodyPoseController.js', 'src/lib/agents/ant/ColonyActivation.js',
+  'src/lib/agents/ant/GaitController.js', 'src/lib/agents/ant/GasterDeposition.js',
+  'src/lib/agents/ant/MaterialStratigraphy.js', 'src/lib/agents/ant/PheromoneField.js',
+  'src/lib/agents/ant/SurfaceField.js', 'src/lib/agents/ant/TrailPlateBirth.js',
+  'src/lib/renderers/AntRenderer.js', 'src/lib/renderers/antMaterialIdentity.js'];
+const MODES = ['presence-96', 'presence-96-sharp', 'identity-fine-shuffled',
+  'identity-fine-registered', 'identity-coarse-shuffled'];
+const MATERIALS = MODES.map((presentation, index) => ({ id: String.fromCharCode(65 + index), presentation }));
+const FRAME_TICKS = 6, MAX_TICKS = 6301, DT = 1 / 60, WIDTH = 640, HEIGHT = 640;
+const sha256 = value => createHash('sha256').update(value).digest('hex');
+const git = (...args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8' }).trim();
+const RECOVERY = process.argv.includes('--recover-existing-media');
+
+assert.equal(git('rev-parse', 'HEAD'), START, 'run from the registered research parent');
+assert.equal(git('branch', '--show-current'), BRANCH);
+assert.equal(git('rev-parse', 'origin/main'), MAIN);
+const existing = await readdir(OUTPUT);
+assert.ok(existing.includes('PLAN.md') && existing.includes('README.md'), 'evidence plan and README required');
+const protectedPaths = [resolve(OUTPUT, 'capture.json'), resolve(OUTPUT, 'manipulation.json'),
+  resolve(OUTPUT, 'MEDIA-SHA256.txt'), resolve(OUTPUT, 'frame-map-H1.csv'),
+  ...MATERIALS.flatMap(({ id }) => [resolve(OUTPUT, 'video', `${id}.webm`),
+    ...['pre-first-plate', 'post-first-plate', 'first-plate-plus-15s', 'first-plate-plus-30s']
+      .map(name => resolve(OUTPUT, 'stills', `${id}-${name}.png`))])];
+for (const path of protectedPaths) {
+  if (RECOVERY && /\.(webm|png)$/.test(path)) { await readFile(path); continue; }
+  try { await readFile(path); throw new Error(`Refusing to overwrite ${path}`); }
+  catch (error) { if (error.code !== 'ENOENT') throw error; }
+}
+const existingMediaHashes = {};
+if (RECOVERY) for (const path of protectedPaths.filter(path => /\.(webm|png)$/.test(path)))
+  existingMediaHashes[path] = sha256(await readFile(path));
+const ffmpeg = execFileSync('where.exe', ['ffmpeg'], { encoding: 'utf8' }).trim().split(/\r?\n/)[0];
+const ffprobe = resolve(dirname(ffmpeg), 'ffprobe.exe');
+const encoder = spawnSync(ffmpeg, ['-hide_banner', '-encoders'], { encoding: 'utf8' });
+assert.equal(encoder.status, 0, encoder.stderr);
+assert.match(encoder.stdout, /libvpx-vp9/);
+const videoDir = resolve(OUTPUT, 'video'), stillDir = resolve(OUTPUT, 'stills');
+const sourceHashesAtBaseline = Object.fromEntries(await Promise.all(SOURCE_PATHS.map(path =>
+  [path, path === 'src/lib/renderers/antMaterialIdentity.js' ? null
+    : sha256(execFileSync('git', ['show', `${START}:${path}`], { cwd: ROOT }))])));
+const sourceHashesAtStart = Object.fromEntries(await Promise.all(SOURCE_PATHS.map(async path =>
+  [path, sha256(await readFile(resolve(ROOT, path)))])));
+const runnerSha256AtStart = sha256(await readFile(fileURLToPath(import.meta.url)));
+await mkdir(videoDir, { recursive: true }); await mkdir(stillDir, { recursive: true });
+const writers = RECOVERY ? {} : Object.fromEntries(MATERIALS.map(({ id }) => [id, createVideoWriter(ffmpeg, resolve(videoDir, `${id}.webm`))]));
+const frames = [], measurements = [];
+const server = await createServer({ logLevel: 'error', appType: 'custom', server: { host: '127.0.0.1', port: 0, strictPort: true } });
+let browser;
+const started = Date.now(), watchdog = setTimeout(() => {
+  for (const writer of Object.values(writers)) writer.abort();
+  void browser?.close(); void server.close(); process.exitCode = 124;
+}, 15 * 60 * 1000);
+try {
+  await server.listen();
+  browser = await chromium.launch({ headless: true,
+    executablePath: process.env.BROWSER_EXECUTABLE_PATH || 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', args: ['--mute-audio'] });
+  const page = await browser.newPage({ viewport: { width: 1920, height: 720 }, deviceScaleFactor: 1 });
+  page.setDefaultTimeout(0);
+  const pageErrors = []; page.on('pageerror', error => pageErrors.push(String(error?.stack || error)));
+  await page.route('**/__ant_material_identity', route => route.fulfill({ status: 200, contentType: 'text/html',
+    body: '<!doctype html><html><body><script>/* p5 sketch context */</script></body></html>' }));
+  const port = server.httpServer.address().port;
+  await page.goto(`http://127.0.0.1:${port}/__ant_material_identity`, { waitUntil: 'domcontentloaded' });
+  await page.exposeFunction('__assertIdentitySetupValid', () => assert.deepEqual(pageErrors, [], 'p5 setup must be error-free before world initialization'));
+  await page.exposeFunction('__submitIdentityPacket', async packet => {
+    if (packet.frameIndex !== null) {
+      if (!RECOVERY) for (const { id } of MATERIALS) await writers[id].write(dataUrlBuffer(packet.pngs[id]));
+      frames.push({ frameIndex: packet.frameIndex, tick: packet.tick, simulationTimeMs: packet.simulationTimeMs,
+        rngState: packet.rng.state, rngCalls: packet.rng.calls, sourceStateSha256: packet.before,
+        afterStateSha256: packet.after, fullStateSha256: packet.fullBefore,
+        fullStateUnchanged: packet.fullBefore === packet.fullAfter, eventCountsUnchanged: packet.eventCountsUnchanged });
+    }
+    if (packet.milestone) {
+      for (const { id } of MATERIALS) {
+        const path = resolve(stillDir, `${id}-${packet.milestone}.png`), bytes = dataUrlBuffer(packet.pngs[id]);
+        if (RECOVERY) assert.ok(bytes.equals(await readFile(path)), `recovered ${id}/${packet.milestone} must match captured PNG bytes`);
+        else await writeFile(path, bytes);
+      }
+      console.log(JSON.stringify({ phase: 'milestone', name: packet.milestone, tick: packet.tick }));
+    }
+    if (packet.measurement) measurements.push(packet.measurement);
+  });
+  const captured = await page.evaluate(async ({ MATERIALS, FRAME_TICKS, MAX_TICKS, DT, RECOVERY }) => {
+    const [{ AntController }, { AntRenderer }] = await Promise.all([
+      import('/src/lib/agents/ant/AntController.js'), import('/src/lib/renderers/AntRenderer.js')]);
+    const enc = new TextEncoder();
+    function makeRandom() { let state = 20261005 >>> 0, calls = 0;
+      const random = () => { calls += 1; state = (Math.imul(state, 1664525) + 1013904223) >>> 0; return state / 0x100000000; };
+      random.state = () => state; random.calls = () => calls; return random; }
+    function typedBytes(view) { return ArrayBuffer.isView(view) ? new Uint8Array(view.buffer, view.byteOffset, view.byteLength) : new Uint8Array(); }
+    async function stateFingerprint(snapshot, rng) {
+      const material = snapshot.stratigraphy, topology = material.stratigraphy;
+      const plates = [...(material.plates || []), ...(snapshot.surfacePlates.plates || [])];
+      const metadata = enc.encode(JSON.stringify({ state: snapshot.state, status: snapshot.status, agents: snapshot.agents,
+        audio: snapshot.audio, analysis: snapshot.analysis, rng, material: { revision: material.revision,
+          layerOrder: topology.layerOrder, plates: (material.plates || []).map(plate => ({ id: plate.id,
+            bornAtSimulationTimeMs: plate.bornAtSimulationTimeMs, grid: plate.grid, material: plate.material,
+            centerline: plate.centerline, edges: plate.edges })) }, surfacePlates: (snapshot.surfacePlates.plates || []).map(plate =>
+          ({ id: plate.id, bornAtSimulationTimeMs: plate.bornAtSimulationTimeMs, grid: plate.grid })) }));
+      const arrays = [snapshot.pheromone.values, snapshot.surface.values, topology.topLayerByCell,
+        topology.layerCountByCell, topology.totalDepthByCellMeters, ...plates.map(plate => plate.mask).filter(ArrayBuffer.isView)];
+      const parts = [metadata, ...arrays.map(typedBytes)], bytes = new Uint8Array(parts.reduce((sum, part) => sum + part.byteLength, 0));
+      let offset = 0; for (const part of parts) { bytes.set(part, offset); offset += part.byteLength; }
+      return [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))].map(value => value.toString(16).padStart(2, '0')).join('');
+    }
+    async function fullFingerprint(snapshot) {
+      const chunks = [];
+      const json = JSON.stringify(snapshot, (_key, value) => {
+        if (!ArrayBuffer.isView(value)) return value;
+        const chunk = chunks.push(typedBytes(value)) - 1;
+        return { typedArray: value.constructor.name, byteLength: value.byteLength, chunk };
+      });
+      const metadata = enc.encode(json), bytes = new Uint8Array(metadata.byteLength + chunks.reduce((n, chunk) => n + chunk.byteLength, 0));
+      bytes.set(metadata); let offset = metadata.byteLength;
+      for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
+      return [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))].map(value => value.toString(16).padStart(2, '0')).join('');
+    }
+    function rasterPixels(renderer, smoothing) {
+      if (!renderer.materialImage) return new Uint8ClampedArray(640 * 640 * 4);
+      if (renderer.materialIdentity) return renderer.materialImage.pixels;
+      const c = document.createElement('canvas'); c.width = c.height = 640;
+      const ctx = c.getContext('2d'); ctx.imageSmoothingEnabled = smoothing; ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(renderer.materialImage.canvas || renderer.materialImage.elt, 0, 0, 640, 640);
+      return ctx.getImageData(0, 0, 640, 640).data;
+    }
+    function summarize(renderer, snapshot, pixels) {
+      const alpha = [], top = snapshot.stratigraphy.stratigraphy.topLayerByCell;
+      let offSupport = 0;
+      for (let y = 0; y < 640; y++) for (let x = 0; x < 640; x++) {
+        const p = (y * 640 + x) * 4, gx = Math.floor((x + .5) * snapshot.stratigraphy.width / 640);
+        const gy = Math.floor((y + .5) * snapshot.stratigraphy.height / 640), occupied = top[gy * snapshot.stratigraphy.width + gx] >= 0;
+        if (pixels[p + 3]) alpha.push(pixels[p + 3]);
+        if (!occupied && pixels[p + 3]) offSupport++;
+      }
+      const sorted = [...alpha].sort((a, b) => a - b), q = f => sorted[Math.floor((sorted.length - 1) * f)] || 0;
+      const meanAlpha = alpha.reduce((a, b) => a + b, 0) / (alpha.length || 1);
+      const stdevAlpha = Math.sqrt(alpha.reduce((sum, value) => sum + (value - meanAlpha) ** 2, 0) / (alpha.length || 1));
+      const darkness = alpha.reduce((sum, a) => sum + (155 * a / 255), 0) / (alpha.length || 1);
+      const identity = renderer.materialIdentity;
+      return { supportPixels: alpha.length, canonicalSupportPixels: alpha.length - offSupport, offSupportPixels: offSupport,
+        alpha: { mean: meanAlpha, stdev: stdevAlpha, q10: q(.1), q50: q(.5), q90: q(.9) },
+        materialWhiteCompositeMeanDarkness: darkness, primitiveCount: identity?.primitives.length ?? null,
+        nominalAngleHistogram: identity?.stats.nominalAngleHistogram ?? null,
+        visibleCenterAngleHistogram: identity?.stats.visibleCenterAngleHistogram ?? null,
+        clippedContributionAngleWeights: identity?.stats.clippedContributionAngleWeights ?? null,
+        inkFraction: identity?.stats.inkFraction ?? null,
+        primitiveDimensions: identity ? Object.fromEntries([...new Set(identity.primitives.map(p => `${p.length}x${p.width}`))]
+          .map(dimension => [dimension, identity.primitives.filter(p => `${p.length}x${p.width}` === dimension).length])) : null };
+    }
+    const canvases = MATERIALS.map(({ id }) => { const c = document.createElement('canvas'); c.width = c.height = 640; c.setAttribute('aria-label', id); document.body.append(c); return c; });
+    const renderers = MATERIALS.map(({ presentation }, i) => new AntRenderer(canvases[i], { materialPresentation: presentation }));
+    const random = makeRandom(), controller = new AntController({ random, acceptedHeadingMode: 'isotropic-diagnostic' });
+    if (controller.audioBridge !== null || !controller.materialLocomotionResistance) throw new Error('Unexpected controller default or audio bridge');
+    for (const renderer of renderers) if (!await renderer.init({ width: 640, height: 640, pixelRatio: 1 })) throw new Error('renderer init failed');
+    await window.__assertIdentitySetupValid();
+    const eventCounts = { footContact: 0, plateBirth: 0, noduleBirth: 0, error: 0 }; let firstPlate = null;
+    const unsubscribe = controller.subscribe(({ type, payload }) => {
+      if (type === 'foot-contact') eventCounts.footContact++; else if (type === 'plate-birth') { eventCounts.plateBirth++; firstPlate ||= payload; }
+      else if (type === 'sphere-birth') eventCounts.noduleBirth++; else if (type === 'error') eventCounts.error++;
+    });
+    await controller.init(); let tick = 0, frameIndex = 0, pre = null, preRng = null, birthTick = null, endTick = null;
+    const initialStateSha256 = await render(controller.getSnapshot(), 0, null, { video: true }), milestones = [], rerenderChecks = [];
+    let birthIdentityBaseline = null;
+    async function render(snapshot, atTick, milestone, { video = false, rngState = null } = {}) {
+      const rng = rngState || { state: random.state(), calls: random.calls() }, liveRng = { state: random.state(), calls: random.calls() };
+      const before = await stateFingerprint(snapshot, rng), fullBefore = await fullFingerprint(snapshot), events = JSON.stringify(eventCounts), pngs = {}, stats = [], rasters = [], cacheRefs = [];
+      let after = before, fullAfter = fullBefore;
+      for (let i = 0; i < renderers.length; i++) {
+        await renderers[i].render(snapshot);
+        if (!RECOVERY || milestone) pngs[MATERIALS[i].id] = canvases[i].toDataURL('image/png');
+        after = await stateFingerprint(snapshot, rng); fullAfter = await fullFingerprint(snapshot);
+        if (after !== before || fullAfter !== fullBefore || JSON.stringify(eventCounts) !== events
+          || random.state() !== liveRng.state || random.calls() !== liveRng.calls) throw new Error(`renderer changed world/RNG/events at ${atTick}`);
+        if (milestone) {
+          const raster = rasterPixels(renderers[i], i === 0);
+          rasters.push(raster); stats.push(summarize(renderers[i], snapshot, raster)); cacheRefs.push(renderers[i].materialImage);
+        }
+      }
+      const idA = renderers[0].materialImage, idB = renderers[1].materialImage;
+      if (idA && idB && !idA.pixels.every((value, index) => value === idB.pixels[index])) throw new Error('A/B source pixels differ');
+      let resampleMismatch = null;
+      if (idA && milestone) { let changedPixels = 0, nearestMismatch = 0;
+        for (let y = 0; y < 640; y++) for (let x = 0; x < 640; x++) {
+          const p = (y * 640 + x) * 4, gx = Math.floor((x + .5) * snapshot.stratigraphy.width / 640), gy = Math.floor((y + .5) * snapshot.stratigraphy.height / 640);
+          const expected = snapshot.stratigraphy.stratigraphy.topLayerByCell[gy * snapshot.stratigraphy.width + gx] >= 0 ? 96 : 0;
+          if (rasters[1][p + 3] !== expected) nearestMismatch++;
+          if (rasters[0][p + 3] !== rasters[1][p + 3]) changedPixels++;
+        }
+        resampleMismatch = { actualAFilteringVsBAlphaPixels: changedPixels, BCanonicalCenterAlphaMismatches: nearestMismatch,
+          method: 'independent transparent Canvas2D drawImage smoothing on for A and off for B' };
+        if (milestone && nearestMismatch) throw new Error(`B nearest raster failed canonical alpha check (${nearestMismatch})`);
+      }
+      const measurement = milestone ? { name: milestone, tick: atTick, conditions: Object.fromEntries(MATERIALS.map(({ id }, i) => [id, stats[i]])), sourceABPixelsEqual: idA ? idA.pixels.every((v, i) => v === idB.pixels[i]) : null,
+        independentResamplingAudit: resampleMismatch, finalComposite: Object.fromEntries(MATERIALS.map(({ id }, i) => [id, compositeStats(canvases[i])])) } : null;
+      if (milestone === 'post-first-plate') birthIdentityBaseline = { top: new Int32Array(snapshot.stratigraphy.stratigraphy.topLayerByCell),
+        pixels: Object.fromEntries(['C','D','E'].map(id => [id, new Uint8ClampedArray(renderers[MATERIALS.findIndex(x => x.id === id)].materialImage.pixels)])) };
+      if (milestone?.startsWith('first-plate-plus-') && birthIdentityBaseline) {
+        measurement.unchangedExposure = Object.fromEntries(['C','D','E'].map(id => {
+          const pixels = renderers[MATERIALS.findIndex(x => x.id === id)].materialImage.pixels; let compared = 0, mismatches = 0;
+          for (let y = 0; y < 640; y++) for (let x = 0; x < 640; x++) {
+            const cell = Math.floor((y + .5) * snapshot.stratigraphy.height / 640) * snapshot.stratigraphy.width
+              + Math.floor((x + .5) * snapshot.stratigraphy.width / 640);
+            if (snapshot.stratigraphy.stratigraphy.topLayerByCell[cell] !== birthIdentityBaseline.top[cell]) continue;
+            compared++; const p = (y * 640 + x) * 4;
+            for (let channel = 0; channel < 4; channel++) if (pixels[p + channel] !== birthIdentityBaseline.pixels[id][p + channel]) { mismatches++; break; }
+          }
+          return [id, { comparedPixels: compared, mismatches }];
+        }));
+        for (const [id, result] of Object.entries(measurement.unchangedExposure)) if (result.mismatches)
+          throw new Error(`${id} texture changed on ${result.mismatches} unchanged-exposure pixels`);
+      }
+      if (milestone) {
+        const repeatPngs = [];
+        for (let i = 0; i < renderers.length; i++) {
+          await renderers[i].render(snapshot); repeatPngs.push(canvases[i].toDataURL('image/png'));
+          const repeatedRaster = rasterPixels(renderers[i], i === 0);
+          if (cacheRefs[i] !== renderers[i].materialImage || repeatPngs[i] !== pngs[MATERIALS[i].id]
+            || rasters[i].some((value, j) => value !== repeatedRaster[j])) throw new Error(`same-snapshot rerender changed pixels/cache: ${MATERIALS[i].id}/${milestone}`);
+        }
+        if (['C','D','E'].some(id => measurement.conditions[id].offSupportPixels)) throw new Error(`identity texture outside exposed support at ${milestone}`);
+        rerenderChecks.push({ name: milestone, allFiveCanvasPngBytesStable: true, allFiveMaterialPixelsStable: true, cacheIdentityStable: true });
+      }
+      await window.__submitIdentityPacket({ frameIndex: video ? frameIndex : null, tick: atTick, simulationTimeMs: snapshot.analysis.simulationTimeMs,
+        rng, before, after, fullBefore, fullAfter, eventCountsUnchanged: JSON.stringify(eventCounts) === events, pngs, milestone, measurement });
+      if (video) frameIndex++;
+      if (milestone) milestones.push({ name: milestone, tick: atTick, simulationTimeMs: snapshot.analysis.simulationTimeMs,
+        stateSha256: before, fullStateSha256: fullBefore, rng, eventCounts: { ...eventCounts } });
+      return before;
+    }
+    function compositeStats(canvas) { const d = canvas.getContext('2d').getImageData(0, 0, 640, 640).data; let sum = 0, sq = 0, occupied = 0;
+      for (let i = 0; i < d.length; i += 4) { const lum = (d[i] + d[i + 1] + d[i + 2]) / 3; sum += lum; sq += lum * lum; if (lum < 250) occupied++; }
+      return { meanDarkness: 255 - sum / (d.length / 4), rmsLuminance: Math.sqrt(sq / (d.length / 4)), nonwhitePixels: occupied }; }
+    try {
+      while (tick < MAX_TICKS) {
+        if (!firstPlate && controller.trailPlateBirth.candidate?.stableSeconds >= 19) { pre = controller.getSnapshot(); preRng = { state: random.state(), calls: random.calls() }; }
+        controller.tick(DT); tick++;
+        if (firstPlate && birthTick === null) { birthTick = tick; const after = controller.getSnapshot();
+          if (!pre || pre.stratigraphy.plates.length || after.stratigraphy.plates.length !== 1) throw new Error('first Plate pre/post state invalid');
+          await render(pre, tick - 1, 'pre-first-plate', { rngState: preRng }); await render(after, tick, 'post-first-plate'); endTick = tick + 1800; }
+        if (birthTick !== null && tick === birthTick + 900) await render(controller.getSnapshot(), tick, 'first-plate-plus-15s');
+        if (tick % FRAME_TICKS === 0) await render(controller.getSnapshot(), tick, null, { video: true });
+        if (endTick !== null && tick >= endTick) break;
+      }
+      if (tick !== 6301 || !birthTick || tick - birthTick !== 1800) throw new Error(`incomplete registered endpoint tick=${tick}, birth=${birthTick}`);
+      const endpoint = controller.getSnapshot();
+      if (tick % FRAME_TICKS !== 0) await render(endpoint, tick, null, { video: true });
+      await render(endpoint, tick, 'first-plate-plus-30s');
+      return { initialStateSha256, milestones, rerenderChecks, tickCount: tick, firstPlateTick: birthTick, firstPlateTimeMs: firstPlate.bornAtSimulationTimeMs,
+        firstPlateVideoOffsetSeconds: Math.ceil(birthTick / FRAME_TICKS) / 10,
+        endTimeMs: endpoint.analysis.simulationTimeMs, rngFinal: { state: random.state(), calls: random.calls() }, eventCounts,
+        materialLocomotionResistance: controller.materialLocomotionResistance, audioBridgeAttached: controller.audioBridge !== null,
+        audioEnabled: endpoint.audio.enabled, finalSnapshotSha256: await stateFingerprint(endpoint, { state: random.state(), calls: random.calls() }), frameCount: frameIndex };
+    } finally { unsubscribe(); await Promise.all(renderers.map(renderer => renderer.destroy())); await controller.destroy(); canvases.forEach(c => c.remove()); }
+  }, { MATERIALS, FRAME_TICKS, MAX_TICKS, DT, RECOVERY });
+  assert.deepEqual(pageErrors, []);
+  assert.equal(captured.tickCount, 6301); assert.equal(captured.audioBridgeAttached, false); assert.equal(captured.audioEnabled, false);
+  const oldCapture = JSON.parse(await readFile(resolve(PRIOR, 'capture.json'), 'utf8'));
+  const oldRows = (await readFile(resolve(PRIOR, 'frame-map-H1.csv'), 'utf8')).trim().split(/\r?\n/).slice(1);
+  assert.deepEqual(frames.map(frame => frame.sourceStateSha256), oldRows.map(row => row.split(',')[6]), 'H1 state fingerprints match prior capture');
+  assert.deepEqual(frames.map(frame => [frame.rngState, frame.rngCalls]), oldRows.map(row => row.split(',').slice(4, 6).map(Number)), 'H1 frame RNG trace matches prior capture');
+  assert.ok(frames.every(frame => frame.fullStateUnchanged && frame.eventCountsUnchanged), 'full state and event counts stable during every five-render frame');
+  const oldMilestones = Object.fromEntries(oldCapture.worlds?.H1?.milestones?.map(x => [x.name, x]) || []);
+  assert.equal(captured.firstPlateTimeMs, oldCapture.worlds.H1.firstPlateTimeMs);
+  assert.deepEqual(captured.rngFinal, oldCapture.worlds.H1.rngFinal, 'H1 final RNG state/call count match');
+  assert.deepEqual(captured.eventCounts, oldCapture.worlds.H1.eventCounts, 'H1 event counts match');
+  assert.equal(captured.firstPlateVideoOffsetSeconds, oldCapture.worlds.H1.firstPlateVideoOffsetSeconds);
+  const priorStill = { 'pre-first-plate': 'pre-first-plate', 'post-first-plate': 'post-first-plate', 'first-plate-plus-15s': 'retained-plus-15s', 'first-plate-plus-30s': 'endpoint' };
+  for (const name of Object.keys(priorStill)) {
+    const old = await readFile(resolve(PRIOR, 'stills', `H1-M1-${name}.png`));
+    const fresh = await readFile(resolve(stillDir, `A-${name}.png`)); assert.ok(old.equals(fresh), `A still mismatch: ${name}`);
+    const previous = oldCapture.worlds.H1.milestones.find(x => x.name === name);
+    const current = captured.milestones.find(x => x.name === name);
+    assert.equal(current.stateSha256, previous.stateSha256, `H1 ${name} state parity`);
+    assert.deepEqual(current.rng, previous.rng, `H1 ${name} RNG parity`);
+    if (previous.eventCounts) assert.deepEqual(current.eventCounts, previous.eventCounts, `H1 ${name} event parity`);
+  }
+  await page.close();
+  for (const writer of Object.values(writers)) await writer.close();
+  const videos = Object.fromEntries(await Promise.all(MATERIALS.map(async ({ id }) => [id, await probeVideo(ffprobe, resolve(videoDir, `${id}.webm`))])));
+  const reference = videos.A;
+  for (const [id, video] of Object.entries(videos)) {
+    assert.equal(video.width, 640); assert.equal(video.height, 640); assert.equal(video.nb_read_frames, String(captured.frameCount));
+    assert.equal(video.duration, reference.duration); assert.ok(Math.abs(Number(video.formatDuration) - captured.frameCount / 10) < .05);
+    assert.equal(video.pix_fmt, 'gbrp'); assert.equal(video.audioStreams, 0, `${id} must have no audio`);
+  }
+  const orientation = Object.fromEntries(['C','D','E'].map(id => [id, measurements.map(sample => sample.conditions[id].nominalAngleHistogram)]));
+  assert.deepEqual(orientation.C, orientation.D, 'C/D nominal angle histograms remain identical at every milestone');
+  const histogramTV = (a, b) => a && b ? a.reduce((sum, value, index) => sum + Math.abs(value / (a.reduce((x, y) => x + y, 0) || 1)
+    - b[index] / (b.reduce((x, y) => x + y, 0) || 1)), 0) / 2 : null;
+  const native = measurements.filter(x => x.conditions.C.nominalAngleHistogram);
+  assert.deepEqual(native[0].conditions.C.nominalAngleHistogram, native[0].conditions.D.nominalAngleHistogram);
+  const manipulation = { priorH1StateFrameHashesMatch: true, priorFirstPlateTimeMatches: true, AStillsByteExact: true,
+    AAndBSourcePixelsEqual: measurements.every(x => x.sourceABPixelsEqual !== false), CAndDNominalAngleHistogramsEqual: true,
+    frameCount: captured.frameCount, frameTicks: FRAME_TICKS, conditions: MATERIALS.map(x => x.id),
+    perMilestoneResamplingMismatch: measurements.map(x => ({ name: x.name, ...x.independentResamplingAudit })),
+    nominalHistogramTV: measurements.map(x => ({ name: x.name,
+      CvsD: histogramTV(x.conditions.C.nominalAngleHistogram, x.conditions.D.nominalAngleHistogram),
+      CvsE: histogramTV(x.conditions.C.nominalAngleHistogram, x.conditions.E.nominalAngleHistogram) })),
+    visibleCenterHistogramTV: measurements.map(x => ({ name: x.name,
+      CvsD: histogramTV(x.conditions.C.visibleCenterAngleHistogram, x.conditions.D.visibleCenterAngleHistogram),
+      CvsE: histogramTV(x.conditions.C.visibleCenterAngleHistogram, x.conditions.E.visibleCenterAngleHistogram) })),
+    clippedContributionHistogramTV: measurements.map(x => ({ name: x.name,
+      CvsD: histogramTV(x.conditions.C.clippedContributionAngleWeights, x.conditions.D.clippedContributionAngleWeights),
+      CvsE: histogramTV(x.conditions.C.clippedContributionAngleWeights, x.conditions.E.clippedContributionAngleWeights) })),
+    orientationDefinitions: { nominal: 'all marks in each currently exposed Plate descriptor full immutable footprint',
+      visibleCenter: 'marks whose center pixel is currently owned by that Plate',
+      clippedContribution: 'per-mark surviving 4x4 sample counts before union; overlapping marks count separately; not a unique final-raster orientation histogram' },
+    realizedIdentityComparison: measurements.map(x => ({ name: x.name, CvsD: {
+      supportPixelDifference: x.conditions.C.supportPixels - x.conditions.D.supportPixels,
+      meanAlphaDifference: x.conditions.C.alpha.mean - x.conditions.D.alpha.mean,
+      inkFractionDifference: (x.conditions.C.inkFraction ?? 0) - (x.conditions.D.inkFraction ?? 0) }, CvsE: {
+      supportPixelDifference: x.conditions.C.supportPixels - x.conditions.E.supportPixels,
+      meanAlphaDifference: x.conditions.C.alpha.mean - x.conditions.E.alpha.mean,
+      inkFractionDifference: (x.conditions.C.inkFraction ?? 0) - (x.conditions.E.inkFraction ?? 0) } })),
+    rerenderStability: captured.rerenderChecks,
+    observedMaxOffSupportPixels: Math.max(...measurements.flatMap(x => MATERIALS.map(m => x.conditions[m.id].offSupportPixels || 0))),
+    identity: measurements.map(x => ({ name: x.name, conditions: Object.fromEntries(['C','D','E'].map(id => [id, x.conditions[id]])) })) };
+  assert.ok(frames.every(x => x.fullStateUnchanged && x.eventCountsUnchanged && x.sourceStateSha256 === x.afterStateSha256));
+  await writeFile(resolve(OUTPUT, 'frame-map-H1.csv'), ['frameIndex,videoTimeSeconds,tick,simulationTimeMs,rngState,rngCalls,sourceStateSha256,afterStateSha256,fullStateSha256,fullStateUnchanged,eventCountsUnchanged',
+    ...frames.map(x => [x.frameIndex, x.frameIndex / 10, x.tick, x.simulationTimeMs, x.rngState, x.rngCalls, x.sourceStateSha256, x.afterStateSha256,
+      x.fullStateSha256, x.fullStateUnchanged, x.eventCountsUnchanged].join(','))].join('\n') + '\n');
+  await writeFile(resolve(OUTPUT, 'manipulation.json'), JSON.stringify(manipulation, null, 2) + '\n');
+  const sourceHashesAtEnd = Object.fromEntries(await Promise.all(SOURCE_PATHS.map(async path => [path, sha256(await readFile(resolve(ROOT, path)))])));
+  assert.deepEqual(sourceHashesAtStart, sourceHashesAtEnd, 'working sources must not change during acquisition');
+  assert.equal(runnerSha256AtStart, sha256(await readFile(fileURLToPath(import.meta.url))), 'runner must not change during acquisition');
+  if (RECOVERY) for (const [path, checksum] of Object.entries(existingMediaHashes))
+    assert.equal(sha256(await readFile(path)), checksum, `metadata recovery must not alter ${path}`);
+  const capture = { schemaVersion: 1, branch: BRANCH, startCommit: START, currentMainCommit: MAIN, seed: 20261005,
+    headingMode: 'isotropic-diagnostic', identityDirectionNote: 'D uses nearest 8-neighbor graph segments; modulo pi yields at most four axial orientations and does not represent continuous gait direction.',
+    canvas: { width: 640, height: 640, pixelRatio: 1 }, frameRate: 10, frameTicks: FRAME_TICKS,
+    maxTick: MAX_TICKS, firstPlateVideoOffsetSeconds: captured.firstPlateVideoOffsetSeconds,
+    world: captured, materials: Object.fromEntries(MATERIALS.map(x => [x.id, x.presentation])),
+    measurements, videos, audio: { bridgeAttached: false, enabled: false, captured: false },
+    metadataCollection: RECOVERY ? 'deterministic same-H1 metadata replay; all 20 existing PNGs byte-equal; native media unchanged; not an original acquisition trace' : 'native acquisition',
+    mediaAcquisition: RECOVERY ? 'attempt-02; loop and media finalized before manifest-scoping failure' : 'current run',
+    metadataWallMs: Date.now() - started,
+    sourceHashesAtBaseline, sourceHashesAtStart, sourceHashesAtEnd, acquisitionSourcesUnchanged: true,
+    toolVersions: { node: process.version, chromium: browser.version(), ffmpeg: spawnSync(ffmpeg, ['-version'], { encoding: 'utf8' }).stdout.split(/\r?\n/)[0] },
+    runnerSha256: runnerSha256AtStart };
+  await writeFile(resolve(OUTPUT, 'capture.json'), JSON.stringify(capture, null, 2) + '\n');
+  const media = [...MATERIALS.map(x => `video/${x.id}.webm`), ...MATERIALS.flatMap(x => ['pre-first-plate','post-first-plate','first-plate-plus-15s','first-plate-plus-30s'].map(n => `stills/${x.id}-${n}.png`))];
+  await writeFile(resolve(OUTPUT, 'MEDIA-SHA256.txt'), (await Promise.all(media.map(async p => `${sha256(await readFile(resolve(OUTPUT, p)))}  ${p}`))).join('\n') + '\n');
+  console.log(JSON.stringify({ status: 'CAPTURED', captured, videos, manipulation }, null, 2));
+} catch (error) { for (const writer of Object.values(writers)) writer.abort(); throw error; }
+finally { clearTimeout(watchdog); await browser?.close(); await server.close(); }
+
+function dataUrlBuffer(value) { assert.match(value, /^data:image\/png;base64,/); return Buffer.from(value.slice(value.indexOf(',') + 1), 'base64'); }
+function createVideoWriter(ffmpegPath, outputPath) {
+  const args = ['-hide_banner','-loglevel','error','-f','image2pipe','-framerate','10','-vcodec','png','-i','pipe:0','-an','-c:v','libvpx-vp9','-threads','2','-lossless','1','-deadline','realtime','-cpu-used','4','-pix_fmt','gbrp','-colorspace','rgb','-r','10','-f','webm',outputPath];
+  const child = spawn(ffmpegPath, args, { cwd: ROOT, stdio: ['pipe','ignore','pipe'] }); let stderr = '', aborted = false; child.stderr.setEncoding('utf8'); child.stderr.on('data', x => { stderr += x; });
+  const exited = new Promise((res, rej) => { child.once('error', e => aborted ? res() : rej(e)); child.once('close', code => aborted || code === 0 ? res() : rej(new Error(`ffmpeg ${code}: ${stderr}`))); });
+  return { async write(buffer) { if (child.exitCode !== null) throw new Error(`ffmpeg stopped: ${stderr}`); if (!child.stdin.write(buffer)) await once(child.stdin, 'drain'); },
+    async close() { child.stdin.end(); await exited; }, abort() { aborted = true; child.stdin.destroy(); child.kill(); } };
+}
+async function probeVideo(ffprobePath, path) {
+  const data = JSON.parse(execFileSync(ffprobePath, ['-v','error','-count_frames','-show_entries','stream=codec_type,width,height,duration,nb_read_frames,pix_fmt,profile,color_space,color_range:format=duration','-of','json',path], { encoding: 'utf8' }));
+  const v = data.streams.find(x => x.codec_type === 'video'); assert.ok(v); return { ...v, formatDuration: data.format?.duration,
+    audioStreams: data.streams.filter(x => x.codec_type === 'audio').length, bytes: (await readFile(path)).byteLength };
+}

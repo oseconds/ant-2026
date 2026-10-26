@@ -1,0 +1,125 @@
+{
+  "scope": "derived from recovery-run counters only; no rendering or candidate changes",
+  "reason": "Eight-neighbor graph axes lie on some 12-bin boundaries; floating point atan2 can split the same 45-degree or 135-degree axis across adjacent bins.",
+  "mapping": {
+    "horizontal": [
+      11,
+      0
+    ],
+    "diagonal45": [
+      2,
+      3
+    ],
+    "vertical": [
+      5,
+      6
+    ],
+    "diagonal135": [
+      8,
+      9
+    ]
+  },
+  "definition": "merge existing bins into the four graph axes; clipped contribution weights count each mark before union and may double-count overlapping ink",
+  "rows": [
+    {
+      "name": "pre-first-plate",
+      "clippedContributionAxisWeights": {
+        "C": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "D": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "E": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "CvsD": null,
+      "CvsE": null
+    },
+    {
+      "name": "post-first-plate",
+      "clippedContributionAxisWeights": {
+        "C": [
+          54224,
+          30103,
+          8752,
+          22290
+        ],
+        "D": [
+          54544,
+          30094,
+          8800,
+          22227
+        ],
+        "E": [
+          49072,
+          29320,
+          7128,
+          22065
+        ]
+      },
+      "CvsD": 0.00178466866676108,
+      "CvsE": 0.023488218970722084
+    },
+    {
+      "name": "first-plate-plus-15s",
+      "clippedContributionAxisWeights": {
+        "C": [
+          84496,
+          39343,
+          12800,
+          25916
+        ],
+        "D": [
+          76000,
+          40626,
+          15376,
+          30537
+        ],
+        "E": [
+          77400,
+          38945,
+          9216,
+          26671
+        ]
+      },
+      "CvsD": 0.052219364021927756,
+      "CvsE": 0.029568360163505863
+    },
+    {
+      "name": "first-plate-plus-30s",
+      "clippedContributionAxisWeights": {
+        "C": [
+          84496,
+          39343,
+          12800,
+          25916
+        ],
+        "D": [
+          76000,
+          40626,
+          15376,
+          30537
+        ],
+        "E": [
+          77400,
+          38945,
+          9216,
+          26671
+        ]
+      },
+      "CvsD": 0.052219364021927756,
+      "CvsE": 0.029568360163505863
+    }
+  ]
+}

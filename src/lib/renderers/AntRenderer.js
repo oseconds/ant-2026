@@ -1,4 +1,5 @@
 import { BODY_GEOMETRY } from '../agents/ant/BodyPoseController.js';
+import { buildMaterialIdentity } from './antMaterialIdentity.js';
 
 /**
  * p5 instance-mode view for the ANT experiment.
@@ -10,7 +11,8 @@ import { BODY_GEOMETRY } from '../agents/ant/BodyPoseController.js';
 export class AntRenderer {
     constructor(canvas, { loadP5 = () => import('p5'), materialPresentation = 'production' } = {}) {
         if (!canvas) throw new TypeError('AntRenderer requires a canvas element');
-        if (!['production', 'surface', 'textured', 'presence-96'].includes(materialPresentation)) {
+        if (!['production', 'surface', 'textured', 'presence-96', 'presence-96-sharp',
+            'identity-fine-shuffled', 'identity-fine-registered', 'identity-coarse-shuffled'].includes(materialPresentation)) {
             throw new TypeError('materialPresentation must be a supported material view');
         }
         this.canvas = canvas;
@@ -28,6 +30,8 @@ export class AntRenderer {
         this.plateImages = new WeakMap();
         this.materialImage = null;
         this.materialRevision = null;
+        this.materialIdentity = null;
+        this.materialIdentityKey = null;
         this.debugOptions = {
             pheromone: true,
             material: true,
@@ -96,7 +100,7 @@ export class AntRenderer {
     render(snapshot) {
         if (this.destroyed) return;
         this.snapshot = snapshot || null;
-        this.instance?.redraw?.();
+        return this.instance?.redraw?.();
     }
 
     /** Change diagnostic overlays without writing to simulation state. */
@@ -129,6 +133,8 @@ export class AntRenderer {
         this.plateImages = new WeakMap();
         this.materialImage = null;
         this.materialRevision = null;
+        this.materialIdentity = null;
+        this.materialIdentityKey = null;
         this.resolveInitialization?.(false);
         this.rejectInitialization = null;
         const removal = this.#removeInstance();
@@ -225,31 +231,64 @@ function drawSnapshot(p, snapshot, renderer) {
     const topology = material?.stratigraphy || material;
     if (renderer.debugOptions.material
         && topology?.topLayerByCell?.length && material.width > 0 && material.height > 0) {
-        if (!renderer.materialImage || renderer.materialRevision !== material.revision) {
-            const image = p.createImage(material.width, material.height);
-            image.loadPixels();
-            for (let index = 0; index < topology.topLayerByCell.length; index += 1) {
-                const hasMaterial = topology.topLayerByCell[index] >= 0;
-                let alpha;
-                if (renderer.materialPresentation === 'presence-96') alpha = 96;
-                else {
-                    const depthCount = topology.layerCountByCell?.[index] || 1;
-                    alpha = renderer.materialPresentation === 'production'
-                        ? Math.min(21, 9 + depthCount * 1.25)
-                        : Math.min(30, 18 + depthCount);
-                }
-                if (hasMaterial && renderer.materialPresentation === 'textured'
-                    && isTexturedMaterialCell(index, material.width)) alpha = Math.max(0, alpha - 8);
-                image.pixels[index * 4] = 100;
-                image.pixels[index * 4 + 1] = 100;
-                image.pixels[index * 4 + 2] = 100;
-                image.pixels[index * 4 + 3] = hasMaterial ? alpha : 0;
+        const nativeIdentity = renderer.materialPresentation.startsWith('identity-');
+        const sharpFlat = renderer.materialPresentation === 'presence-96-sharp';
+        if (nativeIdentity) {
+            // Detached snapshots and reset worlds can share revisions but have different geometry.
+            const key = JSON.stringify([material.revision, width, height, renderer.pixelRatio,
+                renderer.materialPresentation, topology.topLayerByCell.join(','), material.plates]);
+            if (!renderer.materialImage || renderer.materialIdentityKey !== key) {
+                renderer.materialIdentity = buildMaterialIdentity(material, width, height, renderer.materialPresentation);
+                const image = p.createImage(width, height);
+                image.loadPixels();
+                image.pixels.set(renderer.materialIdentity.pixels);
+                image.updatePixels();
+                renderer.materialImage = image;
+                renderer.materialIdentityKey = key;
             }
-            image.updatePixels();
-            renderer.materialImage = image;
-            renderer.materialRevision = material.revision;
+        } else {
+            const revision = sharpFlat
+                ? `${material.revision}:${material.width}:${material.height}:${topology.topLayerByCell.join(',')}`
+                : material.revision;
+            if (!renderer.materialImage || renderer.materialRevision !== revision) {
+                const image = p.createImage(material.width, material.height);
+                image.loadPixels();
+                for (let index = 0; index < topology.topLayerByCell.length; index += 1) {
+                    const hasMaterial = topology.topLayerByCell[index] >= 0;
+                    let alpha;
+                    if (renderer.materialPresentation === 'presence-96' || sharpFlat) alpha = 96;
+                    else {
+                        const depthCount = topology.layerCountByCell?.[index] || 1;
+                        alpha = renderer.materialPresentation === 'production'
+                            ? Math.min(21, 9 + depthCount * 1.25)
+                            : Math.min(30, 18 + depthCount);
+                    }
+                    if (hasMaterial && renderer.materialPresentation === 'textured'
+                        && isTexturedMaterialCell(index, material.width)) alpha = Math.max(0, alpha - 8);
+                    image.pixels[index * 4] = 100;
+                    image.pixels[index * 4 + 1] = 100;
+                    image.pixels[index * 4 + 2] = 100;
+                    image.pixels[index * 4 + 3] = hasMaterial ? alpha : 0;
+                }
+                image.updatePixels();
+                renderer.materialImage = image;
+                renderer.materialRevision = revision;
+            }
         }
-        p.image(renderer.materialImage, 0, 0, width, height);
+        if (sharpFlat || nativeIdentity) {
+            const context = p.drawingContext;
+            const smoothing = context?.imageSmoothingEnabled;
+            const quality = context?.imageSmoothingQuality;
+            try {
+                if (context) context.imageSmoothingEnabled = false;
+                p.image(renderer.materialImage, 0, 0, width, height);
+            } finally {
+                if (context) {
+                    context.imageSmoothingEnabled = smoothing;
+                    if (quality !== undefined) context.imageSmoothingQuality = quality;
+                }
+            }
+        } else p.image(renderer.materialImage, 0, 0, width, height);
     }
     for (const plate of renderer.debugOptions.material && !material
         ? snapshot?.surfacePlates?.plates || [] : []) {

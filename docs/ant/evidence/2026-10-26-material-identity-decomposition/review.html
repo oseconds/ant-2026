@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ANT view comparison</title>
+<style>
+body{font:16px system-ui,sans-serif;max-width:1400px;margin:2rem auto;padding:0 1rem;color:#222}h1{font-size:1.5rem}fieldset{margin:1rem 0;padding:1rem}label{margin-right:1rem}#players{display:flex;gap:1rem;overflow-x:auto;align-items:start}figure{margin:0;flex:none;width:640px}video,img{display:block;width:640px;height:640px;object-fit:contain;background:#111}[hidden]{display:none!important}figcaption{margin:.4rem 0}button,select,input{font:inherit}textarea{width:min(100%,640px);height:7rem}#error{color:#a00;white-space:pre-wrap}#status{min-height:1.5em}details{margin-top:1rem}
+</style>
+</head>
+<body>
+<h1>ANT view comparison</h1>
+<p>View the pair, then write your first observation before opening the questions.</p>
+<p id="error" role="alert"></p><p id="status" aria-live="polite">Loading review media…</p>
+<div id="cache" hidden aria-hidden="true"></div>
+<fieldset><legend>Choose views</legend>
+<label>Left <select id="left" aria-label="Left view"></select></label>
+<label>Right <select id="right" aria-label="Right view"></select></label>
+</fieldset>
+<div id="players">
+<figure><figcaption>View <span id="leftName">1</span></figcaption><video id="leftVideo" muted playsinline preload="auto"></video><img id="leftStill" hidden alt=""></figure>
+<figure><figcaption>View <span id="rightName">2</span></figcaption><video id="rightVideo" muted playsinline preload="auto"></video><img id="rightStill" hidden alt=""></figure>
+</div>
+<p><button id="play" disabled>Play</button> <button id="pause" disabled>Pause</button>
+<label>Time from reference moment (seconds) <input id="time" type="number" min="-1" max="30" step="0.1" value="15" disabled></label></p>
+<p><button data-milestone="-0.1" disabled>Immediately before</button>
+<button data-milestone="0" disabled>Immediately after</button>
+<button data-milestone="15" disabled>Reference +15 s</button>
+<button data-milestone="30" disabled>Reference +30 s</button></p>
+<p>Video seeks use 0.1 s frame steps; milestone stills show the exact captured frame.</p>
+<section><h2>Observation</h2>
+<label for="memo">What changed, and what could you follow? Note any moment or location that stood out.</label><br>
+<textarea id="memo" placeholder="Write a free observation before opening the questions."></textarea><br>
+<button id="download">Download observation JSON</button>
+</section>
+<details><summary>Questions (open after your first observation)</summary>
+<p>What is visible in the material itself?</p>
+<p>Can you distinguish it from the trail?</p>
+<p>What other kind of mark or state, if any, do you see?</p>
+<p>Do you interpret anything as remaining from past history?</p>
+<p>Were any patterns hard to read because of ant motion, road noise, block grids, moiré, or flicker?</p>
+</details>
+<script>
+(() => {
+  const names=['A','B','C','D','E'], left=document.querySelector('#left'), right=document.querySelector('#right');
+  names.forEach((_,i)=>{for(const s of [left,right]){const o=document.createElement('option');o.value=i;o.textContent=`View ${i+1}`;s.append(o)}});
+  right.value='1';
+  const videos=names.map(n=>{const v=document.createElement('video');v.src=`video/${n}.webm`;v.muted=true;v.playsInline=true;v.preload='metadata';document.querySelector('#cache').append(v);return v});
+  const lv=document.querySelector('#leftVideo'),rv=document.querySelector('#rightVideo'),time=document.querySelector('#time'),status=document.querySelector('#status'),err=document.querySelector('#error');
+  let offset=null, ready=false, syncing=false, selectedMilestone=15;
+  window.reviewReady=(async()=>{
+    try{const r=await fetch('capture.json');if(!r.ok)throw Error(`capture.json: HTTP ${r.status}`);const m=await r.json();
+      if(!Number.isFinite(m.firstPlateVideoOffsetSeconds)||m.firstPlateVideoOffsetSeconds<0)throw Error('capture.json must provide a non-negative firstPlateVideoOffsetSeconds.');
+      offset=m.firstPlateVideoOffsetSeconds;
+      await Promise.all(videos.map(v=>new Promise((resolve,reject)=>{v.addEventListener('loadedmetadata',resolve,{once:true});v.addEventListener('error',()=>reject(Error(`Could not load ${v.src}`)),{once:true});if(v.readyState>=1)resolve()})));
+      setPair();await Promise.all([lv,rv].map(waitMetadata));ready=true;for(const b of document.querySelectorAll('button'))b.disabled=false;time.disabled=false;seek(offset+15);await seekedBoth();showStills();status.textContent='Ready. Videos are muted.';
+    }catch(e){err.textContent=`Review media failed to load: ${e.message}`;status.textContent='Review unavailable.'}
+  })();
+  function waitMetadata(v){return new Promise((resolve,reject)=>{if(v.readyState>=1)return resolve();v.addEventListener('loadedmetadata',resolve,{once:true});v.addEventListener('error',()=>reject(Error(`Could not load ${v.currentSrc}`)),{once:true})})}
+  function setPair(){lv.src=videos[+left.value].src;rv.src=videos[+right.value].src;document.querySelector('#leftName').textContent=+left.value+1;document.querySelector('#rightName').textContent=+right.value+1;}
+  const milestoneNames={'-0.1':'pre-first-plate','0':'post-first-plate','15':'first-plate-plus-15s','30':'first-plate-plus-30s'};
+  function showStills(){if(selectedMilestone===null)return;for(const [img,select] of [[document.querySelector('#leftStill'),left],[document.querySelector('#rightStill'),right]]){img.src=`stills/${names[+select.value]}-${milestoneNames[selectedMilestone]}.png`;img.alt=`View ${+select.value+1} still`;img.hidden=false}}
+  function current(){return Math.round((offset+Number(time.value))*10)/10}
+  function seek(t){if(!ready||!Number.isFinite(t))return;const max=Math.min(lv.duration,rv.duration);t=Math.max(0,Math.min(max,Math.round(t*10)/10));time.value=(t-offset).toFixed(1);for(const v of [lv,rv]){v.pause();v.currentTime=t}}
+  async function seekedBoth(){await Promise.all([lv,rv].map(v=>v.seeking?new Promise(r=>v.addEventListener('seeked',r,{once:true})):Promise.resolve()))}
+  left.onchange=right.onchange=async()=>{if(!ready)return;const t=current(),play=document.querySelector('#play');play.disabled=true;setPair();try{await Promise.all([lv,rv].map(waitMetadata));seek(t);await seekedBoth();showStills()}catch(e){err.textContent=e.message}finally{play.disabled=false}};
+  time.onchange=async()=>{selectedMilestone=null;document.querySelectorAll('#leftStill,#rightStill').forEach(i=>i.hidden=true);seek(current());status.textContent='Seeking…';await seekedBoth();status.textContent='Ready. Videos are muted.'};
+  document.querySelectorAll('[data-milestone]').forEach(b=>b.onclick=async()=>{selectedMilestone=Number(b.dataset.milestone);seek(offset+selectedMilestone);await seekedBoth();showStills()});
+  document.querySelector('#pause').onclick=()=>{lv.pause();rv.pause()};
+  document.querySelector('#play').onclick=async()=>{if(!ready)return;const t=current();seek(t);await seekedBoth();try{await Promise.all([lv.play(),rv.play()])}catch(e){lv.pause();rv.pause();err.textContent=`Playback failed: ${e.message}`}};
+  function updateTime(){time.value=(Math.round(((lv.currentTime+rv.currentTime)/2-offset)*10)/10).toFixed(1)}
+  lv.addEventListener('timeupdate',updateTime);rv.addEventListener('timeupdate',updateTime);
+  lv.addEventListener('ended',()=>{rv.pause();lv.pause()});rv.addEventListener('ended',()=>{lv.pause();rv.pause()});
+  setInterval(()=>{if(ready&&!lv.paused&&!rv.paused&&!syncing){const d=rv.currentTime-lv.currentTime;if(Math.abs(d)>.1){syncing=true;(d>0?lv:rv).currentTime=(d>0?rv:lv).currentTime;setTimeout(()=>syncing=false,120)}}},250);
+  document.querySelector('#download').onclick=()=>{const data={views:[`View ${+left.value+1}`,`View ${+right.value+1}`],firstPlateVideoOffsetSeconds:offset,relativeTimeSeconds:Number(time.value),observation:document.querySelector('#memo').value,downloadedAt:new Date().toISOString()};const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));a.download='material-identity-observation.json';a.click();URL.revokeObjectURL(a.href)};
+})();
+</script>
+</body>
+</html>
