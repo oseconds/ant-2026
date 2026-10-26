@@ -49,6 +49,12 @@ This is a conversation-derived **review synthesis, not the reviewer original tex
 
 **[Original review texts (user-pasted transcription): Argon High A1–A4 + Astra High S1](2026-10-26-independent-review-originals/README.md)** are archived separately from the synthesis, including earlier claims subsequently corrected or retracted. They are not independently exported Gemini messages; byte-for-byte fidelity to the provider's original export was not tested.
 
+## 2026-10-26 native AV visual presentation direction
+
+[Native AV visual presentation direction](2026-10-26-native-av-visual-presentation-direction.md) preserves the discussion that followed the first current-G audiovisual observation: the weak retained-material presentation, Argon's broad visual-language exploration, Astra's material-first experimental decomposition, the separate unresolved fixed-heading bias, and the selected **material-only renderer shadow** as the next visual question.
+
+The archive distinguishes implementation/evidence from artistic mapping. Recognizable ants remain fixed for the first pass; pheromone is not changed yet; retained material is tested first as a stable rediscoverable surface. The document does **not** adopt a renderer redesign, new recruitment law, global visual phase system, mineral ontology, persistence feature or audio mapping. Current status still comes from source + `docs/ant/README.md` + evidence/daily records.
+
 ## 2026-10-06 and 2026-10-07 chronology
 
 Date-specific development history already lives in the canonical daily logs and evidence, so it is **not duplicated** into this archive:
