@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-27 — Material smooth substrate relief shadow
+
+[Process log](./2026-10-27-material-smooth-substrate-relief.md) · [Evidence and neutral review assets](../evidence/2026-10-27-material-smooth-substrate-relief/README.md)
+
+- Compared a prior soft alpha-96 reference with three registered smooth pseudo-surface fields over one matched H1 state stream
+- Continuous-field, parity, locality, media, viewer, and technical validation passed; no production or aesthetic decision was made
+- Human free-description review remains pending
+
 ### 2026-10-27 — Material silhouette / edge-depth shadow
 
 [Process log](./2026-10-27-material-silhouette-relief-shadow.md) · [Evidence and neutral review assets](../evidence/2026-10-26-material-silhouette-relief-shadow/README.md)

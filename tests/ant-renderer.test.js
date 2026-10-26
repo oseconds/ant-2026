@@ -381,6 +381,30 @@ test('faint and edge material views scope native filtering and leave pheromone s
   await renderer.destroy();
 });
 
+test('smooth substrate view caches its continuous material field and restores pheromone filtering', async () => {
+  const calls = [];
+  const snapshot = makeMaterialSnapshot(96, 96, [[48 * 96 + 48, 1]], 1);
+  snapshot.pheromone = { width: 2, height: 2, values: new Float32Array([0, 0.1, 0, 0.1]) };
+  const before = [...snapshot.stratigraphy.stratigraphy.topLayerByCell];
+  const renderer = new AntRenderer(makeCanvas(makeParent()), {
+    materialPresentation: 'substrate-relief-subtle', loadP5: async () => ({ default: makeP5(calls) })
+  });
+  await renderer.init({ width: 640, height: 640 });
+  await renderer.render(snapshot);
+  const field = renderer.materialSubstrate, image = renderer.materialImage;
+  const draws = calls.filter(([name]) => name === 'image');
+  assert.equal(field.mode, 'substrate-relief-subtle');
+  assert.equal(draws.length, 2, 'continuous material draws before pheromone');
+  assert.equal(draws[0].at(-1).smoothing, false);
+  assert.equal(draws[1].at(-1).smoothing, true);
+  assert.equal(draws[1].at(-1).quality, 'high');
+  await renderer.render(structuredClone(snapshot));
+  assert.equal(renderer.materialSubstrate, field, 'same support reuses the field cache');
+  assert.equal(renderer.materialImage, image);
+  assert.deepEqual([...snapshot.stratigraphy.stratigraphy.topLayerByCell], before);
+  await renderer.destroy();
+});
+
 test('native identity cache distinguishes dimensions and reset worlds with the same revision', async () => {
   const calls = [];
   const renderer = new AntRenderer(makeCanvas(makeParent()), {

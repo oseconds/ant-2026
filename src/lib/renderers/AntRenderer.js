@@ -1,6 +1,7 @@
 import { BODY_GEOMETRY } from '../agents/ant/BodyPoseController.js';
 import { buildMaterialIdentity } from './antMaterialIdentity.js';
 import { buildMaterialSurface } from './antMaterialSurface.js';
+import { buildMaterialSubstrate } from './antMaterialSubstrate.js';
 
 /**
  * p5 instance-mode view for the ANT experiment.
@@ -14,6 +15,7 @@ export class AntRenderer {
         if (!canvas) throw new TypeError('AntRenderer requires a canvas element');
         if (!['production', 'surface', 'textured', 'presence-96', 'presence-96-sharp',
             'presence-20-sharp', 'presence-20-edge', 'presence-20-directional-edge',
+            'substrate-flat', 'substrate-relief-subtle', 'substrate-relief-strong',
             'identity-fine-shuffled', 'identity-fine-registered', 'identity-coarse-shuffled'].includes(materialPresentation)) {
             throw new TypeError('materialPresentation must be a supported material view');
         }
@@ -34,6 +36,8 @@ export class AntRenderer {
         this.materialEdgeImage = null;
         this.materialSurface = null;
         this.materialSurfaceKey = null;
+        this.materialSubstrate = null;
+        this.materialSubstrateKey = null;
         this.materialRevision = null;
         this.materialIdentity = null;
         this.materialIdentityKey = null;
@@ -140,6 +144,8 @@ export class AntRenderer {
         this.materialEdgeImage = null;
         this.materialSurface = null;
         this.materialSurfaceKey = null;
+        this.materialSubstrate = null;
+        this.materialSubstrateKey = null;
         this.materialRevision = null;
         this.materialIdentity = null;
         this.materialIdentityKey = null;
@@ -242,7 +248,18 @@ function drawSnapshot(p, snapshot, renderer) {
         const nativeIdentity = renderer.materialPresentation.startsWith('identity-');
         const sharpFlat = renderer.materialPresentation === 'presence-96-sharp';
         const nativeSurface = renderer.materialPresentation.startsWith('presence-20-');
-        if (nativeSurface) {
+        const nativeSubstrate = renderer.materialPresentation.startsWith('substrate-');
+        if (nativeSubstrate) {
+            const key = JSON.stringify([material.revision, material.width, material.height, width, height,
+                renderer.pixelRatio, renderer.materialPresentation, topology.topLayerByCell.join(',')]);
+            if (!renderer.materialImage || renderer.materialSubstrateKey !== key) {
+                renderer.materialSubstrate = buildMaterialSubstrate(material, width, height, renderer.materialPresentation);
+                const image = p.createImage(width, height);
+                image.loadPixels(); image.pixels.set(renderer.materialSubstrate.pixels); image.updatePixels();
+                renderer.materialImage = image;
+                renderer.materialSubstrateKey = key;
+            }
+        } else if (nativeSurface) {
             const key = JSON.stringify([material.revision, material.width, material.height, width, height,
                 renderer.pixelRatio, renderer.materialPresentation, topology.topLayerByCell.join(',')]);
             if (!renderer.materialImage || renderer.materialSurfaceKey !== key) {
@@ -300,7 +317,7 @@ function drawSnapshot(p, snapshot, renderer) {
                 renderer.materialRevision = revision;
             }
         }
-        if (sharpFlat || nativeIdentity || nativeSurface) {
+        if (sharpFlat || nativeIdentity || nativeSurface || nativeSubstrate) {
             const context = p.drawingContext;
             const smoothing = context?.imageSmoothingEnabled;
             const quality = context?.imageSmoothingQuality;
