@@ -405,6 +405,68 @@ test('smooth substrate view caches its continuous material field and restores ph
   await renderer.destroy();
 });
 
+test('material-conditioned pheromone mode hides material and keeps zero-signal output unchanged', async () => {
+  const calls = [], snapshot = makeMaterialSnapshot(4, 4, [[5, 1], [6, 1], [9, 1], [10, 1]], 1);
+  snapshot.pheromone = { width: 2, height: 2, values: new Float32Array([0, 0.1, 0, 0.1]) };
+  const beforeTop = [...snapshot.stratigraphy.stratigraphy.topLayerByCell];
+  const renderer = new AntRenderer(makeCanvas(makeParent()), {
+    pheromoneReadout: 'material-crisp', loadP5: async () => ({ default: makeP5(calls) })
+  });
+  await renderer.init({ width: 16, height: 16 });
+  renderer.setDebugOptions({ material: false });
+  await renderer.render(snapshot);
+  assert.equal(renderer.materialImage, null, 'hidden material creates no direct fill image');
+  assert.equal(renderer.pheromoneReadoutAudit.maskStats.supportPixels, 64);
+  assert.ok(renderer.pheromoneReadoutAudit.baselineAlpha.every(alpha => alpha === 0));
+  assert.ok(renderer.pheromoneReadoutAudit.mixedAlpha.every(alpha => alpha === 0));
+  assert.ok(renderer.pheromoneReadoutAudit.effectiveWeights.every(weight => weight === 0));
+  assert.deepEqual([...snapshot.stratigraphy.stratigraphy.topLayerByCell], beforeTop);
+  const draws = calls.filter(([name]) => name === 'image');
+  assert.equal(draws.length, 1, 'the production-sampled source is drawn once');
+  assert.equal(draws[0].at(-1).smoothing, true, 'baseline keeps production smoothing');
+  assert.equal(calls.filter(([name]) => name === 'putImageData').length, 1, 'single opaque baseline write preserves the same canvas path');
+  assert.equal(renderer.instance.p.drawingContext.imageSmoothingEnabled, true, 'canvas state restored');
+  await renderer.destroy();
+});
+
+test('material-conditioned no-material control performs a visual no-op readback', async () => {
+  const calls = [], snapshot = makeMaterialSnapshot(4, 4, [[5, 1], [6, 1]], 1);
+  snapshot.pheromone = { width: 2, height: 2, values: new Float32Array([0, 0.1, 0, 0]) };
+  const renderer = new AntRenderer(makeCanvas(makeParent()), {
+    pheromoneReadout: 'material-control', loadP5: async () => ({ default: makeP5(calls) })
+  });
+  await renderer.init({ width: 16, height: 16 });
+  renderer.setDebugOptions({ material: false });
+  await renderer.render(snapshot);
+  const audit = renderer.pheromoneReadoutAudit;
+  assert.equal(audit.baselineAlpha.length, 16 * 16);
+  assert.deepEqual(audit.mixedAlpha, audit.baselineAlpha);
+  assert.ok(audit.effectiveWeights.every(weight => weight === 0));
+  assert.equal(calls.filter(([name]) => name === 'image').length, 1);
+  assert.equal(calls.filter(([name]) => name === 'putImageData').length, 1);
+  await renderer.destroy();
+});
+
+test('diagnostic empty material raster placeholder is transparent and precedes pheromone', async () => {
+  const calls = [], snapshot = makeMaterialSnapshot(4, 4, [[5, 1], [6, 1]], 1);
+  snapshot.pheromone = { width: 2, height: 2, values: new Float32Array([0, 0.1, 0, 0]) };
+  const renderer = new AntRenderer(makeCanvas(makeParent()), {
+    loadP5: async () => ({ default: makeP5(calls) })
+  });
+  await renderer.init({ width: 16, height: 16 });
+  renderer.setDebugOptions({ material: false, materialRasterPlaceholder: true });
+  await renderer.render(snapshot);
+  const placeholder = renderer.materialRasterPlaceholderImage;
+  assert.ok(placeholder);
+  assert.ok(placeholder.pixels.every((value, index) => index % 4 !== 3 || value === 0));
+  assert.ok(placeholder.pixels.every((value, index) => index % 4 === 3 || value === 100));
+  assert.equal(renderer.materialImage, null, 'hidden material creates no material image');
+  const images = calls.filter(([name]) => name === 'image');
+  assert.equal(images[0][1], placeholder, 'transparent placeholder uses the material draw slot');
+  assert.equal(images[1][1], renderer.fieldImage, 'pheromone draws after the placeholder');
+  await renderer.destroy();
+});
+
 test('native identity cache distinguishes dimensions and reset worlds with the same revision', async () => {
   const calls = [];
   const renderer = new AntRenderer(makeCanvas(makeParent()), {
@@ -480,7 +542,13 @@ function makeP5(calls, { deferSetup = false, manualSetup = false, failSetup = fa
           get imageSmoothingEnabled() { return this.smoothing ?? true; },
           set imageSmoothingEnabled(value) { this.smoothing = value; calls.push(['imageSmoothingEnabled', value]); },
           get imageSmoothingQuality() { return this.quality ?? 'low'; },
-          set imageSmoothingQuality(value) { this.quality = value; calls.push(['imageSmoothingQuality', value]); }
+          set imageSmoothingQuality(value) { this.quality = value; calls.push(['imageSmoothingQuality', value]); },
+          getImageData: (_x, _y, width, height) => {
+            const data = new Uint8ClampedArray(width * height * 4);
+            for (let index = 0; index < data.length; index += 4) data[index] = data[index + 1] = data[index + 2] = data[index + 3] = 255;
+            return { data };
+          },
+          putImageData: (...args) => calls.push(['putImageData', ...args])
         },
         pixelDensity: (...args) => calls.push(['pixelDensity', ...args]),
         createCanvas: (...args) => {
@@ -500,6 +568,15 @@ function makeP5(calls, { deferSetup = false, manualSetup = false, failSetup = fa
           calls.push(['createImage', image]);
           return image;
         },
+        createGraphics: (width, height) => {
+          const graphics = { width, height, pixels: new Uint8ClampedArray(width * height * 4),
+            drawingContext: { imageSmoothingEnabled: true, imageSmoothingQuality: 'low' },
+            pixelDensity: () => {}, clear() { this.pixels.fill(0); }, loadPixels() {},
+            image: (...args) => calls.push(['graphics-image', ...args, { smoothing: graphics.drawingContext.imageSmoothingEnabled,
+              quality: graphics.drawingContext.imageSmoothingQuality }]), remove() { calls.push(['graphics-remove']); } };
+          calls.push(['createGraphics', graphics]);
+          return graphics;
+        },
         image: (...args) => calls.push(['image', ...args, { smoothing: p.drawingContext.imageSmoothingEnabled, quality: p.drawingContext.imageSmoothingQuality }]),
         noStroke: () => calls.push(['noStroke']), stroke: (...args) => calls.push(['stroke', ...args]),
         strokeWeight: (...args) => calls.push(['strokeWeight', ...args]),
@@ -515,6 +592,7 @@ function makeP5(calls, { deferSetup = false, manualSetup = false, failSetup = fa
         textSize: (...args) => calls.push(['textSize', ...args]), text: (...args) => calls.push(['text', ...args])
       };
       sketch(p);
+      this.p = p;
       const setup = () => {
         if (failSetup) p.createCanvas = () => { throw new Error('setup failed'); };
         p.setup();

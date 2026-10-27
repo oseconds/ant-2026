@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-27 — Material-conditioned pheromone readout shadow
+
+[Process log](./2026-10-27-material-conditioned-pheromone-readout.md) · [Evidence and neutral review assets](../evidence/2026-10-27-material-conditioned-pheromone-readout/README.md)
+
+- Crossed the production pheromone readout with two location-conditioned renderer-only readout grammars; material was hidden in Views 2–4 and the 4 px blend mask stayed inside exposed support
+- H1 state/RNG parity matched the prior frame map; ant-free pheromone-layer locality and zero-signal invariance passed
+- Shared-renderer View 1 checkpoint pixels differ from the prior four-renderer capture; this is recorded separately from world-state parity
+- Artist free-description review remains pending; no renderer, heading, or production choice was made
+
 ### 2026-10-27 — Material smooth substrate relief shadow
 
 [Process log](./2026-10-27-material-smooth-substrate-relief.md) · [Evidence and neutral review assets](../evidence/2026-10-27-material-smooth-substrate-relief/README.md)

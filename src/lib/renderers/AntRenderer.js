@@ -2,6 +2,7 @@ import { BODY_GEOMETRY } from '../agents/ant/BodyPoseController.js';
 import { buildMaterialIdentity } from './antMaterialIdentity.js';
 import { buildMaterialSurface } from './antMaterialSurface.js';
 import { buildMaterialSubstrate } from './antMaterialSubstrate.js';
+import { buildMaterialReadoutMask, buildScreenedPheromoneAlpha, mixPheromoneAlpha } from './materialConditionedPheromone.js';
 
 /**
  * p5 instance-mode view for the ANT experiment.
@@ -11,13 +12,16 @@ import { buildMaterialSubstrate } from './antMaterialSubstrate.js';
  * model/controller. No p5 object is created until `init()` is called.
  */
 export class AntRenderer {
-    constructor(canvas, { loadP5 = () => import('p5'), materialPresentation = 'production' } = {}) {
+    constructor(canvas, { loadP5 = () => import('p5'), materialPresentation = 'production', pheromoneReadout = 'production' } = {}) {
         if (!canvas) throw new TypeError('AntRenderer requires a canvas element');
         if (!['production', 'surface', 'textured', 'presence-96', 'presence-96-sharp',
             'presence-20-sharp', 'presence-20-edge', 'presence-20-directional-edge',
             'substrate-flat', 'substrate-relief-subtle', 'substrate-relief-strong',
             'identity-fine-shuffled', 'identity-fine-registered', 'identity-coarse-shuffled'].includes(materialPresentation)) {
             throw new TypeError('materialPresentation must be a supported material view');
+        }
+        if (!['production', 'material-control', 'material-crisp', 'material-screened'].includes(pheromoneReadout)) {
+            throw new TypeError('pheromoneReadout must be production or a supported material-conditioned view');
         }
         this.canvas = canvas;
         this.canvasParent = canvas.parentElement || null;
@@ -27,12 +31,15 @@ export class AntRenderer {
             .map((attribute) => [attribute.name, attribute.value]);
         this.loadP5 = loadP5;
         this.materialPresentation = materialPresentation;
+        this.pheromoneReadout = pheromoneReadout;
         this.instance = null;
         this.snapshot = null;
         this.fieldImage = null;
         this.fieldSize = null;
         this.plateImages = new WeakMap();
         this.materialImage = null;
+        this.materialRasterPlaceholderImage = null;
+        this.materialRasterPlaceholderKey = null;
         this.materialEdgeImage = null;
         this.materialSurface = null;
         this.materialSurfaceKey = null;
@@ -41,9 +48,15 @@ export class AntRenderer {
         this.materialRevision = null;
         this.materialIdentity = null;
         this.materialIdentityKey = null;
+        this.materialReadoutMask = null;
+        this.materialReadoutMaskKey = null;
+        this.pheromoneReadoutGraphics = null;
+        this.pheromoneReadoutBuffers = null;
+        this.pheromoneReadoutAudit = null;
         this.debugOptions = {
             pheromone: true,
             material: true,
+            materialRasterPlaceholder: false,
             surface: false,
             candidate: false,
             source: false,
@@ -141,6 +154,8 @@ export class AntRenderer {
         this.fieldImage = null;
         this.plateImages = new WeakMap();
         this.materialImage = null;
+        this.materialRasterPlaceholderImage = null;
+        this.materialRasterPlaceholderKey = null;
         this.materialEdgeImage = null;
         this.materialSurface = null;
         this.materialSurfaceKey = null;
@@ -149,6 +164,12 @@ export class AntRenderer {
         this.materialRevision = null;
         this.materialIdentity = null;
         this.materialIdentityKey = null;
+        this.materialReadoutMask = null;
+        this.materialReadoutMaskKey = null;
+        for (const graphics of Object.values(this.pheromoneReadoutGraphics || {})) graphics.remove?.();
+        this.pheromoneReadoutGraphics = null;
+        this.pheromoneReadoutBuffers = null;
+        this.pheromoneReadoutAudit = null;
         this.resolveInitialization?.(false);
         this.rejectInitialization = null;
         const removal = this.#removeInstance();
@@ -333,6 +354,25 @@ function drawSnapshot(p, snapshot, renderer) {
             }
         } else p.image(renderer.materialImage, 0, 0, width, height);
     }
+    if (!renderer.debugOptions.material && renderer.debugOptions.materialRasterPlaceholder
+        && material?.width > 0 && material.height > 0) {
+        const key = JSON.stringify([material.width, material.height, width, height, renderer.pixelRatio]);
+        if (!renderer.materialRasterPlaceholderImage || renderer.materialRasterPlaceholderKey !== key) {
+            const image = p.createImage(material.width, material.height);
+            image.loadPixels();
+            for (let index = 0; index < material.width * material.height; index += 1) {
+                image.pixels[index * 4] = 100;
+                image.pixels[index * 4 + 1] = 100;
+                image.pixels[index * 4 + 2] = 100;
+                image.pixels[index * 4 + 3] = 0;
+            }
+            image.updatePixels();
+            renderer.materialRasterPlaceholderImage = image;
+            renderer.materialRasterPlaceholderKey = key;
+        }
+        // Match the p5 image-draw path without adding material pixels.
+        p.image(renderer.materialRasterPlaceholderImage, 0, 0, width, height);
+    }
     for (const plate of renderer.debugOptions.material && !material
         ? snapshot?.surfacePlates?.plates || [] : []) {
         if (!plate?.grid || !plate.mask?.length) continue;
@@ -358,13 +398,10 @@ function drawSnapshot(p, snapshot, renderer) {
         const image = updateFieldImage(p, renderer, field);
         // The field remains at its native grid resolution and fixed alpha values;
         // only the display interpolation is softened when it is scaled to canvas.
-        if (p.drawingContext) {
-            p.drawingContext.imageSmoothingEnabled = true;
-            if ('imageSmoothingQuality' in p.drawingContext) {
-                p.drawingContext.imageSmoothingQuality = 'high';
-            }
-        }
-        p.image(image, 0, 0, width, height);
+        if (renderer.pheromoneReadout === 'production') {
+            setPheromoneSmoothing(p.drawingContext);
+            p.image(image, 0, 0, width, height);
+        } else drawMaterialConditionedPheromone(p, renderer, material, image, width, height);
     }
 
     if (renderer.debugOptions.exposure) drawExposureDebug(p, material, width, height);
@@ -383,6 +420,94 @@ function drawSnapshot(p, snapshot, renderer) {
         if (!isPoint(agent)) continue;
         drawAnt(p, agent, width, height, diameterScale);
     }
+}
+
+function drawMaterialConditionedPheromone(p, renderer, material, sourceImage, width, height) {
+    const context = p.drawingContext;
+    setPheromoneSmoothing(context);
+    p.image(sourceImage, 0, 0, width, height);
+    const topology = material?.stratigraphy || material;
+    if (!topology?.topLayerByCell?.length || !(material.width > 0) || !(material.height > 0)) return;
+    const maskKey = JSON.stringify([material.width, material.height, width, height, topology.topLayerByCell.join(',')]);
+    if (!renderer.materialReadoutMask || renderer.materialReadoutMaskKey !== maskKey) {
+        renderer.materialReadoutMask = buildMaterialReadoutMask(material, width, height);
+        renderer.materialReadoutMaskKey = maskKey;
+    }
+    const size = width * height;
+    if (renderer.materialReadoutMask.stats.supportPixels === 0) {
+        const imageData = context.getImageData(0, 0, width, height), pixels = imageData.data;
+        const baselineAlpha = new Uint8ClampedArray(size);
+        for (let index = 0; index < size; index += 1) baselineAlpha[index] = 255 - pixels[index * 4];
+        const alternateAlpha = renderer.pheromoneReadout === 'material-screened'
+            ? buildScreenedPheromoneAlpha(baselineAlpha, width, height) : baselineAlpha;
+        context.putImageData(imageData, 0, 0);
+        renderer.pheromoneReadoutAudit = { baselineAlpha, alternateAlpha, mixedAlpha: baselineAlpha,
+            effectiveWeights: renderer.materialReadoutMask.weights,
+            materialSupport: renderer.materialReadoutMask.support, maskStats: renderer.materialReadoutMask.stats };
+        return;
+    }
+    if (!renderer.pheromoneReadoutBuffers || renderer.pheromoneReadoutBuffers.size !== size) {
+        renderer.pheromoneReadoutBuffers = {
+            size, baseline: new Uint8ClampedArray(size), alternate: new Uint8ClampedArray(size),
+            mixed: new Uint8ClampedArray(size), effectiveWeights: new Float32Array(size)
+        };
+    }
+    const buffers = renderer.pheromoneReadoutBuffers;
+    const composite = context.getImageData(0, 0, width, height);
+    const baseline = buffers.baseline;
+    for (let index = 0; index < size; index += 1) baseline[index] = 255 - composite.data[index * 4];
+    if (renderer.pheromoneReadout === 'material-control') {
+        const effectiveWeights = buffers.effectiveWeights.fill(0);
+        context.putImageData(composite, 0, 0);
+        renderer.pheromoneReadoutAudit = { baselineAlpha: baseline, alternateAlpha: baseline,
+            mixedAlpha: baseline, effectiveWeights, materialSupport: renderer.materialReadoutMask.support,
+            maskStats: renderer.materialReadoutMask.stats };
+        return;
+    }
+    let alternate;
+    if (renderer.pheromoneReadout === 'material-crisp') {
+        alternate = rasterizePheromoneAlpha(p, renderer, sourceImage, width, height, buffers.alternate);
+    } else {
+        alternate = buildScreenedPheromoneAlpha(baseline, width, height, buffers.alternate);
+    }
+    const { alpha: mixed, effectiveWeights } = mixPheromoneAlpha(baseline, alternate,
+        renderer.materialReadoutMask.weights, buffers.mixed, buffers.effectiveWeights);
+    for (let index = 0; index < size; index += 1) {
+        const weight = effectiveWeights[index];
+        if (weight <= 0) continue;
+        const offset = index * 4, gray = 255 - mixed[index];
+        composite.data[offset] = composite.data[offset + 1] = composite.data[offset + 2] = gray;
+        composite.data[offset + 3] = 255;
+    }
+    context.putImageData(composite, 0, 0);
+    renderer.pheromoneReadoutAudit = { baselineAlpha: baseline, alternateAlpha: alternate,
+        mixedAlpha: mixed, effectiveWeights,
+        materialSupport: renderer.materialReadoutMask.support, maskStats: renderer.materialReadoutMask.stats };
+}
+
+function rasterizePheromoneAlpha(p, renderer, sourceImage, width, height, output) {
+    if (!renderer.pheromoneReadoutGraphics || renderer.pheromoneReadoutGraphics.width !== width
+        || renderer.pheromoneReadoutGraphics.height !== height) {
+        for (const graphics of Object.values(renderer.pheromoneReadoutGraphics || {})) graphics.remove?.();
+        renderer.pheromoneReadoutGraphics = {
+            width, height,
+            crisp: p.createGraphics(width, height, p.P2D)
+        };
+        renderer.pheromoneReadoutGraphics.crisp.pixelDensity?.(1);
+    }
+    const graphics = renderer.pheromoneReadoutGraphics.crisp;
+    graphics.clear();
+    setPheromoneSmoothing(graphics.drawingContext, false);
+    graphics.image(sourceImage, 0, 0, width, height);
+    graphics.loadPixels();
+    for (let index = 0; index < output.length; index += 1) output[index] = graphics.pixels[index * 4 + 3];
+    return output;
+}
+
+function setPheromoneSmoothing(context, enabled = true) {
+    if (!context) return;
+    context.imageSmoothingEnabled = enabled;
+    if ('imageSmoothingQuality' in context) context.imageSmoothingQuality = 'high';
 }
 
 function drawScalarDebugGrid(p, field, width, height, { threshold = 0, maxAlpha = 40, tone = [0, 0, 0] } = {}) {

@@ -72,3 +72,5 @@ Manipulation checks passed: same field/coverage for Views 2–4; no texture or e
 - Whitespace check: `git diff --check` — passed. Runner and renderer-helper syntax checks passed with `node --check`.
 
 Technical validity does not answer whether any view reads as a distinct surface, depth, shadow, or merely a changed pheromone-like mark. Human free-description review remains pending. H1 is not evidence for adopting isotropic recruitment, and these early-world results do not establish mature-world behavior or a final aesthetic fit.
+
+The artist's verbatim response and its bounded interpretation are preserved in [ARTIST-REVIEW.md](ARTIST-REVIEW.md).

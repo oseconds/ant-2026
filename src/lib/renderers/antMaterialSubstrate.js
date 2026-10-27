@@ -193,7 +193,7 @@ function gaussianBlur(input, width, height) {
   return output;
 }
 
-function squaredDistanceTo(mask, width, height, target) {
+export function squaredDistanceTo(mask, width, height, target) {
   const rows = new Float64Array(mask.length), input = new Float64Array(Math.max(width, height));
   const output = new Float64Array(input.length);
   for (let y = 0; y < height; y += 1) {
