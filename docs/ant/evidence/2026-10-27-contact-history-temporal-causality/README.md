@@ -1,6 +1,6 @@
 # Contact-history temporal-causality shadow
 
-**Status: TECHNICALLY VALID — artist review pending.**
+**Status: TECHNICALLY VALID — artist review recorded; interpretation is promising but order-confounded.**
 
 ## Question and scope
 
@@ -60,7 +60,7 @@ A and B use the same matched events, tick curve, per-Plate mark count, and posit
 
 Diagnostics are separate: [event ledger](./contacts.jsonl), [assignment](./assignment.json), [event-position SVG](./diagnostics/event-position-correspondence.svg), [state anchors](./parity-anchors.json).
 
-**Human review:** pending. The neutral page asks only for free description. No artistic verdict is recorded.
+**Artist review:** recorded verbatim in [ARTIST-REVIEW.md](./ARTIST-REVIEW.md). View 1 was noticed more strongly and opened several possible associations, but View 1 was shown first and the artist explicitly flagged order influence. This is not a clean preference result and does not establish old-history or material-identity semantics.
 
 ## Technical result and limits
 
