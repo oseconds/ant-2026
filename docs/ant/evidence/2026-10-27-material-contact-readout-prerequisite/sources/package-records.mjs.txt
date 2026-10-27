@@ -1,0 +1,53 @@
+import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
+import { mkdir, readFile, writeFile, copyFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+const base = 'docs/ant/evidence/2026-10-27-material-contact-readout-prerequisite';
+const ref = 'da70d82822fa4d424744eaf6d50c53a728029ace';
+const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+const specs = [
+  ['material-rediscovery.md', '2026-10-26-material-rediscovery-shadow'],
+  ['heading-material-visibility.md', '2026-10-26-heading-material-visibility-shadow'],
+  ['material-identity.md', '2026-10-26-material-identity-decomposition'],
+  ['smooth-relief.md', '2026-10-27-material-smooth-substrate-relief'],
+  ['conditioned-pheromone.md', '2026-10-27-material-conditioned-pheromone-readout'],
+  ['conditioned-contour-pending.md', '2026-10-27-conditioned-trail-contour-cue-shadow']
+];
+await mkdir(`${base}/previous-reviews`, { recursive: true });
+await mkdir(`${base}/sources`, { recursive: true });
+const manifest = [];
+for (const [name, folder] of specs) {
+  const path = `docs/ant/evidence/${folder}/ARTIST-REVIEW.md`;
+  const bytes = execFileSync('git', ['show', `${ref}:${path}`]);
+  await writeFile(`${base}/previous-reviews/${name}`, bytes);
+  manifest.push({ file: `previous-reviews/${name}`, sourceCommit: ref, sourcePath: path, sha256: sha(bytes) });
+}
+await writeFile(`${base}/PRIOR-REVIEWS.json`, JSON.stringify(manifest, null, 2) + '\n');
+for (const [source, name] of [['scripts/ant-material-contact-prerequisite.js', 'runner.js.txt'],
+  ['scripts/lib/antContactPrerequisiteCore.js', 'core.js.txt']]) await copyFile(source, `${base}/sources/${name}`);
+await copyFile('test-results/contact-prerequisite-tests.log', `${base}/TESTS.log`);
+await copyFile('test-results/contact-prerequisite-build.log', `${base}/BUILD.log`);
+const measurement = JSON.parse(await readFile(`${base}/measurement.json`, 'utf8'));
+assert.equal(sha(await readFile(`${base}/sources/runner.js.txt`)), measurement.runnerSha256);
+assert.equal(sha(await readFile(`${base}/sources/core.js.txt`)), measurement.coreSha256);
+const rows = (await readFile(`${base}/contacts.jsonl`, 'utf8')).trim().split('\n').map(JSON.parse);
+const strikes = (await readFile(`${base}/strikes.jsonl`, 'utf8')).trim().split('\n').map(JSON.parse);
+const flat = rows.flatMap(row => row.posts.map((payload, order) => ({ tick: row.tick,
+  eventTimeMs: row.event.simulationTimeMs, order, payload, topologyRevision: row.topologyRevision })));
+assert.deepEqual(flat, strikes);
+assert.equal(rows.length, measurement.rawGroupedEvents);
+assert.equal(rows.reduce((n, row) => n + row.event.contacts.length, 0), measurement.rawFeet);
+const eligible = rows.flatMap(row => row.resolutions).filter(row => row.plateId !== null);
+assert.equal(eligible.length, strikes.length);
+const audit = { rawGroupedEvents: rows.length, flattenedPostsExact: true, eligibleFeet: eligible.length,
+  eligiblePhysicalDisplayCellDisagreements: eligible.filter(row => row.physicalCell !== row.displayCell).length,
+  firstActualStrikeTick: strikes[0].tick,
+  postsByPlate: Object.fromEntries([...new Set(strikes.map(row => row.payload.plateId))]
+    .map(id => [id, strikes.filter(row => row.payload.plateId === id).length])),
+  milestoneCumulativeCounts: measurement.milestones.map(row => {
+    const count = strikes.filter(strike => strike.tick <= row.tick).length;
+    assert.equal(count, row.history.strikes);
+    return { tick: row.tick, count };
+  }), frozenLoadedSourcesMatchMeasurement: true, priorReviewBlobsPreservedExactly: true };
+await writeFile(`${base}/TRACE-AUDIT.json`, JSON.stringify(audit, null, 2) + '\n');
+console.log(JSON.stringify(audit));

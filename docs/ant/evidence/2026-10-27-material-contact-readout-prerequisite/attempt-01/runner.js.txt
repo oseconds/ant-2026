@@ -1,0 +1,287 @@
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import { mkdir, readFile, writeFile, readdir } from 'node:fs/promises';
+import { resolve, dirname } from 'node:path';
+import { pathToFileURL, fileURLToPath } from 'node:url';
+import { SurfaceAudioBridge } from '../src/lib/audio/SurfaceAudioBridge.js';
+import { pheromoneValueToAlpha } from '../src/lib/renderers/AntRenderer.js';
+
+const ROOT = fileURLToPath(new URL('..', import.meta.url));
+const MAIN = 'aeefa12d8de9da400cb8a2a3d4b5080a21ba0292';
+const PRIOR = 'bee3a6908b36e23c826e1fde00d461b426c75992';
+const RESEARCH = 'da70d82';
+const OUTPUT = resolve(ROOT, 'docs/ant/evidence/2026-10-27-material-contact-readout-prerequisite');
+const BRANCH = 'codex/ant-material-contact-readout-prerequisite-20261027';
+const sha = value => createHash('sha256').update(value).digest('hex');
+const git = (...args) => execFileSync('git', args, { cwd: ROOT, maxBuffer: 16 * 1024 * 1024 });
+const gitText = (...args) => git(...args).toString('utf8').trim();
+
+export function physicalCell({ x, y }, size = 96) {
+  return Math.round(y * (size - 1)) * size + Math.round(x * (size - 1));
+}
+
+export function displayCell({ x, y }, pixels = 640, size = 96) {
+  const px = Math.min(pixels - 1, Math.floor(x * pixels));
+  const py = Math.min(pixels - 1, Math.floor(y * pixels));
+  return Math.floor((py + 0.5) * size / pixels) * size + Math.floor((px + 0.5) * size / pixels);
+}
+
+export function ownerAt(material, cell) {
+  const index = material.stratigraphy.topLayerByCell[cell];
+  return index >= 0 ? material.plates[index]?.id ?? null : null;
+}
+
+export function summarizeHistory(strikes, material, field) {
+  const raw = [], alphas = [], physicalCells = new Set(), pixelBins = new Set();
+  let buried = 0, displayOutside = 0, displayOtherOwner = 0, zeroAlpha = 0, exposedZeroAlpha = 0;
+  for (const strike of strikes) {
+    const { position, plateId } = strike.payload;
+    const currentOwner = ownerAt(material, physicalCell(position));
+    const screenOwner = ownerAt(material, displayCell(position));
+    const value = field.sample(position.x, position.y), alpha = pheromoneValueToAlpha(value);
+    raw.push(value); alphas.push(alpha);
+    buried += Number(currentOwner !== plateId);
+    displayOutside += Number(screenOwner === null);
+    displayOtherOwner += Number(screenOwner !== null && screenOwner !== plateId);
+    zeroAlpha += Number(alpha === 0);
+    exposedZeroAlpha += Number(alpha === 0 && currentOwner === plateId);
+    physicalCells.add(physicalCell(position));
+    pixelBins.add(Math.min(639, Math.floor(position.y * 640)) * 640 + Math.min(639, Math.floor(position.x * 640)));
+  }
+  return { strikes: strikes.length, uniquePhysicalCells: physicalCells.size,
+    uniqueNativePointBins: pixelBins.size, noLongerExposedOnOriginalPlate: buried,
+    displayOutsideSupport: displayOutside, displayDifferentOwner: displayOtherOwner,
+    zeroMappedScalarSamples: zeroAlpha, stillExposedZeroMappedScalarSamples: exposedZeroAlpha,
+    rawPheromone: distribution(raw), scalarAlphaProxy: distribution(alphas) };
+}
+
+function distribution(values) {
+  if (!values.length) return null;
+  const sorted = [...values].sort((a, b) => a - b);
+  return { min: sorted[0], p05: sorted[Math.floor((sorted.length - 1) * 0.05)],
+    median: sorted[Math.floor((sorted.length - 1) * 0.5)],
+    p95: sorted[Math.floor((sorted.length - 1) * 0.95)], max: sorted.at(-1),
+    mean: values.reduce((sum, value) => sum + value, 0) / values.length };
+}
+
+/** Recording transport only: the production bridge still selects and calculates every route. */
+export async function createRouteObserver({ context = () => ({}), sink = () => {} } = {}) {
+  let posts = [], resolutions = [], onTopologies = 0, offPosts = 0, calls = 0;
+  const on = new SurfaceAudioBridge({ audioEngine: {}, workletFactory: async () => ({
+    node: { port: { postMessage(message) {
+      if (message.type === 'strike') posts.push(structuredClone(message.payload));
+      if (message.type === 'topology') onTopologies += 1;
+    } } }, disconnect() {}
+  }) });
+  const off = new SurfaceAudioBridge({ audioEngine: {}, workletFactory: async () => {
+    offPosts += 1;
+    throw new Error('Off bridge must never create a worklet');
+  } });
+  const exposedAt = on.exposedPlateAt.bind(on);
+  on.exposedPlateAt = position => {
+    const plate = exposedAt(position);
+    resolutions.push({ position: { ...position }, plateId: plate?.id ?? null,
+      physicalCell: physicalCell(position), displayCell: displayCell(position) });
+    return plate;
+  };
+  assert.equal(await on.setEnabled(true), true);
+  const wrapper = {
+    syncMaterial(material) {
+      assert.equal(on.syncMaterial(material), true);
+      assert.equal(off.syncMaterial(material), true);
+      assert.deepEqual(on.routingTopLayerByCell96, off.routingTopLayerByCell96);
+    },
+    handleFootContact(event, { responses }) {
+      calls += 1;
+      const before = JSON.stringify({ event, responses });
+      posts = []; resolutions = [];
+      const onDelivered = on.handleFootContact(event, { responses });
+      const offDelivered = off.handleFootContact(event, { responses });
+      assert.equal(offDelivered, false);
+      assert.equal(JSON.stringify({ event, responses }), before, 'observer/bridge mutated contact inputs');
+      const eligible = resolutions.filter(row => row.plateId !== null);
+      assert.equal(posts.length, eligible.length);
+      assert.equal(onDelivered, posts.length > 0);
+      posts.forEach((payload, index) => {
+        assert.equal(payload.plateId, eligible[index].plateId);
+        assert.deepEqual(payload.position, eligible[index].position);
+        assert.ok(Number.isFinite(payload.strength) && payload.strength > 0);
+      });
+      assert.equal(on.diagnostics.supportedFeet, off.diagnostics.supportedFeet);
+      assert.equal(on.diagnostics.unsupportedFeet, off.diagnostics.unsupportedFeet);
+      sink({ ...context(), event: structuredClone(event), responses: structuredClone(responses),
+        topologyRevision: on.materialRevision, resolutions, posts });
+      return onDelivered;
+    },
+    async destroy() { await on.destroy(); await off.destroy(); }
+  };
+  return { wrapper, on, off, diagnostics: () => ({ calls, onTopologies, offWorkletCreations: offPosts,
+    on: { ...on.diagnostics }, off: { ...off.diagnostics } }) };
+}
+
+async function loadH1Controller() {
+  const path = 'src/lib/agents/ant/AntController.js';
+  const original = await readFile(resolve(ROOT, path), 'utf8');
+  assert.equal(original.replace(/\r\n/g, '\n'), git('show', `${MAIN}:${path}`).toString('utf8').replace(/\r\n/g, '\n'),
+    'production controller differs beyond checkout line endings');
+  const from = 'heading: SPAWN_HEADING + signed(this.random) * SPAWN_HEADING_SPREAD';
+  const to = 'heading: wrapAngle(-Math.PI + TAU * this.random())';
+  assert.equal(original.split(from).length, 2, 'H1 transform must replace one accepted-heading expression');
+  const transformed = original.replace(from, to).replace(/from '(\.\/[^']+)'/g,
+    (_, relative) => `from '${pathToFileURL(resolve(ROOT, dirname(path), relative)).href}'`);
+  const { AntController } = await import(`data:text/javascript;base64,${Buffer.from(transformed).toString('base64')}`);
+  return { AntController, transform: { path, sourceSha256: sha(original), transformedSha256: sha(transformed),
+    replacement: { from, to }, importResolutionOnly: true } };
+}
+
+function randomStream() {
+  let state = 20261005 >>> 0, calls = 0;
+  const random = () => { calls += 1; state = (Math.imul(state, 1664525) + 1013904223) >>> 0; return state / 0x100000000; };
+  random.record = () => ({ state, calls });
+  return random;
+}
+
+function objectHash(value) {
+  return sha(JSON.stringify(value, (key, item) => ArrayBuffer.isView(item)
+    ? { typed: item.constructor.name, sha256: sha(Buffer.from(item.buffer, item.byteOffset, item.byteLength)) }
+    : item instanceof Map ? { map: [...item] } : item instanceof Set ? { set: [...item] } : item));
+}
+
+function systemHash(controller) {
+  const { random, listeners, audioBridge, ...systems } = controller;
+  return objectHash(systems);
+}
+
+// Retains the prior H1 capture's exact public fingerprint definition, including its mask limitation.
+function legacyFingerprint(snapshot, rng) {
+  const material = snapshot.stratigraphy, topology = material.stratigraphy;
+  const plates = [...material.plates, ...snapshot.surfacePlates.plates];
+  const metadata = JSON.stringify({ state: snapshot.state, status: snapshot.status,
+    agents: snapshot.agents, audio: snapshot.audio, analysis: snapshot.analysis, rng,
+    material: { revision: material.revision, layerOrder: topology.layerOrder,
+      plates: material.plates.map(plate => ({ id: plate.id, bornAtSimulationTimeMs: plate.bornAtSimulationTimeMs,
+        grid: plate.grid, material: plate.material, centerline: plate.centerline, edges: plate.edges })) },
+    surfacePlates: snapshot.surfacePlates.plates.map(plate => ({ id: plate.id,
+      bornAtSimulationTimeMs: plate.bornAtSimulationTimeMs, grid: plate.grid })) });
+  const hash = createHash('sha256').update(metadata);
+  for (const array of [snapshot.pheromone.values, snapshot.surface.values, topology.topLayerByCell,
+    topology.layerCountByCell, topology.totalDepthByCellMeters, ...plates.map(p => p.mask).filter(ArrayBuffer.isView)]) {
+    hash.update(Buffer.from(array.buffer, array.byteOffset, array.byteLength));
+  }
+  return hash.digest('hex');
+}
+
+async function main() {
+  assert.equal(gitText('branch', '--show-current'), BRANCH);
+  assert.equal(gitText('rev-parse', 'origin/main'), MAIN);
+  assert.equal(gitText('diff', MAIN, '--', 'src', 'static'), '', 'production source must remain unchanged');
+  await mkdir(OUTPUT, { recursive: true });
+  assert.deepEqual((await readdir(OUTPUT)).sort(), ['PLAN.md'], 'refusing to overwrite evidence');
+  const sourcePaths = gitText('ls-tree', '-r', '--name-only', MAIN, 'src/lib/agents/ant', 'src/lib/audio', 'src/lib/renderers').split('\n');
+  const sourceHashes = async () => Object.fromEntries(await Promise.all(sourcePaths.map(async path =>
+    [path, sha(await readFile(resolve(ROOT, path)))])));
+  const beforeSources = await sourceHashes();
+  const priorBytes = git('show', `${PRIOR}:docs/ant/evidence/2026-10-26-heading-material-visibility-shadow/frame-map-H1.csv`);
+  const lines = priorBytes.toString('utf8').trim().split(/\r?\n/), headers = lines.shift().split(',');
+  const prior = new Map(lines.map(line => { const cells = line.split(',');
+    const row = Object.fromEntries(headers.map((name, i) => [name, cells[i]])); return [Number(row.tick), row]; }));
+  const { AntController, transform } = await loadH1Controller();
+  const rows = [], strikes = [], anchors = [], milestones = [], births = [];
+  let tick = 0, firstTick = null;
+  const observer = await createRouteObserver({ context: () => ({ tick }), sink(row) {
+    row.resolutions.forEach(resolution => {
+      const snapshot = world.materialStratigraphy.getSnapshot();
+      assert.equal(resolution.plateId, ownerAt(snapshot, resolution.physicalCell));
+      resolution.displayOwnerAtContact = ownerAt(snapshot, resolution.displayCell);
+    });
+    rows.push(row);
+    for (const [order, payload] of row.posts.entries()) strikes.push({ tick, eventTimeMs: row.event.simulationTimeMs,
+      order, payload, topologyRevision: row.topologyRevision });
+  } });
+  const random = randomStream(), twinRandom = randomStream();
+  const world = new AntController({ random, audioBridge: observer.wrapper });
+  const twin = new AntController({ random: twinRandom });
+  const eventDigests = [createHash('sha256'), createHash('sha256')];
+  const counts = [0, 0];
+  for (const [index, controller] of [world, twin].entries()) controller.subscribe(({ type, payload }) => {
+    if (!['foot-contact', 'plate-birth', 'sphere-birth', 'error'].includes(type)) return;
+    assert.notEqual(type, 'error', JSON.stringify(payload));
+    eventDigests[index].update(JSON.stringify({ type, payload })); counts[index] += 1;
+    if (!index && type === 'plate-birth') { births.push({ tick, id: payload.id, simulationTimeMs: payload.bornAtSimulationTimeMs }); firstTick ??= tick; }
+  });
+  await world.init(); await twin.init();
+  world.syncEnvironmentAudio();
+  const started = performance.now();
+  function checkpoint() {
+    const snapshot = world.getSnapshot(), twinSnapshot = twin.getSnapshot(), rng = random.record();
+    const hash = objectHash(snapshot);
+    assert.equal(hash, objectHash(twinSnapshot), `public snapshot parity at tick ${tick}`);
+    const old = prior.get(tick);
+    if (old) {
+      assert.equal(String(rng.state), old.rngState);
+      assert.equal(String(rng.calls), old.rngCalls);
+      assert.equal(legacyFingerprint(snapshot, rng), old.sourceStateSha256, `prior H1 state at tick ${tick}`);
+    }
+    anchors.push({ tick, simulationTimeMs: world.simulationTimeMs, ...rng, fullPublicSnapshotSha256: hash,
+      priorMatched: Boolean(old) });
+  }
+  function milestone(name) {
+    assert.equal(systemHash(world), systemHash(twin), `controller systems parity at ${name}`);
+    milestones.push({ name, tick, simulationTimeMs: world.simulationTimeMs,
+      plates: world.materialStratigraphy.plates.length, systemStateSha256: systemHash(world),
+      history: summarizeHistory(strikes, world.materialStratigraphy.getSnapshot(), world.field) });
+  }
+  try {
+    checkpoint();
+    while (tick < 6301) {
+      assert.ok(performance.now() - started < 180000, 'registered 180 wall-second boundary exceeded');
+      tick += 1;
+      world.tick(1 / 60); twin.tick(1 / 60);
+      assert.deepEqual(random.record(), twinRandom.record(), `RNG parity at tick ${tick}`);
+      assert.equal(counts[0], counts[1]);
+      assert.equal(eventDigests[0].copy().digest('hex'), eventDigests[1].copy().digest('hex'), `events at tick ${tick}`);
+      if (tick % 6 === 0) checkpoint();
+      if (tick === firstTick) milestone('first-plate');
+      if (firstTick !== null && tick === firstTick + 900) milestone('first-plate-plus-15s');
+      if (firstTick !== null && tick === firstTick + 1800) { checkpoint(); milestone('first-plate-plus-30s'); break; }
+    }
+    assert.equal(firstTick, 4501, 'validated H1 first Plate changed');
+    assert.equal(tick, firstTick + 1800, 'no complete registered early window');
+    assert.equal(strikes.length, observer.on.diagnostics.directExposedStrikes);
+    const afterSources = await sourceHashes();
+    assert.deepEqual(beforeSources, afterSources);
+    const summary = { schemaVersion: 1, status: 'TECHNICAL PREREQUISITE COMPLETE; NO ARTISTIC VERDICT',
+      main: MAIN, branch: BRANCH, researchReference: gitText('rev-parse', RESEARCH), priorH1: PRIOR,
+      runnerSha256: sha(await readFile(fileURLToPath(import.meta.url))), transform,
+      node: process.version, seed: 20261005, dtSeconds: 1 / 60, tickCount: tick, firstPlateTick: firstTick,
+      endpointSimulationTimeMs: world.simulationTimeMs, wallSeconds: (performance.now() - started) / 1000,
+      noBrowserOrDSP: true, nativeGridUsedOnlyForPointMapping: 640,
+      priorFrameMapSha256: sha(priorBytes), parityAnchors: anchors.length,
+      priorMatchedAnchors: anchors.filter(row => row.priorMatched).length,
+      eventDigest: eventDigests[0].digest('hex'), rng: random.record(), births, milestones,
+      rawGroupedEvents: rows.length, rawFeet: rows.reduce((n, row) => n + row.event.contacts.length, 0),
+      responseFeet: rows.reduce((n, row) => n + row.responses.length, 0),
+      eligibleSupportDisplayOutsideAtContact: rows.flatMap(row => row.resolutions)
+        .filter(row => row.plateId && row.displayOwnerAtContact === null).length,
+      eligibleSupportDisplayOtherOwnerAtContact: rows.flatMap(row => row.resolutions)
+        .filter(row => row.plateId && row.displayOwnerAtContact && row.displayOwnerAtContact !== row.plateId).length,
+      transport: observer.diagnostics(), sourceHashes: beforeSources, sourceHashesUnchanged: true,
+      limits: ['Routing oracle has a ready fake port, not an AudioContext/Worklet or PCM.',
+        'Scalar alpha samples are not displayed smoothed pixels or perceptual visibility.',
+        'Native point bins are not mark footprint/contrast/ink coverage.',
+        'H1 is diagnostic; no H0 transfer, mature-world, human or causal-identity claim.'] };
+    await writeFile(resolve(OUTPUT, 'contacts.jsonl'), rows.map(row => JSON.stringify(row)).join('\n') + '\n');
+    await writeFile(resolve(OUTPUT, 'strikes.jsonl'), strikes.map(row => JSON.stringify(row)).join('\n') + '\n');
+    await writeFile(resolve(OUTPUT, 'parity-anchors.json'), JSON.stringify(anchors, null, 2) + '\n');
+    await writeFile(resolve(OUTPUT, 'measurement.json'), JSON.stringify(summary, null, 2) + '\n');
+    console.log(JSON.stringify({ tick, firstTick, strikes: strikes.length, milestones, transport: observer.diagnostics(),
+      anchors: anchors.length, wallSeconds: summary.wallSeconds }, null, 2));
+  } catch (error) {
+    await writeFile(resolve(OUTPUT, 'FAILURE.json'), JSON.stringify({ tick, firstTick,
+      error: String(error.stack), rng: random.record(), rows: rows.length, strikes: strikes.length }, null, 2));
+    throw error;
+  } finally { await world.destroy(); await twin.destroy(); }
+}
+
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await main();

@@ -1,0 +1,16 @@
+import { execFileSync } from 'node:child_process';
+import { pathToFileURL } from 'node:url';
+import { resolve } from 'node:path';
+const git = ref => execFileSync('git', ['show', `${ref}:src/lib/agents/ant/AntController.js`], { encoding: 'utf8' });
+const load = async text => (await import('data:text/javascript;base64,' + Buffer.from(text.replace(/from '(\.\/[^']+)'/g,
+  (_, p) => `from '${pathToFileURL(resolve('src/lib/agents/ant', p)).href}'`)).toString('base64'))).AntController;
+function random() { let s = 20261005; return () => { s = (Math.imul(s, 1664525) + 1013904223) >>> 0; return s / 4294967296; }; }
+const A = await load(git('origin/main').replace('heading: SPAWN_HEADING + signed(this.random) * SPAWN_HEADING_SPREAD',
+  'heading: wrapAngle(-Math.PI + TAU * this.random())'));
+const B = await load(git('bee3a69'));
+const a = new A({ random: random() }), b = new B({ random: random(), acceptedHeadingMode: 'isotropic-diagnostic' });
+await a.init(); await b.init();
+for (let i = 0; i < 6; i++) { a.tick(1 / 60); b.tick(1 / 60); }
+console.log(JSON.stringify({ same: JSON.stringify(a.getSnapshot()) === JSON.stringify(b.getSnapshot()),
+  a: a.agents[0].heading, b: b.agents[0].heading }));
+await a.destroy(); await b.destroy();
