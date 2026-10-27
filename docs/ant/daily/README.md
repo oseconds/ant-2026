@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-27 — Contact-history temporal correspondence
+
+[Process log](./2026-10-27-contact-history-temporal-causality.md) · [Synchronized review](../evidence/2026-10-27-contact-history-temporal-causality/review.html) · [Evidence](../evidence/2026-10-27-contact-history-temporal-causality/README.md)
+
+- Replaced the failed rigid relocation control with a deterministic within-Plate event-position permutation; the prior manipulation-invalid result remains separate
+- All 760 eligible event instances matched in complete cycles; event timing, final position multiset, H1 state, RNG and event digest were preserved across views
+- Native lossless synchronized videos and milestone stills are ready; artist review remains pending
+
 ### 2026-10-25 — Candidate G production adoption
 
 [Adoption record](../evidence/2026-10-25-g-production-adoption/README.md)
