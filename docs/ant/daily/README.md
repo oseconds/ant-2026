@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-27 — Contact-history causal readout preflight
+
+[Evidence](../evidence/2026-10-27-contact-history-causal-readout/README.md)
+
+- Replayed the registered H1 contact stream and matched all 1,052 prior state/RNG anchors
+- The best registered same-Plate relocation preserved support and 12 px separation for only 354/760 routes, below the preregistered 90% threshold
+- Stopped before artist-facing capture; no A/B media or artist verdict was produced
+
 ### 2026-10-25 — Candidate G production adoption
 
 [Adoption record](../evidence/2026-10-25-g-production-adoption/README.md)
