@@ -1,0 +1,48 @@
+{
+  "schema": "ant-g-formation-information-ledger-validation-v1",
+  "completedAt": "2026-10-28",
+  "branchBase": "aeefa12d8de9da400cb8a2a3d4b5080a21ba0292",
+  "runner": {
+    "path": "scripts/ant-g-formation-information-ledger.js",
+    "sha256": "0f3079676d2024eda23cb90cab3589c3d861329cadc9c5fd02d07f1745da8153",
+    "nodeSyntaxCheck": "pass",
+    "selfCheck": {
+      "command": "node scripts/ant-g-formation-information-ledger.js --selfcheck",
+      "result": "pass",
+      "assertions": 7,
+      "transformedSelectorSha256": "b8d23a91ce61c959371d062023cbb8f2f101d274a4019a1fa3588017581de7d9"
+    }
+  },
+  "finalReplay": {
+    "command": "node scripts/ant-g-formation-information-ledger.js",
+    "status": "valid",
+    "analysisRows": 120,
+    "observerOffOnComparedTicks": 7201,
+    "observerOffOnParity": true,
+    "observerStateUnchangedAtEachAnalysis": true,
+    "diagnosticSelectorMatchesProductionAtEveryAnalysis": true,
+    "frozenEndpointPheromoneExact": true,
+    "frozenEndpointSurfaceExact": true,
+    "firstPlateTimeAndMaskReceiptExact": true,
+    "firstPlateCandidateEqualsFrozenDescriptorAtBirth": true,
+    "first120sArchivedContactTotalsExact": true,
+    "contactPrefixDigestAgainst600sArchive": "unavailable; not claimed"
+  },
+  "finalPackageIntegrity": {
+    "checkpointTypedArraysVerified": 80,
+    "checkpointArrayRawBytes": 3241280,
+    "checkpointIndexAndHashes": "pass",
+    "reviewPngsVerified": 80,
+    "reviewPngDimensions": "320x320",
+    "reviewPngCrcAndInflate": "pass",
+    "runnerHashMatchesFormationLedger": true
+  },
+  "sameSeedOffOnPairExecutionsDuringToolingQa": 4,
+  "scope": {
+    "productionSrcChanged": false,
+    "canonicalAntReadmeChanged": false,
+    "fullNpmTest": "not run",
+    "build": "not run",
+    "gitDiffCheck": "pass"
+  }
+}
