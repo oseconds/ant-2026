@@ -1,0 +1,256 @@
+TAP version 13
+# Subtest: production selector remains identical on root, fork, and merge fixtures
+ok 1 - production selector remains identical on root, fork, and merge fixtures
+  ---
+  duration_ms: 48.9033
+  type: 'test'
+  ...
+# Subtest: reversed parent tie changes the chosen principal route on an equal fork
+ok 2 - reversed parent tie changes the chosen principal route on an equal fork
+  ---
+  duration_ms: 17.1925
+  type: 'test'
+  ...
+# Subtest: all-shortest adds the omitted equal route without changing the principal path
+ok 3 - all-shortest adds the omitted equal route without changing the principal path
+  ---
+  duration_ms: 11.0433
+  type: 'test'
+  ...
+# Subtest: all-shortest network excludes a longer reconnecting route, is deterministic, and consumes no RNG
+ok 4 - all-shortest network excludes a longer reconnecting route, is deterministic, and consumes no RNG
+  ---
+  duration_ms: 22.7441
+  type: 'test'
+  ...
+# Subtest: separates omitted H history from E qualification and records sampled absence and return
+ok 5 - separates omitted H history from E qualification and records sampled absence and return
+  ---
+  duration_ms: 5.8573
+  type: 'test'
+  ...
+# Subtest: tracks first-birth omitted cells separately from later I incorporation and frozen coverage
+ok 6 - tracks first-birth omitted cells separately from later I incorporation and frozen coverage
+  ---
+  duration_ms: 1.5366
+  type: 'test'
+  ...
+# Subtest: records every positive component overlap across split and merge without stable identities
+ok 7 - records every positive component overlap across split and merge without stable identities
+  ---
+  duration_ms: 0.9626
+  type: 'test'
+  ...
+# Subtest: reports diagonal microcycle sensitivity between production 8-neighbor and guarded graphs
+ok 8 - reports diagonal microcycle sensitivity between production 8-neighbor and guarded graphs
+  ---
+  duration_ms: 0.2645
+  type: 'test'
+  ...
+# Subtest: does not count first onset as a return and uses full H to guard diagonal O edges
+ok 9 - does not count first onset as a return and uses full H to guard diagonal O edges
+  ---
+  duration_ms: 0.325
+  type: 'test'
+  ...
+# Subtest: bins fractional contacts by analysis interval and conserves the tail after the last analysis
+ok 10 - bins fractional contacts by analysis interval and conserves the tail after the last analysis
+  ---
+  duration_ms: 1.0554
+  type: 'test'
+  ...
+# Subtest: marks omitted cells already covered by the frozen union at birth
+ok 11 - marks omitted cells already covered by the frozen union at birth
+  ---
+  duration_ms: 0.5396
+  type: 'test'
+  ...
+# Subtest: rejects nonfinite fields and an I cell outside H
+ok 12 - rejects nonfinite fields and an I cell outside H
+  ---
+  duration_ms: 0.8709
+  type: 'test'
+  ...
+# Subtest: keeps root-to-target route and excludes terminal-free spur
+ok 13 - keeps root-to-target route and excludes terminal-free spur
+  ---
+  duration_ms: 1.5153
+  type: 'test'
+  ...
+# Subtest: keeps both unequal reconnection routes and excludes a pendant cycle
+ok 14 - keeps both unequal reconnection routes and excludes a pendant cycle
+  ---
+  duration_ms: 1.4173
+  type: 'test'
+  ...
+# Subtest: supports articulation targets and root-equals-target
+ok 15 - supports articulation targets and root-equals-target
+  ---
+  duration_ms: 0.4591
+  type: 'test'
+  ...
+# Subtest: diagonal guard removes a diagonal edge beside either orthogonal cell
+ok 16 - diagonal guard removes a diagonal edge beside either orthogonal cell
+  ---
+  duration_ms: 0.2849
+  type: 'test'
+  ...
+# Subtest: matches simple-path union on connected tiny graphs with either terminal set and diagonal rule
+ok 17 - matches simple-path union on connected tiny graphs with either terminal set and diagonal rule
+  ---
+  duration_ms: 20.2715
+  type: 'test'
+  ...
+# Subtest: rejects absent terminals and disconnected inputs
+ok 18 - rejects absent terminals and disconnected inputs
+  ---
+  duration_ms: 0.7309
+  type: 'test'
+  ...
+# Subtest: compiles sparse 32-grid nodes and global four-neighbor indices without changing frozen 96-grid masks
+ok 19 - compiles sparse 32-grid nodes and global four-neighbor indices without changing frozen 96-grid masks
+  ---
+  duration_ms: 9.179
+  type: 'test'
+  ...
+# Subtest: diagonal graph bridges survive conservative downsampling
+ok 20 - diagonal graph bridges survive conservative downsampling
+  ---
+  duration_ms: 3.8953
+  type: 'test'
+  ...
+# Subtest: stratigraphy order controls local bottom-to-top columns, top exposure routing, and only adjacent vertical links
+ok 21 - stratigraphy order controls local bottom-to-top columns, top exposure routing, and only adjacent vertical links
+  ---
+  duration_ms: 9.2848
+  type: 'test'
+  ...
+# Subtest: never couples masks that only share a coarse32 bin but have no 96-cell overlap
+ok 22 - never couples masks that only share a coarse32 bin but have no 96-cell overlap
+  ---
+  duration_ms: 4.9246
+  type: 'test'
+  ...
+# Subtest: uses A-to-C adjacency where the middle stratum is locally absent at 96-cell scale
+ok 23 - uses A-to-C adjacency where the middle stratum is locally absent at 96-cell scale
+  ---
+  duration_ms: 4.7968
+  type: 'test'
+  ...
+# Subtest: rejects a supplied exposure table that disagrees with frozen birth masks
+ok 24 - rejects a supplied exposure table that disagrees with frozen birth masks
+  ---
+  duration_ms: 2.8812
+  type: 'test'
+  ...
+# Subtest: packs nodules and couples only to the deepest valid local foundation plate
+ok 25 - packs nodules and couples only to the deepest valid local foundation plate
+  ---
+  duration_ms: 8.7932
+  type: 'test'
+  ...
+# Subtest: supports no born plates and enforces the explicit technical layer ceiling
+ok 26 - supports no born plates and enforces the explicit technical layer ceiling
+  ---
+  duration_ms: 35.3836
+  type: 'test'
+  ...
+# Subtest: plate descriptors create immutable bottom-to-top cell columns and age never creates depth
+ok 27 - plate descriptors create immutable bottom-to-top cell columns and age never creates depth
+  ---
+  duration_ms: 7.2088
+  type: 'test'
+  ...
+# Subtest: cached topology lookup and stable plate index mapping expose only the uppermost material
+ok 28 - cached topology lookup and stable plate index mapping expose only the uppermost material
+  ---
+  duration_ms: 0.5965
+  type: 'test'
+  ...
+# Subtest: FOOT_CONTACT counts each in-domain foot and ignores centroid, strength, malformed and out-of-domain data
+ok 29 - FOOT_CONTACT counts each in-domain foot and ignores centroid, strength, malformed and out-of-domain data
+  ---
+  duration_ms: 0.6882
+  type: 'test'
+  ...
+# Subtest: a nodule requires four overlapping plates, three buried layers, compaction, actual foot load and persistence
+ok 30 - a nodule requires four overlapping plates, three buried layers, compaction, actual foot load and persistence
+  ---
+  duration_ms: 3.5393
+  type: 'test'
+  ...
+# Subtest: elapsed simulation time alone cannot create a nodule without contact load or enough material history
+ok 31 - elapsed simulation time alone cannot create a nodule without contact load or enough material history
+  ---
+  duration_ms: 5.9644
+  type: 'test'
+  ...
+# Subtest: loss of a qualification condition resets persistence instead of banking old elapsed time
+ok 32 - loss of a qualification condition resets persistence instead of banking old elapsed time
+  ---
+  duration_ms: 1.8581
+  type: 'test'
+  ...
+# Subtest: metadata cap, read-only topology reuse and reset retain deterministic bounded state
+ok 33 - metadata cap, read-only topology reuse and reset retain deterministic bounded state
+  ---
+  duration_ms: 0.561
+  type: 'test'
+  ...
+# Subtest: default metadata ceiling preserves more than the previous twelve plate limit without eviction
+ok 34 - default metadata ceiling preserves more than the previous twelve plate limit without eviction
+  ---
+  duration_ms: 0.9538
+  type: 'test'
+  ...
+# Subtest: local annular chemical plus mechanical ridge births a frozen network after stable persistence
+ok 35 - local annular chemical plus mechanical ridge births a frozen network after stable persistence
+  ---
+  duration_ms: 182.136
+  type: 'test'
+  ...
+# Subtest: short-lived trail signal cannot become a persistent plate and real fields are read without sensing calls
+ok 36 - short-lived trail signal cannot become a persistent plate and real fields are read without sensing calls
+  ---
+  duration_ms: 35.8678
+  type: 'test'
+  ...
+# Subtest: transverse route support changes ribbon width while retaining bounded physical geometry
+ok 37 - transverse route support changes ribbon width while retaining bounded physical geometry
+  ---
+  duration_ms: 125.4757
+  type: 'test'
+  ...
+# Subtest: distant qualifying branches survive skeleton pruning while short dead-end growth stays out of the plate
+ok 38 - distant qualifying branches survive skeleton pruning while short dead-end growth stays out of the plate
+  ---
+  duration_ms: 138.4214
+  type: 'test'
+  ...
+# Subtest: spawn-center pixels, remote trails, chemical-only ridges, and short paths cannot qualify
+ok 39 - spawn-center pixels, remote trails, chemical-only ridges, and short paths cannot qualify
+  ---
+  duration_ms: 43.2992
+  type: 'test'
+  ...
+# Subtest: real FOOT_CONTACT accumulation, corridor refractory, global spacing, and birth limit are explicit
+ok 40 - real FOOT_CONTACT accumulation, corridor refractory, global spacing, and birth limit are explicit
+  ---
+  duration_ms: 63.191
+  type: 'test'
+  ...
+# Subtest: birth limit reports full and preserves existing descriptors without eviction
+ok 41 - birth limit reports full and preserves existing descriptors without eviction
+  ---
+  duration_ms: 88.0101
+  type: 'test'
+  ...
+1..41
+# tests 41
+# suites 0
+# pass 41
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 808.0273

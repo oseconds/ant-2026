@@ -1,0 +1,57 @@
+{
+  "schema": "ant-omitted-history-capture-v1",
+  "packetSha256": "909516b870b4ddce04ab661c4e7cd4113c52dc16ed35e414142fceb2cff0b1bc",
+  "rawSha256": "fba546769a1ddc552247a93f5c2d3719193b8d4785ed672442dcae1960e25339",
+  "compressedBytes": 17766995,
+  "rawBytes": 69227056,
+  "analyses": 120,
+  "contactGroups": 4368,
+  "individualFeet": 12954,
+  "matchedTickRows": 7201,
+  "matchedDomains": 10,
+  "checkpointArraysMatched": 75,
+  "allAnalysisMetadataExact": true,
+  "frozenChecks": {
+    "frozenPacketSeconds": 120,
+    "endpointSimulationTimeMs": 120000.00000001203,
+    "endpointPheromoneExact": true,
+    "endpointSurfaceExact": true,
+    "firstPlateReceiptExact": true,
+    "firstPlate": {
+      "id": "trail-plate-1",
+      "bornAtSimulationTimeMs": 84016.66666666823,
+      "expectedBornAtSimulationTimeMs": 84016.66666666823,
+      "maskSha256": "3a5a0f5a7252a19e54ce1db0666226e5fd3a4382d6fda0bb4ba8dcc0ce2417ce",
+      "expectedMaskSha256": "3a5a0f5a7252a19e54ce1db0666226e5fd3a4382d6fda0bb4ba8dcc0ce2417ce"
+    },
+    "contactDigestReceiptExact": null,
+    "contactPrefixCountsExact": true,
+    "expectedPrefixCounts": {
+      "contactGroups": 4368,
+      "individualFeet": 12954
+    },
+    "observedPrefixCounts": {
+      "contactGroups": 4368,
+      "individualFeet": 12954
+    },
+    "contactDigestComparison": "Unavailable: the frozen packet stores only a 600 s digest. The 120 s event prefix is checked internally between observer OFF/ON, and first-120 s archived group/foot totals are compared.",
+    "frozenContactDigestSha256": "d2bfaf5b8c8b9c2e517a5964e5506da187d0bd22fed1b3d7e90e9d2c85b5238f",
+    "observed120sContactPrefixSha256": "0a22a5b5ed5a26046f0b6390eabf0f12246e27aa510727095087424ac487ddfb",
+    "note": "Projection uses the frozen G runner 96-grid bilinear coordinates; endpoint array comparisons are exact Float32 values."
+  },
+  "sourceHashes": {
+    "src/lib/agents/ant/AntController.js": "b5a6344ebed52962a1749d612b0140b6a4249817f159758e13f166877078e9f4",
+    "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+    "src/lib/agents/ant/PheromoneField.js": "b68e98b5d916950487da67237a0d0277451d3b930971c1d8a35e92fd7d6f9837",
+    "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+    "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+    "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+    "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+    "src/lib/agents/ant/BodyPoseController.js": "2ec4cc12c12ae301ea07056889c3be9255b1b1e155b7724cd3366278d60ace8e",
+    "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+    "src/lib/agents/ant/LocalOccupancy.js": "df22dd38e9af8078ebcb1d225ca2a5eaf579e994d2d4a00ce9ceeefa2403ff16",
+    "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd"
+  },
+  "replayCount": 1,
+  "scope": "same Node runtime as sealed H0 ledger; one observed replay matched to pre-existing tick chains; no new OFF world"
+}

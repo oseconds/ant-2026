@@ -1,0 +1,13 @@
+# Independent acquisition / omitted-history review
+
+Reviewer: a fresh-context GPT-6 Luna agent, Max reasoning, read-only. It inspected capture/analyzer/summary code, focused fixtures, packet/validation receipts, the parent ledger and Pass 2 output. It did not run a natural world, tests or listening. This is a summary of returned findings, not an additional experiment.
+
+- Acquisition parity is substantive. Although the helper is invoked with the same recovered row array twice to construct chains, the resulting ordered ten-domain chains are compared to the sealed prior OFF/ON ledger. Source hashes, endpoints, first-birth receipt, prefix totals and 75 checkpoint arrays add independent checks. It is not a fresh OFF/ON pair and not a self-comparison-only claim.
+- The limited conclusion that O is not exclusively momentary noise is supported in one sampled seed/window. Pre-birth E/H medians 23/14 s must remain separate from full-window longest-run medians 55/36 s. Stability of raster coordinates is not biological or material-entity identity.
+- Foot samples are not independent visits or episodes. The gap summary's legacy `exactContactEventsBetweenBrackets` property counts individual feet. Its name must not widen interpretation. Counts are over the pre-birth interval, not restricted to each uninterrupted H run.
+- Attachment pixels/groups and cycle rank are strongly adjacency-sensitive. They cannot be described as counts of real routes/loops. Explicit graph-path provenance and fixed-footprint E/H timelines were needed beyond component counts; Pass 3 supplies them.
+- Later I membership and actual frozen coverage are distinct. All 122 newly frozen original O cells match actual Plate 2 at 106.016667 s. The 325 still uncovered at the last analysis are right-censored, not proven never selected.
+- Pass 2 source/input/result receipts match. The shortest predecessor transformation and compiler-bin mapping appear correct. First-birth 133 O cells sharing occupied 32-grid bins is weaker than 59 cells truly inside the 96-grid mask. The all-shortest effect is small: 22 of 506 recovered, 70 to 72 solver nodes. Future-foot readouts are geometric opportunities only.
+- Strongest counterargument: a sampled eligible raster can retain apparent structure while skeleton location changes. Coarse bins further hide fine spatial distinctions. The evidence supports retained availability at sampled coordinates; it does not establish a stable material body or artistic value.
+
+The early contact-bin equality error had already been corrected before review; the reviewer verified the corrected receipt. No additional blocking implementation defect was reported. A separate fresh-context final reviewer evaluates the completed four-pass gate report.
