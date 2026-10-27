@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-27 — Delayed causal contact-history reveal
+
+[Process record](./2026-10-27-delayed-contact-history-reveal.md) · [Evidence and synchronized review](../evidence/2026-10-27-delayed-contact-history-reveal/README.md)
+
+- Preserved the prior temporal-causality artist review on its original research branch; the new comparison starts from fresh main
+- Pre-registered the shortest qualifying reveal delay at 0.5 s, then captured 746 matched true-contact events in lockstep
+- State/RNG parity and exact endpoint convergence passed; artist review remains pending
+- Production renderer and simulation law stayed unchanged
+
 ### 2026-10-25 — Candidate G production adoption
 
 [Adoption record](../evidence/2026-10-25-g-production-adoption/README.md)

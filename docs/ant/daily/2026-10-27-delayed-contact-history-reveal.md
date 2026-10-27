@@ -1,0 +1,15 @@
+# 2026-10-27 — Delayed causal contact-history reveal
+
+Updated the completed temporal-causality branch with the artist's verbatim review and clarification, without changing its experiment code. Evidence-only commit `1f5a396b5e9765944f28719de7b5aa6b2cf8257b` was pushed and verified on `codex/ant-contact-history-temporal-causality-20261027`. The record keeps the multiple interpretations and first-view/order caveat; it does not claim old/history semantics.
+
+Fetched and verified fresh `origin/main` at `aeefa12d8de9da400cb8a2a3d4b5080a21ba0292`, then created `codex/ant-delayed-contact-history-reveal-20261027` directly from it. Production `src/` remained unchanged. H1 remained an in-memory diagnostic transform, and the pass reused the current-G seed `20261005` trajectory and registered contact glyph.
+
+Before candidate rendering, the four fixed delays were measured against the originating ant's post-tick position. The shortest qualifying delay was **0.5 s / 30 ticks**: 737 of 760 eligible events (96.97%) were at least 12 native pixels away; p25/median/p75 were 18.98/25.08/30.71 px. The endpoint-matched subset contains 746 events through tick 6271. The measured delay and table were written to the preregistration before capture.
+
+Captured immediate and delayed views in lockstep from ticks 4501–6301. All 746 selected event identities, Plate IDs, exact coordinates and 30-tick reveal offsets matched. Each scheduled target timestamp was the contact timestamp +500 ms; at 60 Hz, the first tick at or after the target gave measured delays of 500.145–516.666 ms, with at most 16.667 ms tick quantization. Event digest, tick-6301 full-state hash, RNG and 1,053 preflight anchors matched; pheromone/material hashes were recorded and twin parity passed. Renderer checks confirmed no RNG or event consumption and no snapshot mutation. At the endpoint, both views had the same 620 currently visible marks and identical position multisets. Three delayed marks were hidden by owner change at reveal; none later became visible again during the capture. Ten originating ants were absent at reveal. Endpoint convergence is expected by design.
+
+Prepared the synchronized neutral review page, two native 640×640 lossless videos, and birth / +15 s / +30 s stills. The review remains pending; the general research context is known, so simultaneous playback reduces sequential order bias but is not a blind test. See [the evidence package](../evidence/2026-10-27-delayed-contact-history-reveal/README.md).
+
+Validation: focused delay-selection tests **3/3 passed**; full `npm test` **342/342 passed**; `npm run build` passed; `git diff --check` and runner syntax check passed. The build emitted non-blocking Zod annotation and bundle-size warnings. This is a renderer research result only; no production decision changed.
+
+A fresh read-only audit found no evidence blocker. It identified one preregistration sentence that overstated sub-tick reveal precision; PLAN now distinguishes the exact per-event target timestamp from visibility at the first model tick at or after it. No registered delay or rendered condition changed.
