@@ -1,6 +1,9 @@
 import { squaredDistanceTo } from './antMaterialSubstrate.js';
 
 export const MATERIAL_READOUT_TRANSITION_PX = 4;
+export const MATERIAL_LOCAL_CONTOUR_RADIUS_PX = 12;
+export const MATERIAL_CONTOUR_TONE = 140;
+export const MATERIAL_CONTOUR_ALPHA = 24;
 export const PHEROMONE_SCREEN_MAX_ALPHA = 112;
 export const PHEROMONE_BAYER_4X4 = Object.freeze([
   0, 8, 2, 10,
@@ -65,6 +68,54 @@ export function buildMaterialReadoutMask(material, width, height) {
     stats: { supportPixels, boundaryPixels, positiveWeightPixels: weightedPixels,
       meanWeightAcrossCanvas: weightSum / size, maxInsideDistancePx: maxInsideDistance,
       transitionWidthPx: MATERIAL_READOUT_TRANSITION_PX } };
+}
+
+export function buildLocalMaterialContourMask(boundary, baselineAlpha, effectiveWeights, width, height, radiusPx,
+  output = null) {
+  if (!Number.isInteger(width) || width < 1 || !Number.isInteger(height) || height < 1
+    || !Number.isFinite(radiusPx) || radiusPx < 0) {
+    throw new TypeError('Invalid local contour dimensions or radius');
+  }
+  const size = width * height;
+  if (boundary?.length !== size || baselineAlpha?.length !== size || effectiveWeights?.length !== size
+    || (output && output.length !== size)) {
+    throw new TypeError('Invalid local contour dimensions or radius');
+  }
+  output ||= new Uint8Array(size);
+  const active = new Uint8Array(size);
+  let activePixels = 0;
+  for (let index = 0; index < size; index += 1) {
+    active[index] = Number(baselineAlpha[index] > 0 && effectiveWeights[index] > 0);
+    activePixels += active[index];
+  }
+  output.fill(0);
+  if (!activePixels) return output;
+  const activityDistanceSquared = squaredDistanceTo(active, width, height, 1), radiusSquared = radiusPx * radiusPx;
+  for (let index = 0; index < size; index += 1) {
+    output[index] = Number(boundary[index] > 0 && activityDistanceSquared[index] <= radiusSquared);
+  }
+  return output;
+}
+
+export function applyMaterialContourUnderPheromone(pixels, contourMask, baselineAlpha) {
+  const size = contourMask?.length;
+  if (!size || pixels?.length !== size * 4 || baselineAlpha?.length !== size) {
+    throw new TypeError('Contour mask, pheromone alpha, and RGBA pixels must match');
+  }
+  const contourBackground = 255 + (MATERIAL_CONTOUR_TONE - 255) * MATERIAL_CONTOUR_ALPHA / 255;
+  let contourPixels = 0, changedPixels = 0, addedDarkness = 0;
+  for (let index = 0; index < size; index += 1) {
+    if (!contourMask[index]) continue;
+    const offset = index * 4, previous = pixels[offset];
+    const gray = Math.round(contourBackground * (255 - baselineAlpha[index]) / 255);
+    pixels[offset] = pixels[offset + 1] = pixels[offset + 2] = gray;
+    pixels[offset + 3] = 255;
+    contourPixels += 1;
+    changedPixels += Number(previous !== gray);
+    addedDarkness += previous - gray;
+  }
+  return { contourPixels, changedPixels, meanAddedDarkness: contourPixels ? addedDarkness / contourPixels : 0,
+    tone: MATERIAL_CONTOUR_TONE, alpha: MATERIAL_CONTOUR_ALPHA };
 }
 
 export function buildScreenedPheromoneAlpha(baselineAlpha, width, height, output = new Uint8ClampedArray(width * height)) {

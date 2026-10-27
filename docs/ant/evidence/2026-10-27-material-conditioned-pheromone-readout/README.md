@@ -54,7 +54,7 @@ One aggregate field named `compositeOutsideAntMaskChangedPixels` in the capture 
 
 Open [review.html](review.html) locally. The initial screen uses only “View 1–4” and asks: “무엇이 달라 보였고, 어떤 것이 자연스럽거나 이상하게 느껴졌는지 자유롭게 적어 주세요.” Follow-up questions remain hidden until a free response is recorded. This experiment does not establish that a viewer perceives persistence or a separate material state.
 
-The immediately preceding artist review is preserved verbatim in the prior evidence package: [ARTIST-REVIEW.md](../2026-10-27-material-smooth-substrate-relief/ARTIST-REVIEW.md).
+The preceding smooth-relief artist review is preserved verbatim in its original package: [ARTIST-REVIEW.md](../2026-10-27-material-smooth-substrate-relief/ARTIST-REVIEW.md). The later review of Views 1–4 is preserved [here](ARTIST-REVIEW.md).
 
 > «“음 봤는데 1번보다 좀 연하다 말곤 뭐가 다른지 모르겠는데”»
 
@@ -67,4 +67,4 @@ Its bounded interpretation was: the registered smooth grayscale field and direct
 - Build: `npm run build` — passed. Rollup reported two existing `zod` comment warnings and the 1,161.66 kB app chunk warning.
 - Syntax and whitespace checks: runner `node --check` and `git diff --check` passed.
 
-Technical validity does not imply artistic success. View 3 and View 4 test only two registered readout grammars; View 3 versus View 4 is not a single-variable contrast. A changed display grammar may read as pixelation or a graphic filter. The experiment does not show material changing pheromone, retained-history recognition, physical absorption, production suitability, mature-world behavior, or support for isotropic production recruitment. No artist response to Views 1–4 has been recorded yet.
+Technical validity does not imply artistic success. View 3 and View 4 test only two registered readout grammars; View 3 versus View 4 is not a single-variable contrast. A changed display grammar may read as pixelation or a graphic filter. The experiment does not show material changing pheromone, retained-history recognition, physical absorption, production suitability, mature-world behavior, or support for isotropic production recruitment. The artist's response is recorded separately in [ARTIST-REVIEW.md](ARTIST-REVIEW.md).

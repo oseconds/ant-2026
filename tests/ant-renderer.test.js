@@ -14,6 +14,7 @@ test('AntRenderer paints equal agent marks and a cached pheromone field without 
   const renderer = new AntRenderer(canvas, {
     loadP5: async () => ({ default: makeP5(calls, { alterCanvas: true }) })
   });
+  assert.equal(renderer.materialContour, 'none', 'production renderer keeps contours disabled by default');
 
   assert.equal(await renderer.init({ pixelRatio: 3 }), true);
   assert.ok(calls.some(([name, ...args]) => name === 'createCanvas' && args[3] === canvas));

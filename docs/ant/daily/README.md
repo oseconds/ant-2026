@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-27 — Conditioned-trail contour cue shadow
+
+[Process log](./2026-10-27-conditioned-trail-contour-cue-shadow.md) · [Evidence and neutral review assets](../evidence/2026-10-27-conditioned-trail-contour-cue-shadow/README.md)
+
+- Added registered full and activity-gated one-pixel inner boundary cues around the existing conditioned-trail readout; production and simulation laws stayed unchanged
+- Same-state/RNG/event checks and prior View 4 checkpoint raster parity passed; native bounded videos and milestone stills were preserved
+- The 12 px activity gate covered at least 75% of the boundary in every post-birth frame, so View 3 was near-full rather than selective; no tuning or artistic conclusion was made
+- Artist free-description review remains pending
+
 ### 2026-10-27 — Material-conditioned pheromone readout shadow
 
 [Process log](./2026-10-27-material-conditioned-pheromone-readout.md) · [Evidence and neutral review assets](../evidence/2026-10-27-material-conditioned-pheromone-readout/README.md)

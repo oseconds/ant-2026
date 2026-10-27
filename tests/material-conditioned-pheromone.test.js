@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildMaterialReadoutMask, buildScreenedPheromoneAlpha, mixPheromoneAlpha } from '../src/lib/renderers/materialConditionedPheromone.js';
+import { applyMaterialContourUnderPheromone, buildLocalMaterialContourMask, buildMaterialReadoutMask, buildScreenedPheromoneAlpha, mixPheromoneAlpha } from '../src/lib/renderers/materialConditionedPheromone.js';
 
 function rectangularMaterial(size, left, top, right, bottom) {
   const topLayerByCell = new Int32Array(size * size).fill(-1);
@@ -57,4 +57,27 @@ test('pixel alpha mix changes only active weighted locations and keeps zero-sign
   assert.deepEqual([...mixed.alpha], [0, 72, 48, 112]);
   assert.deepEqual([...mixed.effectiveWeights], [0, 0.5, 0.25, 0]);
   assert.throws(() => mixPheromoneAlpha(baseline, alternate.subarray(1), weights), /lengths must match/);
+});
+
+test('local contour keeps only boundary pixels within radius of active conditioned pheromone', () => {
+  const width = 9, height = 7, size = width * height;
+  const boundary = new Uint8Array(size), baseline = new Uint8ClampedArray(size), weights = new Float32Array(size);
+  boundary[3 * width + 1] = 1;
+  boundary[3 * width + 6] = 1;
+  boundary[0] = 1;
+  baseline[3 * width + 3] = 24; weights[3 * width + 3] = 0.5;
+  baseline[3 * width + 5] = 24; // Pheromone without a positive material weight is not conditioned activity.
+  const local = buildLocalMaterialContourMask(boundary, baseline, weights, width, height, 2);
+  assert.deepEqual([...local], [...boundary.map((value, index) => Number(value && index === 3 * width + 1))]);
+  assert.deepEqual([...buildLocalMaterialContourMask(boundary, baseline, weights, width, height, 2)], [...local]);
+  assert.ok(buildLocalMaterialContourMask(boundary, new Uint8ClampedArray(size), weights, width, height, 2)
+    .every(value => value === 0));
+});
+
+test('contour is composited inside support beneath the same black pheromone alpha', () => {
+  const pixels = Uint8ClampedArray.from([255, 255, 255, 255, 143, 143, 143, 255, 255, 255, 255, 255]);
+  const stats = applyMaterialContourUnderPheromone(pixels, Uint8Array.from([1, 1, 0]), Uint8Array.from([0, 112, 0]));
+  assert.deepEqual([...pixels], [244, 244, 244, 255, 137, 137, 137, 255, 255, 255, 255, 255]);
+  assert.equal(stats.contourPixels, 2);
+  assert.equal(stats.changedPixels, 2);
 });

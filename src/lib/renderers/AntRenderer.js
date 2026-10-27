@@ -2,7 +2,9 @@ import { BODY_GEOMETRY } from '../agents/ant/BodyPoseController.js';
 import { buildMaterialIdentity } from './antMaterialIdentity.js';
 import { buildMaterialSurface } from './antMaterialSurface.js';
 import { buildMaterialSubstrate } from './antMaterialSubstrate.js';
-import { buildMaterialReadoutMask, buildScreenedPheromoneAlpha, mixPheromoneAlpha } from './materialConditionedPheromone.js';
+import { applyMaterialContourUnderPheromone, buildLocalMaterialContourMask, buildMaterialReadoutMask,
+    buildScreenedPheromoneAlpha, MATERIAL_CONTOUR_ALPHA, MATERIAL_CONTOUR_TONE,
+    MATERIAL_LOCAL_CONTOUR_RADIUS_PX, mixPheromoneAlpha } from './materialConditionedPheromone.js';
 
 /**
  * p5 instance-mode view for the ANT experiment.
@@ -12,7 +14,8 @@ import { buildMaterialReadoutMask, buildScreenedPheromoneAlpha, mixPheromoneAlph
  * model/controller. No p5 object is created until `init()` is called.
  */
 export class AntRenderer {
-    constructor(canvas, { loadP5 = () => import('p5'), materialPresentation = 'production', pheromoneReadout = 'production' } = {}) {
+    constructor(canvas, { loadP5 = () => import('p5'), materialPresentation = 'production', pheromoneReadout = 'production',
+        materialContour = 'none' } = {}) {
         if (!canvas) throw new TypeError('AntRenderer requires a canvas element');
         if (!['production', 'surface', 'textured', 'presence-96', 'presence-96-sharp',
             'presence-20-sharp', 'presence-20-edge', 'presence-20-directional-edge',
@@ -23,6 +26,9 @@ export class AntRenderer {
         if (!['production', 'material-control', 'material-crisp', 'material-screened'].includes(pheromoneReadout)) {
             throw new TypeError('pheromoneReadout must be production or a supported material-conditioned view');
         }
+        if (!['none', 'full', 'local'].includes(materialContour)) {
+            throw new TypeError('materialContour must be none, full, or local');
+        }
         this.canvas = canvas;
         this.canvasParent = canvas.parentElement || null;
         this.canvasId = canvas.getAttribute ? canvas.getAttribute('id') : (canvas.id || null);
@@ -32,6 +38,7 @@ export class AntRenderer {
         this.loadP5 = loadP5;
         this.materialPresentation = materialPresentation;
         this.pheromoneReadout = pheromoneReadout;
+        this.materialContour = materialContour;
         this.instance = null;
         this.snapshot = null;
         this.fieldImage = null;
@@ -53,6 +60,7 @@ export class AntRenderer {
         this.pheromoneReadoutGraphics = null;
         this.pheromoneReadoutBuffers = null;
         this.pheromoneReadoutAudit = null;
+        this.pheromoneReadoutBaselineCache = null;
         this.debugOptions = {
             pheromone: true,
             material: true,
@@ -170,6 +178,7 @@ export class AntRenderer {
         this.pheromoneReadoutGraphics = null;
         this.pheromoneReadoutBuffers = null;
         this.pheromoneReadoutAudit = null;
+        this.pheromoneReadoutBaselineCache = null;
         this.resolveInitialization?.(false);
         this.rejectInitialization = null;
         const removal = this.#removeInstance();
@@ -423,6 +432,7 @@ function drawSnapshot(p, snapshot, renderer) {
 }
 
 function drawMaterialConditionedPheromone(p, renderer, material, sourceImage, width, height) {
+    renderer.materialContourAudit = null;
     const context = p.drawingContext;
     setPheromoneSmoothing(context);
     p.image(sourceImage, 0, 0, width, height);
@@ -438,12 +448,16 @@ function drawMaterialConditionedPheromone(p, renderer, material, sourceImage, wi
         const imageData = context.getImageData(0, 0, width, height), pixels = imageData.data;
         const baselineAlpha = new Uint8ClampedArray(size);
         for (let index = 0; index < size; index += 1) baselineAlpha[index] = 255 - pixels[index * 4];
+        stabilizeConditionedBaseline(renderer, baselineAlpha, pixels);
         const alternateAlpha = renderer.pheromoneReadout === 'material-screened'
             ? buildScreenedPheromoneAlpha(baselineAlpha, width, height) : baselineAlpha;
         context.putImageData(imageData, 0, 0);
         renderer.pheromoneReadoutAudit = { baselineAlpha, alternateAlpha, mixedAlpha: baselineAlpha,
             effectiveWeights: renderer.materialReadoutMask.weights,
             materialSupport: renderer.materialReadoutMask.support, maskStats: renderer.materialReadoutMask.stats };
+        renderer.materialContourAudit = { mode: renderer.materialContour, contourMask: new Uint8Array(size),
+            contourPixels: 0, boundaryPixels: 0, activeConditionedPixels: 0, boundaryCoverage: 0,
+            changedPixels: 0, meanAddedDarkness: 0, tone: MATERIAL_CONTOUR_TONE, alpha: MATERIAL_CONTOUR_ALPHA };
         return;
     }
     if (!renderer.pheromoneReadoutBuffers || renderer.pheromoneReadoutBuffers.size !== size) {
@@ -456,12 +470,20 @@ function drawMaterialConditionedPheromone(p, renderer, material, sourceImage, wi
     const composite = context.getImageData(0, 0, width, height);
     const baseline = buffers.baseline;
     for (let index = 0; index < size; index += 1) baseline[index] = 255 - composite.data[index * 4];
+    stabilizeConditionedBaseline(renderer, baseline, composite.data);
     if (renderer.pheromoneReadout === 'material-control') {
         const effectiveWeights = buffers.effectiveWeights.fill(0);
+        const contourMask = renderer.materialContour === 'full'
+            ? renderer.materialReadoutMask.boundary : new Uint8Array(size);
+        const contourStats = applyMaterialContourUnderPheromone(composite.data, contourMask, baseline);
         context.putImageData(composite, 0, 0);
         renderer.pheromoneReadoutAudit = { baselineAlpha: baseline, alternateAlpha: baseline,
             mixedAlpha: baseline, effectiveWeights, materialSupport: renderer.materialReadoutMask.support,
             maskStats: renderer.materialReadoutMask.stats };
+        renderer.materialContourAudit = { mode: renderer.materialContour, contourMask,
+            boundaryPixels: renderer.materialReadoutMask.stats.boundaryPixels, activeConditionedPixels: 0,
+            boundaryCoverage: renderer.materialReadoutMask.stats.boundaryPixels
+                ? contourStats.contourPixels / renderer.materialReadoutMask.stats.boundaryPixels : 0, ...contourStats };
         return;
     }
     let alternate;
@@ -479,10 +501,40 @@ function drawMaterialConditionedPheromone(p, renderer, material, sourceImage, wi
         composite.data[offset] = composite.data[offset + 1] = composite.data[offset + 2] = gray;
         composite.data[offset + 3] = 255;
     }
+    let contourMask = null, activeConditionedPixels = 0;
+    for (let index = 0; index < size; index += 1) {
+        activeConditionedPixels += Number(baseline[index] > 0 && effectiveWeights[index] > 0);
+    }
+    if (renderer.materialContour === 'full') contourMask = renderer.materialReadoutMask.boundary;
+    else if (renderer.materialContour === 'local') {
+        contourMask = buildLocalMaterialContourMask(renderer.materialReadoutMask.boundary, baseline, effectiveWeights,
+            width, height, MATERIAL_LOCAL_CONTOUR_RADIUS_PX);
+    }
+    if (contourMask) {
+        const contourStats = applyMaterialContourUnderPheromone(composite.data, contourMask, baseline);
+        renderer.materialContourAudit = { mode: renderer.materialContour, contourMask,
+            boundaryPixels: renderer.materialReadoutMask.stats.boundaryPixels, activeConditionedPixels,
+            boundaryCoverage: renderer.materialReadoutMask.stats.boundaryPixels
+                ? contourStats.contourPixels / renderer.materialReadoutMask.stats.boundaryPixels : 0, ...contourStats };
+    } else renderer.materialContourAudit = { mode: 'none', contourMask: new Uint8Array(size),
+        contourPixels: 0, boundaryPixels: renderer.materialReadoutMask.stats.boundaryPixels,
+        activeConditionedPixels: 0, boundaryCoverage: 0, changedPixels: 0, meanAddedDarkness: 0 };
     context.putImageData(composite, 0, 0);
     renderer.pheromoneReadoutAudit = { baselineAlpha: baseline, alternateAlpha: alternate,
         mixedAlpha: mixed, effectiveWeights,
         materialSupport: renderer.materialReadoutMask.support, maskStats: renderer.materialReadoutMask.stats };
+}
+
+function stabilizeConditionedBaseline(renderer, baseline, pixels) {
+    const cache = renderer.pheromoneReadoutBaselineCache;
+    if (cache?.snapshot === renderer.snapshot && cache.alpha.length === baseline.length) {
+        baseline.set(cache.alpha);
+        for (let index = 0; index < baseline.length; index += 1) {
+            const offset = index * 4, gray = 255 - baseline[index];
+            pixels[offset] = pixels[offset + 1] = pixels[offset + 2] = gray;
+            pixels[offset + 3] = 255;
+        }
+    } else renderer.pheromoneReadoutBaselineCache = { snapshot: renderer.snapshot, alpha: new Uint8ClampedArray(baseline) };
 }
 
 function rasterizePheromoneAlpha(p, renderer, sourceImage, width, height, output) {
