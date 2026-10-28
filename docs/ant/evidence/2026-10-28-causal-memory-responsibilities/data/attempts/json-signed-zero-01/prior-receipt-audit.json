@@ -1,0 +1,38 @@
+{
+  "path": "docs/ant/evidence/2026-10-28-pheromone-cross-lifecycle-provenance/RESULTS.json",
+  "originalSha256": "1e4f756248aaffe99b333ee3415851da2b8bb8bb152d298070a20259d8bbcc06",
+  "strictError": "Expected double-quoted property name in JSON at position 1163 (line 36 column 7)",
+  "derivedParseSha256": "3ed57108e1b34dc04c7c07fe8892e2882f4ddff2fe65076a24afe6d445592181",
+  "correction": "Remove exactly three trailing commas after named parity field; no values changed",
+  "correctionCount": 3,
+  "originalUntouched": true,
+  "pooled": {
+    "seedCount": 3,
+    "rawSampleCalls": 36465983,
+    "positiveProductionSampleReads": 32749412,
+    "sampledProductionSignal": 3465186.0063082166,
+    "signalFractions": {
+      "self": {
+        "sampledSignal": 921.8215006166422,
+        "fractionOfProductionSamples": 0.0002660236705730969,
+        "signalWeightedMeanAgeSeconds": 14.708962689478076,
+        "signalWeightedAgeSdSeconds": 10.51279581380806
+      },
+      "aliveOther": {
+        "sampledSignal": 1210590.4851931783,
+        "fractionOfProductionSamples": 0.3493580093505377,
+        "signalWeightedMeanAgeSeconds": 5.291253050255565,
+        "signalWeightedAgeSdSeconds": 4.752814632907387
+      },
+      "retired": {
+        "sampledSignal": 2253673.6770256227,
+        "fractionOfProductionSamples": 0.6503759604601053,
+        "signalWeightedMeanAgeSeconds": 28.544936643233918,
+        "signalWeightedAgeSdSeconds": 21.132725514592785
+      }
+    },
+    "retiredAuthorReadFrequency": 0.9832930740863378,
+    "retiredReadCount": 32202270,
+    "caveat": "Pooled signal fractions and age moments sum raw production sample reads across seeds; this is not a unique-location or behavioral-causality estimate."
+  }
+}

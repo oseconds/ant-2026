@@ -1,0 +1,104 @@
+{
+  "schema": "ant-pheromone-residual-counterfactual-validity-v1",
+  "packetSha256": "0ddbd5dd622de9cd504f9713c687251a3096bf63a3231cd3dc1cb5c2022a139d",
+  "condition": "Symmetric zero residual author-sum pair, not residual assigned to retired or clamped",
+  "originalLocalRemovalInvalidity": {
+    "localCases": 1458,
+    "localWithNegativeReads": 844,
+    "localRNonfinite": 41,
+    "localRCoherenceOutsideUnitInterval": 176,
+    "negativeRReadCount": 3893,
+    "mostNegativeRRead": -6.159365604774258e-7
+  },
+  "wide": {
+    "cases": 1507,
+    "fullNumericShamChoiceChanged": 0,
+    "fullNumericShamConfidenceDelta": {
+      "n": 1507,
+      "mean": 1.1031326727244451e-7,
+      "max": 0.0000020928628926553117,
+      "median": 1.7231770677028635e-8
+    },
+    "residualFreeRemovedChoiceChanged": 284,
+    "residualFreeFlatChoiceChanged": 246,
+    "originalVersusResidualFreeRemovalChoiceChanged": 0,
+    "originalVersusResidualFreeFlatChoiceChanged": 0
+  },
+  "local": {
+    "cases": 1458,
+    "fullNumericSham": {
+      "strength": {
+        "n": 1458,
+        "mean": 2.5368162282771356e-8,
+        "max": 0.0000011503828142300776,
+        "median": 2.058617720734901e-10
+      },
+      "steering": {
+        "n": 1458,
+        "mean": 3.0737142935711736e-8,
+        "max": 4.569005849774932e-7,
+        "median": 1.0753005014185746e-8
+      },
+      "nextAdherence": {
+        "n": 1458,
+        "mean": 2.3274032499683275e-9,
+        "max": 4.4273060495481076e-8,
+        "median": 4.244682383358622e-10
+      }
+    },
+    "residualFreePairs": {
+      "removeRetired": {
+        "strength": {
+          "n": 1458,
+          "mean": 0.19347864680098806,
+          "max": 0.9998797204380127,
+          "median": 0.00023625981204400404
+        },
+        "coherence": {
+          "n": 1458,
+          "mean": 0.30412180995866217,
+          "max": 0.99999999205099,
+          "median": 0.08990295868508558
+        },
+        "steering": {
+          "n": 1458,
+          "mean": 0.0676603784093392,
+          "max": 0.5267040178662498,
+          "median": 0.009205644053832755
+        },
+        "nextAdherence": {
+          "n": 1458,
+          "mean": 0.004063068154059072,
+          "max": 0.04454869106058945,
+          "median": 0.0004804303885409533
+        }
+      },
+      "flatRetired": {
+        "strength": {
+          "n": 1458,
+          "mean": 0.043837336199430345,
+          "max": 0.9434311994714796,
+          "median": 0.00007924521017532715
+        },
+        "coherence": {
+          "n": 1458,
+          "mean": 0.30787861254085097,
+          "max": 0.99999999205099,
+          "median": 0.10774361677870214
+        },
+        "steering": {
+          "n": 1458,
+          "mean": 0.05487990186733108,
+          "max": 0.4319829789702258,
+          "median": 0.009854212271529852
+        },
+        "nextAdherence": {
+          "n": 1458,
+          "mean": 0.003026784783078987,
+          "max": 0.03969683398135687,
+          "median": 0.000499905652578847
+        }
+      }
+    }
+  }
+}
