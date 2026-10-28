@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-28 — Production G pheromone author provenance
+
+[Process / result](./2026-10-28-pheromone-cross-lifecycle-provenance.md) · [Evidence](../evidence/2026-10-28-pheromone-cross-lifecycle-provenance/README.md)
+
+- Read-only provenance observer passed matched three-seed, 600 s parity and field reconstruction checks
+- Retired ant authors supplied 65.04% of pooled raw sensor-read signal; presence was consistent across seeds and outside the recruitment-origin bands
+- This supports a current-G cross-lifecycle signal bridge, not behavioral causal importance or a new social/material mechanism
+- Production source and canonical ANT guide stayed unchanged
+
 ### 2026-10-25 — Candidate G production adoption
 
 [Adoption record](../evidence/2026-10-25-g-production-adoption/README.md)
