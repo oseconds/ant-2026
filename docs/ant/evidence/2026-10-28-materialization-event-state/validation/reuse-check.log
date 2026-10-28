@@ -1,0 +1,101 @@
+{
+  "fixtures": [
+    {
+      "schedule": "no-postcommit-load",
+      "scope": "clamped actual first-birth selector inputs; prescribed feet, no world/field integration",
+      "commitSeconds": [
+        20
+      ],
+      "finalPlateCount": 1,
+      "capacityReached": false,
+      "descriptorsRemainImmutable": true,
+      "noSpatialNovelty": true,
+      "noCandidateReset": true
+    },
+    {
+      "schedule": "continuous-load",
+      "scope": "clamped actual first-birth selector inputs; prescribed feet, no world/field integration",
+      "commitSeconds": [
+        20,
+        110,
+        200,
+        290,
+        380,
+        470,
+        560
+      ],
+      "finalPlateCount": 7,
+      "capacityReached": false,
+      "descriptorsRemainImmutable": true,
+      "noSpatialNovelty": true,
+      "noCandidateReset": true
+    },
+    {
+      "schedule": "early-refractory-burst",
+      "scope": "clamped actual first-birth selector inputs; prescribed feet, no world/field integration",
+      "commitSeconds": [
+        20,
+        110
+      ],
+      "finalPlateCount": 2,
+      "capacityReached": false,
+      "descriptorsRemainImmutable": true,
+      "noSpatialNovelty": true,
+      "noCandidateReset": true
+    }
+  ],
+  "archives": [
+    {
+      "seed": 20261005,
+      "dataSha256": "a52dd67cd3cab53e8bbdd6df7bb2e536a211d0a6872ebc03342111c8127f0414",
+      "baseline": "adoption-conformant current-G archive; existing Audio-Off 600 s evidence",
+      "birthCount": 36,
+      "firstBirthSeconds": 84.01666666666823,
+      "lastBirthSeconds": 576.883333333455,
+      "gapSeconds": {
+        "min": 10.000000000011426,
+        "median": 11.000000000012847,
+        "max": 42.000000000048885
+      },
+      "exactUniqueMaskHashes": 36,
+      "limitation": "No per-analysis prior-corridor matches or gate states; cannot classify these births as repeats versus unmatched candidates."
+    },
+    {
+      "seed": 20261006,
+      "dataSha256": "cee8fe2bf8354821cbabf95a3160d7e1584f5cbd73f3aa1bf19e46ab95d0ecae",
+      "baseline": "adoption-conformant current-G archive; existing Audio-Off 600 s evidence",
+      "birthCount": 38,
+      "firstBirthSeconds": 96.01666666667172,
+      "lastBirthSeconds": 597.216666666741,
+      "gapSeconds": {
+        "min": 10.000000000000966,
+        "median": 12.000000000013983,
+        "max": 28.00000000003257
+      },
+      "exactUniqueMaskHashes": 38,
+      "limitation": "No per-analysis prior-corridor matches or gate states; cannot classify these births as repeats versus unmatched candidates."
+    },
+    {
+      "seed": 20261007,
+      "dataSha256": "e2de54a8471335a0089f41d3d6362490eb1e7f08f4b8c2e63deea38d00a84f7c",
+      "baseline": "adoption-conformant current-G archive; existing Audio-Off 600 s evidence",
+      "birthCount": 37,
+      "firstBirthSeconds": 92.01666666667056,
+      "lastBirthSeconds": 598.2333333334053,
+      "gapSeconds": {
+        "min": 10.000000000002899,
+        "median": 11.00000000001279,
+        "max": 36.00000000004195
+      },
+      "exactUniqueMaskHashes": 37,
+      "limitation": "No per-analysis prior-corridor matches or gate states; cannot classify these births as repeats versus unmatched candidates."
+    }
+  ],
+  "bounds": {
+    "globalMinimumGapSeconds": 10,
+    "sameMatchedPriorMinimumAgeSeconds": 90,
+    "requiredPostPriorFootCount": 30,
+    "boundsRateNotFiniteTotal": true,
+    "technical256CeilingNotMaterialLaw": true
+  }
+}
