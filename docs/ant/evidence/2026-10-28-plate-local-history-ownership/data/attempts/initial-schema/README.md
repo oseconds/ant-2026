@@ -1,0 +1,3 @@
+# Initial schema output
+
+These first derived files are preserved byte-for-byte. The measurements were generated from the same frozen inputs and calculation code. Before final sealing, the output schema was clarified to include a digest for every post-anchor `A_projection96` sample and to label the contact ordering explicitly as source-event order. This metadata correction does not change the measured arrays or counts. Reproduce the final result from the package runner; these files are retained only as provenance of the initial successful generation.

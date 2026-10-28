@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-28 — Plate local-history ownership
+
+[Process record](./2026-10-28-plate-local-history-ownership.md) · [Evidence package](../evidence/2026-10-28-plate-local-history-ownership/README.md)
+
+- Supported a commit-relative provenance ledger that separates carried context, newly owned history and future contribution; production and the frozen Plate descriptors remain unchanged
+- Natural overlap does not imply prior-match identity; the tested matched-repeat fixture assigns all 200 contribution timestamps exactly once
+- Chemical and SurfaceField differences remain channel-specific conditional endpoints; whether inherited qualification context belongs to new physical Plate support remains an artist / ontology gate
+
 ### 2026-10-25 — Candidate G production adoption
 
 [Adoption record](../evidence/2026-10-25-g-production-adoption/README.md)
