@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-28 — Commit-relative space-time attachment support
+
+[Research result](../evidence/2026-10-28-space-time-attachment-support/README.md)
+
+- Reconstructed registered 8-neighbor sampled ancestry and 4-neighbor sensitivity from frozen P1/P2 inputs; exact prior C0 masks matched
+- C1-8 retained 96.45% and 99.74% of C0; Stage 1 decision is **BOUNDED NEGATIVE — temporal attachment adds no useful selectivity**
+- Did not run conditional Stage 2; production behavior and ontology A remain unchanged/unresolved
+
 ### 2026-10-25 — Candidate G production adoption
 
 [Adoption record](../evidence/2026-10-25-g-production-adoption/README.md)
