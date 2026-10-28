@@ -1,0 +1,41 @@
+{
+  "schema": "ant-recursive-inscription-invalid-attempt-v1",
+  "status": "DISCARDED_VALIDATION_ATTEMPT",
+  "resultSha256": "a4b68497b3cee9e1f6de9257953c053a0bb3b675b598fa71dcd795d22ad37074",
+  "resultBytes": 6786186,
+  "validationSha256": "f9c3eeec4683b4634a55296ba8d8d49a685533bbf43fe3f07317e0695924341c",
+  "reason": "Candidate-geometry validator compared 25 per-sample query rows against five candidate headings instead of deduplicating by profile. No Gate C continuation ran; the attempt is not a valid causal result.",
+  "recoveredChecks": {
+    "targetSelection": {
+      "population": 284,
+      "sourceWideChoices": 1507,
+      "rule": "earliest model timestamp among residual-free Fhat/Rhat option changes; numeric ant ID tie-break",
+      "packetCaseIndex": 120,
+      "wideChoiceIndex": 62,
+      "timestamp": 9.250000000000039,
+      "antId": "ant-1",
+      "FhatOptionIndex": 2,
+      "RhatOptionIndex": 1,
+      "residualFreeIndicesEqualOriginalRemovalIndices": true
+    },
+    "productionReplay": true,
+    "FhatSham": {
+      "selectedOptionUnchanged": true,
+      "metricsWithinCeilings": {
+        "position": true,
+        "velocity": true,
+        "heading": true,
+        "angularVelocity": true
+      },
+      "ceiling": {
+        "position": 1e-8,
+        "velocity": 1e-7,
+        "heading": 0.000001,
+        "angularVelocity": 0.00006
+      }
+    },
+    "changedChoice": true,
+    "candidateGeometryAndCrowdingParity": false
+  },
+  "action": "Raw result removed after recording its digest and size because it redundantly serialized 316x316 field arrays; corrected runner stores field hashes and performs profile-level validation."
+}

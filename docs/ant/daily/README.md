@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-28 — Retired pheromone recursive inscription
+
+[Process record](./2026-10-28-retired-pheromone-recursive-inscription.md) · [Evidence](../evidence/2026-10-28-retired-pheromone-recursive-inscription/README.md)
+
+- One pre-registered retired-author changed-choice case reached different production motor output, true focal contact positions, and distinct writes to the existing SurfaceField
+- No actual stored pheromone dab was observed before non-focal state diverged at the next-tick censor; later consequences remain unresolved
+- Production code and current adoption decisions remain unchanged
+
 ### 2026-10-25 — Candidate G production adoption
 
 [Adoption record](../evidence/2026-10-25-g-production-adoption/README.md)

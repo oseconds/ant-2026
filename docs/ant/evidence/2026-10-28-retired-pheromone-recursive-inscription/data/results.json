@@ -1,0 +1,2895 @@
+{
+  "schema": "ant-retired-pheromone-recursive-results-v1",
+  "status": "SUPPORTED — bounded motor-to-SurfaceField contact inscription",
+  "sourceHashes": {
+    "src/lib/agents/ant/AntController.js": "b5a6344ebed52962a1749d612b0140b6a4249817f159758e13f166877078e9f4",
+    "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+    "src/lib/agents/ant/PheromoneField.js": "b68e98b5d916950487da67237a0d0277451d3b930971c1d8a35e92fd7d6f9837",
+    "src/lib/agents/ant/LocalOccupancy.js": "df22dd38e9af8078ebcb1d225ca2a5eaf579e994d2d4a00ce9ceeefa2403ff16",
+    "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+    "src/lib/agents/ant/BodyPoseController.js": "2ec4cc12c12ae301ea07056889c3be9255b1b1e155b7724cd3366278d60ace8e",
+    "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+    "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+    "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+    "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+    "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd",
+    "scripts/ant-material-causal-tail.js": "d2c519ffe050da910a5deba1fab62da84bfc9a3436b5ea4211b47eecdd1c2308",
+    "scripts/ant-retired-pheromone-recursive-inscription.js": "a8e67753d020cc665393699d42dbf40ee4489f3c7cc7318505b7ea09043d0ffa"
+  },
+  "selection": {
+    "population": 284,
+    "sourceWideChoices": 1507,
+    "rule": "earliest model timestamp among residual-free Fhat/Rhat option changes; numeric ant ID tie-break",
+    "packetCaseIndex": 120,
+    "wideChoiceIndex": 62,
+    "timestamp": 9.250000000000039,
+    "antId": "ant-1",
+    "FhatOptionIndex": 2,
+    "RhatOptionIndex": 1,
+    "residualFreeIndicesEqualOriginalRemovalIndices": true
+  },
+  "validity": {
+    "completeWorldAndRngParity": true,
+    "observerOnOffParity": true,
+    "targetStateParity": true,
+    "localProfileParity": true,
+    "candidateGeometryAndCrowdingParity": true,
+    "targetRandomTapeParity": true,
+    "primaryFhatRhatRngAligned": true,
+    "targetSensorFieldParity": true,
+    "targetSurfaceFieldInputParity": true,
+    "contactEventsReachSurfaceField": true,
+    "FReproducedFrozenAfterState": true,
+    "FhatNumericalSham": {
+      "selectedOptionUnchanged": true,
+      "metricsWithinCeilings": {
+        "position": true,
+        "velocity": true,
+        "heading": true,
+        "angularVelocity": true
+      },
+      "ceiling": {
+        "position": 1e-8,
+        "velocity": 1e-7,
+        "heading": 0.000001,
+        "angularVelocity": 0.00006
+      }
+    },
+    "exactChangedChoiceReproduced": true,
+    "allConditionsReadOnlyAttribution": true,
+    "validForGateC": true
+  },
+  "oneTick": {
+    "selected": {
+      "F": 2,
+      "Fhat": 2,
+      "Rhat": 1
+    },
+    "numericShamFToFhat": {
+      "position": 0,
+      "velocity": 0,
+      "heading": 0,
+      "angularVelocity": 0,
+      "displacement": 0,
+      "proposedDisplacement": 0,
+      "collisionScale": 0
+    },
+    "primaryFhatToRhat": {
+      "position": 0.000059060205462559164,
+      "velocity": 0.0035436123277513137,
+      "heading": 0.09950546203095278,
+      "angularVelocity": 5.970327721857103,
+      "displacement": 0.000059060205462559164,
+      "proposedDisplacement": 0.00005906020546252184,
+      "collisionScale": 0
+    },
+    "motorThresholds": {
+      "position": 1e-8,
+      "velocity": 1e-7,
+      "heading": 0.000001,
+      "angularVelocity": 0.00006,
+      "displacement": 1e-8
+    },
+    "random": {
+      "F": {
+        "before": {
+          "state": 4217350134,
+          "calls": 2255
+        },
+        "after": {
+          "state": 1177365620,
+          "calls": 2269
+        },
+        "targetTape": [
+          0.516548088984564,
+          0.44388500414788723,
+          0.9225972348358482,
+          0.3983831130899489,
+          0.8873840200249106,
+          0.12199993710964918,
+          0.18138541164807975,
+          0.7883914927951992,
+          0.585612901719287,
+          0.5513022691011429,
+          0.6455435527022928,
+          0.6181297567673028,
+          0.6694510674569756,
+          0.2741267951205373
+        ]
+      },
+      "Fhat": {
+        "before": {
+          "state": 4217350134,
+          "calls": 2255
+        },
+        "after": {
+          "state": 1177365620,
+          "calls": 2269
+        },
+        "targetTape": [
+          0.516548088984564,
+          0.44388500414788723,
+          0.9225972348358482,
+          0.3983831130899489,
+          0.8873840200249106,
+          0.12199993710964918,
+          0.18138541164807975,
+          0.7883914927951992,
+          0.585612901719287,
+          0.5513022691011429,
+          0.6455435527022928,
+          0.6181297567673028,
+          0.6694510674569756,
+          0.2741267951205373
+        ]
+      },
+      "Rhat": {
+        "before": {
+          "state": 4217350134,
+          "calls": 2255
+        },
+        "after": {
+          "state": 1177365620,
+          "calls": 2269
+        },
+        "targetTape": [
+          0.516548088984564,
+          0.44388500414788723,
+          0.9225972348358482,
+          0.3983831130899489,
+          0.8873840200249106,
+          0.12199993710964918,
+          0.18138541164807975,
+          0.7883914927951992,
+          0.585612901719287,
+          0.5513022691011429,
+          0.6455435527022928,
+          0.6181297567673028,
+          0.6694510674569756,
+          0.2741267951205373
+        ]
+      }
+    },
+    "arms": {
+      "F": {
+        "condition": "F",
+        "offset": 0,
+        "modelTimeMsBefore": 9233.333333333356,
+        "rngBefore": {
+          "state": 4217350134,
+          "calls": 2255
+        },
+        "targetBefore": {
+          "id": "ant-1",
+          "x": 0.4500566801584844,
+          "y": 0.767018271856259,
+          "vx": 0.056583905934762514,
+          "vy": 0.06497736414002837,
+          "heading": 0.8712864644499678,
+          "angularVelocity": 2.761398679243534,
+          "radius": 0.006,
+          "personality": {
+            "preferredSpeed": 0.09377226318814792,
+            "pheromoneSensitivity": 1.6650410791859032,
+            "exploration": 0.17244797539431603,
+            "turnResponsiveness": 3.7817817789502444,
+            "acceleration": 0.16554309247992932,
+            "damping": 1.3694859258830547,
+            "personalSpacing": 0.026968484645243734
+          },
+          "targetSpeed": 0.08623016338031961,
+          "speedPhase": 1.6579293958856915,
+          "speedCycle": 2.4061510408530014,
+          "hesitationRemaining": 0,
+          "inspectionRemaining": 3.1048237098380937,
+          "decisionRemaining": 0.11768089843271717,
+          "intentHeading": 0.848379924995216,
+          "trailConfidence": 0.06337228683855062,
+          "trailAdherence": 0.016233749935424358,
+          "committedRemaining": 0.0004360934303992911,
+          "wasBlocked": false
+        },
+        "targetLocal": {
+          "left": 0,
+          "center": 0,
+          "right": 0,
+          "strength": 0,
+          "coherence": 0,
+          "steering": 0
+        },
+        "targetAfterIntention": {
+          "id": "ant-1",
+          "x": 0.4500566801584844,
+          "y": 0.767018271856259,
+          "vx": 0.056583905934762514,
+          "vy": 0.06497736414002837,
+          "heading": 0.8712864644499678,
+          "angularVelocity": 2.761398679243534,
+          "radius": 0.006,
+          "personality": {
+            "preferredSpeed": 0.09377226318814792,
+            "pheromoneSensitivity": 1.6650410791859032,
+            "exploration": 0.17244797539431603,
+            "turnResponsiveness": 3.7817817789502444,
+            "acceleration": 0.16554309247992932,
+            "damping": 1.3694859258830547,
+            "personalSpacing": 0.026968484645243734
+          },
+          "targetSpeed": 0.08623016338031961,
+          "speedPhase": 1.6579293958856915,
+          "speedCycle": 2.4061510408530014,
+          "hesitationRemaining": 0,
+          "inspectionRemaining": 3.088157043171427,
+          "decisionRemaining": 0.25565650393466427,
+          "intentHeading": 0.919427161124684,
+          "trailConfidence": 0.17385907714384613,
+          "trailAdherence": 0.016084131184373462,
+          "committedRemaining": 0.37059749638661743,
+          "wasBlocked": false
+        },
+        "queries": [
+          {
+            "profile": 0,
+            "heading": -0.04682843913509416,
+            "x": 0.49135527905269055,
+            "y": 0.7510675436792925,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 0,
+            "heading": -0.04682843913509416,
+            "x": 0.4916829583345252,
+            "y": 0.7580598699222717,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 0,
+            "heading": -0.04682843913509416,
+            "x": 0.4920106376163599,
+            "y": 0.765052196165251,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 0,
+            "heading": -0.04682843913509416,
+            "x": 0.4923383168981946,
+            "y": 0.7720445224082303,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 0,
+            "heading": -0.04682843913509416,
+            "x": 0.4926659961800292,
+            "y": 0.7790368486512095,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0,
+            "signal": 0
+          },
+          {
+            "profile": 1,
+            "heading": 0.3948940539665706,
+            "x": 0.4942101935215539,
+            "y": 0.7702535860136851,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 1,
+            "heading": 0.3948940539665706,
+            "x": 0.4915172207297865,
+            "y": 0.7767148473102743,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 1,
+            "heading": 0.3948940539665706,
+            "x": 0.4888242479380191,
+            "y": 0.7831761086068634,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 1,
+            "heading": 0.3948940539665706,
+            "x": 0.4861312751462517,
+            "y": 0.7896373699034525,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 1,
+            "heading": 0.3948940539665706,
+            "x": 0.4834383023544843,
+            "y": 0.7960986312000417,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0,
+            "signal": 0
+          },
+          {
+            "profile": 2,
+            "heading": 0.919427161124684,
+            "x": 0.4866538264568494,
+            "y": 0.7919310975253009,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 2,
+            "heading": 0.919427161124684,
+            "x": 0.48108704529157487,
+            "y": 0.7961750281866035,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 2,
+            "heading": 0.919427161124684,
+            "x": 0.47552026412630033,
+            "y": 0.8004189588479061,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 2,
+            "heading": 0.919427161124684,
+            "x": 0.4699534829610258,
+            "y": 0.8046628895092088,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 2,
+            "heading": 0.919427161124684,
+            "x": 0.46438670179575126,
+            "y": 0.8089068201705114,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0,
+            "signal": 0
+          },
+          {
+            "profile": 3,
+            "heading": 1.3297106486932329,
+            "x": 0.4736795867861789,
+            "y": 0.8044610052294949,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 3,
+            "heading": 1.3297106486932329,
+            "x": 0.4668820314488088,
+            "y": 0.8061323045549873,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 3,
+            "heading": 1.3297106486932329,
+            "x": 0.4600844761114387,
+            "y": 0.8078036038804797,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 3,
+            "heading": 1.3297106486932329,
+            "x": 0.4532869207740686,
+            "y": 0.809474903205972,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 3,
+            "heading": 1.3297106486932329,
+            "x": 0.44648936543669854,
+            "y": 0.8111462025314644,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0,
+            "signal": 0
+          },
+          {
+            "profile": 4,
+            "heading": 1.8354158033745236,
+            "x": 0.45258460509545834,
+            "y": 0.8112179279127605,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 4,
+            "heading": 1.8354158033745236,
+            "x": 0.44582826044013446,
+            "y": 0.8093871338504814,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 4,
+            "heading": 1.8354158033745236,
+            "x": 0.43907191578481053,
+            "y": 0.8075563397882025,
+            "production": 0.02081848503056003,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0.020818490586324866,
+            "residual": -5.555764834925524e-9,
+            "used": 0.02081848503056003
+          },
+          {
+            "profile": 4,
+            "heading": 1.8354158033745236,
+            "x": 0.4323155711294866,
+            "y": 0.8057255457259236,
+            "production": 0.0008605883055604963,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0.0008605880659675345,
+            "residual": 2.39592961868959e-10,
+            "used": 0.0008605883055604963
+          },
+          {
+            "profile": 4,
+            "heading": 1.8354158033745236,
+            "x": 0.4255592264741627,
+            "y": 0.8038947516636445,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0,
+            "signal": 0.02081848503056003
+          }
+        ],
+        "crowding": [
+          {
+            "heading": -0.04682843913509416,
+            "value": 0.042794184668261064
+          },
+          {
+            "heading": 0.3948940539665706,
+            "value": 0.0539922930207654
+          },
+          {
+            "heading": 0.919427161124684,
+            "value": 0
+          },
+          {
+            "heading": 1.3297106486932329,
+            "value": 0
+          },
+          {
+            "heading": 1.8354158033745236,
+            "value": 0
+          }
+        ],
+        "intentions": [
+          {
+            "id": "ant-1",
+            "intentHeading": 0.919427161124684,
+            "trailConfidence": 0.17385907714384613,
+            "trailAdherence": 0.016084131184373462,
+            "decisionRemaining": 0.25565650393466427,
+            "committedRemaining": 0.37059749638661743
+          },
+          {
+            "id": "ant-4",
+            "intentHeading": -2.059285394603897,
+            "trailConfidence": 0,
+            "trailAdherence": 0.04029931821600391,
+            "decisionRemaining": 0.04268594106214524,
+            "committedRemaining": 0.21670884562656284
+          },
+          {
+            "id": "ant-5",
+            "intentHeading": -0.8388999882696933,
+            "trailConfidence": 0.5130171677161443,
+            "trailAdherence": 0.31847894474976673,
+            "decisionRemaining": 0.1628917865532742,
+            "committedRemaining": 0.07347547138109806
+          },
+          {
+            "id": "ant-6",
+            "intentHeading": -2.3933040956612492,
+            "trailConfidence": 0,
+            "trailAdherence": 0.06638844137640014,
+            "decisionRemaining": 0.11012338389829635,
+            "committedRemaining": 0.11392482833936823
+          },
+          {
+            "id": "ant-7",
+            "intentHeading": 2.9114716828678393,
+            "trailConfidence": 0.9970390209424139,
+            "trailAdherence": 0.7725508109383098,
+            "decisionRemaining": 0.17118607912676542,
+            "committedRemaining": 0.18907598460544145
+          },
+          {
+            "id": "ant-8",
+            "intentHeading": -1.1171062468604696,
+            "trailConfidence": 0.6401827921484736,
+            "trailAdherence": 0.2677489168119041,
+            "decisionRemaining": 0.06490089845797625,
+            "committedRemaining": 0.2602918655984096
+          },
+          {
+            "id": "ant-9",
+            "intentHeading": -1.6049615753165805,
+            "trailConfidence": 0.2327588921138939,
+            "trailAdherence": 0.5074765835273594,
+            "decisionRemaining": 0.3116955059721545,
+            "committedRemaining": 0.9869353484079585
+          },
+          {
+            "id": "ant-10",
+            "intentHeading": -1.669411352796038,
+            "trailConfidence": 0.9884556829384323,
+            "trailAdherence": 0.94637881225865,
+            "decisionRemaining": 0.09573984952966258,
+            "committedRemaining": 0.06357068838266483
+          }
+        ],
+        "events": [
+          {
+            "type": "foot-contact",
+            "payload": {
+              "type": "FOOT_CONTACT",
+              "antId": "ant-1",
+              "contactGroup": "B",
+              "contacts": [
+                {
+                  "legId": "FR",
+                  "position": {
+                    "x": 0.445703618717372,
+                    "y": 0.790823866436576
+                  }
+                },
+                {
+                  "legId": "ML",
+                  "position": {
+                    "x": 0.467200264949007,
+                    "y": 0.7586307895287697
+                  }
+                },
+                {
+                  "legId": "RR",
+                  "position": {
+                    "x": 0.42995662585148203,
+                    "y": 0.7730710577663512
+                  }
+                }
+              ],
+              "position": {
+                "x": 0.447620169839287,
+                "y": 0.7741752379105657
+              },
+              "strength": 0.03440036217598245,
+              "simulationTimeMs": 9245.464973243423
+            }
+          }
+        ],
+        "deposits": [
+          {
+            "kind": "advance",
+            "requests": [],
+            "calls": [],
+            "stored": {
+              "changedNodeCount": 0,
+              "storedDeltaSum": 0,
+              "maxNodeDelta": 0,
+              "changedIndices": []
+            }
+          }
+        ],
+        "movement": {
+          "focalIndex": 0,
+          "proposed": {
+            "x": 0.0009242997420404935,
+            "y": 0.0010988821499979624,
+            "depositionMultiplier": 0.37629349637978066
+          },
+          "collisionScale": 1,
+          "allCollisionScales": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "allProposals": [
+            {
+              "x": 0.0009242997420404935,
+              "y": 0.0010988821499979624,
+              "depositionMultiplier": 0.37629349637978066
+            },
+            {
+              "x": -0.00042935340221871487,
+              "y": -0.0007867996703761637,
+              "depositionMultiplier": 0.3831201752433737
+            },
+            {
+              "x": 0.0001842248070245938,
+              "y": -0.0009749477194190294,
+              "depositionMultiplier": 0.8821441912446248
+            },
+            {
+              "x": -0.0009019783322517519,
+              "y": -0.0009244761121921769,
+              "depositionMultiplier": 0.3970371257419386
+            },
+            {
+              "x": -0.001234982048630386,
+              "y": 0.00032813340938442446,
+              "depositionMultiplier": 3.480209290428185
+            },
+            {
+              "x": 0.00044734013897859107,
+              "y": -0.0008536909167426468,
+              "depositionMultiplier": 0.7334474122697398
+            },
+            {
+              "x": 0.00001902246072719043,
+              "y": -0.00004784813814074371,
+              "depositionMultiplier": 1.7873144707889086
+            },
+            {
+              "x": -0.00013085272250273718,
+              "y": -0.0007678447552657566,
+              "depositionMultiplier": 4.97770910184163
+            }
+          ]
+        },
+        "targetInfo": {
+          "separationX": -0.0009765889460647212,
+          "separationY": 0.002113376276901873,
+          "frontCrowding": 0,
+          "leftCrowding": 0,
+          "rightCrowding": 0,
+          "followingSpeedLimit": {
+            "$antNonFiniteNumber": "Infinity"
+          },
+          "neighbors": 1
+        },
+        "targetFieldBeforeSenseSha256": "0d41afcaf23530e8584f36042b625a86de41ee2ded287d9696a79ea5c953029b",
+        "selectedOptionIndex": 2,
+        "targetReadFieldUnchanged": true,
+        "targetRandomTape": [
+          0.516548088984564,
+          0.44388500414788723,
+          0.9225972348358482,
+          0.3983831130899489,
+          0.8873840200249106,
+          0.12199993710964918,
+          0.18138541164807975,
+          0.7883914927951992,
+          0.585612901719287,
+          0.5513022691011429,
+          0.6455435527022928,
+          0.6181297567673028,
+          0.6694510674569756,
+          0.2741267951205373
+        ],
+        "randomTrace": [
+          {
+            "agentId": "ant-1",
+            "value": 0.516548088984564
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.44388500414788723
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.9225972348358482
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.3983831130899489
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.8873840200249106
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.12199993710964918
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.18138541164807975
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.7883914927951992
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.585612901719287
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.5513022691011429
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.6455435527022928
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.6181297567673028
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.6694510674569756
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.2741267951205373
+          }
+        ],
+        "rngAfter": {
+          "state": 1177365620,
+          "calls": 2269
+        },
+        "targetAfter": {
+          "id": "ant-1",
+          "x": 0.4509809799005249,
+          "y": 0.768117154006257,
+          "vx": 0.05545798452242961,
+          "vy": 0.06593292899987775,
+          "heading": 0.8957919264809195,
+          "angularVelocity": 1.4703277218571031,
+          "radius": 0.006,
+          "personality": {
+            "preferredSpeed": 0.09377226318814792,
+            "pheromoneSensitivity": 1.6650410791859032,
+            "exploration": 0.17244797539431603,
+            "turnResponsiveness": 3.7817817789502444,
+            "acceleration": 0.16554309247992932,
+            "damping": 1.3694859258830547,
+            "personalSpacing": 0.026968484645243734
+          },
+          "targetSpeed": 0.08618993530661916,
+          "speedPhase": 1.701451083984928,
+          "speedCycle": 2.4061510408530014,
+          "hesitationRemaining": 0,
+          "inspectionRemaining": 3.088157043171427,
+          "decisionRemaining": 0.25565650393466427,
+          "intentHeading": 0.919427161124684,
+          "trailConfidence": 0.17385907714384613,
+          "trailAdherence": 0.016084131184373462,
+          "committedRemaining": 0.37059749638661743,
+          "wasBlocked": false
+        },
+        "realizedDisplacement": {
+          "x": 0.0009242997420405019,
+          "y": 0.0010988821499979817
+        },
+        "focalContacts": [
+          {
+            "type": "FOOT_CONTACT",
+            "antId": "ant-1",
+            "contactGroup": "B",
+            "contacts": [
+              {
+                "legId": "FR",
+                "position": {
+                  "x": 0.445703618717372,
+                  "y": 0.790823866436576
+                }
+              },
+              {
+                "legId": "ML",
+                "position": {
+                  "x": 0.467200264949007,
+                  "y": 0.7586307895287697
+                }
+              },
+              {
+                "legId": "RR",
+                "position": {
+                  "x": 0.42995662585148203,
+                  "y": 0.7730710577663512
+                }
+              }
+            ],
+            "position": {
+              "x": 0.447620169839287,
+              "y": 0.7741752379105657
+            },
+            "strength": 0.03440036217598245,
+            "simulationTimeMs": 9245.464973243423
+          }
+        ],
+        "nonFocalEvents": [],
+        "scheduleAfter": {
+          "time": 9250.000000000022,
+          "nextSpawnTimeMs": null,
+          "nextAgentId": 11,
+          "totalSpawned": 10,
+          "totalRetired": 2,
+          "agentIds": [
+            "ant-1",
+            "ant-4",
+            "ant-5",
+            "ant-6",
+            "ant-7",
+            "ant-8",
+            "ant-9",
+            "ant-10"
+          ]
+        },
+        "gaitAfter": {
+          "strideCycleLength": 0.03548223646491765,
+          "phase": 0.5110116137143597,
+          "contactStrength": 0.03440036217598245
+        },
+        "depositionAfter": {
+          "distance": 0.001789799255807111,
+          "amount": 0.003030742689331455
+        },
+        "surfaceWrite": {
+          "preTickFieldSha256": "8245ad049128b0c5b4337fb2a710066d14eba1e7f70c16e5a98136c5c09ba13f",
+          "postRelaxFieldSha256": "329dd1d5487a5bb9a72eb97907f0919f2b79bbcdc3a289f0862825682e152afc",
+          "postTickFieldSha256": "41eb28b496572372e845931633c82029efef3602b709709fbd789e2dba552152",
+          "totalFootContactsBefore": 609,
+          "totalFootContactsAfter": 612,
+          "contactCountDelta": 3,
+          "eventContactPointCount": 3,
+          "targetContactPointCount": 3,
+          "targetContactWrites": [
+            {
+              "contactPointCount": 3,
+              "changedNodeCount": 13,
+              "storedDeltaSum": 0.12965287826955318,
+              "maxNodeDelta": 0.01994149014353752
+            }
+          ],
+          "contactWrite": {
+            "changedNodeCount": 13,
+            "storedDeltaSum": 0.12965287826955318,
+            "maxNodeDelta": 0.01994149014353752
+          }
+        }
+      },
+      "Fhat": {
+        "condition": "Fhat",
+        "offset": 0,
+        "modelTimeMsBefore": 9233.333333333356,
+        "rngBefore": {
+          "state": 4217350134,
+          "calls": 2255
+        },
+        "targetBefore": {
+          "id": "ant-1",
+          "x": 0.4500566801584844,
+          "y": 0.767018271856259,
+          "vx": 0.056583905934762514,
+          "vy": 0.06497736414002837,
+          "heading": 0.8712864644499678,
+          "angularVelocity": 2.761398679243534,
+          "radius": 0.006,
+          "personality": {
+            "preferredSpeed": 0.09377226318814792,
+            "pheromoneSensitivity": 1.6650410791859032,
+            "exploration": 0.17244797539431603,
+            "turnResponsiveness": 3.7817817789502444,
+            "acceleration": 0.16554309247992932,
+            "damping": 1.3694859258830547,
+            "personalSpacing": 0.026968484645243734
+          },
+          "targetSpeed": 0.08623016338031961,
+          "speedPhase": 1.6579293958856915,
+          "speedCycle": 2.4061510408530014,
+          "hesitationRemaining": 0,
+          "inspectionRemaining": 3.1048237098380937,
+          "decisionRemaining": 0.11768089843271717,
+          "intentHeading": 0.848379924995216,
+          "trailConfidence": 0.06337228683855062,
+          "trailAdherence": 0.016233749935424358,
+          "committedRemaining": 0.0004360934303992911,
+          "wasBlocked": false
+        },
+        "targetLocal": {
+          "left": 0,
+          "center": 0,
+          "right": 0,
+          "strength": 0,
+          "coherence": 0,
+          "steering": 0
+        },
+        "targetAfterIntention": {
+          "id": "ant-1",
+          "x": 0.4500566801584844,
+          "y": 0.767018271856259,
+          "vx": 0.056583905934762514,
+          "vy": 0.06497736414002837,
+          "heading": 0.8712864644499678,
+          "angularVelocity": 2.761398679243534,
+          "radius": 0.006,
+          "personality": {
+            "preferredSpeed": 0.09377226318814792,
+            "pheromoneSensitivity": 1.6650410791859032,
+            "exploration": 0.17244797539431603,
+            "turnResponsiveness": 3.7817817789502444,
+            "acceleration": 0.16554309247992932,
+            "damping": 1.3694859258830547,
+            "personalSpacing": 0.026968484645243734
+          },
+          "targetSpeed": 0.08623016338031961,
+          "speedPhase": 1.6579293958856915,
+          "speedCycle": 2.4061510408530014,
+          "hesitationRemaining": 0,
+          "inspectionRemaining": 3.088157043171427,
+          "decisionRemaining": 0.2556565136339149,
+          "intentHeading": 0.919427161124684,
+          "trailConfidence": 0.17385919213582499,
+          "trailAdherence": 0.016084131184373462,
+          "committedRemaining": 0.37059749638661743,
+          "wasBlocked": false
+        },
+        "queries": [
+          {
+            "profile": 0,
+            "heading": -0.04682843913509416,
+            "x": 0.49135527905269055,
+            "y": 0.7510675436792925,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 0,
+            "heading": -0.04682843913509416,
+            "x": 0.4916829583345252,
+            "y": 0.7580598699222717,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 0,
+            "heading": -0.04682843913509416,
+            "x": 0.4920106376163599,
+            "y": 0.765052196165251,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 0,
+            "heading": -0.04682843913509416,
+            "x": 0.4923383168981946,
+            "y": 0.7720445224082303,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 0,
+            "heading": -0.04682843913509416,
+            "x": 0.4926659961800292,
+            "y": 0.7790368486512095,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0,
+            "signal": 0
+          },
+          {
+            "profile": 1,
+            "heading": 0.3948940539665706,
+            "x": 0.4942101935215539,
+            "y": 0.7702535860136851,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 1,
+            "heading": 0.3948940539665706,
+            "x": 0.4915172207297865,
+            "y": 0.7767148473102743,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 1,
+            "heading": 0.3948940539665706,
+            "x": 0.4888242479380191,
+            "y": 0.7831761086068634,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 1,
+            "heading": 0.3948940539665706,
+            "x": 0.4861312751462517,
+            "y": 0.7896373699034525,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 1,
+            "heading": 0.3948940539665706,
+            "x": 0.4834383023544843,
+            "y": 0.7960986312000417,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0,
+            "signal": 0
+          },
+          {
+            "profile": 2,
+            "heading": 0.919427161124684,
+            "x": 0.4866538264568494,
+            "y": 0.7919310975253009,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 2,
+            "heading": 0.919427161124684,
+            "x": 0.48108704529157487,
+            "y": 0.7961750281866035,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 2,
+            "heading": 0.919427161124684,
+            "x": 0.47552026412630033,
+            "y": 0.8004189588479061,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 2,
+            "heading": 0.919427161124684,
+            "x": 0.4699534829610258,
+            "y": 0.8046628895092088,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 2,
+            "heading": 0.919427161124684,
+            "x": 0.46438670179575126,
+            "y": 0.8089068201705114,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0,
+            "signal": 0
+          },
+          {
+            "profile": 3,
+            "heading": 1.3297106486932329,
+            "x": 0.4736795867861789,
+            "y": 0.8044610052294949,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 3,
+            "heading": 1.3297106486932329,
+            "x": 0.4668820314488088,
+            "y": 0.8061323045549873,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 3,
+            "heading": 1.3297106486932329,
+            "x": 0.4600844761114387,
+            "y": 0.8078036038804797,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 3,
+            "heading": 1.3297106486932329,
+            "x": 0.4532869207740686,
+            "y": 0.809474903205972,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 3,
+            "heading": 1.3297106486932329,
+            "x": 0.44648936543669854,
+            "y": 0.8111462025314644,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0,
+            "signal": 0
+          },
+          {
+            "profile": 4,
+            "heading": 1.8354158033745236,
+            "x": 0.45258460509545834,
+            "y": 0.8112179279127605,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 4,
+            "heading": 1.8354158033745236,
+            "x": 0.44582826044013446,
+            "y": 0.8093871338504814,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 4,
+            "heading": 1.8354158033745236,
+            "x": 0.43907191578481053,
+            "y": 0.8075563397882025,
+            "production": 0.02081848503056003,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0.020818490586324866,
+            "residual": -5.555764834925524e-9,
+            "used": 0.020818490586324866
+          },
+          {
+            "profile": 4,
+            "heading": 1.8354158033745236,
+            "x": 0.4323155711294866,
+            "y": 0.8057255457259236,
+            "production": 0.0008605883055604963,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0.0008605880659675345,
+            "residual": 2.39592961868959e-10,
+            "used": 0.0008605880659675345
+          },
+          {
+            "profile": 4,
+            "heading": 1.8354158033745236,
+            "x": 0.4255592264741627,
+            "y": 0.8038947516636445,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0,
+            "signal": 0.020818490586324866
+          }
+        ],
+        "crowding": [
+          {
+            "heading": -0.04682843913509416,
+            "value": 0.042794184668261064
+          },
+          {
+            "heading": 0.3948940539665706,
+            "value": 0.0539922930207654
+          },
+          {
+            "heading": 0.919427161124684,
+            "value": 0
+          },
+          {
+            "heading": 1.3297106486932329,
+            "value": 0
+          },
+          {
+            "heading": 1.8354158033745236,
+            "value": 0
+          }
+        ],
+        "intentions": [
+          {
+            "id": "ant-1",
+            "intentHeading": 0.919427161124684,
+            "trailConfidence": 0.17385919213582499,
+            "trailAdherence": 0.016084131184373462,
+            "decisionRemaining": 0.2556565136339149,
+            "committedRemaining": 0.37059749638661743
+          },
+          {
+            "id": "ant-4",
+            "intentHeading": -2.059285394603897,
+            "trailConfidence": 0,
+            "trailAdherence": 0.04029931821600391,
+            "decisionRemaining": 0.04268594106214524,
+            "committedRemaining": 0.21670884562656284
+          },
+          {
+            "id": "ant-5",
+            "intentHeading": -0.8388999882696933,
+            "trailConfidence": 0.5130171677161443,
+            "trailAdherence": 0.31847894474976673,
+            "decisionRemaining": 0.1628917865532742,
+            "committedRemaining": 0.07347547138109806
+          },
+          {
+            "id": "ant-6",
+            "intentHeading": -2.3933040956612492,
+            "trailConfidence": 0,
+            "trailAdherence": 0.06638844137640014,
+            "decisionRemaining": 0.11012338389829635,
+            "committedRemaining": 0.11392482833936823
+          },
+          {
+            "id": "ant-7",
+            "intentHeading": 2.9114716828678393,
+            "trailConfidence": 0.9970390209424139,
+            "trailAdherence": 0.7725508109383098,
+            "decisionRemaining": 0.17118607912676542,
+            "committedRemaining": 0.18907598460544145
+          },
+          {
+            "id": "ant-8",
+            "intentHeading": -1.1171062468604696,
+            "trailConfidence": 0.6401827921484736,
+            "trailAdherence": 0.2677489168119041,
+            "decisionRemaining": 0.06490089845797625,
+            "committedRemaining": 0.2602918655984096
+          },
+          {
+            "id": "ant-9",
+            "intentHeading": -1.6049615753165805,
+            "trailConfidence": 0.2327588921138939,
+            "trailAdherence": 0.5074765835273594,
+            "decisionRemaining": 0.3116955059721545,
+            "committedRemaining": 0.9869353484079585
+          },
+          {
+            "id": "ant-10",
+            "intentHeading": -1.669411352796038,
+            "trailConfidence": 0.9884556829384323,
+            "trailAdherence": 0.94637881225865,
+            "decisionRemaining": 0.09573984952966258,
+            "committedRemaining": 0.06357068838266483
+          }
+        ],
+        "events": [
+          {
+            "type": "foot-contact",
+            "payload": {
+              "type": "FOOT_CONTACT",
+              "antId": "ant-1",
+              "contactGroup": "B",
+              "contacts": [
+                {
+                  "legId": "FR",
+                  "position": {
+                    "x": 0.445703618717372,
+                    "y": 0.790823866436576
+                  }
+                },
+                {
+                  "legId": "ML",
+                  "position": {
+                    "x": 0.467200264949007,
+                    "y": 0.7586307895287697
+                  }
+                },
+                {
+                  "legId": "RR",
+                  "position": {
+                    "x": 0.42995662585148203,
+                    "y": 0.7730710577663512
+                  }
+                }
+              ],
+              "position": {
+                "x": 0.447620169839287,
+                "y": 0.7741752379105657
+              },
+              "strength": 0.03440036217598245,
+              "simulationTimeMs": 9245.464973243423
+            }
+          }
+        ],
+        "deposits": [
+          {
+            "kind": "advance",
+            "requests": [],
+            "calls": [],
+            "stored": {
+              "changedNodeCount": 0,
+              "storedDeltaSum": 0,
+              "maxNodeDelta": 0,
+              "changedIndices": []
+            }
+          }
+        ],
+        "movement": {
+          "focalIndex": 0,
+          "proposed": {
+            "x": 0.0009242997420404935,
+            "y": 0.0010988821499979624,
+            "depositionMultiplier": 0.37629349637978066
+          },
+          "collisionScale": 1,
+          "allCollisionScales": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "allProposals": [
+            {
+              "x": 0.0009242997420404935,
+              "y": 0.0010988821499979624,
+              "depositionMultiplier": 0.37629349637978066
+            },
+            {
+              "x": -0.00042935340221871487,
+              "y": -0.0007867996703761637,
+              "depositionMultiplier": 0.3831201752433737
+            },
+            {
+              "x": 0.0001842248070245938,
+              "y": -0.0009749477194190294,
+              "depositionMultiplier": 0.8821441912446248
+            },
+            {
+              "x": -0.0009019783322517519,
+              "y": -0.0009244761121921769,
+              "depositionMultiplier": 0.3970371257419386
+            },
+            {
+              "x": -0.001234982048630386,
+              "y": 0.00032813340938442446,
+              "depositionMultiplier": 3.480209290428185
+            },
+            {
+              "x": 0.00044734013897859107,
+              "y": -0.0008536909167426468,
+              "depositionMultiplier": 0.7334474122697398
+            },
+            {
+              "x": 0.00001902246072719043,
+              "y": -0.00004784813814074371,
+              "depositionMultiplier": 1.7873144707889086
+            },
+            {
+              "x": -0.00013085272250273718,
+              "y": -0.0007678447552657566,
+              "depositionMultiplier": 4.97770910184163
+            }
+          ]
+        },
+        "targetInfo": {
+          "separationX": -0.0009765889460647212,
+          "separationY": 0.002113376276901873,
+          "frontCrowding": 0,
+          "leftCrowding": 0,
+          "rightCrowding": 0,
+          "followingSpeedLimit": {
+            "$antNonFiniteNumber": "Infinity"
+          },
+          "neighbors": 1
+        },
+        "targetFieldBeforeSenseSha256": "0d41afcaf23530e8584f36042b625a86de41ee2ded287d9696a79ea5c953029b",
+        "selectedOptionIndex": 2,
+        "targetReadFieldUnchanged": true,
+        "targetRandomTape": [
+          0.516548088984564,
+          0.44388500414788723,
+          0.9225972348358482,
+          0.3983831130899489,
+          0.8873840200249106,
+          0.12199993710964918,
+          0.18138541164807975,
+          0.7883914927951992,
+          0.585612901719287,
+          0.5513022691011429,
+          0.6455435527022928,
+          0.6181297567673028,
+          0.6694510674569756,
+          0.2741267951205373
+        ],
+        "randomTrace": [
+          {
+            "agentId": "ant-1",
+            "value": 0.516548088984564
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.44388500414788723
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.9225972348358482
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.3983831130899489
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.8873840200249106
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.12199993710964918
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.18138541164807975
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.7883914927951992
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.585612901719287
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.5513022691011429
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.6455435527022928
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.6181297567673028
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.6694510674569756
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.2741267951205373
+          }
+        ],
+        "rngAfter": {
+          "state": 1177365620,
+          "calls": 2269
+        },
+        "targetAfter": {
+          "id": "ant-1",
+          "x": 0.4509809799005249,
+          "y": 0.768117154006257,
+          "vx": 0.05545798452242961,
+          "vy": 0.06593292899987775,
+          "heading": 0.8957919264809195,
+          "angularVelocity": 1.4703277218571031,
+          "radius": 0.006,
+          "personality": {
+            "preferredSpeed": 0.09377226318814792,
+            "pheromoneSensitivity": 1.6650410791859032,
+            "exploration": 0.17244797539431603,
+            "turnResponsiveness": 3.7817817789502444,
+            "acceleration": 0.16554309247992932,
+            "damping": 1.3694859258830547,
+            "personalSpacing": 0.026968484645243734
+          },
+          "targetSpeed": 0.08618993530661916,
+          "speedPhase": 1.701451083984928,
+          "speedCycle": 2.4061510408530014,
+          "hesitationRemaining": 0,
+          "inspectionRemaining": 3.088157043171427,
+          "decisionRemaining": 0.2556565136339149,
+          "intentHeading": 0.919427161124684,
+          "trailConfidence": 0.17385919213582499,
+          "trailAdherence": 0.016084131184373462,
+          "committedRemaining": 0.37059749638661743,
+          "wasBlocked": false
+        },
+        "realizedDisplacement": {
+          "x": 0.0009242997420405019,
+          "y": 0.0010988821499979817
+        },
+        "focalContacts": [
+          {
+            "type": "FOOT_CONTACT",
+            "antId": "ant-1",
+            "contactGroup": "B",
+            "contacts": [
+              {
+                "legId": "FR",
+                "position": {
+                  "x": 0.445703618717372,
+                  "y": 0.790823866436576
+                }
+              },
+              {
+                "legId": "ML",
+                "position": {
+                  "x": 0.467200264949007,
+                  "y": 0.7586307895287697
+                }
+              },
+              {
+                "legId": "RR",
+                "position": {
+                  "x": 0.42995662585148203,
+                  "y": 0.7730710577663512
+                }
+              }
+            ],
+            "position": {
+              "x": 0.447620169839287,
+              "y": 0.7741752379105657
+            },
+            "strength": 0.03440036217598245,
+            "simulationTimeMs": 9245.464973243423
+          }
+        ],
+        "nonFocalEvents": [],
+        "scheduleAfter": {
+          "time": 9250.000000000022,
+          "nextSpawnTimeMs": null,
+          "nextAgentId": 11,
+          "totalSpawned": 10,
+          "totalRetired": 2,
+          "agentIds": [
+            "ant-1",
+            "ant-4",
+            "ant-5",
+            "ant-6",
+            "ant-7",
+            "ant-8",
+            "ant-9",
+            "ant-10"
+          ]
+        },
+        "gaitAfter": {
+          "strideCycleLength": 0.03548223646491765,
+          "phase": 0.5514673068755218,
+          "contactStrength": 0.03440036217598245
+        },
+        "depositionAfter": {
+          "distance": 0.0032252577269036185,
+          "amount": 0.005461280974671936
+        },
+        "surfaceWrite": {
+          "preTickFieldSha256": "8245ad049128b0c5b4337fb2a710066d14eba1e7f70c16e5a98136c5c09ba13f",
+          "postRelaxFieldSha256": "329dd1d5487a5bb9a72eb97907f0919f2b79bbcdc3a289f0862825682e152afc",
+          "postTickFieldSha256": "41eb28b496572372e845931633c82029efef3602b709709fbd789e2dba552152",
+          "totalFootContactsBefore": 609,
+          "totalFootContactsAfter": 612,
+          "contactCountDelta": 3,
+          "eventContactPointCount": 3,
+          "targetContactPointCount": 3,
+          "targetContactWrites": [
+            {
+              "contactPointCount": 3,
+              "changedNodeCount": 13,
+              "storedDeltaSum": 0.12965287826955318,
+              "maxNodeDelta": 0.01994149014353752
+            }
+          ],
+          "contactWrite": {
+            "changedNodeCount": 13,
+            "storedDeltaSum": 0.12965287826955318,
+            "maxNodeDelta": 0.01994149014353752
+          }
+        }
+      },
+      "Rhat": {
+        "condition": "Rhat",
+        "offset": 0,
+        "modelTimeMsBefore": 9233.333333333356,
+        "rngBefore": {
+          "state": 4217350134,
+          "calls": 2255
+        },
+        "targetBefore": {
+          "id": "ant-1",
+          "x": 0.4500566801584844,
+          "y": 0.767018271856259,
+          "vx": 0.056583905934762514,
+          "vy": 0.06497736414002837,
+          "heading": 0.8712864644499678,
+          "angularVelocity": 2.761398679243534,
+          "radius": 0.006,
+          "personality": {
+            "preferredSpeed": 0.09377226318814792,
+            "pheromoneSensitivity": 1.6650410791859032,
+            "exploration": 0.17244797539431603,
+            "turnResponsiveness": 3.7817817789502444,
+            "acceleration": 0.16554309247992932,
+            "damping": 1.3694859258830547,
+            "personalSpacing": 0.026968484645243734
+          },
+          "targetSpeed": 0.08623016338031961,
+          "speedPhase": 1.6579293958856915,
+          "speedCycle": 2.4061510408530014,
+          "hesitationRemaining": 0,
+          "inspectionRemaining": 3.1048237098380937,
+          "decisionRemaining": 0.11768089843271717,
+          "intentHeading": 0.848379924995216,
+          "trailConfidence": 0.06337228683855062,
+          "trailAdherence": 0.016233749935424358,
+          "committedRemaining": 0.0004360934303992911,
+          "wasBlocked": false
+        },
+        "targetLocal": {
+          "left": 0,
+          "center": 0,
+          "right": 0,
+          "strength": 0,
+          "coherence": 0,
+          "steering": 0
+        },
+        "targetAfterIntention": {
+          "id": "ant-1",
+          "x": 0.4500566801584844,
+          "y": 0.767018271856259,
+          "vx": 0.056583905934762514,
+          "vy": 0.06497736414002837,
+          "heading": 0.8712864644499678,
+          "angularVelocity": 2.761398679243534,
+          "radius": 0.006,
+          "personality": {
+            "preferredSpeed": 0.09377226318814792,
+            "pheromoneSensitivity": 1.6650410791859032,
+            "exploration": 0.17244797539431603,
+            "turnResponsiveness": 3.7817817789502444,
+            "acceleration": 0.16554309247992932,
+            "damping": 1.3694859258830547,
+            "personalSpacing": 0.026968484645243734
+          },
+          "targetSpeed": 0.08623016338031961,
+          "speedPhase": 1.6579293958856915,
+          "speedCycle": 2.4061510408530014,
+          "hesitationRemaining": 0,
+          "inspectionRemaining": 3.088157043171427,
+          "decisionRemaining": 0.24234863017972003,
+          "intentHeading": 0.3948940539665706,
+          "trailConfidence": 0,
+          "trailAdherence": 0.016084131184373462,
+          "committedRemaining": 0.37059749638661743,
+          "wasBlocked": false
+        },
+        "queries": [
+          {
+            "profile": 0,
+            "heading": -0.04682843913509416,
+            "x": 0.49135527905269055,
+            "y": 0.7510675436792925,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 0,
+            "heading": -0.04682843913509416,
+            "x": 0.4916829583345252,
+            "y": 0.7580598699222717,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 0,
+            "heading": -0.04682843913509416,
+            "x": 0.4920106376163599,
+            "y": 0.765052196165251,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 0,
+            "heading": -0.04682843913509416,
+            "x": 0.4923383168981946,
+            "y": 0.7720445224082303,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 0,
+            "heading": -0.04682843913509416,
+            "x": 0.4926659961800292,
+            "y": 0.7790368486512095,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0,
+            "signal": 0
+          },
+          {
+            "profile": 1,
+            "heading": 0.3948940539665706,
+            "x": 0.4942101935215539,
+            "y": 0.7702535860136851,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 1,
+            "heading": 0.3948940539665706,
+            "x": 0.4915172207297865,
+            "y": 0.7767148473102743,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 1,
+            "heading": 0.3948940539665706,
+            "x": 0.4888242479380191,
+            "y": 0.7831761086068634,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 1,
+            "heading": 0.3948940539665706,
+            "x": 0.4861312751462517,
+            "y": 0.7896373699034525,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 1,
+            "heading": 0.3948940539665706,
+            "x": 0.4834383023544843,
+            "y": 0.7960986312000417,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0,
+            "signal": 0
+          },
+          {
+            "profile": 2,
+            "heading": 0.919427161124684,
+            "x": 0.4866538264568494,
+            "y": 0.7919310975253009,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 2,
+            "heading": 0.919427161124684,
+            "x": 0.48108704529157487,
+            "y": 0.7961750281866035,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 2,
+            "heading": 0.919427161124684,
+            "x": 0.47552026412630033,
+            "y": 0.8004189588479061,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 2,
+            "heading": 0.919427161124684,
+            "x": 0.4699534829610258,
+            "y": 0.8046628895092088,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 2,
+            "heading": 0.919427161124684,
+            "x": 0.46438670179575126,
+            "y": 0.8089068201705114,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0,
+            "signal": 0
+          },
+          {
+            "profile": 3,
+            "heading": 1.3297106486932329,
+            "x": 0.4736795867861789,
+            "y": 0.8044610052294949,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 3,
+            "heading": 1.3297106486932329,
+            "x": 0.4668820314488088,
+            "y": 0.8061323045549873,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 3,
+            "heading": 1.3297106486932329,
+            "x": 0.4600844761114387,
+            "y": 0.8078036038804797,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 3,
+            "heading": 1.3297106486932329,
+            "x": 0.4532869207740686,
+            "y": 0.809474903205972,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 3,
+            "heading": 1.3297106486932329,
+            "x": 0.44648936543669854,
+            "y": 0.8111462025314644,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0,
+            "signal": 0
+          },
+          {
+            "profile": 4,
+            "heading": 1.8354158033745236,
+            "x": 0.45258460509545834,
+            "y": 0.8112179279127605,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 4,
+            "heading": 1.8354158033745236,
+            "x": 0.44582826044013446,
+            "y": 0.8093871338504814,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0
+          },
+          {
+            "profile": 4,
+            "heading": 1.8354158033745236,
+            "x": 0.43907191578481053,
+            "y": 0.8075563397882025,
+            "production": 0.02081848503056003,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0.020818490586324866,
+            "residual": -5.555764834925524e-9,
+            "used": 0
+          },
+          {
+            "profile": 4,
+            "heading": 1.8354158033745236,
+            "x": 0.4323155711294866,
+            "y": 0.8057255457259236,
+            "production": 0.0008605883055604963,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0.0008605880659675345,
+            "residual": 2.39592961868959e-10,
+            "used": 0
+          },
+          {
+            "profile": 4,
+            "heading": 1.8354158033745236,
+            "x": 0.4255592264741627,
+            "y": 0.8038947516636445,
+            "production": 0,
+            "self": 0,
+            "aliveOther": 0,
+            "retired": 0,
+            "residual": 0,
+            "used": 0,
+            "signal": 0
+          }
+        ],
+        "crowding": [
+          {
+            "heading": -0.04682843913509416,
+            "value": 0.042794184668261064
+          },
+          {
+            "heading": 0.3948940539665706,
+            "value": 0.0539922930207654
+          },
+          {
+            "heading": 0.919427161124684,
+            "value": 0
+          },
+          {
+            "heading": 1.3297106486932329,
+            "value": 0
+          },
+          {
+            "heading": 1.8354158033745236,
+            "value": 0
+          }
+        ],
+        "intentions": [
+          {
+            "id": "ant-1",
+            "intentHeading": 0.3948940539665706,
+            "trailConfidence": 0,
+            "trailAdherence": 0.016084131184373462,
+            "decisionRemaining": 0.24234863017972003,
+            "committedRemaining": 0.37059749638661743
+          },
+          {
+            "id": "ant-4",
+            "intentHeading": -2.059285394603897,
+            "trailConfidence": 0,
+            "trailAdherence": 0.04029931821600391,
+            "decisionRemaining": 0.04268594106214524,
+            "committedRemaining": 0.21670884562656284
+          },
+          {
+            "id": "ant-5",
+            "intentHeading": -0.8388999882696933,
+            "trailConfidence": 0.5130171677161443,
+            "trailAdherence": 0.31847894474976673,
+            "decisionRemaining": 0.1628917865532742,
+            "committedRemaining": 0.07347547138109806
+          },
+          {
+            "id": "ant-6",
+            "intentHeading": -2.3933040956612492,
+            "trailConfidence": 0,
+            "trailAdherence": 0.06638844137640014,
+            "decisionRemaining": 0.11012338389829635,
+            "committedRemaining": 0.11392482833936823
+          },
+          {
+            "id": "ant-7",
+            "intentHeading": 2.9114716828678393,
+            "trailConfidence": 0.9970390209424139,
+            "trailAdherence": 0.7725508109383098,
+            "decisionRemaining": 0.17118607912676542,
+            "committedRemaining": 0.18907598460544145
+          },
+          {
+            "id": "ant-8",
+            "intentHeading": -1.1171062468604696,
+            "trailConfidence": 0.6401827921484736,
+            "trailAdherence": 0.2677489168119041,
+            "decisionRemaining": 0.06490089845797625,
+            "committedRemaining": 0.2602918655984096
+          },
+          {
+            "id": "ant-9",
+            "intentHeading": -1.6049615753165805,
+            "trailConfidence": 0.2327588921138939,
+            "trailAdherence": 0.5074765835273594,
+            "decisionRemaining": 0.3116955059721545,
+            "committedRemaining": 0.9869353484079585
+          },
+          {
+            "id": "ant-10",
+            "intentHeading": -1.669411352796038,
+            "trailConfidence": 0.9884556829384323,
+            "trailAdherence": 0.94637881225865,
+            "decisionRemaining": 0.09573984952966258,
+            "committedRemaining": 0.06357068838266483
+          }
+        ],
+        "events": [
+          {
+            "type": "foot-contact",
+            "payload": {
+              "type": "FOOT_CONTACT",
+              "antId": "ant-1",
+              "contactGroup": "B",
+              "contacts": [
+                {
+                  "legId": "FR",
+                  "position": {
+                    "x": 0.44804622454135523,
+                    "y": 0.7911809963695489
+                  }
+                },
+                {
+                  "legId": "ML",
+                  "position": {
+                    "x": 0.46623843247955915,
+                    "y": 0.7570116596722533
+                  }
+                },
+                {
+                  "legId": "RR",
+                  "position": {
+                    "x": 0.43061353776295347,
+                    "y": 0.7750803308029911
+                  }
+                }
+              ],
+              "position": {
+                "x": 0.4482993982612893,
+                "y": 0.7744243289482644
+              },
+              "strength": 0.03440036217598245,
+              "simulationTimeMs": 9245.467403386272
+            }
+          }
+        ],
+        "deposits": [
+          {
+            "kind": "advance",
+            "requests": [],
+            "calls": [],
+            "stored": {
+              "changedNodeCount": 0,
+              "storedDeltaSum": 0,
+              "maxNodeDelta": 0,
+              "changedIndices": []
+            }
+          }
+        ],
+        "movement": {
+          "focalIndex": 0,
+          "proposed": {
+            "x": 0.0009685157823174931,
+            "y": 0.0010597279720408396,
+            "depositionMultiplier": 0.37629349637978066
+          },
+          "collisionScale": 1,
+          "allCollisionScales": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "allProposals": [
+            {
+              "x": 0.0009685157823174931,
+              "y": 0.0010597279720408396,
+              "depositionMultiplier": 0.37629349637978066
+            },
+            {
+              "x": -0.00042935340221871487,
+              "y": -0.0007867996703761637,
+              "depositionMultiplier": 0.3831201752433737
+            },
+            {
+              "x": 0.0001842248070245938,
+              "y": -0.0009749477194190294,
+              "depositionMultiplier": 0.8821441912446248
+            },
+            {
+              "x": -0.0009019783322517519,
+              "y": -0.0009244761121921769,
+              "depositionMultiplier": 0.3970371257419386
+            },
+            {
+              "x": -0.001234982048630386,
+              "y": 0.00032813340938442446,
+              "depositionMultiplier": 3.480209290428185
+            },
+            {
+              "x": 0.00044734013897859107,
+              "y": -0.0008536909167426468,
+              "depositionMultiplier": 0.7334474122697398
+            },
+            {
+              "x": 0.00001902246072719043,
+              "y": -0.00004784813814074371,
+              "depositionMultiplier": 1.7873144707889086
+            },
+            {
+              "x": -0.00013085272250273718,
+              "y": -0.0007678447552657566,
+              "depositionMultiplier": 4.97770910184163
+            }
+          ]
+        },
+        "targetInfo": {
+          "separationX": -0.0009765889460647212,
+          "separationY": 0.002113376276901873,
+          "frontCrowding": 0,
+          "leftCrowding": 0,
+          "rightCrowding": 0,
+          "followingSpeedLimit": {
+            "$antNonFiniteNumber": "Infinity"
+          },
+          "neighbors": 1
+        },
+        "targetFieldBeforeSenseSha256": "0d41afcaf23530e8584f36042b625a86de41ee2ded287d9696a79ea5c953029b",
+        "selectedOptionIndex": 1,
+        "targetReadFieldUnchanged": true,
+        "targetRandomTape": [
+          0.516548088984564,
+          0.44388500414788723,
+          0.9225972348358482,
+          0.3983831130899489,
+          0.8873840200249106,
+          0.12199993710964918,
+          0.18138541164807975,
+          0.7883914927951992,
+          0.585612901719287,
+          0.5513022691011429,
+          0.6455435527022928,
+          0.6181297567673028,
+          0.6694510674569756,
+          0.2741267951205373
+        ],
+        "randomTrace": [
+          {
+            "agentId": "ant-1",
+            "value": 0.516548088984564
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.44388500414788723
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.9225972348358482
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.3983831130899489
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.8873840200249106
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.12199993710964918
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.18138541164807975
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.7883914927951992
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.585612901719287
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.5513022691011429
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.6455435527022928
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.6181297567673028
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.6694510674569756
+          },
+          {
+            "agentId": "ant-1",
+            "value": 0.2741267951205373
+          }
+        ],
+        "rngAfter": {
+          "state": 1177365620,
+          "calls": 2269
+        },
+        "targetAfter": {
+          "id": "ant-1",
+          "x": 0.45102519594080187,
+          "y": 0.7680779998282998,
+          "vx": 0.058110946939049585,
+          "vy": 0.06358367832245038,
+          "heading": 0.7962864644499668,
+          "angularVelocity": -4.5,
+          "radius": 0.006,
+          "personality": {
+            "preferredSpeed": 0.09377226318814792,
+            "pheromoneSensitivity": 1.6650410791859032,
+            "exploration": 0.17244797539431603,
+            "turnResponsiveness": 3.7817817789502444,
+            "acceleration": 0.16554309247992932,
+            "damping": 1.3694859258830547,
+            "personalSpacing": 0.026968484645243734
+          },
+          "targetSpeed": 0.08618993530661916,
+          "speedPhase": 1.701451083984928,
+          "speedCycle": 2.4061510408530014,
+          "hesitationRemaining": 0,
+          "inspectionRemaining": 3.088157043171427,
+          "decisionRemaining": 0.24234863017972003,
+          "intentHeading": 0.3948940539665706,
+          "trailConfidence": 0,
+          "trailAdherence": 0.016084131184373462,
+          "committedRemaining": 0.37059749638661743,
+          "wasBlocked": false
+        },
+        "realizedDisplacement": {
+          "x": 0.0009685157823174917,
+          "y": 0.0010597279720407915
+        },
+        "focalContacts": [
+          {
+            "type": "FOOT_CONTACT",
+            "antId": "ant-1",
+            "contactGroup": "B",
+            "contacts": [
+              {
+                "legId": "FR",
+                "position": {
+                  "x": 0.44804622454135523,
+                  "y": 0.7911809963695489
+                }
+              },
+              {
+                "legId": "ML",
+                "position": {
+                  "x": 0.46623843247955915,
+                  "y": 0.7570116596722533
+                }
+              },
+              {
+                "legId": "RR",
+                "position": {
+                  "x": 0.43061353776295347,
+                  "y": 0.7750803308029911
+                }
+              }
+            ],
+            "position": {
+              "x": 0.4482993982612893,
+              "y": 0.7744243289482644
+            },
+            "strength": 0.03440036217598245,
+            "simulationTimeMs": 9245.467403386272
+          }
+        ],
+        "nonFocalEvents": [],
+        "scheduleAfter": {
+          "time": 9250.000000000022,
+          "nextSpawnTimeMs": null,
+          "nextAgentId": 11,
+          "totalSpawned": 10,
+          "totalRetired": 2,
+          "agentIds": [
+            "ant-1",
+            "ant-4",
+            "ant-5",
+            "ant-6",
+            "ant-7",
+            "ant-8",
+            "ant-9",
+            "ant-10"
+          ]
+        },
+        "gaitAfter": {
+          "strideCycleLength": 0.03548223646491765,
+          "phase": 0.5514003185194261,
+          "contactStrength": 0.03440036217598245
+        },
+        "depositionAfter": {
+          "distance": 0.003222880830212228,
+          "amount": 0.005457256349360529
+        },
+        "surfaceWrite": {
+          "preTickFieldSha256": "8245ad049128b0c5b4337fb2a710066d14eba1e7f70c16e5a98136c5c09ba13f",
+          "postRelaxFieldSha256": "329dd1d5487a5bb9a72eb97907f0919f2b79bbcdc3a289f0862825682e152afc",
+          "postTickFieldSha256": "6c2ab2df4c9830568076771179bcfc02b537fa7b358963bb10c39bc6022845de",
+          "totalFootContactsBefore": 609,
+          "totalFootContactsAfter": 612,
+          "contactCountDelta": 3,
+          "eventContactPointCount": 3,
+          "targetContactPointCount": 3,
+          "targetContactWrites": [
+            {
+              "contactPointCount": 3,
+              "changedNodeCount": 12,
+              "storedDeltaSum": 0.12627213913947344,
+              "maxNodeDelta": 0.020278513431549072
+            }
+          ],
+          "contactWrite": {
+            "changedNodeCount": 12,
+            "storedDeltaSum": 0.12627213913947344,
+            "maxNodeDelta": 0.020278513431549072
+          }
+        }
+      }
+    },
+    "plainObserverControl": {
+      "wholeWorldExact": true,
+      "eventsExact": true,
+      "rngExact": true
+    }
+  },
+  "continuation": {
+    "ran": true,
+    "firstInscription": {
+      "Fhat": {
+        "contact": {
+          "tickOffset": 0,
+          "modelTimeMsBefore": 9233.333333333356,
+          "event": {
+            "type": "FOOT_CONTACT",
+            "antId": "ant-1",
+            "contactGroup": "B",
+            "contacts": [
+              {
+                "legId": "FR",
+                "position": {
+                  "x": 0.445703618717372,
+                  "y": 0.790823866436576
+                }
+              },
+              {
+                "legId": "ML",
+                "position": {
+                  "x": 0.467200264949007,
+                  "y": 0.7586307895287697
+                }
+              },
+              {
+                "legId": "RR",
+                "position": {
+                  "x": 0.42995662585148203,
+                  "y": 0.7730710577663512
+                }
+              }
+            ],
+            "position": {
+              "x": 0.447620169839287,
+              "y": 0.7741752379105657
+            },
+            "strength": 0.03440036217598245,
+            "simulationTimeMs": 9245.464973243423
+          },
+          "surfaceWrite": {
+            "contactPointCount": 3,
+            "changedNodeCount": 13,
+            "storedDeltaSum": 0.12965287826955318,
+            "maxNodeDelta": 0.01994149014353752
+          },
+          "surfaceContactWriteVerified": true
+        },
+        "dab": null
+      },
+      "Rhat": {
+        "contact": {
+          "tickOffset": 0,
+          "modelTimeMsBefore": 9233.333333333356,
+          "event": {
+            "type": "FOOT_CONTACT",
+            "antId": "ant-1",
+            "contactGroup": "B",
+            "contacts": [
+              {
+                "legId": "FR",
+                "position": {
+                  "x": 0.44804622454135523,
+                  "y": 0.7911809963695489
+                }
+              },
+              {
+                "legId": "ML",
+                "position": {
+                  "x": 0.46623843247955915,
+                  "y": 0.7570116596722533
+                }
+              },
+              {
+                "legId": "RR",
+                "position": {
+                  "x": 0.43061353776295347,
+                  "y": 0.7750803308029911
+                }
+              }
+            ],
+            "position": {
+              "x": 0.4482993982612893,
+              "y": 0.7744243289482644
+            },
+            "strength": 0.03440036217598245,
+            "simulationTimeMs": 9245.467403386272
+          },
+          "surfaceWrite": {
+            "contactPointCount": 3,
+            "changedNodeCount": 12,
+            "storedDeltaSum": 0.12627213913947344,
+            "maxNodeDelta": 0.020278513431549072
+          },
+          "surfaceContactWriteVerified": true
+        },
+        "dab": null
+      }
+    },
+    "firstDivergence": {
+      "rng": null,
+      "scheduling": null,
+      "nonFocalState": {
+        "tickOffset": 1
+      },
+      "nonFocalEvents": null
+    },
+    "summary": {
+      "maxTicks": 30,
+      "observedTicks": 1,
+      "stopReason": "matched-fork censoring condition",
+      "censored": true,
+      "differentContact": true,
+      "differentStoredDab": false,
+      "surfaceContactWriteVerified": true,
+      "contactDifferenceBeforeCensor": true,
+      "dabDifferenceBeforeCensor": false,
+      "differentInscription": true,
+      "validDifferenceBeforeCensor": true,
+      "firstContactTickOffsets": {
+        "Fhat": 0,
+        "Rhat": 0
+      },
+      "firstDabTickOffsets": {
+        "Fhat": null,
+        "Rhat": null
+      }
+    },
+    "records": [
+      {
+        "tickOffset": 1,
+        "modelTimeMsBefore": 9250.000000000022,
+        "traceAligned": true,
+        "rngAlignedAfter": true,
+        "scheduleAligned": true,
+        "nonFocalAligned": false,
+        "nonFocalEventsAligned": true,
+        "collisionScales": {
+          "Fhat": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "Rhat": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        "surfaceWrites": {
+          "Fhat": {
+            "preTickFieldSha256": "41eb28b496572372e845931633c82029efef3602b709709fbd789e2dba552152",
+            "postRelaxFieldSha256": "c63e1a9fdd0250f440ced769c1d6b353b82732f67109713d2a431c542806a488",
+            "postTickFieldSha256": "c63e1a9fdd0250f440ced769c1d6b353b82732f67109713d2a431c542806a488",
+            "totalFootContactsBefore": 612,
+            "totalFootContactsAfter": 612,
+            "contactCountDelta": 0,
+            "eventContactPointCount": 0,
+            "targetContactPointCount": 0,
+            "targetContactWrites": [],
+            "contactWrite": {
+              "changedNodeCount": 0,
+              "storedDeltaSum": 0,
+              "maxNodeDelta": 0
+            }
+          },
+          "Rhat": {
+            "preTickFieldSha256": "6c2ab2df4c9830568076771179bcfc02b537fa7b358963bb10c39bc6022845de",
+            "postRelaxFieldSha256": "3c6955a01ecebec3625169b41ea43e5bb54334374545ae0b6615f87c5cc422d9",
+            "postTickFieldSha256": "3c6955a01ecebec3625169b41ea43e5bb54334374545ae0b6615f87c5cc422d9",
+            "totalFootContactsBefore": 612,
+            "totalFootContactsAfter": 612,
+            "contactCountDelta": 0,
+            "eventContactPointCount": 0,
+            "targetContactPointCount": 0,
+            "targetContactWrites": [],
+            "contactWrite": {
+              "changedNodeCount": 0,
+              "storedDeltaSum": 0,
+              "maxNodeDelta": 0
+            }
+          }
+        },
+        "Fhat": {
+          "modelTimeMsAfter": 9266.666666666688,
+          "focal": {
+            "id": "ant-1",
+            "x": 0.4518884940479906,
+            "y": 0.7692293406337581,
+            "vx": 0.05445084884794311,
+            "vy": 0.06673119765006563,
+            "heading": 0.9038881704461605,
+            "angularVelocity": 0.4857746379144601,
+            "radius": 0.006,
+            "personality": {
+              "preferredSpeed": 0.09377226318814792,
+              "pheromoneSensitivity": 1.6650410791859032,
+              "exploration": 0.17244797539431603,
+              "turnResponsiveness": 3.7817817789502444,
+              "acceleration": 0.16554309247992932,
+              "damping": 1.3694859258830547,
+              "personalSpacing": 0.026968484645243734
+            },
+            "targetSpeed": 0.08611922479616174,
+            "speedPhase": 1.7449727720841643,
+            "speedCycle": 2.4061510408530014,
+            "hesitationRemaining": 0,
+            "inspectionRemaining": 3.0714903765047605,
+            "decisionRemaining": 0.23898984696724823,
+            "intentHeading": 0.919427161124684,
+            "trailConfidence": 0.17385919213582499,
+            "trailAdherence": 0.015935891398180045,
+            "committedRemaining": 0.35393082971995077,
+            "wasBlocked": false
+          },
+          "displacement": {
+            "x": 0.0009075141474657045,
+            "y": 0.0011121866275011216
+          },
+          "proposed": {
+            "x": 0.0009075141474657185,
+            "y": 0.0011121866275010939,
+            "depositionMultiplier": 0.37626976317327293
+          },
+          "collisionScale": 1,
+          "contacts": [],
+          "deposits": [],
+          "gait": {
+            "strideCycleLength": 0.03548223646491765,
+            "phase": 0.5514673068755218,
+            "contactStrength": 0.03440036217598245
+          },
+          "deposition": {
+            "distance": 0.0032252577269036185,
+            "amount": 0.005461280974671936
+          },
+          "nonFocalIds": [
+            "ant-4",
+            "ant-5",
+            "ant-6",
+            "ant-7",
+            "ant-8",
+            "ant-9",
+            "ant-10"
+          ]
+        },
+        "Rhat": {
+          "modelTimeMsAfter": 9266.666666666688,
+          "focal": {
+            "id": "ant-1",
+            "x": 0.45204403845949576,
+            "y": 0.7690862195712675,
+            "vx": 0.06113055112163231,
+            "vy": 0.06049318457806474,
+            "heading": 0.7212864644499675,
+            "angularVelocity": -4.5,
+            "radius": 0.006,
+            "personality": {
+              "preferredSpeed": 0.09377226318814792,
+              "pheromoneSensitivity": 1.6650410791859032,
+              "exploration": 0.17244797539431603,
+              "turnResponsiveness": 3.7817817789502444,
+              "acceleration": 0.16554309247992932,
+              "damping": 1.3694859258830547,
+              "personalSpacing": 0.026968484645243734
+            },
+            "targetSpeed": 0.08611904084021312,
+            "speedPhase": 1.7449727720841643,
+            "speedCycle": 2.4061510408530014,
+            "hesitationRemaining": 0,
+            "inspectionRemaining": 3.0714903765047605,
+            "decisionRemaining": 0.22568196351305336,
+            "intentHeading": 0.3948940539665706,
+            "trailConfidence": 0,
+            "trailAdherence": 0.015935891398180045,
+            "committedRemaining": 0.35393082971995077,
+            "wasBlocked": false
+          },
+          "displacement": {
+            "x": 0.0010188425186938854,
+            "y": 0.0010082197429677198
+          },
+          "proposed": {
+            "x": 0.0010188425186938718,
+            "y": 0.0010082197429677456,
+            "depositionMultiplier": 0.37626976317327293
+          },
+          "collisionScale": 1,
+          "contacts": [],
+          "deposits": [],
+          "gait": {
+            "strideCycleLength": 0.03548223646491765,
+            "phase": 0.5514003185194261,
+            "contactStrength": 0.03440036217598245
+          },
+          "deposition": {
+            "distance": 0.003222880830212228,
+            "amount": 0.005457256349360529
+          },
+          "nonFocalIds": [
+            "ant-4",
+            "ant-5",
+            "ant-6",
+            "ant-7",
+            "ant-8",
+            "ant-9",
+            "ant-10"
+          ]
+        }
+      }
+    ]
+  }
+}

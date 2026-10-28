@@ -1,0 +1,154 @@
+{
+  "schema": "ant-recursive-inscription-supplement-before-surface-receipt-v1",
+  "resultSha256": "9a143db0b4df1a0c7290c10f65da36bfd95c76557b76581b7ab9a12524e1cf82",
+  "validationSha256": "b34e60b8b65d3a1b80fe7362db9925de85e10bbdf7c5f95ce2b6e0ab2dfce62e",
+  "status": "SUPPORTED — bounded recursive re-inscription",
+  "selection": {
+    "population": 284,
+    "sourceWideChoices": 1507,
+    "rule": "earliest model timestamp among residual-free Fhat/Rhat option changes; numeric ant ID tie-break",
+    "packetCaseIndex": 120,
+    "wideChoiceIndex": 62,
+    "timestamp": 9.250000000000039,
+    "antId": "ant-1",
+    "FhatOptionIndex": 2,
+    "RhatOptionIndex": 1,
+    "residualFreeIndicesEqualOriginalRemovalIndices": true
+  },
+  "validity": {
+    "completeWorldAndRngParity": true,
+    "observerOnOffParity": true,
+    "targetStateParity": true,
+    "localProfileParity": true,
+    "candidateGeometryAndCrowdingParity": true,
+    "targetRandomTapeParity": true,
+    "primaryFhatRhatRngAligned": true,
+    "targetSensorFieldParity": true,
+    "FReproducedFrozenAfterState": true,
+    "FhatNumericalSham": {
+      "selectedOptionUnchanged": true,
+      "metricsWithinCeilings": {
+        "position": true,
+        "velocity": true,
+        "heading": true,
+        "angularVelocity": true
+      },
+      "ceiling": {
+        "position": 1e-8,
+        "velocity": 1e-7,
+        "heading": 0.000001,
+        "angularVelocity": 0.00006
+      }
+    },
+    "exactChangedChoiceReproduced": true,
+    "allConditionsReadOnlyAttribution": true,
+    "validForGateC": true
+  },
+  "motor": {
+    "position": 0.000059060205462559164,
+    "velocity": 0.0035436123277513137,
+    "heading": 0.09950546203095278,
+    "angularVelocity": 5.970327721857103,
+    "displacement": 0.000059060205462559164,
+    "proposedDisplacement": 0.00005906020546252184,
+    "collisionScale": 0
+  },
+  "sham": {
+    "position": 0,
+    "velocity": 0,
+    "heading": 0,
+    "angularVelocity": 0,
+    "displacement": 0,
+    "proposedDisplacement": 0,
+    "collisionScale": 0
+  },
+  "contact": {
+    "Fhat": {
+      "type": "FOOT_CONTACT",
+      "antId": "ant-1",
+      "contactGroup": "B",
+      "contacts": [
+        {
+          "legId": "FR",
+          "position": {
+            "x": 0.445703618717372,
+            "y": 0.790823866436576
+          }
+        },
+        {
+          "legId": "ML",
+          "position": {
+            "x": 0.467200264949007,
+            "y": 0.7586307895287697
+          }
+        },
+        {
+          "legId": "RR",
+          "position": {
+            "x": 0.42995662585148203,
+            "y": 0.7730710577663512
+          }
+        }
+      ],
+      "position": {
+        "x": 0.447620169839287,
+        "y": 0.7741752379105657
+      },
+      "strength": 0.03440036217598245,
+      "simulationTimeMs": 9245.464973243423
+    },
+    "Rhat": {
+      "type": "FOOT_CONTACT",
+      "antId": "ant-1",
+      "contactGroup": "B",
+      "contacts": [
+        {
+          "legId": "FR",
+          "position": {
+            "x": 0.44804622454135523,
+            "y": 0.7911809963695489
+          }
+        },
+        {
+          "legId": "ML",
+          "position": {
+            "x": 0.46623843247955915,
+            "y": 0.7570116596722533
+          }
+        },
+        {
+          "legId": "RR",
+          "position": {
+            "x": 0.43061353776295347,
+            "y": 0.7750803308029911
+          }
+        }
+      ],
+      "position": {
+        "x": 0.4482993982612893,
+        "y": 0.7744243289482644
+      },
+      "strength": 0.03440036217598245,
+      "simulationTimeMs": 9245.467403386272
+    }
+  },
+  "continuation": {
+    "maxTicks": 30,
+    "observedTicks": 1,
+    "stopReason": "matched-fork censoring condition",
+    "censored": true,
+    "differentContact": true,
+    "differentStoredDab": false,
+    "differentInscription": true,
+    "validDifferenceBeforeCensor": true,
+    "firstContactTickOffsets": {
+      "Fhat": 0,
+      "Rhat": 0
+    },
+    "firstDabTickOffsets": {
+      "Fhat": null,
+      "Rhat": null
+    }
+  },
+  "amendment": "The deterministic event receipt is valid. A narrow evidence addition will hash/compare the production SurfaceField write caused by the already observed FOOT_CONTACT; no condition, horizon, target or threshold changes."
+}
