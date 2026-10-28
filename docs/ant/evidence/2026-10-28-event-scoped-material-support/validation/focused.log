@@ -1,0 +1,280 @@
+TAP version 13
+# Subtest: replays original event groups in tick order and matches every saved Float32 anchor
+ok 1 - replays original event groups in tick order and matches every saved Float32 anchor
+  ---
+  duration_ms: 5.651
+  type: 'test'
+  ...
+# Subtest: excludes start contact, includes end contact, and returns raw signed Float32 residuals
+ok 2 - excludes start contact, includes end contact, and returns raw signed Float32 residuals
+  ---
+  duration_ms: 0.9093
+  type: 'test'
+  ...
+# Subtest: accepts the JSON-serialized packet array schema with exact Float32 parity
+ok 3 - accepts the JSON-serialized packet array schema with exact Float32 parity
+  ---
+  duration_ms: 0.8724
+  type: 'test'
+  ...
+# Subtest: exact anchor mismatch invalidates contribution values instead of relaxing equality
+ok 4 - exact anchor mismatch invalidates contribution values instead of relaxing equality
+  ---
+  duration_ms: 0.7648
+  type: 'test'
+  ...
+# Subtest: event window reports continuous presence and an already-carried onset without treating it as a return
+ok 5 - event window reports continuous presence and an already-carried onset without treating it as a return
+  ---
+  duration_ms: 22.3532
+  type: 'test'
+  ...
+# Subtest: late E onset and reappearance count only the post-absence return
+ok 6 - late E onset and reappearance count only the post-absence return
+  ---
+  duration_ms: 18.5677
+  type: 'test'
+  ...
+# Subtest: irregular sample gaps produce bounded endpoint duration estimates
+ok 7 - irregular sample gaps produce bounded endpoint duration estimates
+  ---
+  duration_ms: 16.056
+  type: 'test'
+  ...
+# Subtest: exact feet and 3x3 feet remain separate; window endpoints inclusive, prestart counted separately, invalid domain excluded
+ok 8 - exact feet and 3x3 feet remain separate; window endpoints inclusive, prestart counted separately, invalid domain excluded
+  ---
+  duration_ms: 11.5076
+  type: 'test'
+  ...
+# Subtest: later frozen coverage is not reported as already frozen at birth
+ok 9 - later frozen coverage is not reported as already frozen at birth
+  ---
+  duration_ms: 13.6099
+  type: 'test'
+  ...
+# Subtest: birth ribbon, rather than the packet final frame, defines final ribbon membership
+ok 10 - birth ribbon, rather than the packet final frame, defines final ribbon membership
+  ---
+  duration_ms: 12.7528
+  type: 'test'
+  ...
+# Subtest: birth ordinal resolves its own saved frame and keeps absolute E tenure from packet start
+ok 11 - birth ordinal resolves its own saved frame and keeps absolute E tenure from packet start
+  ---
+  duration_ms: 14.8055
+  type: 'test'
+  ...
+# Subtest: analysis does not mutate packet or consume RNG
+ok 12 - analysis does not mutate packet or consume RNG
+  ---
+  duration_ms: 20.1121
+  type: 'test'
+  ...
+# Subtest: compiles sparse 32-grid nodes and global four-neighbor indices without changing frozen 96-grid masks
+ok 13 - compiles sparse 32-grid nodes and global four-neighbor indices without changing frozen 96-grid masks
+  ---
+  duration_ms: 10.2984
+  type: 'test'
+  ...
+# Subtest: diagonal graph bridges survive conservative downsampling
+ok 14 - diagonal graph bridges survive conservative downsampling
+  ---
+  duration_ms: 4.5559
+  type: 'test'
+  ...
+# Subtest: stratigraphy order controls local bottom-to-top columns, top exposure routing, and only adjacent vertical links
+ok 15 - stratigraphy order controls local bottom-to-top columns, top exposure routing, and only adjacent vertical links
+  ---
+  duration_ms: 11.5562
+  type: 'test'
+  ...
+# Subtest: never couples masks that only share a coarse32 bin but have no 96-cell overlap
+ok 16 - never couples masks that only share a coarse32 bin but have no 96-cell overlap
+  ---
+  duration_ms: 5.0812
+  type: 'test'
+  ...
+# Subtest: uses A-to-C adjacency where the middle stratum is locally absent at 96-cell scale
+ok 17 - uses A-to-C adjacency where the middle stratum is locally absent at 96-cell scale
+  ---
+  duration_ms: 6.7816
+  type: 'test'
+  ...
+# Subtest: rejects a supplied exposure table that disagrees with frozen birth masks
+ok 18 - rejects a supplied exposure table that disagrees with frozen birth masks
+  ---
+  duration_ms: 2.6142
+  type: 'test'
+  ...
+# Subtest: packs nodules and couples only to the deepest valid local foundation plate
+ok 19 - packs nodules and couples only to the deepest valid local foundation plate
+  ---
+  duration_ms: 5.6714
+  type: 'test'
+  ...
+# Subtest: supports no born plates and enforces the explicit technical layer ceiling
+ok 20 - supports no born plates and enforces the explicit technical layer ceiling
+  ---
+  duration_ms: 39.5684
+  type: 'test'
+  ...
+# Subtest: plate descriptors create immutable bottom-to-top cell columns and age never creates depth
+ok 21 - plate descriptors create immutable bottom-to-top cell columns and age never creates depth
+  ---
+  duration_ms: 4.8203
+  type: 'test'
+  ...
+# Subtest: cached topology lookup and stable plate index mapping expose only the uppermost material
+ok 22 - cached topology lookup and stable plate index mapping expose only the uppermost material
+  ---
+  duration_ms: 0.4062
+  type: 'test'
+  ...
+# Subtest: FOOT_CONTACT counts each in-domain foot and ignores centroid, strength, malformed and out-of-domain data
+ok 23 - FOOT_CONTACT counts each in-domain foot and ignores centroid, strength, malformed and out-of-domain data
+  ---
+  duration_ms: 0.52
+  type: 'test'
+  ...
+# Subtest: a nodule requires four overlapping plates, three buried layers, compaction, actual foot load and persistence
+ok 24 - a nodule requires four overlapping plates, three buried layers, compaction, actual foot load and persistence
+  ---
+  duration_ms: 2.9145
+  type: 'test'
+  ...
+# Subtest: elapsed simulation time alone cannot create a nodule without contact load or enough material history
+ok 25 - elapsed simulation time alone cannot create a nodule without contact load or enough material history
+  ---
+  duration_ms: 5.5693
+  type: 'test'
+  ...
+# Subtest: loss of a qualification condition resets persistence instead of banking old elapsed time
+ok 26 - loss of a qualification condition resets persistence instead of banking old elapsed time
+  ---
+  duration_ms: 1.7987
+  type: 'test'
+  ...
+# Subtest: metadata cap, read-only topology reuse and reset retain deterministic bounded state
+ok 27 - metadata cap, read-only topology reuse and reset retain deterministic bounded state
+  ---
+  duration_ms: 0.5138
+  type: 'test'
+  ...
+# Subtest: default metadata ceiling preserves more than the previous twelve plate limit without eviction
+ok 28 - default metadata ceiling preserves more than the previous twelve plate limit without eviction
+  ---
+  duration_ms: 0.9373
+  type: 'test'
+  ...
+# Subtest: SurfaceField uses the shared 96-square defaults and returns isolated snapshots
+ok 29 - SurfaceField uses the shared 96-square defaults and returns isolated snapshots
+  ---
+  duration_ms: 4.6053
+  type: 'test'
+  ...
+# Subtest: a FOOT_CONTACT compacts only its individual in-domain foot positions
+ok 30 - a FOOT_CONTACT compacts only its individual in-domain foot positions
+  ---
+  duration_ms: 1.9739
+  type: 'test'
+  ...
+# Subtest: contact deposition is deterministic and independent of event strength and global RNG
+ok 31 - contact deposition is deterministic and independent of event strength and global RNG
+  ---
+  duration_ms: 0.4894
+  type: 'test'
+  ...
+# Subtest: compaction saturates smoothly and response derives bounded material properties
+ok 32 - compaction saturates smoothly and response derives bounded material properties
+  ---
+  duration_ms: 8.2865
+  type: 'test'
+  ...
+# Subtest: valid edge contacts remain at their real positions and outside feet are ignored
+ok 33 - valid edge contacts remain at their real positions and outside feet are ignored
+  ---
+  duration_ms: 0.4053
+  type: 'test'
+  ...
+# Subtest: event validation skips malformed feet without discarding valid feet
+ok 34 - event validation skips malformed feet without discarding valid feet
+  ---
+  duration_ms: 0.3807
+  type: 'test'
+  ...
+# Subtest: bilinear samples are bounded and return empty material outside the domain
+ok 35 - bilinear samples are bounded and return empty material outside the domain
+  ---
+  duration_ms: 0.8278
+  type: 'test'
+  ...
+# Subtest: sampleSupport returns a numeric center-weighted local support value
+ok 36 - sampleSupport returns a numeric center-weighted local support value
+  ---
+  duration_ms: 0.2709
+  type: 'test'
+  ...
+# Subtest: relax uses the configured slow half-life and clear resets field metrics
+ok 37 - relax uses the configured slow half-life and clear resets field metrics
+  ---
+  duration_ms: 4.8415
+  type: 'test'
+  ...
+# Subtest: constructor rejects invalid dimensions, dose, radius, and half-life
+ok 38 - constructor rejects invalid dimensions, dose, radius, and half-life
+  ---
+  duration_ms: 0.989
+  type: 'test'
+  ...
+# Subtest: local annular chemical plus mechanical ridge births a frozen network after stable persistence
+ok 39 - local annular chemical plus mechanical ridge births a frozen network after stable persistence
+  ---
+  duration_ms: 202.6944
+  type: 'test'
+  ...
+# Subtest: short-lived trail signal cannot become a persistent plate and real fields are read without sensing calls
+ok 40 - short-lived trail signal cannot become a persistent plate and real fields are read without sensing calls
+  ---
+  duration_ms: 39.7923
+  type: 'test'
+  ...
+# Subtest: transverse route support changes ribbon width while retaining bounded physical geometry
+ok 41 - transverse route support changes ribbon width while retaining bounded physical geometry
+  ---
+  duration_ms: 121.1478
+  type: 'test'
+  ...
+# Subtest: distant qualifying branches survive skeleton pruning while short dead-end growth stays out of the plate
+ok 42 - distant qualifying branches survive skeleton pruning while short dead-end growth stays out of the plate
+  ---
+  duration_ms: 177.8316
+  type: 'test'
+  ...
+# Subtest: spawn-center pixels, remote trails, chemical-only ridges, and short paths cannot qualify
+ok 43 - spawn-center pixels, remote trails, chemical-only ridges, and short paths cannot qualify
+  ---
+  duration_ms: 51.3828
+  type: 'test'
+  ...
+# Subtest: real FOOT_CONTACT accumulation, corridor refractory, global spacing, and birth limit are explicit
+ok 44 - real FOOT_CONTACT accumulation, corridor refractory, global spacing, and birth limit are explicit
+  ---
+  duration_ms: 77.954
+  type: 'test'
+  ...
+# Subtest: birth limit reports full and preserves existing descriptors without eviction
+ok 45 - birth limit reports full and preserves existing descriptors without eviction
+  ---
+  duration_ms: 95.5171
+  type: 'test'
+  ...
+1..45
+# tests 45
+# suites 0
+# pass 45
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 903.7453
