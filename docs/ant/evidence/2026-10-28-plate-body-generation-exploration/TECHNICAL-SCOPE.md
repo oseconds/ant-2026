@@ -1,0 +1,15 @@
+# Conceptual reduction before bounded technical checks
+
+No artistic winner is selected. The technical shortlist is **W with U**, while **P/K** are references and **Q** is an existing whole-Plate character-role comparator.
+
+- W is the constructive alternative to the S pointwise-field contour; it keeps all original I and both actual cases form a single4-connected mask without cleanup. Its new geometric contribution remains an authored radial-growth interpretation, not discovered physical support.
+- U is necessary: W/K changes mean radius as well as local variation. W/U preserve scaffold and mean radius; their49 (P1) and 79 (P2) differing source cells (Jaccard0.911/0.906) show a location-dependent geometric effect beyond mean widening. This does not measure acoustic/perceptual importance.
+- Q is not a new ontology. Production already maps historical means to whole-Plate material. Here changing the averaging footprint changes stiffness/damping; density stays saturated1.2. It is useful to keep geometry and character responsibilities separate.
+- S remains a negative construction comparator: P2 contains an isolated one-cell4-component. No cell is deleted. W changes construction, not S cleanup.
+- R/T are kept as the main challenge to the simplification. The non-pendant alternative-path set plus minimum width already covers1069/1275cells, more than C0. R's chemical shaping adds66/92cells. These are diagnostic breadth/floor-dominance results, not a selective WHERE or proven redundant load paths. No R/T compiler work is needed to establish this conceptual warning.
+- M overlaps R by about94–95%; it has no demonstrated distinct body meaning in these frozen cases under the shared0–1/range. No gain or field renormalization is attempted.
+- L's bounded pockets are highly dependent on complement adjacency and add only34/42cells beyond R. Do not treat raster enclosure as a physical membrane. It is not advanced to qualification.
+
+Checks are restricted to P/K/W/U/Q at the two actual birth times: actual96→32 compile, solver components/pickups, source boundary contact, original versus mask-only reference, and immutable append/re-layer behavior. Original pickups/materials are held where specified. Use one layer per actual event; no shard IDs, growing Plate, audio render, natural run or600s sequence. Hold original whole-Plate meanHalfWidth/thickness; local radius is geometry, not a solver thickness map. Preserve technical failure rather than repairing a mask.
+
+Bounded results: W/U source differences49 cells in P1 and 79 in P2 mostly merge under32-grid compilation. Their occupied solver sets share84/89 and123/131union cells;5 solver occupancy cells in P1 and 8 in P2 differ. This is modest geometry sensitivity, not an acoustic/perceptual effect estimate. In P2, W has 12 occupied border cells and U 14; 10 W sections and 15 U sections extend outside the frame. The mathematical constructions are finite, but the observed descriptors are clipped and actual body closure beyond the observation window is unknown. These limits accompany the shortlist.
