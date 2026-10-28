@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-29 — Actual traffic direction signal audit
+
+[Process log](./2026-10-29-traffic-direction-signal-audit.md) · [Evidence report](../evidence/2026-10-29-traffic-direction-signal-audit/REPORT.md) · [Technical atlas](../evidence/2026-10-29-traffic-direction-signal-audit/atlas.html)
+
+- Deterministically reconstructed current-G/H0 at 60 Hz through frozen P2; exact production source hashes, ordered contact prefix, both commit receipts/masks, and event-time fields/maps matched
+- Measured actual realized movement vectors, directional/axial coherence, every junction, discrete scaffold curvature, and tick-level turns using `r1=.030` with fixed `r0=.012` sensitivity
+- Decision: **INDEPENDENT INFORMATION OBSERVED** only in the descriptive/representational sense; an event-wide mean direction nearly reproduces axial alignment, and no local scaffold-specific, statistical, or causal independence was established
+
 ### 2026-10-28 — Commit-relative space-time attachment support
 
 [Research result](../evidence/2026-10-28-space-time-attachment-support/README.md)

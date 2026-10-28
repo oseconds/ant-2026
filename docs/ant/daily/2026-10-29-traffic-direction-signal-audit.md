@@ -1,0 +1,11 @@
+# 2026-10-29 — actual traffic direction signal audit
+
+Fresh research branch from clean `05012e1b02acb565b9e7f6c2c9076b48be337f39`; production authority remains main `4135d4fb4ab8ec5d46297893fbc9c1c5f4f3e785`. Reused frozen current-G/H0 P1/P2 at seed `20261005`, Audio Off, 60 Hz. The exact 20-second windows came from the ownership/materialization descriptors.
+
+The frozen packet did not preserve tick-level ant kinematics. A read-only deterministic replay recorded actual position deltas, velocity, heading and angular velocity through P2 at tick 6,361. The 11 current ANT source hashes, P1/P2 immutable birth receipts, event-time chemical/surface/support/scaffold maps, and ordered contact stream through P2 matched frozen evidence. No production causal behavior, RNG call or materialization timing changed.
+
+Primary association used nearest actual selected-I edge within authored `r1=.030`; `r0=.012` was the fixed sensitivity check. Exact orientation groups, every graph junction, non-node edge intersections, signed/axial resultants and unsmoothed turn pairs are retained. A same-event global-direction countermodel nearly reproduces mean axial alignment, and branch counts are proximity associations rather than verified junction traversals. Tick-level turns vary while the discrete local scaffold axis usually stays unchanged; no scaffold-linked turning relation is established. Per-edge directional coherence was usually high, so no general same-edge counterflow claim follows.
+
+Decision: **INDEPENDENT INFORMATION OBSERVED** in the narrow descriptive/representational sense: signed movement and tick turns are records a static unoriented I graph cannot encode. This does not establish local scaffold-specific, statistical or causal independence. It establishes no biological role, body law, production state, sonic effect or artistic preference. W/U and production behavior remain unchanged. A later role-isolated interpretation is a separate question.
+
+[Evidence report](../evidence/2026-10-29-traffic-direction-signal-audit/REPORT.md) · [technical atlas](../evidence/2026-10-29-traffic-direction-signal-audit/atlas.html) · [validation](../evidence/2026-10-29-traffic-direction-signal-audit/VALIDATION.md)
