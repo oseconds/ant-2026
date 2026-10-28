@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-28 — Closure-slice crystallization support
+
+[Process record](./2026-10-28-closure-slice-crystallization-support.md) · [Evidence package](../evidence/2026-10-28-closure-slice-crystallization-support/README.md)
+
+- Stage 1 C0 is finite and compiler/pickup-valid at P1/P2; it advances only to the conditional long-horizon shadow
+- Across the actual 36 current-G commits, C0 reaches 62.77% grid union and late new area falls to 16.2 cells per commit on average; verdict is bounded negative for C0 selectivity
+- Working ontology A remains possible; no C1, production change, or artist approval is claimed
+
 ### 2026-10-28 — Plate local-history ownership
 
 [Process record](./2026-10-28-plate-local-history-ownership.md) · [Evidence package](../evidence/2026-10-28-plate-local-history-ownership/README.md)
