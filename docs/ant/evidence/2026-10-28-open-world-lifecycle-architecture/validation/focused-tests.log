@@ -1,0 +1,106 @@
+TAP version 13
+# Subtest: isolates annular local route evidence from the spawn pixel and remote field activity
+ok 1 - isolates annular local route evidence from the spawn pixel and remote field activity
+  ---
+  duration_ms: 0.7561
+  type: 'test'
+  ...
+# Subtest: uses the mean of the four strongest sector means with per-sample saturation
+ok 2 - uses the mean of the four strongest sector means with per-sample saturation
+  ---
+  duration_ms: 0.6889
+  type: 'test'
+  ...
+# Subtest: activation rises and decays continuously, with equivalent elapsed-time response across step sizes
+ok 3 - activation rises and decays continuously, with equivalent elapsed-time response across step sizes
+  ---
+  duration_ms: 3.3206
+  type: 'test'
+  ...
+# Subtest: configuration clamps the ceiling to 8–100 without changing evidence or activation
+ok 4 - configuration clamps the ceiling to 8–100 without changing evidence or activation
+  ---
+  duration_ms: 0.2742
+  type: 'test'
+  ...
+# Subtest: invalid time steps do not advance activation and reset clears its evidence history
+ok 5 - invalid time steps do not advance activation and reset clears its evidence history
+  ---
+  duration_ms: 0.583
+  type: 'test'
+  ...
+# Subtest: stationary agents deposit no signal while traveled distance deposits finite field mass
+ok 6 - stationary agents deposit no signal while traveled distance deposits finite field mass
+  ---
+  duration_ms: 4.2721
+  type: 'test'
+  ...
+# Subtest: segment deposition is approximately stable under path subdivision
+ok 7 - segment deposition is approximately stable under path subdivision
+  ---
+  duration_ms: 5.9515
+  type: 'test'
+  ...
+# Subtest: exponential decay honors half-life and composes over elapsed time
+ok 8 - exponential decay honors half-life and composes over elapsed time
+  ---
+  duration_ms: 0.865
+  type: 'test'
+  ...
+# Subtest: reinforcement is bounded and snapshots do not expose live field storage
+ok 9 - reinforcement is bounded and snapshots do not expose live field storage
+  ---
+  duration_ms: 2.2524
+  type: 'test'
+  ...
+# Subtest: sampling returns no signal outside the observed square and preserves valid edge samples
+ok 10 - sampling returns no signal outside the observed square and preserves valid edge samples
+  ---
+  duration_ms: 1.0004
+  type: 'test'
+  ...
+# Subtest: segments outside the field leave no edge trail while crossing travel deposits only the in-domain length
+ok 11 - segments outside the field leave no edge trail while crossing travel deposits only the in-domain length
+  ---
+  duration_ms: 0.6724
+  type: 'test'
+  ...
+# Subtest: point deposition preserves authored dose in the reference-area integral and rejects outside points
+ok 12 - point deposition preserves authored dose in the reference-area integral and rejects outside points
+  ---
+  duration_ms: 0.5057
+  type: 'test'
+  ...
+# Subtest: default field uses G resolution and distinguishes node sum from bilinear integral
+ok 13 - default field uses G resolution and distinguishes node sum from bilinear integral
+  ---
+  duration_ms: 0.2455
+  type: 'test'
+  ...
+# Subtest: 316-grid point and segment writers convert authored dose once and keep return values in source units
+ok 14 - 316-grid point and segment writers convert authored dose once and keep return values in source units
+  ---
+  duration_ms: 6.0679
+  type: 'test'
+  ...
+# Subtest: boundary truncation and cap loss remain outside the interior reference-integral guarantee
+ok 15 - boundary truncation and cap loss remain outside the interior reference-integral guarantee
+  ---
+  duration_ms: 1.3231
+  type: 'test'
+  ...
+# Subtest: default half-life is fifteen seconds and abandoned traces retain one sixteenth after one minute
+ok 16 - default half-life is fifteen seconds and abandoned traces retain one sixteenth after one minute
+  ---
+  duration_ms: 4.8148
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 103.5461
