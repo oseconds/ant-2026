@@ -1,0 +1,69 @@
+import assert from 'node:assert/strict';
+import { deserialize, serialize } from 'node:v8';
+import { AntController } from '../../src/lib/agents/ant/AntController.js';
+import { AntAgent } from '../../src/lib/agents/ant/AntAgent.js';
+import { PheromoneField } from '../../src/lib/agents/ant/PheromoneField.js';
+import { countedLcg } from '../ant-material-causal-tail.js';
+
+const SUBSYSTEMS = ['occupancy', 'gaitController', 'bodyPoseController', 'gasterDeposition',
+  'colonyActivation', 'surfaceField', 'trailPlateBirth', 'materialStratigraphy'];
+
+export function freezeWorld(controller) {
+  assert.equal(Object.getPrototypeOf(controller), AntController.prototype, 'freeze requires a plain AntController');
+  const excluded = new Set(['listeners', 'random', 'audioBridge', 'fieldFactory']);
+  const state = {};
+  for (const agent of controller.agents) {
+    assert.equal(Object.getPrototypeOf(agent), AntAgent.prototype, 'freeze requires unwrapped AntAgent instances');
+    for (const key of Reflect.ownKeys(agent)) assert.ok(typeof agent[key] !== 'function',
+      `unsupported own agent wrapper: ${String(key)}`);
+  }
+  for (const key of Reflect.ownKeys(controller)) {
+    if (excluded.has(key)) continue;
+    const descriptor = Object.getOwnPropertyDescriptor(controller, key);
+    assert.ok(descriptor && 'value' in descriptor && typeof descriptor.value !== 'function',
+      `unsupported own controller wrapper: ${String(key)}`);
+    state[key] = descriptor.value;
+  }
+  state.rng = { state: controller.random.state(), calls: controller.random.calls };
+  return serialize(state);
+}
+
+export function thawWorld(buffer) {
+  assert.ok(Buffer.isBuffer(buffer), 'frozen world must be a Buffer');
+  const template = new AntController();
+  const state = deserialize(buffer);
+  const rng = state.rng;
+  delete state.rng;
+  const controller = Object.assign(Object.create(AntController.prototype), state);
+  controller.fieldFactory = template.fieldFactory;
+  controller.listeners = new Set();
+  controller.audioBridge = null;
+  controller.random = countedLcg(rng.state, rng.calls);
+  for (const key of SUBSYSTEMS) Object.setPrototypeOf(controller[key], Object.getPrototypeOf(template[key]));
+  if (controller.field) Object.setPrototypeOf(controller.field, PheromoneField.prototype);
+  for (const agent of controller.agents) Object.setPrototypeOf(agent, AntAgent.prototype);
+  return controller;
+}
+
+export function makeAuthorSampler(input, condition) {
+  assert.ok(input && Number.isInteger(input.width) && input.width >= 2
+    && Number.isInteger(input.height) && input.height >= 2, 'author input needs integer dimensions >= 2');
+  assert.ok(input.alive instanceof Float64Array && input.alive.length === input.width * input.height,
+    'alive must be a matching Float64Array');
+  if (condition !== 'fullAuthorSum' && condition !== 'noRetired') throw new RangeError('unsupported author condition');
+  if (condition === 'fullAuthorSum') assert.ok(input.retired instanceof Float64Array
+    && input.retired.length === input.alive.length, 'retired must be a matching Float64Array');
+  for (const value of input.alive) assert.ok(Number.isFinite(value) && value >= 0, 'alive values must be finite and non-negative');
+  if (condition === 'fullAuthorSum') for (const value of input.retired)
+    assert.ok(Number.isFinite(value) && value >= 0, 'retired values must be finite and non-negative');
+  const sampleField = values => ({ width: input.width, height: input.height, values,
+    at: PheromoneField.prototype.at });
+  const alive = sampleField(input.alive);
+  const retired = condition === 'fullAuthorSum' ? sampleField(input.retired) : null;
+  return { sample(x, y) {
+    const value = PheromoneField.prototype.sample.call(alive, x, y)
+      + (retired ? PheromoneField.prototype.sample.call(retired, x, y) : 0);
+    assert.ok(Number.isFinite(value) && value >= 0, 'sampled author sum must be finite and non-negative');
+    return value;
+  } };
+}

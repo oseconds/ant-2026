@@ -1,0 +1,34 @@
+{
+  "fixture": "initialized default world, seed 20261005, frozen after 8 ticks; outer v8 serialize/deserialize packet; 3 independent thaw/tick/destroy forks",
+  "oldImplementationSource": "data/attempts/v8-alias-01/antMotorFrozenWorld.js.txt",
+  "results": [
+    {
+      "mode": "archived-old",
+      "worldBytesEqual": true,
+      "aliveBytesEqual": true,
+      "retiredBytesEqual": true,
+      "strictPacketEqual": true,
+      "worldShaBefore": "0df56eb3da14e1fc49c5cdf7ac8cf2688de688d139501c1bb4661ad6c8224db3",
+      "worldShaAfter": "0df56eb3da14e1fc49c5cdf7ac8cf2688de688d139501c1bb4661ad6c8224db3",
+      "aliveShaBefore": "0f797ffb951797c857bc9a3288c79f7fd13239963806269f25311c1336063829",
+      "aliveShaAfter": "0f797ffb951797c857bc9a3288c79f7fd13239963806269f25311c1336063829",
+      "retiredShaBefore": "0f797ffb951797c857bc9a3288c79f7fd13239963806269f25311c1336063829",
+      "retiredShaAfter": "0f797ffb951797c857bc9a3288c79f7fd13239963806269f25311c1336063829"
+    },
+    {
+      "mode": "current",
+      "worldBytesEqual": true,
+      "aliveBytesEqual": true,
+      "retiredBytesEqual": true,
+      "strictPacketEqual": true,
+      "worldShaBefore": "0df56eb3da14e1fc49c5cdf7ac8cf2688de688d139501c1bb4661ad6c8224db3",
+      "worldShaAfter": "0df56eb3da14e1fc49c5cdf7ac8cf2688de688d139501c1bb4661ad6c8224db3",
+      "aliveShaBefore": "3da07aa6c54a0fe57fe4225db80ead2d744b5b0569f1a418fecdd23c39f5e2c3",
+      "aliveShaAfter": "3da07aa6c54a0fe57fe4225db80ead2d744b5b0569f1a418fecdd23c39f5e2c3",
+      "retiredShaBefore": "3da07aa6c54a0fe57fe4225db80ead2d744b5b0569f1a418fecdd23c39f5e2c3",
+      "retiredShaAfter": "3da07aa6c54a0fe57fe4225db80ead2d744b5b0569f1a418fecdd23c39f5e2c3"
+    }
+  ],
+  "comparison": "Each mode was compared against its own independent serialize/deserialize snapshot. No nested packet bytes, typed-array bytes, or strict packet content changed.",
+  "diagnosis": "Retract the earlier typed-array alias mutation diagnosis. This bounded fixture does not reproduce mutation with archived-old or current helper. The observed SHA(v8.serialize(packet)) drift is a serialization representation instability, not evidence of packet content mutation."
+}
