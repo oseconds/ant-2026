@@ -1,0 +1,904 @@
+{
+  "schema": "ant-gait-contact-signal-audit-v1",
+  "decision": {
+    "label": "INDEPENDENT INFORMATION OBSERVED",
+    "qualifier": "descriptive event-history information only; not an independent gait mechanism or validated material responsibility"
+  },
+  "baseline": {
+    "productionMain": "4135d4fb4ab8ec5d46297893fbc9c1c5f4f3e785",
+    "researchParent": "86308a9cc8bdb067ecabd33465e127d9d453164d",
+    "branch": "codex/ant-gait-contact-signal-audit-20261029",
+    "historyPacketCommit": "0d5096a920e1ebb2086fa1dae782c5d4e871b590",
+    "historyPacketMain": "aeefa12d8de9da400cb8a2a3d4b5080a21ba0292",
+    "historyPacketSha256": "909516b870b4ddce04ab661c4e7cd4113c52dc16ed35e414142fceb2cff0b1bc"
+  },
+  "provenance": {
+    "inputSha256": "d1a1e243ea8f367d926cfed60afb515964f4f6ad75d25a3945060b739f234682",
+    "inputBytes": 445201,
+    "parityAnchorsSha256": "65a2fa65a25c04ff75ebceb1e6381f0153f13aa2ce088f31e5f267eee96003f5",
+    "sourceHashes": {
+      "src/lib/agents/ant/AntController.js": "b5a6344ebed52962a1749d612b0140b6a4249817f159758e13f166877078e9f4",
+      "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+      "src/lib/agents/ant/PheromoneField.js": "b68e98b5d916950487da67237a0d0277451d3b930971c1d8a35e92fd7d6f9837",
+      "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+      "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+      "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+      "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+      "src/lib/agents/ant/BodyPoseController.js": "2ec4cc12c12ae301ea07056889c3be9255b1b1e155b7724cd3366278d60ace8e",
+      "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+      "src/lib/agents/ant/LocalOccupancy.js": "df22dd38e9af8078ebcb1d225ca2a5eaf579e994d2d4a00ce9ceeefa2403ff16",
+      "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd"
+    },
+    "contactPrefixGroups": 3655,
+    "contactPrefixFeet": 10849,
+    "contactPrefixSha256": "19bb340be61cf74a8e868d541df11e3b57e8e7427092eb89dd125f52b3de8eaf",
+    "replayPerformed": false,
+    "p1P2WindowDigestsMatched": true,
+    "surfaceEndpointHashesMatched": true,
+    "sourceHashesMatched": true
+  },
+  "methods": {
+    "timeRule": "(event start, commit] from frozen ownership anchors",
+    "grid": "production 96x96; nearest-cell Math.round in each dimension",
+    "cumulativeCount": "all valid individual FOOT_CONTACT feet through commit, nearest-cell exact projection",
+    "surfaceField": "frozen production C_surface endpoint, exact 96x96 Float32 values",
+    "scalarMatchedCells": "within each event, exact equality of cumulative per-cell contact count and SurfaceField value; both cells have current-window contacts",
+    "smoothingOrEventwiseNormalization": false,
+    "arbitraryThresholds": false
+  },
+  "gaitCountermodel": {
+    "fixedTripods": {
+      "A": [
+        "FL",
+        "MR",
+        "RL"
+      ],
+      "B": [
+        "FR",
+        "ML",
+        "RR"
+      ]
+    },
+    "sourceLaw": "GaitController emits alternating tripod touchdown groups from deterministic per-ant distance-driven phase; leg geometry is fixed by body heading, radius and phase.",
+    "observedTripodLegMismatchFeet": 0,
+    "limitation": "Frozen contact stream has exact touchdown events but not per-tick gait phase, full ant movement, heading or body pose; no trajectory-conditioned counterfactual was reconstructed."
+  },
+  "windows": [
+    {
+      "id": "trail-plate-1",
+      "tick": 5041,
+      "startMs": 64016.66666666308,
+      "commitMs": 84016.66666666823,
+      "durationMs": 20000.00000000515,
+      "cumulativeContactGroups": 2724,
+      "cumulativeFootContacts": 8102,
+      "contactGroups": 832,
+      "feet": 2470,
+      "ants": 28,
+      "groupSizeCounts": {
+        "1": 5,
+        "2": 16,
+        "3": 811
+      },
+      "legs": {
+        "FL": 405,
+        "FR": 412,
+        "ML": 408,
+        "MR": 417,
+        "RL": 414,
+        "RR": 414
+      },
+      "tripodFeet": {
+        "A": 1236,
+        "B": 1234
+      },
+      "tripodGroupCounts": {
+        "A": 418,
+        "B": 414
+      },
+      "observedPerAntTripodTransitions": {
+        "n": 804,
+        "switched": 804,
+        "sameObservedGroup": 0
+      },
+      "contactStrengthByGroup": {
+        "n": 832,
+        "min": 0.03364283865401522,
+        "q25": 0.034099555393960326,
+        "median": 0.03498946299823001,
+        "mean": 0.03494132824348513,
+        "q75": 0.03572048772014678,
+        "q90": 0.036185021407064054,
+        "max": 0.036363292394578466
+      },
+      "uniquePerAntContactStrengths": 28,
+      "observedPerAntIntercontactIntervalMs": {
+        "n": 804,
+        "min": 141.62985804009077,
+        "q25": 204.51403817214305,
+        "median": 259.21885554755863,
+        "mean": 304.2402696021851,
+        "q75": 336.1771242596442,
+        "q90": 417.04236783376837,
+        "max": 1765.2747426587594
+      },
+      "cellRevisitIntervalMs": {
+        "n": 968,
+        "min": 28.342777533907793,
+        "q25": 239.70939259843726,
+        "median": 394.8194272158871,
+        "mean": 2756.6388845622864,
+        "q75": 4010.1492495397542,
+        "q90": 9290.815572941327,
+        "max": 19661.41178338042
+      },
+      "spatial": {
+        "touchedCells": 1502,
+        "cumulativeTouchedCells": 3276,
+        "maxWindowCellCount": 8,
+        "maxCumulativeCellCount": 22,
+        "contactCentroid": {
+          "x": 0.6118775490224501,
+          "y": 0.3938072154554195
+        },
+        "rawPointTo96GridCellCenterRmsDistance": 0.004251334179317419,
+        "maxRawPointTo96GridCellCenterDistance": 0.007352241953220877,
+        "cumulativeCountSurfacePearsonAllCells": 0.9280264536403772,
+        "cumulativeCountSurfacePearsonCumulativeTouchedCells": 0.892769456339996,
+        "exactScalarMatchedTouchedCellPairs": 0,
+        "exactScalarMatchedPairsDifferentWindowCount": 0,
+        "exactScalarMatchedPairsDifferentLegComposition": 0,
+        "exactScalarMatchedPairsDifferentTripodComposition": 0,
+        "exactScalarMatchedPairsDifferentTimedContactSequence": 0,
+        "exactScalarMatchedPairsDifferentAntComposition": 0,
+        "deterministicExamples": {
+          "windowCount": null,
+          "legs": null,
+          "tripods": null,
+          "timing": null
+        },
+        "sameCountAdjacentSurfacePairs": 1483,
+        "sameCountAdjacentSurfaceDifference": {
+          "n": 1483,
+          "min": 3.650784492492676e-7,
+          "q25": 0.00010086596012115479,
+          "median": 0.0002893581986427307,
+          "mean": 0.0015335123877989949,
+          "q75": 0.0009165182709693909,
+          "q90": 0.0027576684951782227,
+          "max": 0.10307177901268005
+        },
+        "adjacentScalarPairsDifferentWindowCount": 652,
+        "adjacentScalarPairsDifferentLegComposition": 1354,
+        "adjacentScalarPairsDifferentTripodComposition": 1050,
+        "adjacentScalarPairsDifferentTimedContactSequence": 1483,
+        "adjacentScalarPairsDifferentAntComposition": 1399,
+        "deterministicAdjacentExamples": {
+          "windowCount": {
+            "surfaceDelta": 0.001526668667793274,
+            "cells": [
+              {
+                "index": 7179,
+                "position": {
+                  "x": 0.7894736842105263,
+                  "y": 0.7789473684210526
+                },
+                "cumulativeCount": 2,
+                "surface": 0.03397562354803085,
+                "windowCount": 2,
+                "legs": {
+                  "FL": 0,
+                  "FR": 1,
+                  "ML": 0,
+                  "MR": 1,
+                  "RL": 0,
+                  "RR": 0
+                },
+                "tripods": {
+                  "A": 1,
+                  "B": 1
+                },
+                "touches": [
+                  {
+                    "simulationTimeMs": 79915.66055702278,
+                    "antId": "ant-25",
+                    "contactGroup": "B",
+                    "legId": "FR"
+                  },
+                  {
+                    "simulationTimeMs": 80247.7055334204,
+                    "antId": "ant-25",
+                    "contactGroup": "A",
+                    "legId": "MR"
+                  }
+                ]
+              },
+              {
+                "index": 65,
+                "position": {
+                  "x": 0.6842105263157895,
+                  "y": 0
+                },
+                "cumulativeCount": 2,
+                "surface": 0.03550229221582413,
+                "windowCount": 1,
+                "legs": {
+                  "FL": 0,
+                  "FR": 0,
+                  "ML": 0,
+                  "MR": 0,
+                  "RL": 1,
+                  "RR": 0
+                },
+                "tripods": {
+                  "A": 1,
+                  "B": 0
+                },
+                "touches": [
+                  {
+                    "simulationTimeMs": 80869.86585112012,
+                    "antId": "ant-39",
+                    "contactGroup": "A",
+                    "legId": "RL"
+                  }
+                ]
+              }
+            ]
+          },
+          "legs": {
+            "surfaceDelta": 0.00013984832912683487,
+            "cells": [
+              {
+                "index": 9096,
+                "position": {
+                  "x": 0.7578947368421053,
+                  "y": 0.9894736842105263
+                },
+                "cumulativeCount": 1,
+                "surface": 0.013644475489854813,
+                "windowCount": 1,
+                "legs": {
+                  "FL": 0,
+                  "FR": 1,
+                  "ML": 0,
+                  "MR": 0,
+                  "RL": 0,
+                  "RR": 0
+                },
+                "tripods": {
+                  "A": 0,
+                  "B": 1
+                },
+                "touches": [
+                  {
+                    "simulationTimeMs": 75586.93952322358,
+                    "antId": "ant-28",
+                    "contactGroup": "B",
+                    "legId": "FR"
+                  }
+                ]
+              },
+              {
+                "index": 2713,
+                "position": {
+                  "x": 0.2631578947368421,
+                  "y": 0.29473684210526313
+                },
+                "cumulativeCount": 1,
+                "surface": 0.013784323818981647,
+                "windowCount": 1,
+                "legs": {
+                  "FL": 0,
+                  "FR": 0,
+                  "ML": 0,
+                  "MR": 0,
+                  "RL": 0,
+                  "RR": 1
+                },
+                "tripods": {
+                  "A": 0,
+                  "B": 1
+                },
+                "touches": [
+                  {
+                    "simulationTimeMs": 74881.60522770169,
+                    "antId": "ant-36",
+                    "contactGroup": "B",
+                    "legId": "RR"
+                  }
+                ]
+              }
+            ]
+          },
+          "tripods": {
+            "surfaceDelta": 0.0004375232383608818,
+            "cells": [
+              {
+                "index": 2713,
+                "position": {
+                  "x": 0.2631578947368421,
+                  "y": 0.29473684210526313
+                },
+                "cumulativeCount": 1,
+                "surface": 0.013784323818981647,
+                "windowCount": 1,
+                "legs": {
+                  "FL": 0,
+                  "FR": 0,
+                  "ML": 0,
+                  "MR": 0,
+                  "RL": 0,
+                  "RR": 1
+                },
+                "tripods": {
+                  "A": 0,
+                  "B": 1
+                },
+                "touches": [
+                  {
+                    "simulationTimeMs": 74881.60522770169,
+                    "antId": "ant-36",
+                    "contactGroup": "B",
+                    "legId": "RR"
+                  }
+                ]
+              },
+              {
+                "index": 7479,
+                "position": {
+                  "x": 0.9157894736842105,
+                  "y": 0.8105263157894737
+                },
+                "cumulativeCount": 1,
+                "surface": 0.01422184705734253,
+                "windowCount": 1,
+                "legs": {
+                  "FL": 1,
+                  "FR": 0,
+                  "ML": 0,
+                  "MR": 0,
+                  "RL": 0,
+                  "RR": 0
+                },
+                "tripods": {
+                  "A": 1,
+                  "B": 0
+                },
+                "touches": [
+                  {
+                    "simulationTimeMs": 65573.61135335307,
+                    "antId": "ant-11",
+                    "contactGroup": "A",
+                    "legId": "FL"
+                  }
+                ]
+              }
+            ]
+          },
+          "timing": {
+            "surfaceDelta": 0.00013984832912683487,
+            "cells": [
+              {
+                "index": 9096,
+                "position": {
+                  "x": 0.7578947368421053,
+                  "y": 0.9894736842105263
+                },
+                "cumulativeCount": 1,
+                "surface": 0.013644475489854813,
+                "windowCount": 1,
+                "legs": {
+                  "FL": 0,
+                  "FR": 1,
+                  "ML": 0,
+                  "MR": 0,
+                  "RL": 0,
+                  "RR": 0
+                },
+                "tripods": {
+                  "A": 0,
+                  "B": 1
+                },
+                "touches": [
+                  {
+                    "simulationTimeMs": 75586.93952322358,
+                    "antId": "ant-28",
+                    "contactGroup": "B",
+                    "legId": "FR"
+                  }
+                ]
+              },
+              {
+                "index": 2713,
+                "position": {
+                  "x": 0.2631578947368421,
+                  "y": 0.29473684210526313
+                },
+                "cumulativeCount": 1,
+                "surface": 0.013784323818981647,
+                "windowCount": 1,
+                "legs": {
+                  "FL": 0,
+                  "FR": 0,
+                  "ML": 0,
+                  "MR": 0,
+                  "RL": 0,
+                  "RR": 1
+                },
+                "tripods": {
+                  "A": 0,
+                  "B": 1
+                },
+                "touches": [
+                  {
+                    "simulationTimeMs": 74881.60522770169,
+                    "antId": "ant-36",
+                    "contactGroup": "B",
+                    "legId": "RR"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "trail-plate-2",
+      "tick": 6361,
+      "startMs": 86016.66666666881,
+      "commitMs": 106016.66666667463,
+      "durationMs": 20000.00000000582,
+      "cumulativeContactGroups": 3655,
+      "cumulativeFootContacts": 10849,
+      "contactGroups": 849,
+      "feet": 2507,
+      "ants": 30,
+      "groupSizeCounts": {
+        "1": 7,
+        "2": 26,
+        "3": 816
+      },
+      "legs": {
+        "FL": 406,
+        "FR": 419,
+        "ML": 417,
+        "MR": 422,
+        "RL": 418,
+        "RR": 425
+      },
+      "tripodFeet": {
+        "A": 1246,
+        "B": 1261
+      },
+      "tripodGroupCounts": {
+        "A": 423,
+        "B": 426
+      },
+      "observedPerAntTripodTransitions": {
+        "n": 819,
+        "switched": 819,
+        "sameObservedGroup": 0
+      },
+      "contactStrengthByGroup": {
+        "n": 849,
+        "min": 0.033607705136481675,
+        "q25": 0.0339279731573537,
+        "median": 0.034596544746030126,
+        "mean": 0.034755205437413235,
+        "q75": 0.03547100140172988,
+        "q90": 0.03620462102042511,
+        "max": 0.03637760685067624
+      },
+      "uniquePerAntContactStrengths": 30,
+      "observedPerAntIntercontactIntervalMs": {
+        "n": 819,
+        "min": 162.70719142213056,
+        "q25": 237.08959357508866,
+        "median": 282.827316464507,
+        "mean": 327.85398367987943,
+        "q75": 344.80208499522996,
+        "q90": 417.7816322986182,
+        "max": 1689.6706642263307
+      },
+      "cellRevisitIntervalMs": {
+        "n": 1033,
+        "min": 10.874192310031503,
+        "q25": 268.0792714719719,
+        "median": 387.1843238878355,
+        "mean": 2775.8017134067895,
+        "q75": 4030.2609676373686,
+        "q90": 9077.752683132509,
+        "max": 18135.976519513453
+      },
+      "spatial": {
+        "touchedCells": 1474,
+        "cumulativeTouchedCells": 3803,
+        "maxWindowCellCount": 8,
+        "maxCumulativeCellCount": 32,
+        "contactCentroid": {
+          "x": 0.5351903625872403,
+          "y": 0.3938512190895015
+        },
+        "rawPointTo96GridCellCenterRmsDistance": 0.00427914145717268,
+        "maxRawPointTo96GridCellCenterDistance": 0.007276668780723475,
+        "cumulativeCountSurfacePearsonAllCells": 0.9355658945815634,
+        "cumulativeCountSurfacePearsonCumulativeTouchedCells": 0.9073657183149377,
+        "exactScalarMatchedTouchedCellPairs": 0,
+        "exactScalarMatchedPairsDifferentWindowCount": 0,
+        "exactScalarMatchedPairsDifferentLegComposition": 0,
+        "exactScalarMatchedPairsDifferentTripodComposition": 0,
+        "exactScalarMatchedPairsDifferentTimedContactSequence": 0,
+        "exactScalarMatchedPairsDifferentAntComposition": 0,
+        "deterministicExamples": {
+          "windowCount": null,
+          "legs": null,
+          "tripods": null,
+          "timing": null
+        },
+        "sameCountAdjacentSurfacePairs": 1451,
+        "sameCountAdjacentSurfaceDifference": {
+          "n": 1451,
+          "min": 5.289912223815918e-7,
+          "q25": 0.00015458464622497559,
+          "median": 0.00045699626207351685,
+          "mean": 0.0021154051145948188,
+          "q75": 0.0012569725513458252,
+          "q90": 0.003953590989112854,
+          "max": 0.12734439969062805
+        },
+        "adjacentScalarPairsDifferentWindowCount": 675,
+        "adjacentScalarPairsDifferentLegComposition": 1329,
+        "adjacentScalarPairsDifferentTripodComposition": 1050,
+        "adjacentScalarPairsDifferentTimedContactSequence": 1451,
+        "adjacentScalarPairsDifferentAntComposition": 1369,
+        "deterministicAdjacentExamples": {
+          "windowCount": {
+            "surfaceDelta": 0.0018603503704071045,
+            "cells": [
+              {
+                "index": 6866,
+                "position": {
+                  "x": 0.5263157894736842,
+                  "y": 0.7473684210526316
+                },
+                "cumulativeCount": 2,
+                "surface": 0.03419763222336769,
+                "windowCount": 1,
+                "legs": {
+                  "FL": 0,
+                  "FR": 0,
+                  "ML": 0,
+                  "MR": 0,
+                  "RL": 0,
+                  "RR": 1
+                },
+                "tripods": {
+                  "A": 0,
+                  "B": 1
+                },
+                "touches": [
+                  {
+                    "simulationTimeMs": 97318.45333605891,
+                    "antId": "ant-62",
+                    "contactGroup": "B",
+                    "legId": "RR"
+                  }
+                ]
+              },
+              {
+                "index": 1370,
+                "position": {
+                  "x": 0.2736842105263158,
+                  "y": 0.14736842105263157
+                },
+                "cumulativeCount": 2,
+                "surface": 0.036057982593774796,
+                "windowCount": 2,
+                "legs": {
+                  "FL": 0,
+                  "FR": 0,
+                  "ML": 0,
+                  "MR": 1,
+                  "RL": 0,
+                  "RR": 1
+                },
+                "tripods": {
+                  "A": 1,
+                  "B": 1
+                },
+                "touches": [
+                  {
+                    "simulationTimeMs": 98599.2912349485,
+                    "antId": "ant-54",
+                    "contactGroup": "A",
+                    "legId": "MR"
+                  },
+                  {
+                    "simulationTimeMs": 98881.47100385276,
+                    "antId": "ant-54",
+                    "contactGroup": "B",
+                    "legId": "RR"
+                  }
+                ]
+              }
+            ]
+          },
+          "legs": {
+            "surfaceDelta": 0.00009562727063894272,
+            "cells": [
+              {
+                "index": 8998,
+                "position": {
+                  "x": 0.7368421052631579,
+                  "y": 0.9789473684210527
+                },
+                "cumulativeCount": 1,
+                "surface": 0.014742099680006504,
+                "windowCount": 1,
+                "legs": {
+                  "FL": 0,
+                  "FR": 0,
+                  "ML": 0,
+                  "MR": 0,
+                  "RL": 0,
+                  "RR": 1
+                },
+                "tripods": {
+                  "A": 0,
+                  "B": 1
+                },
+                "touches": [
+                  {
+                    "simulationTimeMs": 103111.96463418714,
+                    "antId": "ant-22",
+                    "contactGroup": "B",
+                    "legId": "RR"
+                  }
+                ]
+              },
+              {
+                "index": 3375,
+                "position": {
+                  "x": 0.15789473684210525,
+                  "y": 0.3684210526315789
+                },
+                "cumulativeCount": 1,
+                "surface": 0.014837726950645447,
+                "windowCount": 1,
+                "legs": {
+                  "FL": 0,
+                  "FR": 0,
+                  "ML": 0,
+                  "MR": 0,
+                  "RL": 1,
+                  "RR": 0
+                },
+                "tripods": {
+                  "A": 1,
+                  "B": 0
+                },
+                "touches": [
+                  {
+                    "simulationTimeMs": 91155.42538738098,
+                    "antId": "ant-51",
+                    "contactGroup": "A",
+                    "legId": "RL"
+                  }
+                ]
+              }
+            ]
+          },
+          "tripods": {
+            "surfaceDelta": 0.00009562727063894272,
+            "cells": [
+              {
+                "index": 8998,
+                "position": {
+                  "x": 0.7368421052631579,
+                  "y": 0.9789473684210527
+                },
+                "cumulativeCount": 1,
+                "surface": 0.014742099680006504,
+                "windowCount": 1,
+                "legs": {
+                  "FL": 0,
+                  "FR": 0,
+                  "ML": 0,
+                  "MR": 0,
+                  "RL": 0,
+                  "RR": 1
+                },
+                "tripods": {
+                  "A": 0,
+                  "B": 1
+                },
+                "touches": [
+                  {
+                    "simulationTimeMs": 103111.96463418714,
+                    "antId": "ant-22",
+                    "contactGroup": "B",
+                    "legId": "RR"
+                  }
+                ]
+              },
+              {
+                "index": 3375,
+                "position": {
+                  "x": 0.15789473684210525,
+                  "y": 0.3684210526315789
+                },
+                "cumulativeCount": 1,
+                "surface": 0.014837726950645447,
+                "windowCount": 1,
+                "legs": {
+                  "FL": 0,
+                  "FR": 0,
+                  "ML": 0,
+                  "MR": 0,
+                  "RL": 1,
+                  "RR": 0
+                },
+                "tripods": {
+                  "A": 1,
+                  "B": 0
+                },
+                "touches": [
+                  {
+                    "simulationTimeMs": 91155.42538738098,
+                    "antId": "ant-51",
+                    "contactGroup": "A",
+                    "legId": "RL"
+                  }
+                ]
+              }
+            ]
+          },
+          "timing": {
+            "surfaceDelta": 0.00009562727063894272,
+            "cells": [
+              {
+                "index": 8998,
+                "position": {
+                  "x": 0.7368421052631579,
+                  "y": 0.9789473684210527
+                },
+                "cumulativeCount": 1,
+                "surface": 0.014742099680006504,
+                "windowCount": 1,
+                "legs": {
+                  "FL": 0,
+                  "FR": 0,
+                  "ML": 0,
+                  "MR": 0,
+                  "RL": 0,
+                  "RR": 1
+                },
+                "tripods": {
+                  "A": 0,
+                  "B": 1
+                },
+                "touches": [
+                  {
+                    "simulationTimeMs": 103111.96463418714,
+                    "antId": "ant-22",
+                    "contactGroup": "B",
+                    "legId": "RR"
+                  }
+                ]
+              },
+              {
+                "index": 3375,
+                "position": {
+                  "x": 0.15789473684210525,
+                  "y": 0.3684210526315789
+                },
+                "cumulativeCount": 1,
+                "surface": 0.014837726950645447,
+                "windowCount": 1,
+                "legs": {
+                  "FL": 0,
+                  "FR": 0,
+                  "ML": 0,
+                  "MR": 0,
+                  "RL": 1,
+                  "RR": 0
+                },
+                "tripods": {
+                  "A": 1,
+                  "B": 0
+                },
+                "touches": [
+                  {
+                    "simulationTimeMs": 91155.42538738098,
+                    "antId": "ant-51",
+                    "contactGroup": "A",
+                    "legId": "RL"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "sharedP1P2": {
+    "p1P2WindowContactTotalRatio": 1.0149797570850203,
+    "exactGridCellSupportOverlap": {
+      "intersection": 529,
+      "union": 2447,
+      "jaccard": 0.2161830813240703
+    },
+    "windowCountPerCellPearsonAcrossAllCells": 0.28858384255713615,
+    "legSpatialMaps": {
+      "FL": {
+        "support": {
+          "intersection": 31,
+          "union": 721,
+          "jaccard": 0.04299583911234397
+        },
+        "pearsonAcrossAllCells": 0.07105852894387413
+      },
+      "FR": {
+        "support": {
+          "intersection": 46,
+          "union": 736,
+          "jaccard": 0.0625
+        },
+        "pearsonAcrossAllCells": 0.09357194625944507
+      },
+      "ML": {
+        "support": {
+          "intersection": 44,
+          "union": 717,
+          "jaccard": 0.061366806136680614
+        },
+        "pearsonAcrossAllCells": 0.08489211767666986
+      },
+      "MR": {
+        "support": {
+          "intersection": 46,
+          "union": 730,
+          "jaccard": 0.06301369863013699
+        },
+        "pearsonAcrossAllCells": 0.09223963835942413
+      },
+      "RL": {
+        "support": {
+          "intersection": 50,
+          "union": 721,
+          "jaccard": 0.06934812760055478
+        },
+        "pearsonAcrossAllCells": 0.10217005037985377
+      },
+      "RR": {
+        "support": {
+          "intersection": 44,
+          "union": 733,
+          "jaccard": 0.06002728512960437
+        },
+        "pearsonAcrossAllCells": 0.10251401993148497
+      }
+    },
+    "tripodSpatialMaps": {
+      "A": {
+        "support": {
+          "intersection": 271,
+          "union": 1762,
+          "jaccard": 0.15380249716231556
+        },
+        "pearsonAcrossAllCells": 0.21879044962014896
+      },
+      "B": {
+        "support": {
+          "intersection": 293,
+          "union": 1754,
+          "jaccard": 0.16704675028506272
+        },
+        "pearsonAcrossAllCells": 0.2301772174308674
+      }
+    }
+  },
+  "interpretationBoundary": "Raw organization may contain event-specific history beyond scalar endpoints; a difference does not establish a useful or necessary material responsibility, mechanical force, or a new material law."
+}

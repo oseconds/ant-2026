@@ -22,6 +22,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 - Measured actual realized movement vectors, directional/axial coherence, every junction, discrete scaffold curvature, and tick-level turns using `r1=.030` with fixed `r0=.012` sensitivity
 - Decision: **INDEPENDENT INFORMATION OBSERVED** only in the descriptive/representational sense; an event-wide mean direction nearly reproduces axial alignment, and no local scaffold-specific, statistical, or causal independence was established
 
+### 2026-10-29 — FOOT_CONTACT organization signal audit
+
+[Process log](./2026-10-29-gait-contact-signal-audit.md) · [Evidence report](../evidence/2026-10-29-gait-contact-signal-audit/REPORT.md) · [Technical atlas](../evidence/2026-10-29-gait-contact-signal-audit/atlas.html)
+
+- Reused frozen P1/P2 raw contact histories; no replay or new seed, and the existing contact digests, endpoint SurfaceField maps and source hashes match
+- Scalar count and SurfaceField preserve broad spatial load, while leg/tripod/time detail differs among same-count, near-SurfaceField cells in both windows; fixed gait explains the A/B alternation
+- Decision: **INDEPENDENT INFORMATION OBSERVED** in the descriptive contact-history sense only; no force signal, trajectory-conditioned residual, material law or prototype
+
 ### 2026-10-28 — Commit-relative space-time attachment support
 
 [Research result](../evidence/2026-10-28-space-time-attachment-support/README.md)
