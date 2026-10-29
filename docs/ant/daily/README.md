@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-30 — Material compaction shielding screen
+
+[Process log](./2026-10-30-material-compaction-shielding-screen.md) · [Evidence report and matched comparison](../evidence/2026-10-30-material-compaction-shielding-screen/README.md)
+
+- One seed, 600 s, current-G/H0; matched control reproduced the frozen production trajectory and five saved field checkpoints
+- Dose shielding cut aggregate nominal contact dose input 33.9% and 600 s SurfaceField mass 26.5%; mean D median across 20 late anchors fell 27.1%
+- E/F and layer maps remained exact across 40 sampled anchors; entry-near max-D persisted; Nodule counts were 32→12 at 600 s, with control at cap and treatment still birthing
+- Decision: **MIXED**; no production adoption, max-D/X change, or locomotion-screen combination
+
 ### 2026-10-29 — Opportunity landscape audit
 
 [Process log](./2026-10-29-opportunity-landscape-audit.md) · [Evidence, spatial atlas and temporal plots](../evidence/2026-10-29-opportunity-landscape-audit/README.md)
