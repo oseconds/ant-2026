@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-29 — Proposal UPDATE diagnostic
+
+[Process log](./2026-10-29-proposal-update-diagnostic.md) · [Evidence report and atlas](../evidence/2026-10-29-proposal-update-diagnostic/README.md)
+
+- Reused the exact frozen P1/P2 anchors; 71/74 P1 and 480/490 P2 production losses remained in next-anchor `E`, including prior principal-path cells
+- START proposal survival at COMMIT was 96.77% and 93.46%; saved-age medians for still-valid drops were 12 and 10 intervals
+- Decision: **INCUMBENCY DESERVES FURTHER DESIGN** as a future design responsibility only; E-memory ambiguity and strict-retention cliff remain, and EMERGENCE is unresolved
+
 ### 2026-10-29 — P2 closure-history audit
 
 [Process log](./2026-10-29-p2-closure-history-audit.md) · [Evidence report and atlas](../evidence/2026-10-29-p2-closure-history-audit/README.md)
