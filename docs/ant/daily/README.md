@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-29 — Authored finite materialization law
+
+[Process log](./2026-10-29-authored-materialization-law-synthesis.md) · [Evidence and structural atlas](../evidence/2026-10-29-authored-materialization-law-synthesis/README.md)
+
+- Explicitly allowed one authored coherence scale; compared G/X/L at fixed R=.15 on ten frozen P1/P2 states, with no natural replay or UPDATE
+- Retained G/X as distinct connection-distance versus ground-neighborhood meanings; X is the simpler geometric baseline, not an artistic winner
+- Documented max-D entry-hotspot bias, graph sensitivity, dense-packet risk and legacy .30 reach-gate incompatibility; no production law adopted
+
 ### 2026-10-29 — Proposal UPDATE diagnostic
 
 [Process log](./2026-10-29-proposal-update-diagnostic.md) · [Evidence report and atlas](../evidence/2026-10-29-proposal-update-diagnostic/README.md)
