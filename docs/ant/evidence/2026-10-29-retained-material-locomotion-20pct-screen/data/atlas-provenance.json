@@ -1,0 +1,44 @@
+{
+  "schema": "ant-retained-material-locomotion-20pct-atlas-provenance-v1",
+  "inputs": {
+    "pairedAnchors": {
+      "path": "docs/ant/evidence/2026-10-29-retained-material-locomotion-20pct-screen/data/paired-anchors.json.gz",
+      "sha256": "c806ce8f3c0fbc5eb45da2a3c75c00ba64725e59e98b48685f1b92b1f3c721e7"
+    },
+    "armObservations": {
+      "path": "docs/ant/evidence/2026-10-29-retained-material-locomotion-20pct-screen/data/arm-observations.json",
+      "sha256": "b95048b77927072be5aeed551df28fe66b2f6e8455e77b3cacc3b07dfadc0234"
+    },
+    "analysis": {
+      "path": "docs/ant/evidence/2026-10-29-retained-material-locomotion-20pct-screen/data/analysis.json",
+      "sha256": "532ccfd7076008dbf5b01dd7c51bccfc7afeb38dcb75d4347eb7e72a286a64d0"
+    }
+  },
+  "qualifiedD": {
+    "output": "docs/ant/evidence/2026-10-29-retained-material-locomotion-20pct-screen/data/qualified-D-atlas.svg",
+    "sha256": "759b912b964b27480ed798ec6b807b3c1ecaddd3193e6ad3c6be01c4358bd15a",
+    "panels": [
+      "300s/control",
+      "300s/candidate",
+      "600s/control",
+      "600s/candidate"
+    ],
+    "anchorsPerPanel": 20,
+    "grid": "96x96 same world frame",
+    "encoding": "mean D in cells where S is present; no-data gray; color uses fixed linear 0..1 scale; no smoothing; rank-1 mode and entry reference overlaid"
+  },
+  "contacts": {
+    "output": "docs/ant/evidence/2026-10-29-retained-material-locomotion-20pct-screen/data/FOOT-CONTACT-atlas.svg",
+    "sha256": "debe3292abc5115d87325453c2e7d0bc23cac055ec2eab28c34458c353f8be2e",
+    "panels": [
+      "0-200s/control",
+      "0-200s/candidate",
+      "200-400s/control",
+      "200-400s/candidate",
+      "400-600s/control",
+      "400-600s/candidate"
+    ],
+    "grid": "24x24",
+    "encoding": "raw contact count per cell; shared linear 0..827 scale across all six panels; no smoothing"
+  }
+}
