@@ -1,0 +1,442 @@
+{
+  "schema": "ant-body-diverse-scope-result-v1",
+  "selection": [
+    {
+      "id": "trail-plate-4",
+      "ordinal": 4,
+      "commitSeconds": 143.01666666667498,
+      "criterion": "smallest finite scope",
+      "criterionRankAmongP3ToP36": 1
+    },
+    {
+      "id": "trail-plate-22",
+      "ordinal": 22,
+      "commitSeconds": 384.01666666674754,
+      "criterion": "largest finite scope",
+      "criterionRankAmongP3ToP36": 1
+    },
+    {
+      "id": "trail-plate-25",
+      "ordinal": 25,
+      "commitSeconds": 416.0166666667848,
+      "criterion": "highest junction complexity",
+      "criterionRankAmongP3ToP36": 1
+    },
+    {
+      "id": "trail-plate-23",
+      "ordinal": 23,
+      "commitSeconds": 395.01666666676033,
+      "criterion": "most tortuous principal path",
+      "criterionRankAmongP3ToP36": 1
+    },
+    {
+      "id": "trail-plate-3",
+      "ordinal": 3,
+      "commitSeconds": 132.01666666668137,
+      "criterion": "most compact scope",
+      "criterionRankAmongP3ToP36": 1
+    }
+  ],
+  "events": [
+    {
+      "id": "trail-plate-4",
+      "commitSeconds": 143.01666666667498,
+      "selectedFor": "smallest finite scope",
+      "structural": {
+        "nodeCount": 375,
+        "edgeCount": 466,
+        "junctionCount": 115,
+        "terminalCount": 4,
+        "bbox": {
+          "minX": 41,
+          "maxX": 93,
+          "minY": 0,
+          "maxY": 61,
+          "widthCells": 53,
+          "heightCells": 62
+        },
+        "bboxAspectRatio": 1.169811320754717,
+        "tortuosity": 1.0946086240079596,
+        "cycleRank": 92
+      },
+      "cases": [
+        {
+          "id": "P",
+          "cells": 1100,
+          "components4": [
+            1100
+          ],
+          "maskSha256": "cdda05dba7d823fce89a5de25a3fd4d54f3a1f1265d2a097d76329b32042022b"
+        },
+        {
+          "id": "K",
+          "cells": 1018,
+          "components4": [
+            1018
+          ],
+          "maskSha256": "311af3ba458d83e7a87a6732fc57c1d37fb73cce33b6e4db28956d5d14dadfea"
+        },
+        {
+          "id": "H",
+          "cells": 2123,
+          "components4": [
+            2123
+          ],
+          "maskSha256": "2111ece7fb4af80f62c2ae736409c8ab43952f833380253eb62d8e0498b72d5a"
+        }
+      ],
+      "comparisons": [
+        {
+          "a": "P",
+          "b": "K",
+          "shared": 1018,
+          "union": 1100,
+          "xor": 82,
+          "jaccard": 0.9254545454545454
+        },
+        {
+          "a": "K",
+          "b": "H",
+          "shared": 1018,
+          "union": 2123,
+          "xor": 1105,
+          "jaccard": 0.479510127178521
+        },
+        {
+          "a": "P",
+          "b": "H",
+          "shared": 1074,
+          "union": 2149,
+          "xor": 1075,
+          "jaccard": 0.49976733364355513
+        }
+      ],
+      "localHistoryCandidates": {
+        "K": "rendered exactly",
+        "U": "omitted: exact commit-time B raster unavailable",
+        "W": "omitted: exact commit-time B raster unavailable",
+        "S": "omitted: exact commit-time B raster unavailable"
+      }
+    },
+    {
+      "id": "trail-plate-22",
+      "commitSeconds": 384.01666666674754,
+      "selectedFor": "largest finite scope",
+      "structural": {
+        "nodeCount": 817,
+        "edgeCount": 935,
+        "junctionCount": 178,
+        "terminalCount": 23,
+        "bbox": {
+          "minX": 1,
+          "maxX": 94,
+          "minY": 2,
+          "maxY": 64,
+          "widthCells": 94,
+          "heightCells": 63
+        },
+        "bboxAspectRatio": 1.492063492063492,
+        "tortuosity": 1.1378741388218656,
+        "cycleRank": 119
+      },
+      "cases": [
+        {
+          "id": "P",
+          "cells": 2509,
+          "components4": [
+            2509
+          ],
+          "maskSha256": "6a5a274354363057bd5a7c771557f3f855b56b95df287dc7d4238efd885094e6"
+        },
+        {
+          "id": "K",
+          "cells": 2321,
+          "components4": [
+            2321
+          ],
+          "maskSha256": "27dbbc078abcf4b5ec1d3802913cec6f46b964c67086a4a0578508b008d8d40e"
+        },
+        {
+          "id": "H",
+          "cells": 5311,
+          "components4": [
+            5311
+          ],
+          "maskSha256": "9bd12608e91fb310d63b1e9b7b075863386f6d1f2f56978f4f5c6ce34c094f30"
+        }
+      ],
+      "comparisons": [
+        {
+          "a": "P",
+          "b": "K",
+          "shared": 2321,
+          "union": 2509,
+          "xor": 188,
+          "jaccard": 0.9250697489039458
+        },
+        {
+          "a": "K",
+          "b": "H",
+          "shared": 2321,
+          "union": 5311,
+          "xor": 2990,
+          "jaccard": 0.43701751082658635
+        },
+        {
+          "a": "P",
+          "b": "H",
+          "shared": 2492,
+          "union": 5328,
+          "xor": 2836,
+          "jaccard": 0.4677177177177177
+        }
+      ],
+      "localHistoryCandidates": {
+        "K": "rendered exactly",
+        "U": "omitted: exact commit-time B raster unavailable",
+        "W": "omitted: exact commit-time B raster unavailable",
+        "S": "omitted: exact commit-time B raster unavailable"
+      }
+    },
+    {
+      "id": "trail-plate-25",
+      "commitSeconds": 416.0166666667848,
+      "selectedFor": "highest junction complexity",
+      "structural": {
+        "nodeCount": 771,
+        "edgeCount": 976,
+        "junctionCount": 294,
+        "terminalCount": 16,
+        "bbox": {
+          "minX": 1,
+          "maxX": 94,
+          "minY": 2,
+          "maxY": 62,
+          "widthCells": 94,
+          "heightCells": 61
+        },
+        "bboxAspectRatio": 1.540983606557377,
+        "tortuosity": 1.188544425910073,
+        "cycleRank": 206
+      },
+      "cases": [
+        {
+          "id": "P",
+          "cells": 2179,
+          "components4": [
+            2179
+          ],
+          "maskSha256": "66c6cab697fa03c559864b0cd4c3a73a23e913f9b963336c8d1ea11124824068"
+        },
+        {
+          "id": "K",
+          "cells": 2079,
+          "components4": [
+            2079
+          ],
+          "maskSha256": "c8e6ed6490d3db890cdbdf2851b931382495541e8b82981243c3230a1d9ac0d2"
+        },
+        {
+          "id": "H",
+          "cells": 5359,
+          "components4": [
+            5359
+          ],
+          "maskSha256": "8e8b67dde02111dc00201e7121eaafa6bf4e22b2318b06b2ed57d3add86dce32"
+        }
+      ],
+      "comparisons": [
+        {
+          "a": "P",
+          "b": "K",
+          "shared": 2079,
+          "union": 2179,
+          "xor": 100,
+          "jaccard": 0.9541073887104177
+        },
+        {
+          "a": "K",
+          "b": "H",
+          "shared": 2079,
+          "union": 5359,
+          "xor": 3280,
+          "jaccard": 0.38794551222242957
+        },
+        {
+          "a": "P",
+          "b": "H",
+          "shared": 2165,
+          "union": 5373,
+          "xor": 3208,
+          "jaccard": 0.40294062907128236
+        }
+      ],
+      "localHistoryCandidates": {
+        "K": "rendered exactly",
+        "U": "omitted: exact commit-time B raster unavailable",
+        "W": "omitted: exact commit-time B raster unavailable",
+        "S": "omitted: exact commit-time B raster unavailable"
+      }
+    },
+    {
+      "id": "trail-plate-23",
+      "commitSeconds": 395.01666666676033,
+      "selectedFor": "most tortuous principal path",
+      "structural": {
+        "nodeCount": 780,
+        "edgeCount": 910,
+        "junctionCount": 207,
+        "terminalCount": 26,
+        "bbox": {
+          "minX": 1,
+          "maxX": 94,
+          "minY": 2,
+          "maxY": 65,
+          "widthCells": 94,
+          "heightCells": 64
+        },
+        "bboxAspectRatio": 1.46875,
+        "tortuosity": 1.5060751716548937,
+        "cycleRank": 131
+      },
+      "cases": [
+        {
+          "id": "P",
+          "cells": 2385,
+          "components4": [
+            2385
+          ],
+          "maskSha256": "c829c7d6c0d986de37dbbecdb09b4718ef1a7bbc912c6dbba14df75eaa350e59"
+        },
+        {
+          "id": "K",
+          "cells": 2193,
+          "components4": [
+            2193
+          ],
+          "maskSha256": "3c54a25a85c3c5ce63d1f2ae145cc05eafeb85b936e1b8e55ae029647a918f41"
+        },
+        {
+          "id": "H",
+          "cells": 5324,
+          "components4": [
+            5324
+          ],
+          "maskSha256": "5eaab5f59c60959d3711a7f72b07c047faccc8beb317f7ec1ffcfe7be8be7311"
+        }
+      ],
+      "comparisons": [
+        {
+          "a": "P",
+          "b": "K",
+          "shared": 2193,
+          "union": 2385,
+          "xor": 192,
+          "jaccard": 0.919496855345912
+        },
+        {
+          "a": "K",
+          "b": "H",
+          "shared": 2193,
+          "union": 5324,
+          "xor": 3131,
+          "jaccard": 0.41190833959429
+        },
+        {
+          "a": "P",
+          "b": "H",
+          "shared": 2355,
+          "union": 5354,
+          "xor": 2999,
+          "jaccard": 0.43985805005603285
+        }
+      ],
+      "localHistoryCandidates": {
+        "K": "rendered exactly",
+        "U": "omitted: exact commit-time B raster unavailable",
+        "W": "omitted: exact commit-time B raster unavailable",
+        "S": "omitted: exact commit-time B raster unavailable"
+      }
+    },
+    {
+      "id": "trail-plate-3",
+      "commitSeconds": 132.01666666668137,
+      "selectedFor": "most compact scope",
+      "structural": {
+        "nodeCount": 379,
+        "edgeCount": 489,
+        "junctionCount": 127,
+        "terminalCount": 4,
+        "bbox": {
+          "minX": 32,
+          "maxX": 93,
+          "minY": 0,
+          "maxY": 64,
+          "widthCells": 62,
+          "heightCells": 65
+        },
+        "bboxAspectRatio": 1.0483870967741935,
+        "tortuosity": 1.1933064544844403,
+        "cycleRank": 111
+      },
+      "cases": [
+        {
+          "id": "P",
+          "cells": 1088,
+          "components4": [
+            1088
+          ],
+          "maskSha256": "238cb0aeb87a6fd3b20b289e3a80946902b1b339afb79a673304f7e85f1eeb29"
+        },
+        {
+          "id": "K",
+          "cells": 1014,
+          "components4": [
+            1014
+          ],
+          "maskSha256": "db43f473167041888ca8a7afd6e88bfbf717f885f85aa396586aa39ae7095eda"
+        },
+        {
+          "id": "H",
+          "cells": 2474,
+          "components4": [
+            2474
+          ],
+          "maskSha256": "8b5c886a3059db61a7e30816b7c86f7720f24dd117b12d3be4fc9dcc716afe47"
+        }
+      ],
+      "comparisons": [
+        {
+          "a": "P",
+          "b": "K",
+          "shared": 1014,
+          "union": 1088,
+          "xor": 74,
+          "jaccard": 0.9319852941176471
+        },
+        {
+          "a": "K",
+          "b": "H",
+          "shared": 1014,
+          "union": 2474,
+          "xor": 1460,
+          "jaccard": 0.40986257073565074
+        },
+        {
+          "a": "P",
+          "b": "H",
+          "shared": 1069,
+          "union": 2493,
+          "xor": 1424,
+          "jaccard": 0.4288006417970317
+        }
+      ],
+      "localHistoryCandidates": {
+        "K": "rendered exactly",
+        "U": "omitted: exact commit-time B raster unavailable",
+        "W": "omitted: exact commit-time B raster unavailable",
+        "S": "omitted: exact commit-time B raster unavailable"
+      }
+    }
+  ]
+}

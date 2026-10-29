@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-29 — BODY comparison across diverse COMMIT scopes
+
+[Process log](./2026-10-29-body-diverse-scope-atlas.md) · [Evidence report and atlases](../evidence/2026-10-29-body-diverse-scope-atlas/README.md)
+
+- Inventoried all 36 reconstructed current-G scopes before selecting five added cases by fixed structural extremes; no candidate output informed selection
+- P/K remain close across added cases; H spans branches. Exact later commit-time B maps are absent, so U/W/S are omitted, not approximated
+- Current scopes remain conditioned by the authored source-annulus-to-boundary selector; no BODY winner or law selected
+
 ### 2026-10-29 — Actual traffic direction signal audit
 
 [Process log](./2026-10-29-traffic-direction-signal-audit.md) · [Evidence report](../evidence/2026-10-29-traffic-direction-signal-audit/REPORT.md) · [Technical atlas](../evidence/2026-10-29-traffic-direction-signal-audit/atlas.html)
