@@ -516,6 +516,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 - Subsequent direct listening judged D too dominant and the substrate timbre too metallic / long-tailed; next audio side-pass shifts timbre toward dull, sand-like and granular before re-calibrating level
 - Calibration tooling/evidence was later committed and merged via PR #1; base substrate remains default Off
 
+### 2026-10-29 — Peak–saddle domain reproducibility
+
+[`2026-10-29-peak-saddle-domain-reproducibility.md`](./2026-10-29-peak-saddle-domain-reproducibility.md) · [full evidence](../evidence/2026-10-29-peak-saddle-domain-reproducibility/README.md)
+
+- Reused ten exact current-G P1/P2 frozen states; enumerated all finite/essential B peak–saddle domains under predeclared 8/4 adjacency
+- Both late 8-neighbor winner changes were rank crossings among spatially present domains; 4/8 topology changed finite/essential counts and winner locations
+- Decision: `DOMAIN FAMILY PARTIALLY REPRODUCIBLE`; keep domain availability research-only, independent of ranking; no body or production change
+
 ## Logging rule
 
 새 과정 로그는 `YYYY-MM-DD-topic.md` 형식으로 추가한다.
