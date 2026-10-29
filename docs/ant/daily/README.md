@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-30 — Material-dependent pheromone source attenuation
+
+[Process log](./2026-10-30-material-pheromone-attenuation-screen.md) · [Report, receipts and atlas](../evidence/2026-10-30-material-pheromone-attenuation-screen/README.md)
+
+- One matched production-control / fixed attenuation screen; exact frozen raw, five checkpoints and 40 late-anchor control parity
+- New chemical source dose changes downstream traffic, qualification and stacks; the would-be max-D leader remains entry-near
+- **MIXED**; no adoption or strength sweep. A separate frozen-source probe examines chemical residence rather than new inscription
+
 ### 2026-10-29 — Opportunity landscape audit
 
 [Process log](./2026-10-29-opportunity-landscape-audit.md) · [Evidence, spatial atlas and temporal plots](../evidence/2026-10-29-opportunity-landscape-audit/README.md)
