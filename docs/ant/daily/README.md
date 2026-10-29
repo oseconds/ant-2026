@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-29 — P2 closure-history audit
+
+[Process log](./2026-10-29-p2-closure-history-audit.md) · [Evidence report and atlas](../evidence/2026-10-29-p2-closure-history-audit/README.md)
+
+- The exact P2 face boundary is already fully qualified and connected in E at both saved anchors
+- H gains one boundary cell at COMMIT; that cell was present in E at the earlier anchor
+- Decision: **REPRESENTATION-LEVEL CLOSURE ONLY**; no closure-history router or BODY mode follows
+
 ### 2026-10-29 — BODY comparison across diverse COMMIT scopes
 
 [Process log](./2026-10-29-body-diverse-scope-atlas.md) · [Evidence report and atlases](../evidence/2026-10-29-body-diverse-scope-atlas/README.md)
