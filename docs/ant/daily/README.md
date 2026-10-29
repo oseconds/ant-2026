@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-29 — Opportunity landscape audit
+
+[Process log](./2026-10-29-opportunity-landscape-audit.md) · [Evidence, spatial atlas and temporal plots](../evidence/2026-10-29-opportunity-landscape-audit/README.md)
+
+- Reused 120 exact current-G/H0 analyses and 15 existing longer G surface checkpoints; no new simulation or replay
+- Found a persistent mechanically strongest entry region, sustained weaker secondary structure and flatter separated chemical strengths; the D winner remains actively foot-loaded
+- Decision: **PARTIAL CHARACTERIZATION**; late E/F opportunity dynamics are missing. No allocation law or capture/UPDATE change
+
 ### 2026-10-29 — Authored finite materialization law
 
 [Process log](./2026-10-29-authored-materialization-law-synthesis.md) · [Evidence and structural atlas](../evidence/2026-10-29-authored-materialization-law-synthesis/README.md)
