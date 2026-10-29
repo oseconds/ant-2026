@@ -1,0 +1,13 @@
+# 2026-10-29 — Prior stratigraphic context signal audit
+
+Reused the frozen current-G/H0 600 s history (`seed=20261005`, 60 Hz, Audio Off) to ask whether pre-existing material stacks at actual Plate commits retain information beyond binary overlap and current chemical/mechanical summaries. Started from the FOOT_CONTACT audit parent `66a1c16adbc308fdc424307202c61e985b1189c5` on dedicated branch `codex/ant-stratigraphy-signal-audit-20261029`; production authority remained `main` `4135d4fb4ab8ec5d46297893fbc9c1c5f4f3e785`.
+
+The archived raw stream preserved 36 birth times and mask hashes, but not full masks or event-time field maps. One current-main deterministic reconstruction matched the frozen summary, all one-second positions/contacts, all births/mask hashes, nodule/event outputs, five checkpoint maps and final RNG anchors. A read-only observer captured each actual substrate immediately before descriptor append.
+
+Across 66,089 mask-cell observations, 5,711 were virgin, 5,572 single-layer, and 54,806 multi-layer. Pre-commit layer counts spanned 0–34; 23,565 ordered stacks were observed. A rule-selected P31/P35 pair had almost identical prior-overlap fractions (0.998990/0.998820) but a 0.1209 total-variation distance between their layer-count distributions. SurfaceField/support and retained foot load remain moderately correlated with stack depth, and there were no exact same-cell/current-scalar matches. The frozen `PheromoneField.js` source hash differs from current main, though all stored run and checkpoint anchors replay exactly.
+
+All 630 actual-mask pairs were also compared: mask Jaccard and layer-count-distribution distance are strongly inversely associated (`r=-.713`, `ρ=-.728`). This is counter-evidence to geometry-orthogonal independence; the most similar masks P24/P25 have a layer-distribution distance of `.076`. Same-cell revisits still show the stack changing at a fixed included grid location, but no whole-geometry-conditioned effect was tested.
+
+Decision: **INDEPENDENT STRATIGRAPHIC CONTEXT OBSERVED**, defined narrowly as separately retained historical stack state beyond binary overlap in this deterministic sequence. The event comparison does not establish statistical independence from current scalar fields or geometry. No prototype, material law, production state, or justified next technical question was created.
+
+[Evidence report](../evidence/2026-10-29-stratigraphy-signal-audit/REPORT.md) · [technical atlas](../evidence/2026-10-29-stratigraphy-signal-audit/atlas.html) · [validation](../evidence/2026-10-29-stratigraphy-signal-audit/VALIDATION.md)

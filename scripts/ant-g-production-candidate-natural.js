@@ -264,10 +264,11 @@ export async function runSelfChecks() {
   return { scale: DOSE_SCALE, productionFieldParity: field, observerParity: observer };
 }
 
-export async function executeScenario(seed, arm, seconds, output, earlyMask = null) {
+export async function executeScenario(seed, arm, seconds, output, earlyMask = null, controllerObserver = null) {
   const started = performance.now(), ticks = seconds * 60;
   const run = createController(seed, arm);
   const { controller, ledger, fieldStats } = run;
+  controllerObserver?.(controller);
   const movement = { totalDistance: 0, activeAntSeconds: 0, blockedFrames: 0, newlyBlockedFrames: 0,
     retired: 0, recruited: 0, finiteViolations: 0, speedCapViolations: 0, turnCapViolations: 0,
     overlapViolations: 0, populationCeilingViolations: 0, minimumSurfaceGap: Infinity,

@@ -30,6 +30,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 - Scalar count and SurfaceField preserve broad spatial load, while leg/tripod/time detail differs among same-count, near-SurfaceField cells in both windows; fixed gait explains the A/B alternation
 - Decision: **INDEPENDENT INFORMATION OBSERVED** in the descriptive contact-history sense only; no force signal, trajectory-conditioned residual, material law or prototype
 
+### 2026-10-29 — Prior stratigraphic context signal audit
+
+[Process log](./2026-10-29-stratigraphy-signal-audit.md) · [Evidence report](../evidence/2026-10-29-stratigraphy-signal-audit/REPORT.md) · [Technical atlas](../evidence/2026-10-29-stratigraphy-signal-audit/atlas.html)
+
+- Reconstructed all 36 frozen current-G commits and checked exact event, map, RNG, mask, and pre/post append parity
+- Later Plate masks sampled 0–34 prior layers; a rule-selected pair with nearly equal overlap had different layer-count distributions, while current-mask similarity strongly tracked stack similarity and scalar correlations limit the claim
+- Decision: **INDEPENDENT STRATIGRAPHIC CONTEXT OBSERVED** as separately retained historical state in one deterministic sequence only; no statistical/geometry-conditioned independence, Plate body/material law or prototype
+
 ### 2026-10-28 — Commit-relative space-time attachment support
 
 [Research result](../evidence/2026-10-28-space-time-attachment-support/README.md)
