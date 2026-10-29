@@ -1,0 +1,106 @@
+TAP version 13
+# Subtest: compiles sparse 32-grid nodes and global four-neighbor indices without changing frozen 96-grid masks
+ok 1 - compiles sparse 32-grid nodes and global four-neighbor indices without changing frozen 96-grid masks
+  ---
+  duration_ms: 6.0278
+  type: 'test'
+  ...
+# Subtest: diagonal graph bridges survive conservative downsampling
+ok 2 - diagonal graph bridges survive conservative downsampling
+  ---
+  duration_ms: 2.1859
+  type: 'test'
+  ...
+# Subtest: stratigraphy order controls local bottom-to-top columns, top exposure routing, and only adjacent vertical links
+ok 3 - stratigraphy order controls local bottom-to-top columns, top exposure routing, and only adjacent vertical links
+  ---
+  duration_ms: 5.6562
+  type: 'test'
+  ...
+# Subtest: never couples masks that only share a coarse32 bin but have no 96-cell overlap
+ok 4 - never couples masks that only share a coarse32 bin but have no 96-cell overlap
+  ---
+  duration_ms: 2.4388
+  type: 'test'
+  ...
+# Subtest: uses A-to-C adjacency where the middle stratum is locally absent at 96-cell scale
+ok 5 - uses A-to-C adjacency where the middle stratum is locally absent at 96-cell scale
+  ---
+  duration_ms: 3.0261
+  type: 'test'
+  ...
+# Subtest: rejects a supplied exposure table that disagrees with frozen birth masks
+ok 6 - rejects a supplied exposure table that disagrees with frozen birth masks
+  ---
+  duration_ms: 1.8565
+  type: 'test'
+  ...
+# Subtest: packs nodules and couples only to the deepest valid local foundation plate
+ok 7 - packs nodules and couples only to the deepest valid local foundation plate
+  ---
+  duration_ms: 3.9699
+  type: 'test'
+  ...
+# Subtest: supports no born plates and enforces the explicit technical layer ceiling
+ok 8 - supports no born plates and enforces the explicit technical layer ceiling
+  ---
+  duration_ms: 20.7228
+  type: 'test'
+  ...
+# Subtest: plate descriptors create immutable bottom-to-top cell columns and age never creates depth
+ok 9 - plate descriptors create immutable bottom-to-top cell columns and age never creates depth
+  ---
+  duration_ms: 2.6335
+  type: 'test'
+  ...
+# Subtest: cached topology lookup and stable plate index mapping expose only the uppermost material
+ok 10 - cached topology lookup and stable plate index mapping expose only the uppermost material
+  ---
+  duration_ms: 0.2472
+  type: 'test'
+  ...
+# Subtest: FOOT_CONTACT counts each in-domain foot and ignores centroid, strength, malformed and out-of-domain data
+ok 11 - FOOT_CONTACT counts each in-domain foot and ignores centroid, strength, malformed and out-of-domain data
+  ---
+  duration_ms: 0.3116
+  type: 'test'
+  ...
+# Subtest: a nodule requires four overlapping plates, three buried layers, compaction, actual foot load and persistence
+ok 12 - a nodule requires four overlapping plates, three buried layers, compaction, actual foot load and persistence
+  ---
+  duration_ms: 2.3649
+  type: 'test'
+  ...
+# Subtest: elapsed simulation time alone cannot create a nodule without contact load or enough material history
+ok 13 - elapsed simulation time alone cannot create a nodule without contact load or enough material history
+  ---
+  duration_ms: 2.9797
+  type: 'test'
+  ...
+# Subtest: loss of a qualification condition resets persistence instead of banking old elapsed time
+ok 14 - loss of a qualification condition resets persistence instead of banking old elapsed time
+  ---
+  duration_ms: 1.0957
+  type: 'test'
+  ...
+# Subtest: metadata cap, read-only topology reuse and reset retain deterministic bounded state
+ok 15 - metadata cap, read-only topology reuse and reset retain deterministic bounded state
+  ---
+  duration_ms: 0.6074
+  type: 'test'
+  ...
+# Subtest: default metadata ceiling preserves more than the previous twelve plate limit without eviction
+ok 16 - default metadata ceiling preserves more than the previous twelve plate limit without eviction
+  ---
+  duration_ms: 0.5946
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 107.942
