@@ -304,7 +304,7 @@ async function main() {
       D: 'native SurfaceField.sampleSupport(x,y,0.025)', qualifiedFields: 'native TrailPlateBirth mask E, production zhangSuen thinning F, edge-bearing F subset S',
       maxD: 'read-only separated plateau centers in S; no allocation feedback' },
     validity: { selfChecks: { emptyGroundExact: true, layerBoundsAndDoses: true, tickEntryReferenceSurvivesArrayReplacement: true,
-      sameInitialResponseAndContactCount: true }, matchedInitialState: true,
+      samePrecontactResponseAndContactCount: true }, matchedInitialState: true,
       controlFrozenReplayParity: true,
       controlFrozenCheckpointMapsExactAt30_60_120_300_600s: true,
       matchedArmParity: { agentSnapshotsExact: true, contactBucketsExact: true, contactPayloadHashExact: true,
