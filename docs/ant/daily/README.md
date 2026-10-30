@@ -14,6 +14,30 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-30 — Material feedback responsibility synthesis and stopping gate
+
+[Process log](./2026-10-30-material-feedback-space.md) · [Synthesis and source inventory](../evidence/2026-10-30-material-feedback-space/README.md)
+
+- Completed source attenuation, a frozen residence probe, and one independent residence world; no prior treatment stacked
+- Residence remains a promising distinct research responsibility, with mixed world consequences and unisolated locality value
+- Stop further screens; keep production10% feedback. Propose one frozen mass-matched recipient control, not adoption
+
+### 2026-10-30 — Independent chemical-residence world screen
+
+[Process log](./2026-10-30-material-chemical-residence-screen.md) · [Report and receipts](../evidence/2026-10-30-material-chemical-residence-screen/README.md)
+
+- Exact native sham replay, 40 late anchors, source-law identity and single-step tick-entry decay validation
+- Existing chemistry changes future qualification/material with nearly unchanged aggregate traffic; entry-near D remains
+- **PROMISING distinct responsibility / mixed consequences**; no adoption, local-placement benefit and material meaning unresolved
+
+### 2026-10-30 — Frozen chemical-residence leverage probe
+
+[Process log](./2026-10-30-material-chemical-residence-probe.md) · [Report and replay receipts](../evidence/2026-10-30-material-chemical-residence-probe/README.md)
+
+- Replayed only native control source requests and actual material; exact field checkpoints and 40 B-memory maps, no ant simulation
+- Source-free temporal tails differ from source gain and reach recorded prospective sensor footprints; full sensor saturation remains a counterexample
+- Distinctness/leverage gate passed for one independent residence screen, without source attenuation or an allocation objective
+
 ### 2026-10-30 — Material-dependent pheromone source attenuation
 
 [Process log](./2026-10-30-material-pheromone-attenuation-screen.md) · [Report, receipts and atlas](../evidence/2026-10-30-material-pheromone-attenuation-screen/README.md)
