@@ -1,0 +1,47 @@
+{
+  "adherence": {
+    "law": "fade tau = 1.8 * (1 + 0.50*(1-exp(-L/4))); rise unchanged",
+    "sample": {
+      "kind": "adherence",
+      "antId": 1,
+      "timeSeconds": 1.234,
+      "layers": 4,
+      "eligible": true,
+      "binding": true,
+      "changed": true,
+      "before": 0.8,
+      "target": 0.2,
+      "dt": 0.016666666666666666,
+      "nativeTau": 1.8,
+      "candidateTau": 2.3689085029457018,
+      "nativeValue": 0.7944700854092471,
+      "value": 0.7957934616736932,
+      "delta": 0.0013233762644461189,
+      "prospectiveValue": 0.7957934616736932
+    }
+  },
+  "decision": {
+    "law": "new decisionRemaining *= 1 + 0.50*(1-exp(-L/4))",
+    "sample": {
+      "kind": "decision",
+      "antId": 1,
+      "timeSeconds": 1.234,
+      "layers": 4,
+      "eligible": true,
+      "binding": false,
+      "changed": true,
+      "entryDecision": 0,
+      "entryCommitted": 0,
+      "committedAfter": 0.9,
+      "blocked": false,
+      "newlyBlocked": false,
+      "dt": 0.016666666666666666,
+      "nativeValue": 0.4,
+      "value": 0.5264241117657116,
+      "delta": 0.12642411176571156,
+      "prospectiveValue": 0.5264241117657116
+    }
+  },
+  "rngCallsAdded": 0,
+  "naturalWorldRun": false
+}

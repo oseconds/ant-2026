@@ -1,0 +1,442 @@
+{
+  "registeredLaws": {
+    "following": "comfortable headway = radius sum + max(0.6*personalSpacing, speed*0.4*(1+0.5*(1-exp(-L/4)))); same-flow classification, response time, separation and swept guard unchanged",
+    "velocity": "accelerateToward(speed, dt*q(L)); q(L)=1-0.50*(1-exp(-L/4)); desired speed, heading, actual movement dt and swept guard unchanged"
+  },
+  "rows": [
+    {
+      "layers": 0,
+      "followingHeadwaySeconds": 0.4,
+      "velocityFactor": 1,
+      "maximumVelocityRelaxationReduction": 0
+    },
+    {
+      "layers": 1,
+      "followingHeadwaySeconds": 0.44423984338571904,
+      "velocityFactor": 0.8894003915357025,
+      "maximumVelocityRelaxationReduction": 0.1105996084642975
+    },
+    {
+      "layers": 4,
+      "followingHeadwaySeconds": 0.5264241117657116,
+      "velocityFactor": 0.6839397205857212,
+      "maximumVelocityRelaxationReduction": 0.31606027941427883
+    },
+    {
+      "layers": 8,
+      "followingHeadwaySeconds": 0.5729329433526774,
+      "velocityFactor": 0.5676676416183064,
+      "maximumVelocityRelaxationReduction": 0.4323323583816936
+    },
+    {
+      "layers": 100,
+      "followingHeadwaySeconds": 0.5999999999972224,
+      "velocityFactor": 0.500000000006944,
+      "maximumVelocityRelaxationReduction": 0.499999999993056
+    }
+  ],
+  "fixedMotor": {
+    "dtSeconds": [
+      0.03333333333333333,
+      0.016666666666666666,
+      0.008333333333333333
+    ],
+    "control": [
+      [
+        {
+          "segment": "step",
+          "dt": 0.03333333333333333,
+          "layersTransition": "0",
+          "speed": 0.07999999099718602,
+          "vx": 0.07999999099718602,
+          "vy": 0,
+          "heading": 0
+        },
+        {
+          "segment": "brake",
+          "dt": 0.03333333333333333,
+          "layersTransition": "0",
+          "speed": 0.020003112521048975,
+          "vx": 0.020003112521048975,
+          "vy": 0,
+          "heading": 0
+        },
+        {
+          "segment": "reversal",
+          "dt": 0.03333333333333333,
+          "layersTransition": "0",
+          "speed": 0.07929079987727804,
+          "vx": -0.044862732404124195,
+          "vy": -0.06537863707981759,
+          "heading": -2.2500000000000053
+        }
+      ],
+      [
+        {
+          "segment": "step",
+          "dt": 0.016666666666666666,
+          "layersTransition": "0",
+          "speed": 0.07999999099718604,
+          "vx": 0.07999999099718604,
+          "vy": 0,
+          "heading": 0
+        },
+        {
+          "segment": "brake",
+          "dt": 0.016666666666666666,
+          "layersTransition": "0",
+          "speed": 0.020005766698258407,
+          "vx": 0.020005766698258407,
+          "vy": 0,
+          "heading": 0
+        },
+        {
+          "segment": "reversal",
+          "dt": 0.016666666666666666,
+          "layersTransition": "0",
+          "speed": 0.07923883980874459,
+          "vx": -0.04300481980823299,
+          "vy": -0.06655358147761319,
+          "heading": -2.2499999999999893
+        }
+      ],
+      [
+        {
+          "segment": "step",
+          "dt": 0.008333333333333333,
+          "layersTransition": "0",
+          "speed": 0.07999999099718604,
+          "vx": 0.07999999099718604,
+          "vy": 0,
+          "heading": 0
+        },
+        {
+          "segment": "brake",
+          "dt": 0.008333333333333333,
+          "layersTransition": "0",
+          "speed": 0.02000576669825841,
+          "vx": 0.02000576669825841,
+          "vy": 0,
+          "heading": 0
+        },
+        {
+          "segment": "reversal",
+          "dt": 0.008333333333333333,
+          "layersTransition": "0",
+          "speed": 0.07922515627506102,
+          "vx": -0.041909485422389745,
+          "vy": -0.06723258449917228,
+          "heading": -2.2499999999999787
+        }
+      ]
+    ],
+    "conditionedWithMaterialTransition": [
+      [
+        {
+          "segment": "step",
+          "dt": 0.03333333333333333,
+          "layersTransition": "0->4 halfway through segment",
+          "speed": 0.07999990465957137,
+          "vx": 0.07999990465957137,
+          "vy": 0,
+          "heading": 0
+        },
+        {
+          "segment": "brake",
+          "dt": 0.03333333333333333,
+          "layersTransition": "0->4 halfway through segment",
+          "speed": 0.020014800519733863,
+          "vx": 0.020014800519733863,
+          "vy": 0,
+          "heading": 0
+        },
+        {
+          "segment": "reversal",
+          "dt": 0.03333333333333333,
+          "layersTransition": "0->4 halfway through segment",
+          "speed": 0.07845915036050966,
+          "vx": -0.04050739350043951,
+          "vy": -0.06719367043921334,
+          "heading": -2.2500000000000053
+        }
+      ],
+      [
+        {
+          "segment": "step",
+          "dt": 0.016666666666666666,
+          "layersTransition": "0->4 halfway through segment",
+          "speed": 0.0799998871545224,
+          "vx": 0.0799998871545224,
+          "vy": 0,
+          "heading": 0
+        },
+        {
+          "segment": "brake",
+          "dt": 0.016666666666666666,
+          "layersTransition": "0->4 halfway through segment",
+          "speed": 0.020022565559618274,
+          "vx": 0.020022565559618274,
+          "vy": 0,
+          "heading": 0
+        },
+        {
+          "segment": "reversal",
+          "dt": 0.016666666666666666,
+          "layersTransition": "0->4 halfway through segment",
+          "speed": 0.0783989898462177,
+          "vx": -0.03839055907953537,
+          "vy": -0.06835617442826983,
+          "heading": -2.2499999999999893
+        }
+      ],
+      [
+        {
+          "segment": "step",
+          "dt": 0.008333333333333333,
+          "layersTransition": "0->4 halfway through segment",
+          "speed": 0.0799998871545224,
+          "vx": 0.0799998871545224,
+          "vy": 0,
+          "heading": 0
+        },
+        {
+          "segment": "brake",
+          "dt": 0.008333333333333333,
+          "layersTransition": "0->4 halfway through segment",
+          "speed": 0.020024875335060817,
+          "vx": 0.020024875335060817,
+          "vy": 0,
+          "heading": 0
+        },
+        {
+          "segment": "reversal",
+          "dt": 0.008333333333333333,
+          "layersTransition": "0->4 halfway through segment",
+          "speed": 0.07838555085045876,
+          "vx": -0.037213660674634705,
+          "vy": -0.06898868053038122,
+          "heading": -2.2499999999999787
+        }
+      ]
+    ]
+  },
+  "sameFlowGate": [
+    {
+      "eligible": true,
+      "nativeFollowingSpeedLimit": 0.06444444444444443,
+      "candidateFollowingSpeedLimit": 0.05882559503263503,
+      "nativeHeadwayTerm": 0.016,
+      "candidateHeadwayTerm": 0.021056964470628464
+    }
+  ],
+  "flowClassifications": [
+    {
+      "name": "sameFlow",
+      "nativeEligible": true,
+      "candidateEligible": true,
+      "nativeSeparationX": 0,
+      "candidateSeparationX": 0,
+      "nativeFrontCrowding": 0,
+      "candidateFrontCrowding": 0,
+      "sweptGuardExact": true,
+      "sample": {
+        "kind": "following",
+        "antId": "sameFlow-0",
+        "layers": 4,
+        "eligible": true,
+        "nativeFollowingSpeedLimit": 0.0644444444444445,
+        "candidateFollowingSpeedLimit": 0.0588255950326351,
+        "nativeHeadwayTerm": 0.016,
+        "candidateHeadwayTerm": 0.021056964470628464,
+        "changed": true,
+        "info": {
+          "separationX": 0,
+          "separationY": 0,
+          "frontCrowding": 0,
+          "leftCrowding": 0,
+          "rightCrowding": 0,
+          "followingSpeedLimit": 0.0644444444444445,
+          "neighbors": 1
+        },
+        "speedPhase": 3.141592653589793,
+        "hesitationRemaining": 0.4,
+        "personality": {
+          "preferredSpeed": 0.0975,
+          "pheromoneSensitivity": 1.6,
+          "exploration": 0.23,
+          "turnResponsiveness": 3.1,
+          "acceleration": 0.18,
+          "damping": 1.5,
+          "personalSpacing": 0.024
+        },
+        "resistanceEnabled": false
+      }
+    },
+    {
+      "name": "opposing",
+      "nativeEligible": false,
+      "candidateEligible": false,
+      "nativeSeparationX": -0.16955017301038025,
+      "candidateSeparationX": -0.16955017301038025,
+      "nativeFrontCrowding": 0.7738095238095235,
+      "candidateFrontCrowding": 0.7738095238095235,
+      "sweptGuardExact": true,
+      "sample": {
+        "kind": "following",
+        "antId": "opposing-0",
+        "layers": 4,
+        "eligible": false,
+        "nativeFollowingSpeedLimit": null,
+        "candidateFollowingSpeedLimit": null,
+        "nativeHeadwayTerm": 0.016,
+        "candidateHeadwayTerm": 0.021056964470628464,
+        "changed": false,
+        "info": {
+          "separationX": -0.16955017301038025,
+          "separationY": 0,
+          "frontCrowding": 0.7738095238095235,
+          "leftCrowding": 0.0012958203772772232,
+          "rightCrowding": 0.0012958203772772232,
+          "followingSpeedLimit": null,
+          "neighbors": 1
+        },
+        "speedPhase": 3.141592653589793,
+        "hesitationRemaining": 0.4,
+        "personality": {
+          "preferredSpeed": 0.0975,
+          "pheromoneSensitivity": 1.6,
+          "exploration": 0.23,
+          "turnResponsiveness": 3.1,
+          "acceleration": 0.18,
+          "damping": 1.5,
+          "personalSpacing": 0.024
+        },
+        "resistanceEnabled": false
+      }
+    },
+    {
+      "name": "stoppedAhead",
+      "nativeEligible": false,
+      "candidateEligible": false,
+      "nativeSeparationX": -0.16955017301038025,
+      "candidateSeparationX": -0.16955017301038025,
+      "nativeFrontCrowding": 0.547619047619047,
+      "candidateFrontCrowding": 0.547619047619047,
+      "sweptGuardExact": true,
+      "sample": {
+        "kind": "following",
+        "antId": "stoppedAhead-0",
+        "layers": 4,
+        "eligible": false,
+        "nativeFollowingSpeedLimit": null,
+        "candidateFollowingSpeedLimit": null,
+        "nativeHeadwayTerm": 0.016,
+        "candidateHeadwayTerm": 0.021056964470628464,
+        "changed": false,
+        "info": {
+          "separationX": -0.16955017301038025,
+          "separationY": 0,
+          "frontCrowding": 0.547619047619047,
+          "leftCrowding": 0.0012958203772772232,
+          "rightCrowding": 0.0012958203772772232,
+          "followingSpeedLimit": null,
+          "neighbors": 1
+        },
+        "speedPhase": 3.141592653589793,
+        "hesitationRemaining": 0.4,
+        "personality": {
+          "preferredSpeed": 0.0975,
+          "pheromoneSensitivity": 1.6,
+          "exploration": 0.23,
+          "turnResponsiveness": 3.1,
+          "acceleration": 0.18,
+          "damping": 1.5,
+          "personalSpacing": 0.024
+        },
+        "resistanceEnabled": false
+      }
+    },
+    {
+      "name": "emergencyClose",
+      "nativeEligible": false,
+      "candidateEligible": false,
+      "nativeSeparationX": -0.6973479367439723,
+      "candidateSeparationX": -0.6973479367439723,
+      "nativeFrontCrowding": 0.9047619047619045,
+      "candidateFrontCrowding": 0.9047619047619045,
+      "sweptGuardExact": true,
+      "sample": {
+        "kind": "following",
+        "antId": "emergencyClose-0",
+        "layers": 4,
+        "eligible": false,
+        "nativeFollowingSpeedLimit": null,
+        "candidateFollowingSpeedLimit": null,
+        "nativeHeadwayTerm": 0.016,
+        "candidateHeadwayTerm": 0.021056964470628464,
+        "changed": false,
+        "info": {
+          "separationX": -0.6973479367439723,
+          "separationY": 0,
+          "frontCrowding": 0.9047619047619045,
+          "leftCrowding": 0.08255939922654086,
+          "rightCrowding": 0.08255939922654086,
+          "followingSpeedLimit": null,
+          "neighbors": 1
+        },
+        "speedPhase": 3.141592653589793,
+        "hesitationRemaining": 0.4,
+        "personality": {
+          "preferredSpeed": 0.0975,
+          "pheromoneSensitivity": 1.6,
+          "exploration": 0.23,
+          "turnResponsiveness": 3.1,
+          "acceleration": 0.18,
+          "damping": 1.5,
+          "personalSpacing": 0.024
+        },
+        "resistanceEnabled": false
+      }
+    }
+  ],
+  "finalTargetGate": [
+    {
+      "kind": "following",
+      "stage": "final-target",
+      "antId": "target-false-0",
+      "layers": 4,
+      "eligible": true,
+      "nativeFollowingSpeedLimit": 0.06444444444444443,
+      "candidateFollowingSpeedLimit": 0.05882559503263503,
+      "actualFinalTargetSpeed": 0.003222222222222222,
+      "nativeDesiredSpeed": 0.003222222222222222,
+      "prospectiveDesiredSpeed": 0.0029412797516317514,
+      "prospectiveDesiredSpeedDelta": -0.0002809424705904704,
+      "nativeCapBinds": true,
+      "candidateCapBinds": true,
+      "actualMatchesNative": true,
+      "actualMatchesProspective": false,
+      "changed": true
+    },
+    {
+      "kind": "following",
+      "stage": "final-target",
+      "antId": "target-true-0",
+      "layers": 4,
+      "eligible": true,
+      "nativeFollowingSpeedLimit": 0.06444444444444443,
+      "candidateFollowingSpeedLimit": 0.05882559503263503,
+      "actualFinalTargetSpeed": 0.0029412797516317514,
+      "nativeDesiredSpeed": 0.003222222222222222,
+      "prospectiveDesiredSpeed": 0.0029412797516317514,
+      "prospectiveDesiredSpeedDelta": -0.0002809424705904704,
+      "nativeCapBinds": true,
+      "candidateCapBinds": true,
+      "actualMatchesNative": false,
+      "actualMatchesProspective": true,
+      "changed": true
+    }
+  ],
+  "probeScope": "Fixed same-state local response only; no natural-world run.",
+  "interpretation": "Authored candidate laws, not measured biology or traction. Candidate worlds require separate registration after actual-neutral leverage and material-binding gates."
+}

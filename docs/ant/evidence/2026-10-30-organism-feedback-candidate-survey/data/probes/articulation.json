@@ -1,0 +1,143 @@
+{
+  "law": "tau_gaster(L)=0.45*(1+0.5*(1-exp(-L/4))) seconds; turnSignal/head/antennae unchanged",
+  "sourceChain": "material layer count -> gaster yaw relaxation -> gaster rear source position -> GasterDeposition dab positions; thorax travel sets dose",
+  "trajectory": "same interior thorax path, angular schedule: straight 0-3s, +turn 3-6s, -turn 6-9s, sine 9-12.1s",
+  "runs": [
+    {
+      "hz": 30,
+      "control": {
+        "hz": 30,
+        "layers": 0,
+        "enabled": false,
+        "steps": 363,
+        "travelled": 0.43559999999999777,
+        "turningSamples": 266,
+        "pendingBeforeFlush": 0.0162,
+        "sourceDose": 1.9601999999999975,
+        "dabs": 73,
+        "changedPositionDabs": 73,
+        "finalRear": {
+          "x": 0.6810291529685845,
+          "y": 0.6480429045076064
+        }
+      },
+      "L4": {
+        "hz": 30,
+        "layers": 4,
+        "enabled": true,
+        "steps": 363,
+        "travelled": 0.43559999999999777,
+        "turningSamples": 266,
+        "pendingBeforeFlush": 0.0162,
+        "sourceDose": 1.9601999999999975,
+        "dabs": 73,
+        "changedPositionDabs": 73,
+        "finalRear": {
+          "x": 0.6810286983308532,
+          "y": 0.6480592948758038
+        }
+      },
+      "comparison": {
+        "sameThoraxTravel": true,
+        "sameAuthoredDose": true,
+        "sourceDoseControl": 1.9601999999999975,
+        "sourceDoseConditioned": 1.9601999999999975,
+        "native316FieldNodeCoefficientL1": 0.25639490131288767,
+        "maxNativeFieldNodeDelta": 0.015293093398213387,
+        "sameDabCount": true,
+        "gasterRearDisplacement": 0.000016396672379316467
+      }
+    },
+    {
+      "hz": 60,
+      "control": {
+        "hz": 60,
+        "layers": 0,
+        "enabled": false,
+        "steps": 726,
+        "travelled": 0.43559999999999505,
+        "turningSamples": 539,
+        "pendingBeforeFlush": 0.0162,
+        "sourceDose": 1.9601999999999977,
+        "dabs": 73,
+        "changedPositionDabs": 73,
+        "finalRear": {
+          "x": 0.681025555401073,
+          "y": 0.6479671652872216
+        }
+      },
+      "L4": {
+        "hz": 60,
+        "layers": 4,
+        "enabled": true,
+        "steps": 726,
+        "travelled": 0.43559999999999505,
+        "turningSamples": 539,
+        "pendingBeforeFlush": 0.0162,
+        "sourceDose": 1.9601999999999977,
+        "dabs": 73,
+        "changedPositionDabs": 73,
+        "finalRear": {
+          "x": 0.6810250149724367,
+          "y": 0.6479834367332549
+        }
+      },
+      "comparison": {
+        "sameThoraxTravel": true,
+        "sameAuthoredDose": true,
+        "sourceDoseControl": 1.9601999999999977,
+        "sourceDoseConditioned": 1.9601999999999977,
+        "native316FieldNodeCoefficientL1": 0.23308286629617214,
+        "maxNativeFieldNodeDelta": 0.015489364042878151,
+        "sameDabCount": true,
+        "gasterRearDisplacement": 0.00001628041827235992
+      }
+    },
+    {
+      "hz": 120,
+      "control": {
+        "hz": 120,
+        "layers": 0,
+        "enabled": false,
+        "steps": 1452,
+        "travelled": 0.43560000000001087,
+        "turningSamples": 1072,
+        "pendingBeforeFlush": 0.016200000000000003,
+        "sourceDose": 1.9601999999999977,
+        "dabs": 73,
+        "changedPositionDabs": 73,
+        "finalRear": {
+          "x": 0.6810259334287563,
+          "y": 0.6479134722448748
+        }
+      },
+      "L4": {
+        "hz": 120,
+        "layers": 4,
+        "enabled": true,
+        "steps": 1452,
+        "travelled": 0.43560000000001087,
+        "turningSamples": 1072,
+        "pendingBeforeFlush": 0.016200000000000003,
+        "sourceDose": 1.9601999999999977,
+        "dabs": 73,
+        "changedPositionDabs": 73,
+        "finalRear": {
+          "x": 0.6810253502175886,
+          "y": 0.6479297029157045
+        }
+      },
+      "comparison": {
+        "sameThoraxTravel": true,
+        "sameAuthoredDose": true,
+        "sourceDoseControl": 1.9601999999999977,
+        "sourceDoseConditioned": 1.9601999999999977,
+        "native316FieldNodeCoefficientL1": 0.3196121556684375,
+        "maxNativeFieldNodeDelta": 0.015480724163353443,
+        "sameDabCount": true,
+        "gasterRearDisplacement": 0.000016241145613761445
+      }
+    }
+  ],
+  "naturalLeverage": "not measured by this fixed-trajectory probe; attachArticulation on the real controller can record it via onSample"
+}
