@@ -9,3 +9,9 @@
 - **Next:** test Chemical Residence as one additional world-memory responsibility against the adopted speed/A/D production baseline.
 
 Adoption record: [evidence](../evidence/2026-10-30-material-feedback-ad-production-adoption/README.md) · candidate measurements: [REPORT](../evidence/2026-10-30-material-feedback-ad-production-candidate/REPORT.md)
+
+## Visual presentation follow-up
+
+- Pheromone/trail remains fully active in simulation state and causal consumers, but its renderer overlay now defaults **Off**.
+- The Pheromone debug checkbox remains available for explicit inspection; material remains default **On**.
+- This is renderer/UI presentation only; no pheromone, movement, recruitment, Plate-birth, or Residence law changed.
