@@ -1,0 +1,765 @@
+{
+  "authority": "301f0740c9fe2e0697e31a716f7226cb2112ede7",
+  "conditions": {
+    "seeds": [
+      "20261005",
+      "20261006",
+      "20261007"
+    ],
+    "ticks": 36000,
+    "stepSeconds": 0.016666666666666666,
+    "modelSeconds": 600,
+    "audio": "Off; no audio bridge or renderer",
+    "production": "exact authority source; default materialLocomotionResistance=true",
+    "observer": "read-only instance wrappers; original heading draw and all other random calls forwarded once"
+  },
+  "signal": {
+    "center": {
+      "x": 0.5,
+      "y": 0.72
+    },
+    "acceptedSpawnPositionRadius": 0.018,
+    "segmentMidpointAnnulus": {
+      "innerExclusive": 0.018,
+      "outerInclusive": 0.085
+    },
+    "realizedSpeedMinimumWorldUnitsPerSecond": 0.008,
+    "radialOutwardCriterion": "strictly increasing distance from center; equivalently midpoint radial dot segment displacement > 0",
+    "eligibleAntMinimum": 3,
+    "q": "equal-weight mean of eligible realized unit segment directions, one per live ant",
+    "unavailable": "N < 3 or R <= 1e-9",
+    "hypotheticalHalfSpread": "pi - (pi - 0.3) * R; diagnostics only"
+  },
+  "runs": [
+    {
+      "seed": "20261005",
+      "acceptedSpawns": 769,
+      "acceptedWithNAtLeast3": 138,
+      "availableSpawns": 138,
+      "availabilityPercent": 17.945383615084527,
+      "eligibleN": {
+        "distribution": [
+          {
+            "value": 0,
+            "count": 109
+          },
+          {
+            "value": 1,
+            "count": 288
+          },
+          {
+            "value": 2,
+            "count": 234
+          },
+          {
+            "value": 3,
+            "count": 119
+          },
+          {
+            "value": 4,
+            "count": 15
+          },
+          {
+            "value": 5,
+            "count": 4
+          }
+        ],
+        "statistics": {
+          "count": 769,
+          "min": 0,
+          "p10": 0,
+          "p25": 1,
+          "median": 1,
+          "mean": 1.5513654096228868,
+          "p75": 2,
+          "p90": 3,
+          "max": 5
+        }
+      },
+      "R": {
+        "statistics": {
+          "count": 138,
+          "min": 0.45729904644408853,
+          "p10": 0.6805198629418965,
+          "p25": 0.7418187702080997,
+          "median": 0.8384908376177224,
+          "mean": 0.8248742373768053,
+          "p75": 0.9170069029211075,
+          "p90": 0.9716652134618565,
+          "max": 0.997620768324858
+        },
+        "histogram": [
+          {
+            "lower": 0,
+            "upper": 0.1,
+            "count": 0
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.25,
+            "count": 0
+          },
+          {
+            "lower": 0.25,
+            "upper": 0.5,
+            "count": 1
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.75,
+            "count": 37
+          },
+          {
+            "lower": 0.75,
+            "upper": 0.9,
+            "count": 54
+          },
+          {
+            "lower": 0.9,
+            "upper": 1,
+            "count": 46
+          }
+        ]
+      },
+      "hypotheticalW": {
+        "statistics": {
+          "count": 138,
+          "min": 0.30676080724927157,
+          "p10": 0.3805159212678233,
+          "p25": 0.5358325749580453,
+          "median": 0.7480364988382529,
+          "mean": 0.7976360805243806,
+          "p75": 1.033645885871442,
+          "p90": 1.2078324104321672,
+          "max": 1.8421350427206535
+        },
+        "histogram": [
+          {
+            "lower": 0.3,
+            "upper": 0.7,
+            "count": 59
+          },
+          {
+            "lower": 0.7,
+            "upper": 1.2,
+            "count": 64
+          },
+          {
+            "lower": 1.2,
+            "upper": 1.8,
+            "count": 14
+          },
+          {
+            "lower": 1.8,
+            "upper": 2.4,
+            "count": 1
+          },
+          {
+            "lower": 2.4,
+            "upper": 3.141592653589793,
+            "count": 0
+          }
+        ]
+      },
+      "availableQDirection": {
+        "count": 138,
+        "meanDirectionRadians": -1.5612414349010253,
+        "circularConcentration": 0.9436796945436318
+      },
+      "windows": [
+        {
+          "window": "0-60",
+          "acceptedSpawns": 33,
+          "availableSpawns": 2,
+          "availabilityPercent": 6.0606060606060606
+        },
+        {
+          "window": "60-120",
+          "acceptedSpawns": 53,
+          "availableSpawns": 4,
+          "availabilityPercent": 7.547169811320755
+        },
+        {
+          "window": "120-180",
+          "acceptedSpawns": 77,
+          "availableSpawns": 7,
+          "availabilityPercent": 9.090909090909092
+        },
+        {
+          "window": "180-240",
+          "acceptedSpawns": 89,
+          "availableSpawns": 12,
+          "availabilityPercent": 13.48314606741573
+        },
+        {
+          "window": "240-300",
+          "acceptedSpawns": 89,
+          "availableSpawns": 14,
+          "availabilityPercent": 15.730337078651685
+        },
+        {
+          "window": "300-360",
+          "acceptedSpawns": 90,
+          "availableSpawns": 17,
+          "availabilityPercent": 18.88888888888889
+        },
+        {
+          "window": "360-420",
+          "acceptedSpawns": 88,
+          "availableSpawns": 18,
+          "availabilityPercent": 20.454545454545453
+        },
+        {
+          "window": "420-480",
+          "acceptedSpawns": 83,
+          "availableSpawns": 20,
+          "availabilityPercent": 24.096385542168676
+        },
+        {
+          "window": "480-540",
+          "acceptedSpawns": 81,
+          "availableSpawns": 22,
+          "availabilityPercent": 27.160493827160494
+        },
+        {
+          "window": "540-600",
+          "acceptedSpawns": 86,
+          "availableSpawns": 22,
+          "availabilityPercent": 25.58139534883721
+        }
+      ],
+      "availableWindowCount": 10,
+      "spawnContext": {
+        "initialCalls": 1,
+        "scheduledOpportunities": 784,
+        "nonRetryScheduledOpportunities": 768,
+        "blockedPlacementCalls": 16,
+        "retryCalls": 16,
+        "retryRecoveredSpawns": 11,
+        "capacitySuppressedCalls": 0,
+        "placementAttempts": 1719,
+        "clearanceRejectedPositions": 950,
+        "acceptedSpawnCalls": 769,
+        "regularScheduleWrites": 769,
+        "retryScheduleWrites": 16,
+        "pendingRetryAt600s": false,
+        "nextSpawnTimeMsAt600s": 600156.7986865825
+      },
+      "spawn": {
+        "initialCalls": 1,
+        "scheduledOpportunities": 784,
+        "nonRetryScheduledOpportunities": 768,
+        "blockedPlacementCalls": 16,
+        "retryCalls": 16,
+        "retryRecoveredSpawns": 11,
+        "capacitySuppressedCalls": 0,
+        "placementAttempts": 1719,
+        "clearanceRejectedPositions": 950,
+        "acceptedSpawnCalls": 769,
+        "regularScheduleWrites": 769,
+        "retryScheduleWrites": 16,
+        "pendingRetryAt600s": false,
+        "nextSpawnTimeMsAt600s": 600156.7986865825
+      }
+    },
+    {
+      "seed": "20261006",
+      "acceptedSpawns": 819,
+      "acceptedWithNAtLeast3": 127,
+      "availableSpawns": 127,
+      "availabilityPercent": 15.506715506715507,
+      "eligibleN": {
+        "distribution": [
+          {
+            "value": 0,
+            "count": 105
+          },
+          {
+            "value": 1,
+            "count": 274
+          },
+          {
+            "value": 2,
+            "count": 313
+          },
+          {
+            "value": 3,
+            "count": 107
+          },
+          {
+            "value": 4,
+            "count": 20
+          }
+        ],
+        "statistics": {
+          "count": 819,
+          "min": 0,
+          "p10": 0,
+          "p25": 1,
+          "median": 2,
+          "mean": 1.5885225885225884,
+          "p75": 2,
+          "p90": 3,
+          "max": 4
+        }
+      },
+      "R": {
+        "statistics": {
+          "count": 127,
+          "min": 0.5579638298644577,
+          "p10": 0.6864854409729686,
+          "p25": 0.7343364006695454,
+          "median": 0.8096632406820029,
+          "mean": 0.815165497566601,
+          "p75": 0.8924804438884002,
+          "p90": 0.9594150494450097,
+          "max": 0.9986497043803136
+        },
+        "histogram": [
+          {
+            "lower": 0,
+            "upper": 0.1,
+            "count": 0
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.25,
+            "count": 0
+          },
+          {
+            "lower": 0.25,
+            "upper": 0.5,
+            "count": 0
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.75,
+            "count": 37
+          },
+          {
+            "lower": 0.75,
+            "upper": 0.9,
+            "count": 61
+          },
+          {
+            "lower": 0.9,
+            "upper": 1,
+            "count": 29
+          }
+        ]
+      },
+      "hypotheticalW": {
+        "statistics": {
+          "count": 127,
+          "min": 0.3038369901130751,
+          "p10": 0.41532589734336556,
+          "p25": 0.6055267807639573,
+          "median": 0.8408595369861089,
+          "mean": 0.8252243642446708,
+          "p75": 1.0549077321836418,
+          "p90": 1.190880667724656,
+          "max": 1.5560867336781248
+        },
+        "histogram": [
+          {
+            "lower": 0.3,
+            "upper": 0.7,
+            "count": 44
+          },
+          {
+            "lower": 0.7,
+            "upper": 1.2,
+            "count": 72
+          },
+          {
+            "lower": 1.2,
+            "upper": 1.8,
+            "count": 11
+          },
+          {
+            "lower": 1.8,
+            "upper": 2.4,
+            "count": 0
+          },
+          {
+            "lower": 2.4,
+            "upper": 3.141592653589793,
+            "count": 0
+          }
+        ]
+      },
+      "availableQDirection": {
+        "count": 127,
+        "meanDirectionRadians": -1.572448571653811,
+        "circularConcentration": 0.9429956568209475
+      },
+      "windows": [
+        {
+          "window": "0-60",
+          "acceptedSpawns": 45,
+          "availableSpawns": 0,
+          "availabilityPercent": 0
+        },
+        {
+          "window": "60-120",
+          "acceptedSpawns": 79,
+          "availableSpawns": 6,
+          "availabilityPercent": 7.594936708860759
+        },
+        {
+          "window": "120-180",
+          "acceptedSpawns": 92,
+          "availableSpawns": 16,
+          "availabilityPercent": 17.391304347826086
+        },
+        {
+          "window": "180-240",
+          "acceptedSpawns": 86,
+          "availableSpawns": 10,
+          "availabilityPercent": 11.627906976744185
+        },
+        {
+          "window": "240-300",
+          "acceptedSpawns": 89,
+          "availableSpawns": 12,
+          "availabilityPercent": 13.48314606741573
+        },
+        {
+          "window": "300-360",
+          "acceptedSpawns": 86,
+          "availableSpawns": 15,
+          "availabilityPercent": 17.441860465116278
+        },
+        {
+          "window": "360-420",
+          "acceptedSpawns": 86,
+          "availableSpawns": 20,
+          "availabilityPercent": 23.25581395348837
+        },
+        {
+          "window": "420-480",
+          "acceptedSpawns": 83,
+          "availableSpawns": 15,
+          "availabilityPercent": 18.072289156626507
+        },
+        {
+          "window": "480-540",
+          "acceptedSpawns": 87,
+          "availableSpawns": 14,
+          "availabilityPercent": 16.091954022988507
+        },
+        {
+          "window": "540-600",
+          "acceptedSpawns": 86,
+          "availableSpawns": 19,
+          "availabilityPercent": 22.093023255813954
+        }
+      ],
+      "availableWindowCount": 9,
+      "spawnContext": {
+        "initialCalls": 1,
+        "scheduledOpportunities": 830,
+        "nonRetryScheduledOpportunities": 818,
+        "blockedPlacementCalls": 12,
+        "retryCalls": 12,
+        "retryRecoveredSpawns": 10,
+        "capacitySuppressedCalls": 0,
+        "placementAttempts": 1754,
+        "clearanceRejectedPositions": 935,
+        "acceptedSpawnCalls": 819,
+        "regularScheduleWrites": 819,
+        "retryScheduleWrites": 12,
+        "pendingRetryAt600s": false,
+        "nextSpawnTimeMsAt600s": 600294.6293886043
+      },
+      "spawn": {
+        "initialCalls": 1,
+        "scheduledOpportunities": 830,
+        "nonRetryScheduledOpportunities": 818,
+        "blockedPlacementCalls": 12,
+        "retryCalls": 12,
+        "retryRecoveredSpawns": 10,
+        "capacitySuppressedCalls": 0,
+        "placementAttempts": 1754,
+        "clearanceRejectedPositions": 935,
+        "acceptedSpawnCalls": 819,
+        "regularScheduleWrites": 819,
+        "retryScheduleWrites": 12,
+        "pendingRetryAt600s": false,
+        "nextSpawnTimeMsAt600s": 600294.6293886043
+      }
+    },
+    {
+      "seed": "20261007",
+      "acceptedSpawns": 790,
+      "acceptedWithNAtLeast3": 137,
+      "availableSpawns": 137,
+      "availabilityPercent": 17.341772151898734,
+      "eligibleN": {
+        "distribution": [
+          {
+            "value": 0,
+            "count": 99
+          },
+          {
+            "value": 1,
+            "count": 281
+          },
+          {
+            "value": 2,
+            "count": 273
+          },
+          {
+            "value": 3,
+            "count": 120
+          },
+          {
+            "value": 4,
+            "count": 17
+          }
+        ],
+        "statistics": {
+          "count": 790,
+          "min": 0,
+          "p10": 0,
+          "p25": 1,
+          "median": 2,
+          "mean": 1.5886075949367089,
+          "p75": 2,
+          "p90": 3,
+          "max": 4
+        }
+      },
+      "R": {
+        "statistics": {
+          "count": 137,
+          "min": 0.4397716901917388,
+          "p10": 0.6258352961684969,
+          "p25": 0.7247477130957807,
+          "median": 0.8082659718622063,
+          "mean": 0.8045466497128744,
+          "p75": 0.8963514738671796,
+          "p90": 0.9606842371353257,
+          "max": 0.9986499438927772
+        },
+        "histogram": [
+          {
+            "lower": 0,
+            "upper": 0.1,
+            "count": 0
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.25,
+            "count": 0
+          },
+          {
+            "lower": 0.25,
+            "upper": 0.5,
+            "count": 3
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.75,
+            "count": 39
+          },
+          {
+            "lower": 0.75,
+            "upper": 0.9,
+            "count": 61
+          },
+          {
+            "lower": 0.9,
+            "upper": 1,
+            "count": 34
+          }
+        ]
+      },
+      "hypotheticalW": {
+        "statistics": {
+          "count": 137,
+          "min": 0.30383630951621843,
+          "p10": 0.41171938292653687,
+          "p25": 0.5945268904144321,
+          "median": 0.8448300057995333,
+          "mean": 0.8553988042954087,
+          "p75": 1.0821548763508195,
+          "p90": 1.3632236736402,
+          "max": 1.8919406494841817
+        },
+        "histogram": [
+          {
+            "lower": 0.3,
+            "upper": 0.7,
+            "count": 50
+          },
+          {
+            "lower": 0.7,
+            "upper": 1.2,
+            "count": 66
+          },
+          {
+            "lower": 1.2,
+            "upper": 1.8,
+            "count": 20
+          },
+          {
+            "lower": 1.8,
+            "upper": 2.4,
+            "count": 1
+          },
+          {
+            "lower": 2.4,
+            "upper": 3.141592653589793,
+            "count": 0
+          }
+        ]
+      },
+      "availableQDirection": {
+        "count": 137,
+        "meanDirectionRadians": -1.573763833699376,
+        "circularConcentration": 0.9432481537202408
+      },
+      "windows": [
+        {
+          "window": "0-60",
+          "acceptedSpawns": 39,
+          "availableSpawns": 1,
+          "availabilityPercent": 2.5641025641025643
+        },
+        {
+          "window": "60-120",
+          "acceptedSpawns": 56,
+          "availableSpawns": 3,
+          "availabilityPercent": 5.357142857142857
+        },
+        {
+          "window": "120-180",
+          "acceptedSpawns": 81,
+          "availableSpawns": 12,
+          "availabilityPercent": 14.814814814814815
+        },
+        {
+          "window": "180-240",
+          "acceptedSpawns": 94,
+          "availableSpawns": 17,
+          "availabilityPercent": 18.085106382978722
+        },
+        {
+          "window": "240-300",
+          "acceptedSpawns": 87,
+          "availableSpawns": 16,
+          "availabilityPercent": 18.39080459770115
+        },
+        {
+          "window": "300-360",
+          "acceptedSpawns": 85,
+          "availableSpawns": 19,
+          "availabilityPercent": 22.352941176470587
+        },
+        {
+          "window": "360-420",
+          "acceptedSpawns": 90,
+          "availableSpawns": 16,
+          "availabilityPercent": 17.77777777777778
+        },
+        {
+          "window": "420-480",
+          "acceptedSpawns": 83,
+          "availableSpawns": 20,
+          "availabilityPercent": 24.096385542168676
+        },
+        {
+          "window": "480-540",
+          "acceptedSpawns": 87,
+          "availableSpawns": 19,
+          "availabilityPercent": 21.839080459770116
+        },
+        {
+          "window": "540-600",
+          "acceptedSpawns": 88,
+          "availableSpawns": 14,
+          "availabilityPercent": 15.909090909090908
+        }
+      ],
+      "availableWindowCount": 10,
+      "spawnContext": {
+        "initialCalls": 1,
+        "scheduledOpportunities": 800,
+        "nonRetryScheduledOpportunities": 789,
+        "blockedPlacementCalls": 11,
+        "retryCalls": 11,
+        "retryRecoveredSpawns": 9,
+        "capacitySuppressedCalls": 0,
+        "placementAttempts": 1587,
+        "clearanceRejectedPositions": 797,
+        "acceptedSpawnCalls": 790,
+        "regularScheduleWrites": 790,
+        "retryScheduleWrites": 11,
+        "pendingRetryAt600s": false,
+        "nextSpawnTimeMsAt600s": 600729.4545311928
+      },
+      "spawn": {
+        "initialCalls": 1,
+        "scheduledOpportunities": 800,
+        "nonRetryScheduledOpportunities": 789,
+        "blockedPlacementCalls": 11,
+        "retryCalls": 11,
+        "retryRecoveredSpawns": 9,
+        "capacitySuppressedCalls": 0,
+        "placementAttempts": 1587,
+        "clearanceRejectedPositions": 797,
+        "acceptedSpawnCalls": 790,
+        "regularScheduleWrites": 790,
+        "retryScheduleWrites": 11,
+        "pendingRetryAt600s": false,
+        "nextSpawnTimeMsAt600s": 600729.4545311928
+      }
+    }
+  ],
+  "parity": {
+    "seed": "20261005",
+    "result": "PASS",
+    "comparedTicks": 36000,
+    "comparedRngBoundaries": 36000,
+    "comparedPerTickAgentStates": 36000,
+    "fullPublicSnapshotChecks": 600,
+    "initialPublicSnapshotCheck": true,
+    "finalRngCalls": 346460,
+    "observerRandomForwardCalls": 14097,
+    "observedAcceptedSpawns": 769,
+    "note": "Plain production controller vs observer-wrapped controller, same seed, lockstep 1/60-second ticks."
+  },
+  "authoredGate": {
+    "perSeedMinimumAvailabilityPercent": 10,
+    "perSeedMinimumSupportedWindows": 8,
+    "decision": "GO",
+    "perSeed": [
+      {
+        "seed": "20261005",
+        "availabilityPass": true,
+        "supportWindowsPass": true,
+        "pass": true,
+        "availabilityPercent": 17.945383615084527,
+        "availableWindows": 10
+      },
+      {
+        "seed": "20261006",
+        "availabilityPass": true,
+        "supportWindowsPass": true,
+        "pass": true,
+        "availabilityPercent": 15.506715506715507,
+        "availableWindows": 9
+      },
+      {
+        "seed": "20261007",
+        "availabilityPass": true,
+        "supportWindowsPass": true,
+        "pass": true,
+        "availabilityPercent": 17.341772151898734,
+        "availableWindows": 10
+      }
+    ]
+  },
+  "nextComparison": "CONTROL: isotropic accepted-spawn heading; TREATMENT: outgoing-flow q when available, isotropic fallback otherwise."
+}
