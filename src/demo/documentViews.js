@@ -145,7 +145,7 @@ export const documentViews = {
         <label><input type="checkbox" data-ant-overlay="plateOutlines"> Plate outlines</label>
         <label><input type="checkbox" data-ant-overlay="plateCenterlines"> Plate centerlines</label>
         <label><input type="checkbox" data-ant-overlay="platePickups"> Plate pickups</label>
-        <label><input type="checkbox" data-ant-overlay="pheromone" checked> Pheromone</label>
+        <label><input type="checkbox" data-ant-overlay="pheromone"> Pheromone</label>
         <label><input type="checkbox" data-ant-overlay="material" checked> Material</label>
       </fieldset>
       <table class="ant-debug-table"><caption>Material / audio status</caption><tbody>
