@@ -159,7 +159,7 @@ try {
   await capture(repeat.found ? 'natural-repeat-candidate' : 'no-repeat-at-limit');
   const nodule = await advanceTo('nodule');
   await capture(nodule.found ? 'natural-nodule' : 'no-nodule-at-limit');
-  for (const key of overlayKeys) await page.locator(`[data-ant-overlay="${key}"]`).setChecked(['pheromone', 'material'].includes(key));
+  for (const key of overlayKeys) await page.locator(`[data-ant-overlay="${key}"]`).setChecked(['material'].includes(key));
   await page.setViewportSize({ width: 390, height: 844 });
   const layout = await page.evaluate(() => ({ viewport: innerWidth, document: document.documentElement.scrollWidth }));
   assert.ok(layout.document <= layout.viewport, 'expanded mobile debug panel fits viewport');
