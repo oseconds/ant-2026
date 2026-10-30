@@ -612,6 +612,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 - Reused frozen N/A/D current-G/H0 evidence and ran one new AD world; direct same-state turn and following-target effects remained distinct and co-occurred without a shared material mode
 - Decision: COMPLEMENTARY at direct-consumer level only; no production adoption, candidate sweep, additional seed, or audio pass
 
+### 2026-10-30 — Material feedback surface vs accumulated depth
+
+[2026-10-30-material-feedback-surface-vs-depth.md](./2026-10-30-material-feedback-surface-vs-depth.md) · [full evidence](../evidence/2026-10-30-material-feedback-surface-vs-depth/REPORT.md)
+
+- Ran one registered AD-S world and paired the accumulated-L and exposed-surface A/D calculations on the same consumer states; frozen N and AD-L were reused
+- L=1 matched exactly, while high-L A turn response and D target changes remained larger under the depth law
+- Decision: DEPTH-SENSITIVE for the registered candidate laws; no production adoption or residence conclusion
+
 ## Logging rule
 
 새 과정 로그는 `YYYY-MM-DD-topic.md` 형식으로 추가한다.

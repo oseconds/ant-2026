@@ -1,0 +1,16 @@
+{
+  "attempt": 1,
+  "status": "INCOMPLETE_OBSERVER_ASSERTION",
+  "arm": "AD-S",
+  "seed": 20261005,
+  "modelSecondsCompleted": 0,
+  "tickReached": 1,
+  "failure": "AD-S actual rate equals its same-state surface shadow: native identity-turn rate 4.5 differed by floating-point rounding from a recomputed 4.499999999999957.",
+  "cause": "observer parity assertion used a second angle-difference calculation for the exact factor-1 native case",
+  "treatmentInterpretationAllowed": false,
+  "productionOrFrozenInputChanged": false,
+  "completeWorldArtifactsProduced": false,
+  "partialProvenancePath": "data/attempts/attempt-01/PROVENANCE.partial.json",
+  "repair": "For factor 1, use the native method's stored angularVelocity; retain the same calculation as the actual surface wrapper for conditioned factors.",
+  "rerun": "One full AD-S treatment will be rerun from its deterministic initial state after this instrumentation-only correction."
+}

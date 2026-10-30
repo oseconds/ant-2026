@@ -1,0 +1,9 @@
+{
+  "attempt": 1,
+  "status": "ANALYSIS_SHAPE_MISMATCH",
+  "treatmentRunComplete": true,
+  "failure": "analysis requested footGrid from frozen N/AD-L auxiliary packets, which retain individual feet instead",
+  "impact": "analysis stopped before ANALYSIS.json was written; full AD-S run-summary, raw positions/contacts, checkpoints, auxiliary direct samples, and opportunity frames were saved",
+  "repair": "Rasterize frozen N/AD-L individual FOOT_CONTACT coordinates using the same 96x96 nearest-cell rule, then compare with the AD-S count grid.",
+  "simulationRerun": false
+}

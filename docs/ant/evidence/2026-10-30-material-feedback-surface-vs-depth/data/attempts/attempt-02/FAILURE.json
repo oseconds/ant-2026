@@ -1,0 +1,16 @@
+{
+  "attempt": 2,
+  "status": "INCOMPLETE_OBSERVER_ASSERTION",
+  "arm": "AD-S",
+  "seed": 20261005,
+  "modelSecondsCompleted": 0,
+  "tickReached": 1,
+  "failure": "surface following headway matches the applied arm: helper returned 0.027256810102639206 while the observer recomputed 0.027256810102639202.",
+  "cause": "observer grouped floating-point multiplication as speed*0.4*headwayFactor instead of speed*(0.4*headwayFactor), unlike the existing helper",
+  "treatmentInterpretationAllowed": false,
+  "productionOrFrozenInputChanged": false,
+  "completeWorldArtifactsProduced": false,
+  "partialProvenancePath": "data/attempts/attempt-02/PROVENANCE.partial.json",
+  "repair": "Use the helper's exact arithmetic order for the candidate surface comfort term.",
+  "rerun": "One full AD-S treatment will be rerun from its deterministic initial state after this instrumentation-only correction."
+}
