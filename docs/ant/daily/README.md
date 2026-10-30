@@ -14,6 +14,13 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-30 — Material information axes
+
+[Process log](./2026-10-30-material-information-axes.md) · [Report, provenance and data](../evidence/2026-10-30-material-information-axes/REPORT.md)
+
+- `MULTI-AXIS`: layer count nearly determines depth, but not exposed birth properties, age, current compaction or cumulative use at organism read points
+- Candidate material feedback axes remain unassigned; no treatment or production change
+
 ### 2026-10-30 — Deferred organism-feedback survey C–G
 
 [Process log](./2026-10-30-organism-feedback-candidate-survey.md) · [Research report and data](../evidence/2026-10-30-organism-feedback-candidate-survey/README.md)
