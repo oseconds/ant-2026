@@ -11,7 +11,7 @@ const directory = resolve('docs/ant/evidence/2026-10-07-base-substrate-debug/pla
 const seed = 20261005;
 const defaults = { surface: false, candidate: false, source: false, exposure: false,
   plateIds: false, plateOutlines: false, plateCenterlines: false, platePickups: false,
-  pheromone: true, material: true };
+  pheromone: false, material: true };
 const server = production
   ? await preview({ preview: { host: '127.0.0.1', port: 0 }, logLevel: 'error' })
   : await createServer({ server: { host: '127.0.0.1', port: 0 }, logLevel: 'error' });
