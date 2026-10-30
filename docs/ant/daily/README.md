@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-30 — Neutral material-to-organism feedback discovery
+
+[Process log](./2026-10-30-material-organism-feedback-discovery.md) · [Report, data and atlas](../evidence/2026-10-30-material-organism-feedback-discovery/README.md)
+
+- Slowdown Off / residence Off control; independent turn-rate and stride/contact probes followed by one world each
+- A **PROMISING** angular maneuverability; B **MIXED** contact/C/D effect with exact traffic and layer-count return null
+- Stop discovery; recommend separate A+10% interaction. No adoption or direct colony control
+
 ### 2026-10-30 — Material-conditioned residence locality control
 
 [Process log](./2026-10-30-material-chemical-residence-locality.md) · [Report and mass-matched receipts](../evidence/2026-10-30-material-chemical-residence-locality/README.md)

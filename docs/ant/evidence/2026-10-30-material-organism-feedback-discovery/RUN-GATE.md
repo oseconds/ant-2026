@@ -1,0 +1,13 @@
+# Neutral-history leverage gate before candidate worlds
+
+The fixed motor/contact probes and10 focused tests pass. Final native calibration reproduces original raw/five checkpoint bytes and40late B/C/D/E/F/S/material anchors. The new slowdown-Off/residence-Off neutral control reproduces raw, auxiliary and five checkpoint bytes exactly; its full saved summary matches after JSON serialization and exclusion of wall-clock duration. Source/input receipts are checked before candidates and analysis.
+
+At this point **no candidate world has been run**. The fixed neutral history has644,449 turn calls, including427,974 on material. A prospective same-state cap calculation predicts423,432 material calls would change under the registered A cap (98.94% of exposed calls). Material exposure is66.41% of calls. This is substantial actual availability, not a signal discovered only in reversing-target fixtures. It does not show that slower turning is good, or that a coupled world will have the same targets/RNG schedule. Native cap-binding is frequent; this is specifically a rate-ceiling intervention at60Hz, not evidence of physical inertia or time-step-independent mechanics.
+
+Promote A once to the independent600s world. Preserve the target law and scalar source rate. Recognize existing body-pose/Gaster geometry as a parallel descendant path; do not claim chemical outcomes are mediated only by thorax trajectories.
+
+The same actual exposure also supplies B's input availability. Its interior fixed-path probe produced20/24/27 contact groups at L0/L4/L100 for identical.36-world-unit travel, preserving native strength and phase. Promote B once **after A has been analyzed**, independently against the same neutral control. Expect an exact motor/chemistry/recruitment null from the source audit, while measuring whether changed contact history reaches C/D/formation/material. Do not tune if it does not.
+
+The baseline's existence is not candidate success. No threshold, candidate amplitude, source/lifecycle, allocation/X, UPDATE or BODY parameter changed. These two contrasts answer different questions; no C/D/E/F candidate is automatically escalated.
+
+Two validation issues occurred before this gate: stored E/F/S index-list normalization, and live-undefined versus stored-JSON summary comparison. A concurrent validator/source receipt update also excluded one calibration from promotion. Source snapshots, output hashes and retained unique outputs are under `data/attempts/`. None changed a physical parameter, seed, duration or selected a preferred natural case. Final promoted calibration/control use one frozen code version and immutable input receipts.

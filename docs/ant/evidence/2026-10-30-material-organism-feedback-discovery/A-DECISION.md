@@ -1,0 +1,9 @@
+# A decision before B execution
+
+The registered A world completed on the neutral control, with no residence or10% slowdown. The first actual differing turn uses the same requested target and true dt at L1: native4.5 versus4.00230176rad/s. There are393,105 matched-current-state turn calls changed by the cap. First sampled position divergence is85s. No finite, overlap or population-ceiling violation is reported by the native runner.
+
+Relative to neutral,600s travel is616.7305 to621.5402 (+.78%), source accepted dose8364.092 to8428.191 (+.77%), active-ant seconds10740.82 to10579.98 (−1.50%), admissions792 to797, feet101836 to102496, Plates38 to36. Final activation changes .82730 to.81611, both with final recruitment limit24. The full activation/population timelines and E/F/material maps are saved; these final values alone are not the collective evidence.
+
+**Provisional PROMISING distinct organism/world responsibility**, pending final artifact/interpretation review. It changes angular maneuverability and subsequent environmental history without direct destination, source-rate or colony command and without blanket activity suppression. Frequent native cap binding means this remains specifically a60Hz rate-ceiling intervention, not measured physical inertia. Chemistry can change through both movement and existing body-articulation/Gaster geometry; no single mediator attribution is made. Small admissions differences are not called strong colony amplification.
+
+B is still informative as a different high-priority body responsibility already admitted at the cheap gate: it should alter contact sequence without any traffic/chemistry/recruitment change in the neutral world. Execute that one independent contrast next; do not stack A, slowdowns or residence. Then stop adding organism candidates. No amplitude tuning or interaction run is implied.
