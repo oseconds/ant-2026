@@ -1,0 +1,1028 @@
+{
+  "schema": "ant-material-chemical-residence-probe-v1",
+  "sourceCommit": "afea7ec",
+  "productionAuthority": "4135d4fb4ab8ec5d46297893fbc9c1c5f4f3e785",
+  "replayCorrections": [
+    {
+      "initialAssertion": "projected field map length 99856 !== saved map length 9216",
+      "cause": "Frozen maps are exact 96x96 bilinear projections of the 316x316 native field.",
+      "correction": "Verifier now samples native field values at each saved 96-grid coordinate; all five projected maps match exactly."
+    },
+    {
+      "initialAssertion": "reconstructed integral 0.012360094191302975 !== 0.012360094191302977",
+      "cause": "Verifier divided by grid area; source computes weighted sum multiplied by hx then hy.",
+      "correction": "Verifier now follows that operation order; all five native integrals match exactly."
+    }
+  ],
+  "inputs": {
+    "pairedInputSha256": "4bad89763aa226cc113413a30002f35d949caefed0e6e6fde2e1ac6026194a4c",
+    "emissionsSha256": "c465157d4ed1f16305b750533db518b72c2789848ff43ec99a75e8305322fb60",
+    "sourceHashes": {
+      "src/lib/agents/ant/AntController.js": "b5a6344ebed52962a1749d612b0140b6a4249817f159758e13f166877078e9f4",
+      "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+      "src/lib/agents/ant/PheromoneField.js": "b68e98b5d916950487da67237a0d0277451d3b930971c1d8a35e92fd7d6f9837",
+      "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+      "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+      "src/lib/agents/ant/BodyPoseController.js": "2ec4cc12c12ae301ea07056889c3be9255b1b1e155b7724cd3366278d60ace8e",
+      "src/lib/agents/ant/LocalOccupancy.js": "df22dd38e9af8078ebcb1d225ca2a5eaf579e994d2d4a00ce9ceeefa2403ff16",
+      "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd",
+      "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+      "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+      "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+      "scripts/ant-g-production-candidate-natural.js": "31d3d8d416b119831a6e345c47a2d11c207399cd245d9fca42c2110d9bb72e02",
+      "scripts/ant-late-qualified-opportunity-capture.js": "1db93678cd6ba88f3d9ee97f3ef8013d88a130173d07370060e6f315cbb6d921",
+      "scripts/ant-opportunity-core.js": "5d72d09f77e6384a55baaaef548c0247dc12159c8346d261a68da7651125a034",
+      "scripts/ant-material-pheromone-attenuation-screen.js": "e339fb1e634ad07ad866aaa0ded58ad170a627869a5973e44455fd10ed7d7c81",
+      "scripts/ant-material-feedback-screen-analysis.js": "f5ee18ba3e6be08cef2cdf5058c7e59cb5b9701d8e4d4d67d0fe6dec1b7e1019",
+      "tests/ant-material-pheromone-attenuation-screen.test.js": "d6b8ec1d9c227675fc3b36d37978549650e2c110e353e95cfcde7b693602d3f5"
+    }
+  },
+  "protocol": {
+    "tickHz": 60,
+    "ticks": 36000,
+    "decayThenFrozenWrites": true,
+    "material": "actual births at tick entry; nearest 96-grid layer count",
+    "countermodel": "lambda=ln(2)/15 * (1 - 0.5*(1-exp(-L/4)))",
+    "noAgentFeedback": true,
+    "prospectiveReadout": "native senseLocalTrail at all saved post-tick 1Hz positions/headings; these are matched-state readouts, not original pre-move inputs or motor outcomes",
+    "sourceContext": "exact native sample points; aggregate positive bilinear 316-grid node weights, last source-kernel write ages, and tick-entry material layer counts; 15s age reference is descriptive",
+    "oldMaterialOnlyReadout": "same saved poses; positive material nodes with last actual kernel contribution age >=15s; all other nodes masked to zero",
+    "eligibility": "native B>=0.30 and fixed saved control D>=0.015; no formation or selector feedback"
+  },
+  "summary": {
+    "status": "COMPLETE",
+    "controlParity": "exact maps, nodeSum, integral and 40 B-memory maps",
+    "checkpoints": [
+      {
+        "seconds": 30,
+        "control": {
+          "nodeSum": 542.9318113311892,
+          "reconstructedIntegral": 0.005471723974111255
+        },
+        "candidate": {
+          "nodeSum": 542.9318113311892,
+          "reconstructedIntegral": 0.005471723974111255
+        },
+        "candidateMax": 0.8530722260475159,
+        "controlMax": 0.8530722260475159
+      },
+      {
+        "seconds": 60,
+        "control": {
+          "nodeSum": 1226.5031900635367,
+          "reconstructedIntegral": 0.012360094191302977
+        },
+        "candidate": {
+          "nodeSum": 1226.5031900635367,
+          "reconstructedIntegral": 0.012360094191302977
+        },
+        "candidateMax": 0.9827208518981934,
+        "controlMax": 0.9827208518981934
+      },
+      {
+        "seconds": 120,
+        "control": {
+          "nodeSum": 2495.819457225184,
+          "reconstructedIntegral": 0.0251454008842228
+        },
+        "candidate": {
+          "nodeSum": 2560.806407871335,
+          "reconstructedIntegral": 0.025800340734686542
+        },
+        "candidateMax": 1.6576365232467651,
+        "controlMax": 1.6576365232467651
+      },
+      {
+        "seconds": 300,
+        "control": {
+          "nodeSum": 3788.8208904433623,
+          "reconstructedIntegral": 0.03818307966921007
+        },
+        "candidate": {
+          "nodeSum": 5080.596387329418,
+          "reconstructedIntegral": 0.051201268952368255
+        },
+        "candidateMax": 1.8537180423736572,
+        "controlMax": 1.8172587156295776
+      },
+      {
+        "seconds": 600,
+        "control": {
+          "nodeSum": 3626.436696460703,
+          "reconstructedIntegral": 0.03654557914048546
+        },
+        "candidate": {
+          "nodeSum": 6292.481925315732,
+          "reconstructedIntegral": 0.06341298434443805
+        },
+        "candidateMax": 1.4632177352905273,
+        "controlMax": 1.0816128253936768
+      }
+    ],
+    "memoryParity": [
+      {
+        "tick": 16801,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.3377838134765625
+      },
+      {
+        "tick": 16861,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.33835381269454956
+      },
+      {
+        "tick": 16921,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.33876389265060425
+      },
+      {
+        "tick": 16981,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.3390160799026489
+      },
+      {
+        "tick": 17041,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.33911263942718506
+      },
+      {
+        "tick": 17101,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.3390560746192932
+      },
+      {
+        "tick": 17161,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.33884894847869873
+      },
+      {
+        "tick": 17221,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.3384940028190613
+      },
+      {
+        "tick": 17281,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.33799421787261963
+      },
+      {
+        "tick": 17341,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.3373526930809021
+      },
+      {
+        "tick": 17401,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.3365725874900818
+      },
+      {
+        "tick": 17461,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.3356572389602661
+      },
+      {
+        "tick": 17521,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.3350960612297058
+      },
+      {
+        "tick": 17581,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.3361213803291321
+      },
+      {
+        "tick": 17641,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.3369816839694977
+      },
+      {
+        "tick": 17701,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.3376784324645996
+      },
+      {
+        "tick": 17761,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.33821338415145874
+      },
+      {
+        "tick": 17821,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.3385883569717407
+      },
+      {
+        "tick": 17881,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.33919477462768555
+      },
+      {
+        "tick": 17941,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.34070199728012085
+      },
+      {
+        "tick": 34796,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.48484453558921814
+      },
+      {
+        "tick": 34857,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.4754805564880371
+      },
+      {
+        "tick": 34918,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.4765337109565735
+      },
+      {
+        "tick": 34979,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.4570333659648895
+      },
+      {
+        "tick": 35040,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.45439866185188293
+      },
+      {
+        "tick": 35101,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.45205485820770264
+      },
+      {
+        "tick": 35162,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.4532500207424164
+      },
+      {
+        "tick": 35223,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.45457860827445984
+      },
+      {
+        "tick": 35284,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.45575037598609924
+      },
+      {
+        "tick": 35345,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.4567645788192749
+      },
+      {
+        "tick": 35406,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.4576209783554077
+      },
+      {
+        "tick": 35467,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.45831942558288574
+      },
+      {
+        "tick": 35528,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.4588601887226105
+      },
+      {
+        "tick": 35589,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.4592437744140625
+      },
+      {
+        "tick": 35650,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.45947110652923584
+      },
+      {
+        "tick": 35711,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.4595430791378021
+      },
+      {
+        "tick": 35772,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.4594610333442688
+      },
+      {
+        "tick": 35833,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.45922648906707764
+      },
+      {
+        "tick": 35894,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.45884108543395996
+      },
+      {
+        "tick": 35955,
+        "id": "trail-plate-1",
+        "controlMaxAbsError": 0,
+        "candidateMaxAbsDeltaFromControl": 0.4583067297935486
+      }
+    ],
+    "sourceRows": 100882,
+    "positionRows": 10880,
+    "prospectiveReadoutCount": 10880,
+    "lastWriteAgeSeconds": {
+      "count": 73487,
+      "min": 0,
+      "p10": 8.016666666666666,
+      "median": 81.26666666666667,
+      "p90": 346.1166666666667,
+      "max": 598.4833333333333,
+      "mean": 129.22935008913237
+    },
+    "lastWriteNativeResponse": {
+      "count": 73487,
+      "min": 9.755233089141589e-13,
+      "p10": 1.132139880286413e-7,
+      "median": 0.023393024682049537,
+      "p90": 0.6904244953987153,
+      "max": 1,
+      "mean": 0.18247269935109597
+    },
+    "quietOver15SecondsFraction": 0.8447344428266224,
+    "prospectiveStrengthControl": {
+      "count": 10880,
+      "min": 0,
+      "p10": 0.0000028626812193100868,
+      "median": 0.9955522104254362,
+      "p90": 0.9998826022963443,
+      "max": 0.9999984528973864,
+      "mean": 0.7689085038884614
+    },
+    "prospectiveStrengthResidence": {
+      "count": 10880,
+      "min": 0,
+      "p10": 0.00002770059983564952,
+      "median": 0.9983263460319954,
+      "p90": 0.9999438890269365,
+      "max": 0.9999984528973864,
+      "mean": 0.8053979373918607
+    },
+    "prospectiveStrengthDelta": {
+      "count": 10880,
+      "min": 0,
+      "p10": 0,
+      "median": 0.00025334319454628496,
+      "p90": 0.07112092440044038,
+      "max": 0.9390068710687957,
+      "mean": 0.03648943350339859
+    },
+    "prospectiveSteeringDelta": {
+      "count": 10880,
+      "min": -0.3339393797588012,
+      "p10": -0.04419871142583853,
+      "median": 0,
+      "p90": 0.0433098133881025,
+      "max": 0.33494318951202684,
+      "mean": -0.0005618135324635203
+    },
+    "sourceContext": {
+      "sourceAgeClassCounts": {
+        "all-old": 3063,
+        "partly-old": 6918,
+        "fresh-only": 343,
+        "no-positive-chemical": 556
+      },
+      "materialSourceClassCounts": {
+        "all-old-material": 1743,
+        "partly-old-material": 6201,
+        "no-old-material-contribution": 2380,
+        "no-positive-chemical": 556
+      },
+      "minSourceAgeSeconds": {
+        "count": 10324,
+        "min": 0,
+        "p10": 0.43333333333333335,
+        "median": 7,
+        "p90": 37.983333333333334,
+        "max": 561.9666666666667,
+        "mean": 17.355440397778633
+      },
+      "medianSourceAgeSeconds": {
+        "count": 10324,
+        "min": 0.05,
+        "p10": 5.25,
+        "median": 30.349999999999998,
+        "p90": 116.31666666666666,
+        "max": 561.9666666666667,
+        "mean": 48.967220392612596
+      },
+      "materialContributingFraction": {
+        "count": 10324,
+        "min": 0,
+        "p10": 0,
+        "median": 1,
+        "p90": 1,
+        "max": 1,
+        "mean": 0.7069979199843814
+      },
+      "oldMaterialContributingFraction": {
+        "count": 10324,
+        "min": 0,
+        "p10": 0,
+        "median": 0.5565422551197516,
+        "p90": 1,
+        "max": 1,
+        "mean": 0.5004933016086704
+      },
+      "note": "Age and material fractions use positive bilinear node support only; untouched zero nodes are excluded."
+    },
+    "oldMaterialOnlyReadout": {
+      "controlStrength": {
+        "count": 10880,
+        "min": 0,
+        "p10": 0,
+        "median": 0.23113040397832144,
+        "p90": 0.9935907520408279,
+        "max": 0.9998722014177359,
+        "mean": 0.43676046498911647
+      },
+      "residenceStrength": {
+        "count": 10880,
+        "min": 0,
+        "p10": 0,
+        "median": 0.783042199474647,
+        "p90": 0.9989365988231217,
+        "max": 0.9999787979903146,
+        "mean": 0.5331225870213572
+      },
+      "strengthDelta": {
+        "count": 10880,
+        "min": 0,
+        "p10": 0,
+        "median": 0.006302120523210775,
+        "p90": 0.3772219980472703,
+        "max": 0.9390068710687957,
+        "mean": 0.09636212203224077
+      },
+      "coherenceDelta": {
+        "count": 10880,
+        "min": -0.7580944489019674,
+        "p10": -0.13108923737550415,
+        "median": 0,
+        "p90": 0.031835197736238885,
+        "max": 0.7258710850880251,
+        "mean": -0.02262754587897013
+      },
+      "steeringDelta": {
+        "count": 10880,
+        "min": -0.3854542316908973,
+        "p10": -0.04323812843665241,
+        "median": 0,
+        "p90": 0.04678804084313681,
+        "max": 0.37766290594632046,
+        "mean": 0.0005868312031338372
+      },
+      "nonzeroControlCount": 7379,
+      "nonzeroResidenceCount": 7379,
+      "note": "Same saved poses; only positive material nodes with last source-kernel contribution at least 15 seconds old remain. Hill response is nonlinear; deltas are direct masked-field readouts, not additive attribution."
+    },
+    "eligibility": {
+      "anchors": [
+        {
+          "tick": 16801,
+          "cells": 9216,
+          "controlEligible": 2921,
+          "residenceEligible": 3277,
+          "gained": 356,
+          "lost": 0,
+          "changed": 356
+        },
+        {
+          "tick": 16861,
+          "cells": 9216,
+          "controlEligible": 2906,
+          "residenceEligible": 3280,
+          "gained": 374,
+          "lost": 0,
+          "changed": 374
+        },
+        {
+          "tick": 16921,
+          "cells": 9216,
+          "controlEligible": 2893,
+          "residenceEligible": 3281,
+          "gained": 388,
+          "lost": 0,
+          "changed": 388
+        },
+        {
+          "tick": 16981,
+          "cells": 9216,
+          "controlEligible": 2900,
+          "residenceEligible": 3292,
+          "gained": 392,
+          "lost": 0,
+          "changed": 392
+        },
+        {
+          "tick": 17041,
+          "cells": 9216,
+          "controlEligible": 2903,
+          "residenceEligible": 3299,
+          "gained": 396,
+          "lost": 0,
+          "changed": 396
+        },
+        {
+          "tick": 17101,
+          "cells": 9216,
+          "controlEligible": 2891,
+          "residenceEligible": 3298,
+          "gained": 407,
+          "lost": 0,
+          "changed": 407
+        },
+        {
+          "tick": 17161,
+          "cells": 9216,
+          "controlEligible": 2898,
+          "residenceEligible": 3303,
+          "gained": 405,
+          "lost": 0,
+          "changed": 405
+        },
+        {
+          "tick": 17221,
+          "cells": 9216,
+          "controlEligible": 2901,
+          "residenceEligible": 3294,
+          "gained": 393,
+          "lost": 0,
+          "changed": 393
+        },
+        {
+          "tick": 17281,
+          "cells": 9216,
+          "controlEligible": 2885,
+          "residenceEligible": 3288,
+          "gained": 403,
+          "lost": 0,
+          "changed": 403
+        },
+        {
+          "tick": 17341,
+          "cells": 9216,
+          "controlEligible": 2874,
+          "residenceEligible": 3281,
+          "gained": 407,
+          "lost": 0,
+          "changed": 407
+        },
+        {
+          "tick": 17401,
+          "cells": 9216,
+          "controlEligible": 2873,
+          "residenceEligible": 3272,
+          "gained": 399,
+          "lost": 0,
+          "changed": 399
+        },
+        {
+          "tick": 17461,
+          "cells": 9216,
+          "controlEligible": 2862,
+          "residenceEligible": 3268,
+          "gained": 406,
+          "lost": 0,
+          "changed": 406
+        },
+        {
+          "tick": 17521,
+          "cells": 9216,
+          "controlEligible": 2865,
+          "residenceEligible": 3272,
+          "gained": 407,
+          "lost": 0,
+          "changed": 407
+        },
+        {
+          "tick": 17581,
+          "cells": 9216,
+          "controlEligible": 2862,
+          "residenceEligible": 3269,
+          "gained": 407,
+          "lost": 0,
+          "changed": 407
+        },
+        {
+          "tick": 17641,
+          "cells": 9216,
+          "controlEligible": 2861,
+          "residenceEligible": 3260,
+          "gained": 399,
+          "lost": 0,
+          "changed": 399
+        },
+        {
+          "tick": 17701,
+          "cells": 9216,
+          "controlEligible": 2859,
+          "residenceEligible": 3257,
+          "gained": 398,
+          "lost": 0,
+          "changed": 398
+        },
+        {
+          "tick": 17761,
+          "cells": 9216,
+          "controlEligible": 2859,
+          "residenceEligible": 3260,
+          "gained": 401,
+          "lost": 0,
+          "changed": 401
+        },
+        {
+          "tick": 17821,
+          "cells": 9216,
+          "controlEligible": 2873,
+          "residenceEligible": 3262,
+          "gained": 389,
+          "lost": 0,
+          "changed": 389
+        },
+        {
+          "tick": 17881,
+          "cells": 9216,
+          "controlEligible": 2871,
+          "residenceEligible": 3256,
+          "gained": 385,
+          "lost": 0,
+          "changed": 385
+        },
+        {
+          "tick": 17941,
+          "cells": 9216,
+          "controlEligible": 2867,
+          "residenceEligible": 3256,
+          "gained": 389,
+          "lost": 0,
+          "changed": 389
+        },
+        {
+          "tick": 34796,
+          "cells": 9216,
+          "controlEligible": 2878,
+          "residenceEligible": 3814,
+          "gained": 936,
+          "lost": 0,
+          "changed": 936
+        },
+        {
+          "tick": 34857,
+          "cells": 9216,
+          "controlEligible": 2878,
+          "residenceEligible": 3811,
+          "gained": 933,
+          "lost": 0,
+          "changed": 933
+        },
+        {
+          "tick": 34918,
+          "cells": 9216,
+          "controlEligible": 2873,
+          "residenceEligible": 3815,
+          "gained": 942,
+          "lost": 0,
+          "changed": 942
+        },
+        {
+          "tick": 34979,
+          "cells": 9216,
+          "controlEligible": 2868,
+          "residenceEligible": 3823,
+          "gained": 955,
+          "lost": 0,
+          "changed": 955
+        },
+        {
+          "tick": 35040,
+          "cells": 9216,
+          "controlEligible": 2874,
+          "residenceEligible": 3824,
+          "gained": 950,
+          "lost": 0,
+          "changed": 950
+        },
+        {
+          "tick": 35101,
+          "cells": 9216,
+          "controlEligible": 2874,
+          "residenceEligible": 3832,
+          "gained": 958,
+          "lost": 0,
+          "changed": 958
+        },
+        {
+          "tick": 35162,
+          "cells": 9216,
+          "controlEligible": 2883,
+          "residenceEligible": 3836,
+          "gained": 953,
+          "lost": 0,
+          "changed": 953
+        },
+        {
+          "tick": 35223,
+          "cells": 9216,
+          "controlEligible": 2873,
+          "residenceEligible": 3838,
+          "gained": 965,
+          "lost": 0,
+          "changed": 965
+        },
+        {
+          "tick": 35284,
+          "cells": 9216,
+          "controlEligible": 2871,
+          "residenceEligible": 3842,
+          "gained": 971,
+          "lost": 0,
+          "changed": 971
+        },
+        {
+          "tick": 35345,
+          "cells": 9216,
+          "controlEligible": 2879,
+          "residenceEligible": 3829,
+          "gained": 950,
+          "lost": 0,
+          "changed": 950
+        },
+        {
+          "tick": 35406,
+          "cells": 9216,
+          "controlEligible": 2882,
+          "residenceEligible": 3842,
+          "gained": 960,
+          "lost": 0,
+          "changed": 960
+        },
+        {
+          "tick": 35467,
+          "cells": 9216,
+          "controlEligible": 2888,
+          "residenceEligible": 3846,
+          "gained": 958,
+          "lost": 0,
+          "changed": 958
+        },
+        {
+          "tick": 35528,
+          "cells": 9216,
+          "controlEligible": 2893,
+          "residenceEligible": 3852,
+          "gained": 959,
+          "lost": 0,
+          "changed": 959
+        },
+        {
+          "tick": 35589,
+          "cells": 9216,
+          "controlEligible": 2894,
+          "residenceEligible": 3850,
+          "gained": 956,
+          "lost": 0,
+          "changed": 956
+        },
+        {
+          "tick": 35650,
+          "cells": 9216,
+          "controlEligible": 2898,
+          "residenceEligible": 3847,
+          "gained": 949,
+          "lost": 0,
+          "changed": 949
+        },
+        {
+          "tick": 35711,
+          "cells": 9216,
+          "controlEligible": 2896,
+          "residenceEligible": 3848,
+          "gained": 952,
+          "lost": 0,
+          "changed": 952
+        },
+        {
+          "tick": 35772,
+          "cells": 9216,
+          "controlEligible": 2906,
+          "residenceEligible": 3853,
+          "gained": 947,
+          "lost": 0,
+          "changed": 947
+        },
+        {
+          "tick": 35833,
+          "cells": 9216,
+          "controlEligible": 2921,
+          "residenceEligible": 3859,
+          "gained": 938,
+          "lost": 0,
+          "changed": 938
+        },
+        {
+          "tick": 35894,
+          "cells": 9216,
+          "controlEligible": 2929,
+          "residenceEligible": 3862,
+          "gained": 933,
+          "lost": 0,
+          "changed": 933
+        },
+        {
+          "tick": 35955,
+          "cells": 9216,
+          "controlEligible": 2931,
+          "residenceEligible": 3863,
+          "gained": 932,
+          "lost": 0,
+          "changed": 932
+        }
+      ],
+      "thresholds": {
+        "nativeB": 0.3,
+        "controlD": 0.015
+      },
+      "note": "B varies by replay arm; D remains the saved control map. No selector or formation feedback."
+    },
+    "finalTotalMatchedFieldShape": {
+      "controlScaleToCandidateNodeSum": 1.735169383063273,
+      "normalizedL1": 0.3548620302753774,
+      "limitation": "Descriptive shape comparison only; no equal-total global-dose world control was run, so local p(L) advantage is unproven."
+    },
+    "pulseDiagnostics": {
+      "layer1EquivalentHalfLifeSeconds": 16.865295026573943,
+      "fixedPulse": {
+        "equalDoseNative15s": {
+          "initial": 0.27486148476600647,
+          "after30s": 0.06871512532234192,
+          "normalizedAfter30s": 0.2499991054797659
+        },
+        "residenceMaterialLayer1": {
+          "initial": 0.27486148476600647,
+          "after30s": 0.08010166138410568,
+          "normalizedAfter30s": 0.2914255573213445
+        },
+        "sourceAttenuationHalfDoseNative15s": {
+          "initial": 0.13743074238300323,
+          "after30s": 0.03435756266117096,
+          "normalizedAfter30s": 0.2499991054797659
+        }
+      },
+      "constantSource": {
+        "native15s": {
+          "equilibrium": 0.35701221227645874,
+          "afterSourceStops15s": 0.1785062551498413,
+          "normalizedTail": 0.5000004173851953
+        },
+        "residenceLayer1": {
+          "equilibrium": 0.4013906419277191,
+          "afterSourceStops15s": 0.2166861593723297,
+          "normalizedTail": 0.5398385929768381
+        },
+        "gainEquivalentNative15s": {
+          "equilibrium": 0.4014137387275696,
+          "afterSourceStops15s": 0.20070698857307434,
+          "normalizedTail": 0.5000002969736161
+        },
+        "note": "The gain can match equilibrium amplitude; normalized source-free tails differ."
+      },
+      "firstRealMaskEdgePulse": {
+        "plateId": "trail-plate-1",
+        "edge96": {
+          "x": 69,
+          "y": 2,
+          "nx": 68,
+          "ny": 2
+        },
+        "field316Pulse": {
+          "from": {
+            "x": 0.7263157894736842,
+            "y": 0.021052631578947368
+          },
+          "to": {
+            "x": 0.7157894736842105,
+            "y": 0.021052631578947368
+          }
+        },
+        "initialSamples": [
+          0.03082369561010122,
+          0.041072377991809586
+        ],
+        "after15sSamples": [
+          0.01663981018964426,
+          0.020536220201660647
+        ],
+        "note": "Piecewise 316-to-96 nearest-cell raster diagnostic; not natural physics."
+      }
+    },
+    "detailedReadouts": "data/replay.json.gz",
+    "maps": [
+      {
+        "seconds": 30,
+        "controlStats": {
+          "nodeSum": 542.9318113311892,
+          "reconstructedIntegral": 0.005471723974111255
+        },
+        "residenceStats": {
+          "nodeSum": 542.9318113311892,
+          "reconstructedIntegral": 0.005471723974111255
+        },
+        "nativeMapParity": true
+      },
+      {
+        "seconds": 60,
+        "controlStats": {
+          "nodeSum": 1226.5031900635367,
+          "reconstructedIntegral": 0.012360094191302977
+        },
+        "residenceStats": {
+          "nodeSum": 1226.5031900635367,
+          "reconstructedIntegral": 0.012360094191302977
+        },
+        "nativeMapParity": true
+      },
+      {
+        "seconds": 120,
+        "controlStats": {
+          "nodeSum": 2495.819457225184,
+          "reconstructedIntegral": 0.0251454008842228
+        },
+        "residenceStats": {
+          "nodeSum": 2560.806407871335,
+          "reconstructedIntegral": 0.025800340734686542
+        },
+        "nativeMapParity": true
+      },
+      {
+        "seconds": 300,
+        "controlStats": {
+          "nodeSum": 3788.8208904433623,
+          "reconstructedIntegral": 0.03818307966921007
+        },
+        "residenceStats": {
+          "nodeSum": 5080.596387329418,
+          "reconstructedIntegral": 0.051201268952368255
+        },
+        "nativeMapParity": true
+      },
+      {
+        "seconds": 600,
+        "controlStats": {
+          "nodeSum": 3626.436696460703,
+          "reconstructedIntegral": 0.03654557914048546
+        },
+        "residenceStats": {
+          "nodeSum": 6292.481925315732,
+          "reconstructedIntegral": 0.06341298434443805
+        },
+        "nativeMapParity": true
+      }
+    ]
+  },
+  "outputSha256": "313bd77d45821b9761a40e63fc84c7f30633f0eff546838e4ac39d6fa7e58f73"
+}
