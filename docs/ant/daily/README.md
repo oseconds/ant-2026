@@ -14,6 +14,14 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-30 — Deferred organism-feedback survey C–G
+
+[Process log](./2026-10-30-organism-feedback-candidate-survey.md) · [Research report and data](../evidence/2026-10-30-organism-feedback-candidate-survey/README.md)
+
+- Concrete native-leverage gates and one independent neutral screen per C–G; prior A/B preserved
+- C/D/G **PROMISING**, E/F **MIXED** with real causal effects and unresolved value
+- Next question: D plus production10% versus10% alone; no interaction/adoption executed
+
 ### 2026-10-30 — Neutral material-to-organism feedback discovery
 
 [Process log](./2026-10-30-material-organism-feedback-discovery.md) · [Report, data and atlas](../evidence/2026-10-30-material-organism-feedback-discovery/README.md)
