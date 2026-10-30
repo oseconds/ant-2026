@@ -17,7 +17,7 @@ export class LocalOccupancy {
     this.closeRange = closeRange;
   }
 
-  sense(agent, agents) {
+  sense(agent, agents, followingHeadwayMultiplier = 1) {
     let separationX = 0;
     let separationY = 0;
     let frontCrowding = 0;
@@ -50,7 +50,8 @@ export class LocalOccupancy {
         const forwardSpeed = other.vx * hx + other.vy * hy;
         const speed = Math.hypot(agent.vx ?? 0, agent.vy ?? 0);
         const comfortableDistance = agent.radius + other.radius
-          + Math.max(agent.personality.personalSpacing * 0.6, speed * FOLLOWING_HEADWAY_SECONDS);
+          + Math.max(agent.personality.personalSpacing * 0.6,
+            speed * FOLLOWING_HEADWAY_SECONDS * followingHeadwayMultiplier);
         followingSpeedLimit = Math.min(followingSpeedLimit,
           Math.max(0, forwardSpeed + (along - comfortableDistance) / FOLLOWING_RESPONSE_SECONDS));
         continue;

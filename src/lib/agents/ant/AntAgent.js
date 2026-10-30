@@ -35,12 +35,12 @@ export class AntAgent {
     }
 
     /** Keep directional intent smooth while allowing deliberate, slow changes. */
-    turnToward(targetHeading, dtSeconds) {
+    turnToward(targetHeading, dtSeconds, maxTurnRate = ANT_MAX_TURN_RATE) {
         const error = angleDelta(this.heading, targetHeading);
         const turn = clamp(
             error,
-            -ANT_MAX_TURN_RATE * dtSeconds,
-            ANT_MAX_TURN_RATE * dtSeconds
+            -maxTurnRate * dtSeconds,
+            maxTurnRate * dtSeconds
         );
 
         this.heading = wrapAngle(this.heading + turn);

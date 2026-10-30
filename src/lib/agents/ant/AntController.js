@@ -1,4 +1,4 @@
-import { AntAgent } from './AntAgent.js';
+import { AntAgent, ANT_MAX_TURN_RATE } from './AntAgent.js';
 import { LocalOccupancy } from './LocalOccupancy.js';
 import { PheromoneField } from './PheromoneField.js';
 import { GaitController } from './GaitController.js';
@@ -299,12 +299,13 @@ export class AntController {
         if (this.destroyed || !this.initialized || !this.running || !Number.isFinite(dt) || dt <= 0) return;
         const current = this.agents;
         // Read at the causal boundary; contacts and births later in this tick affect the next one.
-        const materialSnapshot = this.materialLocomotionResistance
-            ? this.materialStratigraphy.getSnapshot() : null;
+        const materialSnapshot = this.materialStratigraphy.getSnapshot();
+        const materialLayers = current.map(agent => materialLayerCountAtSnapshot(materialSnapshot, agent.x, agent.y));
         const materialRevision = this.materialStratigraphy.revision;
         const previousRear = current.map(agent => this.bodyPoseController.getSnapshot(agent)?.gasterRear
             || gasterRearPoint(agent));
-        const sensed = current.map((agent) => this.occupancy.sense(agent, current));
+        const sensed = current.map((agent, index) => this.occupancy.sense(agent, current,
+            materialFollowingHeadwayMultiplier(materialLayers[index])));
         this.surfaceField.relax(dt);
         this.field.decay(dt);
         const localTrails = current.map((agent) => this.senseLocalTrail(agent));
@@ -341,7 +342,8 @@ export class AntController {
                 targetHeading = blendAngle(targetHeading, agent.heading + side * 0.42,
                     Math.min(0.58, info.frontCrowding * 0.6));
             }
-            agent.turnToward(targetHeading, dt);
+            agent.turnToward(targetHeading, dt,
+                ANT_MAX_TURN_RATE * materialTurnRateMultiplier(materialLayers[index]));
             const cycle = Math.sin(agent.speedPhase);
             let desiredSpeed = agent.personality.preferredSpeed * (0.58 + 0.34 * (cycle + 1) * 0.5);
             // Inertia limits braking; the swept contact guard is a final safeguard.
@@ -350,8 +352,7 @@ export class AntController {
             // Same-direction traffic caps pace without adding a steering target.
             desiredSpeed = Math.min(desiredSpeed, info.followingSpeedLimit);
             if (agent.hesitationRemaining > 0) desiredSpeed *= HESITATION_SPEED_RATIO;
-            if (materialSnapshot) desiredSpeed *= materialLocomotionMultiplier(
-                materialLayerCountAtSnapshot(materialSnapshot, agent.x, agent.y));
+            if (this.materialLocomotionResistance) desiredSpeed *= materialLocomotionMultiplier(materialLayers[index]);
             agent.targetSpeed = desiredSpeed;
             agent.accelerateToward(desiredSpeed, dt);
             agent.vx += info.separationX * SEPARATION_ACCELERATION * dt;
@@ -707,6 +708,14 @@ function minimumSeparation(agents) {
 
 export function materialLocomotionMultiplier(layerCount) {
     return 1 - 0.10 * (1 - Math.exp(-layerCount / 4));
+}
+
+export function materialTurnRateMultiplier(layerCount) {
+    return 1 - 0.50 * (1 - Math.exp(-layerCount / 4));
+}
+
+export function materialFollowingHeadwayMultiplier(layerCount) {
+    return 1 + 0.50 * (1 - Math.exp(-layerCount / 4));
 }
 
 export function materialLayerCountAtSnapshot(snapshot, x, y) {

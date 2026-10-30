@@ -264,7 +264,7 @@ export async function runSelfChecks() {
   return { scale: DOSE_SCALE, productionFieldParity: field, observerParity: observer };
 }
 
-export async function executeScenario(seed, arm, seconds, output, earlyMask = null) {
+export async function executeScenario(seed, arm, seconds, output, earlyMask = null, controllerObserver = null) {
   const started = performance.now(), ticks = seconds * 60;
   const run = createController(seed, arm);
   const { controller, ledger, fieldStats } = run;
@@ -336,6 +336,7 @@ export async function executeScenario(seed, arm, seconds, output, earlyMask = nu
   assert.equal(controller.field.height, ARMS[arm].width);
   assert.equal(controller.field.maxValue, CAP);
   try {
+    controllerObserver?.(controller, run);
     for (let tick = 1; tick <= ticks; tick += 1) {
       const spawnedBefore = controller.totalSpawned, retiredBefore = controller.totalRetired;
       const before = controller.agents.map(agent => ({ agent, x: agent.x, y: agent.y,

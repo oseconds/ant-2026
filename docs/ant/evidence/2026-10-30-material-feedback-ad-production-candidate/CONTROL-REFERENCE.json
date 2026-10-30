@@ -1,0 +1,75 @@
+{
+  "productionMain": "15667c73e9f507bf89dea645f966bc7f58301fdc",
+  "behavioralProductionPin": "4135d4fb4ab8ec5d46297893fbc9c1c5f4f3e785",
+  "mainDeltaVerified": [
+    ".github/workflows/deploy.yml",
+    "vite.config.js"
+  ],
+  "researchParents": {
+    "adComposition": {
+      "branch": "codex/ant-material-feedback-ad-composition-20261030",
+      "commit": "10b1cbd877f4130924be83daa37fe8c40e9b230c",
+      "decision": "COMPLEMENTARY at direct-consumer level; activation contexts overlap strongly."
+    },
+    "surfaceVsDepth": {
+      "branch": "codex/ant-material-feedback-surface-vs-depth-20261030",
+      "commit": "18fed8fbca82e8b86dfc88779cd6e11b797a2439",
+      "decision": "DEPTH-SENSITIVE; does not establish L as the final physical or artistic descriptor."
+    },
+    "materialInformationAxes": {
+      "branch": "codex/ant-material-information-axes-20261030",
+      "commit": "e888624879c90933c2b16d6e9b42d12a8339e814",
+      "decision": "MULTI-AXIS; this integration keeps the already-registered L-conditioned laws."
+    }
+  },
+  "controlEvidence": {
+    "branch": "codex/ant-material-pheromone-attenuation-screen-20261030",
+    "commit": "2414d1a9b580296c9c38d4fb796904525a843b78",
+    "path": "docs/ant/evidence/2026-10-30-material-pheromone-attenuation-screen/data/control",
+    "status": "Production control, exact frozen current-G/H0 seed 20261005 history, 10% slowdown on, A/D off.",
+    "runSummaryCanonicalLfSha256": "c82d11ec8749b65ec5930ac14c0f4abc55cf407702e902f0ba620b2b01bfcd87",
+    "sourceHashes": {
+      "src/lib/agents/ant/AntController.js": "b5a6344ebed52962a1749d612b0140b6a4249817f159758e13f166877078e9f4",
+      "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+      "src/lib/agents/ant/LocalOccupancy.js": "df22dd38e9af8078ebcb1d225ca2a5eaf579e994d2d4a00ce9ceeefa2403ff16",
+      "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+      "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+      "scripts/ant-g-production-candidate-natural.js": "31d3d8d416b119831a6e345c47a2d11c207399cd245d9fca42c2110d9bb72e02"
+    },
+    "frozenRun": {
+      "seed": 20261005,
+      "arm": "G",
+      "seconds": 600,
+      "ticks": 36000,
+      "initialStateSha256": "f480c2fd61e34c4975539e50bdac3c3511aa4b73192473b317d6760e274f02fd",
+      "rngCallsAt600s": 349136,
+      "footContacts": 99469,
+      "plateBirths": 36,
+      "firstPlateSeconds": 84.01666666666823,
+      "noduleBirths": 32,
+      "totalTravel": 603.0980324707864,
+      "activeAntSeconds": 10865.633333336136,
+      "fieldNodeSum": 3626.436696460703,
+      "surfaceFootContacts": 99469,
+      "buriedLayerCells": 60378
+    }
+  },
+  "receipts": {
+    "originalRawSha256": "a52dd67cd3cab53e8bbdd6df7bb2e536a211d0a6872ebc03342111c8127f0414",
+    "summaryCanonicalLfSha256": "c82d11ec8749b65ec5930ac14c0f4abc55cf407702e902f0ba620b2b01bfcd87",
+    "sourceHashManifestCanonicalLfSha256": "b4a34b88b95b52edc5622fb09b851ff27dbf029af27deee78461de8bf2d904a4",
+    "checkpointSha256": {
+      "seed20261005-G-30s.json.gz": "39509be4d1536aeb448245e90b76c2c0f0db19556f748896eb21d20de9a4b2c8",
+      "seed20261005-G-60s.json.gz": "34edf622452f2c048562a08d8ce123688940f384998eb10c77353c8ad1f8a2e8",
+      "seed20261005-G-120s.json.gz": "8973d243671e137ba28b956b64d932c3980220db9565131dee9bd45779502dc4",
+      "seed20261005-G-300s.json.gz": "e30689da03bb621bea32d08a80c06041fab49ed71c71652327d3d0045afee07d",
+      "seed20261005-G-600s.json.gz": "cb0bf577c000138a9f8a25ec3f4d5b6c7e686c34da5726ceaafd0eff38a9c7dc"
+    }
+  },
+  "rejectedNearMatch": {
+    "commit": "e888624879c90933c2b16d6e9b42d12a8339e814",
+    "path": "docs/ant/evidence/2026-10-30-material-organism-feedback-discovery/data/control",
+    "reason": "The discovery report identifies this as materialLocomotionResistance=false; not the required production 10%-only control. It was not used for paired interpretation."
+  },
+  "note": "The correct production-control frozen run and five checkpoint maps are embedded under data/control. The control is not rerun."
+}
