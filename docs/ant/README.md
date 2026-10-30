@@ -29,6 +29,8 @@ current/recent proximity
 (read-only)
 ```
 
+Pheromone remains a live causal field but is hidden by default in the audience renderer. The diagnostic Pheromone overlay remains available as an explicit debug opt-in; material remains visible by default. This is presentation-only and does not change sensing, recruitment, TrailPlate qualification, or chemical state.
+
 Founder-refined movement baseline is `e38450ce11f99e63f5ab0cb6e8e8ee4281fcadd9`. Retained-history material feedback is a separately tested production layer: the previously adopted desired-speed resistance is now joined by adopted A turn-rate and D same-flow-headway conditions. These were not part of the founder baseline.
 
 S0/S1 read-only social observation pass의 구현/evidence 흐름:
