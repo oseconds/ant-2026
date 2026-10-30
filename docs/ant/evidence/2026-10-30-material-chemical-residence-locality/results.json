@@ -1,0 +1,846 @@
+{
+  "schema": "ant-material-chemical-residence-locality-v1",
+  "authority": {
+    "productionMain": "4135d4fb4ab8ec5d46297893fbc9c1c5f4f3e785",
+    "researchBase": "3b61f995c8e514e848b1d4133812fa855db92c04",
+    "branch": "codex/ant-material-feedback-space-20261030"
+  },
+  "inputs": {
+    "pairedInputSha256": "4bad89763aa226cc113413a30002f35d949caefed0e6e6fde2e1ac6026194a4c",
+    "emissionsSha256": "c465157d4ed1f16305b750533db518b72c2789848ff43ec99a75e8305322fb60",
+    "sourceHashManifestSha256": "b4a34b88b95b52edc5622fb09b851ff27dbf029af27deee78461de8bf2d904a4",
+    "savedRawPositionsSha256": "a52dd67cd3cab53e8bbdd6df7bb2e536a211d0a6872ebc03342111c8127f0414",
+    "controlRunSummarySha256": "c82d11ec8749b65ec5930ac14c0f4abc55cf407702e902f0ba620b2b01bfcd87",
+    "residenceProbeReplaySha256": "313bd77d45821b9761a40e63fc84c7f30633f0eff546838e4ac39d6fa7e58f73",
+    "residenceProbeResultsSha256": "dab3ccecfbac0667d33d39d891ff23828f0fa74537e9726eb6a66c9bd229ab7f",
+    "sourceHashes": {
+      "src/lib/agents/ant/AntController.js": "b5a6344ebed52962a1749d612b0140b6a4249817f159758e13f166877078e9f4",
+      "src/lib/agents/ant/AntAgent.js": "ed72c33fb26f269c77853b7aa98da9e2b8a07f196bbea114583dedcd52110411",
+      "src/lib/agents/ant/PheromoneField.js": "b68e98b5d916950487da67237a0d0277451d3b930971c1d8a35e92fd7d6f9837",
+      "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+      "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+      "src/lib/agents/ant/BodyPoseController.js": "2ec4cc12c12ae301ea07056889c3be9255b1b1e155b7724cd3366278d60ace8e",
+      "src/lib/agents/ant/LocalOccupancy.js": "df22dd38e9af8078ebcb1d225ca2a5eaf579e994d2d4a00ce9ceeefa2403ff16",
+      "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd",
+      "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+      "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+      "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+      "scripts/ant-g-production-candidate-natural.js": "31d3d8d416b119831a6e345c47a2d11c207399cd245d9fca42c2110d9bb72e02",
+      "scripts/ant-late-qualified-opportunity-capture.js": "1db93678cd6ba88f3d9ee97f3ef8013d88a130173d07370060e6f315cbb6d921",
+      "scripts/ant-opportunity-core.js": "5d72d09f77e6384a55baaaef548c0247dc12159c8346d261a68da7651125a034",
+      "scripts/ant-material-pheromone-attenuation-screen.js": "e339fb1e634ad07ad866aaa0ded58ad170a627869a5973e44455fd10ed7d7c81",
+      "scripts/ant-material-feedback-screen-analysis.js": "f5ee18ba3e6be08cef2cdf5058c7e59cb5b9701d8e4d4d67d0fe6dec1b7e1019",
+      "tests/ant-material-pheromone-attenuation-screen.test.js": "d6b8ec1d9c227675fc3b36d37978549650e2c110e353e95cfcde7b693602d3f5"
+    }
+  },
+  "protocol": {
+    "seconds": 600,
+    "tickHz": 60,
+    "savedReadTimes": "post-tick at each integer model second, 1..600",
+    "recipients": "all saved production-control positions/headings; no agents tick or respond",
+    "sourceRequestRows": 100882,
+    "fields": {
+      "native": "PheromoneField production 15s decay then frozen requests in recorded order",
+      "residence": "exact prior probe 15..30s material-conditioned decay; tick-entry actual masks on nearest 96-grid; decay before writes",
+      "null": "independent per-time Float32 snapshot C_i=min(8,k*A_i); deterministic nonnegative scalar k minimizes node-sum residual to B"
+    },
+    "nullSolver": "use target/native node-sum scale if uncapped; otherwise bracket and bisect up to 64 times against Float32 node sums; compare bracket endpoints and midpoint, tie toward lower k",
+    "sensor": {
+      "local": "production senseLocalTrail at saved pose/heading",
+      "wide": "production senseTrail at fixed source-defined offsets [-.92,-.47,0,.47,.92] from saved heading; these are prospective probes, not the jittered headings actually selected in world ticks",
+      "wideResponse": "production Hill response formula (signal/.035)^3 / (1+(signal/.035)^3)",
+      "nativeLocalHeadroom": "1 - native senseLocalTrail strength; continuous",
+      "nativeWideHeadroom": "1 - maximum of five native wide Hill responses; continuous"
+    },
+    "headroomGroups": "four ranges cut from native local strength at pooled empirical p25/p50/p75 before computing B-C summaries; ties remain in the lower inclusive range; material support is the prior probe geometric fraction of positive native bilinear support, not signal attribution",
+    "nodeSumMeaning": "native storage coefficient sum, not a resolution-independent physical mass",
+    "noRng": true,
+    "noAgentTick": true,
+    "noCounterfactualWorld": true
+  },
+  "validation": {
+    "exactNativeResidenceProbeReadoutParity": true,
+    "exactNativeResidenceCheckpointMapParity": true,
+    "sourceRequestsConsumed": 100882,
+    "savedRecipients": 10880,
+    "checkpointParity": [
+      {
+        "seconds": 30,
+        "nativeProjected96": true,
+        "residenceProjected96": true,
+        "nativeNodeSum": 542.9318113311892,
+        "residenceNodeSum": 542.9318113311892,
+        "nativeReconstructedIntegral": 0.005471723974111255,
+        "residenceReconstructedIntegral": 0.005471723974111255
+      },
+      {
+        "seconds": 60,
+        "nativeProjected96": true,
+        "residenceProjected96": true,
+        "nativeNodeSum": 1226.5031900635367,
+        "residenceNodeSum": 1226.5031900635367,
+        "nativeReconstructedIntegral": 0.012360094191302977,
+        "residenceReconstructedIntegral": 0.012360094191302977
+      },
+      {
+        "seconds": 120,
+        "nativeProjected96": true,
+        "residenceProjected96": true,
+        "nativeNodeSum": 2495.819457225184,
+        "residenceNodeSum": 2560.806407871335,
+        "nativeReconstructedIntegral": 0.0251454008842228,
+        "residenceReconstructedIntegral": 0.025800340734686542
+      },
+      {
+        "seconds": 300,
+        "nativeProjected96": true,
+        "residenceProjected96": true,
+        "nativeNodeSum": 3788.8208904433623,
+        "residenceNodeSum": 5080.596387329418,
+        "nativeReconstructedIntegral": 0.03818307966921007,
+        "residenceReconstructedIntegral": 0.051201268952368255
+      },
+      {
+        "seconds": 600,
+        "nativeProjected96": true,
+        "residenceProjected96": true,
+        "nativeNodeSum": 3626.436696460703,
+        "residenceNodeSum": 6292.481925315732,
+        "nativeReconstructedIntegral": 0.03654557914048546,
+        "residenceReconstructedIntegral": 0.06341298434443805
+      }
+    ],
+    "noRandomCalls": true,
+    "productionUnchanged": true
+  },
+  "summary": {
+    "native": {
+      "count": 10880,
+      "min": 0,
+      "p10": 0.0000028626812193100868,
+      "p25": 0.7424668535574585,
+      "median": 0.9955522104254362,
+      "p75": 0.9994875726526535,
+      "p90": 0.9998826022963443,
+      "p95": 0.9999473969358383,
+      "p99": 0.9999854579074569,
+      "max": 0.9999984528973864,
+      "mean": 0.7689085038884614
+    },
+    "residenceVsNull": {
+      "local": {
+        "left": {
+          "residenceMinusNative": {
+            "count": 10880,
+            "min": 0,
+            "p10": 0,
+            "p25": 0,
+            "median": 0.009058474720461632,
+            "p75": 0.046097575978086516,
+            "p90": 0.10426992314113848,
+            "p95": 0.1469166456261467,
+            "p99": 0.21146991251336092,
+            "max": 0.4457478657109981,
+            "mean": 0.032978864260449665
+          },
+          "nullMinusNative": {
+            "count": 10880,
+            "min": 0,
+            "p10": 0,
+            "p25": 0.00041079776069129193,
+            "median": 0.009147190485264467,
+            "p75": 0.045312978493533225,
+            "p90": 0.11740368179948218,
+            "p95": 0.17569223620979532,
+            "p99": 0.31242910205422525,
+            "max": 0.5367747552508182,
+            "mean": 0.03782779554840437
+          },
+          "residenceMinusNull": {
+            "count": 10880,
+            "min": -0.5232786677202688,
+            "p10": -0.040069699327995645,
+            "p25": -0.0056989428936960185,
+            "median": 0,
+            "p75": 0.009663443198941815,
+            "p90": 0.038149989034646795,
+            "p95": 0.05984520230618323,
+            "p99": 0.10249407424730148,
+            "max": 0.17970457149803837,
+            "mean": -0.004848931287954707
+          }
+        },
+        "center": {
+          "residenceMinusNative": {
+            "count": 10880,
+            "min": 0,
+            "p10": 0,
+            "p25": 0,
+            "median": 0.009062601368627105,
+            "p75": 0.047002964236044734,
+            "p90": 0.10595568961133908,
+            "p95": 0.1452400834955279,
+            "p99": 0.21892094157883024,
+            "max": 0.4377292711283092,
+            "mean": 0.033329927475159914
+          },
+          "nullMinusNative": {
+            "count": 10880,
+            "min": 0,
+            "p10": 0,
+            "p25": 0.000466728189750901,
+            "median": 0.009946641951995044,
+            "p75": 0.04953525476422398,
+            "p90": 0.12361437860936011,
+            "p95": 0.18735900651837273,
+            "p99": 0.33868808629849756,
+            "max": 0.5822980495326175,
+            "mean": 0.04074207576514708
+          },
+          "residenceMinusNull": {
+            "count": 10880,
+            "min": -0.5822980495326175,
+            "p10": -0.04808560070321155,
+            "p25": -0.005946379195241956,
+            "median": 0,
+            "p75": 0.0098789296291504,
+            "p90": 0.03716597993120177,
+            "p95": 0.05753631773115117,
+            "p99": 0.10366315313883878,
+            "max": 0.1792843422932212,
+            "mean": -0.007412148289987299
+          }
+        },
+        "right": {
+          "residenceMinusNative": {
+            "count": 10880,
+            "min": 0,
+            "p10": 0,
+            "p25": 0,
+            "median": 0.009274191997288017,
+            "p75": 0.043889034153425294,
+            "p90": 0.10453095496914233,
+            "p95": 0.14438773205743427,
+            "p99": 0.2134768878165299,
+            "max": 0.37119361194717493,
+            "mean": 0.03236149781953059
+          },
+          "nullMinusNative": {
+            "count": 10880,
+            "min": 0,
+            "p10": 0,
+            "p25": 0.0004977208017646372,
+            "median": 0.00972996702301223,
+            "p75": 0.04822526313725939,
+            "p90": 0.12117767466256069,
+            "p95": 0.18312177379963757,
+            "p99": 0.33306068959480495,
+            "max": 0.635076904830148,
+            "mean": 0.039689948084726076
+          },
+          "residenceMinusNull": {
+            "count": 10880,
+            "min": -0.635076904830148,
+            "p10": -0.04750394363844407,
+            "p25": -0.006363994481348674,
+            "median": 0,
+            "p75": 0.009201279301542714,
+            "p90": 0.03615290267779181,
+            "p95": 0.059537443932914214,
+            "p99": 0.10026876444445043,
+            "max": 0.16248912618862338,
+            "mean": -0.007328450265195557
+          }
+        },
+        "strength": {
+          "residenceMinusNative": {
+            "count": 10880,
+            "min": 0,
+            "p10": 0,
+            "p25": 0,
+            "median": 0.00025334319454628496,
+            "p75": 0.004018310213863341,
+            "p90": 0.07112092440044038,
+            "p95": 0.2569089561398502,
+            "p99": 0.6980744983333419,
+            "max": 0.9390068710687957,
+            "mean": 0.03648943350339859
+          },
+          "nullMinusNative": {
+            "count": 10880,
+            "min": 0,
+            "p10": 0,
+            "p25": 0.00004549804116749101,
+            "median": 0.0005365732598209272,
+            "p75": 0.006078633324868243,
+            "p90": 0.0603752205491211,
+            "p95": 0.16097197440039268,
+            "p99": 0.3337804839172017,
+            "max": 0.40442720649865943,
+            "mean": 0.02219711373075141
+          },
+          "residenceMinusNull": {
+            "count": 10880,
+            "min": -0.3764347699494466,
+            "p10": -0.0024349315390735926,
+            "p25": -0.0001545766287441852,
+            "median": -0.0000013295404028834668,
+            "p75": 0.00010996711915889357,
+            "p90": 0.010683818800434342,
+            "p95": 0.09065969735945678,
+            "p99": 0.5020279772787429,
+            "max": 0.8728759990810677,
+            "mean": 0.01429231977264718
+          }
+        },
+        "coherence": {
+          "residenceMinusNative": {
+            "count": 10880,
+            "min": -0.7874960317437747,
+            "p10": -0.16328183163448454,
+            "p25": -0.06843653781600267,
+            "median": -0.000029052502477866504,
+            "p75": 0,
+            "p90": 0.03338080769624807,
+            "p95": 0.09000469540962108,
+            "p99": 0.23309230834264671,
+            "max": 0.6999861224860544,
+            "mean": -0.036231389575945065
+          },
+          "nullMinusNative": {
+            "count": 10880,
+            "min": -0.001151004686883228,
+            "p10": -6.546429953679933e-9,
+            "p25": -1.7295476162360046e-10,
+            "median": 1.4824624861020652e-9,
+            "p75": 7.345118624435543e-9,
+            "p90": 2.029820234117352e-8,
+            "p95": 8.06520031870761e-8,
+            "p99": 0.000014358961594851394,
+            "max": 0.1214878957746397,
+            "mean": 0.00014825228136833326
+          },
+          "residenceMinusNull": {
+            "count": 10880,
+            "min": -0.7874961065670576,
+            "p10": -0.1632818369777679,
+            "p25": -0.06852634915710631,
+            "median": -0.00010382731398750344,
+            "p75": 1.4074141851949662e-10,
+            "p90": 0.033333066691165314,
+            "p95": 0.08950581743276806,
+            "p99": 0.2330923089885751,
+            "max": 0.6999862899004563,
+            "mean": -0.03637964185731346
+          }
+        },
+        "steering": {
+          "residenceMinusNative": {
+            "count": 10880,
+            "min": -0.3339393797588012,
+            "p10": -0.04419871142583853,
+            "p25": -0.011482530071797782,
+            "median": 0,
+            "p75": 0.008998161796685673,
+            "p90": 0.0433098133881025,
+            "p95": 0.07006194264494442,
+            "p99": 0.1325748724362571,
+            "max": 0.33494318951202684,
+            "mean": -0.0005618135324635203
+          },
+          "nullMinusNative": {
+            "count": 10880,
+            "min": -0.17229871648192524,
+            "p10": -0.0016506069250418198,
+            "p25": -0.00004799859348314506,
+            "median": 0,
+            "p75": 0.00006914303172697589,
+            "p90": 0.001664474751997394,
+            "p95": 0.008894592015490727,
+            "p99": 0.06136166782971486,
+            "max": 0.1693154436467719,
+            "mean": -0.00006697185113845898
+          },
+          "residenceMinusNull": {
+            "count": 10880,
+            "min": -0.29347699916143294,
+            "p10": -0.04429582900331344,
+            "p25": -0.012318643945971763,
+            "median": 0,
+            "p75": 0.009600379500151317,
+            "p90": 0.04278436876182931,
+            "p95": 0.07035255454499513,
+            "p99": 0.12956599199100455,
+            "max": 0.2938805448602385,
+            "mean": -0.000494841681325059
+          }
+        }
+      },
+      "wide": {
+        "nativeMaxResponse": {
+          "count": 10880,
+          "min": 0,
+          "p10": 0.1911356873627729,
+          "p25": 0.9698681693476483,
+          "median": 0.9960663792582883,
+          "p75": 0.9989017964942253,
+          "p90": 0.9995719893180574,
+          "p95": 0.9997582115809924,
+          "p99": 0.9999223414673435,
+          "max": 0.9999929439661115,
+          "mean": 0.8664481483280306
+        },
+        "nativeMaxHeadroom": {
+          "count": 10880,
+          "min": 0.000007056033888508395,
+          "p10": 0.0004280110185082009,
+          "p25": 0.0010983014809382574,
+          "median": 0.003936112079838128,
+          "p75": 0.030189081905245052,
+          "p90": 0.8090882341803405,
+          "p95": 0.9998952935457276,
+          "p99": 1,
+          "max": 1,
+          "mean": 0.13355185167196537
+        },
+        "maxAbsoluteResidenceMinusNullResponse": {
+          "count": 10880,
+          "min": 0,
+          "p10": 1.8654295584372553e-17,
+          "p25": 0.0030203865670141994,
+          "median": 0.026436555392580274,
+          "p75": 0.13049515288898816,
+          "p90": 0.3126810608173274,
+          "p95": 0.44359562428946314,
+          "p99": 0.6712194876479625,
+          "max": 0.8480438845468267,
+          "mean": 0.09843476945255772
+        },
+        "nativeHeadroomVsMaxAbsoluteResponseDifferencePearson": -0.0672992445914137
+      },
+      "localHeadroom": {
+        "nativeStrength": {
+          "count": 10880,
+          "min": 0,
+          "p10": 0.0000028626812193100868,
+          "p25": 0.7424668535574585,
+          "median": 0.9955522104254362,
+          "p75": 0.9994875726526535,
+          "p90": 0.9998826022963443,
+          "p95": 0.9999473969358383,
+          "p99": 0.9999854579074569,
+          "max": 0.9999984528973864,
+          "mean": 0.7689085038884614
+        },
+        "nativeHeadroom": {
+          "count": 10880,
+          "min": 0.0000015471026135749355,
+          "p10": 0.00011789086370828095,
+          "p25": 0.0005124677649301912,
+          "median": 0.004448283375753648,
+          "p75": 0.2577898332277375,
+          "p90": 0.9999972130556491,
+          "p95": 1,
+          "p99": 1,
+          "max": 1,
+          "mean": 0.23109149611153712
+        },
+        "bMinusCByAHeadroomQuartile": [
+          {
+            "label": "Q1",
+            "nativeStrengthRange": [
+              0,
+              0.7424668535574585
+            ],
+            "count": 2721,
+            "residenceMinusNullStrength": {
+              "count": 2721,
+              "min": -0.3764347699494466,
+              "p10": -0.018859636981494576,
+              "p25": -1.8438744152210365e-14,
+              "median": 0,
+              "p75": 0.029579717840206972,
+              "p90": 0.27239919404236834,
+              "p95": 0.46509342690491595,
+              "p99": 0.7435659352978193,
+              "max": 0.8728759990810677,
+              "mean": 0.05779991599394909
+            },
+            "residenceMinusNullSteering": {
+              "count": 2721,
+              "min": -0.29347699916143294,
+              "p10": -0.030950771326005155,
+              "p25": -0.000025853574523769672,
+              "median": 0,
+              "p75": 0.000009509856609647852,
+              "p90": 0.027925979553289154,
+              "p95": 0.06856740228277802,
+              "p99": 0.16392636110771197,
+              "max": 0.2938805448602385,
+              "mean": 0.0009915444253927876
+            },
+            "positiveNativeSupportCount": 2165,
+            "positiveNativeSupportMaterialFraction": {
+              "count": 2165,
+              "min": 0,
+              "p10": 0,
+              "p25": 0,
+              "median": 0.8068528088968421,
+              "p75": 1,
+              "p90": 1,
+              "p95": 1,
+              "p99": 1,
+              "max": 1,
+              "mean": 0.5448793944324613
+            },
+            "materialSupportVsResidenceMinusNullStrengthPearson": 0.4593689204479694
+          },
+          {
+            "label": "Q2",
+            "nativeStrengthRange": [
+              0.7424668535574585,
+              0.9955522104254362
+            ],
+            "count": 2720,
+            "residenceMinusNullStrength": {
+              "count": 2720,
+              "min": -0.17575376692782718,
+              "p10": -0.012074941768551617,
+              "p25": -0.0025646844416932213,
+              "median": 0,
+              "p75": 0.0026193385995249008,
+              "p90": 0.015220248316749285,
+              "p95": 0.027781799970262977,
+              "p99": 0.056592351644560446,
+              "max": 0.1266219872378751,
+              "mean": -0.0004987786006945381
+            },
+            "residenceMinusNullSteering": {
+              "count": 2720,
+              "min": -0.23610866510153422,
+              "p10": -0.05830222467427677,
+              "p25": -0.017872494381417775,
+              "median": 0,
+              "p75": 0.01822279461854705,
+              "p90": 0.056869488863234965,
+              "p95": 0.09151783275091128,
+              "p99": 0.1406608678762721,
+              "max": 0.23572505753690187,
+              "mean": 0.000024452016897242563
+            },
+            "positiveNativeSupportCount": 2720,
+            "positiveNativeSupportMaterialFraction": {
+              "count": 2720,
+              "min": 0,
+              "p10": 0,
+              "p25": 0.6166853141587942,
+              "median": 1,
+              "p75": 1,
+              "p90": 1,
+              "p95": 1,
+              "p99": 1,
+              "max": 1,
+              "mean": 0.7557023640452826
+            },
+            "materialSupportVsResidenceMinusNullStrengthPearson": 0.273180180120122
+          },
+          {
+            "label": "Q3",
+            "nativeStrengthRange": [
+              0.9955522104254362,
+              0.9994875726526535
+            ],
+            "count": 2720,
+            "residenceMinusNullStrength": {
+              "count": 2720,
+              "min": -0.0029816952936049246,
+              "p10": -0.0006163585746521427,
+              "p25": -0.0002602383803820274,
+              "median": -0.0000470543104068577,
+              "p75": 0.00007821519047068737,
+              "p90": 0.00027688493824507,
+              "p95": 0.000464800951097577,
+              "p99": 0.0008452900189375168,
+              "max": 0.002006903411893357,
+              "mean": -0.00012575586087386258
+            },
+            "residenceMinusNullSteering": {
+              "count": 2720,
+              "min": -0.19266844927213977,
+              "p10": -0.04756003351569989,
+              "p25": -0.018150154514961936,
+              "median": 0,
+              "p75": 0.01609945289203458,
+              "p90": 0.04557242662939437,
+              "p95": 0.06900450754806381,
+              "p99": 0.1075881618865366,
+              "max": 0.18181600376069204,
+              "mean": -0.000611089836855231
+            },
+            "positiveNativeSupportCount": 2720,
+            "positiveNativeSupportMaterialFraction": {
+              "count": 2720,
+              "min": 0,
+              "p10": 0,
+              "p25": 0.8817571701242876,
+              "median": 1,
+              "p75": 1,
+              "p90": 1,
+              "p95": 1,
+              "p99": 1,
+              "max": 1,
+              "mean": 0.8151298991414784
+            },
+            "materialSupportVsResidenceMinusNullStrengthPearson": 0.1790926509037964
+          },
+          {
+            "label": "Q4",
+            "nativeStrengthRange": [
+              0.9994875726526535,
+              1
+            ],
+            "count": 2719,
+            "residenceMinusNullStrength": {
+              "count": 2719,
+              "min": -0.00037711004141538496,
+              "p10": -0.00008947109185475366,
+              "p25": -0.000038927685704126525,
+              "median": -0.000014451544324445287,
+              "p75": -0.0000010834369567058744,
+              "p90": 0.000010773847105127743,
+              "p95": 0.00002941036258785612,
+              "p99": 0.00006952340676602553,
+              "max": 0.00016811098265923086,
+              "mean": -0.0000273624706392411
+            },
+            "residenceMinusNullSteering": {
+              "count": 2719,
+              "min": -0.154711164360164,
+              "p10": -0.0398280942634809,
+              "p25": -0.014504953480069242,
+              "median": -1.3804740766482082e-7,
+              "p75": 0.008120858783133435,
+              "p90": 0.03546358815012894,
+              "p95": 0.05489475119621065,
+              "p99": 0.09460589153059693,
+              "max": 0.15378610670288306,
+              "mean": -0.002385514896662278
+            },
+            "positiveNativeSupportCount": 2719,
+            "positiveNativeSupportMaterialFraction": {
+              "count": 2719,
+              "min": 0,
+              "p10": 0,
+              "p25": 0.2089449262079231,
+              "median": 1,
+              "p75": 1,
+              "p90": 1,
+              "p95": 1,
+              "p99": 1,
+              "max": 1,
+              "mean": 0.6791904674896958
+            },
+            "materialSupportVsResidenceMinusNullStrengthPearson": 0.03500891313702326
+          }
+        ],
+        "headroomVsAbsoluteStrengthDifferencePearson": 0.34360020090902016,
+        "positiveNativeSupportContextCount": 10324,
+        "positiveNativeSupportMaterialFraction": {
+          "count": 10324,
+          "min": 0,
+          "p10": 0,
+          "p25": 0.26915062572556775,
+          "median": 1,
+          "p75": 1,
+          "p90": 1,
+          "p95": 1,
+          "p99": 1,
+          "max": 1,
+          "mean": 0.7069979199843814
+        },
+        "positiveNativeSupportOldMaterialFraction": {
+          "count": 10324,
+          "min": 0,
+          "p10": 0,
+          "p25": 0.04198460464308793,
+          "median": 0.5565422551197516,
+          "p75": 0.8605447617039286,
+          "p90": 1,
+          "p95": 1,
+          "p99": 1,
+          "max": 1,
+          "mean": 0.5004933016086704
+        },
+        "materialSupportVsResidenceMinusNullStrengthPearson": 0.1716521690829398,
+        "materialSupportVsAbsoluteResidenceNullStrengthDifferencePearson": 0.11497374821357294,
+        "materialSupportVsAbsoluteResidenceNullSteeringDifferencePearson": 0.4189637517576903
+      }
+    },
+    "fields": {
+      "nodeSumRatioResidenceToNative": {
+        "count": 600,
+        "min": 1,
+        "p10": 1,
+        "p25": 1.0527260142085908,
+        "median": 1.3422751472980192,
+        "p75": 1.6748683682094976,
+        "p90": 1.7170993027219545,
+        "p95": 1.7359647560359543,
+        "p99": 1.7931006482691347,
+        "max": 1.8009166332799018,
+        "mean": 1.3588991286842618
+      },
+      "massMatchAbsoluteResidual": {
+        "count": 600,
+        "min": 0,
+        "p10": 0,
+        "p25": 1.6335525288013741e-7,
+        "median": 5.426195457403082e-7,
+        "p75": 0.0000011111860658274963,
+        "p90": 0.000001693148078629747,
+        "p95": 0.0000021263567759888247,
+        "p99": 0.000002654104719113093,
+        "max": 0.000003021107659151312,
+        "mean": 7.158513176364068e-7
+      },
+      "massMatchRelativeResidual": {
+        "count": 600,
+        "min": 0,
+        "p10": 0,
+        "p25": 3.527101781715374e-11,
+        "median": 1.1662171732165015e-10,
+        "p75": 2.38718403192086e-10,
+        "p90": 3.5098257869916597e-10,
+        "p95": 4.17588545566948e-10,
+        "p99": 5.24466231533482e-10,
+        "max": 6.203048493327896e-10,
+        "mean": 1.4844599413670353e-10
+      },
+      "k": {
+        "count": 600,
+        "min": 1,
+        "p10": 1,
+        "p25": 1.0527260142085908,
+        "median": 1.3422751472980192,
+        "p75": 1.6748683682094976,
+        "p90": 1.7170993027219545,
+        "p95": 1.7359647560359543,
+        "p99": 1.7931006482691347,
+        "max": 1.8009166332799018,
+        "mean": 1.3588991286842618
+      },
+      "cappedNodes": {
+        "count": 600,
+        "min": 0,
+        "p10": 0,
+        "p25": 0,
+        "median": 0,
+        "p75": 0,
+        "p90": 0,
+        "p95": 0,
+        "p99": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "cappedFractionOfPositive": {
+        "count": 600,
+        "min": 0,
+        "p10": 0,
+        "p25": 0,
+        "median": 0,
+        "p75": 0,
+        "p90": 0,
+        "p95": 0,
+        "p99": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "capRemovedSum": {
+        "count": 600,
+        "min": 0,
+        "p10": 0,
+        "p25": 0,
+        "median": 0,
+        "p75": 0,
+        "p90": 0,
+        "p95": 0,
+        "p99": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "capRemovedFractionOfTarget": {
+        "count": 600,
+        "min": 0,
+        "p10": 0,
+        "p25": 0,
+        "median": 0,
+        "p75": 0,
+        "p90": 0,
+        "p95": 0,
+        "p99": 0,
+        "max": 0,
+        "mean": 0
+      },
+      "residenceNullPearson": {
+        "count": 600,
+        "min": 0.9405188172023882,
+        "p10": 0.95236796601374,
+        "p25": 0.9578949113092577,
+        "median": 0.9763297659833892,
+        "p75": 0.9976420303318965,
+        "p90": 1,
+        "p95": 1,
+        "p99": 1,
+        "max": 1,
+        "mean": 0.9759129369393541
+      },
+      "normalizedL1ResidenceNull": {
+        "count": 600,
+        "min": 0,
+        "p10": 0,
+        "p25": 0.06401402041457177,
+        "median": 0.21672533822068887,
+        "p75": 0.3082890719591073,
+        "p90": 0.33268008624301726,
+        "p95": 0.34265456562700053,
+        "p99": 0.3535787929349236,
+        "max": 0.354913656855731,
+        "mean": 0.1914349061275129
+      },
+      "materialMeanResidenceMinusNull": {
+        "count": 600,
+        "min": null,
+        "p10": null,
+        "p25": 0.002570056729124057,
+        "median": 0.003217201376132865,
+        "p75": 0.004162354614136905,
+        "p90": 0.005252511694805008,
+        "p95": 0.005872692215149714,
+        "p99": 0.007783500914738064,
+        "max": 0.008751911667291484,
+        "mean": 0.0031875449261563895
+      },
+      "bareMeanResidenceMinusNull": {
+        "count": 600,
+        "min": -0.007084148551352128,
+        "p10": -0.004954115823038608,
+        "p25": -0.00428461668489275,
+        "median": -0.0037331136897334268,
+        "p75": -0.001138733392120814,
+        "p90": 0,
+        "p95": 0,
+        "p99": 0,
+        "max": 0,
+        "mean": -0.0030330433554575215
+      }
+    },
+    "feasibleAtEveryReadTime": true,
+    "feasibleTimeCount": 600,
+    "infeasibleTimes": [],
+    "timeCount": 600,
+    "recipientCount": 10880,
+    "interpretationLimit": "Single frozen history and serial recipient snapshots; profile differences are matched-state readouts, not ant behavior or independent trials."
+  },
+  "data": "data/locality-results.json.gz",
+  "dataSha256": "687c45a39553da389f6fda0d0f12414475cfb65f402bd486a71aabda8266b3e7"
+}

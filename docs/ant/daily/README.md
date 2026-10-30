@@ -14,6 +14,15 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-30 — Material-conditioned residence locality control
+
+[Process log](./2026-10-30-material-chemical-residence-locality.md) · [Report and mass-matched receipts](../evidence/2026-10-30-material-chemical-residence-locality/README.md)
+
+- Reused frozen native source requests, actual material masks and 600 saved recipient snapshots; no ant ticks or RNG
+- The scalar null matched residence node sums at every time without any field-cap clipping; exact native/residence probe parity held
+- **LOCALITY SUPPORTED** at native local sensor/readout level, chiefly in lower-strength, higher-headroom contexts associated with frozen material support; saturated bulk reads remain similar
+- Production unchanged; no behavioral, artistic-value or adoption claim
+
 ### 2026-10-30 — Material feedback responsibility synthesis and stopping gate
 
 [Process log](./2026-10-30-material-feedback-space.md) · [Synthesis and source inventory](../evidence/2026-10-30-material-feedback-space/README.md)
