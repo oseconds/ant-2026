@@ -1317,7 +1317,7 @@ async function verifyPlateDebugUI(page) {
 
   const defaults = { surface: false, candidate: false, source: false, exposure: false,
     plateIds: false, plateOutlines: false, plateCenterlines: false, platePickups: false,
-    pheromone: true, material: true };
+    pheromone: false, material: true };
   const overlays = panel.locator('input[data-ant-overlay]');
   assert.deepEqual(await overlays.evaluateAll(nodes => nodes.map(node => node.dataset.antOverlay)),
     Object.keys(defaults), 'Plate Debug exposes all ten overlay controls');
