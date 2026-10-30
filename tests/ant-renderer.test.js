@@ -35,6 +35,7 @@ test('AntRenderer paints equal agent marks and a cached pheromone field without 
   const savedValues = [...values];
   Object.freeze(snapshot.agents);
   for (const agent of snapshot.agents) Object.freeze(agent);
+  renderer.setDebugOptions({ pheromone: true });
   renderer.render(snapshot);
   const circles = calls.filter(([name]) => name === 'circle');
   assert.equal(circles.length, 3);
