@@ -474,7 +474,10 @@ async function checkControlReplay() {
     const replay = await runScenario('control', output);
     assert.equal(replay.initialStateSha256, savedSummary.initialStateSha256);
     assert.deepEqual(replay.finalRng, savedSummary.finalRng);
-    const comparable = value => { const { wallSeconds, ...stable } = value; return stable; };
+    const comparable = value => {
+      const { wallSeconds, ...stable } = value;
+      return JSON.parse(JSON.stringify(stable));
+    };
     assert.deepEqual(comparable(replay), comparable(savedSummary), 'control run summary matches except wall-clock duration');
     for (const file of ['auxiliary.json.gz', 'seed20261005-G-raw.json.gz',
       ...CHECKPOINTS.map(seconds => `seed20261005-G-${seconds}s.json.gz`)])
