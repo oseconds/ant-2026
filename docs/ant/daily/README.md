@@ -2,6 +2,14 @@
 
 **Canonical chronology: `docs/ant/daily/`**
 
+### 2026-10-31 — Recruitment heading: endogenous flow vs isotropic
+
+[Daily record](./2026-10-31-recruitment-heading-flow-vs-isotropic.md) · [Comparison evidence](../evidence/2026-10-31-recruitment-heading-flow-vs-isotropic/REPORT.md)
+
+- Completed the single authorized isotropic vs endogenous outgoing-flow heading comparison from the accepted-spawn GO gate
+- Flow-conditioned heading was directly used in 18.9–22.9% of accepted spawns across all ten windows per seed; short-horizon transport and angular/spatial occupancy differed from isotropic
+- Decision: **FLOW DISTINCT / WORTH ARTIST REVIEW**; no production adoption, Residence work, PR, or merge
+
 이 디렉터리는 상태 요약이 아니라 **실험이 어떤 질문에서 출발했고, 무엇을 관찰한 뒤 어떤 판단으로 넘어갔는지**를 날짜별로 남긴다.
 
 ## Source roles
