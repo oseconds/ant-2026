@@ -14,6 +14,16 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-30 — Material-feedback A/D production adoption
+
+[Daily record](./2026-10-30-material-feedback-ad-production-adoption.md) · [Adoption evidence](../evidence/2026-10-30-material-feedback-ad-production-adoption/README.md)
+
+- Adopted production 10% slowdown + A native turn-rate ceiling + D same-flow headway via PR #10
+- Direct responsibilities remained DISTINCT in the fixed 600 s integration screen
+- Carries blocked-frame increase (+13.17%) forward as an explicit integration cost
+- Material `L` remains an authored tested conditioning coordinate; MULTI-AXIS audit still limits its physical interpretation
+- Next bounded pass: Chemical Residence on top of the adopted speed/A/D baseline
+
 ### 2026-10-25 — Candidate G production adoption
 
 [Adoption record](../evidence/2026-10-25-g-production-adoption/README.md)
