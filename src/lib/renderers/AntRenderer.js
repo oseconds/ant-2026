@@ -25,7 +25,7 @@ export class AntRenderer {
         this.materialImage = null;
         this.materialRevision = null;
         this.debugOptions = {
-            pheromone: true,
+            pheromone: false,
             material: true,
             surface: false,
             candidate: false,
