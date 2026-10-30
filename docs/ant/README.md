@@ -1,6 +1,6 @@
 # ANT — Current Architecture, Evidence and Research Boundary
 
-**Current repository state: 2026-10-25**
+**Current repository state: 2026-10-30**
 
 이 문서는 ANT의 **현재 verified state**를 위한 GitHub-side hub다. 과정은 [daily logs](daily/README.md), 실험별 원본과 재현 자료는 [evidence packages](evidence/)에 둔다.
 
@@ -13,8 +13,10 @@ movement / realized travel
 chemical memory + mechanical support / repeat gates
 → TrailPlateBirth (current authored corridor-to-Plate formation law)
 → MaterialStratigraphy
-→ current-cell local column layer count (`layerCountByCell`)
-→ bounded desiredSpeed resistance
+→ current-cell tick-entry local column layer count (`layerCountByCell`)
+├─→ bounded desiredSpeed resistance
+├─→ bounded native turn-rate ceiling
+└─→ bounded same-flow comfortable-headway expansion
 → later ant movement / environmental history
 
 MaterialStratigraphy
@@ -27,7 +29,7 @@ current/recent proximity
 (read-only)
 ```
 
-Founder-refined movement baseline is `e38450ce11f99e63f5ab0cb6e8e8ee4281fcadd9`. Retained-history locomotion resistance is a separately tested and explicitly adopted production exception; it was not part of the founder baseline.
+Founder-refined movement baseline is `e38450ce11f99e63f5ab0cb6e8e8ee4281fcadd9`. Retained-history material feedback is a separately tested production layer: the previously adopted desired-speed resistance is now joined by adopted A turn-rate and D same-flow-headway conditions. These were not part of the founder baseline.
 
 S0/S1 read-only social observation pass의 구현/evidence 흐름:
 
@@ -40,7 +42,7 @@ af9c417  Record ANT social graph baseline evidence
 
 그 이후 커밋은 daily/documentation을 추가할 수 있으므로 **repository HEAD와 latest implementation baseline을 구분**한다.
 
-## Review handoff — decisions, baselines, web experience, viewing evidence (2026-10-25)
+## Review handoff — decisions, baselines, web experience, viewing evidence (2026-10-30)
 
 이 절은 **독립 검토자가 먼저 읽을 현재 판정과 자료 범위**를 연결한다. 아래 verdict는 한정된 실험의 현재 판정이며, 실험 당시 작성된 README의 시점별 표현을 소급 변경하지 않는다. `docs/ant/README.md`와 현 `main` 구현이 현재 상태의 기준이고, branch-only 연구는 production 채택과 구분한다.
 
@@ -48,7 +50,7 @@ af9c417  Record ANT social graph baseline evidence
 
 | 질문 | 현재 판정 · 적용 범위 | 근거 | 다시 열 조건 |
 | --- | --- | --- | --- |
-| G pheromone은 production인가? | **ADOPTED.** 316×316 Gaussian field. 고정 입력 parity 및 세 seed의 저장된 G 600 s 궤적 일치가 확인됐다. 자연 경로의 미학·장기 전시 성능까지 검증된 것은 아니다. | [G adoption](evidence/2026-10-25-g-production-adoption/README.md) · [validation](evidence/2026-10-25-g-production-adoption/VALIDATION.md) | 새로운 G production 결함; 별도로 natural route persistence/turnover에 관한 사전 정의된 관찰 |
+| retained-material movement feedback은 production인가? | **ADOPTED.** Production은 tick-entry `L`을 한 번 읽어 기존 10% desired-speed resistance, A native turn-rate ceiling, D same-flow comfortable headway에 재사용한다. A/D는 600 s integration screen에서 slowdown 아래에서도 direct consumer 책임이 DISTINCT했고 등록된 invariant 위반은 없었다. blocked frames +13.17%는 열린 production cost로 유지한다. | [A/D adoption](evidence/2026-10-30-material-feedback-ad-production-adoption/README.md) · [candidate evidence](evidence/2026-10-30-material-feedback-ad-production-candidate/REPORT.md) | localized long-lived jam이 확인되거나, 후속 Residence/multi-feedback integration에서 movement/flow collapse가 나타나는 경우 |\n| G pheromone은 production인가? | **ADOPTED.** 316×316 Gaussian field. 고정 입력 parity 및 세 seed의 저장된 G 600 s 궤적 일치가 확인됐다. 자연 경로의 미학·장기 전시 성능까지 검증된 것은 아니다. | [G adoption](evidence/2026-10-25-g-production-adoption/README.md) · [validation](evidence/2026-10-25-g-production-adoption/VALIDATION.md) | 새로운 G production 결함; 별도로 natural route persistence/turnover에 관한 사전 정의된 관찰 |
 | Plate의 형성은 자생적 물질 법칙인가? | `TrailPlateBirth`는 현재 **authored source→boundary corridor selection law**다. 행동의 흔적을 기록하지만 어떤 역사를 영구 물질로 선택할지는 저술되어 있다. | [movement/material morphology audit](evidence/2026-10-08-movement-material-morphology/README.md) · [production source](../../src/lib/agents/ant/TrailPlateBirth.js) | 현재 G history를 선택기 전후로 계량했을 때 작품에 중요한 구체적 정보 손실이 확인되는 경우 |
 | 자연 Plate의 차이를 들을 수 있는가? | **2026-10-18 완료**: 자연 Plate 12개의 선택된 p50 비교 **6/6**에서 단일 청취자가 `different=yes`, 숨겨진 A/A는 `no`. Isolated/level-matched 조건이며 일반적 인식률이나 live mix 청취를 증명하지 않는다. | [original subjective export](subjective-listening/2026-10-13-plate-sonic-individuality-subjective-listening.json) · [as-of measurement](evidence/2026-10-13-plate-sonic-individuality/README.md) | 동일 Plate의 다른 접촉 위치 인식, 다른 청취자, 실제 dense mix에서 구분 가능성을 묻는 별도 질문 |
 | Synthetic geometry의 차이를 들을 수 있는가? | **2026-10-18 완료**: 실제 비교 **5/6**에서 단일 청취자가 차이를 보고. A/A raw export는 `different=yes / confidence=5` 그대로, 별도 interpretation-only correction에서 의도한 응답을 `no / 5`로 기록한다. | [raw export](subjective-listening/2026-10-18-synthetic-plate-shape-capability-subjective-listening.json) · [correction](subjective-listening/2026-10-18-synthetic-plate-shape-capability-corrections.json) · [prepared experiment](evidence/2026-10-18-synthetic-plate-shape-capability/README.md) | 일반화·semantic shape 식별·실제 mixed-world 청취를 주장할 때 |
@@ -173,11 +175,23 @@ gait
 - buried material은 reciprocal coupling으로만 반응
 - technical ceiling은 history eviction semantics가 아님
 
-Production also reads the current cell's public `layerCountByCell` value L at tick entry. This is the local stratigraphic column count, including its top layer and any underlying layers; the controller reads this aggregate scalar and does not use individual buried-Plate identities. It applies the adopted authored local-history condition:
+Production reads one public `layerCountByCell` value `L` per active ant at tick entry and reuses that same local-history coordinate across three adopted movement consumers:
 
-    m(L) = 1 - 0.10 * (1 - exp(-L / 4))
+```text
+m(L)  = 1 - 0.10 * (1 - exp(-L / 4))
+qA(L) = 1 - 0.50 * (1 - exp(-L / 4))
+hD(L) = 1 + 0.50 * (1 - exp(-L / 4))
+```
 
-It multiplies the existing final `desiredSpeed` once, after steering/turning/crowding/following/hesitation and before `targetSpeed` / `accelerateToward`. L = 0 is exactly 1; the maximum slowdown approaches 10%. Later contacts, births and topology changes in the same tick apply from the next tick. This is a bounded authored world law, not a measured friction value or a claim of physical sensing of buried Plates. It does not change heading, steering, targets, attraction/avoidance or Plate-birth qualification, and the A/B did not support a consistent Plate-birth or coverage direction. [Adoption conformance](evidence/2026-10-12-retained-material-locomotion-adoption/README.md) · [causal A/B evidence](evidence/2026-10-11-retained-material-locomotion-ab-final/README.md).
+- **Desired-speed resistance:** `m(L)` multiplies the existing final `desiredSpeed` once, after steering/turning/crowding/following/hesitation and before `targetSpeed` / `accelerateToward`. Its asymptotic slowdown is 10%.
+- **A — angular maneuverability:** the native requested heading is unchanged; only the native maximum turn-rate ceiling is conditioned to `4.5 rad/s × qA(L)`.
+- **D — same-flow headway:** only the native `0.4 s` speed-based comfortable-headway term is multiplied by `hD(L)`. Same-flow classification, personal-space floor, following response, opposing/emergency handling, route intent and swept collision protection remain native.
+
+For all three links `L=0` is exact native behavior. Later contacts, births and topology changes in the same tick therefore apply from the next tick. These are bounded authored world laws, not measured friction/traction values and not a claim that ants physically sense buried Plates. They add no material heading vector, attraction/avoidance target or explicit material mode switch.
+
+The A/D production adoption followed the fixed 20261005 / 600 s integration candidate: the existing slowdown remained correctly applied once, A changed 427,177 / 442,962 material turn calls, D changed 21,694 / 40,418 material-exposed same-flow final targets after slowdown, and no registered finite/cap/collision/population/time/field invariant violation was observed. Blocked frames increased 9,468 → 10,715 (+13.17%); this remains an open production cost rather than a demonstrated pathology. [A/D production adoption](evidence/2026-10-30-material-feedback-ad-production-adoption/README.md) · [candidate evidence](evidence/2026-10-30-material-feedback-ad-production-candidate/REPORT.md).
+
+The separate material-information audit remains **MULTI-AXIS**: `L` nearly compresses burial depth in the observed history, but not exposed Plate age/birth properties, current compaction or cumulative foot-load context. Thus `L` is the currently tested and adopted conditioning coordinate for these links, not an established final physical or artistic descriptor. [Material information axes](evidence/2026-10-30-material-information-axes/REPORT.md).
 
 A three-seed, 600 s pre-cohort diagnostic found that layers born before every currently live ant remained in later ants' occupied columns and contributed through the same aggregate `L` law (46.07% of active ant-time overall; 42.38–50.21% by seed). This is a current-state cross-cohort observation, not attribution to a particular retired ant or evidence of buried-layer sensing. [Pre-cohort evidence](evidence/2026-10-12-pre-cohort-retained-history/README.md).
 
