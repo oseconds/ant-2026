@@ -605,6 +605,13 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 - Most domains were 1–2 cells, while multi-anchor families and a larger tail persisted; nesting and split/merge made the raw census more numerous than distinct spatial regions
 - Decision: `DOMAIN AVAILABILITY EXISTS BUT IS TOO UNDERDETERMINED`; no selector, proposer, capture rule, UPDATE or BODY was adopted
 
+### 2026-10-30 — Material feedback A+D composition
+
+[2026-10-30-material-feedback-ad-composition.md](./2026-10-30-material-feedback-ad-composition.md) · [full evidence](../evidence/2026-10-30-material-feedback-ad-composition/REPORT.md)
+
+- Reused frozen N/A/D current-G/H0 evidence and ran one new AD world; direct same-state turn and following-target effects remained distinct and co-occurred without a shared material mode
+- Decision: COMPLEMENTARY at direct-consumer level only; no production adoption, candidate sweep, additional seed, or audio pass
+
 ## Logging rule
 
 새 과정 로그는 `YYYY-MM-DD-topic.md` 형식으로 추가한다.
