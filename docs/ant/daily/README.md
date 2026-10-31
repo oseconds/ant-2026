@@ -2,6 +2,16 @@
 
 **Canonical chronology: `docs/ant/daily/`**
 
+### 2026-11-01 — B/C provenance stratigraphy prototype
+
+[Daily record](./2026-11-01-bc-provenance-stratigraphy-prototype.md) · [Evidence](../evidence/2026-10-31-bc-provenance-stratigraphy-prototype/REPORT.md)
+
+- Reused the exact 2,089 B/C events and frozen material/birth histories; no new natural trajectory
+- Virtual provenance remains spatially mixed, exclusive, and chronologically ordered across all three seeds
+- Raw event counts cross the production 256-Plate ceiling reference at 247–272 s; current births were 23–37 per seed
+- Decision: **COMPLEMENTARY BUT OVERPROLIFIC**; real materialization needs a separate commit/arbitration question
+- No Plate, production material state, competition, or Residence work
+
 ### 2026-10-31 — B/C dual-material shadow maturation
 
 [Daily record](./2026-10-31-bc-dual-material-shadow.md) · [Evidence](../evidence/2026-10-31-bc-dual-material-shadow/REPORT.md)
