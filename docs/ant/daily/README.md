@@ -2,6 +2,15 @@
 
 **Canonical chronology: `docs/ant/daily/`**
 
+### 2026-10-31 — Materialization UPDATE: fixed-nucleus X recapture
+
+[Daily record](./2026-10-31-materialization-fixed-nucleus-update.md) · [Evidence report](../evidence/2026-10-31-materialization-fixed-nucleus-update/REPORT.md)
+
+- Reused the exact frozen P1/P2 histories and compared production I, stateless X, and fixed-START-nucleus X re-capture
+- The START nucleus remained valid; allocation had no effect in P1 and changed four P2 transitions
+- Most fixed-X losses were still in E but no longer in F; a separate incumbency rule is not justified by this diagnostic
+- Decision: **D — MIXED**; no production law, Residence behavior, PR, or merge
+
 ### 2026-10-31 — Recruitment heading: endogenous flow vs isotropic
 
 [Daily record](./2026-10-31-recruitment-heading-flow-vs-isotropic.md) · [Comparison evidence](../evidence/2026-10-31-recruitment-heading-flow-vs-isotropic/REPORT.md)
