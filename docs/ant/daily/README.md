@@ -22,6 +22,16 @@ Daily log는 현재 상태 문서를 덮어쓰지 않는다. 과거 날짜의 �
 
 ## Logs
 
+### 2026-10-31 — Outgoing-flow recruitment heading production adoption
+
+[Daily record](./2026-10-31-recruitment-heading-flow-production-adoption.md) · [Adoption evidence](../evidence/2026-10-31-recruitment-heading-flow-production-adoption/README.md)
+
+- Author accepted the matched visual comparison and adopted endogenous outgoing-flow recruitment heading
+- Removed the fixed north spawn bias; exact isotropic fallback remains when local outgoing flow is unavailable
+- Preserved spawn position/cadence/clearance and all living-ant steering/material/formation laws
+- Carries increased entrance clearance rejection / blocked placement as an explicit production observation
+- Chemical Residence returns as the next bounded feedback question
+
 ### 2026-10-30 — Material-feedback A/D production adoption
 
 [Daily record](./2026-10-30-material-feedback-ad-production-adoption.md) · [Adoption evidence](../evidence/2026-10-30-material-feedback-ad-production-adoption/README.md)
