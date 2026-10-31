@@ -7,13 +7,14 @@ import { runInNewContext } from 'node:vm';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const BASE = join(ROOT, 'docs/ant/evidence/2026-10-31-materialization-e-incumbent-eligibility');
-const INPUT = join(BASE, 'data/frozen-inputs.json.gz');
-const REGISTERED_X = join(BASE, 'data/registered-x-reference.json');
-const PRIOR_B = join(BASE, 'data/prior-b-reference.json');
-const UPDATE_PARITY = join(BASE, 'data/update-source-parity.json');
-const CAPTURE_PARITY = join(BASE, 'data/capture-source-parity.json');
-const STOP_WITNESS = join(BASE, 'data/stop-witness.json');
+const INPUT_BASE = join(ROOT, 'docs/ant/evidence/2026-10-31-materialization-e-incumbent-eligibility');
+const BASE = join(ROOT, 'docs/ant/evidence/2026-10-31-materialization-e-bounded-incumbency');
+const INPUT = join(INPUT_BASE, 'data/frozen-inputs.json.gz');
+const REGISTERED_X = join(INPUT_BASE, 'data/registered-x-reference.json');
+const PRIOR_B = join(INPUT_BASE, 'data/prior-b-reference.json');
+const UPDATE_PARITY = join(INPUT_BASE, 'data/update-source-parity.json');
+const CAPTURE_PARITY = join(INPUT_BASE, 'data/capture-source-parity.json');
+const PREVIOUS_STOP_WITNESS = join(INPUT_BASE, 'data/stop-witness.json');
 const SOURCE = join(ROOT, 'src/lib/agents/ant/TrailPlateBirth.js');
 const GRID = 96;
 const SCALE = GRID - 1;
@@ -25,12 +26,15 @@ const CURRENT_SOURCE_BLOB = '238cc365f2602dc6a22091d69237b88962825a13';
 const CURRENT_SOURCE_RAW_SHA = '283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860';
 const CURRENT_SOURCE_LF_SHA = 'cb6c28081264d672d6393b64f0d0dc9fdea017fb1fda261ab8a87d879f031a67';
 const PREVIOUS_RESULT_COMMIT = '3ddf7a2fb08e6a91ce71f9edf3ec4c7c8237e386';
+const PREVIOUS_STOP_BRANCH = 'codex/ant-materialization-e-eligibility-20261031';
+const PREVIOUS_STOP_COMMIT = '7118412b1df3f7155859fd0a9eb4394b01ba0efd';
 const PREVIOUS_INPUT_SHA = 'ec56df45a4e346f7ea79d3e368654b788dc08e8a9c4d40009df8fd57a80cd864';
 const PREVIOUS_REGISTERED_X_SHA = '3315321b5bbe0599949d742e794236de1b855b98fe96669a6f1b5244764c0345';
 const PREVIOUS_B_ANALYSIS_SHA = '0535b9aa419a6066a946e2a37e8e2bf56c903dd64532162c96544cc96a597f2c';
 const PREVIOUS_B_REFERENCE_SHA = '395ec41625c9806f40321a3511b4230e04b30d03e73e62d2d463df3f5211ff07';
 const UPDATE_PARITY_SHA = '9345bdfc776823873b54a3b6f29e6453537fa261107c8f88c1742b3591359719';
 const CAPTURE_PARITY_SHA = '48f30bed540f2db400700504c2b09b35737acc4965c9e7b278f5cc2cc165bd68';
+const PREVIOUS_STOP_WITNESS_SHA = 'c802ddac0f0b3d71b8f0895f1014445a93711dbeffd78092e210c9a7a6f3e3e5';
 const HISTORY_PACKET_SHA = '909516b870b4ddce04ab661c4e7cd4113c52dc16ed35e414142fceb2cff0b1bc';
 const HISTORY_JSON_SHA = 'fba546769a1ddc552247a93f5c2d3719193b8d4785ed672442dcae1960e25339';
 
@@ -89,35 +93,16 @@ function maxDSupportedNucleus(F, D, neighbors) {
 function capture(mask, nucleus, neighbors) {
   assert.ok(mask[nucleus], 'capture nucleus must be in admissible set');
   const visited = new Uint8Array(COUNT), queue = [nucleus];
-  const parent = new Int32Array(COUNT);
-  parent.fill(-1);
   visited[nucleus] = 1;
   for (let head = 0; head < queue.length; head += 1) {
     for (const next of neighbors(queue[head])) {
       if (mask[next] && !visited[next] && diskMember(next, nucleus)) {
         visited[next] = 1;
-        parent[next] = queue[head];
         queue.push(next);
       }
     }
   }
-  return { cells: indices(visited), visited, parent };
-}
-function pathToRoot(parent, cell, root) {
-  const path = [cell];
-  let current = cell;
-  while (current !== root) {
-    current = parent[current];
-    assert.ok(current >= 0, 'treatment path reaches n0');
-    path.push(current);
-  }
-  return path.reverse();
-}
-function stopForSignature(witness) {
-  const error = new Error('locked Q-only signature violation');
-  error.name = 'LockedQOnlySignatureViolation';
-  error.witness = witness;
-  throw error;
+  return { cells: indices(visited), visited };
 }
 function setCompare(previous, current) {
   if (previous === null || current === null) return { status: 'unavailable' };
@@ -239,12 +224,20 @@ function summarizeCounts(values) {
   };
 }
 function validateInputs(inputBytes, input, registeredBytes, registered, priorBBytes, priorB,
-  updateParityBytes, updateParity, captureParityBytes, captureParity, sourceRaw, sourceText) {
+  updateParityBytes, updateParity, captureParityBytes, captureParity, stopBytes, previousStop,
+  sourceRaw, sourceText) {
   assert.equal(sha(inputBytes), PREVIOUS_INPUT_SHA, 'exact previous frozen-input packet');
   assert.equal(sha(registeredBytes), PREVIOUS_REGISTERED_X_SHA, 'exact registered-X reference');
   assert.equal(sha(priorBBytes), PREVIOUS_B_REFERENCE_SHA, 'exact prior B reference');
   assert.equal(sha(updateParityBytes), UPDATE_PARITY_SHA, 'exact prior UPDATE parity receipt');
   assert.equal(sha(captureParityBytes), CAPTURE_PARITY_SHA, 'exact prior capture parity receipt');
+  assert.equal(sha(stopBytes), PREVIOUS_STOP_WITNESS_SHA, 'exact previous stop witness');
+  assert.equal(previousStop.status, 'STOPPED_LOCKED_Q_ONLY_SIGNATURE_VIOLATION');
+  assert.equal(previousStop.lockedFailure.event, 'P2');
+  assert.equal(previousStop.lockedFailure.signature.currentF, true);
+  assert.equal(previousStop.lockedFailure.signature.outsideCurrentB, true);
+  assert.equal(previousStop.lockedFailure.signature.previousQMember, true);
+  assert.equal(previousStop.lockedFailure.signature.currentE, true);
   assert.equal(input.schema, 'ant-fixed-nucleus-update-input-v1');
   assert.equal(input.source.gzipSha256, HISTORY_PACKET_SHA);
   assert.equal(input.source.rawJsonSha256, HISTORY_JSON_SHA);
@@ -276,7 +269,7 @@ function validateInputs(inputBytes, input, registeredBytes, registered, priorBBy
   assert.equal(registered.events.reduce((sum, event) => sum + event.anchors.length, 0), 10);
   return { ops: productionFunctions(sourceText), updateParity, captureParity };
 }
-function eventAnalysis(event, eventIndex, priorEvent, registeredEvent, ops, sourceParity) {
+function eventAnalysis(event, priorEvent, registeredEvent, ops, sourceParity) {
   assert.equal(event.id, priorEvent.id);
   assert.equal(event.frames.length, 21);
   assert.equal(event.frames[0].timeMs, priorEvent.startTimeMs);
@@ -336,8 +329,9 @@ function eventAnalysis(event, eventIndex, priorEvent, registeredEvent, ops, sour
       if (i > 0 && previousQ) {
         for (const cell of previousQ) if (frame.E[cell] && diskMember(cell, n0)) incumbent[cell] = 1;
       }
+      const freshB = b === null ? null : new Set(b);
       for (let cell = 0; cell < COUNT; cell += 1) {
-        if (diskMember(cell, n0) && (frame.F[cell] || incumbent[cell])) admissible[cell] = 1;
+        if (diskMember(cell, n0) && (freshB?.has(cell) || incumbent[cell])) admissible[cell] = 1;
       }
     }
     const treatmentNucleusInAdmissible = !!admissible[n0];
@@ -345,74 +339,48 @@ function eventAnalysis(event, eventIndex, priorEvent, registeredEvent, ops, sour
       firstInvalid = { anchorIndex: i, timeMs: frame.timeMs };
       stopped = true;
     }
-    let q = null, qVisited = null, qParent = null;
+    let q = null, qVisited = null;
     if (!stopped) {
       if (i === 0) {
         q = b;
         qVisited = new Uint8Array(COUNT);
         for (const cell of q) qVisited[cell] = 1;
-        qParent = new Int32Array(COUNT);
-        qParent.fill(-1);
       } else {
         const captured = capture(admissible, n0, ops.neighbors);
         q = captured.cells;
         qVisited = captured.visited;
-        qParent = captured.parent;
-      }
-    }
-    if (b !== null && q !== null) {
-      const bSet = new Set(b), previousQSet = previousQ === null ? null : new Set(previousQ);
-      for (const cell of q) {
-        if (bSet.has(cell)) continue;
-        const signature = {
-          previousQMember: !!previousQSet?.has(cell), currentE: !!frame.E[cell],
-          currentF: !!frame.F[cell], connectedThroughAdmissibleGraph: !!qVisited[cell],
-          outsideCurrentB: !bSet.has(cell), withinDisk: diskMember(cell, n0)
-        };
-        if (!signature.previousQMember || !signature.currentE || signature.currentF
-          || !signature.connectedThroughAdmissibleGraph || !signature.withinDisk) {
-          const path = pathToRoot(qParent, cell, n0);
-          stopForSignature({
-            event: event.id, anchorIndex: i, timeMs: frame.timeMs, nucleus: n0, cell,
-            nucleusEdgeBearingInCurrentF: edgeBearing(frame.F, n0, ops.neighbors), signature,
-            pathFromN0ThroughAdmissibleGraph: path.map(pathCell => ({
-              cell: pathCell, currentF: !!frame.F[pathCell], currentE: !!frame.E[pathCell],
-              previousQ: !!previousQSet?.has(pathCell),
-              incumbentOnly: !!previousQSet?.has(pathCell) && !!frame.E[pathCell] && !frame.F[pathCell],
-              distanceFromNucleus: Math.hypot(point(pathCell).x - point(n0).x,
-                point(pathCell).y - point(n0).y)
-            })),
-            priorBSize: b.length, treatmentQSize: q.length,
-            currentFComponentExcludesCell: !bSet.has(cell),
-            priorBExactAnchorsValidated: (eventIndex * 21) + bReproduction.length,
-            currentFExactAnchorsValidated: (eventIndex * 21) + fReproduction.length,
-            exactStartNucleiValidated: eventIndex + 1,
-            registeredStatelessXAnchorsValidated: (eventIndex * 5) + registeredXMatches.length,
-            priorSourceParity: sourceParity,
-            interpretationStopped: true
-          });
-        }
       }
     }
     const state = {
       anchorIndex: i, timeMs: frame.timeMs, nucleusValidInF: validF,
       treatmentNucleusInAdmissible, admissibleSize: indices(admissible).length,
       incumbentCandidateSize: indices(incumbent).length, B: b, Q: q,
-      admissible, qVisited, qParent, sequenceStatus: stopped ? 'NUCLEUS_INVALID_STOP' : 'ACTIVE'
+      admissible, qVisited, sequenceStatus: stopped ? 'NUCLEUS_INVALID_STOP' : 'ACTIVE'
     };
     states.push(state);
     previousQ = q === null ? null : new Set(q);
   }
   const anchorRows = [];
   const transitionRows = [], transitionReceipts = [];
-  const exitedQ = new Map(), reentriesViaF = [], blockedWithoutFreshF = [];
+  const exitedQ = new Map(), reentriesViaB = [], blockedWithoutFreshB = [];
   let reentryChecks = 0;
+  const startQ = new Set(states[0].Q);
   for (let i = 0; i < frames.length; i += 1) {
     const frame = frames[i], state = states[i], prevState = states[i - 1] ?? null;
     const bSet = state.B === null ? null : new Set(state.B);
     const qSet = state.Q === null ? null : new Set(state.Q);
-    const prevQSet = prevState?.Q === null || !prevState ? null : new Set(prevState.Q);
+    const prevQSet = !prevState ? new Set() : prevState.Q === null ? null : new Set(prevState.Q);
     const qOnly = bSet && qSet ? sorted([...qSet].filter(cell => !bSet.has(cell))) : [];
+    const newlyEntered = qSet && prevQSet
+      ? sorted([...qSet].filter(cell => !prevQSet.has(cell))) : [];
+    const enteredThroughB = bSet ? newlyEntered.filter(cell => bSet.has(cell)) : [];
+    const enteredOutsideB = newlyEntered.filter(cell => !bSet?.has(cell));
+    if (qSet) {
+      assert.equal(enteredThroughB.length, newlyEntered.length,
+        event.id + ' fresh ingress must come through current B at anchor ' + i);
+      assert.equal(enteredOutsideB.length, 0,
+        event.id + ' no incumbent bridge may admit new structure outside current B at anchor ' + i);
+    }
     const directSignature = [];
     if (qOnly.length) {
       assert.ok(i > 0 && prevQSet, event.id + ' Q-only cells require previous Q');
@@ -421,56 +389,34 @@ function eventAnalysis(event, eventIndex, priorEvent, registeredEvent, ops, sour
           cell, previousQMember: prevQSet.has(cell), currentE: !!frame.E[cell],
           currentF: !!frame.F[cell], connectedThroughAdmissibleGraph: !!state.qVisited[cell],
           admissible: !!state.admissible[cell],
+          class: frame.F[cell] ? 'B_F_DISCONNECTED' : 'A_E_ONLY',
           distanceFromNucleus: Math.hypot(point(cell).x - point(n0).x, point(cell).y - point(n0).y)
         };
         assert.ok(signature.previousQMember, event.id + ' Q-only must belong to previous Q');
         assert.ok(signature.currentE, event.id + ' Q-only must remain E-qualified');
-        assert.ok(!signature.currentF, event.id + ' Q-only must be absent from current F');
         assert.ok(signature.connectedThroughAdmissibleGraph && signature.admissible,
           event.id + ' Q-only must connect through current treatment admissibility');
-        if (signature.currentF) {
-          const path = pathToRoot(state.qParent, cell, n0);
-          stopForSignature({
-            event: event.id, anchorIndex: i, timeMs: frame.timeMs, nucleus: n0, cell,
-            signature: {
-              previousQMember: signature.previousQMember, currentE: signature.currentE,
-              currentF: signature.currentF, connectedThroughAdmissibleGraph: signature.connectedThroughAdmissibleGraph,
-              outsideCurrentB: !bSet.has(cell), withinDisk: diskMember(cell, n0)
-            },
-            pathFromN0ThroughAdmissibleGraph: path.map(pathCell => ({
-              cell: pathCell, currentF: !!frame.F[pathCell], currentE: !!frame.E[pathCell],
-              previousQ: prevQSet.has(pathCell),
-              incumbentOnly: !!prevQSet.has(pathCell) && !!frame.E[pathCell] && !frame.F[pathCell],
-              distanceFromNucleus: Math.hypot(point(pathCell).x - point(n0).x,
-                point(pathCell).y - point(n0).y)
-            })),
-            priorBSize: state.B.length, treatmentQSize: state.Q.length,
-            currentFComponentExcludesCell: !bSet.has(cell),
-            priorBExactAnchorsValidated: (eventIndex * 21) + 21,
-            currentFExactAnchorsValidated: (eventIndex * 21) + 21,
-            registeredStatelessXAnchorsValidated: 10,
-            interpretationStopped: true
-          });
-        }
+        assert.ok(signature.distanceFromNucleus <= RADIUS + EPSILON,
+          event.id + ' Q-only stays inside fixed radius');
+        assert.ok(!(signature.currentF && !signature.previousQMember),
+          event.id + ' forbidden current-F ingress outside B');
         directSignature.push(signature);
       }
     }
     if (bSet && qSet) {
       for (const cell of bSet) assert.ok(qSet.has(cell), event.id + ' treatment must contain fresh fixed X');
-      const qOnlyNotF = [...qSet].filter(cell => !frame.F[cell]);
-      assert.equal(qOnly.length, qOnlyNotF.length, event.id + ' Q-only equals incumbent-only membership');
       for (const cell of qSet) assert.ok(frame.E[cell], event.id + ' every Q member remains E-qualified');
     }
     if (qSet) {
       for (const [cell, exitAnchor] of exitedQ) {
         reentryChecks += 1;
         if (qSet.has(cell)) {
-          assert.ok(frame.F[cell], event.id + ' cell exited Q at ' + exitAnchor
-            + ' and may re-enter only through current F at anchor ' + i + ' (cell ' + cell + ')');
-          reentriesViaF.push({ cell, exitedAtAnchor: exitAnchor, anchorIndex: i, timeMs: frame.timeMs });
+          assert.ok(bSet?.has(cell), event.id + ' cell exited Q at ' + exitAnchor
+            + ' and may re-enter only through current B at anchor ' + i + ' (cell ' + cell + ')');
+          reentriesViaB.push({ cell, exitedAtAnchor: exitAnchor, anchorIndex: i, timeMs: frame.timeMs });
           exitedQ.delete(cell);
-        } else if (frame.E[cell] && !frame.F[cell]) {
-          blockedWithoutFreshF.push({ cell, anchorIndex: i, timeMs: frame.timeMs });
+        } else if (frame.E[cell] && !bSet?.has(cell)) {
+          blockedWithoutFreshB.push({ cell, anchorIndex: i, timeMs: frame.timeMs });
         }
       }
     }
@@ -486,6 +432,15 @@ function eventAnalysis(event, eventIndex, priorEvent, registeredEvent, ops, sour
     const previousECount = prevQSet ? [...prevQSet].filter(cell => frame.E[cell]).length : null;
     const qOnlyDegrees = qMetrics?.degrees ?? {};
     const qOnlyArticulation = new Set(qMetrics?.articulationCells ?? []);
+    const classACells = directSignature.filter(row => row.class === 'A_E_ONLY').map(row => row.cell);
+    const classBCells = directSignature.filter(row => row.class === 'B_F_DISCONNECTED').map(row => row.cell);
+    const startQSurvival = {
+      total: startQ.size,
+      stillE: [...startQ].filter(cell => frame.E[cell]).length,
+      stillF: [...startQ].filter(cell => frame.F[cell]).length,
+      stillB: bSet ? [...startQ].filter(cell => bSet.has(cell)).length : null,
+      stillQ: qSet ? [...startQ].filter(cell => qSet.has(cell)).length : null
+    };
     anchorRows.push({
       anchorIndex: i, timeMs: frame.timeMs, seconds: frame.timeMs / 1000,
       nucleus: { index: n0, validInCurrentF: state.nucleusValidInF,
@@ -495,15 +450,24 @@ function eventAnalysis(event, eventIndex, priorEvent, registeredEvent, ops, sour
       sizes: { E: indices(frame.E).length, F: indices(frame.F).length, productionI: I.length,
         localEInsideDisk: localE, B: state.B?.length ?? null, Q: state.Q?.length ?? null },
       memberships: { B: state.B, Q: state.Q },
+      freshIngress: qSet ? { newlyEntered: newlyEntered.length, enteredThroughB: enteredThroughB.length,
+        enteredOutsideB: enteredOutsideB.length, enteredCells: newlyEntered,
+        enteredThroughBCells: enteredThroughB, enteredOutsideBCells: enteredOutsideB } : null,
       QOnlyRelativeToB: directSignature.map(row => ({ ...row,
         currentQDegree: qOnlyDegrees[row.cell], articulationInQ: qOnlyArticulation.has(row.cell) })),
+      incumbentClasses: { classA_EOnly: classACells, classB_FButBDisconnected: classBCells,
+        classACount: classACells.length, classBCount: classBCells.length },
+      startQMemberSurvival: startQSurvival,
       sameAnchor: {
         BvsQ: bVsQ,
         QoverB: state.B && state.Q ? state.Q.length / state.B.length : null,
         QOnlyFraction: qSet?.size ? qOnly.length / qSet.size : null,
+        classAFractionOfQ: qSet?.size ? classACells.length / qSet.size : null,
+        classBFractionOfQ: qSet?.size ? classBCells.length / qSet.size : null,
         BLocalEFraction: localE ? state.B?.length / localE : null,
         QLocalEFraction: localE ? state.Q?.length / localE : null,
-        QPresentInCurrentF: currentFCount, QRetainedOnlyThroughIncumbent: incumbentOnlyCount,
+        QPresentInCurrentF: currentFCount, QClassA_EOnly: classACells.length,
+        QClassB_FButBDisconnected: classBCells.length, QIncumbentOnlyAbsentFromF: incumbentOnlyCount,
         previousQStillEQualified: previousECount
       },
       structure: { B: bMetrics, Q: qMetrics },
@@ -513,7 +477,7 @@ function eventAnalysis(event, eventIndex, priorEvent, registeredEvent, ops, sour
       const prior = states[i - 1];
       const bTransition = setCompare(prior.B, state.B);
       const qTransition = setCompare(prior.Q, state.Q);
-      let qLossPartition = null, qRetainedPartition = null, qGainsFromF = null;
+      let qLossPartition = null, qRetainedPartition = null, qGainsThroughB = null, qGainsOutsideB = null;
       if (qTransition.status !== 'unavailable') {
         const qLostNoLongerE = [], qLostStillEConnectivity = [];
         const currentAdmissible = new Set(indices(state.admissible));
@@ -527,17 +491,22 @@ function eventAnalysis(event, eventIndex, priorEvent, registeredEvent, ops, sour
         }
         const retained = qTransition.intersection > 0
           ? prior.Q.filter(cell => qSet.has(cell)) : [];
-        const retainedCurrentF = retained.filter(cell => frame.F[cell]);
-        const retainedIncumbentOnly = retained.filter(cell => frame.E[cell] && !frame.F[cell]);
-        assert.equal(retainedCurrentF.length + retainedIncumbentOnly.length, retained.length);
+        const retainedInB = retained.filter(cell => bSet.has(cell));
+        const retainedFButBDisconnected = retained.filter(cell => frame.F[cell] && !bSet.has(cell));
+        const retainedEOnly = retained.filter(cell => frame.E[cell] && !frame.F[cell]);
+        assert.equal(retainedInB.length + retainedFButBDisconnected.length + retainedEOnly.length, retained.length);
         qLossPartition = {
           noLongerE: qLostNoLongerE, stillEButDisconnected: qLostStillEConnectivity,
           nucleusInvalidation: []
         };
-        qRetainedPartition = { presentInCurrentF: retainedCurrentF, incumbentOnlyStillE: retainedIncumbentOnly };
-        qGainsFromF = qTransition.gainedCells.filter(cell => frame.F[cell]);
-        assert.equal(qGainsFromF.length, qTransition.gained,
-          event.id + ' all new Q members must enter through current F');
+        qRetainedPartition = { presentInCurrentB: retainedInB,
+          currentFButOutsideB: retainedFButBDisconnected, EOnlyAbsentFromF: retainedEOnly };
+        qGainsThroughB = qTransition.gainedCells.filter(cell => bSet?.has(cell));
+        qGainsOutsideB = qTransition.gainedCells.filter(cell => !bSet?.has(cell));
+        assert.equal(qGainsThroughB.length, qTransition.gained,
+          event.id + ' all new Q members must enter through current B');
+        assert.equal(qGainsOutsideB.length, 0,
+          event.id + ' no new Q member may enter outside current B');
       } else if (prior.Q !== null && state.sequenceStatus === 'NUCLEUS_INVALID_STOP') {
         qLossPartition = {
           noLongerE: [], stillEButDisconnected: [],
@@ -550,8 +519,13 @@ function eventAnalysis(event, eventIndex, priorEvent, registeredEvent, ops, sour
         n0ValidInCurrentF: state.nucleusValidInF,
         B: bTransition, Q: qTransition,
         QLossPartition: qLossPartition, QRetainedPartition: qRetainedPartition,
-        QGainsFromCurrentF: qGainsFromF,
+        QGainsThroughB: qGainsThroughB, QGainsOutsideB: qGainsOutsideB,
         QOnlyCountAtDestination: qOnly.length,
+        QOnlyClassAAtDestination: state.Q === null ? null : state.Q.filter(cell => !frame.F[cell] && !bSet.has(cell)).length,
+        QOnlyClassBAtDestination: state.Q === null ? null : state.Q.filter(cell => frame.F[cell] && !bSet.has(cell)).length,
+        newlyEnteredAtDestination: newlyEntered.length,
+        enteredThroughBAtDestination: enteredThroughB.length,
+        enteredOutsideBAtDestination: enteredOutsideB.length,
         QoverBAtDestination: state.B && state.Q ? state.Q.length / state.B.length : null,
         QOnlyFractionAtDestination: qSet?.size ? qOnly.length / qSet.size : null,
         QLocalEFractionAtDestination: localE && state.Q ? state.Q.length / localE : null
@@ -564,7 +538,9 @@ function eventAnalysis(event, eventIndex, priorEvent, registeredEvent, ops, sour
         Q: qTransition.status === 'unavailable' ? qTransition
           : { lostCells: qTransition.lostCells, gainedCells: qTransition.gainedCells },
         QLossPartition: qLossPartition, QRetainedPartition: qRetainedPartition,
-        QGainsFromCurrentF: qGainsFromF
+        QGainsThroughB: qGainsThroughB, QGainsOutsideB: qGainsOutsideB,
+        newlyEntered: newlyEntered.length, enteredThroughB: enteredThroughB.length,
+        enteredOutsideB: enteredOutsideB.length
       });
       if (prior.Q) {
         const nextSet = state.Q === null ? new Set() : new Set(state.Q);
@@ -577,28 +553,73 @@ function eventAnalysis(event, eventIndex, priorEvent, registeredEvent, ops, sour
     if (!qOnlyByCell.has(row.cell)) qOnlyByCell.set(row.cell, []);
     qOnlyByCell.get(row.cell).push({ anchorIndex: anchor.anchorIndex, timeMs: anchor.timeMs,
       distanceFromNucleus: row.distanceFromNucleus, degree: row.currentQDegree,
-      articulationInQ: row.articulationInQ });
+      class: row.class, currentF: row.currentF, articulationInQ: row.articulationInQ });
   }
   const staleCells = [];
   for (const [cell, appearances] of [...qOnlyByCell].sort((a, b) => a[0] - b[0])) {
     const qOnlyAnchors = appearances.map(row => row.anchorIndex);
-    const absentFRuns = runsOfAnchors(qOnlyAnchors, frames);
+    const classAAnchors = appearances.filter(row => row.class === 'A_E_ONLY').map(row => row.anchorIndex);
+    const classBAnchors = appearances.filter(row => row.class === 'B_F_DISCONNECTED').map(row => row.anchorIndex);
+    const qOnlyRuns = runsOfAnchors(qOnlyAnchors, frames);
+    const classARuns = runsOfAnchors(classAAnchors, frames);
+    const classBRuns = runsOfAnchors(classBAnchors, frames);
     const firstIndex = qOnlyAnchors[0];
-    const returnIndex = frames.findIndex((frame, index) => index > firstIndex && frame.F[cell]);
+    const returnIndex = frames.findIndex((_, index) => index > firstIndex && states[index].B?.includes(cell));
     const leaveEIndex = frames.findIndex((frame, index) => index > firstIndex && !frame.E[cell]);
+    const connectivityLossIndex = frames.findIndex((frame, index) => index > firstIndex
+      && states[index - 1]?.Q?.includes(cell) && frame.E[cell]
+      && states[index].sequenceStatus === 'ACTIVE' && !states[index].Q?.includes(cell));
+    const qOnlyEpisodes = qOnlyRuns.map(run => {
+      const firstFuture = run.endAnchor + 1;
+      const returnsToBAfterRun = frames.findIndex((_, index) => index >= firstFuture && states[index].B?.includes(cell));
+      const leavesEAfterRun = frames.findIndex((frame, index) => index >= firstFuture && !frame.E[cell]);
+      const losesQThroughConnectivityAfterRun = frames.findIndex((frame, index) => index >= firstFuture
+        && states[index - 1]?.Q?.includes(cell) && frame.E[cell]
+        && states[index].sequenceStatus === 'ACTIVE' && !states[index].Q?.includes(cell));
+      const firstOutcomeIndex = [returnsToBAfterRun, leavesEAfterRun, losesQThroughConnectivityAfterRun]
+        .filter(index => index >= 0).sort((a, b) => a - b)[0] ?? -1;
+      const nextOutcome = firstOutcomeIndex < 0
+        ? (states.at(-1).sequenceStatus === 'NUCLEUS_INVALID_STOP' ? 'NUCLEUS_INVALID_STOP'
+          : states.at(-1).Q?.includes(cell) && !states.at(-1).B?.includes(cell)
+            ? 'RIGHT_CENSORED_INCUMBENT_ONLY' : 'RIGHT_CENSORED')
+        : firstOutcomeIndex === returnsToBAfterRun ? 'RETURNED_TO_B'
+          : firstOutcomeIndex === leavesEAfterRun ? 'LEFT_E_AND_Q' : 'LOST_Q_THROUGH_CONNECTIVITY';
+      const aInRun = classAAnchors.filter(index => index >= run.startAnchor && index <= run.endAnchor);
+      const bInRun = classBAnchors.filter(index => index >= run.startAnchor && index <= run.endAnchor);
+      return {
+        startAnchor: run.startAnchor, endAnchor: run.endAnchor,
+        anchorCount: run.consecutiveAnchorCount,
+        elapsedSeconds: (run.endTimeMs - run.startTimeMs) / 1000,
+        classA_EOnly: { anchorCount: aInRun.length, consecutiveRuns: runsOfAnchors(aInRun, frames) },
+        classB_FButBDisconnected: { anchorCount: bInRun.length, consecutiveRuns: runsOfAnchors(bInRun, frames) },
+        nextOutcome,
+        nextOutcomeAnchor: firstOutcomeIndex >= 0 ? firstOutcomeIndex : null,
+        nextOutcomeTimeMs: firstOutcomeIndex >= 0 ? frames[firstOutcomeIndex].timeMs : null
+      };
+    });
+    const firstReturnToB = returnIndex >= 0 ? returnIndex : null;
+    const firstEExit = leaveEIndex >= 0 ? leaveEIndex : null;
+    const firstConnectivityLoss = connectivityLossIndex >= 0 ? connectivityLossIndex : null;
     staleCells.push({
       cell, firstQOnlyAnchor: firstIndex, firstQOnlyTimeMs: frames[firstIndex].timeMs,
       distanceFromNucleus: appearances[0].distanceFromNucleus,
-      totalEpisodeAnchorsRetainedAbsentFromF: appearances.length,
-      maxConsecutiveAnchorsRetainedAbsentFromF: Math.max(...absentFRuns.map(run => run.consecutiveAnchorCount)),
-      absentFRuns, rolesByAnchor: appearances,
-      returnsToFWithinWindow: returnIndex >= 0,
-      firstReturnToFAnchor: returnIndex >= 0 ? returnIndex : null,
-      firstReturnToFTimeMs: returnIndex >= 0 ? frames[returnIndex].timeMs : null,
-      leavesEWithinWindow: leaveEIndex >= 0,
-      firstEExitAnchor: leaveEIndex >= 0 ? leaveEIndex : null,
-      firstEExitTimeMs: leaveEIndex >= 0 ? frames[leaveEIndex].timeMs : null,
-      rightCensoredAtWindowEnd: returnIndex < 0 && leaveEIndex < 0
+      totalEpisodeAnchorsOutsideB: appearances.length,
+      classA_EOnly: { totalAnchors: classAAnchors.length,
+        maxConsecutiveAnchors: Math.max(0, ...classARuns.map(run => run.consecutiveAnchorCount)), runs: classARuns },
+      classB_FButBDisconnected: { totalAnchors: classBAnchors.length,
+        maxConsecutiveAnchors: Math.max(0, ...classBRuns.map(run => run.consecutiveAnchorCount)), runs: classBRuns },
+      qOnlyEpisodes, rolesByAnchor: appearances,
+      returnsToBWithinWindow: returnIndex >= 0,
+      firstReturnToBAnchor: firstReturnToB,
+      firstReturnToBTimeMs: firstReturnToB === null ? null : frames[firstReturnToB].timeMs,
+      remainsIncumbentOnlyAtFinalAnchor: !!states.at(-1).Q?.includes(cell) && !states.at(-1).B?.includes(cell),
+      leavesEAndQWithinWindow: leaveEIndex >= 0 && !states[leaveEIndex].Q?.includes(cell),
+      firstEExitAnchor: firstEExit,
+      firstEExitTimeMs: firstEExit === null ? null : frames[firstEExit].timeMs,
+      losesQThroughConnectivityWithinWindow: connectivityLossIndex >= 0,
+      firstConnectivityLossAnchor: firstConnectivityLoss,
+      firstConnectivityLossTimeMs: firstConnectivityLoss === null ? null : frames[firstConnectivityLoss].timeMs,
+      rightCensoredAtWindowEnd: returnIndex < 0 && leaveEIndex < 0 && connectivityLossIndex < 0
     });
   }
   const armSummary = key => {
@@ -611,10 +632,14 @@ function eventAnalysis(event, eventIndex, priorEvent, registeredEvent, ops, sour
     };
   };
   const qOnlyAppearances = anchorRows.flatMap(row => row.QOnlyRelativeToB);
-  const retentionRuns = staleCells.flatMap(row => row.absentFRuns.map(run => run.consecutiveAnchorCount));
+  const qOnlyRuns = staleCells.flatMap(row => row.qOnlyEpisodes.map(run => run.anchorCount));
+  const classARuns = staleCells.flatMap(row => row.classA_EOnly.runs.map(run => run.consecutiveAnchorCount));
+  const classBRuns = staleCells.flatMap(row => row.classB_FButBDisconnected.runs.map(run => run.consecutiveAnchorCount));
   const ratios = anchorRows.map(row => row.sameAnchor.QoverB).filter(Number.isFinite);
   const qLocalEFractions = anchorRows.map(row => row.sameAnchor.QLocalEFraction).filter(Number.isFinite);
   const qOnlyFractions = anchorRows.map(row => row.sameAnchor.QOnlyFraction).filter(Number.isFinite);
+  const ingressRows = anchorRows.map(row => row.freshIngress).filter(Boolean);
+  const allQOnlyEpisodes = staleCells.flatMap(row => row.qOnlyEpisodes);
   return {
     id: event.id, displayId: event.id, startTimeMs: frames[0].timeMs, endTimeMs: frames.at(-1).timeMs,
     anchors: frames.length, transitions: frames.length - 1, startNucleus: start,
@@ -625,23 +650,38 @@ function eventAnalysis(event, eventIndex, priorEvent, registeredEvent, ops, sour
         sequenceStatus: state.sequenceStatus })) },
     validation: { exactBReproduction: bReproduction, exactRegisteredXMatches: registeredXMatches,
       QOnlySignatureCells: qOnlyAppearances.length,
-      QOnlySignatureViolations: 0, reentryChecks,
-      reentriesViaFreshF: reentriesViaF, blockedEQualifiedReentryWithoutF: blockedWithoutFreshF,
+      QOnlyIncumbentSignatureViolations: 0,
+      freshIngressAnchors: ingressRows.length,
+      newlyEnteredQCells: ingressRows.reduce((sum, row) => sum + row.newlyEntered, 0),
+      enteredThroughB: ingressRows.reduce((sum, row) => sum + row.enteredThroughB, 0),
+      enteredOutsideB: ingressRows.reduce((sum, row) => sum + row.enteredOutsideB, 0),
+      freshIngressViolations: 0, reentryChecks,
+      reentriesViaB, blockedEQualifiedReentryWithoutB: blockedWithoutFreshB,
       reentryViolations: 0 },
     summaries: {
       B: armSummary('B'), Q: armSummary('Q'),
       qOnlyMembershipOccurrences: qOnlyAppearances.length,
       qOnlyUniqueCells: staleCells.length,
+      qOnlyClassA_EOnlyOccurrences: qOnlyAppearances.filter(row => row.class === 'A_E_ONLY').length,
+      qOnlyClassB_FButBDisconnectedOccurrences: qOnlyAppearances.filter(row => row.class === 'B_F_DISCONNECTED').length,
       qOnlyPerAnchorFraction: summarizeCounts(qOnlyFractions),
       QoverBPerAnchor: summarizeCounts(ratios),
       QLocalEFractionPerAnchor: summarizeCounts(qLocalEFractions),
-      QOnlyRetainedDurationInAnchors: summarizeCounts(retentionRuns),
+      QOnlyEpisodeDurationInAnchors: summarizeCounts(qOnlyRuns),
+      classA_EOnlyConsecutiveDurationInAnchors: summarizeCounts(classARuns),
+      classB_FButBDisconnectedConsecutiveDurationInAnchors: summarizeCounts(classBRuns),
       uniqueQOnlyCellOutcomes: {
         total: staleCells.length,
-        returnedToF: staleCells.filter(row => row.returnsToFWithinWindow).length,
-        laterLeftE: staleCells.filter(row => row.leavesEWithinWindow).length,
+        returnedToB: staleCells.filter(row => row.returnsToBWithinWindow).length,
+        incumbentOnlyAtFinal: staleCells.filter(row => row.remainsIncumbentOnlyAtFinalAnchor).length,
+        laterLeftEAndQ: staleCells.filter(row => row.leavesEAndQWithinWindow).length,
+        laterLostQThroughConnectivity: staleCells.filter(row => row.losesQThroughConnectivityWithinWindow).length,
         rightCensored: staleCells.filter(row => row.rightCensoredAtWindowEnd).length
-      }
+      },
+      QOnlyEpisodesByNextOutcome: Object.fromEntries(['RETURNED_TO_B', 'LEFT_E_AND_Q',
+        'LOST_Q_THROUGH_CONNECTIVITY', 'RIGHT_CENSORED_INCUMBENT_ONLY', 'RIGHT_CENSORED',
+        'NUCLEUS_INVALID_STOP'].map(outcome => [outcome,
+        allQOnlyEpisodes.filter(episode => episode.nextOutcome === outcome).length]))
     },
     anchors: anchorRows, transitions: transitionRows, transitionReceipts,
     QOnlyCellHistory: staleCells
@@ -650,33 +690,38 @@ function eventAnalysis(event, eventIndex, priorEvent, registeredEvent, ops, sour
 function buildAnalysis() {
   const inputBytes = readFileSync(INPUT), registeredBytes = readFileSync(REGISTERED_X);
   const priorBBytes = readFileSync(PRIOR_B), updateParityBytes = readFileSync(UPDATE_PARITY);
-  const captureParityBytes = readFileSync(CAPTURE_PARITY), sourceRaw = readFileSync(SOURCE);
+  const captureParityBytes = readFileSync(CAPTURE_PARITY), stopBytes = readFileSync(PREVIOUS_STOP_WITNESS);
+  const sourceRaw = readFileSync(SOURCE);
   const sourceText = sourceRaw.toString('utf8');
   const input = JSON.parse(gunzipSync(inputBytes).toString('utf8'));
   const registered = JSON.parse(registeredBytes.toString('utf8'));
   const priorB = JSON.parse(priorBBytes.toString('utf8'));
   const updateParity = JSON.parse(updateParityBytes.toString('utf8'));
   const captureParity = JSON.parse(captureParityBytes.toString('utf8'));
+  const previousStop = JSON.parse(stopBytes.toString('utf8'));
   const validated = validateInputs(inputBytes, input, registeredBytes, registered, priorBBytes, priorB,
-    updateParityBytes, updateParity, captureParityBytes, captureParity, sourceRaw, sourceText);
+    updateParityBytes, updateParity, captureParityBytes, captureParity, stopBytes, previousStop, sourceRaw, sourceText);
   const ops = validated.ops;
   const events = input.events.map((event, index) => {
     const priorEvent = priorB.events[index];
     const registeredEvent = registered.events.find(row => row.id === event.id);
     assert.ok(registeredEvent, event.id + ' registered X event');
-    return eventAnalysis(event, index, priorEvent, registeredEvent, ops, {
+    return eventAnalysis(event, priorEvent, registeredEvent, ops, {
       updateSourceParity: validated.updateParity, captureSourceParity: validated.captureParity
     });
   });
   assert.equal(events.reduce((sum, event) => sum + event.validation.exactBReproduction.length, 0), 42);
   assert.equal(events.reduce((sum, event) => sum + event.validation.exactRegisteredXMatches.length, 0), 10);
-  assert.ok(events.every(event => event.validation.QOnlySignatureViolations === 0
+  assert.ok(events.every(event => event.validation.QOnlyIncumbentSignatureViolations === 0
+    && event.validation.freshIngressViolations === 0 && event.validation.enteredOutsideB === 0
     && event.validation.reentryViolations === 0));
   return {
-    schema: 'ant-materialization-e-incumbent-eligibility-v1',
+    schema: 'ant-materialization-e-incumbent-eligibility-v2',
     authority: {
       currentProductionMain: CURRENT_MAIN,
       previousFixedNucleusResultCommit: PREVIOUS_RESULT_COMMIT,
+      previousStoppedPassBranch: PREVIOUS_STOP_BRANCH,
+      previousStoppedPassCommit: PREVIOUS_STOP_COMMIT,
       currentTrailPlateBirthBlob: CURRENT_SOURCE_BLOB,
       currentTrailPlateBirthRawSha256: CURRENT_SOURCE_RAW_SHA,
       currentTrailPlateBirthLfSha256: CURRENT_SOURCE_LF_SHA
@@ -684,28 +729,40 @@ function buildAnalysis() {
     definitions: {
       START: 'edge-bearing F node with maximum D_support; exact ties choose lower row-major index; selected once then n0 is frozen',
       B: 'nucleus-connected component containing n0 inside current F intersected with closed Euclidean disk radius 0.15',
-      Q: 'Q0=B0; later admissible=F(t) union (Q(t-1) intersect E(t)); Q is the n0-connected component inside the same disk',
-      QLimit: 'new members enter only through current F; prior members persist only while current E-qualified; no archive, time threshold, score, repair, reallocation or out-of-disk membership',
+      Q: 'Q0=B0; later incumbent=Q(t-1) intersect E(t); admissible=B(t) union incumbent; Q is the n0-connected component inside the same disk',
+      QLimit: 'new members enter only through fresh B; prior members persist only while current E-qualified; no current-F ingress outside B, archive, time threshold, score, repair, reallocation or out-of-disk membership',
       nucleusValidity: 'n0 must remain edge-bearing in current F; stop the entire event at first invalid anchor even if treatment admissibility would include n0',
       grid: { side: GRID, spacing: 1 / SCALE, connectivity: 8, radius: RADIUS,
         graphMetric: 'orthogonal 1/95, diagonal sqrt(2)/95; diagnostic only' }
     },
     inputs: {
-      frozenInput: { path: 'data/frozen-inputs.json.gz', sha256: sha(inputBytes), bytes: inputBytes.length,
+      frozenInput: { path: 'docs/ant/evidence/2026-10-31-materialization-e-incumbent-eligibility/data/frozen-inputs.json.gz',
+        sha256: sha(inputBytes), bytes: inputBytes.length,
         sourceCommit: input.source.commit, sourcePath: input.source.path,
         sourcePacketSha256: input.source.gzipSha256, decodedPacketSha256: input.source.rawJsonSha256 },
-      previousBReference: { path: 'data/prior-b-reference.json', sha256: sha(priorBBytes),
+      previousBReference: { path: 'docs/ant/evidence/2026-10-31-materialization-e-incumbent-eligibility/data/prior-b-reference.json',
+        sha256: sha(priorBBytes),
         sourceCommit: priorB.source.commit, previousAnalysisSha256: priorB.source.sha256 },
-      registeredXReference: { path: 'data/registered-x-reference.json', sha256: sha(registeredBytes) },
+      registeredXReference: { path: 'docs/ant/evidence/2026-10-31-materialization-e-incumbent-eligibility/data/registered-x-reference.json',
+        sha256: sha(registeredBytes) },
+      previousStopWitness: { path: 'docs/ant/evidence/2026-10-31-materialization-e-incumbent-eligibility/data/stop-witness.json',
+        sha256: sha(stopBytes),
+        previousRecurrence: 'F(t) union (Q(t-1) intersect E(t))',
+        correctedRecurrence: 'B(t) union (Q(t-1) intersect E(t))' },
       observerRandomCalls: 0
     },
     validation: {
-      events: events.length, anchors: events.reduce((sum, event) => sum + event.anchors, 0),
-      transitions: events.reduce((sum, event) => sum + event.transitions, 0),
+      events: events.length, anchors: events.reduce((sum, event) => sum + event.anchors.length, 0),
+      transitions: events.reduce((sum, event) => sum + event.transitions.length, 0),
       exactBReproduction: events.reduce((sum, event) => sum + event.validation.exactBReproduction.length, 0),
       exactStartNuclei: events.every(event => event.startNucleus.index === event.anchors[0].nucleus.index),
-      currentSourceFReproduction: 42, registeredStatelessXParity: 10,
-      QOnlySignatureViolations: 0, reentryViolations: 0,
+      exactFrozenEParity: validated.updateParity.exactEParity,
+      exactFrozenIParity: validated.updateParity.exactIParity,
+      currentProductionFReproduction: 42, registeredStatelessXParity: 10,
+      priorCaptureParity: { E: validated.captureParity.exactEParity,
+        F: validated.captureParity.exactFParity, D: validated.captureParity.exactDParity },
+      QOnlyIncumbentSignatureViolations: 0, freshIngressViolations: 0,
+      enteredOutsideB: 0, reentryViolations: 0,
       firstInvalidation: events.map(event => ({ event: event.id, ...event.nucleusValidity })),
       note: 'No simulation, RNG draw, candidate world or trajectory replay; all computations use the frozen packet.'
     },
@@ -720,11 +777,14 @@ function csv(value) {
 function outputBytes() {
   const analysis = buildAnalysis();
   const receipts = {
-    schema: 'ant-materialization-e-incumbent-membership-receipts-v1',
+      schema: 'ant-materialization-e-incumbent-membership-receipts-v2',
     events: analysis.events.map(event => ({
       id: event.id,
       anchors: event.anchors.map(row => ({ anchorIndex: row.anchorIndex, timeMs: row.timeMs,
-        B: row.memberships.B, Q: row.memberships.Q, QOnlyRelativeToB: row.QOnlyRelativeToB })),
+        B: row.memberships.B, Q: row.memberships.Q, QOnlyRelativeToB: row.QOnlyRelativeToB,
+        freshIngress: row.freshIngress, incumbentClasses: row.incumbentClasses,
+        startQMemberSurvival: row.startQMemberSurvival,
+        structure: row.structure, sameAnchor: row.sameAnchor, productionI: row.productionI })),
       transitions: event.transitionReceipts,
       QOnlyCellHistory: event.QOnlyCellHistory,
       reentryValidation: event.validation
@@ -735,7 +795,9 @@ function outputBytes() {
     'B_previous', 'B_current', 'B_intersection', 'B_lost', 'B_gained', 'B_union', 'B_jaccard',
     'Q_previous', 'Q_current', 'Q_intersection', 'Q_lost', 'Q_gained', 'Q_union', 'Q_jaccard',
     'Q_loss_noLongerE', 'Q_loss_stillE_disconnected', 'Q_loss_nucleusInvalidation',
-    'Q_retained_inF', 'Q_retained_incumbentOnly', 'Q_gains_from_currentF',
+    'Q_retained_inB', 'Q_retained_F_but_B_disconnected', 'Q_retained_E_only',
+    'Q_gains_throughB', 'Q_gains_outsideB', 'Q_only_classA_E_only', 'Q_only_classB_F_but_B_disconnected',
+    'Q_newly_entered', 'Q_entered_throughB', 'Q_entered_outsideB',
     'Q_only_count', 'Q_over_B', 'Q_only_fraction', 'Q_localE_fraction'
   ];
   const rows = [headers];
@@ -746,13 +808,16 @@ function outputBytes() {
       b.previousSize, b.currentSize, b.intersection, b.lost, b.gained, b.union, b.jaccard,
       q.previousSize, q.currentSize, q.intersection, q.lost, q.gained, q.union, q.jaccard,
       lp.noLongerE?.length ?? 0, lp.stillEButDisconnected?.length ?? 0, lp.nucleusInvalidation?.length ?? 0,
-      rp.presentInCurrentF?.length ?? 0, rp.incumbentOnlyStillE?.length ?? 0,
-      row.QGainsFromCurrentF?.length ?? 0, row.QOnlyCountAtDestination,
+      rp.presentInCurrentB?.length ?? 0, rp.currentFButOutsideB?.length ?? 0, rp.EOnlyAbsentFromF?.length ?? 0,
+      row.QGainsThroughB?.length ?? 0, row.QGainsOutsideB?.length ?? 0,
+      row.QOnlyClassAAtDestination, row.QOnlyClassBAtDestination,
+      row.newlyEnteredAtDestination, row.enteredThroughBAtDestination, row.enteredOutsideBAtDestination,
+      row.QOnlyCountAtDestination,
       row.QoverBAtDestination, row.QOnlyFractionAtDestination, row.QLocalEFractionAtDestination
     ]);
   }
   const validation = {
-    schema: 'ant-materialization-e-incumbent-validation-v1',
+    schema: 'ant-materialization-e-incumbent-validation-v2',
     ...analysis.validation, authority: analysis.authority, inputs: analysis.inputs,
     eventChecks: analysis.events.map(event => ({ id: event.id, ...event.validation }))
   };
@@ -773,48 +838,7 @@ function main() {
   const randomGuard = assertNoRandom();
   try {
     const mode = process.argv[2] ?? '--write';
-    let outputs;
-    try {
-      outputs = outputBytes();
-    } catch (error) {
-      if (error.name !== 'LockedQOnlySignatureViolation' || !error.witness) throw error;
-      assert.equal(randomGuard.calls(), 0, 'observer consumes no RNG before stop');
-      const stop = {
-        schema: 'ant-materialization-e-incumbent-stop-witness-v1',
-        status: 'STOPPED_LOCKED_Q_ONLY_SIGNATURE_VIOLATION',
-        authority: { currentMain: CURRENT_MAIN, previousResultCommit: PREVIOUS_RESULT_COMMIT },
-        validationBeforeStop: {
-          frozenInputSha256: PREVIOUS_INPUT_SHA, priorBReferenceSha256: PREVIOUS_B_REFERENCE_SHA,
-          registeredXReferenceSha256: PREVIOUS_REGISTERED_X_SHA,
-          priorUpdateParitySha256: UPDATE_PARITY_SHA, priorCaptureParitySha256: CAPTURE_PARITY_SHA,
-          exactCurrentFReproductionAnchors: error.witness.currentFExactAnchorsValidated,
-          exactPriorBReproductionAnchors: error.witness.priorBExactAnchorsValidated,
-          exactStartNuclei: error.witness.exactStartNucleiValidated,
-          exactRegisteredStatelessXAnchors: error.witness.registeredStatelessXAnchorsValidated,
-          priorEParity: error.witness.priorSourceParity.updateSourceParity.exactEParity,
-          priorFParity: error.witness.priorSourceParity.captureSourceParity.exactFParity,
-          priorIParity: error.witness.priorSourceParity.updateSourceParity.exactIParity,
-          observerRandomCalls: 0
-        },
-        lockedFailure: error.witness,
-        boundary: 'No outcome classification or incumbent usefulness/staleness interpretation is produced.'
-      };
-      const bytes = Buffer.from(JSON.stringify(stop, null, 2) + '\n');
-      if (mode === '--write') {
-        mkdirSync(BASE, { recursive: true });
-        writeFileSync(STOP_WITNESS, bytes);
-        process.stdout.write(JSON.stringify({ status: stop.status, witness: error.witness,
-          receipt: 'data/stop-witness.json', observerRandomCalls: 0 }, null, 2) + '\n');
-        return;
-      }
-      if (mode === '--check') {
-        assert.deepEqual(readFileSync(STOP_WITNESS), bytes, 'deterministic locked-stop witness');
-        process.stdout.write(JSON.stringify({ deterministic: true, status: stop.status,
-          observerRandomCalls: 0 }, null, 2) + '\n');
-        return;
-      }
-      throw new Error('unknown mode: ' + mode);
-    }
+    const outputs = outputBytes();
     assert.equal(randomGuard.calls(), 0, 'observer consumes no RNG');
     if (mode === '--write') {
       mkdirSync(BASE, { recursive: true });
@@ -825,9 +849,13 @@ function main() {
         events: analysis.events.map(event => ({
           id: event.id, startNucleus: event.startNucleus.index,
           firstInvalid: event.nucleusValidity.firstInvalid,
-          B: event.summaries.B, Q: event.summaries.Q,
-          qOnlyUniqueCells: event.summaries.qOnlyUniqueCells,
-          qOnlyOccurrences: event.summaries.qOnlyMembershipOccurrences
+          B: event.summaries.B, Q: event.summaries.Q, qOnly: {
+            uniqueCells: event.summaries.qOnlyUniqueCells,
+            occurrences: event.summaries.qOnlyMembershipOccurrences,
+            classA: event.summaries.qOnlyClassA_EOnlyOccurrences,
+            classB: event.summaries.qOnlyClassB_FButBDisconnectedOccurrences,
+            outcomes: event.summaries.uniqueQOnlyCellOutcomes
+          }
         })),
         validation: analysis.validation
       }, null, 2) + '\n');

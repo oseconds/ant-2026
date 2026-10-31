@@ -2,6 +2,14 @@
 
 **Canonical chronology: `docs/ant/daily/`**
 
+### 2026-10-31 — Bounded E-qualified incumbent eligibility
+
+[Daily record](./2026-10-31-materialization-e-bounded-incumbency.md) · [Evidence](../evidence/2026-10-31-materialization-e-bounded-incumbency/README.md)
+
+- Corrected the prior recurrence/signature conflict: new Q membership enters only through fresh fixed-nucleus B
+- Bounded E-qualified incumbency reduced Q loss but accumulated broad local E-only scope in both frozen events
+- Decision: **STALE / OVER-RETENTIVE**; no production or Residence change
+
 ### 2026-10-31 — Materialization E-qualified incumbent eligibility
 
 [Daily record](./2026-10-31-materialization-e-incumbent-eligibility.md) · [Stop evidence](../evidence/2026-10-31-materialization-e-incumbent-eligibility/README.md)
