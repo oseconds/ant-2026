@@ -2,6 +2,14 @@
 
 **Canonical chronology: `docs/ant/daily/`**
 
+### 2026-10-31 — Materialization E-qualified incumbent eligibility
+
+[Daily record](./2026-10-31-materialization-e-incumbent-eligibility.md) · [Stop evidence](../evidence/2026-10-31-materialization-e-incumbent-eligibility/README.md)
+
+- Reused exact frozen P1/P2 inputs and reproduced current F and prior fixed-nucleus B at all 42 anchors
+- Exact Q recurrence reached a Q-only current-F cell outside B through incumbent bridges; locked direct signature failed
+- Stopped before usefulness/staleness interpretation; no outcome class or production change
+
 ### 2026-10-31 — Recruitment heading: endogenous flow vs isotropic
 
 [Daily record](./2026-10-31-recruitment-heading-flow-vs-isotropic.md) · [Comparison evidence](../evidence/2026-10-31-recruitment-heading-flow-vs-isotropic/REPORT.md)
