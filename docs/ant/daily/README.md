@@ -2,6 +2,15 @@
 
 **Canonical chronology: `docs/ant/daily/`**
 
+### 2026-10-31 — Local episode evidence responsibility: B vs C
+
+[Daily record](./2026-10-31-local-episode-evidence-b-vs-c.md) · [Evidence](../evidence/2026-10-31-local-episode-evidence-b-vs-c/README.md)
+
+- Reused the exact frozen three-seed current-production opportunity packet; no new natural trajectory
+- B supports near-winner non-entry histories with stronger rank persistence; C relates more directly to recent `FOOT_CONTACT` and compaction change
+- Both responsibilities remain plausible and distinct; nearby matched centers commonly produce the same X, while strongest choices and rank hierarchies differ
+- No B/C fusion, competition rule, production selector change, or Residence work; next step is an authored responsibility choice
+
 ### 2026-10-31 — Author reopens local formation opportunities (research branch only)
 
 [Daily record](./2026-10-31-local-opportunity-competition-audit.md) · [Evidence](../evidence/2026-10-31-local-opportunity-competition-audit/README.md)
