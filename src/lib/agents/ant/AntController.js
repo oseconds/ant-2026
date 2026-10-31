@@ -39,8 +39,12 @@ const TAU = Math.PI * 2;
 // This is only an entry region. Agents have no reason to return to it.
 const SPAWN_CENTER = { x: 0.5, y: 0.72 };
 const SPAWN_RADIUS = 0.018;
-const SPAWN_HEADING = -Math.PI / 2;
 const SPAWN_HEADING_SPREAD = 0.3;
+const SPAWN_FLOW_INNER_RADIUS = 0.018;
+const SPAWN_FLOW_OUTER_RADIUS = 0.085;
+const SPAWN_FLOW_MIN_SPEED = 0.008;
+const SPAWN_FLOW_MIN_ANTS = 3;
+const SPAWN_FLOW_MIN_RESULTANT = 1e-9;
 const SPAWN_INTERVAL_MIN_MS = 400;
 const SPAWN_INTERVAL_RANGE_MS = 500;
 const SPAWN_RETRY_MS = 120;
@@ -79,6 +83,9 @@ export class AntController {
         this.totalSpawned = 0;
         this.totalRetired = 0;
         this.agents = [];
+        // One completed post-collision segment per surviving ant from the previous tick.
+        // Recruitment may read this local transport signal, but it never steers living ants.
+        this.completedMovementSegments = [];
         this.field = null;
         this.occupancy = new LocalOccupancy();
         this.gaitController = gaitController;
@@ -281,6 +288,7 @@ export class AntController {
         this.nextSpawnTimeMs = null;
         this.listeners.clear();
         this.agents = [];
+        this.completedMovementSegments = [];
         this.field?.clear();
         this.field = null;
         this.lastFrameTimestamp = null;
@@ -371,6 +379,7 @@ export class AntController {
 
         const collisionScales = this.occupancy.constrainDisplacements(current, displacements);
         const survivors = [];
+        const completedMovementSegments = [];
         for (let index = 0; index < current.length; index += 1) {
             const agent = current[index];
             const displacement = displacements[index];
@@ -410,8 +419,13 @@ export class AntController {
             if (!exiting) {
                 this.advanceBehaviorClocks(agent, dt);
                 survivors.push(agent);
+                completedMovementSegments.push({
+                    id: agent.id, from, to, dt,
+                    dx: to.x - from.x, dy: to.y - from.y
+                });
             }
         }
+        this.completedMovementSegments = completedMovementSegments;
         const retiredCount = current.length - survivors.length;
         if (retiredCount) {
             this.agents = survivors;
@@ -462,9 +476,10 @@ export class AntController {
             const y = SPAWN_CENTER.y + Math.sin(angle) * distance;
             if (this.agents.some(agent => Math.hypot(x - agent.x, y - agent.y)
                 < radius + agent.radius + SPAWN_CLEARANCE)) continue;
+            const heading = this.spawnHeading(this.random());
             this.agents.push(new AntAgent({
                 id: 'ant-' + this.nextAgentId++, x, y, radius, random: this.random,
-                heading: SPAWN_HEADING + signed(this.random) * SPAWN_HEADING_SPREAD
+                heading
             }));
             this.totalSpawned += 1;
             if (this.agents.length < this.recruitmentLimit) this.scheduleNextSpawn();
@@ -473,6 +488,16 @@ export class AntController {
         }
         this.nextSpawnTimeMs = this.simulationTimeMs + SPAWN_RETRY_MS;
         return false;
+    }
+
+    spawnHeading(uniform) {
+        const fallback = -Math.PI + TAU * uniform;
+        const liveIds = new Set(this.agents.map(agent => agent.id));
+        const flow = measureOutgoingSpawnFlow(this.completedMovementSegments
+            .filter(segment => liveIds.has(segment.id)));
+        if (!flow.available) return fallback;
+        const halfSpread = Math.PI - (Math.PI - SPAWN_HEADING_SPREAD) * flow.resultant;
+        return wrapAngle(flow.heading + (2 * uniform - 1) * halfSpread);
     }
 
     scheduleNextSpawn() {
@@ -668,6 +693,29 @@ function clampFinite(value, min, max, fallback) {
     return Number.isFinite(number) ? clamp(number, min, max) : fallback;
 }
 function clamp(value, min, max) { return Math.min(max, Math.max(min, value)); }
+function measureOutgoingSpawnFlow(segments) {
+    const eligible = [];
+    for (const segment of segments || []) {
+        const dx = segment?.dx, dy = segment?.dy, dt = segment?.dt;
+        const length = Math.hypot(dx, dy);
+        if (!(length > 0) || !(dt > 0)) continue;
+        const midpointX = (segment.from.x + segment.to.x) * 0.5;
+        const midpointY = (segment.from.y + segment.to.y) * 0.5;
+        const rx = midpointX - SPAWN_CENTER.x, ry = midpointY - SPAWN_CENTER.y;
+        const radius = Math.hypot(rx, ry);
+        const speed = length / dt;
+        if (!(radius > SPAWN_FLOW_INNER_RADIUS && radius <= SPAWN_FLOW_OUTER_RADIUS
+            && speed >= SPAWN_FLOW_MIN_SPEED && rx * dx + ry * dy > 0)) continue;
+        eligible.push({ x: dx / length, y: dy / length });
+    }
+    if (eligible.length < SPAWN_FLOW_MIN_ANTS) return { available: false };
+    const x = eligible.reduce((sum, item) => sum + item.x, 0) / eligible.length;
+    const y = eligible.reduce((sum, item) => sum + item.y, 0) / eligible.length;
+    const resultant = Math.hypot(x, y);
+    if (!(resultant > SPAWN_FLOW_MIN_RESULTANT)) return { available: false };
+    return { available: true, resultant, heading: Math.atan2(y, x) };
+}
+
 function signed(random) { return random() * 2 - 1; }
 function trailResponse(signal, halfSaturation = TRAIL_HALF_SATURATION) {
     const normalized = (signal / halfSaturation) ** TRAIL_RESPONSE_EXPONENT;

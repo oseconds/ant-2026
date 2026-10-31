@@ -75,6 +75,8 @@ TemporalSocialTopology
 
 2026-10-07 founder-effect pass에서는 **low-evidence 상태의 새 decision/commitment를 최대 20% 짧게 하고 새 baseline deposition을 0.5→0.375로 낮추는 최소 수정**만 채택했습니다. 세 matched seed에서 초기 pheromone 증폭은 줄었지만 600 s mature mass는 회복했고, Plate 형성도 유지되었습니다. 더 많은 branch를 직접 만들도록 튜닝하지 않았습니다.
 
+2026-10-31에는 별도 recruitment-heading 검증 뒤 **고정 north spawn bias를 제거하고 endogenous outgoing-flow heading을 채택**했습니다. 새 ant는 기본적으로 isotropic heading으로 들어오며, 직전 완료 tick에 entrance 주변의 실제 outward traffic이 충분할 때만 그 local flow 방향으로 heading spread가 좁아집니다. Spawn 위치·cadence와 living-ant steering은 바뀌지 않았습니다. [adoption record](docs/ant/evidence/2026-10-31-recruitment-heading-flow-production-adoption/README.md).
+
 <img src="docs/ant/evidence/2026-10-07-founder-effect-refinement/chrome-seed20261005-120s-600s-comparison.png" width="760" alt="Founder-effect refinement Chrome comparison at 120 and 600 seconds">
 
 *[Founder-effect refinement evidence](docs/ant/evidence/2026-10-07-founder-effect-refinement/README.md). 초기 lock-in 압력 감소를 보여주지만 individual founder causality를 증명하지는 않습니다.*
@@ -154,7 +156,7 @@ S0는 60 Hz에서 encounter start/end, duration, minimum distance와 stable ID�
 
 | 영역 | 상태 |
 | --- | --- |
-| ANT movement / gait | founder-refined baseline; local material locomotion resistance adopted; no new behavior tuning |
+| ANT movement / gait | founder-refined baseline + adopted material speed/A/D feedback + endogenous outgoing-flow spawn heading; fixed north spawn bias removed |
 | pheromone field | **G 316×316 adopted in production (2026-10-25)**; natural route persistence/turnover remains open |
 | founder refinement | adopted |
 | SurfaceField / Plate birth / stratigraphy | active, frozen qualification |

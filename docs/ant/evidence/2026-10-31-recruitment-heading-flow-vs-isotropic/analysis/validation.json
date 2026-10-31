@@ -1,0 +1,114 @@
+{
+  "status": "PASS",
+  "authority": "301f0740c9fe2e0697e31a716f7226cb2112ede7",
+  "sourceHashes": {
+    "src/lib/agents/ant/AntController.js": "5e37e256ca6fff12c2c6377d015bc9b2256c570a5ec8a7c326a3f3703935554e",
+    "src/lib/agents/ant/AntAgent.js": "4189262719ab62968aa801118372a96bac04afa6bffacaaa6594694012cb9c28",
+    "src/lib/agents/ant/LocalOccupancy.js": "2e66bd5a434b108eea54e3eb80ab1bf7f6dec92bca0e4f0531d417aef5a6db97",
+    "src/lib/agents/ant/PheromoneField.js": "b68e98b5d916950487da67237a0d0277451d3b930971c1d8a35e92fd7d6f9837",
+    "src/lib/agents/ant/GaitController.js": "8fb744ee696d80ad2d9c81313a0632b8e0723a56face77ebef4d799f5b51433e",
+    "src/lib/agents/ant/BodyPoseController.js": "2ec4cc12c12ae301ea07056889c3be9255b1b1e155b7724cd3366278d60ace8e",
+    "src/lib/agents/ant/GasterDeposition.js": "0293e14599dee0c0b2c688247b25a363a22489693824ab7b188faf060233ce41",
+    "src/lib/agents/ant/ColonyActivation.js": "3f04b44fe81f692ea295b33ce311f239083c5db01a8400e35c0bb6fb9d685abd",
+    "src/lib/agents/ant/SurfaceField.js": "182b70f589bec7de427a97a4f14f3823b2bd474f6c49c90c59b17c306990c096",
+    "src/lib/agents/ant/TrailPlateBirth.js": "283de374bc38cd8baae47d99d253d43b71b800edbf4747d19d06299986c12860",
+    "src/lib/agents/ant/MaterialStratigraphy.js": "5cf272663ac2afb61ca94857f3636916f528d4cfb9d419e4d727c46f8c028be7",
+    "src/lib/renderers/AntRenderer.js": "e54c17f55996c087146cb5833255ba646cb46d9c889df7982a6dcff8db55639d"
+  },
+  "runChecks": {
+    "count": 6,
+    "seconds": 600,
+    "ticksPerRun": 36000,
+    "framesPerRun": 600,
+    "windowsPerRun": 10,
+    "headingDrawsPerAcceptedSpawn": 1,
+    "headingRngCallDelta": 1,
+    "placementAttemptIdentity": "attempts = accepted + clearance-rejected positions",
+    "invariantChecks": {
+      "nonFinite": 0,
+      "outOfDomain": 0,
+      "sampledOverlaps": 0
+    },
+    "runs": [
+      {
+        "seed": "20261005",
+        "arm": "isotropic",
+        "accepted": 866,
+        "flowAvailableAccepted": 148,
+        "flowConditioned": 0,
+        "randomCalls": 310384,
+        "headingDraws": 866,
+        "blocked": 10,
+        "placementAttempts": 1851,
+        "clearanceRejected": 985
+      },
+      {
+        "seed": "20261005",
+        "arm": "outgoingFlow",
+        "accepted": 868,
+        "flowAvailableAccepted": 181,
+        "flowConditioned": 181,
+        "randomCalls": 316402,
+        "headingDraws": 868,
+        "blocked": 27,
+        "placementAttempts": 2082,
+        "clearanceRejected": 1214
+      },
+      {
+        "seed": "20261006",
+        "arm": "isotropic",
+        "accepted": 857,
+        "flowAvailableAccepted": 170,
+        "flowConditioned": 0,
+        "randomCalls": 322856,
+        "headingDraws": 857,
+        "blocked": 17,
+        "placementAttempts": 1833,
+        "clearanceRejected": 976
+      },
+      {
+        "seed": "20261006",
+        "arm": "outgoingFlow",
+        "accepted": 875,
+        "flowAvailableAccepted": 200,
+        "flowConditioned": 200,
+        "randomCalls": 326874,
+        "headingDraws": 875,
+        "blocked": 24,
+        "placementAttempts": 2070,
+        "clearanceRejected": 1195
+      },
+      {
+        "seed": "20261007",
+        "arm": "isotropic",
+        "accepted": 843,
+        "flowAvailableAccepted": 136,
+        "flowConditioned": 0,
+        "randomCalls": 306308,
+        "headingDraws": 843,
+        "blocked": 9,
+        "placementAttempts": 1642,
+        "clearanceRejected": 799
+      },
+      {
+        "seed": "20261007",
+        "arm": "outgoingFlow",
+        "accepted": 834,
+        "flowAvailableAccepted": 158,
+        "flowConditioned": 158,
+        "randomCalls": 320562,
+        "headingDraws": 834,
+        "blocked": 11,
+        "placementAttempts": 1668,
+        "clearanceRejected": 834
+      }
+    ]
+  },
+  "visual": {
+    "rendererSha256": "e54c17f55996c087146cb5833255ba646cb46d9c889df7982a6dcff8db55639d",
+    "images": 24,
+    "sheets": 4,
+    "browserConsoleErrors": 0,
+    "imageAndSheetSha256Verified": true
+  }
+}

@@ -38,6 +38,51 @@ function annularRouteField({ strength = 1, sectors = [0, 1, 2, 3] } = {}) {
   } };
 }
 
+test('spawn heading uses isotropic fallback and previous-tick outgoing flow without a fixed north bias', async () => {
+  const controller = new AntController({ random: () => 0.5 });
+  await controller.init();
+  assert.ok(Math.abs(controller.agents[0].heading) < 1e-12,
+    'initial spawn has no prior flow and uses the isotropic transform');
+
+  for (let spawn = 0; spawn < 2; spawn += 1) {
+    for (const [index, ant] of controller.agents.entries()) {
+      ant.x = 0.15 + index * 0.05;
+      ant.y = 0.15;
+    }
+    assert.equal(controller.spawnNextAnt(), true);
+  }
+  assert.equal(controller.agents.length, 3);
+
+  const flowPositions = [[0.53, 0.70], [0.53, 0.72], [0.53, 0.74]];
+  controller.completedMovementSegments = controller.agents.map((ant, index) => {
+    ant.x = flowPositions[index][0];
+    ant.y = flowPositions[index][1];
+    return {
+      id: ant.id,
+      from: { x: ant.x - 0.001, y: ant.y },
+      to: { x: ant.x, y: ant.y },
+      dt: 1 / 60,
+      dx: 0.001,
+      dy: 0
+    };
+  });
+  controller.random = () => 0.75;
+  assert.equal(controller.spawnNextAnt(), true);
+  assert.ok(Math.abs(controller.agents.at(-1).heading - 0.15) < 1e-12,
+    'three coherent outward segments narrow the existing heading draw around their realized flow');
+
+  const retained = controller.completedMovementSegments.slice(0, 2);
+  controller.completedMovementSegments = retained;
+  for (const [index, ant] of controller.agents.entries()) {
+    ant.x = 0.15 + index * 0.05;
+    ant.y = 0.15;
+  }
+  assert.equal(controller.spawnNextAnt(), true);
+  assert.ok(Math.abs(controller.agents.at(-1).heading - Math.PI / 2) < 1e-12,
+    'fewer than three eligible segments falls back to the exact isotropic transform');
+  await controller.destroy();
+});
+
 test('cold colonies recruit gradually to the floor with bounded delays and blocked-entry retries', async () => {
   const controller = new AntController({ random: countedRandom(61) });
   await controller.init();

@@ -1,6 +1,6 @@
 # ANT — Current Architecture, Evidence and Research Boundary
 
-**Current repository state: 2026-10-30**
+**Current repository state: 2026-10-31**
 
 이 문서는 ANT의 **현재 verified state**를 위한 GitHub-side hub다. 과정은 [daily logs](daily/README.md), 실험별 원본과 재현 자료는 [evidence packages](evidence/)에 둔다.
 
@@ -8,6 +8,7 @@
 
 ```text
 movement / realized travel
+├─→ local completed outgoing flow → later accepted-spawn heading (isotropic fallback)
 ├─→ pheromone → movement / recruitment + TrailPlate chemical memory
 └─→ gait / FOOT_CONTACT → SurfaceField + retained contact counts
 chemical memory + mechanical support / repeat gates
@@ -33,6 +34,8 @@ Pheromone remains a live causal field but is hidden by default in the audience r
 
 Founder-refined movement baseline is `e38450ce11f99e63f5ab0cb6e8e8ee4281fcadd9`. Retained-history material feedback is a separately tested production layer: the previously adopted desired-speed resistance is now joined by adopted A turn-rate and D same-flow-headway conditions. These were not part of the founder baseline.
 
+Recruitment heading now has a separately adopted production law: the old fixed north `-π/2 ± 0.3` spawn bias is removed. Accepted spawns use exact isotropic heading when no qualifying prior completed local flow exists; with at least three qualifying outward post-collision segments, the same one heading RNG draw is narrowed around that endogenous q direction by the registered `w = π - (π - 0.3)R` mapping. Spawn position/cadence/clearance remain unchanged. [Production adoption](evidence/2026-10-31-recruitment-heading-flow-production-adoption/README.md).
+
 S0/S1 read-only social observation pass의 구현/evidence 흐름:
 
 ```text
@@ -44,7 +47,7 @@ af9c417  Record ANT social graph baseline evidence
 
 그 이후 커밋은 daily/documentation을 추가할 수 있으므로 **repository HEAD와 latest implementation baseline을 구분**한다.
 
-## Review handoff — decisions, baselines, web experience, viewing evidence (2026-10-30)
+## Review handoff — decisions, baselines, web experience, viewing evidence (2026-10-31)
 
 이 절은 **독립 검토자가 먼저 읽을 현재 판정과 자료 범위**를 연결한다. 아래 verdict는 한정된 실험의 현재 판정이며, 실험 당시 작성된 README의 시점별 표현을 소급 변경하지 않는다. `docs/ant/README.md`와 현 `main` 구현이 현재 상태의 기준이고, branch-only 연구는 production 채택과 구분한다.
 
@@ -52,6 +55,7 @@ af9c417  Record ANT social graph baseline evidence
 
 | 질문 | 현재 판정 · 적용 범위 | 근거 | 다시 열 조건 |
 | --- | --- | --- | --- |
+| recruitment spawn heading은 production에서 어떻게 정하는가? | **ADOPTED.** Fixed north bias는 제거됐다. 초기/flow-unavailable spawn은 exact isotropic; 직전 완료 tick의 local outgoing realized flow가 locked gate를 만족하면 그 q 방향으로 같은 RNG draw의 spread만 좁힌다. 세 seed 600 s에서 direct use 18.9–22.9%, 모든 60 s window에서 사용, fixed-direction lock-in은 관측되지 않았다. Artist matched-view review 후 채택. | [adoption](evidence/2026-10-31-recruitment-heading-flow-production-adoption/README.md) · [comparison](evidence/2026-10-31-recruitment-heading-flow-vs-isotropic/REPORT.md) | 600 s 이후 장기 directional lock-in, entrance placement pressure가 실제 failure로 확인되거나 spawn-position 자체를 다시 설계할 때 |
 | retained-material movement feedback은 production인가? | **ADOPTED.** Production은 tick-entry `L`을 한 번 읽어 기존 10% desired-speed resistance, A native turn-rate ceiling, D same-flow comfortable headway에 재사용한다. A/D는 600 s integration screen에서 slowdown 아래에서도 direct consumer 책임이 DISTINCT했고 등록된 invariant 위반은 없었다. blocked frames +13.17%는 열린 production cost로 유지한다. | [A/D adoption](evidence/2026-10-30-material-feedback-ad-production-adoption/README.md) · [candidate evidence](evidence/2026-10-30-material-feedback-ad-production-candidate/REPORT.md) | localized long-lived jam이 확인되거나, 후속 Residence/multi-feedback integration에서 movement/flow collapse가 나타나는 경우 |\n| G pheromone은 production인가? | **ADOPTED.** 316×316 Gaussian field. 고정 입력 parity 및 세 seed의 저장된 G 600 s 궤적 일치가 확인됐다. 자연 경로의 미학·장기 전시 성능까지 검증된 것은 아니다. | [G adoption](evidence/2026-10-25-g-production-adoption/README.md) · [validation](evidence/2026-10-25-g-production-adoption/VALIDATION.md) | 새로운 G production 결함; 별도로 natural route persistence/turnover에 관한 사전 정의된 관찰 |
 | Plate의 형성은 자생적 물질 법칙인가? | `TrailPlateBirth`는 현재 **authored source→boundary corridor selection law**다. 행동의 흔적을 기록하지만 어떤 역사를 영구 물질로 선택할지는 저술되어 있다. | [movement/material morphology audit](evidence/2026-10-08-movement-material-morphology/README.md) · [production source](../../src/lib/agents/ant/TrailPlateBirth.js) | 현재 G history를 선택기 전후로 계량했을 때 작품에 중요한 구체적 정보 손실이 확인되는 경우 |
 | 자연 Plate의 차이를 들을 수 있는가? | **2026-10-18 완료**: 자연 Plate 12개의 선택된 p50 비교 **6/6**에서 단일 청취자가 `different=yes`, 숨겨진 A/A는 `no`. Isolated/level-matched 조건이며 일반적 인식률이나 live mix 청취를 증명하지 않는다. | [original subjective export](subjective-listening/2026-10-13-plate-sonic-individuality-subjective-listening.json) · [as-of measurement](evidence/2026-10-13-plate-sonic-individuality/README.md) | 동일 Plate의 다른 접촉 위치 인식, 다른 청취자, 실제 dense mix에서 구분 가능성을 묻는 별도 질문 |
@@ -125,6 +129,7 @@ S0–S2c 사회 관측은 read-only/parked이고, vitality/episodic formation은
 - inertia / acceleration / braking / bounded turn.
 - local occupancy와 swept collision constraint.
 - 자연 퇴장 + gradual recruitment.
+- accepted-spawn heading은 fixed north가 아니다. 직전 완료 tick의 realized local outgoing flow가 `N>=3`, `0.018<r<=0.085`, speed `>=0.008`, outward 조건을 만족하면 q 주변으로 broad conditioning; 아니면 exact isotropic fallback. Spawn center/radius/cadence는 기존 값 유지.
 - behavior는 framework-independent model에 있고 renderer는 snapshot만 그린다.
 
 ### Chemical memory
