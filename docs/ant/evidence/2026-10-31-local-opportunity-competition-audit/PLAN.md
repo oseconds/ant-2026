@@ -56,14 +56,15 @@ Fixed visual requests are 60/120/300/600 s for each seed, displaying the latest 
 
 ## Execution and acceptance
 
-- [ ] Capture/core self-checks and independent definition review.
-- [ ] Three fresh 600 s runs; parity gate before interpretation.
-- [ ] Every-boundary analysis and signed histories; validity of every computed X.
-- [ ] Cross-channel/temporal/material/birth summaries and registered cases.
-- [ ] Technical atlases and reopened-image inspection.
-- [ ] Full deterministic rerun hashes; verify package manifest.
-- [ ] Fresh independent review of definitions, arithmetic and claims; resolve findings without changing production.
-- [ ] Report one authorized descriptive regime and the smallest justified next question.
-- [ ] Exact-path commits and push; verify remote branch SHA. No PR, main merge or production adoption.
+- [x] Capture/core self-checks and independent definition review.
+- [x] Three fresh 600 s runs; parity gate before interpretation.
+- [x] Every-boundary analysis and signed histories; validity of every computed X.
+- [x] Cross-channel/temporal/material/birth summaries and registered cases.
+- [x] Technical atlases and reopened-image inspection.
+- [x] Full deterministic rerun hashes; verify package manifest.
+- [x] Fresh independent review of definitions, arithmetic and claims; resolve findings without changing production.
+- [x] Report one authorized descriptive regime and the smallest justified next question.
 
-The final classification remains undecided until evidence is collected: `MULTI-OPPORTUNITY / COMPETITION PLAUSIBLE`, `DOMINANT ATTRACTOR ACROSS CHANNELS`, `TRANSIENT / UNDERDETERMINED`, or `SIGNAL-DEPENDENT / MIXED`.
+Delivery uses exact-path commits and push, followed by remote branch SHA verification. The final delivery message records that SHA after push, without self-embedding a commit in its own hashed artifact. No PR, main merge or production adoption.
+
+The registered decision set was `MULTI-OPPORTUNITY / COMPETITION PLAUSIBLE`, `DOMINANT ATTRACTOR ACROSS CHANNELS`, `TRANSIENT / UNDERDETERMINED`, or `SIGNAL-DEPENDENT / MIXED`. The collected evidence supports **SIGNAL-DEPENDENT / MIXED**; see [REPORT.md](REPORT.md) for its scope and the smallest justified next question.

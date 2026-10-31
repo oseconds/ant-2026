@@ -1,0 +1,148 @@
+TAP version 13
+# Subtest: rolling window uses (t-w,t] endpoints
+ok 1 - rolling window uses (t-w,t] endpoints
+  ---
+  duration_ms: 1.0142
+  type: 'test'
+  ...
+# Subtest: foot capture rejects malformed and out-of-domain positions and counts distinct ants/groups
+ok 2 - foot capture rejects malformed and out-of-domain positions and counts distinct ants/groups
+  ---
+  duration_ms: 5.0063
+  type: 'test'
+  ...
+# Subtest: segment rasterization clips exits and conserves clipped travel and time
+ok 3 - segment rasterization clips exits and conserves clipped travel and time
+  ---
+  duration_ms: 0.444
+  type: 'test'
+  ...
+# Subtest: stationary segment contributes full occupancy with zero travel
+ok 4 - stationary segment contributes full occupancy with zero travel
+  ---
+  duration_ms: 0.0977
+  type: 'test'
+  ...
+# Subtest: last-birth map excludes plates born at the current boundary
+ok 5 - last-birth map excludes plates born at the current boundary
+  ---
+  duration_ms: 0.422
+  type: 'test'
+  ...
+# Subtest: exact equal plateaus retain all cells; higher neighbors reject; zero maxima stay context-only
+ok 6 - exact equal plateaus retain all cells; higher neighbors reject; zero maxima stay context-only
+  ---
+  duration_ms: 4.1297
+  type: 'test'
+  ...
+# Subtest: greedy groups keep nearby peaks in separate current components
+ok 7 - greedy groups keep nearby peaks in separate current components
+  ---
+  duration_ms: 0.6369
+  type: 'test'
+  ...
+# Subtest: strongest-first grouping is deliberately nontransitive
+ok 8 - strongest-first grouping is deliberately nontransitive
+  ---
+  duration_ms: 0.3051
+  type: 'test'
+  ...
+# Subtest: reciprocal nearest breaks equal-distance ties toward the lower index
+ok 9 - reciprocal nearest breaks equal-distance ties toward the lower index
+  ---
+  duration_ms: 0.6605
+  type: 'test'
+  ...
+# Subtest: component ordinals can change when shared F cells preserve continuity
+ok 10 - component ordinals can change when shared F cells preserve continuity
+  ---
+  duration_ms: 1.2105
+  type: 'test'
+  ...
+# Subtest: adjacent component overlap reports descriptive split and merge degrees
+ok 11 - adjacent component overlap reports descriptive split and merge degrees
+  ---
+  duration_ms: 0.4605
+  type: 'test'
+  ...
+# Subtest: lag boundaries use nearest strictly prior anchor, ties older, and no interpolation
+ok 12 - lag boundaries use nearest strictly prior anchor, ties older, and no interpolation
+  ---
+  duration_ms: 0.2962
+  type: 'test'
+  ...
+# Subtest: X keys deduplicate exact sets and relations retain disjoint and nested cases
+ok 13 - X keys deduplicate exact sets and relations retain disjoint and nested cases
+  ---
+  duration_ms: 0.9028
+  type: 'test'
+  ...
+# Subtest: signal analysis preserves full signed lag maps and component-gated grouped tracks
+ok 14 - signal analysis preserves full signed lag maps and component-gated grouped tracks
+  ---
+  duration_ms: 62.8808
+  type: 'test'
+  ...
+# Subtest: chunk roundtrip is deterministic and rejects corrupt chunks
+ok 15 - chunk roundtrip is deterministic and rejects corrupt chunks
+  ---
+  duration_ms: 43.2029
+  type: 'test'
+  ...
+# Subtest: typed arrays decode exact values and reject length mismatch
+ok 16 - typed arrays decode exact values and reject length mismatch
+  ---
+  duration_ms: 0.4807
+  type: 'test'
+  ...
+# Subtest: correlations preserve ties and reject constant/insufficient samples
+ok 17 - correlations preserve ties and reject constant/insufficient samples
+  ---
+  duration_ms: 1.2023
+  type: 'test'
+  ...
+# Subtest: objective episodes never bridge a missing analysis or a diagnostic partition change
+ok 18 - objective episodes never bridge a missing analysis or a diagnostic partition change
+  ---
+  duration_ms: 0.1873
+  type: 'test'
+  ...
+# Subtest: positive D changes retain chemical gate context without changing opportunity eligibility
+ok 19 - positive D changes retain chemical gate context without changing opportunity eligibility
+  ---
+  duration_ms: 0.1412
+  type: 'test'
+  ...
+# Subtest: strict rank crossings exclude ties and unmatched centers
+ok 20 - strict rank crossings exclude ties and unmatched centers
+  ---
+  duration_ms: 0.3311
+  type: 'test'
+  ...
+# Subtest: regional context keeps separate spatial means and activity totals
+ok 21 - regional context keeps separate spatial means and activity totals
+  ---
+  duration_ms: 0.1628
+  type: 'test'
+  ...
+# Subtest: independent X check rejects a connected but incomplete disk component and wrong material arithmetic
+ok 22 - independent X check rejects a connected but incomplete disk component and wrong material arithmetic
+  ---
+  duration_ms: 2.5003
+  type: 'test'
+  ...
+# Subtest: g15 X observations deduplicate per boundary/channel and keep the lowest-index nucleus metrics
+ok 23 - g15 X observations deduplicate per boundary/channel and keep the lowest-index nucleus metrics
+  ---
+  duration_ms: 1.4564
+  type: 'test'
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 23
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 158.4

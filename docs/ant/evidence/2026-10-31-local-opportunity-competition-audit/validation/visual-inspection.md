@@ -1,0 +1,9 @@
+# Technical atlas inspection
+
+The parent reopened the final PNG contact sheets for signals, associated X and objective cases after the frozen canonical render completed. The renderer also checks SVG dimensions and reopens each PNG to verify its dimensions. This inspection concerns technical presentation, not artistic acceptance.
+
+- The signal sheet contains all three seeds at requested 60/120/300/600 s. Each panel labels its exact production-analysis anchor. E/F, separate B/C/D, recent feet/travel and signed changes remain distinct. Activity and change use fixed channel-specific scales shared across the twelve frames; native accumulated fields retain 0–1 bounds. Positive and negative change remain signed. Color intensity is not a common opportunity score.
+- The associated-X sheet contains twelve nine-panel figures. Each figure separates eight signal channels and existing material. Gray F remains context; colored exact X membership and nuclei identify the three illustrative within-channel ranks. Capture IDs and node counts remain on the standalone SVGs. Existing material has a separate fixed 0–35 layer scale. The figure does not union different channels into a supposed material object.
+- The four objective case figures contain nonempty center and changing-X-region trajectories, actual model-second axes, signed changes, separate recent contact/travel, ranks, material overlap/layers, adjacent X Jaccard, node count, centroid and geometry. Selection remains the registered machine choice in `analysis/cases.json`; no case was replaced after viewing.
+
+Contact sheets are downsampled overviews. Use the linked standalone SVGs for small labels, exact IDs and local traces; full definitions and scale metadata remain in the HTML and visual manifest. The independent visual rerun and byte comparison are recorded separately in `visual-determinism.json` in this validation directory.

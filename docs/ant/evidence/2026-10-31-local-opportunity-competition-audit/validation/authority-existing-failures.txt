@@ -1,0 +1,55 @@
+TAP version 13
+# Subtest: ants enter one at a time from a common region with irregular delays and distinct headings
+not ok 1 - ants enter one at a time from a common region with irregular delays and distinct headings
+  ---
+  duration_ms: 5.1439
+  type: 'test'
+  location: 'C:\\Users\\5dudt\\Documents\\Github\\ant-2026\\tests\\ant-controller.test.js:166:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(Math.abs(ant.heading + Math.PI / 2) <= 0.3)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    recordBirth (file:///C:/Users/5dudt/Documents/Github/ant-2026/tests/ant-controller.test.js:180:12)
+    TestContext.<anonymous> (file:///C:/Users/5dudt/Documents/Github/ant-2026/tests/ant-controller.test.js:191:3)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: historical plate masks draw beneath live pheromone and cache frozen geometry
+not ok 2 - historical plate masks draw beneath live pheromone and cache frozen geometry
+  ---
+  duration_ms: 1.8683
+  type: 'test'
+  location: 'C:\\Users\\5dudt\\Documents\\Github\\ant-2026\\tests\\ant-renderer.test.js:170:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    1 !== 2
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 2
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/5dudt/Documents/Github/ant-2026/tests/ant-renderer.test.js:180:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 71.2143

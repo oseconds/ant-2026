@@ -92,6 +92,7 @@ const cases = [
     ].map(({ timeMs, peak }, index) => {
       const D = zero.slice(); [100, 101, 196, 197].forEach((cell, i) => { D[cell] = peak[i]; });
       const foot = new Uint32Array(CELL_COUNT), travel = zero.slice();
+      if (index === 0) foot[100] = 1;
       const window = () => ({ count: packed(foot), groups: packed(new Uint16Array(CELL_COUNT)),
         ants: packed(new Uint16Array(CELL_COUNT)), ageSeconds: packed(new Float32Array(CELL_COUNT)) });
       const traffic = () => ({ travel: packed(travel), ants: packed(new Uint16Array(CELL_COUNT)),
@@ -114,7 +115,30 @@ const cases = [
     assert.equal(track.observations[1].displacementFromPrevious, 1 / 95);
     assert.equal(track.observations[1].xJaccard, 1);
     assert.equal(track.leftCensored, true); assert.equal(track.rightCensored, true);
-    assert.equal(track.endObservation.biologicalTerminationInferred, false);
+    assert.deepEqual(track.startObservation, { anchorIndex: 0, timeMs: 10000, previousAnchorIndex: null,
+      reason: 'left-censored-at-source-boundary' });
+    assert.deepEqual(track.endObservation, { anchorIndex: 2, timeMs: 30000, nextAnchorIndex: null, nextTimeMs: null,
+      reason: 'right-censored-at-source-boundary', biologicalTerminationInferred: false });
+    const footTrack = result.tracks.find(row => row.channel === 'feet1' && row.representation === 'raw' && row.cutoff === .025);
+    assert.equal(footTrack.observations.length, 1);
+    assert.equal(footTrack.leftCensored, true); assert.equal(footTrack.rightCensored, false);
+    assert.deepEqual(footTrack.startObservation, { anchorIndex: 0, timeMs: 10000, previousAnchorIndex: null,
+      reason: 'left-censored-at-source-boundary' });
+    assert.deepEqual(footTrack.endObservation, { anchorIndex: 0, timeMs: 10000, nextAnchorIndex: 1, nextTimeMs: 20000,
+      reason: 'no-adjacent-reciprocal-match-at-next-anchor', biologicalTerminationInferred: false });
+    for (const row of result.tracks) {
+      const first = row.observations[0], last = row.observations.at(-1);
+      assert.equal(row.startObservation.anchorIndex, first.anchorIndex);
+      assert.equal(row.startObservation.timeMs, first.timeMs);
+      assert.equal(row.startObservation.previousAnchorIndex, first.anchorIndex === 0 ? null : first.anchorIndex - 1);
+      assert.equal(row.endObservation.anchorIndex, last.anchorIndex);
+      assert.equal(row.endObservation.timeMs, last.timeMs);
+      assert.equal(row.endObservation.nextAnchorIndex, last.anchorIndex === 2 ? null : last.anchorIndex + 1);
+      assert.equal(row.endObservation.nextTimeMs, last.anchorIndex === 2 ? null : anchors[last.anchorIndex + 1].timeMs);
+      assert.equal(row.leftCensored, first.anchorIndex === 0);
+      assert.equal(row.rightCensored, last.anchorIndex === 2);
+      assert.equal(row.endObservation.biologicalTerminationInferred, false);
+    }
     assert.ok(result.anchors.every(anchor => anchor.captures.length === 1));
     assert.equal(result.anchors[0].componentRelationFromPrevious, null);
     assert.equal(result.anchors[1].componentRelationFromPrevious.relations.length, 1);

@@ -2,6 +2,15 @@
 
 **Canonical chronology: `docs/ant/daily/`**
 
+### 2026-10-31 — Author reopens local formation opportunities (research branch only)
+
+[Daily record](./2026-10-31-local-opportunity-competition-audit.md) · [Evidence](../evidence/2026-10-31-local-opportunity-competition-audit/README.md)
+
+- Author retained X as promising and narrowed the preceding negative result to global max-D allocation into X
+- Fresh three-seed, 600 s production-parity histories audit local accumulated state, recent inscription, correspondence tracks and locked X consequences
+- Production `TrailPlateBirth` remains unchanged; no allocation mechanism or Residence work
+- This reopening and its research result belong to the dedicated branch, with no main merge or production adoption
+
 ### 2026-10-31 — Current-production materialization selector closure
 
 [Daily record](./2026-10-31-materialization-production-shaped-x-shadow.md) · [Evidence](../evidence/2026-10-31-materialization-production-shaped-x-shadow/README.md)
