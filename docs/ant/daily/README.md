@@ -2,6 +2,15 @@
 
 **Canonical chronology: `docs/ant/daily/`**
 
+### 2026-10-31 — B vs C matched author review
+
+[Daily record](./2026-10-31-b-vs-c-author-review.md) · [Evidence](../evidence/2026-10-31-b-vs-c-author-review/REPORT.md)
+
+- Reused frozen three-seed B/C observations and registered objective tracks; deterministic replay only reconstructed missing native frames
+- Prepared matched author sheet, clean artwork comparison, technical opportunity/X atlas, objective sequences, and temporal responsibility panels
+- B and C remain technically viable and distinct; no author choice inferred
+- No competition, production selector, material birth, or Residence work
+
 ### 2026-10-31 — Local episode evidence responsibility: B vs C
 
 [Daily record](./2026-10-31-local-episode-evidence-b-vs-c.md) · [Evidence](../evidence/2026-10-31-local-episode-evidence-b-vs-c/README.md)
