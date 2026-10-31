@@ -2,6 +2,16 @@
 
 **Canonical chronology: `docs/ant/daily/`**
 
+### 2026-10-31 — Current-production materialization selector closure
+
+[Daily record](./2026-10-31-materialization-production-shaped-x-shadow.md) · [Evidence](../evidence/2026-10-31-materialization-production-shaped-x-shadow/README.md)
+
+- Observer-only max-D → X shadow ran on three fresh current-production 600 s histories with tick-wise parity
+- X was available about 98% of actual production analysis boundaries and had low overlap with the source→boundary candidate
+- The max-D nucleus repeatedly stayed in two adjacent entrance-local regions; median 94–95% of X overlapped prior material
+- Decision: **X OVERCONCENTRATED / REPETITIVE**; close selector research and leave production `TrailPlateBirth` unchanged
+- Next workstream: Chemical Residence; no Residence work was included
+
 ### 2026-10-31 — Recruitment heading: endogenous flow vs isotropic
 
 [Daily record](./2026-10-31-recruitment-heading-flow-vs-isotropic.md) · [Comparison evidence](../evidence/2026-10-31-recruitment-heading-flow-vs-isotropic/REPORT.md)
