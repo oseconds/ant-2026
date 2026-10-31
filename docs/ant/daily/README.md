@@ -2,6 +2,16 @@
 
 **Canonical chronology: `docs/ant/daily/`**
 
+### 2026-10-31 — B/C dual-material shadow maturation
+
+[Daily record](./2026-10-31-bc-dual-material-shadow.md) · [Evidence](../evidence/2026-10-31-bc-dual-material-shadow/REPORT.md)
+
+- Reused three frozen seeds and 599 saved boundaries per seed; no new natural-history measurements
+- Applied one shared 20 s / `.60` X-stability grammar to 1,135 B and 954 C events
+- Event timing was closely synchronized, while same-boundary X captures were more often disjoint than identical; virtual ledger retained shared and channel-exclusive cells
+- Decision: **DUAL HISTORY / COMPLEMENTARY**; supports consideration of a provenance-only prototype, without choosing a channel or assigning physical/audio differences
+- Production source, real material, competition, and Residence were untouched
+
 ### 2026-10-31 — B vs C matched author review
 
 [Daily record](./2026-10-31-b-vs-c-author-review.md) · [Evidence](../evidence/2026-10-31-b-vs-c-author-review/REPORT.md)

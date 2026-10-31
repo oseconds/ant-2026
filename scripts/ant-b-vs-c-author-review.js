@@ -15,7 +15,7 @@ const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const AUTHORITY = 'bc045dc3caa5954df633ecbee37fbabcb8224f30';
 const SOURCE_PACKET = resolve(ROOT, 'docs/ant/evidence/2026-10-31-local-opportunity-competition-audit');
 const BC_EVIDENCE = resolve(ROOT, 'docs/ant/evidence/2026-10-31-local-episode-evidence-b-vs-c');
-const OUTPUT = resolve(ROOT, 'docs/ant/evidence/2026-10-31-b-vs-c-author-review');
+const OUTPUT = resolve(ROOT, process.env.ANT_REVIEW_OUTPUT || 'docs/ant/evidence/2026-10-31-b-vs-c-author-review');
 const VISUAL = resolve(OUTPUT, 'visual');
 const SEEDS = ['20261005', '20261006', '20261007'];
 const GRID = 96, COUNT = GRID * GRID, DT = 1 / 60, STEP_MS = 1000 / 60;
@@ -43,7 +43,7 @@ function countedLcg(seed) {
     get calls() { return calls; }, state() { return state; } };
 }
 
-function productionThinning(sourceText) {
+export function productionThinning(sourceText) {
   const neighborStart = sourceText.indexOf('function neighborValues(');
   const samplerStart = sourceText.indexOf('function createPheromoneSampler(', neighborStart);
   const thinStart = sourceText.indexOf('function zhangSuen(');
@@ -449,7 +449,7 @@ async function prepareSelection() {
   return { selection };
 }
 
-async function replaySeed(seed, frames, thinning, page, frameMeta) {
+export async function replaySeed(seed, frames, thinning, page, frameMeta) {
   const source = await readRun(resolve(SOURCE_PACKET, `analysis/seed-${seed}.signals.json.gz`));
   assert.equal(source.anchors.length, 599, 'frozen source analysis anchor count');
   const rng = countedLcg(seed), controller = new AntController({ random: rng.random });
@@ -553,7 +553,7 @@ async function renderWorld(page, snapshot) {
   return await page.locator('#world').screenshot({ type: 'png' });
 }
 
-async function makeBrowser() {
+export async function makeBrowser() {
   const server = await createServer({ configFile: false, base: '/', server: { host: '127.0.0.1', port: 0, strictPort: true }, logLevel: 'error' });
   await server.listen();
   const browser = await chromium.launch({ headless: true, executablePath: BROWSER_EXE });
@@ -647,7 +647,7 @@ async function compose(page, spec) {
   }, spec);
 }
 
-async function writeComposite(page, spec, output) {
+export async function writeComposite(page, spec, output) {
   const first = Buffer.from((await compose(page, spec)).split(',')[1], 'base64');
   const second = Buffer.from((await compose(page, spec)).split(',')[1], 'base64');
   assert.equal(sha256(first), sha256(second), 'composite regeneration deterministic');
