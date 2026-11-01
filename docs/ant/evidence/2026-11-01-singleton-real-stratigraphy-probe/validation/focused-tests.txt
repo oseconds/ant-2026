@@ -1,0 +1,274 @@
+TAP version 13
+# Subtest: fixed material multiplier follows the selected equation and bound
+ok 1 - fixed material multiplier follows the selected equation and bound
+  ---
+  duration_ms: 0.5864
+  type: 'test'
+  ...
+# Subtest: public snapshot lookup reads only layer count and treats empty/outside cells as L=0
+ok 2 - public snapshot lookup reads only layer count and treats empty/outside cells as L=0
+  ---
+  duration_ms: 0.1438
+  type: 'test'
+  ...
+# Subtest: production default enables resistance; explicit Off and On preserve candidate semantics
+ok 3 - production default enables resistance; explicit Off and On preserve candidate semantics
+  ---
+  duration_ms: 18.5841
+  type: 'test'
+  ...
+# Subtest: same-tick stratigraphy changes affect locomotion starting with the next tick
+ok 4 - same-tick stratigraphy changes affect locomotion starting with the next tick
+  ---
+  duration_ms: 5.2841
+  type: 'test'
+  ...
+# Subtest: absent research provider preserves the shared production layer count
+ok 5 - absent research provider preserves the shared production layer count
+  ---
+  duration_ms: 20.9835
+  type: 'test'
+  ...
+# Subtest: one research layer is added once and the same effective L reaches speed, A, and D
+ok 6 - one research layer is added once and the same effective L reaches speed, A, and D
+  ---
+  duration_ms: 2.018
+  type: 'test'
+  ...
+# Subtest: an end-of-tick overlay increment first reaches movement on the next tick
+ok 7 - an end-of-tick overlay increment first reaches movement on the next tick
+  ---
+  duration_ms: 1.0371
+  type: 'test'
+  ...
+# Subtest: fresh overlays are independent and start empty
+ok 8 - fresh overlays are independent and start empty
+  ---
+  duration_ms: 1.3237
+  type: 'test'
+  ...
+# Subtest: coeval exact-X B/C maturation increments one layer per cell
+ok 9 - coeval exact-X B/C maturation increments one layer per cell
+  ---
+  duration_ms: 1.7317
+  type: 'test'
+  ...
+# Subtest: a contested maturation receives no overlay and a singleton receives exactly one layer
+ok 10 - a contested maturation receives no overlay and a singleton receives exactly one layer
+  ---
+  duration_ms: 0.6697
+  type: 'test'
+  ...
+# Subtest: live observer uses actual elapsed time, locked X stability, exact grouping and no RNG
+ok 11 - live observer uses actual elapsed time, locked X stability, exact grouping and no RNG
+  ---
+  duration_ms: 57.6913
+  type: 'test'
+  ...
+# Subtest: builds exact connected X masks with no inferred corridor fields or RNG use
+ok 12 - builds exact connected X masks with no inferred corridor fields or RNG use
+  ---
+  duration_ms: 2.2455
+  type: 'test'
+  ...
+# Subtest: accepts a two-cell X and keeps B, C, and BC on the same neutral material baseline
+ok 13 - accepts a two-cell X and keeps B, C, and BC on the same neutral material baseline
+  ---
+  duration_ms: 0.5924
+  type: 'test'
+  ...
+# Subtest: validates IDs, xCells geometry, time, provenance, and event IDs
+ok 14 - validates IDs, xCells geometry, time, provenance, and event IDs
+  ---
+  duration_ms: 0.4091
+  type: 'test'
+  ...
+# Subtest: MaterialStratigraphy freezes exact mask and copied provenance in birth order
+ok 15 - MaterialStratigraphy freezes exact mask and copied provenance in birth order
+  ---
+  duration_ms: 4.6726
+  type: 'test'
+  ...
+# Subtest: two-cell and branched masks pass bridge storage and material topology compilation unchanged
+ok 16 - two-cell and branched masks pass bridge storage and material topology compilation unchanged
+  ---
+  duration_ms: 14.4917
+  type: 'test'
+  ...
+# Subtest: manifest preserves binary bytes and gives text one declared line-ending convention
+ok 17 - manifest preserves binary bytes and gives text one declared line-ending convention
+  ---
+  duration_ms: 0.82
+  type: 'test'
+  ...
+# Subtest: manifest verifies digest and length and rejects altered evidence
+ok 18 - manifest verifies digest and length and rejects altered evidence
+  ---
+  duration_ms: 1.013
+  type: 'test'
+  ...
+# Subtest: replication projection ignores branch only and rejects evidence changes
+ok 19 - replication projection ignores branch only and rejects evidence changes
+  ---
+  duration_ms: 3.427
+  type: 'test'
+  ...
+# Subtest: a local Plate enters native stratigraphy after completed tick and reads next tick
+ok 20 - a local Plate enters native stratigraphy after completed tick and reads next tick
+  ---
+  duration_ms: 2.5456
+  type: 'test'
+  ...
+# Subtest: combined material cap stops at the actual stored Plate count
+ok 21 - combined material cap stops at the actual stored Plate count
+  ---
+  duration_ms: 0.1966
+  type: 'test'
+  ...
+# Subtest: frozen authority metadata binds audio, horizon, authority and source hashes
+ok 22 - frozen authority metadata binds audio, horizon, authority and source hashes
+  ---
+  duration_ms: 0.5041
+  type: 'test'
+  ...
+# Subtest: native depth excludes bottom Plate and uses descending Float32 accumulation
+ok 23 - native depth excludes bottom Plate and uses descending Float32 accumulation
+  ---
+  duration_ms: 4.2724
+  type: 'test'
+  ...
+# Subtest: 60-second windows use actual anchor times and exact half-open boundaries
+ok 24 - 60-second windows use actual anchor times and exact half-open boundaries
+  ---
+  duration_ms: 13.3634
+  type: 'test'
+  ...
+# Subtest: material chronology rebuilds exact masks, pair overlaps and full-grid quantiles
+ok 25 - material chronology rebuilds exact masks, pair overlaps and full-grid quantiles
+  ---
+  duration_ms: 16.3467
+  type: 'test'
+  ...
+# Subtest: nodule lineage stays unclassified without source plate receipts
+ok 26 - nodule lineage stays unclassified without source plate receipts
+  ---
+  duration_ms: 5.9199
+  type: 'test'
+  ...
+# Subtest: native qualification predicate changes and candidate timer resets remain separate
+ok 27 - native qualification predicate changes and candidate timer resets remain separate
+  ---
+  duration_ms: 3.9438
+  type: 'test'
+  ...
+# Subtest: a capacity-stop checkpoint preserves its tick and is not used as a later nominal point
+ok 28 - a capacity-stop checkpoint preserves its tick and is not used as a later nominal point
+  ---
+  duration_ms: 3.354
+  type: 'test'
+  ...
+# Subtest: real insertion lineage round-trips decision X through mask, descriptor, and birth receipt
+ok 29 - real insertion lineage round-trips decision X through mask, descriptor, and birth receipt
+  ---
+  duration_ms: 7.0964
+  type: 'test'
+  ...
+# Subtest: plate descriptors create immutable bottom-to-top cell columns and age never creates depth
+ok 30 - plate descriptors create immutable bottom-to-top cell columns and age never creates depth
+  ---
+  duration_ms: 3.3825
+  type: 'test'
+  ...
+# Subtest: cached topology lookup and stable plate index mapping expose only the uppermost material
+ok 31 - cached topology lookup and stable plate index mapping expose only the uppermost material
+  ---
+  duration_ms: 0.3561
+  type: 'test'
+  ...
+# Subtest: FOOT_CONTACT counts each in-domain foot and ignores centroid, strength, malformed and out-of-domain data
+ok 32 - FOOT_CONTACT counts each in-domain foot and ignores centroid, strength, malformed and out-of-domain data
+  ---
+  duration_ms: 0.3524
+  type: 'test'
+  ...
+# Subtest: a nodule requires four overlapping plates, three buried layers, compaction, actual foot load and persistence
+ok 33 - a nodule requires four overlapping plates, three buried layers, compaction, actual foot load and persistence
+  ---
+  duration_ms: 2.336
+  type: 'test'
+  ...
+# Subtest: elapsed simulation time alone cannot create a nodule without contact load or enough material history
+ok 34 - elapsed simulation time alone cannot create a nodule without contact load or enough material history
+  ---
+  duration_ms: 2.8751
+  type: 'test'
+  ...
+# Subtest: loss of a qualification condition resets persistence instead of banking old elapsed time
+ok 35 - loss of a qualification condition resets persistence instead of banking old elapsed time
+  ---
+  duration_ms: 1.0657
+  type: 'test'
+  ...
+# Subtest: metadata cap, read-only topology reuse and reset retain deterministic bounded state
+ok 36 - metadata cap, read-only topology reuse and reset retain deterministic bounded state
+  ---
+  duration_ms: 0.6931
+  type: 'test'
+  ...
+# Subtest: default metadata ceiling preserves more than the previous twelve plate limit without eviction
+ok 37 - default metadata ceiling preserves more than the previous twelve plate limit without eviction
+  ---
+  duration_ms: 0.5854
+  type: 'test'
+  ...
+# Subtest: stores bounded immutable birth descriptors and recreates surfaces without replaying contacts
+ok 38 - stores bounded immutable birth descriptors and recreates surfaces without replaying contacts
+  ---
+  duration_ms: 131.8616
+  type: 'test'
+  ...
+# Subtest: routes each foot only to the uppermost overlapping plate and leaves unsupported energy unused
+ok 39 - routes each foot only to the uppermost overlapping plate and leaves unsupported energy unused
+  ---
+  duration_ms: 2.3673
+  type: 'test'
+  ...
+# Subtest: syncMaterial compiles exposure routing so buried overlapping layers receive no direct foot strikes
+ok 40 - syncMaterial compiles exposure routing so buried overlapping layers receive no direct foot strikes
+  ---
+  duration_ms: 4.207
+  type: 'test'
+  ...
+# Subtest: syncPlates fallback compiles once per topology change and Off/On sends topology without replaying impacts
+ok 41 - syncPlates fallback compiles once per topology change and Off/On sends topology without replaying impacts
+  ---
+  duration_ms: 1.404
+  type: 'test'
+  ...
+# Subtest: does not backlog contacts during load and Off cancels a pending enable without destroying AudioEngine
+ok 42 - does not backlog contacts during load and Off cancels a pending enable without destroying AudioEngine
+  ---
+  duration_ms: 1.4546
+  type: 'test'
+  ...
+# Subtest: a processor error disables and disconnects only the surface worklet
+ok 43 - a processor error disables and disconnects only the surface worklet
+  ---
+  duration_ms: 1.1725
+  type: 'test'
+  ...
+# Subtest: rejects empty or off-mask frozen surfaces before allocating worklet layers
+ok 44 - rejects empty or off-mask frozen surfaces before allocating worklet layers
+  ---
+  duration_ms: 0.1842
+  type: 'test'
+  ...
+1..44
+# tests 44
+# suites 0
+# pass 44
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 243.2978
