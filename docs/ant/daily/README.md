@@ -2,6 +2,15 @@
 
 **Canonical chronology: `docs/ant/daily/`**
 
+### 2026-11-01 — B/C one-per-component capacity necessity audit
+
+[Daily record](./2026-11-01-bc-material-capacity-necessity-audit.md) · [Evidence](../evidence/2026-11-01-bc-material-capacity-necessity-audit/REPORT.md)
+
+- Reused all 163 registered slots, 1,846 X-option appearances, 1,352 conflict components, raw B/C events, and saved production material; no new trajectory or replay
+- All one-per-component references exceed the 256 implementation ceiling, but the spatial footprint does not establish a semantic world-capacity law
+- Decision: **CAPACITY LAW NOT YET JUSTIFIED**; keep storage capacity separate and continue with the local arbitration question
+- No winner rule, cap, turnover, Plate creation, production feedback, or Residence work
+
 ### 2026-11-01 — B/C local X-conflict decomposition
 
 [Daily record](./2026-11-01-bc-local-conflict-decomposition.md) · [Evidence](../evidence/2026-11-01-bc-local-conflict-decomposition/REPORT.md)
