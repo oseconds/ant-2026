@@ -2,6 +2,15 @@
 
 **Canonical chronology: `docs/ant/daily/`**
 
+### 2026-11-01 — Local-X material replacement (research only)
+
+[Daily record](./2026-11-01-local-x-material-replacement.md) · [Evidence package](../evidence/2026-11-01-local-x-material-replacement/REPORT.md)
+
+- Three 300 s CONTROL/REPLACEMENT pairs; every CONTROL matched the frozen authority receipts and B/C maturity stream
+- Replacement retained 137–156 local Plates per seed, with material exposure and no capacity stop
+- Coverage, connected-body structure and Nodule history differed substantially from source-to-boundary CONTROL
+- Decision: **REPLACEMENT VIABLE BUT REGIME DISTINCT**; no production adoption, tuning, Audio On, longer run or Residence work
+
 ### 2026-11-01 — Singleton X retained through actual stratigraphy (research only)
 
 [Daily record](./2026-11-01-singleton-real-stratigraphy-probe.md) · [Report](../evidence/2026-11-01-singleton-real-stratigraphy-probe/REPORT.md)
