@@ -2,6 +2,16 @@
 
 **Canonical chronology: `docs/ant/daily/`**
 
+### 2026-11-01 — B/C local X-conflict decomposition
+
+[Daily record](./2026-11-01-bc-local-conflict-decomposition.md) · [Evidence](../evidence/2026-11-01-bc-local-conflict-decomposition/REPORT.md)
+
+- Reused all 163 registered 10 s commit slots and exact mature X masks; no new natural simulation
+- Exact cell overlap produced mostly singleton/small components, while a contested neighborhood remained present in 138 slots
+- One hypothetical event per component crossed the 256-Plate reference in every seed
+- Decision: **LOCAL CONFLICT DECOMPOSES BUT REMAINS OVERPROLIFIC**; keep local conflict and total world commit capacity separate
+- No spatial winner, Plate, production feedback, or Residence work
+
 ### 2026-11-01 — B/C 10 s commit-slot ambiguity audit
 
 [Daily record](./2026-11-01-bc-commit-slot-ambiguity-audit.md) · [Evidence](../evidence/2026-11-01-bc-commit-slot-ambiguity-audit/REPORT.md)

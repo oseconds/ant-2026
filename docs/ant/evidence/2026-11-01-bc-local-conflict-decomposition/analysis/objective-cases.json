@@ -1,0 +1,166 @@
+{
+  "selectionRules": {
+    "tieBreak": "seed ascending, actual time ascending, anchor ascending, then stable IDs",
+    "localConflictContinuity": "exact member X hashes, mutual one-to-one contested-component correspondence only",
+    "manyOptionsSmallConflicts": "maximize global option count, minimize largest component, maximize singleton components, then earliest",
+    "sameFDisjoint": "pure B and pure C options; zero shared X cells; at least one same frozen F component"
+  },
+  "cases": [
+    {
+      "id": "maximum-singleton-components",
+      "criterion": "Max singleton component count, then more global options, then earliest.",
+      "status": "selected",
+      "selected": {
+        "seed": "20261005",
+        "slotIndex": 9,
+        "anchorIndex": 137,
+        "timeMs": 137016.66666667847,
+        "uniqueSpatialOptionCount": 15,
+        "overlapComponentCount": 15,
+        "singletonComponentCount": 15,
+        "contestedComponentCount": 0,
+        "largestComponentSize": 1,
+        "detail": {
+          "singletonComponents": 15
+        }
+      }
+    },
+    {
+      "id": "largest-contested-component",
+      "criterion": "Largest connected overlap component by member X count, then union-cell count, then earliest.",
+      "status": "selected",
+      "selected": {
+        "seed": "20261007",
+        "slotIndex": 53,
+        "anchorIndex": 589,
+        "timeMs": 590100.0000000909,
+        "uniqueSpatialOptionCount": 16,
+        "overlapComponentCount": 5,
+        "singletonComponentCount": 4,
+        "contestedComponentCount": 1,
+        "largestComponentSize": 12,
+        "detail": {
+          "componentId": "CC001",
+          "memberXCount": 12,
+          "unionCellCount": 1191,
+          "memberOptionIds": [
+            "X005-0338272b4917",
+            "X001-3f0cbd9c0ad7",
+            "X012-426d876def70",
+            "X006-4d2b5d0808aa",
+            "X002-6976d8611c89",
+            "X004-7e2a56894b1d",
+            "X013-8334c8d8f98a",
+            "X014-ace74bae4fc3",
+            "X015-ba8e74854e5f",
+            "X010-d680670f7a69",
+            "X011-dc6a390c727c",
+            "X008-ecf13b3aa187"
+          ]
+        }
+      }
+    },
+    {
+      "id": "many-options-small-local-conflicts",
+      "criterion": "Max options, then min largest component, then max singleton count, then earliest.",
+      "status": "selected",
+      "selected": {
+        "seed": "20261007",
+        "slotIndex": 9,
+        "anchorIndex": 138,
+        "timeMs": 138016.6666666779,
+        "uniqueSpatialOptionCount": 20,
+        "overlapComponentCount": 13,
+        "singletonComponentCount": 10,
+        "contestedComponentCount": 3,
+        "largestComponentSize": 5,
+        "detail": {
+          "globalOptions": 20,
+          "largestComponent": 5,
+          "singletonComponents": 10
+        }
+      }
+    },
+    {
+      "id": "dual-provenance-option-overlap",
+      "criterion": "Earliest {B,C} node with an overlap edge to another unique X.",
+      "status": "none",
+      "selected": null
+    },
+    {
+      "id": "same-F-component-disjoint-B-C-options",
+      "criterion": "Earliest pure B/C pair sharing an F component but no X cells.",
+      "status": "selected",
+      "selected": {
+        "seed": "20261005",
+        "slotIndex": 4,
+        "anchorIndex": 84,
+        "timeMs": 84016.66666666823,
+        "uniqueSpatialOptionCount": 5,
+        "overlapComponentCount": 2,
+        "singletonComponentCount": 1,
+        "contestedComponentCount": 1,
+        "largestComponentSize": 4,
+        "detail": {
+          "BOptionId": "X002-1b1a6ea184ad",
+          "COptionId": "X005-093dff6f8820",
+          "sharedFComponents": [
+            5
+          ]
+        }
+      }
+    },
+    {
+      "id": "longest-lived-contested-local-region",
+      "criterion": "Longest unambiguous contested component chain; use its final observation.",
+      "status": "selected",
+      "selected": {
+        "seed": "20261006",
+        "slotIndex": 11,
+        "anchorIndex": 160,
+        "timeMs": 160016.66666666509,
+        "uniqueSpatialOptionCount": 14,
+        "overlapComponentCount": 10,
+        "singletonComponentCount": 8,
+        "contestedComponentCount": 2,
+        "largestComponentSize": 4,
+        "detail": {
+          "trackId": "R0002",
+          "durationSlots": 7,
+          "startTimeMs": 97016.66666667201,
+          "endTimeMs": 160016.66666666509,
+          "componentId": "CC003",
+          "memberOptionIds": [
+            "X001-10871f5615ab",
+            "X007-2c042ab63c25",
+            "X008-96faf3b0c4d2",
+            "X014-c9ef777bb92c"
+          ]
+        }
+      }
+    },
+    {
+      "id": "longest-lived-singleton-option",
+      "criterion": "Longest exact X mask run that remains singleton at adjacent slots; use its final observation.",
+      "status": "selected",
+      "selected": {
+        "seed": "20261005",
+        "slotIndex": 47,
+        "anchorIndex": 528,
+        "timeMs": 528083.3333335686,
+        "uniqueSpatialOptionCount": 14,
+        "overlapComponentCount": 12,
+        "singletonComponentCount": 10,
+        "contestedComponentCount": 2,
+        "largestComponentSize": 2,
+        "detail": {
+          "xSha256": "0aed1a8df23f03fe425465da1620cabf69226845ebf221b1460d3c2af29e65bc",
+          "durationSlots": 6,
+          "startTimeMs": 478016.66666685697,
+          "endTimeMs": 528083.3333335686,
+          "optionId": "X001-0aed1a8df23f"
+        }
+      }
+    }
+  ]
+}
