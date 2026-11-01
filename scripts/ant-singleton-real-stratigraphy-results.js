@@ -329,26 +329,33 @@ function summarizeQualification(insertions) {
   return summary;
 }
 
-function svg(title, ylabel, series, { width = 720, height = 300 } = {}) {
-  const left = 72, right = 18, top = 40, bottom = 46, pw = width - left - right, ph = height - top - bottom;
+function svg(title, ylabel, series, { width = 720, height = 340 } = {}) {
+  const left = 72, right = 18, top = 40, bottom = 86, pw = width - left - right, ph = height - top - bottom;
   const plotted = series.map(s => ({ ...s, values: s.values.filter(row => Number.isFinite(row[1])) }));
   const all = plotted.flatMap(s => s.values.map(row => row[1]));
-  const max = Math.max(1, ...all), min = Math.min(0, ...all), colors = ['#243b53', '#a34a28', '#31725b'];
+  const max = Math.max(1, ...all), min = Math.min(0, ...all), colors = ['#243b53', '#a34a28', '#31725b', '#9c6f2f'];
   const x = seconds => left + seconds / 300 * pw, y = value => top + (max === min ? ph / 2 : (max - value) / (max - min) * ph);
   const lines = plotted.map((s, i) => `<polyline fill="none" stroke="${colors[i]}" stroke-width="2" points="${s.values.map(([t, v]) => `${x(t)},${y(v)}`).join(' ')}"/><text x="${left + i * 160}" y="${height - 8}" fill="${colors[i]}" font-size="12">${s.name}</text>`).join('');
   const ticks = [0, 60, 120, 180, 240, 300].map(t => `<line x1="${x(t)}" x2="${x(t)}" y1="${top}" y2="${top + ph}" stroke="#d8dee4"/><text x="${x(t)}" y="${top + ph + 20}" text-anchor="middle" font-size="11">${t}</text>`).join('');
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><rect width="100%" height="100%" fill="white"/><text x="${left}" y="22" font-size="16">${title}</text><text x="14" y="${top + ph / 2}" transform="rotate(-90 14 ${top + ph / 2})" text-anchor="middle" font-size="12">${ylabel}</text>${ticks}${lines}<text x="${left + pw / 2}" y="${height - 23}" text-anchor="middle" font-size="12">Model time (s)</text></svg>\n`;
+  const yTicks = `<text x="${left - 7}" y="${top + 4}" text-anchor="end" font-size="10" data-axis="y">${formatAxisValue(max)}</text><text x="${left - 7}" y="${top + ph + 4}" text-anchor="end" font-size="10" data-axis="y">0</text>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><rect width="100%" height="100%" fill="white"/><text x="${left}" y="22" font-size="16">${title}</text><text x="${left}" y="36" font-size="10">60 s windows; points at window midpoints</text><text x="14" y="${top + ph / 2}" transform="rotate(-90 14 ${top + ph / 2})" text-anchor="middle" font-size="12">${ylabel}</text>${yTicks}${ticks}${lines}<text x="${left + pw / 2}" y="${height - 36}" text-anchor="middle" font-size="12">Model time (s)</text></svg>\n`;
+}
+
+function formatAxisValue(value) {
+  return Number(value.toPrecision(5)).toString();
 }
 
 function materialSvg(material) {
   const vals = Object.entries(material.layerCounts).map(([layers, cells]) => [Number(layers), cells]);
   const max = Math.max(1, ...vals.map(row => row[1])), x0 = 390, y0 = 62, w = 295, h = 160, bw = w / Math.max(vals.length, 1);
   const bars = vals.map(([layer, cells], i) => `<rect x="${x0 + i * bw}" y="${y0 + h * (1 - cells / max)}" width="${Math.max(1, bw - 2)}" height="${h * cells / max}" fill="#31725b"/><text x="${x0 + i * bw + bw / 2}" y="${y0 + h + 18}" text-anchor="middle" font-size="11">${layer}</text>`).join('');
+  const coverageTicks = `<text x="63" y="66" text-anchor="end" font-size="10" data-axis="y">${GRID_CELLS}</text><text x="63" y="226" text-anchor="end" font-size="10" data-axis="y">0</text>`;
+  const layerTicks = `<text x="384" y="66" text-anchor="end" font-size="10" data-axis="y">${max}</text><text x="384" y="226" text-anchor="end" font-size="10" data-axis="y">0</text>`;
   const labels = ['productionCoverageCells', 'researchCoverageCells', 'combinedCoverageCells'];
   const coverage = labels.map((key, i) => { const height = 160 * material[key] / GRID_CELLS;
     return `<rect x="${90 + i * 80}" y="${222 - height}" width="44" height="${height}" fill="#${['243b53','a34a28','31725b'][i]}"/><text x="${112 + i * 80}" y="240" text-anchor="middle" font-size="9">${['prod','research','union'][i]}</text><text x="${112 + i * 80}" y="${214 - height}" text-anchor="middle" font-size="9">${material[key]}</text>`;
   }).join('');
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300"><rect width="100%" height="100%" fill="white"/><text x="22" y="26" font-size="15">Coverage and depth at final checkpoint</text><text x="84" y="50" font-size="12">Coverage (cells of 9,216)</text><line x1="70" x2="350" y1="222" y2="222" stroke="#5a6872"/>${coverage}<text x="390" y="50" font-size="12">Cell count by layer depth</text><text x="369" y="142" transform="rotate(-90 369 142)" text-anchor="middle" font-size="10">Cells (of 9,216)</text>${bars}<text x="535" y="260" text-anchor="middle" font-size="11">Layer count</text></svg>\n`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300"><rect width="100%" height="100%" fill="white"/><text x="22" y="26" font-size="15">Coverage and depth at final checkpoint</text><text x="84" y="50" font-size="12">Coverage (cells of 9,216)</text><line x1="70" x2="350" y1="222" y2="222" stroke="#5a6872"/>${coverageTicks}${coverage}<text x="390" y="50" font-size="12">Cell count by layer depth</text><text x="369" y="142" transform="rotate(-90 369 142)" text-anchor="middle" font-size="10">Cells (of 9,216)</text>${layerTicks}${bars}<text x="535" y="260" text-anchor="middle" font-size="11">Layer count</text></svg>\n`;
 }
 
 function travelPopulationSvg(runs) {
@@ -357,11 +364,12 @@ function travelPopulationSvg(runs) {
     const vals = Object.values(runs).flatMap(run => times.map(t => checkpointAt(run, t)?.[key]).filter(Number.isFinite));
     const max = Math.max(1, ...vals), y0 = 76, h = 148, x = t => x0 + t / 300 * width, y = v => y0 + h * (1 - v / max);
     const ticks = times.map(t => `<line x1="${x(t)}" x2="${x(t)}" y1="${y0}" y2="${y0+h}" stroke="#d8dee4"/><text x="${x(t)}" y="${y0+h+17}" text-anchor="middle" font-size="10">${t}</text>`).join('');
+    const yTicks = `<text x="${x0 - 7}" y="${y0 + 4}" text-anchor="end" font-size="9" data-axis="y">${formatAxisValue(max)}</text><text x="${x0 - 7}" y="${y0 + h + 4}" text-anchor="end" font-size="9" data-axis="y">0</text>`;
     const traces = Object.entries(runs).map(([name, run], i) => {
       const values = times.map(t => [t, checkpointAt(run, t)?.[key]]).filter(([, value]) => Number.isFinite(value));
       return `<polyline fill="none" stroke="${colors[i]}" stroke-width="2" points="${values.map(([t, value]) => `${x(t)},${y(value)}`).join(' ')}"/><text x="${x0 + i*96}" y="294" fill="${colors[i]}" font-size="10">${name}</text>`;
     }).join('');
-    return `<text x="${x0}" y="52" font-size="13">${title}</text><text x="${x0-12}" y="150" transform="rotate(-90 ${x0-12} 150)" text-anchor="middle" font-size="10">${unit}</text>${ticks}${traces}`;
+    return `<text x="${x0}" y="52" font-size="13">${title}</text><text x="${x0-12}" y="150" transform="rotate(-90 ${x0-12} 150)" text-anchor="middle" font-size="10">${unit}</text>${yTicks}${ticks}${traces}`;
   };
   return `<svg xmlns="http://www.w3.org/2000/svg" width="720" height="315" viewBox="0 0 720 315"><rect width="100%" height="100%" fill="white"/><text x="22" y="25" font-size="15">Movement and population at checkpoints</text>${panel('realizedTravel','Realized travel','Model units',75,250)}${panel('livingPopulation','Living population','Ants',430,250)}<text x="360" y="313" text-anchor="middle" font-size="10">Checkpoint model time (s)</text></svg>\n`;
 }
@@ -411,7 +419,7 @@ export function deriveResults(runs) {
     'mature-x-windows.svg': svg('Mature unique X options', 'Mean per analysis anchor', Object.entries(arms).map(([name, arm]) => ({ name, values: arm.windows.map(row => [(row.startSeconds + row.endSeconds) / 2, row.complete60sWindow ? row.matureXMean : null]) }))),
     'births.svg': svg('Native production and research-local births per 60 s', 'Birth count', Object.entries(runs).map(([name, run]) => ({ name, values: WINDOWS.map(([a, b]) => [(a + b) / 2, completeWindow(run, [a, b]) ? count(run.births, row => inWindow(row.timeMs, [a, b])) : null]) })).concat([{ name: 'Research local', values: WINDOWS.map(([a, b]) => [(a + b) / 2, completeWindow(runs.realStratigraphy, [a, b]) ? count(researchBirths, row => inWindow(row.timeMs, [a, b])) : null]) }])),
     'coverage-depth.svg': materialSvg(material),
-    'nodule-births.svg': svg('Nodule births by lineage', 'Birth count', [{ name: 'Production-only', values: WINDOWS.map(([a, b]) => [(a + b) / 2, completeWindow(runs.realStratigraphy, [a, b]) ? count(lineage, row => row.classification === 'production-only' && inWindow(row.timeMs, [a, b])) : null]) }, { name: 'Research-involving', values: WINDOWS.map(([a, b]) => [(a + b) / 2, completeWindow(runs.realStratigraphy, [a, b]) ? count(lineage, row => row.classification === 'research-involving' && inWindow(row.timeMs, [a, b])) : null]) }]),
+    'nodule-births.svg': svg('REAL native Nodule births per 60 s by lineage', 'Birth count', [{ name: 'Production-only', values: WINDOWS.map(([a, b]) => [(a + b) / 2, completeWindow(runs.realStratigraphy, [a, b]) ? count(lineage, row => row.classification === 'production-only' && inWindow(row.timeMs, [a, b])) : null]) }, { name: 'Research-involving', values: WINDOWS.map(([a, b]) => [(a + b) / 2, completeWindow(runs.realStratigraphy, [a, b]) ? count(lineage, row => row.classification === 'research-involving' && inWindow(row.timeMs, [a, b])) : null]) }]),
     'travel-population.svg': travelPopulationSvg(runs)
   };
   return { summary, material, productionBirthComparison, checkpointWorldComparison: summary.checkpointWorldComparison,

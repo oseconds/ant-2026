@@ -2,6 +2,15 @@
 
 **Canonical chronology: `docs/ant/daily/`**
 
+### 2026-11-01 — Singleton X retained through actual stratigraphy (research only)
+
+[Daily record](./2026-11-01-singleton-real-stratigraphy-probe.md) · [Report](../evidence/2026-11-01-singleton-real-stratigraphy-probe/REPORT.md)
+
+- Seed05 only, 300 s, CONTROL + exact prior OVERLAY + actual MaterialStratigraphy; both conformance gates passed before REAL
+- 151 research X layers plus nine native Plates; no overlay/provider in REAL and no capacity encounter
+- OVERLAY/REAL movement, B/C formation and native births match exactly; native Nodules differ (five versus six, three research foundations)
+- **REAL STRATIGRAPHY ADDS MATERIAL DYNAMICS**, limited to the retained-material/Nodule subloop; no timer-reset effect, adoption, PR or merge
+
 ### 2026-11-01 — Singleton-only feedback replication, seed 20261006
 
 [Daily record](./2026-11-01-singleton-feedback-replication-seed06.md) · [Evidence](../evidence/2026-11-01-singleton-feedback-replication-seed06/REPORT.md)

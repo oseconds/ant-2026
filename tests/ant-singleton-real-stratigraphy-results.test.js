@@ -26,6 +26,18 @@ test('60-second windows use actual anchor times and exact half-open boundaries',
     overlay: emptyArm('overlay'), realStratigraphy: emptyRealArm() };
   runs.control.checkpoints = [{ requestedSeconds: 60, timeMs: 60_000, livingPopulation: 2 }];
   const result = deriveResults(runs);
+  for (const [name, svg] of Object.entries(result.visual)) {
+    assert.doesNotMatch(svg, /(?:stroke|fill)="(?:undefined|NaN|null)"|(?:NaN|null)/, `${name} has no invalid SVG values`);
+    const numericYTicks = [...svg.matchAll(/data-axis="y">(?:0|[0-9]+(?:\.[0-9]+)?)<\/text>/g)];
+    assert.ok(numericYTicks.length >= 2, `${name} shows numeric y-axis endpoint labels`);
+  }
+  for (const name of ['mature-x-windows.svg', 'births.svg', 'nodule-births.svg']) {
+    assert.match(result.visual[name], />60 s windows; points at window midpoints<\/text>/, `${name} names the 60 s window and midpoint convention`);
+  }
+  assert.match(result.visual['nodule-births.svg'], />REAL native Nodule births per 60 s by lineage<\/text>/);
+  const researchLocalSeries = result.visual['births.svg'].match(/<polyline[^>]*stroke="([^"]+)"[^>]*\/><text[^>]*>Research local<\/text>/);
+  assert.ok(researchLocalSeries, 'birth SVG contains a colored Research local series');
+  assert.match(researchLocalSeries[1], /^#[0-9a-f]{6}$/i, 'Research local uses a categorical color');
   assert.equal(result.summary.arms.control.windows[0].anchorCount, 1);
   assert.equal(result.summary.arms.control.windows[0].matureXMean, 1);
   assert.equal(result.summary.arms.control.windows[1].anchorCount, 1);
