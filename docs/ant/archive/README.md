@@ -55,6 +55,12 @@ This is a conversation-derived **review synthesis, not the reviewer original tex
 
 The archive distinguishes implementation/evidence from artistic mapping. Recognizable ants remain fixed for the first pass; pheromone is not changed yet; retained material is tested first as a stable rediscoverable surface. The document does **not** adopt a renderer redesign, new recruitment law, global visual phase system, mineral ontology, persistence feature or audio mapping. Current status still comes from source + `docs/ant/README.md` + evidence/daily records.
 
+## 2026-11-02 material-formation and physical-acoustics brainstorm
+
+[Argon three-round material-physics exploration and critical synthesis](2026-11-02-material-formation-physics-brainstorming/README.md) records seven initial alternatives to frozen Plate/Z, the subsequent Micro-Bond / 3D geometry / reduced-acoustics proposals, and the renewed material-process framing: cavity air acoustics, viscoelastic coalescence, orientation defects, mobile fragments and wet damping.
+
+Three user-pasted Argon response texts are preserved separately and tagged as **unverified model outputs**, including claims later corrected or challenged. **Archive-only / not adopted / not an experiment / not current implementation or a new development pass.** The existing archive access policy continues to apply.
+
 ## 2026-10-06 and 2026-10-07 chronology
 
 Date-specific development history already lives in the canonical daily logs and evidence, so it is **not duplicated** into this archive:
