@@ -2,6 +2,16 @@
 
 **Canonical chronology: `docs/ant/daily/`**
 
+### 2026-11-01 — Final frozen B/C overlap and union audit
+
+[Daily record](./2026-11-01-bc-frozen-overlap-topology-audit.md) · [Evidence](../evidence/2026-11-01-bc-frozen-overlap-topology-audit/REPORT.md)
+
+- Reused the exact 163-slot B/C candidate histories and registered overlap graphs; no simulation or replay
+- Exact B/C X pairs were usually entire small F components; positive overlaps ranged from near-equal to low-Jaccard distinct captures
+- Transitive unions remained modest for alpha=1 cliques but expanded substantially for alpha>1 components
+- Decisions: **MIXED B/C CONFLICT ORIGIN** and **MIXED / SCALE-DEPENDENT**; the static observer-only formation line is closed
+- Next research category: singleton-only closed-loop feedback sensitivity; no winner, capacity, or formation law added
+
 ### 2026-11-01 — B/C local conflict topology audit
 
 [Daily record](./2026-11-01-bc-local-conflict-topology-audit.md) · [Evidence](../evidence/2026-11-01-bc-local-conflict-topology-audit/REPORT.md)
