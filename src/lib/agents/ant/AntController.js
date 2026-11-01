@@ -67,7 +67,7 @@ export class AntController {
         gaitController = new GaitController(), bodyPoseController = new BodyPoseController(),
         gasterDeposition = null, surfaceField = new SurfaceField(),
         trailPlateBirth = new TrailPlateBirth(), materialStratigraphy = new MaterialStratigraphy(),
-        materialLocomotionResistance = true, audioBridge = null } = {}) {
+        materialLocomotionResistance = true, researchLayerCountProvider = null, audioBridge = null } = {}) {
         this.state = normalizeState(state || {});
         this.random = random;
         this.fieldFactory = fieldFactory;
@@ -96,6 +96,8 @@ export class AntController {
         this.trailPlateBirth = trailPlateBirth;
         this.materialStratigraphy = materialStratigraphy;
         this.materialLocomotionResistance = materialLocomotionResistance === true;
+        this.researchLayerCountProvider = typeof researchLayerCountProvider === 'function'
+            ? researchLayerCountProvider : null;
         this.audioBridge = audioBridge;
         this.audioBridge?.setMode?.(this.state.audioExperiment.mode);
         this.audioBridge?.setBaseSubstrateEnabled?.(this.state.audioExperiment.baseSubstrate);
@@ -309,6 +311,13 @@ export class AntController {
         // Read at the causal boundary; contacts and births later in this tick affect the next one.
         const materialSnapshot = this.materialStratigraphy.getSnapshot();
         const materialLayers = current.map(agent => materialLayerCountAtSnapshot(materialSnapshot, agent.x, agent.y));
+        if (this.researchLayerCountProvider) {
+            for (let index = 0; index < current.length; index += 1) {
+                const addend = this.researchLayerCountProvider(current[index], materialLayers[index], this.simulationTimeMs);
+                if (!Number.isInteger(addend) || addend < 0) throw new RangeError('research layer count must be a nonnegative integer');
+                materialLayers[index] += addend;
+            }
+        }
         const materialRevision = this.materialStratigraphy.revision;
         const previousRear = current.map(agent => this.bodyPoseController.getSnapshot(agent)?.gasterRear
             || gasterRearPoint(agent));

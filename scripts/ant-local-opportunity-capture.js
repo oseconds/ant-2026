@@ -137,7 +137,7 @@ function fingerprint(controller, rng) {
   return digest(JSON.stringify(state));
 }
 
-function productionOps(text) {
+export function productionOps(text) {
   const start = text.indexOf('function neighborValues('), end = text.indexOf('function createPheromoneSampler(', start);
   const thin = text.indexOf('function zhangSuen('), thinEnd = text.indexOf('function skeletonComponents(', thin);
   assert.ok(start >= 0 && end > start && thin >= 0 && thinEnd > thin, 'production mask helpers found');

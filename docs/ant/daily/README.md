@@ -2,6 +2,15 @@
 
 **Canonical chronology: `docs/ant/daily/`**
 
+### 2026-11-01 — Singleton-only closed-loop feedback sensitivity
+
+[Daily record](./2026-11-01-singleton-feedback-sensitivity.md) · [Evidence](../evidence/2026-11-01-singleton-feedback-sensitivity/REPORT.md)
+
+- Ran matched 300 s CONTROL and singleton-feedback TREATMENT for seed `20261005`; CONTROL matched 300 frozen boundaries and 277 B/C maturation events exactly
+- TREATMENT created 151 singleton overlay episodes and exposed 361 ant IDs across 52,564 ant-ticks; no observer RNG was used
+- Opportunity/conflict and production Plate histories diverged, but effects varied by time window
+- Decision: **LIMITED / MIXED FEEDBACK SENSITIVITY**; no formation adoption; next question is same-law replication in another seed before actual-Plate integration
+
 ### 2026-11-01 — Final frozen B/C overlap and union audit
 
 [Daily record](./2026-11-01-bc-frozen-overlap-topology-audit.md) · [Evidence](../evidence/2026-11-01-bc-frozen-overlap-topology-audit/REPORT.md)

@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  AntController, materialLayerCountAtSnapshot, materialLocomotionMultiplier
+  AntController, materialLayerCountAtSnapshot, materialLocomotionMultiplier,
+  materialTurnRateMultiplier, materialFollowingHeadwayMultiplier
 } from '../src/lib/agents/ant/AntController.js';
 
 const DT = 1 / 60;
@@ -117,5 +118,78 @@ test('same-tick stratigraphy changes affect locomotion starting with the next ti
   } finally {
     await baseline.destroy();
     await treatment.destroy();
+  }
+});
+
+test('absent research provider preserves the shared production layer count', async () => {
+  let providerCalls = 0;
+  const production = new AntController({ random: countedRandom(81), materialStratigraphy: testStratigraphy() });
+  const zeroOverlay = new AntController({ random: countedRandom(81), materialStratigraphy: testStratigraphy(),
+    researchLayerCountProvider: () => { providerCalls++; return 0; } });
+  try {
+    await production.init(); await zeroOverlay.init();
+    for (let i = 0; i < 12; i++) {
+      production.tick(DT); zeroOverlay.tick(DT);
+      assert.deepEqual(zeroOverlay.getSnapshot(), production.getSnapshot());
+    }
+    assert.equal(providerCalls, 12, 'the opt-in provider is read once per living ant per tick');
+  } finally {
+    await production.destroy(); await zeroOverlay.destroy();
+  }
+});
+
+test('one research layer is added once and the same effective L reaches speed, A, and D', async () => {
+  const plain = new AntController({ random: countedRandom(91), materialStratigraphy: testStratigraphy() });
+  const observed = [];
+  const treatment = new AntController({ random: countedRandom(91), materialStratigraphy: testStratigraphy(),
+    researchLayerCountProvider: (agent, productionLayers, timeMs) => {
+      observed.push({ antId: agent.id, productionLayers, timeMs });
+      return 1;
+    } });
+  const senses = [plain, treatment].map(controller => {
+    const original = controller.occupancy.sense.bind(controller.occupancy), values = [];
+    controller.occupancy.sense = (agent, agents, multiplier) => {
+      values.push(multiplier);
+      return original(agent, agents, multiplier);
+    };
+    return values;
+  });
+  const turnRates = [];
+  try {
+    await plain.init(); await treatment.init();
+    for (const [index, controller] of [plain, treatment].entries()) {
+      const agent = controller.agents[0], turnToward = agent.turnToward.bind(agent);
+      agent.turnToward = (heading, dt, maxRate) => {
+        turnRates[index] = maxRate;
+        return turnToward(heading, dt, maxRate);
+      };
+    }
+    const productionLayers = materialLayerCountAtSnapshot(plain.materialStratigraphy.getSnapshot(),
+      plain.agents[0].x, plain.agents[0].y);
+    plain.tick(DT); treatment.tick(DT);
+    assert.deepEqual(observed, [{ antId: treatment.agents[0].id, productionLayers, timeMs: 0 }]);
+    assert.equal(senses[0][0], materialFollowingHeadwayMultiplier(productionLayers));
+    assert.equal(senses[1][0], materialFollowingHeadwayMultiplier(productionLayers + 1));
+    assert.ok(Math.abs(turnRates[1] / turnRates[0] - materialTurnRateMultiplier(productionLayers + 1)
+      / materialTurnRateMultiplier(productionLayers)) < 1e-12);
+    assert.ok(Math.abs(treatment.agents[0].targetSpeed / plain.agents[0].targetSpeed
+      - materialLocomotionMultiplier(productionLayers + 1) / materialLocomotionMultiplier(productionLayers)) < 1e-12);
+  } finally {
+    await plain.destroy(); await treatment.destroy();
+  }
+});
+
+test('an end-of-tick overlay increment first reaches movement on the next tick', async () => {
+  const overlay = { layers: 0 }, seen = [];
+  const controller = new AntController({ random: countedRandom(101), materialStratigraphy: testStratigraphy(),
+    researchLayerCountProvider: () => { seen.push(overlay.layers); return overlay.layers; } });
+  try {
+    await controller.init();
+    controller.tick(DT);
+    overlay.layers = 1;
+    controller.tick(DT);
+    assert.deepEqual(seen, [0, 1]);
+  } finally {
+    await controller.destroy();
   }
 });
