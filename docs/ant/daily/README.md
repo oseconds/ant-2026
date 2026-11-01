@@ -2,6 +2,15 @@
 
 **Canonical chronology: `docs/ant/daily/`**
 
+### 2026-11-01 — Singleton-only feedback replication, seed 20261006
+
+[Daily record](./2026-11-01-singleton-feedback-replication-seed06.md) · [Evidence](../evidence/2026-11-01-singleton-feedback-replication-seed06/REPORT.md)
+
+- Reused the exact singleton overlay observer on seed `20261006`; CONTROL matched all 300 frozen boundaries
+- TREATMENT exposed 274 ants on 31,730 ant-ticks; 161 singleton episodes changed the research overlay, while 57 contested groups remained inert
+- Mature-X mean, contested share, maturation count, and production Plate count shifted in directions opposite to seed `20261005`
+- Decision: **SEED-DEPENDENT FEEDBACK SENSITIVITY**; no third seed or actual-Plate integration launched
+
 ### 2026-11-01 — Singleton-only closed-loop feedback sensitivity
 
 [Daily record](./2026-11-01-singleton-feedback-sensitivity.md) · [Evidence](../evidence/2026-11-01-singleton-feedback-sensitivity/REPORT.md)

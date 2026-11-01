@@ -6,7 +6,7 @@ import { CELL_COUNT } from './ant-local-opportunity-core.js';
 import { readJson, readRun, sha256, unpack, writeJson } from './ant-local-opportunity-io.js';
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
-const ANALYSIS = resolve(ROOT, 'docs/ant/evidence/2026-11-01-singleton-feedback-sensitivity/analysis');
+const ANALYSIS = resolve(ROOT, 'docs/ant/evidence/2026-11-01-singleton-feedback-replication-seed06/analysis');
 
 function maskKey(cells) { return cells.join(','); }
 
@@ -166,9 +166,11 @@ function verifyExposure(exposure) {
 
 async function main() {
   const receipt = { schema: 'ant-singleton-feedback-independent-validation-v1', arms: {}, exposure: null };
+  const paired = await readJson(resolve(ANALYSIS, 'paired-comparison.json.gz'));
   for (const arm of ['control', 'treatment']) {
     const run = await readRun(resolve(ANALYSIS, `${arm}.signals.json.gz`));
-    assert.equal(run.anchors.length, 300); assert.equal(run.events.length, arm === 'control' ? 277 : 336);
+    assert.equal(run.seed, '20261006'); assert.equal(run.anchors.length, 300);
+    assert.equal(run.events.length, arm === 'control' ? paired.controlMaturations : paired.treatmentMaturations);
     for (const anchor of run.anchors) verifyBoundary(run, anchor,
       arm === 'treatment' ? 'singleton-overlay-layer' : 'singleton-control-observation');
     const overlay = verifyOverlay(run);

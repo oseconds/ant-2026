@@ -13,12 +13,12 @@ import { createSingletonLayerOverlay, SingletonFeedbackObserver } from './ant-si
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const AUTHORITY = 'bc045dc3caa5954df633ecbee37fbabcb8224f30';
-const BRANCH = 'codex/ant-singleton-feedback-sensitivity-20261101';
-const SEED = '20261005', SECONDS = 300, DT = 1 / 60, TICKS = SECONDS * 60, GRID = 96;
-const EVIDENCE = resolve(ROOT, 'docs/ant/evidence/2026-11-01-singleton-feedback-sensitivity');
-const FROZEN_SIGNALS = resolve(ROOT, 'docs/ant/evidence/2026-10-31-local-opportunity-competition-audit/analysis/seed-20261005.signals.json.gz');
-const FROZEN_OPPORTUNITIES = resolve(ROOT, 'docs/ant/evidence/2026-10-31-local-opportunity-competition-audit/analysis/seed-20261005.opportunities.json.gz');
-const FROZEN_EVENTS = resolve(ROOT, 'docs/ant/evidence/2026-10-31-bc-dual-material-shadow/analysis/events-20261005.json.gz');
+const BRANCH = 'codex/ant-singleton-feedback-replication-seed06-20261101';
+const SEED = '20261006', SECONDS = 300, DT = 1 / 60, TICKS = SECONDS * 60, GRID = 96;
+const EVIDENCE = resolve(ROOT, 'docs/ant/evidence/2026-11-01-singleton-feedback-replication-seed06');
+const FROZEN_SIGNALS = resolve(ROOT, 'docs/ant/evidence/2026-10-31-local-opportunity-competition-audit/analysis/seed-20261006.signals.json.gz');
+const FROZEN_OPPORTUNITIES = resolve(ROOT, 'docs/ant/evidence/2026-10-31-local-opportunity-competition-audit/analysis/seed-20261006.opportunities.json.gz');
+const FROZEN_EVENTS = resolve(ROOT, 'docs/ant/evidence/2026-10-31-bc-dual-material-shadow/analysis/events-20261006.json.gz');
 const SOURCE_PATHS = [
   'src/lib/agents/ant/AntController.js', 'src/lib/agents/ant/AntAgent.js',
   'src/lib/agents/ant/LocalOccupancy.js', 'src/lib/agents/ant/PheromoneField.js',
