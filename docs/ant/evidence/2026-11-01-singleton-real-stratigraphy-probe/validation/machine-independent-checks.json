@@ -1,0 +1,232 @@
+{
+  "schema": "ant-singleton-real-stratigraphy-independent-checks-v1",
+  "reviewMethod": "Independent reconstruction from persisted raw arms, packed material arrays, immutable masks, insertion chronology, and tick-level exposure; no simulation rerun.",
+  "sourceCommit": "2a0cb35b6c19cdf969d8c887b2eb4577fcb361b6",
+  "productionAuthority": "bc045dc3caa5954df633ecbee37fbabcb8224f30",
+  "inputReceipts": {
+    "analysis/conformance.json.gz": "398f27a63b39aa4a43cde5accd8e61a222c7036f0020d8ada5913890b06a3986",
+    "analysis/control.signals.json.gz": "0e0abe4159e5dec009c73c156b3be116d4475631766e64a78d68bf5eefa5714c",
+    "analysis/treatment.signals.json.gz": "2e33cae8957e368391a0793f8fe4de53c0eb0a1b9d9e2594b318c23c5cd70a49",
+    "analysis/real-stratigraphy.signals.json.gz": "21fd7347f921695e7e5278aa56516382bbd9594dd79c96a4858e1a8589d144a6",
+    "analysis/control-diagnostics.json.gz": "bbb1d2a544c57da9f296e107997d2c9d6ec0a8091878246220baf64aa37ba6e3",
+    "analysis/treatment-diagnostics.json.gz": "410252b05b7a53788123d29e18e0f81bea24f7be4332ddb120741f47a6f6345f",
+    "analysis/real-stratigraphy-diagnostics.json.gz": "813b2d30a511a913af169ab8fb8ede767056e6bbc69b5d619ad027b0ce7090fe",
+    "analysis/treatment-exposure.json.gz": "6bf011bd8048e63cef0a2427e0ce9e50a67eaa859c7fdd02eef30172eb482142",
+    "analysis/real-exposure.json.gz": "6bf011bd8048e63cef0a2427e0ce9e50a67eaa859c7fdd02eef30172eb482142"
+  },
+  "campaignGates": {
+    "status": "PASS",
+    "seed": "20261005",
+    "modelSeconds": 300,
+    "hz": 60,
+    "audio": "Off",
+    "frozenControlAnchorsExact": 300,
+    "frozenBCMaturationsExact": 277,
+    "savedControlExact": true,
+    "savedOverlayAndExposureExact": true,
+    "anchorsPerArm": 300,
+    "ticksPerArm": 18000,
+    "combinedMaterialCapacityReached": false
+  },
+  "localXLineage": {
+    "insertions": 151,
+    "sourceDecisionToInsertionToBirthToChronologyToImmutableMaskExact": 151,
+    "decisionBirthInsertionTimesEqual": 151,
+    "eventIdsAndChannelsResolved": true,
+    "coevalAcceptedMasksDisjoint": true,
+    "sameTimeProductionBeforeResearch": true,
+    "researchLayerCountMapEqualsOverlayMap": true,
+    "firstInsertion": {
+      "id": "research-local-X-0001",
+      "timeMs": 42016.66666666628,
+      "tick": 2521,
+      "channels": ["B", "C"],
+      "eventIds": ["20261005:B:6:I002", "20261005:C:7:I002"],
+      "xCells": [7708, 7804, 7900, 7996],
+      "immediateNextTick": 2522,
+      "immediateNextTickTimeMs": 42016.66666666628,
+      "immediateNextTickAntsOnX": 0,
+      "immediateNextTickResearchExposures": 0,
+      "firstLaterDirectExposure": {
+        "tick": 2642,
+        "timeMs": 44016.66666666599,
+        "antId": "ant-1",
+        "cell": 6574,
+        "researchLayers": 1
+      }
+    }
+  },
+  "materialReconstruction": {
+    "plates": 160,
+    "productionPlates": 9,
+    "researchPlates": 151,
+    "coverageCellsOf9216": 4824,
+    "layerCellIncidences": 14271,
+    "layerDistribution": {
+      "0": 4392,
+      "1": 1457,
+      "2": 920,
+      "3": 799,
+      "4": 647,
+      "5": 438,
+      "6": 300,
+      "7": 154,
+      "8": 66,
+      "9": 39,
+      "10": 2,
+      "11": 2
+    },
+    "nearestObservedQuantiles": {
+      "q50": 1,
+      "q90": 5,
+      "max": 11
+    },
+    "provenanceIncidences": {
+      "research": {
+        "maskIncidences": 2498,
+        "topCells": 863,
+        "buriedIncidences": 1635
+      },
+      "production": {
+        "maskIncidences": 11773,
+        "topCells": 3961,
+        "buriedIncidences": 7812
+      }
+    },
+    "fullGridLayerCountsExact": true,
+    "fullGridTopPlateIndicesExact": true,
+    "nativeBottomExcludedFloat32DepthBytesExact": true,
+    "chronologyPriorOverlapReceiptsExact": true
+  },
+  "overlayParity": {
+    "tickEntryLayerTuplesExactTicks": 18000,
+    "perTickDOutcomesExactTicks": 18000,
+    "environmentMovementFingerprintsExactTicks": 18000,
+    "sameExposureReceiptSha256": "6bf011bd8048e63cef0a2427e0ce9e50a67eaa859c7fdd02eef30172eb482142",
+    "BCEventRecordsExact": 336,
+    "decisionXStructureExact": true,
+    "nativeProductionBirthIdsTimesMasksExact": 9
+  },
+  "tickEntryExposure": {
+    "tickRows": 18000,
+    "antTicks": 268721,
+    "exposedAntTicks": 52564,
+    "uniqueAntsExposed": 361,
+    "researchLayerHistogram": {
+      "1": 41317,
+      "2": 10652,
+      "3": 557,
+      "4": 38
+    },
+    "productionLayerHistogramAmongExposed": {
+      "0": 14802,
+      "1": 6964,
+      "2": 7741,
+      "3": 5846,
+      "4": 6260,
+      "5": 8186,
+      "6": 2180,
+      "7": 461,
+      "8": 124
+    },
+    "effectiveLayerHistogramAmongExposed": {
+      "1": 11676,
+      "2": 8342,
+      "3": 8052,
+      "4": 5528,
+      "5": 6649,
+      "6": 8056,
+      "7": 3046,
+      "8": 840,
+      "9": 304,
+      "10": 71
+    },
+    "speedMultiplierCallsChanged": 52564,
+    "aTurnRateCallsChanged": 52564,
+    "dSameFlowHeadwayTargetsChanged": 4255,
+    "exposureFormulaAndPerTickAggregateChecksExact": true
+  },
+  "noduleMaterialSubloop": {
+    "qualificationPredicateTransitionsAtInsertion": {
+      "falseToTrue": 0,
+      "trueToFalse": 0,
+      "unchangedCellReads": 2498
+    },
+    "candidateTimerEffectsAtInsertion": {
+      "previouslyActive": 0,
+      "cleared": 0,
+      "changed": 0,
+      "unchanged": 2498
+    },
+    "nativeNoduleOrProductionBirthEngineStateChangedAtInsertion": 0,
+    "checkpointNoduleCounts": {
+      "control": [0, 0, 1, 2, 5],
+      "overlay": [0, 0, 0, 2, 5],
+      "realStratigraphy": [0, 0, 1, 1, 6]
+    },
+    "realNoduleBirths": 6,
+    "realResearchBearingBirths": 3,
+    "researchFoundationBirths": 3,
+    "birthTimeSourceStacksReconstructedFromChronology": true,
+    "researchBearingBirthDetails": [
+      {
+        "id": "buried-sphere-1",
+        "timeMs": 176499.99999998882,
+        "foundation": "research-local-X-0002",
+        "sourcePlateIDs": ["research-local-X-0002", "research-local-X-0011", "trail-plate-2", "trail-plate-3", "trail-plate-4"],
+        "layerCount": 5,
+        "buriedLayerCount": 4,
+        "buriedDepthMeters": 0.0069206395087126945,
+        "compaction": 0.6731839776039121,
+        "localFootLoad": 463
+      },
+      {
+        "id": "buried-sphere-4",
+        "timeMs": 245633.33333328192,
+        "foundation": "research-local-X-0002",
+        "sourcePlateIDs": ["research-local-X-0002", "research-local-X-0011", "trail-plate-2", "trail-plate-5", "trail-plate-6", "trail-plate-7", "trail-plate-8"],
+        "layerCount": 7,
+        "buriedLayerCount": 6,
+        "buriedDepthMeters": 0.010200280538100239,
+        "compaction": 0.6672393083572388,
+        "localFootLoad": 480
+      },
+      {
+        "id": "buried-sphere-5",
+        "timeMs": 288899.99999997014,
+        "foundation": "research-local-X-0011",
+        "sourcePlateIDs": ["research-local-X-0011", "trail-plate-4", "trail-plate-5", "trail-plate-6", "trail-plate-7", "trail-plate-8"],
+        "layerCount": 6,
+        "buriedLayerCount": 5,
+        "buriedDepthMeters": 0.008238223505645787,
+        "compaction": 0.5836909413337708,
+        "localFootLoad": 397
+      }
+    ]
+  },
+  "structuralCompilerCheck": {
+    "used": "compileSurfaceTopology on saved final descriptors; no AudioEngine, SurfaceAudioBridge, worklet, enable, contact, or Audio On execution",
+    "sourceGrid": 96,
+    "solverGrid": 32,
+    "compiledPlateLayers": 160,
+    "compiledNodules": 6,
+    "solverNodes": 3316,
+    "adjacentLinks": 3077,
+    "layerOrderExact": true,
+    "sourceLayerCountsExact": true,
+    "routingTopLayerByCell96Exact": true,
+    "noduleFoundationLayerIndices": [1, 75, 43, 1, 10, 14]
+  },
+  "interpretation": {
+    "movementAndFormationRelativeToOverlay": "Exact match in saved tick-entry material tuples, D outcomes, movement/environment fingerprints, B/C event and decision-X structure, and native production Plate births.",
+    "additionalResponsibility": "REAL exercises native Nodule births over research-bearing stratigraphic columns; its Nodule count, timing, and lineage differ from OVERLAY.",
+    "boundedClassInference": "REAL STRATIGRAPHY ADDS MATERIAL DYNAMICS, limited to the exercised native Nodule/material subloop. It adds no movement or B/C formation divergence relative to OVERLAY. Topology differences alone are not the basis.",
+    "timerCausality": "Do not attribute the Nodule differences to local active-timer resets: all 2,498 insertion-cell timers were already inactive and native engine state was unchanged at insertion.",
+    "limits": [
+      "One seed and a 300-second window.",
+      "Uniform fixture material and default thickness are model inputs, not measured B/C properties.",
+      "The topology compiler check does not establish audio or listening validity.",
+      "No production adoption claim is established."
+    ]
+  }
+}
