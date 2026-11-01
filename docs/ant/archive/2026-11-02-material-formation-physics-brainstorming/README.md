@@ -8,7 +8,7 @@
 
 이 문서는 현재 Plate·Z 구조를 **즉시 대체한다는 결론이 아니라**, 개미 활동이 물질을 형성하는 법칙과 물질이 소리를 내는 법칙을 다시 탐색한 대화의 기록이다. Argon의 모델 응답 자체, 사용자·ChatGPT의 반론, 실제 구현과 기존 evidence를 구분한다. 세 개의 원문은 사용자 붙여넣기 텍스트이며 별도의 Gemini 원본 export로 인증하지 않았다.
 
-현재 구현의 근거는 항상 [ANT 현행 허브](../../README.md), [실제 코드](../../../src/lib/agents/ant/TrailPlateBirth.js), [evidence](../../evidence/), [daily](../../daily/)다. 관련 과거 개념은 [Dimensional Formation](../2026-10-11-dimensional-formation-influence-and-relations.md) 및 [이전 formation-law 검토](../2026-10-11-authored-formation-law-and-world-model-clarification.md)에 있고, [2026-10-28 Argon world-architecture 탐색](../2026-10-28-argon-world-architecture/README.md)은 **다른 주제**이므로 구별한다.
+현재 구현의 근거는 항상 [ANT 현행 허브](../../README.md), [실제 코드](../../../../src/lib/agents/ant/TrailPlateBirth.js), [evidence](../../evidence/), [daily](../../daily/)다. 관련 과거 개념은 [Dimensional Formation](../2026-10-11-dimensional-formation-influence-and-relations.md) 및 [이전 formation-law 검토](../2026-10-11-authored-formation-law-and-world-model-clarification.md)에 있고, [2026-10-28 Argon world-architecture 탐색](../2026-10-28-argon-world-architecture/README.md)은 **다른 주제**이므로 구별한다.
 
 ## 1. 출발점과 현재 구현의 경계
 
