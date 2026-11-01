@@ -1,0 +1,64 @@
+{
+  "schema": "ant-bc-local-conflict-topology-validation-v1",
+  "productionAuthority": "bc045dc3caa5954df633ecbee37fbabcb8224f30",
+  "inputConflictManifestSha256": "bff8cead2f860caf1c589023d05eae374224de6bb0aaa6739736d7b680681892",
+  "inputConflictSumsSha256": "53449491d37c42a874bb7f47a12588641a30e1e761c09512d88c6d7660d90824",
+  "inputCapacityManifestSha256": "765cbb14baa05c8a1481661b4f91aa6370cda8c63f7e5b63e4b82194262f7062",
+  "inputCapacitySumsSha256": "e30f83e53582798c9971c8ee7da58fd94e4cb07c5b7e0154974c2cf611951e8d",
+  "registeredSlots": 163,
+  "registeredOptionAppearances": 1846,
+  "registeredComponents": 1352,
+  "contestedComponents": 231,
+  "sourceFiles": [
+    {
+      "file": "analysis/conflict-slots-20261005.json.gz",
+      "sha256": "799a2c6ba2a1304337d6bd031364a8c2daa9510e03b0101534e16af62b20fa00",
+      "bytes": 451654
+    },
+    {
+      "file": "analysis/conflict-slots-20261006.json.gz",
+      "sha256": "5757c0c0fce114d2c7f164ff5f414778f0de418ad125c73d7d5ad5f70b3cb87c",
+      "bytes": 505904
+    },
+    {
+      "file": "analysis/conflict-slots-20261007.json.gz",
+      "sha256": "48b04821e67308d16865074955937bc6a062b2abc62ce5090af668aa548a6e26",
+      "bytes": 462220
+    },
+    {
+      "file": "analysis/persistent-conflicts-20261005.json.gz",
+      "sha256": "4c6994df6344a0dcf8bd34a7524fe49a2589c7a23966be04425609759efd19bd",
+      "bytes": 92235
+    },
+    {
+      "file": "analysis/persistent-conflicts-20261006.json.gz",
+      "sha256": "11adbbe2ab1bfd93b18ab176e26c4189fec58923eac6a7f03c73a270d7a88593",
+      "bytes": 86783
+    },
+    {
+      "file": "analysis/persistent-conflicts-20261007.json.gz",
+      "sha256": "b9a27bf9c7925a0af67f00e0be2b14d6d1854136b3a7179badaecc69eac3d888",
+      "bytes": 84426
+    }
+  ],
+  "sourcePackageFilesReverified": 46,
+  "graphChecks": {
+    "directMaskEdgesVsCellInversion": "pass",
+    "registeredEdges": "pass",
+    "bfsVsUnionFindComponents": "pass",
+    "exactCliqueAndAlphaBruteVsRecursive": "pass",
+    "maximumIndependentSetsExactSetEquality": "pass",
+    "maxComponentSize": 12
+  },
+  "temporalChecks": {
+    "actualSavedTimesRetained": true,
+    "registeredOneToOnePairs": 108,
+    "reconstructedAdjacentPairs": 108,
+    "exactIsomorphismMethod": "degree-pruned adjacency-preserving backtracking"
+  },
+  "deterministic": true,
+  "observerRngCalls": 0,
+  "productionPathsChanged": false,
+  "simulationOrReplay": false,
+  "diagnosticMaximumIndependentSetsAreCommitRecommendations": false
+}

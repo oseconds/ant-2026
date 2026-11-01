@@ -2,6 +2,15 @@
 
 **Canonical chronology: `docs/ant/daily/`**
 
+### 2026-11-01 — B/C local conflict topology audit
+
+[Daily record](./2026-11-01-bc-local-conflict-topology-audit.md) · [Evidence](../evidence/2026-11-01-bc-local-conflict-topology-audit/REPORT.md)
+
+- Reused the exact 163 temporal slots, 1,846 unique-X appearances, and 1,352 registered overlap components; no simulation or replay
+- All 120 size-2 contested components are cliques, while larger components commonly include pairwise-disjoint options; pooled `sum α` is 1,475 vs 1,352 components
+- Decision: **MIXED TOPOLOGY**; arbitrate overlapping pairs locally and keep world-level capacity open
+- No maximum-independent-set selection, winner, Plate, production feedback, or Residence work
+
 ### 2026-11-01 — B/C one-per-component capacity necessity audit
 
 [Daily record](./2026-11-01-bc-material-capacity-necessity-audit.md) · [Evidence](../evidence/2026-11-01-bc-material-capacity-necessity-audit/REPORT.md)
