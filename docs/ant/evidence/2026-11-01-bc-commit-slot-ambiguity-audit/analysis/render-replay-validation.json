@@ -1,0 +1,149 @@
+{
+  "schema": "ant-bc-commit-slot-objective-frame-replay-v1",
+  "purpose": "Render selected objective slot frames from the same frozen production histories; no new seed, parameter, or causal history.",
+  "method": "Source-conformant 60 Hz deterministic replay; compare E/F/B/C/D, material layer/top/birth maps, birth IDs, and final RNG state against the existing 599-boundary frozen packet before accepting a frame.",
+  "productionAuthority": "bc045dc3caa5954df633ecbee37fbabcb8224f30",
+  "newNaturalTrajectory": false,
+  "allSavedBoundariesCompared": true,
+  "observerRngCalls": 0,
+  "renderer": "Native AntRenderer 720x720; material on; pheromone overlay off; debug overlays off.",
+  "replay": [
+    {
+      "seed": "20261005",
+      "anchorsCompared": 599,
+      "selectedFrames": 4,
+      "rngCalls": 330654,
+      "rngState": 3039568899,
+      "elapsedSeconds": 22.617412599999998,
+      "requestedAnchors": [
+        {
+          "anchorIndex": 42,
+          "slotCaseIds": [
+            "first-single-option"
+          ],
+          "timeMs": 42016.66666666628
+        },
+        {
+          "anchorIndex": 53,
+          "slotCaseIds": [
+            "mixed-plus-distinct-competitors"
+          ],
+          "timeMs": 53016.66666666468
+        },
+        {
+          "anchorIndex": 96,
+          "slotCaseIds": [
+            "C-only-dominated"
+          ],
+          "timeMs": 96016.66666667172
+        },
+        {
+          "anchorIndex": 268,
+          "slotCaseIds": [
+            "B-only-dominated"
+          ],
+          "timeMs": 268016.6666666125
+        }
+      ]
+    },
+    {
+      "seed": "20261007",
+      "anchorsCompared": 599,
+      "selectedFrames": 2,
+      "rngCalls": 321214,
+      "rngState": 2581842517,
+      "elapsedSeconds": 21.022084700000004,
+      "requestedAnchors": [
+        {
+          "anchorIndex": 138,
+          "slotCaseIds": [
+            "maximum-spatial-options",
+            "maximum-disjoint-options"
+          ],
+          "timeMs": 138016.6666666779
+        },
+        {
+          "anchorIndex": 349,
+          "slotCaseIds": [
+            "oldest-surviving-unresolved-candidate"
+          ],
+          "timeMs": 349016.6666667068
+        }
+      ]
+    }
+  ],
+  "frames": [
+    {
+      "seed": "20261005",
+      "anchorIndex": 42,
+      "timeMs": 42016.66666666628,
+      "file": "visual/world-frames/seed-20261005-anchor-042.png",
+      "sha256": "3638a31ffb49110b8d9e48962a0e3f0646e508328266014b8769e889e0bfc01c",
+      "bytes": 17019,
+      "antCount": 12,
+      "savedWorldAnchorSha256": "98612937ef69037877eac7c677def65c9a94263d608805757842aeae91d0142a",
+      "birthIds": []
+    },
+    {
+      "seed": "20261005",
+      "anchorIndex": 53,
+      "timeMs": 53016.66666666468,
+      "file": "visual/world-frames/seed-20261005-anchor-053.png",
+      "sha256": "f347ce4eb64ccca31fe9ce9c802f1ab6ded53a46c8ef852f541eef0c54da39c3",
+      "bytes": 18239,
+      "antCount": 13,
+      "savedWorldAnchorSha256": "43770a94cdbb777d147ab07b209162a9f02c7fbf0bc5e09b0cbf07488c44a2ae",
+      "birthIds": []
+    },
+    {
+      "seed": "20261005",
+      "anchorIndex": 96,
+      "timeMs": 96016.66666667172,
+      "file": "visual/world-frames/seed-20261005-anchor-096.png",
+      "sha256": "39443794e31f934c5ab1139e6878dd0e870d55aa89ec4159c76854ec494260d7",
+      "bytes": 30772,
+      "antCount": 17,
+      "savedWorldAnchorSha256": "159544b0ecef540372b924c4bed75021b84a8aa1869fe28b54f0b1cb409ecd0e",
+      "birthIds": []
+    },
+    {
+      "seed": "20261005",
+      "anchorIndex": 268,
+      "timeMs": 268016.6666666125,
+      "file": "visual/world-frames/seed-20261005-anchor-268.png",
+      "sha256": "fde7511c17b00e6f7c3a0588689d39c232a8799b5b6800de24f7f684e1cf8d17",
+      "bytes": 83967,
+      "antCount": 14,
+      "savedWorldAnchorSha256": "c127b16fb81af2d31bc9dfb5c1c85063629fc1497de20e4cfe7bab6024fb3f35",
+      "birthIds": []
+    },
+    {
+      "seed": "20261007",
+      "anchorIndex": 138,
+      "timeMs": 138016.6666666779,
+      "file": "visual/world-frames/seed-20261007-anchor-138.png",
+      "sha256": "b4489472d4bc2aa9ce942e5a684dbc3265f6d1ee3253627a2765ee7d7135daed",
+      "bytes": 50995,
+      "antCount": 20,
+      "savedWorldAnchorSha256": "a2505ec8348983e231863360ff9a69b3b78397f728840920efaa391a3ef9e1e6",
+      "birthIds": []
+    },
+    {
+      "seed": "20261007",
+      "anchorIndex": 349,
+      "timeMs": 349016.6666667068,
+      "file": "visual/world-frames/seed-20261007-anchor-349.png",
+      "sha256": "e1b8f87b664fab80c2d13b31a109ae4e111322c0a8865feda70903883665a15f",
+      "bytes": 94834,
+      "antCount": 14,
+      "savedWorldAnchorSha256": "200fc2b7d50dd160be547a8dc3b799e2e62236d565750fb136b7f772ef12956f",
+      "birthIds": []
+    }
+  ],
+  "exactPreviousFrameReproduced": {
+    "seed": "20261005",
+    "anchorIndex": 42,
+    "sha256": "3638a31ffb49110b8d9e48962a0e3f0646e508328266014b8769e889e0bfc01c"
+  },
+  "browserErrors": []
+}

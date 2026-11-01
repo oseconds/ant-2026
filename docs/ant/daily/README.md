@@ -2,6 +2,16 @@
 
 **Canonical chronology: `docs/ant/daily/`**
 
+### 2026-11-01 — B/C 10 s commit-slot ambiguity audit
+
+[Daily record](./2026-11-01-bc-commit-slot-ambiguity-audit.md) · [Evidence](../evidence/2026-11-01-bc-commit-slot-ambiguity-audit/REPORT.md)
+
+- Reused the exact 2,089 B/C maturation events and frozen opportunity/X histories; no new natural trajectory
+- A fixed 10 s temporal reference produced 163 slots; 159 contained multiple distinct X options (median 12, maximum 20)
+- Candidate turnover occurred, but old options often persisted while new options joined; exact `{B,C}` same-X options commonly coexisted with other choices
+- Decision: **PERSISTENT MULTI-OPTION COMPETITION**; temporal cadence reduces event pressure but does not resolve spatial commit responsibility
+- No spatial winner, Plate, production feedback, or Residence work
+
 ### 2026-11-01 — B/C provenance stratigraphy prototype
 
 [Daily record](./2026-11-01-bc-provenance-stratigraphy-prototype.md) · [Evidence](../evidence/2026-10-31-bc-provenance-stratigraphy-prototype/REPORT.md)
