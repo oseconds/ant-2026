@@ -1,0 +1,1 @@
+Rejected dev attempt. Vite HMR reloaded app.js during the run, so A-300s.json declared 300 s while its state and visible clock were at 180 s (tick 10800). The sketchbook page also requested a missing /favicon.ico and returned 404. Captures were removed; the failed summary is retained. Use ../production as the accepted stable build-preview evidence.

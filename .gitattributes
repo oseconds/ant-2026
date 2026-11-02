@@ -1,6 +1,17 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
+# Keep Material Sketchbook sources and byte-hashed receipts stable on Windows.
+.gitattributes text eol=lf
+material-sketchbook.html text eol=lf
+vite.config.js text eol=lf
+src/sketchbook/* text eol=lf
+scripts/material-sketchbook-*.js text eol=lf
+tests/material-sketchbook-*.test.js text eol=lf
+docs/ant/daily/2026-11-03-material-sketchbook-v0.md text eol=lf
+docs/ant/evidence/2026-11-02-material-sketchbook-v0/** text eol=lf
+docs/ant/evidence/2026-11-02-material-sketchbook-v0/**/*.png binary
+
 # Keep this run's source and byte-hashed evidence stable across Windows worktrees.
 scripts/ant-natural-nodule-opportunity.js text eol=lf
 tests/ant-natural-nodule-opportunity.test.js text eol=lf

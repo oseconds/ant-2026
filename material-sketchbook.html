@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="data:," />
+  <title>ANT · Material Sketchbook v0</title>
+</head>
+<body>
+  <main>
+    <header><p class="eyebrow">ANT / isolated material studies / v0</p><h1>Material Sketchbook</h1><p>세 독립적인 가상 물질 세계. 형태와 내부 상태, 같은 자극에 대한 반응을 관찰합니다.</p></header>
+    <section class="controls" aria-label="Simulation controls">
+      <label>World <select id="model"><option value="A">A · Activity Fluidization</option><option value="B">B · Order-Dependent Memory</option><option value="C">C · Coupling Capacity</option></select></label>
+      <label>Seed <input id="seed" type="number" min="0" max="4294967295" value="20261005" step="1" /></label>
+      <button id="run">실행</button><button id="reset">초기화</button>
+      <label>관찰 속도 <select id="speed"><option value="1">1×</option><option value="4">4×</option><option value="16">16×</option></select></label>
+      <label><input type="checkbox" id="diagnostic" /> 내부 상태</label>
+      <select id="field" aria-label="A diagnostic field"><option value="bond">결합</option><option value="mass">재료량</option><option value="agitation">교란</option></select>
+    </section>
+    <div class="time"><output id="time">0.000 s</output><span id="phase"></span></div>
+    <p id="law" class="law"></p>
+    <canvas id="world" width="1200" height="520" role="img" aria-label="Current material state; numeric values follow below"></canvas>
+    <p id="legend" class="caption"></p><dl id="stats"></dl>
+    <section class="observation" aria-label="Frozen-state mechanical probe">
+      <div class="probe-controls"><button id="probe">현재 구조에 작은 probe</button><button id="listen" disabled>응답 듣기</button><select id="sample" aria-label="Probe sample"></select><span id="probe-status">소리 없이 탐험 가능</span></div>
+      <canvas id="wave" width="1200" height="100" role="img" aria-label="Probe left and right waveforms, fixed amplitude scale plus or minus one"></canvas>
+      <p class="caption">고정된 현재 상태의 작은 scalar 결합망 응답. Probe는 물질을 바꾸지 않습니다. 동일한 자극·시간 배율·고정 gain, 파형 ±1. 실제 ANT 오디오와 별개입니다.</p>
+    </section>
+    <section class="records" aria-label="Reproducible record"><button id="record">현재 기록 저장</button><label class="file">기록 재현 <input id="replay" type="file" accept="application/json,.json" /></label><span id="receipt"></span></section>
+    <p id="status" role="status" aria-live="polite"></p>
+    <footer>고정 dt = 1/60 s. 기본 공급: A 0–30 s / B 각 20 s, 총 40 s / C 국소 구동 0–40 s. 이후에도 상태 갱신은 계속됩니다. v0 페이지 관찰·기록 재현 한도 1시간. Production ANT와 연결되지 않습니다.</footer>
+  </main>
+  <script type="module" src="/src/sketchbook/app.js"></script>
+</body>
+</html>

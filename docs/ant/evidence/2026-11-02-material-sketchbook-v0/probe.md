@@ -1,0 +1,9 @@
+# Shared frozen-state mechanical probe
+
+`renderProbe(graph)` observes one current mechanics graph without stepping a world, consuming RNG, or changing graph inputs. This is a virtual scalar displacement experiment, not calibrated material physics or production ANT audio.
+
+All graphs use the same unit-square Gaussian impulse centered at `(0.22, 0.52)` with width `0.08`, left/right Gaussian pickups centered at `(0.25, 0.5)` and `(0.75, 0.5)`, 24 kHz PCM, a 1.2 second recording, and a fixed `100×` clock scale. The solver integrates the unscaled graph coefficients over 100 times the recorded duration; stiffness, damping, and the fixed `0.01` velocity dose are not multiplied by the clock scale. The impulse is distributed by normalized Gaussian weights. Pickup geometry is normalized before applying optional per-node contact, so contact attenuation is never restored by renormalization. A graph without contact has unit contact at every node.
+
+The solver integrates the current linear mass-ground-damper-spring graph with semi-implicit Euler. At each output sample it selects enough internal substeps to keep both `dt × sqrt(λbound) ≤ 0.25` and `dt × max(damping / mass) ≤ 0.25`; `λbound` is the largest unscaled Gershgorin row bound `(ground + 2 × incident spring sum) / mass`. This is conservative for the documented degree-four C graph with springs bounded by 120 and also limits explicit damping steps. There is no per-graph tuning, RMS matching, or output normalization. PCM is the raw fixed-scale pickup signal; the stated dose and documented graph bounds keep expected sketchbook output small. `metrics.peak` exposes its actual maximum, and displacement RMS/substep count are returned for inspection.
+
+The probe omits vector bending, nonlinear contacts, state evolution, forcing after the initial impulse, material feedback, acoustic radiation, and calibrated units. It deliberately treats each graph as a fixed virtual mechanical network for comparison.

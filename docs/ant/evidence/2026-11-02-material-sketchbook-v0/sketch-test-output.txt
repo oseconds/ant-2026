@@ -1,0 +1,100 @@
+TAP version 13
+# Subtest: activity world is deterministic and observations do not advance it
+ok 1 - activity world is deterministic and observations do not advance it
+  ---
+  duration_ms: 68.8217
+  type: 'test'
+  ...
+# Subtest: activity supply ends at 30 s while conservative transport continues
+ok 2 - activity supply ends at 30 s while conservative transport continues
+  ---
+  duration_ms: 30.0845
+  type: 'test'
+  ...
+# Subtest: bond slows transport and empty material has no probe contact
+ok 3 - bond slows transport and empty material has no probe contact
+  ---
+  duration_ms: 0.43
+  type: 'test'
+  ...
+# Subtest: extended run stays finite and emits a positive 8 by 8 graph
+ok 4 - extended run stays finite and emits a positive 8 by 8 graph
+  ---
+  duration_ms: 707.317
+  type: 'test'
+  ...
+# Subtest: capacity world is deterministic and observations leave the source state unchanged
+ok 5 - capacity world is deterministic and observations leave the source state unchanged
+  ---
+  duration_ms: 37.3669
+  type: 'test'
+  ...
+# Subtest: seeded local drive redistributes positive capacity without changing the declared budget
+ok 6 - seeded local drive redistributes positive capacity without changing the declared budget
+  ---
+  duration_ms: 19.1211
+  type: 'test'
+  ...
+# Subtest: 1000-second run stays finite with fixed geometry and unit masses
+ok 7 - 1000-second run stays finite with fixed geometry and unit masses
+  ---
+  duration_ms: 389.0625
+  type: 'test'
+  ...
+# Subtest: paired samples share exact initial geometry, mass, memory, and seed state
+ok 8 - paired samples share exact initial geometry, mass, memory, and seed state
+  ---
+  duration_ms: 1.8969
+  type: 'test'
+  ...
+# Subtest: A and B each receive one equal-duration, equal-dose episode in opposite order
+ok 9 - A and B each receive one equal-duration, equal-dose episode in opposite order
+  ---
+  duration_ms: 5.613
+  type: 'test'
+  ...
+# Subtest: same seed and schedule replay exactly; mechanics reflect memory without mutating it
+ok 10 - same seed and schedule replay exactly; mechanics reflect memory without mutating it
+  ---
+  duration_ms: 3.1721
+  type: 'test'
+  ...
+# Subtest: long quiet evolution remains finite and deterministic through 1000 seconds
+ok 11 - long quiet evolution remains finite and deterministic through 1000 seconds
+  ---
+  duration_ms: 18.4165
+  type: 'test'
+  ...
+# Subtest: empty and zero-contact graphs are silent
+ok 12 - empty and zero-contact graphs are silent
+  ---
+  duration_ms: 15.1262
+  type: 'test'
+  ...
+# Subtest: frozen-state mass and stiffness alter response without mutating input
+ok 13 - frozen-state mass and stiffness alter response without mutating input
+  ---
+  duration_ms: 17.3883
+  type: 'test'
+  ...
+# Subtest: the 100x clock advances free motion for exactly 100x the recorded duration
+ok 14 - the 100x clock advances free motion for exactly 100x the recorded duration
+  ---
+  duration_ms: 9.8014
+  type: 'test'
+  ...
+# Subtest: bounded high-stiffness graph stays finite
+ok 15 - bounded high-stiffness graph stays finite
+  ---
+  duration_ms: 21.7564
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 869.4048
