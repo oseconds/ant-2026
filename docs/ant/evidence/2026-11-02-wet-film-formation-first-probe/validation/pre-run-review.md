@@ -1,6 +1,6 @@
 # Independent pre-run numerical review
 
-Status: **BLOCKED BEFORE CAMPAIGN** pending the retry-log fix below. No interaction campaign was run in this review.
+Status: **PASS FOR CAMPAIGN START — 2026-11-02**. This is numerical pre-run clearance only; no interaction campaign was run in this review.
 
 ## Checks passed
 
@@ -10,9 +10,13 @@ Status: **BLOCKED BEFORE CAMPAIGN** pending the retry-log fix below. No interact
 - Time binning applies each valid foot dose once at `floor(t)+1` seconds. Bins 1–60 become `0.0001`–`0.006` nondimensional time using the registered `T0=10,000 s`. `run_case` applies a time-keyed source once before the state row/snapshot at that time; retries stay inside the same step loop, so they do not reapply the source. All arms use the same schedule and rasterized dose fields. See `scripts/ant-wet-film-formation.py:112-125, 185-195, 211-247`.
 - The `t=60 s` snapshot is post-dose: the final `[59,60)` bin is deposited at its registered right edge, then the source-free evolution proceeds to `120 s`. Reports should describe persistence from this post-dose boundary state.
 
-## Blocking issue
+## Initial blocker and resolution
 
-The protocol requires every failed step retry to be logged. The runner increments only `retries` and later stores the aggregate `numerical_retry_count`; it discards each failure's time, attempted `dt`, and exception reason. The halving loop itself is correctly scoped around one unchanged state, but if any retry occurs the required numerical audit trail is unavailable. Add per-retry records before starting the campaign. Relevant code: `scripts/ant-wet-film-formation.py:211-245, 257-263`.
+The first review found that the protocol's per-retry log was missing; the runner stored only an aggregate count. This is resolved. The runner now records each failed attempt's time, attempted step size, and exception reason in `numerical_retry_ledger`; the run summary retains that ledger, and a retry-floor abort writes `validation/numerical-stop.json` with the ledger and last accepted state. Relevant code: `scripts/ant-wet-film-formation.py:211-253, 265-272`.
+
+The optional `--output` rerun path now falls back to the canonical input ledger when the selected output package has no local copy. Relevant code: `scripts/ant-wet-film-formation.py:113-128`.
+
+Follow-up verification: the focused wet-film suite passed **9/9** after these runner changes. No full campaign or interaction run was performed.
 
 ## CSV interpretation to preserve in the report
 

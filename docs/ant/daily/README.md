@@ -2,6 +2,14 @@
 
 **Canonical chronology: `docs/ant/daily/`**
 
+### 2026-11-02 — First discriminating wet-film formation experiment (research only)
+
+[Daily record](./2026-11-02-wet-film-formation-first-probe.md) · [Report](../evidence/2026-11-02-wet-film-formation-first-probe/REPORT.md) · [Fixed atlas](../evidence/2026-11-02-wet-film-formation-first-probe/ATLAS.md)
+
+- One conservative Newtonian precursor-film law;25 controlled, refinement and conditional foot-input runs, with frozen/heat Nulls
+- Bounded ridge/bridge evolution differs from immutable deposition; early connection timing and precursor dependence remain unresolved
+- **MIXED**; no viscoelasticity, curing, audio experiment, production integration, PR or merge
+
 ### 2026-10-31 — Current-production materialization selector closure
 
 [Daily record](./2026-10-31-materialization-production-shaped-x-shadow.md) · [Evidence](../evidence/2026-10-31-materialization-production-shaped-x-shadow/README.md)

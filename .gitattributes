@@ -1,6 +1,16 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
+# Preserve this isolated wet-film experiment's byte-hashed text and arrays.
+scripts/ant-wet-film-*.py text eol=lf
+scripts/ant_wet_film_core.py text eol=lf
+tests/test_ant_wet_film*.py text eol=lf
+docs/ant/daily/2026-11-02-wet-film-formation-first-probe.md text eol=lf
+docs/ant/evidence/2026-11-02-wet-film-formation-first-probe/** text=auto eol=lf
+docs/ant/evidence/2026-11-02-wet-film-formation-first-probe/**/*.npz binary
+docs/ant/evidence/2026-11-02-wet-film-formation-first-probe/**/*.gz binary
+docs/ant/evidence/2026-11-02-wet-film-formation-first-probe/**/*.png binary
+
 # Keep this run's source and byte-hashed evidence stable across Windows worktrees.
 scripts/ant-natural-nodule-opportunity.js text eol=lf
 tests/ant-natural-nodule-opportunity.test.js text eol=lf
