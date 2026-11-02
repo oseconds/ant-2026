@@ -2,6 +2,8 @@
 
 물리 오디오 모델과 자율 ANT 시뮬레이션을 함께 다루는 vanilla Vite 프로젝트입니다. 현재 중심은 **ANT**입니다. 동등한 개체들이 이동하고, 화학적 흔적과 실제 발 접촉을 통해 환경에 기억을 남기며, 반복된 경로가 동결된 재질 구조와 물리 진동으로 이어집니다.
 
+**작품의 방향 (2026-11-02):** ANT는 **시뮬레이션을 매체로 사용하는 제너레이티브 아트(simulation-driven generative art)**이기도 합니다. 현실의 개미 생태나 물질을 정확히 재현하는 것이 목적은 아닙니다. 물리학에서 영감을 얻거나 새로 발명한 규칙들이 내부 인과성을 갖고 상호작용하며, 미리 지정하지 않은 물질의 형태·변화·소리가 발견되는 세계를 지향합니다. 특정 결과를 사건별로 직접 연출하는 것보다 결과가 생길 조건을 설계하는 데 관심을 둡니다. 이 관점은 작품의 방향이며 현재 구현된 Plate·음향 모델을 교체했다는 뜻은 아닙니다.
+
 String, Circular Plate, Solid Sphere는 같은 라이브러리 안의 독립적인 물리 오디오 실험으로 유지됩니다.
 
 <img src="docs/ant/evidence/2026-10-05-integrated-refinement/natural-run-03m20.png" width="760" alt="Integrated ANT simulation after about three minutes">

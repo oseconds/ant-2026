@@ -2,6 +2,14 @@
 
 **Canonical chronology: `docs/ant/daily/`**
 
+### 2026-11-02 — Artistic direction: simulation-driven generative art
+
+[Direction and chronology](./2026-11-02-generative-art-direction.md) · [Current artwork framing](../README.md#artwork-direction--causal-generative-world-2026-11-02)
+
+- Artist confirmed ANT is not a literal ant/material reproduction: simulation is a medium for internally causal, invented material worlds
+- Prefer discovering unexpected visible/audible consequences of interacting rules over scripting each desired shape or timbre
+- Distinguish open-ended exploratory sketches from validation and production adoption; no solver, formation law or decision register changed
+
 ### 2026-10-31 — Current-production materialization selector closure
 
 [Daily record](./2026-10-31-materialization-production-shaped-x-shadow.md) · [Evidence](../evidence/2026-10-31-materialization-production-shaped-x-shadow/README.md)
