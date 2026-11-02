@@ -6,6 +6,8 @@
 
 ## Current status
 
+**Branch-side audio research (2026-11-01):** the [local-X audio reassessment](evidence/2026-11-01-local-x-audio-reassessment/REPORT.md) reproduces the six fixed CONTROL/REPLACEMENT worlds and measures their continuous current-worklet sound, acoustic granularity and offline CPU cost. It recommends explicit spatial mechanics with material provenance and readout responsibilities kept distinct, preserving stratified coupling as the initial reference. Bonded effective mechanics, live web deadline viability and artistic readout remain unresolved; **MULTIPLE COHERENT OPTIONS REMAIN — ARTIST DECISION REQUIRED**. Neither local-X formation nor a new audio architecture is adopted. [Atlas](evidence/2026-11-01-local-x-audio-reassessment/ATLAS.md) · [Chronology](daily/2026-11-01-local-x-audio-reassessment.md).
+
 ```text
 movement / realized travel
 ├─→ local completed outgoing flow → later accepted-spawn heading (isotropic fallback)

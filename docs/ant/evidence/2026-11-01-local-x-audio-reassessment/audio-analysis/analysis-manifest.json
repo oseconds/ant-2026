@@ -1,0 +1,153 @@
+{
+  "status": "FIXED_WINDOW_AUDIO_ANALYSIS_COMPLETE",
+  "selfCheck": {
+    "passed": true,
+    "frameCount": 1872,
+    "toneHz": 750,
+    "silenceShapeNull": true,
+    "dcAmplitudePower": 0.0625,
+    "rendererCrosscheckDbDifference": 3.126230438965649e-07
+  },
+  "frontend": {
+    "sampleRate": 48000,
+    "gain": "post-bridge PCM at fixed output gain 0.7; no RMS matching",
+    "outputGain": 0.7,
+    "gainStage": "post-bridge fixed GainNode after worklet soft limiter and interpolation; direct master gain 1",
+    "powerScaleRelativeToPreBridge": 0.48999999999999994,
+    "fftSize": 1024,
+    "window": "symmetric Hann",
+    "hopSize": 256,
+    "maxHz": 8000,
+    "frameSupport": "whole frames only, start at each window's first sample, no padding/interpolation",
+    "spectrogram": "20*log10(2*|rFFT|/sum(Hann)), clamped -100..0 dBFS, grayscale linear gamma 1",
+    "erb": "30 equal ERB-rate bands; one-sided |rFFT|^2/sum(Hann)^2, positive bins doubled except DC; sum bins per band; preserve L/R",
+    "shape": "unit-sum time-mean ERB power; null for silence; cosine and total variation are descriptive"
+  },
+  "windowsSeconds": [
+    [
+      50,
+      60
+    ],
+    [
+      110,
+      120
+    ],
+    [
+      170,
+      180
+    ],
+    [
+      230,
+      240
+    ],
+    [
+      290,
+      300
+    ]
+  ],
+  "inputs": [
+    {
+      "path": ".cache/local-x-audio-reassessment/pcm/seed-20261005-control.wav",
+      "bytes": 115200044,
+      "sha256": "827e6778c4e41904cd16ce452b5775644287b9bb4b425d35fcf0fc832d3e1a89",
+      "framesPerChannel": 14400000,
+      "sampleRate": 48000,
+      "channels": 2,
+      "format": "IEEE_FLOAT",
+      "bitsPerSample": 32
+    },
+    {
+      "path": ".cache/local-x-audio-reassessment/pcm/seed-20261005-replacement.wav",
+      "bytes": 115200044,
+      "sha256": "21d0cc8489cf40296d1858499f60ea7caf3848a3e4318068cbefe54311e8026f",
+      "framesPerChannel": 14400000,
+      "sampleRate": 48000,
+      "channels": 2,
+      "format": "IEEE_FLOAT",
+      "bitsPerSample": 32
+    },
+    {
+      "path": ".cache/local-x-audio-reassessment/pcm/seed-20261006-control.wav",
+      "bytes": 115200044,
+      "sha256": "2f20cf8070f17d2db69af38d731567abf4f178116e9d662c82ec70d5428b299e",
+      "framesPerChannel": 14400000,
+      "sampleRate": 48000,
+      "channels": 2,
+      "format": "IEEE_FLOAT",
+      "bitsPerSample": 32
+    },
+    {
+      "path": ".cache/local-x-audio-reassessment/pcm/seed-20261006-replacement.wav",
+      "bytes": 115200044,
+      "sha256": "e7f9e173fdeadc83d77fa11e92869efb900adc765569333ed063a9aa1979b159",
+      "framesPerChannel": 14400000,
+      "sampleRate": 48000,
+      "channels": 2,
+      "format": "IEEE_FLOAT",
+      "bitsPerSample": 32
+    },
+    {
+      "path": ".cache/local-x-audio-reassessment/pcm/seed-20261007-control.wav",
+      "bytes": 115200044,
+      "sha256": "81ec3db70bb21661b214b1b654ec5577d8ed33c3651e3b68ff63311bc58a50e7",
+      "framesPerChannel": 14400000,
+      "sampleRate": 48000,
+      "channels": 2,
+      "format": "IEEE_FLOAT",
+      "bitsPerSample": 32
+    },
+    {
+      "path": ".cache/local-x-audio-reassessment/pcm/seed-20261007-replacement.wav",
+      "bytes": 115200044,
+      "sha256": "35115ab9cd69bc9a90cdf9ab731de49728be6fdf9a0e68ef08d6b7c99c1df31a",
+      "framesPerChannel": 14400000,
+      "sampleRate": 48000,
+      "channels": 2,
+      "format": "IEEE_FLOAT",
+      "bitsPerSample": 32
+    }
+  ],
+  "outputFiles": [
+    "windows.csv",
+    "erb-power.csv",
+    "paired-shape.csv",
+    "analysis.json"
+  ],
+  "analysisValidation": {
+    "windowCount": 30,
+    "all30BandArraysFinite": true,
+    "leftRightArraysPerWindow": true,
+    "silenceShape": "null"
+  },
+  "outputReceipts": [
+    {
+      "path": "windows.csv",
+      "bytes": 9379,
+      "sha256": "3f6c67cd64d7741f9eca4f6dcd9f386b3bee6197325035ffe82fe4af362643e4"
+    },
+    {
+      "path": "erb-power.csv",
+      "bytes": 124637,
+      "sha256": "1d5babffafb9e19b917e9ca82acffbba0c075bb4e7bee0e32e5a248a3ae703e0"
+    },
+    {
+      "path": "paired-shape.csv",
+      "bytes": 725,
+      "sha256": "d6bb21bf6b127b69936a3fd48bc2f56e65aa3b0df2907562d393157f87bb122d"
+    },
+    {
+      "path": "analysis.json",
+      "bytes": 139767,
+      "sha256": "8ed53095ac4b8fbff242e34ed8744ba61491031464c2ab43b17da8b79e53142a"
+    }
+  ],
+  "fixedAbsoluteErbPowerRange": [
+    0.0,
+    0.0005903468370128132
+  ],
+  "limitations": [
+    "ERB is an FFT-bin grouping, not a gammatone/cochleogram.",
+    "Linear absolute power can span a wide range and hide quiet channels; scale is shared across all 30 windows.",
+    "Shape statistics normalize per window and are secondary diagnostics, not perceptual thresholds."
+  ]
+}

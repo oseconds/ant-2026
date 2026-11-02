@@ -1,0 +1,36 @@
+{
+  "schema": "ant-local-x-audio-world-partial-attempts-v1",
+  "campaignStatus": "PREPARATION ATTEMPTS; six-world campaign later passed (analysis/receipts.json)",
+  "preservedArtifacts": [
+    {
+      "attempt": 1,
+      "seed": "20261005",
+      "arm": "control",
+      "executionHead": "d0481760fd44052acbeaaf88c3b171ab2a625601",
+      "worldTicksCompleted": 18000,
+      "simulationSeconds": 299.99999999998306,
+      "frozenControlValidation": "PASS",
+      "initialHarnessComparison": "STOPPED BEFORE CAPTURE WRITE",
+      "cause": "Compared in-memory run object with readRun result that includes serialized anchor chunk manifest fields.",
+      "correctedReadbackComparison": "PASS",
+      "runFileBytes": 810513,
+      "runFileSha256": "dab57a07b429517bd7a9585804ae62632985194d6ead981aeb140140ee06d20d",
+      "sourceParityFailure": false,
+      "captureAndScheduleFiles": "NOT WRITTEN",
+      "originalRunFile": "analysis/runs/seed-20261005-control.signals.json.gz",
+      "preservedRunFile": ".cache/local-x-audio-reassessment/preexisting/partial-control-runs/seed-20261005-control.signals.json.gz"
+    },
+    {
+      "attempt": 2,
+      "seed": null,
+      "arm": null,
+      "executionHead": "d2b62f52a85ad7320c9056dc30454808c73972bc",
+      "worldTicksCompleted": 0,
+      "status": "STOPPED BEFORE WORLD START",
+      "cause": "Temporary exact-HEAD guard still expected d048176 after parent added the preregistration commit.",
+      "sourceParityFailure": false,
+      "captureAndScheduleFiles": "NOT WRITTEN"
+    }
+  ],
+  "preservation": "All 16 partial files exactly match the committed baseline; hashes checked before and after moving to cache. See validation/preserved-partial-files.json."
+}

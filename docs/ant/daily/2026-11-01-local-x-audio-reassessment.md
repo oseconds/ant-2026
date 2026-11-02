@@ -1,0 +1,15 @@
+# Local-X audio architecture reassessment
+
+The frozen experiment authority is `bc045dc3caa5954df633ecbee37fbabcb8224f30`. At delivery on 2026-11-02, remote main had advanced to `5bdd516b412d03d78c2511ceb372180941206968` through archive-documentation-only changes; complete `src`/`static` trees are identical. A dedicated research branch based on local-X replacement `d0481760fd44052acbeaaf88c3b171ab2a625601` reassessed audio without tuning either material world. The source-only diagnosis/protocol was committed before capture and historical alternatives were considered only after independent diagnosis and candidate selection. No new archive content from the delivery-time main update was read or used.
+
+All six fresh 300 s CONTROL/REPLACEMENT worlds reproduced their frozen signals exactly. Actual compiler/bridge messages drove six continuous 48 kHz OfflineAudioContext/AudioWorklet renders. The fixed five 10 s windows per world use the verified waveform/spectrogram frontend and absolute ERB power, with shape comparisons separate. Browser fixture numerical parity and one full seed05 replacement byte-identical rerun passed; no raw PCM is committed.
+
+Local-X creates 137–156 solver layers but only 964–1070 nodes, versus 1750–3567 CONTROL nodes. Its median layer has two nodes; 110 local layers collapse to the same isolated one-node fixture response, and 184 compiled local pickup pairs coincide. These collisions do not prove coupled-state redundancy. Fully buried, never-directly-struck layers still show indirect raw activity in each local world. Unlike CONTROL, local worlds show native sleep events.
+
+Clean late-window CPU fixtures are about 4–6 times cheaper for replacement despite more descriptor identities. Continuous node/stencil/wake work dominates. These are rest-initialized Chrome main-realm measurements, not live AudioWorklet deadline or sonic-quality evidence.
+
+**Decision: MULTIPLE COHERENT OPTIONS REMAIN — ARTIST DECISION REQUIRED.** If designing today, prefer retained material history feeding explicit sparse spatial mechanics and a separately declared readout. Preserve stratified motion/coupling as the initial physical reference; do not require a resonator/two pickups for every deposition ID. Bonded effective columns require an explicit continuity/material law and a tested prototype. The old dormant modal ROM negative remains preserved. No new architecture or local-X formation was adopted.
+
+The smallest engineering follow-up is input/state/Z-force/readout correspondence for repeated coarse-filter classes in these same frozen histories. The independent artistic choice concerns laminar versus bonded continuity and where the world is heard. No extra seed, longer horizon, formation tuning, new material law, live audio-quality study, PR, merge, force-push or Residence work occurred.
+
+[Report](../evidence/2026-11-01-local-x-audio-reassessment/REPORT.md) · [Atlas](../evidence/2026-11-01-local-x-audio-reassessment/ATLAS.md) · [Validation](../evidence/2026-11-01-local-x-audio-reassessment/VALIDATION.md) · [Reproduction](../evidence/2026-11-01-local-x-audio-reassessment/README.md).

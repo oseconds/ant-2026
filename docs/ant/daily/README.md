@@ -2,6 +2,15 @@
 
 **Canonical chronology: `docs/ant/daily/`**
 
+### 2026-11-01 — Local-X audio architecture reassessment (research only)
+
+[Daily record](./2026-11-01-local-x-audio-reassessment.md) · [Report](../evidence/2026-11-01-local-x-audio-reassessment/REPORT.md) · [Fixed atlas](../evidence/2026-11-01-local-x-audio-reassessment/ATLAS.md)
+
+- Six exact 300 s world reproductions and continuous native-worklet offline renders; fixed 30-window measurement and numerical browser parity
+- Many local identities become few-node layers; actual solver workload is lower, while buried/unstruck history still participates indirectly
+- Preferred direction: explicit spatial stratified mechanics with provenance/readout responsibilities separated; bonded consolidation and live web viability remain open
+- **MULTIPLE COHERENT OPTIONS REMAIN — ARTIST DECISION REQUIRED**; no formation/audio adoption, PR or merge
+
 ### 2026-11-01 — Local-X material replacement (research only)
 
 [Daily record](./2026-11-01-local-x-material-replacement.md) · [Evidence package](../evidence/2026-11-01-local-x-material-replacement/REPORT.md)

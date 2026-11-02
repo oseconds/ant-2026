@@ -48,8 +48,8 @@ function git(...args) {
   return execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
 }
 
-async function verifyAuthorityReceipts() {
-  assert.equal(git('branch', '--show-current'), BRANCH, 'research branch');
+export async function verifyAuthorityReceipts(expectedBranch = BRANCH) {
+  assert.equal(git('branch', '--show-current'), expectedBranch, 'research branch');
   assert.equal(git('merge-base', '--is-ancestor', BASE, 'HEAD'), '', 'requested base is an ancestor');
   git('cat-file', '-e', AUTHORITY + '^{commit}');
   const changedProductionFiles = git('diff', '--name-only', BASE, '--', 'src', 'static').split(/\r?\n/).filter(Boolean);
@@ -422,7 +422,7 @@ function checkObserverNoRng(controller, rng, callback, ctx, label) {
   } finally { Math.random = priorRandom; }
 }
 
-async function runArm(seed, arm, ops) {
+export async function runArm(seed, arm, ops, { outDir = resolve(EVIDENCE, 'analysis/runs'), avCapture = null } = {}) {
   const isReplacement = arm === 'replacement', rng = countedLcg(seed), observer = new SingletonFeedbackObserver(seed);
   const controller = new AntController({ random: rng.random });
   const ctx = { rng, built: null, pendingBoundary: null, anchors: [], events: [], decisions: [],
@@ -452,6 +452,7 @@ async function runArm(seed, arm, ops) {
       }), burial: payload.burial, support: payload.support });
   });
   ctx.noduleLineage = [];
+  avCapture?.attach?.(controller, { seed, arm });
   await controller.init();
   const initialRngCalls = rng.calls;
   assert.ok(initialRngCalls > 0, 'normal controller initialization consumes production RNG');
@@ -474,6 +475,7 @@ async function runArm(seed, arm, ops) {
         aCalls += Number(sample.aTurnRateChanged);
       }
       ctx.currentDOpportunities = 0;
+      avCapture?.beforeTick?.(controller, tick, timeAtEntry);
       controller.tick(DT);
       const stateTime = controller.simulationTimeMs;
       const idsAfter = new Set(controller.agents.map(agent => agent.id));
@@ -570,6 +572,7 @@ async function runArm(seed, arm, ops) {
             entryCounts: formation.entryCounts, opportunities: formation.opportunities,
             matureOptions: formation.matureOptions } });
       }
+      avCapture?.afterTick?.(controller, tick, stateTime);
       if (ctx.nativeBirthEvents.length && ctx.nativeBirthEvents.at(-1).timeMs === stateTime
         && ctx.firstNativeSelectorTimeMs === undefined) ctx.firstNativeSelectorTimeMs = stateTime;
       if (strataNoduleCapacityReached(controller) && ctx.firstNoduleCapacityTimeMs === null) {
@@ -644,10 +647,9 @@ async function runArm(seed, arm, ops) {
           ? ctx.localBirths.length === controller.materialStratigraphy.plates.length : null,
         capacityReachedAtMs: ctx.firstCapacityTimeMs, noduleCapacityReachedAtMs: ctx.firstNoduleCapacityTimeMs },
       controlConformance: null };
-    const out = resolve(EVIDENCE, 'analysis', 'runs');
-    await mkdir(out, { recursive: true });
-    await writeRun(resolve(out, 'seed-' + seed + '-' + arm + '.signals.json.gz'), run, 20);
-    return { run };
+    await mkdir(outDir, { recursive: true });
+    await writeRun(resolve(outDir, 'seed-' + seed + '-' + arm + '.signals.json.gz'), run, 20);
+    return { run, av: avCapture?.data ?? null };
   } finally {
     await controller.destroy();
   }
@@ -657,7 +659,7 @@ function strataNoduleCapacityReached(controller) {
   return controller.materialStratigraphy.nodules.length >= controller.materialStratigraphy.maxNodules;
 }
 
-async function validateControlAgainstFrozen(run, authorityReceipt) {
+export async function validateControlAgainstFrozen(run, authorityReceipt) {
   const seed = String(run.seed);
   const frozen = await readRun(resolve(FROZEN_ROOT, 'seed-' + seed + '.signals.json.gz'));
   assert.equal(frozen.authority, AUTHORITY, 'frozen signal authority');

@@ -1,0 +1,24 @@
+{
+  "schema": "ant-local-x-audio-delivery-authority-v1",
+  "checkedAtUtc": "2026-11-02 00:14:55 UTC",
+  "frozenExperimentAuthority": "bc045dc3caa5954df633ecbee37fbabcb8224f30",
+  "replacementBase": "d0481760fd44052acbeaaf88c3b171ab2a625601",
+  "remoteMainAtDeliveryCheck": "5bdd516b412d03d78c2511ceb372180941206968",
+  "remoteReplacementAtDeliveryCheck": "d0481760fd44052acbeaaf88c3b171ab2a625601",
+  "mainAdvancedAfterInitialAuthorityCheck": true,
+  "mainChangeScope": "Nine documentation-only commits; changed paths are confined to docs/ant/archive/.",
+  "srcTreeAtFrozenAuthority": "e0d6b518c4fb816ee5a0d65e12df589eae5d2739",
+  "srcTreeAtDeliveryMain": "e0d6b518c4fb816ee5a0d65e12df589eae5d2739",
+  "staticTreeAtFrozenAuthority": "b469aa0b58ceb60944db80a1ec389d78380b6b37",
+  "staticTreeAtDeliveryMain": "b469aa0b58ceb60944db80a1ec389d78380b6b37",
+  "productionSourceAndWorkletTreesEqual": true,
+  "newArchiveContentsRead": false,
+  "researchCheckoutMergedOrRebased": false,
+  "commands": [
+    "git ls-remote origin refs/heads/main refs/heads/codex/ant-local-x-replacement-20261101",
+    "git fetch origin main",
+    "git diff --name-status bc045dc3caa5954df633ecbee37fbabcb8224f30 5bdd516b412d03d78c2511ceb372180941206968",
+    "git diff --stat bc045dc3caa5954df633ecbee37fbabcb8224f30 5bdd516b412d03d78c2511ceb372180941206968 -- src static",
+    "git rev-parse bc045dc3caa5954df633ecbee37fbabcb8224f30:src 5bdd516b412d03d78c2511ceb372180941206968:src bc045dc3caa5954df633ecbee37fbabcb8224f30:static 5bdd516b412d03d78c2511ceb372180941206968:static"
+  ]
+}

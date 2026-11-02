@@ -1,0 +1,1260 @@
+{
+  "schema": "ant-local-x-audio-runtime-profile-v1",
+  "timestamp": "2026-11-01T13:54:56.544Z",
+  "sourceSha256": "14c7461f1412f0d6897a6683d46e582dbb80711f2ba74e8ea53e026895eeea5e",
+  "compilerSourceSha256": "839ffa616445095bd6564fe3fd562d305d255849f85ee11cd79f60d33df92912",
+  "browserVersion": "157.0.8103.26",
+  "nodeVersion": "v22.23.2",
+  "quantileMethod": "nearest-rank: sorted[ceil(p*n)-1]",
+  "platform": "win32",
+  "arch": "x64",
+  "sampleRate": 48000,
+  "window": {
+    "startSeconds": 290,
+    "endSeconds": 300,
+    "startFrame": 13920000,
+    "endFrame": 14400000,
+    "state": "Install latest topology before 290 s into a fresh processor; vibration state starts at rest."
+  },
+  "method": "Unmodified SurfacePlateProcessor source executed in a Chrome main-realm AudioWorkletProcessor stub. Each case uses one untimed warmup plus three clean measured 10-second replays, then a separate CDP sampling replay. Events are dispatched at exact scheduled frame boundaries.",
+  "attribution": "V8 samples report function/source locations for process, advancePhysics, computeLap, advanceNodules and other called worklet code. Contact dispatch is timed separately. Intra-Plate recurrence, Z-link loops and pickup/output mixing are inline within advancePhysics, so their sampled cost cannot be separated without changing the profiled source.",
+  "limitation": "Main-realm CPU profile and processor wall time are not AudioWorklet deadline, realtime, or underrun measurements. Rest initialization omits pre-290 s vibration history. Schedule files contain compiled topology payloads, so source topology compilation time is unavailable; structured-clone cost is reported separately as a transfer proxy.",
+  "cases": [
+    {
+      "seed": "20261005",
+      "arm": "control",
+      "scheduleSha256": "03ea5eb43f39e914d2bea360441a2b34f2f4e2bf9b534b7dccb16ac4e4d4b83e",
+      "scheduleBytesGzip": 2056510,
+      "captureSha256": "4871d4d24b4f235b9626f1e95baa3b79f81ec1c4ad800fc57187202fbfcb1003",
+      "captureTopologyTick": 16861,
+      "compiler": {
+        "warmups": 1,
+        "measuredRuns": 9,
+        "quantileMethod": "nearest-rank: sorted[ceil(p*n)-1]",
+        "p50Ms": 8.214399999999955,
+        "p95Ms": 11.845699999999965,
+        "samplesMs": [
+          11.845699999999965,
+          9.28270000000009,
+          8.214399999999955,
+          11.298400000000015,
+          11.007799999999975,
+          6.927599999999984,
+          6.1819000000000415,
+          6.444900000000075,
+          5.986700000000042
+        ],
+        "scope": "compileSurfaceTopology on exact late-window stratigraphy snapshot in Node; bridge-side validation and browser message transfer excluded"
+      },
+      "scheduleUnpackParseMsNode": 57.399099999999976,
+      "baseTopologyFrame": 13488800,
+      "scheduleContactCount": 1121,
+      "scheduleTopologyInstallCount": 1,
+      "warmupState": {
+        "layers": 14,
+        "nodes": 3567,
+        "activeNodesEnd": 3567,
+        "adjacentLinks": 3489,
+        "sphereFoundationLinks": 5,
+        "pickupNodes": 28,
+        "nodules": 5,
+        "physicsSteps": 60000,
+        "strikes": 1121,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "contactPulseNodeSteps": 162324,
+        "deepPlateCouplingTransfers": 373576082,
+        "sphereCouplingTransfers": 3600000
+      },
+      "cleanProcessTiming": {
+        "measuredReplays": 3,
+        "quantileMethod": "nearest-rank: sorted[ceil(p*n)-1]",
+        "processMsMedian": 18927.49999988079,
+        "processMsMin": 18904.699999570847,
+        "processMsMax": 19064.000000059605,
+        "processWallMsPerSimulatedSecond": 1892.749999988079
+      },
+      "cleanRunDetails": [
+        {
+          "processTotalMs": 18904.699999570847,
+          "processCalls": 4200,
+          "processBatches": 337,
+          "contactDispatchTotalMs": 53.80000030994415,
+          "topologyInstallTotalMs": 0.9000000357627869,
+          "initialTopologyInstallMs": 0.800000011920929,
+          "topologyInstallMs": [
+            0.9000000357627869
+          ]
+        },
+        {
+          "processTotalMs": 18927.49999988079,
+          "processCalls": 4200,
+          "processBatches": 337,
+          "contactDispatchTotalMs": 52.19999998807907,
+          "topologyInstallTotalMs": 0.7000000476837158,
+          "initialTopologyInstallMs": 0.5,
+          "topologyInstallMs": [
+            0.7000000476837158
+          ]
+        },
+        {
+          "processTotalMs": 19064.000000059605,
+          "processCalls": 4200,
+          "processBatches": 337,
+          "contactDispatchTotalMs": 53.499999940395355,
+          "topologyInstallTotalMs": 0.7000000476837158,
+          "initialTopologyInstallMs": 0.3999999761581421,
+          "topologyInstallMs": [
+            0.7000000476837158
+          ]
+        }
+      ],
+      "lateEvents": 1122,
+      "strikeCount": 1121,
+      "topologyInstallCount": 1,
+      "structuredCloneP50Ms": 0.19999998807907104,
+      "structuredCloneP95Ms": 0.30000001192092896,
+      "structuredCloneQuantileMethod": "nearest-rank: sorted[ceil(p*n)-1]",
+      "profiledState": {
+        "layers": 14,
+        "nodes": 3567,
+        "activeNodesEnd": 3567,
+        "adjacentLinks": 3489,
+        "sphereFoundationLinks": 5,
+        "pickupNodes": 28,
+        "nodules": 5,
+        "physicsSteps": 60000,
+        "strikes": 1121,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "contactPulseNodeSteps": 162324,
+        "deepPlateCouplingTransfers": 373576082,
+        "sphereCouplingTransfers": 3600000
+      },
+      "activeNodeSummary": {
+        "samples": 600,
+        "activeNodesAverageAt60Hz": 3257.69,
+        "activeNodesMaxAt60Hz": 3567
+      },
+      "cpuProfileProcessMs": null,
+      "v8SampledFunctions": [
+        {
+          "functionName": "advancePhysics",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 564,
+          "sampledMs": 17768.063
+        },
+        {
+          "functionName": "wakeNeighborhood",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 313,
+          "sampledMs": 1649.58
+        },
+        {
+          "functionName": "applyContactForces",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 739,
+          "sampledMs": 171.143
+        },
+        {
+          "functionName": "advanceNodules",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 786,
+          "sampledMs": 51.055
+        },
+        {
+          "functionName": "applyStrike",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 913,
+          "sampledMs": 50.357
+        },
+        {
+          "functionName": "(garbage collector)",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 0,
+          "sampledMs": 29.498
+        },
+        {
+          "functionName": "(program)",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 0,
+          "sampledMs": 21.337
+        },
+        {
+          "functionName": "localSphereForce",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 776,
+          "sampledMs": 12.535
+        },
+        {
+          "functionName": "runFixture",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 22,
+          "sampledMs": 5.909
+        },
+        {
+          "functionName": "process",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 536,
+          "sampledMs": 4.993
+        },
+        {
+          "functionName": "validTopology",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 861,
+          "sampledMs": 2.661
+        },
+        {
+          "functionName": "(idle)",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 0,
+          "sampledMs": 2.044
+        },
+        {
+          "functionName": "(anonymous)",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 1,
+          "sampledMs": 1.506
+        }
+      ]
+    },
+    {
+      "seed": "20261005",
+      "arm": "replacement",
+      "scheduleSha256": "c603c3b975302d3443d89cd9218c2bf447a02827b14585ba63cb824bfbecb6a5",
+      "scheduleBytesGzip": 4187496,
+      "captureSha256": "3a47ed44641c88b65955db32122b353636211498edd41dc679d3c30585fd99b9",
+      "captureTopologyTick": 17341,
+      "compiler": {
+        "warmups": 1,
+        "measuredRuns": 9,
+        "quantileMethod": "nearest-rank: sorted[ceil(p*n)-1]",
+        "p50Ms": 7.121100000003935,
+        "p95Ms": 18.165399999998044,
+        "samplesMs": [
+          18.165399999998044,
+          7.88980000000447,
+          7.121100000003935,
+          8.349699999991572,
+          10.80789999999979,
+          6.70329999999376,
+          6.700100000001839,
+          6.072899999999208,
+          6.056700000001001
+        ],
+        "scope": "compileSurfaceTopology on exact late-window stratigraphy snapshot in Node; bridge-side validation and browser message transfer excluded"
+      },
+      "scheduleUnpackParseMsNode": 121.29110000000219,
+      "baseTopologyFrame": 13872800,
+      "scheduleContactCount": 493,
+      "scheduleTopologyInstallCount": 4,
+      "warmupState": {
+        "layers": 156,
+        "nodes": 1070,
+        "activeNodesEnd": 797,
+        "adjacentLinks": 411,
+        "sphereFoundationLinks": 0,
+        "pickupNodes": 312,
+        "nodules": 0,
+        "physicsSteps": 60000,
+        "strikes": 493,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "contactPulseNodeSteps": 68472,
+        "deepPlateCouplingTransfers": 35633226,
+        "sphereCouplingTransfers": 0
+      },
+      "cleanProcessTiming": {
+        "measuredReplays": 3,
+        "quantileMethod": "nearest-rank: sorted[ceil(p*n)-1]",
+        "processMsMedian": 3037.899999797344,
+        "processMsMin": 3029.5999997854233,
+        "processMsMax": 3038,
+        "processWallMsPerSimulatedSecond": 303.78999997973443
+      },
+      "cleanRunDetails": [
+        {
+          "processTotalMs": 3029.5999997854233,
+          "processCalls": 4200,
+          "processBatches": 243,
+          "contactDispatchTotalMs": 4.6000001430511475,
+          "topologyInstallTotalMs": 1.0000000596046448,
+          "initialTopologyInstallMs": 0.09999996423721313,
+          "topologyInstallMs": [
+            0.30000001192092896,
+            0.10000002384185791,
+            0.30000001192092896,
+            0.30000001192092896
+          ]
+        },
+        {
+          "processTotalMs": 3038,
+          "processCalls": 4200,
+          "processBatches": 243,
+          "contactDispatchTotalMs": 3.799999952316284,
+          "topologyInstallTotalMs": 1.100000023841858,
+          "initialTopologyInstallMs": 0.19999998807907104,
+          "topologyInstallMs": [
+            0.19999998807907104,
+            0.30000001192092896,
+            0.30000001192092896,
+            0.30000001192092896
+          ]
+        },
+        {
+          "processTotalMs": 3037.899999797344,
+          "processCalls": 4200,
+          "processBatches": 243,
+          "contactDispatchTotalMs": 3.500000238418579,
+          "topologyInstallTotalMs": 0.800000011920929,
+          "initialTopologyInstallMs": 0.10000002384185791,
+          "topologyInstallMs": [
+            0.30000001192092896,
+            0.10000002384185791,
+            0.09999996423721313,
+            0.30000001192092896
+          ]
+        }
+      ],
+      "lateEvents": 497,
+      "strikeCount": 493,
+      "topologyInstallCount": 4,
+      "structuredCloneP50Ms": 0.10000002384185791,
+      "structuredCloneP95Ms": 0.20000004768371582,
+      "structuredCloneQuantileMethod": "nearest-rank: sorted[ceil(p*n)-1]",
+      "profiledState": {
+        "layers": 156,
+        "nodes": 1070,
+        "activeNodesEnd": 797,
+        "adjacentLinks": 411,
+        "sphereFoundationLinks": 0,
+        "pickupNodes": 312,
+        "nodules": 0,
+        "physicsSteps": 60000,
+        "strikes": 493,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "contactPulseNodeSteps": 68472,
+        "deepPlateCouplingTransfers": 35633226,
+        "sphereCouplingTransfers": 0
+      },
+      "activeNodeSummary": {
+        "samples": 600,
+        "activeNodesAverageAt60Hz": 726.6133333333333,
+        "activeNodesMaxAt60Hz": 845
+      },
+      "cpuProfileProcessMs": null,
+      "v8SampledFunctions": [
+        {
+          "functionName": "advancePhysics",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 564,
+          "sampledMs": 2568.733
+        },
+        {
+          "functionName": "wakeNeighborhood",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 313,
+          "sampledMs": 304.866
+        },
+        {
+          "functionName": "localPlateForce",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 768,
+          "sampledMs": 192.765
+        },
+        {
+          "functionName": "wakeNode",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 289,
+          "sampledMs": 72.422
+        },
+        {
+          "functionName": "applyContactForces",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 739,
+          "sampledMs": 55.604
+        },
+        {
+          "functionName": "process",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 536,
+          "sampledMs": 32.043
+        },
+        {
+          "functionName": "(program)",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 0,
+          "sampledMs": 11.26
+        },
+        {
+          "functionName": "localSphereForce",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 776,
+          "sampledMs": 10.954
+        },
+        {
+          "functionName": "(idle)",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 0,
+          "sampledMs": 5.004
+        },
+        {
+          "functionName": "(garbage collector)",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 0,
+          "sampledMs": 3.536
+        },
+        {
+          "functionName": "(anonymous)",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 1,
+          "sampledMs": 2.073
+        },
+        {
+          "functionName": "validTopology",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 861,
+          "sampledMs": 2.016
+        },
+        {
+          "functionName": "applyStrike",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 913,
+          "sampledMs": 1.503
+        },
+        {
+          "functionName": "runFixture",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 22,
+          "sampledMs": 1.247
+        }
+      ]
+    },
+    {
+      "seed": "20261006",
+      "arm": "control",
+      "scheduleSha256": "faef9ba238a04288557029a92715109bdbb63dd6cf64753d646fc431391c88f9",
+      "scheduleBytesGzip": 1177411,
+      "captureSha256": "f172d1624bf7697798a92ea2b721d3d77751619887895e6ed85333debd323918",
+      "captureTopologyTick": 16554,
+      "compiler": {
+        "warmups": 1,
+        "measuredRuns": 9,
+        "quantileMethod": "nearest-rank: sorted[ceil(p*n)-1]",
+        "p50Ms": 2.0656999999919208,
+        "p95Ms": 3.603499999997439,
+        "samplesMs": [
+          3.603499999997439,
+          3.0838999999978114,
+          1.9338999999890802,
+          1.910699999993085,
+          2.0656999999919208,
+          1.9697000000014668,
+          2.183599999989383,
+          2.721399999994901,
+          1.7801999999937834
+        ],
+        "scope": "compileSurfaceTopology on exact late-window stratigraphy snapshot in Node; bridge-side validation and browser message transfer excluded"
+      },
+      "scheduleUnpackParseMsNode": 41.62090000000899,
+      "baseTopologyFrame": 13243200,
+      "scheduleContactCount": 877,
+      "scheduleTopologyInstallCount": 1,
+      "warmupState": {
+        "layers": 7,
+        "nodes": 1750,
+        "activeNodesEnd": 1750,
+        "adjacentLinks": 1344,
+        "sphereFoundationLinks": 3,
+        "pickupNodes": 14,
+        "nodules": 3,
+        "physicsSteps": 60000,
+        "strikes": 877,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "contactPulseNodeSteps": 118674,
+        "deepPlateCouplingTransfers": 140067746,
+        "sphereCouplingTransfers": 2160000
+      },
+      "cleanProcessTiming": {
+        "measuredReplays": 3,
+        "quantileMethod": "nearest-rank: sorted[ceil(p*n)-1]",
+        "processMsMedian": 11401.499999940395,
+        "processMsMin": 11400.700001120567,
+        "processMsMax": 11424.900000274181,
+        "processWallMsPerSimulatedSecond": 1140.1499999940395
+      },
+      "cleanRunDetails": [
+        {
+          "processTotalMs": 11424.900000274181,
+          "processCalls": 4200,
+          "processBatches": 297,
+          "contactDispatchTotalMs": 33.69999986886978,
+          "topologyInstallTotalMs": 0.3999999761581421,
+          "initialTopologyInstallMs": 0.5,
+          "topologyInstallMs": [
+            0.3999999761581421
+          ]
+        },
+        {
+          "processTotalMs": 11400.700001120567,
+          "processCalls": 4200,
+          "processBatches": 297,
+          "contactDispatchTotalMs": 34.79999887943268,
+          "topologyInstallTotalMs": 0.40000003576278687,
+          "initialTopologyInstallMs": 0.09999996423721313,
+          "topologyInstallMs": [
+            0.40000003576278687
+          ]
+        },
+        {
+          "processTotalMs": 11401.499999940395,
+          "processCalls": 4200,
+          "processBatches": 297,
+          "contactDispatchTotalMs": 32.700000047683716,
+          "topologyInstallTotalMs": 0.40000003576278687,
+          "initialTopologyInstallMs": 0.3999999761581421,
+          "topologyInstallMs": [
+            0.40000003576278687
+          ]
+        }
+      ],
+      "lateEvents": 878,
+      "strikeCount": 877,
+      "topologyInstallCount": 1,
+      "structuredCloneP50Ms": 0.10000002384185791,
+      "structuredCloneP95Ms": 0.10000002384185791,
+      "structuredCloneQuantileMethod": "nearest-rank: sorted[ceil(p*n)-1]",
+      "profiledState": {
+        "layers": 7,
+        "nodes": 1750,
+        "activeNodesEnd": 1750,
+        "adjacentLinks": 1344,
+        "sphereFoundationLinks": 3,
+        "pickupNodes": 14,
+        "nodules": 3,
+        "physicsSteps": 60000,
+        "strikes": 877,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "contactPulseNodeSteps": 118674,
+        "deepPlateCouplingTransfers": 140067746,
+        "sphereCouplingTransfers": 2160000
+      },
+      "activeNodeSummary": {
+        "samples": 600,
+        "activeNodesAverageAt60Hz": 1588.1383333333333,
+        "activeNodesMaxAt60Hz": 1750
+      },
+      "cpuProfileProcessMs": null,
+      "v8SampledFunctions": [
+        {
+          "functionName": "advancePhysics",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 564,
+          "sampledMs": 8706.502
+        },
+        {
+          "functionName": "wakeNode",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 289,
+          "sampledMs": 2178.217
+        },
+        {
+          "functionName": "wakeNeighborhood",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 313,
+          "sampledMs": 565.46
+        },
+        {
+          "functionName": "process",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 536,
+          "sampledMs": 153.515
+        },
+        {
+          "functionName": "applyContactForces",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 739,
+          "sampledMs": 101.118
+        },
+        {
+          "functionName": "advanceNodules",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 786,
+          "sampledMs": 35.683
+        },
+        {
+          "functionName": "applyStrike",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 913,
+          "sampledMs": 25.916
+        },
+        {
+          "functionName": "(garbage collector)",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 0,
+          "sampledMs": 21.618
+        },
+        {
+          "functionName": "localLinkForce",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 762,
+          "sampledMs": 20.834
+        },
+        {
+          "functionName": "(program)",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 0,
+          "sampledMs": 17.208
+        },
+        {
+          "functionName": "localPlateForce",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 768,
+          "sampledMs": 11.104
+        },
+        {
+          "functionName": "runFixture",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 22,
+          "sampledMs": 1.577
+        },
+        {
+          "functionName": "(idle)",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 0,
+          "sampledMs": 1.57
+        },
+        {
+          "functionName": "installTopology",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 137,
+          "sampledMs": 1.478
+        }
+      ]
+    },
+    {
+      "seed": "20261006",
+      "arm": "replacement",
+      "scheduleSha256": "9239b758ee1f7fbe4fa482734be2d518a89124113bc8b6cd69700d310f2e69f8",
+      "scheduleBytesGzip": 3046208,
+      "captureSha256": "b5ad78353501b1f36f36cfa601f3b89150b3e79c233cc0c4f35655cc31a2d372",
+      "captureTopologyTick": 17281,
+      "compiler": {
+        "warmups": 1,
+        "measuredRuns": 9,
+        "quantileMethod": "nearest-rank: sorted[ceil(p*n)-1]",
+        "p50Ms": 7.061099999991711,
+        "p95Ms": 9.643400000000838,
+        "samplesMs": [
+          7.561300000001211,
+          9.643400000000838,
+          7.061099999991711,
+          6.806899999995949,
+          6.888099999981932,
+          9.201600000000326,
+          7.178599999984726,
+          6.356899999984307,
+          6.818499999993946
+        ],
+        "scope": "compileSurfaceTopology on exact late-window stratigraphy snapshot in Node; bridge-side validation and browser message transfer excluded"
+      },
+      "scheduleUnpackParseMsNode": 98.41400000001886,
+      "baseTopologyFrame": 13824800,
+      "scheduleContactCount": 411,
+      "scheduleTopologyInstallCount": 3,
+      "warmupState": {
+        "layers": 143,
+        "nodes": 964,
+        "activeNodesEnd": 638,
+        "adjacentLinks": 367,
+        "sphereFoundationLinks": 0,
+        "pickupNodes": 286,
+        "nodules": 0,
+        "physicsSteps": 60000,
+        "strikes": 411,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "contactPulseNodeSteps": 57420,
+        "deepPlateCouplingTransfers": 26848913,
+        "sphereCouplingTransfers": 0
+      },
+      "cleanProcessTiming": {
+        "measuredReplays": 3,
+        "quantileMethod": "nearest-rank: sorted[ceil(p*n)-1]",
+        "processMsMedian": 2860.599999964237,
+        "processMsMin": 2858.099999666214,
+        "processMsMax": 2861.399999797344,
+        "processWallMsPerSimulatedSecond": 286.0599999964237
+      },
+      "cleanRunDetails": [
+        {
+          "processTotalMs": 2858.099999666214,
+          "processCalls": 4200,
+          "processBatches": 204,
+          "contactDispatchTotalMs": 2.700000286102295,
+          "topologyInstallTotalMs": 0.7000000476837158,
+          "initialTopologyInstallMs": 0.10000002384185791,
+          "topologyInstallMs": [
+            0.19999998807907104,
+            0.20000004768371582,
+            0.30000001192092896
+          ]
+        },
+        {
+          "processTotalMs": 2860.599999964237,
+          "processCalls": 4200,
+          "processBatches": 204,
+          "contactDispatchTotalMs": 2.5000001192092896,
+          "topologyInstallTotalMs": 0.5999999642372131,
+          "initialTopologyInstallMs": 0.09999996423721313,
+          "topologyInstallMs": [
+            0.19999998807907104,
+            0.19999998807907104,
+            0.19999998807907104
+          ]
+        },
+        {
+          "processTotalMs": 2861.399999797344,
+          "processCalls": 4200,
+          "processBatches": 204,
+          "contactDispatchTotalMs": 2.20000022649765,
+          "topologyInstallTotalMs": 0.7999999523162842,
+          "initialTopologyInstallMs": 0.19999998807907104,
+          "topologyInstallMs": [
+            0.2999999523162842,
+            0.30000001192092896,
+            0.19999998807907104
+          ]
+        }
+      ],
+      "lateEvents": 414,
+      "strikeCount": 411,
+      "topologyInstallCount": 3,
+      "structuredCloneP50Ms": 0.10000002384185791,
+      "structuredCloneP95Ms": 0.19999998807907104,
+      "structuredCloneQuantileMethod": "nearest-rank: sorted[ceil(p*n)-1]",
+      "profiledState": {
+        "layers": 143,
+        "nodes": 964,
+        "activeNodesEnd": 638,
+        "adjacentLinks": 367,
+        "sphereFoundationLinks": 0,
+        "pickupNodes": 286,
+        "nodules": 0,
+        "physicsSteps": 60000,
+        "strikes": 411,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "contactPulseNodeSteps": 57420,
+        "deepPlateCouplingTransfers": 26848913,
+        "sphereCouplingTransfers": 0
+      },
+      "activeNodeSummary": {
+        "samples": 600,
+        "activeNodesAverageAt60Hz": 495.495,
+        "activeNodesMaxAt60Hz": 645
+      },
+      "cpuProfileProcessMs": null,
+      "v8SampledFunctions": [
+        {
+          "functionName": "advancePhysics",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 564,
+          "sampledMs": 2046.284
+        },
+        {
+          "functionName": "wakeNode",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 289,
+          "sampledMs": 545.363
+        },
+        {
+          "functionName": "wakeNeighborhood",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 313,
+          "sampledMs": 150.791
+        },
+        {
+          "functionName": "computeLap",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 754,
+          "sampledMs": 117.025
+        },
+        {
+          "functionName": "localPlateForce",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 768,
+          "sampledMs": 116.999
+        },
+        {
+          "functionName": "process",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 536,
+          "sampledMs": 80.618
+        },
+        {
+          "functionName": "localLinkForce",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 762,
+          "sampledMs": 58.402
+        },
+        {
+          "functionName": "(program)",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 0,
+          "sampledMs": 21.072
+        },
+        {
+          "functionName": "localSphereForce",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 776,
+          "sampledMs": 10.865
+        },
+        {
+          "functionName": "(anonymous)",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 1,
+          "sampledMs": 9.241
+        },
+        {
+          "functionName": "(garbage collector)",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 0,
+          "sampledMs": 8.151
+        },
+        {
+          "functionName": "(idle)",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 0,
+          "sampledMs": 3.281
+        },
+        {
+          "functionName": "runFixture",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 22,
+          "sampledMs": 1.505
+        },
+        {
+          "functionName": "applyStrike",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 913,
+          "sampledMs": 1.5
+        }
+      ]
+    },
+    {
+      "seed": "20261007",
+      "arm": "control",
+      "scheduleSha256": "72d468c322173d28d4f4eeaffb025df901daade5a24643be73c350519d470cad",
+      "scheduleBytesGzip": 1740764,
+      "captureSha256": "ce2b7a757f1c1eddbeb8710972673232e920c803fc8ffebb5ee960f03503d8a9",
+      "captureTopologyTick": 17221,
+      "compiler": {
+        "warmups": 1,
+        "measuredRuns": 9,
+        "quantileMethod": "nearest-rank: sorted[ceil(p*n)-1]",
+        "p50Ms": 4.67860000001383,
+        "p95Ms": 6.863600000011502,
+        "samplesMs": [
+          4.015099999989616,
+          5.22019999998156,
+          6.863600000011502,
+          5.1432999999960884,
+          3.981599999999162,
+          4.1019999999844,
+          4.67860000001383,
+          3.9342999999935273,
+          4.896999999997206
+        ],
+        "scope": "compileSurfaceTopology on exact late-window stratigraphy snapshot in Node; bridge-side validation and browser message transfer excluded"
+      },
+      "scheduleUnpackParseMsNode": 44.869599999976344,
+      "baseTopologyFrame": 13776800,
+      "scheduleContactCount": 882,
+      "scheduleTopologyInstallCount": 1,
+      "warmupState": {
+        "layers": 11,
+        "nodes": 2877,
+        "activeNodesEnd": 2877,
+        "adjacentLinks": 2772,
+        "sphereFoundationLinks": 5,
+        "pickupNodes": 22,
+        "nodules": 5,
+        "physicsSteps": 60000,
+        "strikes": 882,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "contactPulseNodeSteps": 118314,
+        "deepPlateCouplingTransfers": 291252250,
+        "sphereCouplingTransfers": 3600000
+      },
+      "cleanProcessTiming": {
+        "measuredReplays": 3,
+        "quantileMethod": "nearest-rank: sorted[ceil(p*n)-1]",
+        "processMsMedian": 25709.80000013113,
+        "processMsMin": 25596.899999558926,
+        "processMsMax": 25784.300000309944,
+        "processWallMsPerSimulatedSecond": 2570.980000013113
+      },
+      "cleanRunDetails": [
+        {
+          "processTotalMs": 25709.80000013113,
+          "processCalls": 4200,
+          "processBatches": 287,
+          "contactDispatchTotalMs": 39.69999986886978,
+          "topologyInstallTotalMs": 0.3999999761581421,
+          "initialTopologyInstallMs": 0.5,
+          "topologyInstallMs": [
+            0.3999999761581421
+          ]
+        },
+        {
+          "processTotalMs": 25784.300000309944,
+          "processCalls": 4200,
+          "processBatches": 287,
+          "contactDispatchTotalMs": 40.39999961853027,
+          "topologyInstallTotalMs": 0.5,
+          "initialTopologyInstallMs": 0.30000001192092896,
+          "topologyInstallMs": [
+            0.5
+          ]
+        },
+        {
+          "processTotalMs": 25596.899999558926,
+          "processCalls": 4200,
+          "processBatches": 287,
+          "contactDispatchTotalMs": 38.900000512599945,
+          "topologyInstallTotalMs": 0.5,
+          "initialTopologyInstallMs": 0.19999998807907104,
+          "topologyInstallMs": [
+            0.5
+          ]
+        }
+      ],
+      "lateEvents": 883,
+      "strikeCount": 882,
+      "topologyInstallCount": 1,
+      "structuredCloneP50Ms": 0.19999998807907104,
+      "structuredCloneP95Ms": 0.30000001192092896,
+      "structuredCloneQuantileMethod": "nearest-rank: sorted[ceil(p*n)-1]",
+      "profiledState": {
+        "layers": 11,
+        "nodes": 2877,
+        "activeNodesEnd": 2877,
+        "adjacentLinks": 2772,
+        "sphereFoundationLinks": 5,
+        "pickupNodes": 22,
+        "nodules": 5,
+        "physicsSteps": 60000,
+        "strikes": 882,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "contactPulseNodeSteps": 118314,
+        "deepPlateCouplingTransfers": 291252250,
+        "sphereCouplingTransfers": 3600000
+      },
+      "activeNodeSummary": {
+        "samples": 600,
+        "activeNodesAverageAt60Hz": 2587.93,
+        "activeNodesMaxAt60Hz": 2877
+      },
+      "cpuProfileProcessMs": null,
+      "v8SampledFunctions": [
+        {
+          "functionName": "advancePhysics",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 564,
+          "sampledMs": 18265.224
+        },
+        {
+          "functionName": "process",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 536,
+          "sampledMs": 4086.195
+        },
+        {
+          "functionName": "wakeNeighborhood",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 313,
+          "sampledMs": 1918.639
+        },
+        {
+          "functionName": "wakeNode",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 289,
+          "sampledMs": 1666.822
+        },
+        {
+          "functionName": "applyContactForces",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 739,
+          "sampledMs": 381.641
+        },
+        {
+          "functionName": "(program)",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 0,
+          "sampledMs": 304.285
+        },
+        {
+          "functionName": "localLinkForce",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 762,
+          "sampledMs": 99
+        },
+        {
+          "functionName": "localPlateForce",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 768,
+          "sampledMs": 81.628
+        },
+        {
+          "functionName": "(garbage collector)",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 0,
+          "sampledMs": 67.63
+        },
+        {
+          "functionName": "advanceNodules",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 786,
+          "sampledMs": 50.279
+        },
+        {
+          "functionName": "applyStrike",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 913,
+          "sampledMs": 37.956
+        },
+        {
+          "functionName": "runFixture",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 22,
+          "sampledMs": 9.565
+        },
+        {
+          "functionName": "(idle)",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 0,
+          "sampledMs": 4.893
+        },
+        {
+          "functionName": "localSphereForce",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 776,
+          "sampledMs": 2.002
+        },
+        {
+          "functionName": "validTopology",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 861,
+          "sampledMs": 1.971
+        }
+      ]
+    },
+    {
+      "seed": "20261007",
+      "arm": "replacement",
+      "scheduleSha256": "5be27c9336a638ccc2227c4cd30b7789ec02f2c11e65df41c3682f704133e5af",
+      "scheduleBytesGzip": 3354848,
+      "captureSha256": "e7580f010f79cbe47b180f980a71546d90e67595b7968dd644bcc21feca1553d",
+      "captureTopologyTick": 17341,
+      "compiler": {
+        "warmups": 1,
+        "measuredRuns": 9,
+        "quantileMethod": "nearest-rank: sorted[ceil(p*n)-1]",
+        "p50Ms": 6.7620999999926426,
+        "p95Ms": 46.661300000036135,
+        "samplesMs": [
+          6.924700000032317,
+          6.628299999982119,
+          6.7620999999926426,
+          46.661300000036135,
+          7.379499999980908,
+          6.60930000001099,
+          6.749499999976251,
+          7.910899999958929,
+          6.730000000039581
+        ],
+        "scope": "compileSurfaceTopology on exact late-window stratigraphy snapshot in Node; bridge-side validation and browser message transfer excluded"
+      },
+      "scheduleUnpackParseMsNode": 132.41749999998137,
+      "baseTopologyFrame": 13872800,
+      "scheduleContactCount": 344,
+      "scheduleTopologyInstallCount": 4,
+      "warmupState": {
+        "layers": 137,
+        "nodes": 964,
+        "activeNodesEnd": 665,
+        "adjacentLinks": 288,
+        "sphereFoundationLinks": 0,
+        "pickupNodes": 274,
+        "nodules": 0,
+        "physicsSteps": 60000,
+        "strikes": 344,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "contactPulseNodeSteps": 46476,
+        "deepPlateCouplingTransfers": 24992176,
+        "sphereCouplingTransfers": 0
+      },
+      "cleanProcessTiming": {
+        "measuredReplays": 3,
+        "quantileMethod": "nearest-rank: sorted[ceil(p*n)-1]",
+        "processMsMedian": 4442.5000004172325,
+        "processMsMin": 4438.299999773502,
+        "processMsMax": 4449.400000095367,
+        "processWallMsPerSimulatedSecond": 444.25000004172324
+      },
+      "cleanRunDetails": [
+        {
+          "processTotalMs": 4442.5000004172325,
+          "processCalls": 4200,
+          "processBatches": 201,
+          "contactDispatchTotalMs": 1.6999996900558472,
+          "topologyInstallTotalMs": 0.9999999403953552,
+          "initialTopologyInstallMs": 0.5,
+          "topologyInstallMs": [
+            0.19999998807907104,
+            0.19999998807907104,
+            0.2999999523162842,
+            0.30000001192092896
+          ]
+        },
+        {
+          "processTotalMs": 4438.299999773502,
+          "processCalls": 4200,
+          "processBatches": 201,
+          "contactDispatchTotalMs": 1.5000001788139343,
+          "topologyInstallTotalMs": 0.7000001072883606,
+          "initialTopologyInstallMs": 0.10000002384185791,
+          "topologyInstallMs": [
+            0.19999998807907104,
+            0.20000004768371582,
+            0.20000004768371582,
+            0.10000002384185791
+          ]
+        },
+        {
+          "processTotalMs": 4449.400000095367,
+          "processCalls": 4200,
+          "processBatches": 201,
+          "contactDispatchTotalMs": 2.399999976158142,
+          "topologyInstallTotalMs": 0.7999999523162842,
+          "initialTopologyInstallMs": 0.09999996423721313,
+          "topologyInstallMs": [
+            0.19999998807907104,
+            0.30000001192092896,
+            0.19999998807907104,
+            0.09999996423721313
+          ]
+        }
+      ],
+      "lateEvents": 348,
+      "strikeCount": 344,
+      "topologyInstallCount": 4,
+      "structuredCloneP50Ms": 0.10000002384185791,
+      "structuredCloneP95Ms": 0.10000002384185791,
+      "structuredCloneQuantileMethod": "nearest-rank: sorted[ceil(p*n)-1]",
+      "profiledState": {
+        "layers": 137,
+        "nodes": 964,
+        "activeNodesEnd": 665,
+        "adjacentLinks": 288,
+        "sphereFoundationLinks": 0,
+        "pickupNodes": 274,
+        "nodules": 0,
+        "physicsSteps": 60000,
+        "strikes": 344,
+        "dropped": 0,
+        "droppedRoutes": 0,
+        "nonFinite": 0,
+        "contactPulseNodeSteps": 46476,
+        "deepPlateCouplingTransfers": 24992176,
+        "sphereCouplingTransfers": 0
+      },
+      "activeNodeSummary": {
+        "samples": 600,
+        "activeNodesAverageAt60Hz": 610.6416666666667,
+        "activeNodesMaxAt60Hz": 708
+      },
+      "cpuProfileProcessMs": null,
+      "v8SampledFunctions": [
+        {
+          "functionName": "advancePhysics",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 564,
+          "sampledMs": 3222.707
+        },
+        {
+          "functionName": "process",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 536,
+          "sampledMs": 696.057
+        },
+        {
+          "functionName": "wakeNode",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 289,
+          "sampledMs": 374.926
+        },
+        {
+          "functionName": "wakeNeighborhood",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 313,
+          "sampledMs": 244.593
+        },
+        {
+          "functionName": "(program)",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 0,
+          "sampledMs": 77.306
+        },
+        {
+          "functionName": "applyContactForces",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 739,
+          "sampledMs": 62.42
+        },
+        {
+          "functionName": "runFixture",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 22,
+          "sampledMs": 14.581
+        },
+        {
+          "functionName": "(garbage collector)",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 0,
+          "sampledMs": 9.435
+        },
+        {
+          "functionName": "applyStrike",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 913,
+          "sampledMs": 1.958
+        },
+        {
+          "functionName": "(idle)",
+          "sourceUrl": "(worklet eval)",
+          "lineNumber": 0,
+          "sampledMs": 1.513
+        }
+      ]
+    }
+  ]
+}

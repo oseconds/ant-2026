@@ -1,0 +1,122 @@
+{
+  "status": "PASS",
+  "browserVersion": "153.0.8010.12",
+  "fixture": {
+    "description": "compiled overlapping Plates with a native Nodule; frame-0 strike, topology reinstall at frame 16 during pending contact force, overlapping second Plate plus frame-tied strike at frame 800",
+    "frames": 24576,
+    "sampleRate": 48000,
+    "events": [
+      {
+        "frame": 0,
+        "type": "strike",
+        "layerId": "parity-bottom"
+      },
+      {
+        "frame": 16,
+        "type": "topology",
+        "layerId": null,
+        "topologyLayers": [
+          "parity-bottom"
+        ]
+      },
+      {
+        "frame": 800,
+        "type": "topology",
+        "layerId": null,
+        "topologyLayers": [
+          "parity-bottom",
+          "parity-top"
+        ]
+      },
+      {
+        "frame": 800,
+        "type": "strike",
+        "layerId": "parity-top"
+      }
+    ]
+  },
+  "gain": 0.7,
+  "workletSourceSha256": "14c7461f1412f0d6897a6683d46e582dbb80711f2ba74e8ea53e026895eeea5e",
+  "nodePcmSha256": "82540a6d2167253dfff7794d8d1f471cbff78d6f7217d39051123dbc8080bbf3",
+  "browserPcmSha256": "c27f42c7013c508d6d728009186f894fc88e555ca4fd73056d8a7441169801d7",
+  "exactFloatEquality": false,
+  "maxAbsDiff": 7.450580596923828e-9,
+  "maxAllowedDiff": 1e-8,
+  "parityScope": "Whole interleaved Float32 PCM after Float32-rounded 0.7 gain; numerical parity permits at most 1e-8 absolute difference.",
+  "browserReceipts": [
+    {
+      "requestedFrame": 0,
+      "actualFrame": 0,
+      "type": "strike",
+      "accepted": true,
+      "layerId": "parity-bottom"
+    },
+    {
+      "requestedFrame": 16,
+      "actualFrame": 16,
+      "type": "topology",
+      "layerId": null
+    },
+    {
+      "requestedFrame": 800,
+      "actualFrame": 800,
+      "type": "topology",
+      "layerId": null
+    },
+    {
+      "requestedFrame": 800,
+      "actualFrame": 800,
+      "type": "strike",
+      "accepted": true,
+      "layerId": "parity-top"
+    }
+  ],
+  "allEventsReceived": true,
+  "allEventsExactFrame": true,
+  "allStrikesAccepted": true,
+  "noDroppedRoutes": true,
+  "noInvalidTopologies": true,
+  "finiteState": true,
+  "finitePcm": true,
+  "diagnostics": {
+    "topologies": 3,
+    "strikes": 2,
+    "dropped": 0,
+    "droppedRoutes": 0,
+    "nonFinite": 0,
+    "clipped": 0,
+    "wakes": 891,
+    "sleeps": 0,
+    "truncatedTailEnergy": 0,
+    "physicsSteps": 3072,
+    "energyDelta": -0.0009974362520288327,
+    "couplingWorkProxy": 0.0003219582543802208,
+    "deepPlateCouplingTransfers": 1717523,
+    "sphereCouplingTransfers": 36864,
+    "maxOutputAbs": 0.11797603597977042,
+    "requestedContactImpulseSquared": 0.0022272726789978755,
+    "compliantContactImpulseSquared": 0.0022272726789978755,
+    "contactPulseNodeSteps": 576,
+    "contactAttenuatedNodeContributions": 0,
+    "activeSphereModes": 5,
+    "layers": 2,
+    "activeNodes": 578,
+    "awakeLayers": 2,
+    "sleepingLayers": 0,
+    "physicsRate": 6000,
+    "topologyGeneration": 0,
+    "couplingLinks": 289,
+    "noduleCount": 1,
+    "integratedSphereModes": 12,
+    "mix": 0.2886751345948129,
+    "platePickupMix": 1,
+    "sphereModeMix": 0.2886751345948129,
+    "truncatedTailRiskThreshold": 1e-10,
+    "quietStepsThreshold": 12000,
+    "contactPulseDurationMs": 3,
+    "contactPulseSteps": 18,
+    "contactRecoveryTimeMs": 75,
+    "contactReferenceDeltaV": 0.02,
+    "contactMaximumComplianceLoss": 0.25
+  }
+}
