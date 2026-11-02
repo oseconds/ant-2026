@@ -10,6 +10,15 @@
 - Bounded ridge/bridge evolution differs from immutable deposition; early connection timing and precursor dependence remain unresolved
 - **MIXED**; no viscoelasticity, curing, audio experiment, production integration, PR or merge
 
+### 2026-11-02 — Multi-physics broad first-pass investigation
+
+[Daily record](./2026-11-02-multiphysics-first-pass.md) · [Report](../evidence/2026-11-02-multiphysics-first-pass/REPORT.md) · [Coupling table](../evidence/2026-11-02-multiphysics-first-pass/COUPLING.md)
+
+- Reused 25 wet-film cases; separately inspected actual directional history, supplied air spaces and dry mobile contacts
+- Planar closure does not supply an air cavity; temporary blockage does not supply adhesion or collective jamming
+- Coexistence, an explicit transfer law and a checked coupled model remain different evidence levels
+- **MIXED; final architecture deferred**; production and decision register unchanged
+
 ### 2026-10-31 — Current-production materialization selector closure
 
 [Daily record](./2026-10-31-materialization-production-shaped-x-shadow.md) · [Evidence](../evidence/2026-10-31-materialization-production-shaped-x-shadow/README.md)

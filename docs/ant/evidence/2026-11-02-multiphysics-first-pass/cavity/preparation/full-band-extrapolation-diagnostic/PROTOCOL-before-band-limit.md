@@ -1,6 +1,6 @@
 # Cavity / air-volume minimum study protocol
 
-**Status:** amended and frozen before the accepted numerical rerun. Parameters below are illustrative controls, not ANT measurements. The first frozen version and its explicitly rejected short-neck diagnostic output are preserved under [`preparation/initial-short-neck-diagnostic/`](preparation/initial-short-neck-diagnostic/).
+**Status:** amended and frozen before the accepted numerical rerun. Parameters below are illustrative controls, not ANT measurements. The first frozen version and its explicitly rejected short-neck diagnostic output are preserved under [`preparation/initial-short-neck-diagnostic/`](../initial-short-neck-diagnostic/).
 
 ## Pre-run correction record
 

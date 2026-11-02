@@ -1,0 +1,53 @@
+# Physical coupling: what would actually cross an interface?
+
+This is a modeling analysis, not a common-material API or an implemented integration framework. Individual candidate operation does not establish a coupled world. The table distinguishes coexistence, a stated physical law, and an executed coupled check. New experimental results are linked only at the scope they actually test.
+
+## The distinction that survives the broad challenge
+
+Material provenance, current material geometry, mechanical freedom and acoustic observation are different responsibilities. The earlier audio result supports keeping these distinguishable. It does not require the current material geometry to be fixed, stratified, elastic, planar, or even solid. It also does not imply that a particle, liquid cell, material episode and acoustic degree of freedom share one identity.
+
+A sparse stratified solid network can remain a downstream reference when the world genuinely contains separate, stress-bearing laminae. It does not supply a sufficient state space for liquid mass transport, finite fragment translation/rotation, a moving contact network, cure kinetics or air compression. Adding those states would be a substantive model change, even if all processes happened to be stored in a graph. Conversely, using several processes does not require implementing all of them now.
+
+## Levels of evidence
+
+1. **Coexistence:** the ingredients can physically exist together under stated conditions. This can be grounded in literature without a project implementation.
+2. **Explicit coupling:** a constitutive/interface law identifies exchanged quantities, units, supports, sources and budgets. Merely sending a scalar or sharing a timestep is insufficient.
+3. **Executed coupled check:** the paired state equations were run and checked together. A reduced controlled surrogate can satisfy this at its own narrow scope; it is not validation of a formed ANT structure or of all other couplings.
+
+The survey's [provisional table](SURVEY.md#provisional-coupling-table) records the literature and minimal proposed experiments. The present table narrows the exchanges and gives the pass's implementation boundary.
+
+| Pair | Level 1: conditions for coexistence | Level 2: actual exchange and missing law | Level 3 in this pass |
+|---|---|---|---|
+| **Orientation × wet transport** | A physically anisotropic substrate can affect a liquid. A traffic direction field is not automatically such a substrate. | Declare how a real deposited microstructure/director produces permeability, slip or wetting anisotropy; then mass flux depends on pressure gradients and that constitutive tensor. If time-dependent externally assigned orientation changes energy, record that work/source. A free isotropic Newtonian film does not acquire anisotropic mobility merely because ants align. | **Not run.** Measuring traffic P/Q and separately solving an isotropic film is not this coupling. |
+| **Wet liquid × mobile fragments** | Liquid can surround particles, create bridges or lubricate contacts. Different saturation regimes can favor cohesion or sliding. | Liquid volume/pressure/viscous traction, capillary force/contact angle and moving wetted geometry; equal/opposite particle forces and torques; displacement of liquid by particles; bridge mass inventory. Replacing dry friction with an arbitrary wet stiffness loses these distinctions. | **Not run.** The film has a stationary substrate; the fragment experiments are dry contacts with prescribed driving. |
+| **Cure/solidification × elastic vibration** | A chosen substance may acquire a load-bearing reference structure during cure or drying. They are not identical processes. | Conversion/moisture/temperature and mass/heat exchanges; reference geometry, density, storage/loss modulus, shrinkage eigenstrain and attachment conditions. Constraint can convert shrinkage to residual stress; shrinkage alone does not imply tension. A fluid height field alone supplies no elastic reference metric. | **Not run.** No wet-to-solid switch, new elastic solver or resonance is tested. |
+| **Formed solid × air space** | Enclosure, an opening/leak and actual air volume can coexist with an elastic wall. A planar mask hole does not specify them. | Pressure traction on the wall and wall-normal velocity into air, with consistent area and work. Volume changes and leaks require continuity. Rigid walls are a limiting assumption, not an automatic property of retained material. | Only the cavity family's **explicit chamber–piston surrogate** can support a level-3 claim after its coupled energy/work check. It has prescribed geometry and wall coefficients; it is not a grown wall, ANT Plate, shell or eroded void. See [cavity report](cavity/REPORT.md). |
+| **Wetness × existing vibration loss** | Fluid loading, bound water and material chemistry can alter mass, stiffness and dissipation. The sign need not be monotone. | Separate moisture mass, added fluid inertia, drag/flow loss and a material-specific complex modulus. Fit or measure its frequency/state dependence. A scalar amplitude fade keyed to age is a sonification decision, not a validated wet-damping law. | **Not run.** The wet film has no vibration state and the audio study has no moisture state. |
+| **Granular friction × long settlement** | Contacts under gravity/confinement can dissipate energy and rearrange, depending on load and packing. | Grain positions, rotations, contact state, normal/tangential forces, frictional slip, work and dissipated energy. Settlement is geometric evolution under those forces, not an age-based pin. | Contact/rotation/blockage/release are exercised in [small fragment fixtures](fragments/REPORT.md). **No long packing/settlement study or formation-driven grain supply.** Do not promote that partial overlap to the full coupling claim. |
+| **Vibration × later material rearrangement** | A driven structure can move mobile matter if motion overcomes the relevant contact/yield/capillary constraints. | Local displacement/velocity/acceleration or stress, transmitted force and input energy; changed material geometry/mass/contact conditions returned to mechanics. Mechanical excitation supplies energy. A waveform, speaker output or RMS bus value does not define that transfer. | **Not run.** No audio-output feedback or reciprocal cymatics. |
+
+## Minimum common physical interface
+
+The useful common denominator is an exchange contract, not a universal particle, material class, graph node or stiffness matrix. Five items suffice to state the next bounded model honestly:
+
+1. **Quantity and unit:** name the state and its time/spatial support, or declare its dimensionless scale. Orientation and normalized compaction can remain dimensionless; they must not silently become pressure or traction.
+2. **Geometry and measure:** specify a volume, area, face, line, body or contact and its orientation. Mapping between grids must preserve the relevant integrated quantity. A material ID is provenance, not an area, mass or force.
+3. **Transfer law and budget:** identify the source/receiver and the compatible force/flow or mass exchange. State what is conserved, dissipated, radiated or externally supplied.
+4. **Causal timing:** state which completed state is read, the exact update boundary, and how values are held, interpolated or integrated between rates. Preserve no retroactive effect. A changing topology/coefficient can exchange energy and needs a state-transfer rule.
+5. **Validity and rejection:** state the regime and the check that would reject the approximation. A stable implementation is not sufficient evidence for the intended physical interpretation.
+
+For mechanical interfaces, force times velocity and torque times angular velocity are power. For continuum boundaries, integrate traction dotted with velocity over area. For lumped acoustics, pressure times volume flow is power. These are compatible descriptions of work, not interchangeable variable names. A pressure–velocity interface requires an area/integration map; copying one scalar onto every particle would multiply force spuriously.
+
+For example, a velocity interpolation `v_B = H v_A` requires a compatible reaction load `f_A = -H^T f_B` to make interface powers cancel in the same discrete inner product. Quadrature/mass weights belong in that operator when fields are densities. This identity is a minimal algebraic requirement, not a claim that any chosen H preserves all geometry or continuum accuracy. Conservative load/motion transfer across nonmatching meshes is a distinct research problem; see [Farhat, Lesoinne & Le Tallec (1998), author's publication record](https://web.stanford.edu/group/frg/publications/index.html).
+
+Mass exchange has its own ledger: the liquid removed from a film into a bridge, evaporated into the environment, or excluded by a moving body must be accounted for. A torque ledger uses a common origin or contact point. Energy bookkeeping cannot be replaced by counting contacts or assigning a new stiffness. Constitutive transitions may dissipate or release energy; those terms must be explicit instead of being hidden in a topology reinstall.
+
+This contract can be documented directly in a small experiment's inputs/results. No common-interface software is written in this pass because no validated coupled ANT model needs it yet.
+
+## Multiple physics and multiple clocks are independent choices
+
+Slow material geometry and fast small-amplitude vibration can often use different time steps. This does not choose between one or several material processes. A single constitutive model can require multiple scales; several coupled processes can also share an integrator.
+
+Separation is conditional. Fast collisions, fracture, sudden contact loss, capillary bridge rupture, or a geometry revision can inject broad-band transients. They need event/impulse transfer or a properly resolved common interval rather than assuming every formation event is quasi-static. Likewise, a loosely staggered fluid–solid method can be unstable through added-mass effects even when its isolated solvers are stable. [Van Brummelen (2009), author/university record](https://research.tue.nl/en/publications/added-mass-effects-of-compressible-and-incompressible-flows-in-fl/). This literature warning is not a runtime or stability measurement of ANT.
+
+The common simplification is therefore not “everything becomes bonds” or “everything runs at 60 Hz.” It is to choose one physical transfer, keep its source and sink visible, and test its budget and observable consequence before adding another. No final multi-physics architecture or production causal loop is selected here.

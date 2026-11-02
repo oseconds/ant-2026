@@ -1,0 +1,70 @@
+{
+  "scope": "Two unchanged-parameter deterministic reruns compared with the existing 20-run campaign outputs; the full campaign was not rerun.",
+  "source": "scripts/ant-multiphysics-fragments.py",
+  "comparison": "Exact CSV serialized row equality, including per-frame state/energy and sampled contact records.",
+  "cases": [
+    {
+      "run_id": "head_on_mu000_dt2.5e-05",
+      "label": "head-on zero-friction pair impact",
+      "parameters": {
+        "mu": 0.0,
+        "dt_s": 2.5e-05,
+        "kn_N_per_m": 4000.0,
+        "kt_N_per_m": 4000.0
+      },
+      "all_artifacts_exact_match": true,
+      "artifacts": {
+        "summary": {
+          "exact_serialized_match": true,
+          "row_count": 1,
+          "campaign_sha256": "4048836848407ebce0ef50b855580aad0c0bb63074a75c1600694999b8655ed9",
+          "repeat_sha256": "4048836848407ebce0ef50b855580aad0c0bb63074a75c1600694999b8655ed9"
+        },
+        "timeseries": {
+          "exact_serialized_match": true,
+          "row_count": 121,
+          "campaign_sha256": "51cbdddfc427c378c4193013b71ef9b86290f8a3a86ebbc862a478b65dc5a6e9",
+          "repeat_sha256": "51cbdddfc427c378c4193013b71ef9b86290f8a3a86ebbc862a478b65dc5a6e9"
+        },
+        "contact_ledger": {
+          "exact_serialized_match": true,
+          "row_count": 36,
+          "campaign_sha256": "ca954b44d96709d5e8759bbcb3b797a5e83ec40abb3d0b0ca5f95fc5cc5533c9",
+          "repeat_sha256": "ca954b44d96709d5e8759bbcb3b797a5e83ec40abb3d0b0ca5f95fc5cc5533c9"
+        }
+      }
+    },
+    {
+      "run_id": "row_mu050_dt2.5e-05",
+      "label": "three-disk frictional row blockage and reverse release",
+      "parameters": {
+        "mu": 0.5,
+        "dt_s": 2.5e-05,
+        "kn_N_per_m": 4000.0,
+        "kt_N_per_m": 4000.0
+      },
+      "all_artifacts_exact_match": true,
+      "artifacts": {
+        "summary": {
+          "exact_serialized_match": true,
+          "row_count": 1,
+          "campaign_sha256": "bc46253381ef8c30cd0def1a27f6ee72ad3c59827d4e5661207fbc01c6a63709",
+          "repeat_sha256": "bc46253381ef8c30cd0def1a27f6ee72ad3c59827d4e5661207fbc01c6a63709"
+        },
+        "timeseries": {
+          "exact_serialized_match": true,
+          "row_count": 1101,
+          "campaign_sha256": "8e428ec9f358fb56c38018c42e732cd9230fb8b6eb554bfdc6b506b9faa31f47",
+          "repeat_sha256": "8e428ec9f358fb56c38018c42e732cd9230fb8b6eb554bfdc6b506b9faa31f47"
+        },
+        "contact_ledger": {
+          "exact_serialized_match": true,
+          "row_count": 5691,
+          "campaign_sha256": "fe8f17fe9fbc2b8dd7f8b7b67a0e2e5187f514b5c9014974ff4054587004fcae",
+          "repeat_sha256": "fe8f17fe9fbc2b8dd7f8b7b67a0e2e5187f514b5c9014974ff4054587004fcae"
+        }
+      }
+    }
+  ],
+  "all_cases_exact_match": true
+}

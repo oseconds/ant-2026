@@ -1,0 +1,37 @@
+{
+  "canonicalOutputHashes": {
+    "STATE-DIGESTS.jsonl.gz": "8fb96f664c0e0addad39662f8032febab64de7048855d628c62d8faacae82a3e",
+    "TRAJECTORY.ndjson.gz": "e72cbbd8fac36c1f286b2ec7e219620a7dd81ac40c173221fc108913674262fe"
+  },
+  "conformanceUnchanged": true,
+  "files": [
+    {
+      "normalizedFile": "TRAJECTORY.ndjson.gz",
+      "normalizedSha256": "e72cbbd8fac36c1f286b2ec7e219620a7dd81ac40c173221fc108913674262fe",
+      "recordCount": 18000,
+      "roundTripSemanticArraySha256": "47526829728cac0d1858214c6c91706e387433991000b11057d5b47369a66c83",
+      "runDigestStreamSha256": null,
+      "semanticArraySha256": "47526829728cac0d1858214c6c91706e387433991000b11057d5b47369a66c83",
+      "semanticRoundTripMatch": true,
+      "sourceArchive": "TRAJECTORY.raw-json-sequence.gz",
+      "sourceSha256": "79cdeefb5305954955e78744e1a1b68ee77c5286af24c29800677c7da6a26605"
+    },
+    {
+      "normalizedFile": "STATE-DIGESTS.jsonl.gz",
+      "normalizedSha256": "8fb96f664c0e0addad39662f8032febab64de7048855d628c62d8faacae82a3e",
+      "recordCount": 18001,
+      "roundTripSemanticArraySha256": "faa6121056534149623307c76a3ada4d2c53d3dc7a228708012119e60f224d6b",
+      "runDigestStreamSha256": "faa6121056534149623307c76a3ada4d2c53d3dc7a228708012119e60f224d6b",
+      "semanticArraySha256": "faa6121056534149623307c76a3ada4d2c53d3dc7a228708012119e60f224d6b",
+      "semanticRoundTripMatch": true,
+      "sourceArchive": "STATE-DIGESTS.raw-json-sequence.gz",
+      "sourceSha256": "53bf328003205ea7655a6ce9b0c3106482e338bad795f16b04b27206d02304f6"
+    }
+  ],
+  "method": "parse each concatenated JSON value, preserve the original compressed bytes under a new name, and rewrite canonical sorted-key one-record-per-line gzip with mtime zero",
+  "noTrajectoryReconstruction": true,
+  "note": "RUN.pre-repair.json and the preserved raw JSON-sequence archives retain original capture hashes. RUN.json outputHashes now refer to the canonical files at their current names. Normalization parsed and re-emitted JSON values only; no positions, states, or simulation steps were reconstructed.",
+  "originalRunReceipt": "RUN.pre-repair.json",
+  "reason": "Array.map passed its row index as JSON indentation, making later records pretty-printed JSON sequence values rather than one-line NDJSON.",
+  "schema": "ant-multiphysics-orientation-format-repair-v1"
+}

@@ -1,0 +1,2491 @@
+{
+  "protocol": "docs/ant/evidence/2026-11-02-multiphysics-first-pass/fragments/PROTOCOL.md",
+  "integrator": "semi-implicit Euler; explicit contact forces; energy residual retained as diagnostic",
+  "model": "2D compliant disk DEM; linear spring-dashpot normal contact; history tangential spring with Coulomb cap",
+  "energy_work_status": "INCONCLUSIVE; signed balance residual excludes separately reported normal-force-cutoff energy and is not a validated dissipation budget",
+  "run_count": 20,
+  "runs": [
+    {
+      "run_id": "head_on_mu000_dt0.0001",
+      "fixture": "pair_impact",
+      "mu": 0.0,
+      "dt": 0.0001,
+      "kn": 4000.0,
+      "kt": 4000.0,
+      "duration": 0.12,
+      "gravity": [
+        0.0,
+        0.0
+      ],
+      "disks": [
+        "A",
+        "B"
+      ],
+      "disk_radius": {
+        "A": 0.5,
+        "B": 0.5
+      },
+      "disk_mass": {
+        "A": 1.0,
+        "B": 1.0
+      },
+      "disk_moment_of_inertia": {
+        "A": 0.125,
+        "B": 0.125
+      },
+      "initial_state": {
+        "A": {
+          "position": [
+            -0.505,
+            0.0
+          ],
+          "velocity": [
+            1.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        },
+        "B": {
+          "position": [
+            0.505,
+            0.0
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        }
+      },
+      "normal_dashpot_pair": 6.337043498524383,
+      "normal_dashpot_wall": {
+        "A": 8.96193286096143,
+        "B": 8.96193286096143
+      },
+      "tangential_dashpot": 0.0,
+      "normal_dashpot_unclamped_reference_e": 0.8,
+      "initial_center_of_mass_x": 0.0,
+      "final_center_of_mass_x": 0.05999999999999475,
+      "net_center_of_mass_dx": 0.05999999999999475,
+      "peak_overlap": 0.010053457478292893,
+      "peak_normal_force": 40.64694511125382,
+      "max_coulomb_excess": 0.0,
+      "max_angular_speed": 0.0,
+      "initial_mechanical_energy": 0.5,
+      "final_mechanical_energy": 0.4134437179677538,
+      "drive_work": 0.0,
+      "normal_contact_loss_signed": 0.08612593721148808,
+      "tangent_contact_loss_signed": 0.0,
+      "contact_frame_energy_change": 0.0,
+      "contact_history_release": 0.0,
+      "normal_force_cutoff_energy": 0.0029264325137230754,
+      "final_energy_balance_residual": -0.0004303448207581134,
+      "final_translation_speeds": {
+        "A": 0.09571826906505632,
+        "B": 0.9042817309349432
+      },
+      "final_angular_speeds": {
+        "A": 0.0,
+        "B": 0.0
+      },
+      "final_angular_momentum": 0.0,
+      "initial_angular_momentum": 0.0,
+      "angular_momentum_drift": 0.0,
+      "final_contact_active": false,
+      "final_omega_A": 0.0,
+      "final_omega_B": 0.0,
+      "impact_kind": "head_on_restitution",
+      "nominal_unclamped_reference_e": 0.8,
+      "repulsive_only_reference_e": 0.8080993352540083,
+      "measured_normal_restitution": 0.8085634618698869,
+      "restitution_reference_abs_error": 0.0004641266158785795,
+      "walls": [],
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s",
+        "force": "N",
+        "moment": "N m",
+        "energy": "J",
+        "angle": "rad"
+      }
+    },
+    {
+      "run_id": "head_on_mu000_dt5e-05",
+      "fixture": "pair_impact",
+      "mu": 0.0,
+      "dt": 5e-05,
+      "kn": 4000.0,
+      "kt": 4000.0,
+      "duration": 0.12,
+      "gravity": [
+        0.0,
+        0.0
+      ],
+      "disks": [
+        "A",
+        "B"
+      ],
+      "disk_radius": {
+        "A": 0.5,
+        "B": 0.5
+      },
+      "disk_mass": {
+        "A": 1.0,
+        "B": 1.0
+      },
+      "disk_moment_of_inertia": {
+        "A": 0.125,
+        "B": 0.125
+      },
+      "initial_state": {
+        "A": {
+          "position": [
+            -0.505,
+            0.0
+          ],
+          "velocity": [
+            1.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        },
+        "B": {
+          "position": [
+            0.505,
+            0.0
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        }
+      },
+      "normal_dashpot_pair": 6.337043498524383,
+      "normal_dashpot_wall": {
+        "A": 8.96193286096143,
+        "B": 8.96193286096143
+      },
+      "tangential_dashpot": 0.0,
+      "normal_dashpot_unclamped_reference_e": 0.8,
+      "initial_center_of_mass_x": 0.0,
+      "final_center_of_mass_x": 0.06000000000003752,
+      "net_center_of_mass_dx": 0.06000000000003752,
+      "peak_overlap": 0.01005194658833597,
+      "peak_normal_force": 40.62781347786172,
+      "max_coulomb_excess": 0.0,
+      "max_angular_speed": 0.0,
+      "initial_mechanical_energy": 0.5,
+      "final_mechanical_energy": 0.41334988199927103,
+      "drive_work": 0.0,
+      "normal_contact_loss_signed": 0.08474688300111123,
+      "tangent_contact_loss_signed": 0.0,
+      "contact_frame_energy_change": 0.0,
+      "contact_history_release": 0.0,
+      "normal_force_cutoff_energy": 0.003146313826459017,
+      "final_energy_balance_residual": -0.0019032349996177395,
+      "final_translation_speeds": {
+        "A": 0.09583433842139569,
+        "B": 0.9041656615786045
+      },
+      "final_angular_speeds": {
+        "A": 0.0,
+        "B": 0.0
+      },
+      "final_angular_momentum": 0.0,
+      "initial_angular_momentum": 0.0,
+      "angular_momentum_drift": 0.0,
+      "final_contact_active": false,
+      "final_omega_A": 0.0,
+      "final_omega_B": 0.0,
+      "impact_kind": "head_on_restitution",
+      "nominal_unclamped_reference_e": 0.8,
+      "repulsive_only_reference_e": 0.8080993352540083,
+      "measured_normal_restitution": 0.8083313231572088,
+      "restitution_reference_abs_error": 0.00023198790320044793,
+      "walls": [],
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s",
+        "force": "N",
+        "moment": "N m",
+        "energy": "J",
+        "angle": "rad"
+      }
+    },
+    {
+      "run_id": "head_on_mu000_dt2.5e-05",
+      "fixture": "pair_impact",
+      "mu": 0.0,
+      "dt": 2.5e-05,
+      "kn": 4000.0,
+      "kt": 4000.0,
+      "duration": 0.12,
+      "gravity": [
+        0.0,
+        0.0
+      ],
+      "disks": [
+        "A",
+        "B"
+      ],
+      "disk_radius": {
+        "A": 0.5,
+        "B": 0.5
+      },
+      "disk_mass": {
+        "A": 1.0,
+        "B": 1.0
+      },
+      "disk_moment_of_inertia": {
+        "A": 0.125,
+        "B": 0.125
+      },
+      "initial_state": {
+        "A": {
+          "position": [
+            -0.505,
+            0.0
+          ],
+          "velocity": [
+            1.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        },
+        "B": {
+          "position": [
+            0.505,
+            0.0
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        }
+      },
+      "normal_dashpot_pair": 6.337043498524383,
+      "normal_dashpot_wall": {
+        "A": 8.96193286096143,
+        "B": 8.96193286096143
+      },
+      "tangential_dashpot": 0.0,
+      "normal_dashpot_unclamped_reference_e": 0.8,
+      "initial_center_of_mass_x": 0.0,
+      "final_center_of_mass_x": 0.06000000000008679,
+      "net_center_of_mass_dx": 0.06000000000008679,
+      "peak_overlap": 0.010048026033909085,
+      "peak_normal_force": 40.60552725679376,
+      "max_coulomb_excess": 0.0,
+      "max_angular_speed": 0.0,
+      "initial_mechanical_energy": 0.5,
+      "final_mechanical_energy": 0.4131992682018388,
+      "drive_work": 0.0,
+      "normal_contact_loss_signed": 0.0841636165557753,
+      "tangent_contact_loss_signed": 0.0,
+      "contact_frame_energy_change": 0.0,
+      "contact_history_release": 0.0,
+      "normal_force_cutoff_energy": 0.0032570500138591647,
+      "final_energy_balance_residual": -0.002637115242385926,
+      "final_translation_speeds": {
+        "A": 0.0960207082017207,
+        "B": 0.9039792917982787
+      },
+      "final_angular_speeds": {
+        "A": 0.0,
+        "B": 0.0
+      },
+      "final_angular_momentum": 0.0,
+      "initial_angular_momentum": 0.0,
+      "angular_momentum_drift": 0.0,
+      "final_contact_active": false,
+      "final_omega_A": 0.0,
+      "final_omega_B": 0.0,
+      "impact_kind": "head_on_restitution",
+      "nominal_unclamped_reference_e": 0.8,
+      "repulsive_only_reference_e": 0.8080993352540083,
+      "measured_normal_restitution": 0.807958583596558,
+      "restitution_reference_abs_error": 0.00014075165745031093,
+      "walls": [],
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s",
+        "force": "N",
+        "moment": "N m",
+        "energy": "J",
+        "angle": "rad"
+      }
+    },
+    {
+      "run_id": "impact_mu050_dt0.0001",
+      "fixture": "pair_impact",
+      "mu": 0.5,
+      "dt": 0.0001,
+      "kn": 4000.0,
+      "kt": 4000.0,
+      "duration": 0.12,
+      "gravity": [
+        0.0,
+        0.0
+      ],
+      "disks": [
+        "A",
+        "B"
+      ],
+      "disk_radius": {
+        "A": 0.5,
+        "B": 0.5
+      },
+      "disk_mass": {
+        "A": 1.0,
+        "B": 1.0
+      },
+      "disk_moment_of_inertia": {
+        "A": 0.125,
+        "B": 0.125
+      },
+      "initial_state": {
+        "A": {
+          "position": [
+            -0.505,
+            0.0
+          ],
+          "velocity": [
+            1.0,
+            0.35
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        },
+        "B": {
+          "position": [
+            0.505,
+            0.0
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        }
+      },
+      "normal_dashpot_pair": 6.337043498524383,
+      "normal_dashpot_wall": {
+        "A": 8.96193286096143,
+        "B": 8.96193286096143
+      },
+      "tangential_dashpot": 0.0,
+      "normal_dashpot_unclamped_reference_e": 0.8,
+      "initial_center_of_mass_x": 0.0,
+      "final_center_of_mass_x": 0.05999999999999506,
+      "net_center_of_mass_dx": 0.05999999999999506,
+      "peak_overlap": 0.01003044645504525,
+      "peak_normal_force": 40.554022748791894,
+      "max_coulomb_excess": 0.0,
+      "max_angular_speed": 0.4757448953338617,
+      "initial_mechanical_energy": 0.56125,
+      "final_mechanical_energy": 0.4643299275041597,
+      "drive_work": 0.0,
+      "normal_contact_loss_signed": 0.08582341160283496,
+      "tangent_contact_loss_signed": 0.011052006915469295,
+      "contact_frame_energy_change": -8.449799511483927e-17,
+      "contact_history_release": 1.7688527223329857e-08,
+      "normal_force_cutoff_energy": 0.00289850312614311,
+      "final_energy_balance_residual": -4.463628900876896e-05,
+      "final_translation_speeds": {
+        "A": 0.3128334000374193,
+        "B": 0.9038010222003307
+      },
+      "final_angular_speeds": {
+        "A": -0.2361256538285049,
+        "B": -0.2361256538285049
+      },
+      "final_angular_momentum": -0.17674999999999913,
+      "initial_angular_momentum": -0.17675,
+      "angular_momentum_drift": 8.604228440844963e-16,
+      "final_contact_active": false,
+      "final_omega_A": -0.2361256538285049,
+      "final_omega_B": -0.2361256538285049,
+      "impact_kind": "oblique_frictional_torque",
+      "walls": [],
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s",
+        "force": "N",
+        "moment": "N m",
+        "energy": "J",
+        "angle": "rad"
+      }
+    },
+    {
+      "run_id": "impact_mu050_dt5e-05",
+      "fixture": "pair_impact",
+      "mu": 0.5,
+      "dt": 5e-05,
+      "kn": 4000.0,
+      "kt": 4000.0,
+      "duration": 0.12,
+      "gravity": [
+        0.0,
+        0.0
+      ],
+      "disks": [
+        "A",
+        "B"
+      ],
+      "disk_radius": {
+        "A": 0.5,
+        "B": 0.5
+      },
+      "disk_mass": {
+        "A": 1.0,
+        "B": 1.0
+      },
+      "disk_moment_of_inertia": {
+        "A": 0.125,
+        "B": 0.125
+      },
+      "initial_state": {
+        "A": {
+          "position": [
+            -0.505,
+            0.0
+          ],
+          "velocity": [
+            1.0,
+            0.35
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        },
+        "B": {
+          "position": [
+            0.505,
+            0.0
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        }
+      },
+      "normal_dashpot_pair": 6.337043498524383,
+      "normal_dashpot_wall": {
+        "A": 8.96193286096143,
+        "B": 8.96193286096143
+      },
+      "tangential_dashpot": 0.0,
+      "normal_dashpot_unclamped_reference_e": 0.8,
+      "initial_center_of_mass_x": 0.0,
+      "final_center_of_mass_x": 0.060000000000037634,
+      "net_center_of_mass_dx": 0.060000000000037634,
+      "peak_overlap": 0.01002894755738204,
+      "peak_normal_force": 40.5349693848871,
+      "max_coulomb_excess": 0.0,
+      "max_angular_speed": 0.47573189003794597,
+      "initial_mechanical_energy": 0.56125,
+      "final_mechanical_energy": 0.4642371794733192,
+      "drive_work": 0.0,
+      "normal_contact_loss_signed": 0.08445042754111905,
+      "tangent_contact_loss_signed": 0.010867414346429327,
+      "contact_frame_energy_change": -2.2503144162039698e-17,
+      "contact_history_release": 5.4952571113097455e-08,
+      "normal_force_cutoff_energy": 0.0031169354138656353,
+      "final_energy_balance_residual": -0.0016949236865613003,
+      "final_translation_speeds": {
+        "A": 0.3128754820296157,
+        "B": 0.9036856818396257
+      },
+      "final_angular_speeds": {
+        "A": -0.23609726918729756,
+        "B": -0.23609726918729756
+      },
+      "final_angular_momentum": -0.1767499999999882,
+      "initial_angular_momentum": -0.17675,
+      "angular_momentum_drift": 1.1796119636642288e-14,
+      "final_contact_active": false,
+      "final_omega_A": -0.23609726918729756,
+      "final_omega_B": -0.23609726918729756,
+      "impact_kind": "oblique_frictional_torque",
+      "walls": [],
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s",
+        "force": "N",
+        "moment": "N m",
+        "energy": "J",
+        "angle": "rad"
+      }
+    },
+    {
+      "run_id": "impact_mu050_dt2.5e-05",
+      "fixture": "pair_impact",
+      "mu": 0.5,
+      "dt": 2.5e-05,
+      "kn": 4000.0,
+      "kt": 4000.0,
+      "duration": 0.12,
+      "gravity": [
+        0.0,
+        0.0
+      ],
+      "disks": [
+        "A",
+        "B"
+      ],
+      "disk_radius": {
+        "A": 0.5,
+        "B": 0.5
+      },
+      "disk_mass": {
+        "A": 1.0,
+        "B": 1.0
+      },
+      "disk_moment_of_inertia": {
+        "A": 0.125,
+        "B": 0.125
+      },
+      "initial_state": {
+        "A": {
+          "position": [
+            -0.505,
+            0.0
+          ],
+          "velocity": [
+            1.0,
+            0.35
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        },
+        "B": {
+          "position": [
+            0.505,
+            0.0
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        }
+      },
+      "normal_dashpot_pair": 6.337043498524383,
+      "normal_dashpot_wall": {
+        "A": 8.96193286096143,
+        "B": 8.96193286096143
+      },
+      "tangential_dashpot": 0.0,
+      "normal_dashpot_unclamped_reference_e": 0.8,
+      "initial_center_of_mass_x": 0.0,
+      "final_center_of_mass_x": 0.059999999999915954,
+      "net_center_of_mass_dx": 0.059999999999915954,
+      "peak_overlap": 0.010028217704569076,
+      "peak_normal_force": 40.525585519859355,
+      "max_coulomb_excess": 0.0,
+      "max_angular_speed": 0.475726781486161,
+      "initial_mechanical_energy": 0.56125,
+      "final_mechanical_energy": 0.46419058320490575,
+      "drive_work": 0.0,
+      "normal_contact_loss_signed": 0.08376502249654505,
+      "tangent_contact_loss_signed": 0.010775091139296034,
+      "contact_frame_energy_change": -3.010010325662471e-17,
+      "contact_history_release": 8.10801210721364e-08,
+      "normal_force_cutoff_energy": 0.0032290017938144126,
+      "final_energy_balance_residual": -0.0025192220791320926,
+      "final_translation_speeds": {
+        "A": 0.3128975338902908,
+        "B": 0.9036276570701647
+      },
+      "final_angular_speeds": {
+        "A": -0.2360792839117462,
+        "B": -0.2360792839117462
+      },
+      "final_angular_momentum": -0.17675000000002428,
+      "initial_angular_momentum": -0.17675,
+      "angular_momentum_drift": -2.42861286636753e-14,
+      "final_contact_active": false,
+      "final_omega_A": -0.2360792839117462,
+      "final_omega_B": -0.2360792839117462,
+      "impact_kind": "oblique_frictional_torque",
+      "walls": [],
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s",
+        "force": "N",
+        "moment": "N m",
+        "energy": "J",
+        "angle": "rad"
+      }
+    },
+    {
+      "run_id": "impact_mu000_base",
+      "fixture": "pair_impact",
+      "mu": 0.0,
+      "dt": 2.5e-05,
+      "kn": 4000.0,
+      "kt": 4000.0,
+      "duration": 0.12,
+      "gravity": [
+        0.0,
+        0.0
+      ],
+      "disks": [
+        "A",
+        "B"
+      ],
+      "disk_radius": {
+        "A": 0.5,
+        "B": 0.5
+      },
+      "disk_mass": {
+        "A": 1.0,
+        "B": 1.0
+      },
+      "disk_moment_of_inertia": {
+        "A": 0.125,
+        "B": 0.125
+      },
+      "initial_state": {
+        "A": {
+          "position": [
+            -0.505,
+            0.0
+          ],
+          "velocity": [
+            1.0,
+            0.35
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        },
+        "B": {
+          "position": [
+            0.505,
+            0.0
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        }
+      },
+      "normal_dashpot_pair": 6.337043498524383,
+      "normal_dashpot_wall": {
+        "A": 8.96193286096143,
+        "B": 8.96193286096143
+      },
+      "tangential_dashpot": 0.0,
+      "normal_dashpot_unclamped_reference_e": 0.8,
+      "initial_center_of_mass_x": 0.0,
+      "final_center_of_mass_x": 0.06000000000000144,
+      "net_center_of_mass_dx": 0.06000000000000144,
+      "peak_overlap": 0.010024216149774334,
+      "peak_normal_force": 40.50992844925153,
+      "max_coulomb_excess": 0.0,
+      "max_angular_speed": 0.0,
+      "initial_mechanical_energy": 0.56125,
+      "final_mechanical_energy": 0.4748868395931507,
+      "drive_work": 0.0,
+      "normal_contact_loss_signed": 0.08374688570907365,
+      "tangent_contact_loss_signed": 0.0,
+      "contact_frame_energy_change": 0.0,
+      "contact_history_release": 0.0,
+      "normal_force_cutoff_energy": 0.0032326297590968937,
+      "final_energy_balance_residual": -0.0026162746977756723,
+      "final_translation_speeds": {
+        "A": 0.37169019518201657,
+        "B": 0.9008995937349822
+      },
+      "final_angular_speeds": {
+        "A": 0.0,
+        "B": 0.0
+      },
+      "final_angular_momentum": -0.17675000000000435,
+      "initial_angular_momentum": -0.17675,
+      "angular_momentum_drift": -4.3576253716537394e-15,
+      "final_contact_active": false,
+      "final_omega_A": 0.0,
+      "final_omega_B": 0.0,
+      "impact_kind": "oblique_frictional_torque",
+      "walls": [],
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s",
+        "force": "N",
+        "moment": "N m",
+        "energy": "J",
+        "angle": "rad"
+      }
+    },
+    {
+      "run_id": "floor_mu050_dt0.0001",
+      "fixture": "floor_arrest",
+      "mu": 0.5,
+      "dt": 0.0001,
+      "kn": 4000.0,
+      "kt": 4000.0,
+      "duration": 0.14,
+      "gravity": [
+        0.0,
+        -9.81
+      ],
+      "disks": [
+        "fragment"
+      ],
+      "disk_radius": {
+        "fragment": 0.5
+      },
+      "disk_mass": {
+        "fragment": 1.0
+      },
+      "disk_moment_of_inertia": {
+        "fragment": 0.125
+      },
+      "initial_state": {
+        "fragment": {
+          "position": [
+            0.0,
+            0.4975475
+          ],
+          "velocity": [
+            0.5,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 2.0
+        }
+      },
+      "normal_dashpot_pair": null,
+      "normal_dashpot_wall": {
+        "fragment": 8.96193286096143
+      },
+      "tangential_dashpot": 0.0,
+      "normal_dashpot_unclamped_reference_e": 0.8,
+      "initial_center_of_mass_x": 0.0,
+      "final_center_of_mass_x": 0.024966330574524073,
+      "net_center_of_mass_dx": 0.024966330574524073,
+      "peak_overlap": 0.002452500000000024,
+      "peak_normal_force": 9.81000000000027,
+      "max_coulomb_excess": 0.0,
+      "max_angular_speed": 2.0,
+      "initial_mechanical_energy": 5.268015340470295,
+      "final_mechanical_energy": 4.895993819369012,
+      "drive_work": 0.0,
+      "normal_contact_loss_signed": -6.413272690686256e-15,
+      "tangent_contact_loss_signed": 0.37241866967889514,
+      "contact_frame_energy_change": 0.0,
+      "contact_history_release": 0.0,
+      "normal_force_cutoff_energy": 0.0,
+      "final_energy_balance_residual": 0.0003971485776055328,
+      "final_translation_speeds": {
+        "fragment": 0.036013179363787035
+      },
+      "final_angular_speeds": {
+        "fragment": 0.14860442816558844
+      },
+      "final_angular_momentum": 0.0006572861611949185,
+      "analytic_stop_time": 0.1019367991845056,
+      "analytic_stop_distance": 0.0254841997961264,
+      "measured_dx": 0.024966330574524073,
+      "measured_vx_final": 0.036013179363787035,
+      "measured_omega_final": 0.14860442816558844,
+      "walls": [
+        {
+          "name": "floor",
+          "start": [
+            -100.0,
+            0.0
+          ],
+          "end": [
+            100.0,
+            0.0
+          ],
+          "inward": [
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s",
+        "force": "N",
+        "moment": "N m",
+        "energy": "J",
+        "angle": "rad"
+      }
+    },
+    {
+      "run_id": "floor_mu050_dt5e-05",
+      "fixture": "floor_arrest",
+      "mu": 0.5,
+      "dt": 5e-05,
+      "kn": 4000.0,
+      "kt": 4000.0,
+      "duration": 0.14,
+      "gravity": [
+        0.0,
+        -9.81
+      ],
+      "disks": [
+        "fragment"
+      ],
+      "disk_radius": {
+        "fragment": 0.5
+      },
+      "disk_mass": {
+        "fragment": 1.0
+      },
+      "disk_moment_of_inertia": {
+        "fragment": 0.125
+      },
+      "initial_state": {
+        "fragment": {
+          "position": [
+            0.0,
+            0.4975475
+          ],
+          "velocity": [
+            0.5,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 2.0
+        }
+      },
+      "normal_dashpot_pair": null,
+      "normal_dashpot_wall": {
+        "fragment": 8.96193286096143
+      },
+      "tangential_dashpot": 0.0,
+      "normal_dashpot_unclamped_reference_e": 0.8,
+      "initial_center_of_mass_x": 0.0,
+      "final_center_of_mass_x": 0.024989236840895625,
+      "net_center_of_mass_dx": 0.024989236840895625,
+      "peak_overlap": 0.002452500000000024,
+      "peak_normal_force": 9.81000000000028,
+      "max_coulomb_excess": 0.0,
+      "max_angular_speed": 2.0,
+      "initial_mechanical_energy": 5.267981700742573,
+      "final_mechanical_energy": 4.8959861018321975,
+      "drive_work": 0.0,
+      "normal_contact_loss_signed": -6.453171330633722e-15,
+      "tangent_contact_loss_signed": 0.3722053704677028,
+      "contact_frame_energy_change": 0.0,
+      "contact_history_release": 0.0,
+      "normal_force_cutoff_energy": 0.0,
+      "final_energy_balance_residual": 0.00020977155732077035,
+      "final_translation_speeds": {
+        "fragment": 0.03594434970666568
+      },
+      "final_angular_speeds": {
+        "fragment": 0.14832978475603334
+      },
+      "final_angular_momentum": 0.0006572017588271153,
+      "analytic_stop_time": 0.1019367991845056,
+      "analytic_stop_distance": 0.0254841997961264,
+      "measured_dx": 0.024989236840895625,
+      "measured_vx_final": 0.03594434970666568,
+      "measured_omega_final": 0.14832978475603334,
+      "walls": [
+        {
+          "name": "floor",
+          "start": [
+            -100.0,
+            0.0
+          ],
+          "end": [
+            100.0,
+            0.0
+          ],
+          "inward": [
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s",
+        "force": "N",
+        "moment": "N m",
+        "energy": "J",
+        "angle": "rad"
+      }
+    },
+    {
+      "run_id": "floor_mu050_dt2.5e-05",
+      "fixture": "floor_arrest",
+      "mu": 0.5,
+      "dt": 2.5e-05,
+      "kn": 4000.0,
+      "kt": 4000.0,
+      "duration": 0.14,
+      "gravity": [
+        0.0,
+        -9.81
+      ],
+      "disks": [
+        "fragment"
+      ],
+      "disk_radius": {
+        "fragment": 0.5
+      },
+      "disk_mass": {
+        "fragment": 1.0
+      },
+      "disk_moment_of_inertia": {
+        "fragment": 0.125
+      },
+      "initial_state": {
+        "fragment": {
+          "position": [
+            0.0,
+            0.4975475
+          ],
+          "velocity": [
+            0.5,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 2.0
+        }
+      },
+      "normal_dashpot_pair": null,
+      "normal_dashpot_wall": {
+        "fragment": 8.96193286096143
+      },
+      "tangential_dashpot": 0.0,
+      "normal_dashpot_unclamped_reference_e": 0.8,
+      "initial_center_of_mass_x": 0.0,
+      "final_center_of_mass_x": 0.02500069511217775,
+      "net_center_of_mass_dx": 0.02500069511217775,
+      "peak_overlap": 0.002452500000000024,
+      "peak_normal_force": 9.810000000000281,
+      "max_coulomb_excess": 0.0,
+      "max_angular_speed": 2.0,
+      "initial_mechanical_energy": 5.267973290810643,
+      "final_mechanical_energy": 4.895982239288827,
+      "drive_work": 0.0,
+      "normal_contact_loss_signed": -6.692563170318522e-15,
+      "tangent_contact_loss_signed": 0.37209873692894974,
+      "contact_frame_energy_change": 0.0,
+      "contact_history_release": 0.0,
+      "normal_force_cutoff_energy": 0.0,
+      "final_energy_balance_residual": 0.00010768540712735586,
+      "final_translation_speeds": {
+        "fragment": 0.03590994830533172
+      },
+      "final_angular_speeds": {
+        "fragment": 0.14819251662833866
+      },
+      "final_angular_momentum": 0.0006571595740954908,
+      "analytic_stop_time": 0.1019367991845056,
+      "analytic_stop_distance": 0.0254841997961264,
+      "measured_dx": 0.02500069511217775,
+      "measured_vx_final": 0.03590994830533172,
+      "measured_omega_final": 0.14819251662833866,
+      "walls": [
+        {
+          "name": "floor",
+          "start": [
+            -100.0,
+            0.0
+          ],
+          "end": [
+            100.0,
+            0.0
+          ],
+          "inward": [
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s",
+        "force": "N",
+        "moment": "N m",
+        "energy": "J",
+        "angle": "rad"
+      }
+    },
+    {
+      "run_id": "floor_mu000_base",
+      "fixture": "floor_arrest",
+      "mu": 0.0,
+      "dt": 2.5e-05,
+      "kn": 4000.0,
+      "kt": 4000.0,
+      "duration": 0.14,
+      "gravity": [
+        0.0,
+        -9.81
+      ],
+      "disks": [
+        "fragment"
+      ],
+      "disk_radius": {
+        "fragment": 0.5
+      },
+      "disk_mass": {
+        "fragment": 1.0
+      },
+      "disk_moment_of_inertia": {
+        "fragment": 0.125
+      },
+      "initial_state": {
+        "fragment": {
+          "position": [
+            0.0,
+            0.4975475
+          ],
+          "velocity": [
+            0.5,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 2.0
+        }
+      },
+      "normal_dashpot_pair": null,
+      "normal_dashpot_wall": {
+        "fragment": 8.96193286096143
+      },
+      "tangential_dashpot": 0.0,
+      "normal_dashpot_unclamped_reference_e": 0.8,
+      "initial_center_of_mass_x": 0.0,
+      "final_center_of_mass_x": 0.06999999999999433,
+      "net_center_of_mass_dx": 0.06999999999999433,
+      "peak_overlap": 0.002452500000000024,
+      "peak_normal_force": 9.810000000000286,
+      "max_coulomb_excess": 0.0,
+      "max_angular_speed": 2.0,
+      "initial_mechanical_energy": 5.2679704874999995,
+      "final_mechanical_energy": 5.2679704874999995,
+      "drive_work": 0.0,
+      "normal_contact_loss_signed": -6.366435156834882e-15,
+      "tangent_contact_loss_signed": 0.0,
+      "contact_frame_energy_change": 0.0,
+      "contact_history_release": 0.0,
+      "normal_force_cutoff_energy": 0.0,
+      "final_energy_balance_residual": -6.366435156834882e-15,
+      "final_translation_speeds": {
+        "fragment": 0.5
+      },
+      "final_angular_speeds": {
+        "fragment": 2.0
+      },
+      "final_angular_momentum": 0.0012262500000005394,
+      "analytic_stop_time": null,
+      "analytic_stop_distance": null,
+      "measured_dx": 0.06999999999999433,
+      "measured_vx_final": 0.5,
+      "measured_omega_final": 2.0,
+      "walls": [
+        {
+          "name": "floor",
+          "start": [
+            -100.0,
+            0.0
+          ],
+          "end": [
+            100.0,
+            0.0
+          ],
+          "inward": [
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s",
+        "force": "N",
+        "moment": "N m",
+        "energy": "J",
+        "angle": "rad"
+      }
+    },
+    {
+      "run_id": "floor_mu050_kn2000",
+      "fixture": "floor_arrest",
+      "mu": 0.5,
+      "dt": 2.5e-05,
+      "kn": 2000.0,
+      "kt": 2000.0,
+      "duration": 0.14,
+      "gravity": [
+        0.0,
+        -9.81
+      ],
+      "disks": [
+        "fragment"
+      ],
+      "disk_radius": {
+        "fragment": 0.5
+      },
+      "disk_mass": {
+        "fragment": 1.0
+      },
+      "disk_moment_of_inertia": {
+        "fragment": 0.125
+      },
+      "initial_state": {
+        "fragment": {
+          "position": [
+            0.0,
+            0.495095
+          ],
+          "velocity": [
+            0.5,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 2.0
+        }
+      },
+      "normal_dashpot_pair": null,
+      "normal_dashpot_wall": {
+        "fragment": 6.337043498524383
+      },
+      "tangential_dashpot": 0.0,
+      "normal_dashpot_unclamped_reference_e": 0.8,
+      "initial_center_of_mass_x": 0.0,
+      "final_center_of_mass_x": 0.024209698784089455,
+      "net_center_of_mass_dx": 0.024209698784089455,
+      "peak_overlap": 0.004904999999999993,
+      "peak_normal_force": 9.810000000000116,
+      "max_coulomb_excess": 0.0,
+      "max_angular_speed": 2.0,
+      "initial_mechanical_energy": 5.255942372068161,
+      "final_mechanical_energy": 4.8869545552851745,
+      "drive_work": 0.0,
+      "normal_contact_loss_signed": 2.42861286636753e-16,
+      "tangent_contact_loss_signed": 0.369092792714905,
+      "contact_frame_energy_change": 0.0,
+      "contact_history_release": 0.0,
+      "normal_force_cutoff_energy": 0.0,
+      "final_energy_balance_residual": 0.00010497593191849397,
+      "final_translation_speeds": {
+        "fragment": 0.019870551296568225
+      },
+      "final_angular_speeds": {
+        "fragment": -0.06928234497000967
+      },
+      "final_angular_momentum": 0.0011775174729232,
+      "analytic_stop_time": 0.1019367991845056,
+      "analytic_stop_distance": 0.0254841997961264,
+      "measured_dx": 0.024209698784089455,
+      "measured_vx_final": -0.019870551296568225,
+      "measured_omega_final": -0.06928234497000967,
+      "walls": [
+        {
+          "name": "floor",
+          "start": [
+            -100.0,
+            0.0
+          ],
+          "end": [
+            100.0,
+            0.0
+          ],
+          "inward": [
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s",
+        "force": "N",
+        "moment": "N m",
+        "energy": "J",
+        "angle": "rad"
+      }
+    },
+    {
+      "run_id": "floor_mu050_kn8000",
+      "fixture": "floor_arrest",
+      "mu": 0.5,
+      "dt": 2.5e-05,
+      "kn": 8000.0,
+      "kt": 8000.0,
+      "duration": 0.14,
+      "gravity": [
+        0.0,
+        -9.81
+      ],
+      "disks": [
+        "fragment"
+      ],
+      "disk_radius": {
+        "fragment": 0.5
+      },
+      "disk_mass": {
+        "fragment": 1.0
+      },
+      "disk_moment_of_inertia": {
+        "fragment": 0.125
+      },
+      "initial_state": {
+        "fragment": {
+          "position": [
+            0.0,
+            0.49877375
+          ],
+          "velocity": [
+            0.5,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 2.0
+        }
+      },
+      "normal_dashpot_pair": null,
+      "normal_dashpot_wall": {
+        "fragment": 12.674086997048766
+      },
+      "tangential_dashpot": 0.0,
+      "normal_dashpot_unclamped_reference_e": 0.8,
+      "initial_center_of_mass_x": 0.0,
+      "final_center_of_mass_x": 0.02553977872790149,
+      "net_center_of_mass_dx": 0.02553977872790149,
+      "peak_overlap": 0.0012262499999999843,
+      "peak_normal_force": 9.810000000000139,
+      "max_coulomb_excess": 0.0,
+      "max_angular_speed": 2.0,
+      "initial_mechanical_energy": 5.273990859556885,
+      "final_mechanical_energy": 4.900486834837076,
+      "drive_work": 0.0,
+      "normal_contact_loss_signed": 6.971853649950788e-15,
+      "tangent_contact_loss_signed": 0.37360614952921634,
+      "contact_frame_energy_change": 0.0,
+      "contact_history_release": 0.0,
+      "normal_force_cutoff_energy": 0.0,
+      "final_energy_balance_residual": 0.0001021248094144056,
+      "final_translation_speeds": {
+        "fragment": 0.012914220162261568
+      },
+      "final_angular_speeds": {
+        "fragment": 0.0540460363988931
+      },
+      "final_angular_momentum": 0.0003144805312046157,
+      "analytic_stop_time": 0.1019367991845056,
+      "analytic_stop_distance": 0.0254841997961264,
+      "measured_dx": 0.02553977872790149,
+      "measured_vx_final": 0.012914220162261568,
+      "measured_omega_final": 0.0540460363988931,
+      "walls": [
+        {
+          "name": "floor",
+          "start": [
+            -100.0,
+            0.0
+          ],
+          "end": [
+            100.0,
+            0.0
+          ],
+          "inward": [
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s",
+        "force": "N",
+        "moment": "N m",
+        "energy": "J",
+        "angle": "rad"
+      }
+    },
+    {
+      "run_id": "row_mu050_dt0.0001",
+      "fixture": "row_blockage",
+      "mu": 0.5,
+      "dt": 0.0001,
+      "kn": 4000.0,
+      "kt": 4000.0,
+      "duration": 1.1,
+      "gravity": [
+        0.0,
+        -9.81
+      ],
+      "disks": [
+        "fragment_1",
+        "fragment_2",
+        "fragment_3"
+      ],
+      "disk_radius": {
+        "fragment_1": 0.5,
+        "fragment_2": 0.5,
+        "fragment_3": 0.5
+      },
+      "disk_mass": {
+        "fragment_1": 1.0,
+        "fragment_2": 1.0,
+        "fragment_3": 1.0
+      },
+      "disk_moment_of_inertia": {
+        "fragment_1": 0.125,
+        "fragment_2": 0.125,
+        "fragment_3": 0.125
+      },
+      "initial_state": {
+        "fragment_1": {
+          "position": [
+            -1.0,
+            0.4975475
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        },
+        "fragment_2": {
+          "position": [
+            0.0,
+            0.4975475
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        },
+        "fragment_3": {
+          "position": [
+            1.0,
+            0.4975475
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        }
+      },
+      "normal_dashpot_pair": 6.337043498524383,
+      "normal_dashpot_wall": {
+        "fragment_1": 8.96193286096143,
+        "fragment_2": 8.96193286096143,
+        "fragment_3": 8.96193286096143
+      },
+      "tangential_dashpot": 0.0,
+      "normal_dashpot_unclamped_reference_e": 0.8,
+      "initial_center_of_mass_x": 0.0,
+      "final_center_of_mass_x": -0.32634104469226677,
+      "net_center_of_mass_dx": -0.32634104469226677,
+      "peak_overlap": 0.006327999516129834,
+      "peak_normal_force": 25.368094579902735,
+      "max_coulomb_excess": 0.0,
+      "max_angular_speed": 3.986742033174678,
+      "initial_mechanical_energy": 14.6789114625,
+      "final_mechanical_energy": 22.592363806882254,
+      "drive_work": 8.217407059562108,
+      "normal_contact_loss_signed": 0.036626469721591316,
+      "tangent_contact_loss_signed": 0.2696936265456638,
+      "contact_frame_energy_change": 1.9286998743721764e-17,
+      "contact_history_release": 1.3658625284810393e-07,
+      "normal_force_cutoff_energy": 0.0004397234082752409,
+      "final_energy_balance_residual": 0.002365517673653915,
+      "final_translation_speeds": {
+        "fragment_1": 1.9652257159656155,
+        "fragment_2": 1.8725074834983642,
+        "fragment_3": 1.7709901473958045
+      },
+      "final_angular_speeds": {
+        "fragment_1": 3.986742033174678,
+        "fragment_2": 3.7409766698591085,
+        "fragment_3": 3.554678603907051
+      },
+      "final_angular_momentum": 4.210049733684099,
+      "hold_rightward_dx": -0.0006839897376364288,
+      "hold_min_drive_force_x": 24.0,
+      "reverse_leftward_dx": 0.33441398448198983,
+      "hold_min_disk_contacts": 2,
+      "hold_min_end_stop_contacts": 1,
+      "reverse_final_end_stop_contacts": 0,
+      "classification": "wall-supported multi-contact blockage; not a collective-jam claim",
+      "walls": [
+        {
+          "name": "floor",
+          "start": [
+            -10.0,
+            0.0
+          ],
+          "end": [
+            10.0,
+            0.0
+          ],
+          "inward": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "name": "end_stop",
+          "start": [
+            1.5,
+            0.0
+          ],
+          "end": [
+            1.5,
+            1.05
+          ],
+          "inward": [
+            -1.0,
+            0.0
+          ]
+        },
+        {
+          "name": "ceiling",
+          "start": [
+            -10.0,
+            1.05
+          ],
+          "end": [
+            10.0,
+            1.05
+          ],
+          "inward": [
+            0.0,
+            -1.0
+          ]
+        }
+      ],
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s",
+        "force": "N",
+        "moment": "N m",
+        "energy": "J",
+        "angle": "rad"
+      }
+    },
+    {
+      "run_id": "row_mu050_dt5e-05",
+      "fixture": "row_blockage",
+      "mu": 0.5,
+      "dt": 5e-05,
+      "kn": 4000.0,
+      "kt": 4000.0,
+      "duration": 1.1,
+      "gravity": [
+        0.0,
+        -9.81
+      ],
+      "disks": [
+        "fragment_1",
+        "fragment_2",
+        "fragment_3"
+      ],
+      "disk_radius": {
+        "fragment_1": 0.5,
+        "fragment_2": 0.5,
+        "fragment_3": 0.5
+      },
+      "disk_mass": {
+        "fragment_1": 1.0,
+        "fragment_2": 1.0,
+        "fragment_3": 1.0
+      },
+      "disk_moment_of_inertia": {
+        "fragment_1": 0.125,
+        "fragment_2": 0.125,
+        "fragment_3": 0.125
+      },
+      "initial_state": {
+        "fragment_1": {
+          "position": [
+            -1.0,
+            0.4975475
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        },
+        "fragment_2": {
+          "position": [
+            0.0,
+            0.4975475
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        },
+        "fragment_3": {
+          "position": [
+            1.0,
+            0.4975475
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        }
+      },
+      "normal_dashpot_pair": 6.337043498524383,
+      "normal_dashpot_wall": {
+        "fragment_1": 8.96193286096143,
+        "fragment_2": 8.96193286096143,
+        "fragment_3": 8.96193286096143
+      },
+      "tangential_dashpot": 0.0,
+      "normal_dashpot_unclamped_reference_e": 0.8,
+      "initial_center_of_mass_x": 0.0,
+      "final_center_of_mass_x": -0.3271059446012462,
+      "net_center_of_mass_dx": -0.3271059446012462,
+      "peak_overlap": 0.006511813370176478,
+      "peak_normal_force": 26.07157491859512,
+      "max_coulomb_excess": 0.0,
+      "max_angular_speed": 4.012442080431258,
+      "initial_mechanical_energy": 14.6789114625,
+      "final_mechanical_energy": 22.628315639223736,
+      "drive_work": 8.279280207327496,
+      "normal_contact_loss_signed": 0.036610024292385364,
+      "tangent_contact_loss_signed": 0.29419517907429293,
+      "contact_frame_energy_change": -1.1969457937198324e-17,
+      "contact_history_release": 1.321365954907009e-09,
+      "normal_force_cutoff_energy": 0.0004861806535583447,
+      "final_energy_balance_residual": 0.0009291740842842291,
+      "final_translation_speeds": {
+        "fragment_1": 1.9787330160916197,
+        "fragment_2": 1.8734993727736733,
+        "fragment_3": 1.7784593307202787
+      },
+      "final_angular_speeds": {
+        "fragment_1": 4.012442080431258,
+        "fragment_2": 3.7876063889008584,
+        "fragment_3": 3.462531485262245
+      },
+      "final_angular_momentum": 4.221352315129372,
+      "hold_rightward_dx": -0.0005231114266909618,
+      "hold_min_drive_force_x": 24.0,
+      "reverse_leftward_dx": 0.3360618359601419,
+      "hold_min_disk_contacts": 2,
+      "hold_min_end_stop_contacts": 1,
+      "reverse_final_end_stop_contacts": 0,
+      "classification": "wall-supported multi-contact blockage; not a collective-jam claim",
+      "walls": [
+        {
+          "name": "floor",
+          "start": [
+            -10.0,
+            0.0
+          ],
+          "end": [
+            10.0,
+            0.0
+          ],
+          "inward": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "name": "end_stop",
+          "start": [
+            1.5,
+            0.0
+          ],
+          "end": [
+            1.5,
+            1.05
+          ],
+          "inward": [
+            -1.0,
+            0.0
+          ]
+        },
+        {
+          "name": "ceiling",
+          "start": [
+            -10.0,
+            1.05
+          ],
+          "end": [
+            10.0,
+            1.05
+          ],
+          "inward": [
+            0.0,
+            -1.0
+          ]
+        }
+      ],
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s",
+        "force": "N",
+        "moment": "N m",
+        "energy": "J",
+        "angle": "rad"
+      }
+    },
+    {
+      "run_id": "row_mu050_dt2.5e-05",
+      "fixture": "row_blockage",
+      "mu": 0.5,
+      "dt": 2.5e-05,
+      "kn": 4000.0,
+      "kt": 4000.0,
+      "duration": 1.1,
+      "gravity": [
+        0.0,
+        -9.81
+      ],
+      "disks": [
+        "fragment_1",
+        "fragment_2",
+        "fragment_3"
+      ],
+      "disk_radius": {
+        "fragment_1": 0.5,
+        "fragment_2": 0.5,
+        "fragment_3": 0.5
+      },
+      "disk_mass": {
+        "fragment_1": 1.0,
+        "fragment_2": 1.0,
+        "fragment_3": 1.0
+      },
+      "disk_moment_of_inertia": {
+        "fragment_1": 0.125,
+        "fragment_2": 0.125,
+        "fragment_3": 0.125
+      },
+      "initial_state": {
+        "fragment_1": {
+          "position": [
+            -1.0,
+            0.4975475
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        },
+        "fragment_2": {
+          "position": [
+            0.0,
+            0.4975475
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        },
+        "fragment_3": {
+          "position": [
+            1.0,
+            0.4975475
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        }
+      },
+      "normal_dashpot_pair": 6.337043498524383,
+      "normal_dashpot_wall": {
+        "fragment_1": 8.96193286096143,
+        "fragment_2": 8.96193286096143,
+        "fragment_3": 8.96193286096143
+      },
+      "tangential_dashpot": 0.0,
+      "normal_dashpot_unclamped_reference_e": 0.8,
+      "initial_center_of_mass_x": 0.0,
+      "final_center_of_mass_x": -0.3262772565233602,
+      "net_center_of_mass_dx": -0.3262772565233602,
+      "peak_overlap": 0.006898171366762185,
+      "peak_normal_force": 27.710790376392207,
+      "max_coulomb_excess": 0.0,
+      "max_angular_speed": 4.00399574075049,
+      "initial_mechanical_energy": 14.6789114625,
+      "final_mechanical_energy": 22.59201487969993,
+      "drive_work": 8.265120299128112,
+      "normal_contact_loss_signed": 0.040841400740016805,
+      "tangent_contact_loss_signed": 0.31139216374388695,
+      "contact_frame_energy_change": 3.613223128304405e-17,
+      "contact_history_release": 6.560366434915573e-09,
+      "normal_force_cutoff_energy": 0.0004984710964827031,
+      "final_energy_balance_residual": 0.00021668911608911244,
+      "final_translation_speeds": {
+        "fragment_1": 1.9842265814526396,
+        "fragment_2": 1.8507969420932333,
+        "fragment_3": 1.7695109416503625
+      },
+      "final_angular_speeds": {
+        "fragment_1": 4.00399574075049,
+        "fragment_2": 3.8129119423154707,
+        "fragment_3": 3.4690823952220375
+      },
+      "final_angular_momentum": 4.202605955920208,
+      "hold_rightward_dx": -0.0005985411438895749,
+      "hold_min_drive_force_x": 24.0,
+      "reverse_leftward_dx": 0.33534041453656127,
+      "hold_min_disk_contacts": 2,
+      "hold_min_end_stop_contacts": 1,
+      "reverse_final_end_stop_contacts": 0,
+      "classification": "wall-supported multi-contact blockage; not a collective-jam claim",
+      "walls": [
+        {
+          "name": "floor",
+          "start": [
+            -10.0,
+            0.0
+          ],
+          "end": [
+            10.0,
+            0.0
+          ],
+          "inward": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "name": "end_stop",
+          "start": [
+            1.5,
+            0.0
+          ],
+          "end": [
+            1.5,
+            1.05
+          ],
+          "inward": [
+            -1.0,
+            0.0
+          ]
+        },
+        {
+          "name": "ceiling",
+          "start": [
+            -10.0,
+            1.05
+          ],
+          "end": [
+            10.0,
+            1.05
+          ],
+          "inward": [
+            0.0,
+            -1.0
+          ]
+        }
+      ],
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s",
+        "force": "N",
+        "moment": "N m",
+        "energy": "J",
+        "angle": "rad"
+      }
+    },
+    {
+      "run_id": "row_mu000_base",
+      "fixture": "row_blockage",
+      "mu": 0.0,
+      "dt": 2.5e-05,
+      "kn": 4000.0,
+      "kt": 4000.0,
+      "duration": 1.1,
+      "gravity": [
+        0.0,
+        -9.81
+      ],
+      "disks": [
+        "fragment_1",
+        "fragment_2",
+        "fragment_3"
+      ],
+      "disk_radius": {
+        "fragment_1": 0.5,
+        "fragment_2": 0.5,
+        "fragment_3": 0.5
+      },
+      "disk_mass": {
+        "fragment_1": 1.0,
+        "fragment_2": 1.0,
+        "fragment_3": 1.0
+      },
+      "disk_moment_of_inertia": {
+        "fragment_1": 0.125,
+        "fragment_2": 0.125,
+        "fragment_3": 0.125
+      },
+      "initial_state": {
+        "fragment_1": {
+          "position": [
+            -1.0,
+            0.4975475
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        },
+        "fragment_2": {
+          "position": [
+            0.0,
+            0.4975475
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        },
+        "fragment_3": {
+          "position": [
+            1.0,
+            0.4975475
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        }
+      },
+      "normal_dashpot_pair": 6.337043498524383,
+      "normal_dashpot_wall": {
+        "fragment_1": 8.96193286096143,
+        "fragment_2": 8.96193286096143,
+        "fragment_3": 8.96193286096143
+      },
+      "tangential_dashpot": 0.0,
+      "normal_dashpot_unclamped_reference_e": 0.8,
+      "initial_center_of_mass_x": 0.0,
+      "final_center_of_mass_x": -0.5315071742439049,
+      "net_center_of_mass_dx": -0.5315071742439049,
+      "peak_overlap": 0.011212443672588224,
+      "peak_normal_force": 44.901280519070966,
+      "max_coulomb_excess": 0.0,
+      "max_angular_speed": 0.0,
+      "initial_mechanical_energy": 14.6789114625,
+      "final_mechanical_energy": 27.92873069860456,
+      "drive_work": 13.354307918216186,
+      "normal_contact_loss_signed": 0.1037991944058462,
+      "tangent_contact_loss_signed": 0.0,
+      "contact_frame_energy_change": 0.0,
+      "contact_history_release": 0.0,
+      "normal_force_cutoff_energy": 0.0013297819986333457,
+      "final_energy_balance_residual": -0.0006894877057795623,
+      "final_translation_speeds": {
+        "fragment_1": 3.1828198780336106,
+        "fragment_2": 2.9915661357971817,
+        "fragment_3": 2.7239361503814203
+      },
+      "final_angular_speeds": {
+        "fragment_1": 0.0,
+        "fragment_2": 0.0,
+        "fragment_3": 0.0
+      },
+      "final_angular_momentum": 4.4273379469983585,
+      "hold_rightward_dx": 0.007686480761748197,
+      "hold_min_drive_force_x": 24.0,
+      "reverse_leftward_dx": 0.5439882959688151,
+      "hold_min_disk_contacts": 2,
+      "hold_min_end_stop_contacts": 1,
+      "reverse_final_end_stop_contacts": 0,
+      "classification": "wall-supported multi-contact blockage; not a collective-jam claim",
+      "walls": [
+        {
+          "name": "floor",
+          "start": [
+            -10.0,
+            0.0
+          ],
+          "end": [
+            10.0,
+            0.0
+          ],
+          "inward": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "name": "end_stop",
+          "start": [
+            1.5,
+            0.0
+          ],
+          "end": [
+            1.5,
+            1.05
+          ],
+          "inward": [
+            -1.0,
+            0.0
+          ]
+        },
+        {
+          "name": "ceiling",
+          "start": [
+            -10.0,
+            1.05
+          ],
+          "end": [
+            10.0,
+            1.05
+          ],
+          "inward": [
+            0.0,
+            -1.0
+          ]
+        }
+      ],
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s",
+        "force": "N",
+        "moment": "N m",
+        "energy": "J",
+        "angle": "rad"
+      }
+    },
+    {
+      "run_id": "row_mu050_kn2000",
+      "fixture": "row_blockage",
+      "mu": 0.5,
+      "dt": 2.5e-05,
+      "kn": 2000.0,
+      "kt": 2000.0,
+      "duration": 1.1,
+      "gravity": [
+        0.0,
+        -9.81
+      ],
+      "disks": [
+        "fragment_1",
+        "fragment_2",
+        "fragment_3"
+      ],
+      "disk_radius": {
+        "fragment_1": 0.5,
+        "fragment_2": 0.5,
+        "fragment_3": 0.5
+      },
+      "disk_mass": {
+        "fragment_1": 1.0,
+        "fragment_2": 1.0,
+        "fragment_3": 1.0
+      },
+      "disk_moment_of_inertia": {
+        "fragment_1": 0.125,
+        "fragment_2": 0.125,
+        "fragment_3": 0.125
+      },
+      "initial_state": {
+        "fragment_1": {
+          "position": [
+            -1.0,
+            0.495095
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        },
+        "fragment_2": {
+          "position": [
+            0.0,
+            0.495095
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        },
+        "fragment_3": {
+          "position": [
+            1.0,
+            0.495095
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        }
+      },
+      "normal_dashpot_pair": 4.480966430480715,
+      "normal_dashpot_wall": {
+        "fragment_1": 6.337043498524383,
+        "fragment_2": 6.337043498524383,
+        "fragment_3": 6.337043498524383
+      },
+      "tangential_dashpot": 0.0,
+      "normal_dashpot_unclamped_reference_e": 0.8,
+      "initial_center_of_mass_x": 0.0,
+      "final_center_of_mass_x": -0.3437341335756436,
+      "net_center_of_mass_dx": -0.3437341335756436,
+      "peak_overlap": 0.012541457631642272,
+      "peak_normal_force": 25.1106190014396,
+      "max_coulomb_excess": 0.0,
+      "max_angular_speed": 4.208916319698757,
+      "initial_mechanical_energy": 14.642822924999999,
+      "final_mechanical_energy": 23.12444114950377,
+      "drive_work": 9.145080222101477,
+      "normal_contact_loss_signed": 0.08009732959475237,
+      "tangent_contact_loss_signed": 0.583242552630672,
+      "contact_frame_energy_change": 1.4119594384265107e-16,
+      "contact_history_release": 2.20647385075191e-09,
+      "normal_force_cutoff_energy": 0.001155765469644245,
+      "final_energy_balance_residual": -0.00012211316580753003,
+      "final_translation_speeds": {
+        "fragment_1": 2.1317058553939217,
+        "fragment_2": 1.9291879561368062,
+        "fragment_3": 1.7752650618708203
+      },
+      "final_angular_speeds": {
+        "fragment_1": 4.208916319698757,
+        "fragment_2": 3.815135009837031,
+        "fragment_3": 3.4686051343926696
+      },
+      "final_angular_momentum": 4.319523170571421,
+      "hold_rightward_dx": 0.0019651646934759626,
+      "hold_min_drive_force_x": 24.0,
+      "reverse_leftward_dx": 0.3624015432671121,
+      "hold_min_disk_contacts": 2,
+      "hold_min_end_stop_contacts": 1,
+      "reverse_final_end_stop_contacts": 0,
+      "classification": "wall-supported multi-contact blockage; not a collective-jam claim",
+      "walls": [
+        {
+          "name": "floor",
+          "start": [
+            -10.0,
+            0.0
+          ],
+          "end": [
+            10.0,
+            0.0
+          ],
+          "inward": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "name": "end_stop",
+          "start": [
+            1.5,
+            0.0
+          ],
+          "end": [
+            1.5,
+            1.05
+          ],
+          "inward": [
+            -1.0,
+            0.0
+          ]
+        },
+        {
+          "name": "ceiling",
+          "start": [
+            -10.0,
+            1.05
+          ],
+          "end": [
+            10.0,
+            1.05
+          ],
+          "inward": [
+            0.0,
+            -1.0
+          ]
+        }
+      ],
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s",
+        "force": "N",
+        "moment": "N m",
+        "energy": "J",
+        "angle": "rad"
+      }
+    },
+    {
+      "run_id": "row_mu050_kn8000",
+      "fixture": "row_blockage",
+      "mu": 0.5,
+      "dt": 2.5e-05,
+      "kn": 8000.0,
+      "kt": 8000.0,
+      "duration": 1.1,
+      "gravity": [
+        0.0,
+        -9.81
+      ],
+      "disks": [
+        "fragment_1",
+        "fragment_2",
+        "fragment_3"
+      ],
+      "disk_radius": {
+        "fragment_1": 0.5,
+        "fragment_2": 0.5,
+        "fragment_3": 0.5
+      },
+      "disk_mass": {
+        "fragment_1": 1.0,
+        "fragment_2": 1.0,
+        "fragment_3": 1.0
+      },
+      "disk_moment_of_inertia": {
+        "fragment_1": 0.125,
+        "fragment_2": 0.125,
+        "fragment_3": 0.125
+      },
+      "initial_state": {
+        "fragment_1": {
+          "position": [
+            -1.0,
+            0.49877375
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        },
+        "fragment_2": {
+          "position": [
+            0.0,
+            0.49877375
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        },
+        "fragment_3": {
+          "position": [
+            1.0,
+            0.49877375
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        }
+      },
+      "normal_dashpot_pair": 8.96193286096143,
+      "normal_dashpot_wall": {
+        "fragment_1": 12.674086997048766,
+        "fragment_2": 12.674086997048766,
+        "fragment_3": 12.674086997048766
+      },
+      "tangential_dashpot": 0.0,
+      "normal_dashpot_unclamped_reference_e": 0.8,
+      "initial_center_of_mass_x": 0.0,
+      "final_center_of_mass_x": -0.3311374230897798,
+      "net_center_of_mass_dx": -0.3311374230897798,
+      "peak_overlap": 0.003448625948115014,
+      "peak_normal_force": 27.706612010114046,
+      "max_coulomb_excess": 0.0,
+      "max_angular_speed": 3.9434144992036737,
+      "initial_mechanical_energy": 14.69695573125,
+      "final_mechanical_energy": 22.697448186906698,
+      "drive_work": 8.174823428781435,
+      "normal_contact_loss_signed": 0.02181907211123002,
+      "tangent_contact_loss_signed": 0.15279208658042154,
+      "contact_frame_energy_change": -1.9112811019028346e-18,
+      "contact_history_release": 1.0560003713968997e-08,
+      "normal_force_cutoff_energy": 0.0002731482722774505,
+      "final_energy_balance_residual": 0.00028019612691771996,
+      "final_translation_speeds": {
+        "fragment_1": 1.9737924374157891,
+        "fragment_2": 1.8873335474951614,
+        "fragment_3": 1.7926245138257253
+      },
+      "final_angular_speeds": {
+        "fragment_1": 3.9434144992036737,
+        "fragment_2": 3.725589793412163,
+        "fragment_3": 3.6290682706675903
+      },
+      "final_angular_momentum": 4.228578909589086,
+      "hold_rightward_dx": 1.0656445666852761e-05,
+      "hold_min_drive_force_x": 24.0,
+      "reverse_leftward_dx": 0.33588934128065956,
+      "hold_min_disk_contacts": 2,
+      "hold_min_end_stop_contacts": 1,
+      "reverse_final_end_stop_contacts": 0,
+      "classification": "wall-supported multi-contact blockage; not a collective-jam claim",
+      "walls": [
+        {
+          "name": "floor",
+          "start": [
+            -10.0,
+            0.0
+          ],
+          "end": [
+            10.0,
+            0.0
+          ],
+          "inward": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "name": "end_stop",
+          "start": [
+            1.5,
+            0.0
+          ],
+          "end": [
+            1.5,
+            1.05
+          ],
+          "inward": [
+            -1.0,
+            0.0
+          ]
+        },
+        {
+          "name": "ceiling",
+          "start": [
+            -10.0,
+            1.05
+          ],
+          "end": [
+            10.0,
+            1.05
+          ],
+          "inward": [
+            0.0,
+            -1.0
+          ]
+        }
+      ],
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s",
+        "force": "N",
+        "moment": "N m",
+        "energy": "J",
+        "angle": "rad"
+      }
+    },
+    {
+      "run_id": "single_stop_base",
+      "fixture": "single_stop",
+      "mu": 0.5,
+      "dt": 2.5e-05,
+      "kn": 4000.0,
+      "kt": 4000.0,
+      "duration": 1.1,
+      "gravity": [
+        0.0,
+        -9.81
+      ],
+      "disks": [
+        "fragment_1"
+      ],
+      "disk_radius": {
+        "fragment_1": 0.5
+      },
+      "disk_mass": {
+        "fragment_1": 1.0
+      },
+      "disk_moment_of_inertia": {
+        "fragment_1": 0.125
+      },
+      "initial_state": {
+        "fragment_1": {
+          "position": [
+            1.0,
+            0.4975475
+          ],
+          "velocity": [
+            0.0,
+            0.0
+          ],
+          "angle": 0.0,
+          "angular_velocity": 0.0
+        }
+      },
+      "normal_dashpot_pair": null,
+      "normal_dashpot_wall": {
+        "fragment_1": 8.96193286096143
+      },
+      "tangential_dashpot": 0.0,
+      "normal_dashpot_unclamped_reference_e": 0.8,
+      "initial_center_of_mass_x": 1.0,
+      "final_center_of_mass_x": 0.6551734033113442,
+      "net_center_of_mass_dx": -0.3448265966886558,
+      "peak_overlap": 0.002954011961848413,
+      "peak_normal_force": 11.861557262357415,
+      "max_coulomb_excess": 0.0,
+      "max_angular_speed": 3.87049247943497,
+      "initial_mechanical_energy": 4.8929704874999995,
+      "final_mechanical_energy": 7.653690135206122,
+      "drive_work": 2.787118633539159,
+      "normal_contact_loss_signed": 0.008862344598759482,
+      "tangent_contact_loss_signed": 0.01742596042777362,
+      "contact_frame_energy_change": 0.0,
+      "contact_history_release": 2.849476093412249e-09,
+      "normal_force_cutoff_energy": 0.00026555249769919165,
+      "final_energy_balance_residual": -0.00011067795702726563,
+      "final_translation_speeds": {
+        "fragment_1": 1.9101455166730714
+      },
+      "final_angular_speeds": {
+        "fragment_1": 3.87049247943497
+      },
+      "final_angular_momentum": 1.4325031477326584,
+      "hold_rightward_dx": -3.325803100007185e-05,
+      "hold_min_drive_force_x": 8.0,
+      "reverse_leftward_dx": 0.34662006608549845,
+      "hold_min_disk_contacts": 0,
+      "hold_min_end_stop_contacts": 1,
+      "reverse_final_end_stop_contacts": 0,
+      "classification": "single-body geometric stop control",
+      "walls": [
+        {
+          "name": "floor",
+          "start": [
+            -10.0,
+            0.0
+          ],
+          "end": [
+            10.0,
+            0.0
+          ],
+          "inward": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "name": "end_stop",
+          "start": [
+            1.5,
+            0.0
+          ],
+          "end": [
+            1.5,
+            1.05
+          ],
+          "inward": [
+            -1.0,
+            0.0
+          ]
+        },
+        {
+          "name": "ceiling",
+          "start": [
+            -10.0,
+            1.05
+          ],
+          "end": [
+            10.0,
+            1.05
+          ],
+          "inward": [
+            0.0,
+            -1.0
+          ]
+        }
+      ],
+      "units": {
+        "length": "m",
+        "mass": "kg",
+        "time": "s",
+        "force": "N",
+        "moment": "N m",
+        "energy": "J",
+        "angle": "rad"
+      }
+    }
+  ],
+  "units": {
+    "length": "m",
+    "mass": "kg",
+    "time": "s",
+    "force": "N",
+    "moment": "N m",
+    "energy": "J",
+    "angle": "rad"
+  },
+  "parameter_calibration": "illustrative, uncalibrated synthetic fixture values"
+}

@@ -1,8 +1,10 @@
 # Cavity / air-volume minimum study
 
-**Recorded:** 2026-11-02  
-**Research branch starting commit:** `796d5c7`  
-**Inspected production main:** `5bdd516`  
+**Recorded:** 2026-11-02
+
+**Research branch starting commit:** `796d5c7`
+
+**Inspected production main:** `5bdd516`
 **Scope:** analytical / lumped acoustics and small deterministic ODE checks. No 3D solver and no ANT production changes.
 
 The accepted frequency sweep is 1–340 Hz, limited by the preregistered study screen `kDmax ≤ 0.25` at the upper edge; `ka` is at most 0.025 there. This is a conservative comparison boundary, not a universal acoustic error guarantee. A preceding 1–5 kHz export is preserved as an extrapolation diagnostic in [`preparation/full-band-extrapolation-diagnostic/`](preparation/full-band-extrapolation-diagnostic/) and is not interpreted outside the compact band.
