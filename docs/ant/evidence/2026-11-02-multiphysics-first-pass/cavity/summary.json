@@ -1,0 +1,215 @@
+{
+  "status": "CONTROLLED_PHYSICAL_MODEL_ONLY; ANT_CAVITY_MAPPING_UNSUPPORTED",
+  "source_boundary": "ANT compiles 2D surface masks to plate nodes; no roof, sealed air volume, or air solver is represented in this scope.",
+  "illustrative_air_constants": {
+    "density_kg_m3": 1.2,
+    "sound_speed_m_s": 343.0
+  },
+  "accepted_frequency_sweep": {
+    "start_hz": 1.0,
+    "end_hz": 340.0,
+    "step_hz": 1.0,
+    "max_kD_at_end": 0.24912921334589613,
+    "max_ka_at_end": 0.02491292133458961,
+    "study_kD_screen": 0.25,
+    "screen_is_universal_error_bound": false
+  },
+  "open_geometry_cases": [
+    {
+      "name": "open_top_groove",
+      "roof_coverage_fraction": 0.0,
+      "dimensions_m": {
+        "length": 0.1,
+        "width": 0.02,
+        "depth": 0.005
+      },
+      "geometric_void_m3": 1e-05,
+      "opening_area_m2": 0.002,
+      "sealed_cavity_volume_m3": null,
+      "neck_area_m2": null,
+      "status": "REJECT_HELMHOLTZ_OPEN_TOP_NO_SEALED_VOLUME_OR_NECK",
+      "frequency_hz": null,
+      "pressure_pa": null,
+      "loss_and_radiation": null
+    },
+    {
+      "name": "broad_mouth_partial_recess",
+      "roof_coverage_fraction": 0.2,
+      "dimensions_m": {
+        "length": 0.04,
+        "width": 0.04,
+        "depth": 0.01
+      },
+      "geometric_void_m3": 1.6000000000000003e-05,
+      "opening_area_m2": 0.00128,
+      "sealed_cavity_volume_m3": null,
+      "neck_area_m2": null,
+      "status": "REJECT_HELMHOLTZ_BROAD_FACE_OPENING_NO_DEFINED_NECK",
+      "frequency_hz": null,
+      "pressure_pa": null,
+      "loss_and_radiation": null
+    }
+  ],
+  "roofed_duct_reference": {
+    "name": "added_roof_open_open_duct_counterexample",
+    "length_m": 0.1,
+    "cross_section_m2": 0.0001,
+    "first_mode_hz": 1715.0,
+    "assumptions": "rigid roof and walls; pressure-release ends; no end correction, loss, or radiation model"
+  },
+  "canonical_chamber_m": {
+    "length": 0.04,
+    "width": 0.04,
+    "height": 0.025
+  },
+  "neck_length_m": 0.04,
+  "end_correction_factor_times_radius": 1.6434,
+  "internal_q_scenario": 20.0,
+  "aperture_sweep": [
+    {
+      "neck_radius_mm": 2,
+      "aperture_area_mm2": 12.566370614359172,
+      "sealed_chamber_volume_cm3": 40.0,
+      "physical_neck_length_mm": 40.0,
+      "effective_neck_length_mm": 43.2868,
+      "neck_aspect_ratio_L_over_2a": 10.0,
+      "inertance_pa_s2_m3": 4133.584914378153,
+      "compliance_m3_pa": 2.833286584104696e-10,
+      "f0_analytic_hz": 147.06571788975018,
+      "frequency_peak_hz": 147.0,
+      "peak_cavity_pressure_ratio_pa_per_pa": 19.956124816829355,
+      "radiation_resistance_at_f0_pa_s_m3": 475.4336194867718,
+      "internal_resistance_pa_s_m3": 190980.12951450114,
+      "q_internal": 20.0,
+      "q_radiation": 8033.934567802051,
+      "q_total": 19.95033483366017,
+      "kD_max": 0.10775990178830279,
+      "ka": 0.00538799508941514,
+      "kL_neck": 0.10775990178830279,
+      "cavity_pressure_at_f0_pa_per_pa": 19.950334833660175,
+      "radiated_power_at_f0_w_per_pa2": 1.29704160920811e-08,
+      "internal_loss_at_f0_w_per_pa2": 5.210173710047317e-06,
+      "radiation_fraction_at_f0": 0.0024832583169915263,
+      "far_field_pressure_at_f0_pa_per_pa_at_1m": 0.000921774528662787
+    },
+    {
+      "neck_radius_mm": 3,
+      "aperture_area_mm2": 28.274333882308138,
+      "sealed_chamber_volume_cm3": 40.0,
+      "physical_neck_length_mm": 40.0,
+      "effective_neck_length_mm": 44.930200000000006,
+      "neck_aspect_ratio_L_over_2a": 6.666666666666667,
+      "inertance_pa_s2_m3": 1906.8969130953271,
+      "compliance_m3_pa": 2.833286584104696e-10,
+      "f0_analytic_hz": 216.5266073459407,
+      "frequency_peak_hz": 216.0,
+      "peak_cavity_pressure_ratio_pa_per_pa": 19.79925189603562,
+      "radiation_resistance_at_f0_pa_s_m3": 1030.5985728975165,
+      "internal_resistance_pa_s_m3": 129714.45031166114,
+      "q_internal": 20.0,
+      "q_radiation": 2517.26431071936,
+      "q_total": 19.842349889087195,
+      "kD_max": 0.15865618634279396,
+      "ka": 0.011899213975709547,
+      "kL_neck": 0.15865618634279396,
+      "cavity_pressure_at_f0_pa_per_pa": 19.8423498890872,
+      "radiated_power_at_f0_w_per_pa2": 6.028913226840378e-08,
+      "internal_loss_at_f0_w_per_pa2": 7.588184049174589e-06,
+      "radiation_fraction_at_f0": 0.007882505545640076,
+      "far_field_pressure_at_f0_pa_per_pa_at_1m": 0.001987317539225118
+    },
+    {
+      "neck_radius_mm": 4,
+      "aperture_area_mm2": 50.26548245743669,
+      "sealed_chamber_volume_cm3": 40.0,
+      "physical_neck_length_mm": 40.0,
+      "effective_neck_length_mm": 46.5736,
+      "neck_aspect_ratio_L_over_2a": 5.0,
+      "inertance_pa_s2_m3": 1111.8627986377046,
+      "compliance_m3_pa": 2.833286584104696e-10,
+      "f0_analytic_hz": 283.5628151275606,
+      "frequency_peak_hz": 283.0,
+      "peak_cavity_pressure_ratio_pa_per_pa": 19.63005394069994,
+      "radiation_resistance_at_f0_pa_s_m3": 1767.5249497569437,
+      "internal_resistance_pa_s_m3": 99049.05844968717,
+      "q_internal": 20.0,
+      "q_radiation": 1120.765604619133,
+      "q_total": 19.649358292027443,
+      "kD_max": 0.20777582666728517,
+      "ka": 0.020777582666728515,
+      "kL_neck": 0.20777582666728517,
+      "cavity_pressure_at_f0_pa_per_pa": 19.64935829202744,
+      "radiated_power_at_f0_w_per_pa2": 1.7390080884971291e-07,
+      "internal_loss_at_f0_w_per_pa2": 9.745102258710238e-06,
+      "radiation_fraction_at_f0": 0.017532085398627873,
+      "far_field_pressure_at_f0_pa_per_pa_at_1m": 0.003375192519715451
+    }
+  ],
+  "base_transient": {
+    "neck_radius_mm": 3.0,
+    "pulse_pa": 1.0,
+    "pulse_width_s": 0.001,
+    "time_step_s": 1e-05,
+    "end_time_s": 0.1,
+    "peak_pressure_error_fraction_vs_exact": 1.9992028733014775e-10,
+    "pressure_trace_error_fraction_vs_exact": 4.332668803052787e-09,
+    "velocity_trace_error_fraction_vs_exact": 4.506089234448004e-09,
+    "input_energy_j": 2.1930328534287984e-10,
+    "internal_loss_j": 2.1733897891413882e-10,
+    "radiation_loss_j": 1.726787115589222e-12,
+    "stored_energy_at_end_j": 2.41526495266828e-13,
+    "energy_closure_error_j": -4.007182115023003e-15,
+    "energy_closure_fraction": 1.8272330525088985e-05
+  },
+  "wall_compliance_example": {
+    "wall_area_m2": 0.0016,
+    "wall_modal_mass_kg": 0.002,
+    "wall_modal_stiffness_n_m": 5000.0,
+    "wall_uncoupled_frequency_hz": 251.6460605224352,
+    "air_compliance_m3_pa": 2.833286584104696e-10,
+    "wall_compliance_m3_pa": 5.12e-10,
+    "wall_to_air_compliance_ratio": 1.8070886399999997,
+    "rigid_wall_frequency_hz": 216.5266073459407,
+    "coupled_undamped_frequencies_hz": [
+      118.7491812092998,
+      458.8500500130344
+    ],
+    "coupled_mode_compactness": {
+      "neck_length_m": 0.04,
+      "kD_screen_max": 0.25,
+      "modes": [
+        {
+          "frequency_hz": 118.7491812092998,
+          "kD": 0.08701144147100627,
+          "screen_status": "INSIDE_COMPACT_SCREEN"
+        },
+        {
+          "frequency_hz": 458.8500500130344,
+          "kD": 0.3362145647160952,
+          "screen_status": "OUTSIDE_SCREEN_SURROGATE_ROOT_ONLY_NO_PHYSICAL_VALIDATION"
+        }
+      ]
+    },
+    "closed_form_eigenvalue_roots_rad2_s2": [
+      556699.6961921323,
+      8311919.021403421
+    ],
+    "numeric_eigenvalue_roots_rad2_s2": [
+      556699.6961921304,
+      8311919.021403422
+    ],
+    "eigenvalue_root_relative_error": 3.3458706048729496e-15,
+    "status": "RIGID_WALL_REJECTED_FOR_ILLUSTRATIVE_COMPLIANT_WALL"
+  },
+  "wall_time_domain": {
+    "neck_radius_mm": 3.0,
+    "wall_initial_displacement_m3": 1e-09,
+    "time_step_s": 1e-05,
+    "end_time_s": 0.1,
+    "initial_energy_j": 1.7647350000000001e-09,
+    "maximum_total_energy_drift_fraction": 5.977166990226882e-08,
+    "maximum_pressure_work_error_fraction": 0.000144811952149099,
+    "peak_pressure_pa": 3.52947,
+    "peak_wall_displacement_m": 7.281469288254585e-07
+  }
+}

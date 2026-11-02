@@ -1,0 +1,159 @@
+{
+  "status": "CONTROLLED_PHYSICAL_MODEL_ONLY; ANT_CAVITY_MAPPING_UNSUPPORTED",
+  "source_boundary": "ANT compiles 2D surface masks to plate nodes; no roof, sealed air volume, or air solver is represented in this scope.",
+  "illustrative_air_constants": {
+    "density_kg_m3": 1.2,
+    "sound_speed_m_s": 343.0
+  },
+  "open_geometry_cases": [
+    {
+      "name": "open_top_groove",
+      "dimensions_m": {
+        "length": 0.1,
+        "width": 0.02,
+        "depth": 0.005
+      },
+      "geometric_void_m3": 1e-05,
+      "opening_area_m2": 0.002,
+      "sealed_cavity_volume_m3": null,
+      "neck_area_m2": null,
+      "status": "REJECT_HELMHOLTZ_OPEN_TOP_NO_SEALED_VOLUME_OR_NECK",
+      "frequency_hz": null,
+      "pressure_pa": null,
+      "loss_and_radiation": null
+    },
+    {
+      "name": "broad_mouth_partial_recess",
+      "dimensions_m": {
+        "length": 0.04,
+        "width": 0.04,
+        "depth": 0.01
+      },
+      "geometric_void_m3": 1.6000000000000003e-05,
+      "opening_area_m2": 0.00128,
+      "sealed_cavity_volume_m3": null,
+      "neck_area_m2": null,
+      "status": "REJECT_HELMHOLTZ_BROAD_FACE_OPENING_NO_DEFINED_NECK",
+      "frequency_hz": null,
+      "pressure_pa": null,
+      "loss_and_radiation": null
+    }
+  ],
+  "roofed_duct_reference": {
+    "name": "added_roof_open_open_duct_counterexample",
+    "length_m": 0.1,
+    "cross_section_m2": 0.0001,
+    "first_mode_hz": 1715.0,
+    "assumptions": "rigid roof and walls; pressure-release ends; no end correction, loss, or radiation model"
+  },
+  "canonical_chamber_m": {
+    "length": 0.04,
+    "width": 0.04,
+    "height": 0.025
+  },
+  "neck_length_m": 0.012,
+  "end_correction_factor_times_radius": 1.6434,
+  "internal_q_scenario": 20.0,
+  "aperture_sweep": [
+    {
+      "neck_radius_mm": 2,
+      "aperture_area_mm2": 12.566370614359172,
+      "sealed_chamber_volume_cm3": 40.0,
+      "physical_neck_length_mm": 12.0,
+      "effective_neck_length_mm": 15.2868,
+      "f0_analytic_hz": 247.47475114140997,
+      "frequency_peak_hz": 247.0,
+      "peak_cavity_pressure_ratio_pa_per_pa": 19.747603308772256,
+      "radiation_resistance_at_f0_pa_s_m3": 1346.2595180155429,
+      "internal_resistance_pa_s_m3": 113492.91077245519,
+      "q_internal": 20.0,
+      "q_radiation": 1686.0480353706198,
+      "q_total": 19.765540013113927,
+      "kD_max": 0.18133291198479667,
+      "ka": 0.009066645599239835,
+      "kL_neck": 0.054399873595439005,
+      "cavity_pressure_at_f0_pa_per_pa": 19.747603308772256,
+      "radiated_power_at_f0_w_per_pa2": 1.0111703894854172e-07,
+      "internal_loss_at_f0_w_per_pa2": 8.557209747533532e-06,
+      "radiation_fraction_at_f0": 0.011678588882370671,
+      "far_field_pressure_at_f0_pa_per_pa_at_1m": 0.002573711840923994
+    },
+    {
+      "neck_radius_mm": 4,
+      "aperture_area_mm2": 50.26548245743669,
+      "sealed_chamber_volume_cm3": 40.0,
+      "physical_neck_length_mm": 12.0,
+      "effective_neck_length_mm": 18.5736,
+      "f0_analytic_hz": 449.02563893368534,
+      "frequency_peak_hz": 449.0,
+      "peak_cavity_pressure_ratio_pa_per_pa": 18.677800781269365,
+      "radiation_resistance_at_f0_pa_s_m3": 4432.097170177026,
+      "internal_resistance_pa_s_m3": 62550.169554740234,
+      "q_internal": 20.0,
+      "q_radiation": 282.25991964089485,
+      "q_total": 18.67663565690341,
+      "kD_max": 0.32901589470496306,
+      "ka": 0.032901589470496304,
+      "kL_neck": 0.09870476841148891,
+      "cavity_pressure_at_f0_pa_per_pa": 18.677800781269365,
+      "radiated_power_at_f0_w_per_pa2": 9.877444161429921e-07,
+      "internal_loss_at_f0_w_per_pa2": 1.3941625037718301e-05,
+      "radiation_fraction_at_f0": 0.06616116100519732,
+      "far_field_pressure_at_f0_pa_per_pa_at_1m": 0.008043962558949465
+    },
+    {
+      "neck_radius_mm": 6,
+      "aperture_area_mm2": 113.09733552923255,
+      "sealed_chamber_volume_cm3": 40.0,
+      "physical_neck_length_mm": 12.0,
+      "effective_neck_length_mm": 21.860400000000002,
+      "f0_analytic_hz": 620.8424306797435,
+      "frequency_peak_hz": 620.0,
+      "peak_cavity_pressure_ratio_pa_per_pa": 16.857565953599316,
+      "radiation_resistance_at_f0_pa_s_m3": 8472.855025525605,
+      "internal_resistance_pa_s_m3": 45239.54623877156,
+      "q_internal": 20.0,
+      "q_radiation": 106.78701831314568,
+      "q_total": 16.845102871556946,
+      "kD_max": 0.4549117246088193,
+      "ka": 0.0682367586913229,
+      "kL_neck": 0.1364735173826458,
+      "cavity_pressure_at_f0_pa_per_pa": 16.838864862241778,
+      "radiated_power_at_f0_w_per_pa2": 2.937648064763096e-06,
+      "internal_loss_at_f0_w_per_pa2": 1.5677175165205887e-05,
+      "radiation_fraction_at_f0": 0.15781229982531458,
+      "far_field_pressure_at_f0_pa_per_pa_at_1m": 0.013872273147223672
+    }
+  ],
+  "base_transient": {
+    "neck_radius_mm": 4.0,
+    "pulse_pa": 1.0,
+    "pulse_width_s": 0.001,
+    "time_step_s": 1e-05,
+    "end_time_s": 0.1,
+    "peak_pressure_error_fraction_vs_exact": 6.496213438287924e-10,
+    "pressure_trace_error_fraction_vs_exact": 7.562645394212862e-08,
+    "velocity_trace_error_fraction_vs_exact": 7.876185747129877e-08,
+    "input_energy_j": 5.303444840513778e-10,
+    "internal_loss_j": 4.9528607294331e-10,
+    "radiation_loss_j": 3.509432537027832e-11,
+    "stored_energy_at_end_j": 1.602229332604351e-16,
+    "energy_closure_error_j": -3.607448514377028e-14,
+    "energy_closure_fraction": 6.802085480024624e-05
+  },
+  "wall_compliance_example": {
+    "wall_area_m2": 0.0016,
+    "wall_modal_mass_kg": 0.002,
+    "wall_modal_stiffness_n_m": 5000.0,
+    "wall_uncoupled_frequency_hz": 251.6460605224352,
+    "air_compliance_m3_pa": 2.833286584104696e-10,
+    "wall_compliance_m3_pa": 5.12e-10,
+    "wall_to_air_compliance_ratio": 1.8070886399999997,
+    "rigid_wall_frequency_hz": 449.02563893368534,
+    "coupled_undamped_frequencies_hz": [
+      193.20189842584963,
+      584.8572608855533
+    ],
+    "status": "RIGID_WALL_REJECTED_FOR_ILLUSTRATIVE_COMPLIANT_WALL"
+  }
+}
