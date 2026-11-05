@@ -274,6 +274,22 @@ try {
     visible: !document.querySelector('#clip-warning').hidden,
     predictedClip: window.materialSketchbook.response(0).metrics.peak > 1 }));
   check('zero_db_readout_and_clip_prediction', zeroDbWarning.label === '0 dB' && zeroDbWarning.visible === zeroDbWarning.predictedClip, zeroDbWarning);
+  const clipWarning = await page.evaluate(() => {
+    const response = window.materialSketchbook.response(0), input = document.querySelector('#monitor-gain');
+    const originalPeak = response.metrics.peak;
+    let visible, predictedDbfs, text;
+    try {
+      response.metrics.peak = 0.01; input.value = '54'; input.dispatchEvent(new Event('input', { bubbles: true }));
+      predictedDbfs = 20 * Math.log10(response.metrics.peak * 10 ** (Number(input.value) / 20));
+      visible = !document.querySelector('#clip-warning').hidden; text = document.querySelector('#clip-warning').textContent;
+    } finally {
+      response.metrics.peak = originalPeak; input.value = '0'; input.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+    return { visible, predictedDbfs, text, metricsRestored: response.metrics.peak === originalPeak,
+      gainRestored: input.value === '0', warningCleared: document.querySelector('#clip-warning').hidden };
+  });
+  check('predicted_overload_shows_clip_warning_and_restores_probe_metrics', clipWarning.visible && clipWarning.predictedDbfs > 0
+    && clipWarning.text.includes('0 dBFS') && clipWarning.metricsRestored && clipWarning.gainRestored && clipWarning.warningCleared, clipWarning);
   await page.locator('#listen').click();
   await page.waitForTimeout(120);
   const zeroDbAudio = await page.evaluate(() => {
