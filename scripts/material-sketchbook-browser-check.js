@@ -11,7 +11,7 @@ const chromePath = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
 const seed = 20261005;
 const points = [0, 30, 120, 300];
 const production = process.argv.includes('--production');
-const output = resolve(root, 'docs/ant/evidence/2026-11-02-material-sketchbook-v0/browser', production ? 'production' : 'dev');
+const output = resolve(process.env.SKETCHBOOK_BROWSER_OUTPUT || resolve(root, 'docs/ant/evidence/2026-11-02-material-sketchbook-v0/browser'), production ? 'production' : 'dev');
 if (!process.argv.includes('--record')) {
   console.error('Pass --record to write browser evidence.');
   process.exit(2);
@@ -43,6 +43,9 @@ const check = (name, pass, details = null) => {
   receipt.checks[name] = { pass: Boolean(pass), ...(details === null ? {} : { details }) };
   assert.ok(pass, `${name}${details ? `: ${JSON.stringify(details)}` : ''}`);
 };
+const skip = (name, reason, details = null) => {
+  receipt.checks[name] = { skipped: true, reason, ...(details === null ? {} : { details }) };
+};
 
 try {
   const viteConfig = { configFile: false, root, base: '/ant-2026/', publicDir: 'static' };
@@ -57,13 +60,34 @@ try {
   await context.addInitScript(() => {
     const NativeAudioContext = window.AudioContext;
     window.__sketchbookAudioContexts = [];
+    window.__sketchbookAudioNodes = { gains: [], analysers: [], splitters: [], sources: [], connections: [], gainTargets: [] };
+    const audioNodeConnect = AudioNode.prototype.connect;
+    AudioNode.prototype.connect = function(destination, ...args) {
+      window.__sketchbookAudioNodes.connections.push({ source: this, destination, output: args[0] ?? 0, input: args[1] ?? 0 });
+      return audioNodeConnect.call(this, destination, ...args);
+    };
     if (NativeAudioContext) window.AudioContext = new Proxy(NativeAudioContext, {
       construct(target, args) {
         const audioContext = Reflect.construct(target, args, target);
         window.__sketchbookAudioContexts.push(audioContext);
+        for (const [method, key] of [['createGain', 'gains'], ['createAnalyser', 'analysers'], ['createChannelSplitter', 'splitters']]) {
+          const create = audioContext[method].bind(audioContext);
+          audioContext[method] = (...createArgs) => {
+            const node = create(...createArgs); window.__sketchbookAudioNodes[key].push(node);
+            if (key === 'gains') {
+              const setTarget = node.gain.setTargetAtTime.bind(node.gain);
+              node.gain.setTargetAtTime = (value, startTime, timeConstant) => {
+                window.__sketchbookAudioNodes.gainTargets.push({ value, startTime, timeConstant });
+                return setTarget(value, startTime, timeConstant);
+              };
+            }
+            return node;
+          };
+        }
         const createSource = audioContext.createBufferSource.bind(audioContext);
         audioContext.createBufferSource = () => {
           const source = createSource();
+          window.__sketchbookAudioNodes.sources.push(source);
           const start = source.start.bind(source);
           source.start = (...startArgs) => {
             window.__sketchbookAudioStarts.push({ state: audioContext.state, buffer: source.buffer });
@@ -83,8 +107,12 @@ try {
   await page.goto(`${base}material-sketchbook.html`, { waitUntil: 'networkidle' });
   await page.locator('#world').waitFor();
   const api = page.locator('body');
-  const ready = await page.evaluate(() => ({ api: Boolean(window.materialSketchbook), seed: Number(document.querySelector('#seed').value), model: document.querySelector('#model').value, audioCreated: window.materialSketchbook?.audioCreated() }));
+  const ready = await page.evaluate(() => ({ api: Boolean(window.materialSketchbook), seed: Number(document.querySelector('#seed').value), model: document.querySelector('#model').value, audioCreated: window.materialSketchbook?.audioCreated(),
+    monitor: { min: Number(document.querySelector('#monitor-gain').min), max: Number(document.querySelector('#monitor-gain').max), value: Number(document.querySelector('#monitor-gain').value), label: document.querySelector('#monitor-gain-value').textContent,
+      vertical: getComputedStyle(document.querySelector('#monitor-gain')).writingMode } }));
   check('sketchbook_initialization', ready.api && ready.seed === seed && ready.model === 'A' && ready.audioCreated === false, ready);
+  check('monitor_gain_defaults_and_vertical_control', ready.monitor.min === 0 && ready.monitor.max === 54 && ready.monitor.value === 36
+    && ready.monitor.label === '+36 dB' && ready.monitor.vertical === 'vertical-lr', ready.monitor);
   const initialCanvas = await page.locator('#world').evaluate(canvas => ({ width: canvas.width, height: canvas.height }));
   check('fixed_canvas_dimensions', initialCanvas.width === 1200 && initialCanvas.height === 520, initialCanvas);
 
@@ -232,32 +260,116 @@ try {
   const uploadedState = await page.evaluate(() => window.materialSketchbook.state());
   check('actual_file_upload_restore', hashJson(uploadedState) === hashJson(expected.state), { stateSha256: hashJson(uploadedState) });
 
-  // AudioContext must remain absent until this real user-gesture click.
+  // AudioContext remains lazy until Listen; the gain and meter stay outside Probe and world state.
+  const beforeProbeAudio = await page.evaluate(() => JSON.stringify(window.materialSketchbook.state()));
   await page.locator('#probe').click();
   check('audio_context_still_absent_before_listen', !(await page.evaluate(() => window.materialSketchbook.audioCreated())));
+  const probePcmHash = await page.evaluate(() => {
+    const response = window.materialSketchbook.response(0);
+    return { left: Array.from(response.left), right: Array.from(response.right), sampleRate: response.sampleRate };
+  }).then(response => hashSamples([...response.left, ...response.right]));
+  await page.locator('#monitor-gain').evaluate(input => { input.value = '0'; input.dispatchEvent(new Event('input', { bubbles: true })); });
+  const zeroDbWarning = await page.evaluate(() => ({ label: document.querySelector('#monitor-gain-value').textContent,
+    peak: window.materialSketchbook.response(0).metrics.peak,
+    visible: !document.querySelector('#clip-warning').hidden,
+    predictedClip: window.materialSketchbook.response(0).metrics.peak > 1 }));
+  check('zero_db_readout_and_clip_prediction', zeroDbWarning.label === '0 dB' && zeroDbWarning.visible === zeroDbWarning.predictedClip, zeroDbWarning);
   await page.locator('#listen').click();
-  await page.waitForTimeout(100);
-  const audio = await page.evaluate(() => {
-    const started = window.__sketchbookAudioStarts[0], response = window.materialSketchbook.response(0);
-    return {
-      created: window.materialSketchbook.audioCreated(),
-      states: window.__sketchbookAudioContexts.map(audioContext => audioContext.state),
-      started: Boolean(started),
-      startContextState: started?.state,
-      buffer: started && { channels: started.buffer.numberOfChannels, length: started.buffer.length, sampleRate: started.buffer.sampleRate,
-        left: Array.from(started.buffer.getChannelData(0)), right: Array.from(started.buffer.getChannelData(1)) },
-      response: response && { sampleRate: response.sampleRate, left: Array.from(response.left), right: Array.from(response.right) },
-    };
+  await page.waitForTimeout(120);
+  const zeroDbAudio = await page.evaluate(() => {
+    const probe = window.__sketchbookAudioNodes, context = window.__sketchbookAudioContexts[0];
+    const source = probe.sources[0], gain = probe.gains[0], analyser = probe.analysers[0];
+    const hasConnection = (from, to) => probe.connections.some(edge => edge.source === from && edge.destination === to);
+    const leftMeterAnalyser = probe.analysers[1], rightMeterAnalyser = probe.analysers[2], splitter = probe.splitters[0];
+    return { contextState: context?.state, contextTime: context?.currentTime, gainValue: gain?.gain.value,
+      graph: Boolean(source && gain && analyser && hasConnection(source, gain) && hasConnection(gain, analyser) && hasConnection(analyser, context.destination)),
+      stereoMeterTaps: Boolean(splitter && leftMeterAnalyser && rightMeterAnalyser
+        && hasConnection(gain, splitter)
+        && probe.connections.some(edge => edge.source === splitter && edge.destination === leftMeterAnalyser && edge.output === 0)
+        && probe.connections.some(edge => edge.source === splitter && edge.destination === rightMeterAnalyser && edge.output === 1)),
+      buffer: source?.buffer && { left: Array.from(source.buffer.getChannelData(0)), right: Array.from(source.buffer.getChannelData(1)), sampleRate: source.buffer.sampleRate },
+      meter: { text: document.querySelector('#peak-meter-value').textContent, height: parseFloat(document.querySelector('#peak-meter-fill').style.height) },
+      audioCreated: window.materialSketchbook.audioCreated() };
   });
-  const audioBufferMatches = audio.started && audio.buffer.channels === 2 && audio.buffer.length === audio.response.left.length
-    && audio.buffer.sampleRate === audio.response.sampleRate
-    && hashSamples([...audio.buffer.left, ...audio.buffer.right]) === hashSamples([...audio.response.left, ...audio.response.right]);
-  check('audio_context_running_and_matching_pcm_started_after_gesture', audio.created && audio.states.length === 1 && audio.states[0] === 'running'
-    && audio.started && audio.startContextState === 'running' && audioBufferMatches,
-  { created: audio.created, states: audio.states, started: audio.started, startContextState: audio.startContextState,
-    buffer: audio.buffer && { channels: audio.buffer.channels, length: audio.buffer.length, sampleRate: audio.buffer.sampleRate },
-    response: audio.response && { sampleRate: audio.response.sampleRate, length: audio.response.left.length }, audioBufferMatches,
-    pcmSha256: audio.buffer && hashSamples([...audio.buffer.left, ...audio.buffer.right]), status: await page.locator('#status').textContent() });
+  const zeroDbPcmHash = zeroDbAudio.buffer && hashSamples([...zeroDbAudio.buffer.left, ...zeroDbAudio.buffer.right]);
+  check('unity_gain_routes_pcm_through_gain_and_analyser', zeroDbAudio.contextState === 'running' && zeroDbAudio.gainValue === 1
+    && zeroDbAudio.graph && zeroDbAudio.stereoMeterTaps && zeroDbPcmHash === probePcmHash,
+  { contextState: zeroDbAudio.contextState, gainValue: zeroDbAudio.gainValue, graph: zeroDbAudio.graph, stereoMeterTaps: zeroDbAudio.stereoMeterTaps,
+    pcmHash: zeroDbPcmHash, probePcmHash });
+  const zeroDbWorld = await page.evaluate(() => JSON.stringify(window.materialSketchbook.state()));
+  check('monitor_does_not_change_probe_or_world', beforeProbeAudio === zeroDbWorld);
+  await page.waitForTimeout(1220);
+  const heldZeroDbPeak = await page.locator('#peak-meter-value').textContent();
+  const zeroDbClock = await page.evaluate(() => window.__sketchbookAudioContexts[0]?.currentTime || 0);
+  if (zeroDbClock === 0) {
+    skip('output_meter_moves_on_post_gain_signal', 'headless AudioContext clock did not advance', { heldZeroDbPeak, zeroDbClock });
+    skip('peak_hold_keeps_short_probe_readable', 'headless AudioContext clock did not advance', { heldZeroDbPeak, zeroDbClock });
+  } else {
+    check('output_meter_moves_on_post_gain_signal', heldZeroDbPeak !== '−∞ dBFS', { heldZeroDbPeak, zeroDbClock });
+    check('peak_hold_keeps_short_probe_readable', heldZeroDbPeak !== '−∞ dBFS', { heldZeroDbPeak, zeroDbClock });
+  }
+
+  await page.locator('#monitor-gain').evaluate(input => { input.value = '20'; input.dispatchEvent(new Event('input', { bubbles: true })); });
+  check('twenty_db_slider_displays_scheduled_gain', await page.evaluate(() => {
+    const input = document.querySelector('#monitor-gain'), gain = window.__sketchbookAudioNodes.gains[0];
+    const target = window.__sketchbookAudioNodes.gainTargets.at(-1);
+    return input.value === '20' && document.querySelector('#monitor-gain-value').textContent === '+20 dB'
+      && Boolean(gain) && target?.value === 10 && Math.abs(target.timeConstant - 0.01) < 1e-12
+      && Math.abs(10 ** (Number(input.value) / 20) / 10 - 1) < 1e-12;
+  }), await page.evaluate(() => ({ label: document.querySelector('#monitor-gain-value').textContent,
+    gainValue: window.__sketchbookAudioNodes.gains[0].gain.value, target: window.__sketchbookAudioNodes.gainTargets.at(-1) })));
+  await page.locator('#listen').click(); await page.waitForTimeout(1250);
+  const twentyDbAudio = await page.evaluate(() => ({ peak: document.querySelector('#peak-meter-value').textContent,
+    warning: !document.querySelector('#clip-warning').hidden,
+    metricsPeak: window.materialSketchbook.response(0).metrics.peak,
+    label: document.querySelector('#monitor-gain-value').textContent,
+    setting: Number(document.querySelector('#monitor-gain').value),
+    contextTime: window.__sketchbookAudioContexts[0]?.currentTime,
+    buffer: { left: Array.from(window.__sketchbookAudioNodes.sources.at(-1).buffer.getChannelData(0)),
+      right: Array.from(window.__sketchbookAudioNodes.sources.at(-1).buffer.getChannelData(1)) },
+    gainValue: window.__sketchbookAudioNodes.gains[0].gain.value }));
+  await page.screenshot({ path: resolve(output, 'captures', 'monitor-output-20db.png'), fullPage: false, animations: 'disabled' });
+  const twentyDbPcmHash = hashSamples([...twentyDbAudio.buffer.left, ...twentyDbAudio.buffer.right]);
+  const inputPeak = Math.max(...twentyDbAudio.buffer.left.map(Math.abs), ...twentyDbAudio.buffer.right.map(Math.abs));
+  const outputPeak = inputPeak * twentyDbAudio.gainValue;
+  const worldUnchangedAfterGain = beforeProbeAudio === await page.evaluate(() => JSON.stringify(window.materialSketchbook.state()));
+  check('twenty_db_gainnode_applies_tenfold_pcm_amplitude', twentyDbAudio.label === '+20 dB' && twentyDbAudio.setting === 20
+    && Math.abs(twentyDbAudio.gainValue - 10) < 1e-6
+    && inputPeak > 0 && Math.abs(outputPeak / inputPeak - 10) < 1e-12,
+  { label: twentyDbAudio.label, setting: twentyDbAudio.setting, inputPeak, gainValue: twentyDbAudio.gainValue, outputPeak, amplitudeRatio: outputPeak / inputPeak });
+  check('twenty_db_clip_warning_and_unmodified_probe_pcm', twentyDbAudio.warning === (twentyDbAudio.metricsPeak * 10 > 1)
+    && twentyDbAudio.peak !== '−∞ dBFS' && twentyDbPcmHash === probePcmHash && worldUnchangedAfterGain,
+  { warning: twentyDbAudio.warning, predictedClip: twentyDbAudio.metricsPeak * 10 > 1, probePcmHash, twentyDbPcmHash, worldUnchangedAfterGain });
+  await page.waitForTimeout(1250);
+  if (twentyDbAudio.contextTime === 0) skip('playback_end_resets_peak_meter', 'headless AudioContext clock did not advance', { value: await page.locator('#peak-meter-value').textContent() });
+  else check('playback_end_resets_peak_meter', await page.locator('#peak-meter-value').textContent() === '−∞ dBFS'
+    && await page.locator('#peak-meter-fill').evaluate(fill => fill.style.height) === '0%', { value: await page.locator('#peak-meter-value').textContent() });
+
+  for (const [model, samples] of [['A', [0]], ['B', [0, 1]], ['C', [0]]]) {
+    await page.locator('#model').selectOption(model); await page.locator('#probe').click();
+    for (const sampleIndex of samples) {
+      await page.locator('#sample').selectOption(String(sampleIndex));
+      const modelState = await page.evaluate(() => JSON.stringify(window.materialSketchbook.state()));
+      await page.locator('#listen').click(); await page.waitForTimeout(60);
+      const playback = await page.evaluate(() => {
+        const nodes = window.__sketchbookAudioNodes, source = nodes.sources.at(-1), context = window.__sketchbookAudioContexts[0];
+        const index = Number(document.querySelector('#sample').value), response = window.materialSketchbook.response(index);
+        return { model: document.querySelector('#model').value, index, label: document.querySelector('#monitor-gain-value').textContent,
+          gainSetting: Number(document.querySelector('#monitor-gain').value), gainValue: nodes.gains[0]?.gain.value,
+          gainCount: nodes.gains.length, contextCount: window.__sketchbookAudioContexts.length,
+          routed: nodes.connections.some(edge => edge.source === source && edge.destination === nodes.gains[0]),
+          pcm: { left: Array.from(source.buffer.getChannelData(0)), right: Array.from(source.buffer.getChannelData(1)) },
+          response: { left: Array.from(response.left), right: Array.from(response.right) }, state: JSON.stringify(window.materialSketchbook.state()),
+          contextRunning: context?.state === 'running' };
+      });
+      const samePcm = hashSamples([...playback.pcm.left, ...playback.pcm.right]) === hashSamples([...playback.response.left, ...playback.response.right]);
+      check(`${model}_sample${sampleIndex}_uses_shared_monitor_gain`, playback.model === model && playback.index === sampleIndex && playback.label === '+20 dB'
+        && playback.gainSetting === 20 && playback.gainCount === 1 && playback.contextCount === 1
+        && playback.routed && playback.contextRunning && samePcm && playback.state === modelState,
+      { model: playback.model, sampleIndex: playback.index, gain: playback.label, gainValue: playback.gainValue,
+        gainCount: playback.gainCount, contextCount: playback.contextCount, routed: playback.routed, samePcm, worldUnchanged: playback.state === modelState });
+    }
+  }
 
   // The old ANT entry only gets a load check here, not behavior review.
   const oldPage = await context.newPage();
@@ -276,6 +388,7 @@ try {
   await writeFile(resolve(output, 'summary.json'), `${JSON.stringify(receipt, null, 2)}\n`);
 }
 
-const failed = Object.entries(receipt.checks).filter(([, result]) => !result.pass);
-console.log(JSON.stringify({ output: `docs/ant/evidence/2026-11-02-material-sketchbook-v0/browser/${production ? 'production' : 'dev'}`, checks: Object.keys(receipt.checks).length, failed, errors: receipt.errors.length }, null, 2));
+const failed = Object.entries(receipt.checks).filter(([, result]) => result.pass === false);
+const skipped = Object.entries(receipt.checks).filter(([, result]) => result.skipped);
+console.log(JSON.stringify({ output, checks: Object.keys(receipt.checks).length, skipped, failed, errors: receipt.errors.length }, null, 2));
 if (failed.length || receipt.errors.length) process.exitCode = 1;

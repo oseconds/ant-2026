@@ -8,18 +8,84 @@ import { renderProbe } from './response.js';
 const $ = id => document.getElementById(id);
 const constructors = { A: ActivityWorld, B: MemoryWorld, C: CapacityWorld };
 const MAX_TICKS = 216000;
+const MONITOR_PEAK_HOLD_MS = 1200;
+const METER_FLOOR_DBFS = -60;
 const laws = {
   A: '활동은 공급과 교란을 함께 남깁니다. 교란은 빨리 줄고, 결합은 천천히 회복하며 이동성을 낮춥니다.',
   B: '동일한 질량·형상과 입력량. AB / BA 순서가 방향 기억을 바꾸고, 같은 결합 법칙이 이를 읽습니다.',
   C: '질량과 위치는 고정. 국소 구동이 변형을 만들고, 연결별 용량이 보존된 예산 안에서 재분배됩니다.'
 };
 let modelId = 'A', world = new ActivityWorld(), running = false, busy = false;
-let responses = [], context, source, accumulator = 0, lastFrame;
+let responses = [], context, source, monitorGainNode, monitorAnalyser, meterSplitter, leftMeterAnalyser, rightMeterAnalyser, meterSamples, meterFrame;
+let monitorGainDb = 36, meterHeldPeakDbfs = -Infinity, meterPeakAt = 0, meterEndedAt = 0;
+let accumulator = 0, lastFrame;
 const canvas = $('world'), pen = canvas.getContext('2d');
 const wave = $('wave'), wavePen = wave.getContext('2d');
 
-function stopAudio() { if (source) { source.stop(); source.disconnect(); source = null; } }
-function clearProbe() { stopAudio(); responses = []; $('listen').disabled = true; $('sample').replaceChildren(); drawWave(); }
+function gainFromDb(db) { return 10 ** (db / 20); }
+function formatDbfs(db) { return Number.isFinite(db) ? `${db > 0 ? '+' : ''}${db.toFixed(1)} dBFS` : '−∞ dBFS'; }
+function setMeter(db) {
+  const meter = $('peak-meter');
+  const boundedDb = Number.isFinite(db) ? db : METER_FLOOR_DBFS;
+  const percent = Math.max(0, Math.min(100, (boundedDb - METER_FLOOR_DBFS) / -METER_FLOOR_DBFS * 100));
+  $('peak-meter-fill').style.height = `${percent}%`;
+  $('peak-meter-value').textContent = formatDbfs(db);
+  meter.setAttribute('aria-valuenow', String(Math.max(METER_FLOOR_DBFS, Math.min(0, boundedDb))));
+  meter.setAttribute('aria-valuetext', formatDbfs(db));
+}
+function resetMeter() {
+  if (meterFrame !== undefined) cancelAnimationFrame(meterFrame);
+  meterFrame = undefined; meterHeldPeakDbfs = -Infinity; meterPeakAt = 0; meterEndedAt = 0;
+  setMeter(-Infinity);
+}
+function stopAudio() {
+  if (source) { const current = source; source = null; current.onended = null; current.stop(); current.disconnect(); }
+  resetMeter();
+}
+function clearProbe() {
+  stopAudio(); responses = []; $('listen').disabled = true; $('sample').replaceChildren();
+  updateClipWarning(); drawWave();
+}
+function updateClipWarning() {
+  const response = responses[Number($('sample').value) || 0];
+  const peakDbfs = response?.metrics.peak > 0
+    ? 20 * Math.log10(response.metrics.peak * gainFromDb(monitorGainDb)) : -Infinity;
+  const warning = $('clip-warning');
+  warning.hidden = !(peakDbfs > 0);
+  if (!warning.hidden) warning.textContent = `예상 출력 피크 ${formatDbfs(peakDbfs)} · 0 dBFS를 넘어 클리핑될 수 있습니다.`;
+}
+function updateMonitorGain() {
+  monitorGainDb = Number($('monitor-gain').value);
+  $('monitor-gain-value').textContent = `${monitorGainDb > 0 ? '+' : ''}${monitorGainDb} dB`;
+  if (monitorGainNode) {
+    const now = context.currentTime, gain = monitorGainNode.gain;
+    gain.cancelScheduledValues(now);
+    gain.setTargetAtTime(gainFromDb(monitorGainDb), now, 0.01);
+  }
+  updateClipWarning();
+}
+function updatePeakMeter() {
+  meterFrame = undefined;
+  if (source) {
+    leftMeterAnalyser.getFloatTimeDomainData(meterSamples[0]);
+    rightMeterAnalyser.getFloatTimeDomainData(meterSamples[1]);
+    let peak = 0;
+    for (const channel of meterSamples) for (const sample of channel) peak = Math.max(peak, Math.abs(sample));
+    const peakDbfs = peak > 0 ? 20 * Math.log10(peak) : -Infinity;
+    const now = performance.now();
+    if (peakDbfs > meterHeldPeakDbfs || now - meterPeakAt >= MONITOR_PEAK_HOLD_MS) {
+      meterHeldPeakDbfs = peakDbfs; meterPeakAt = now;
+    }
+    setMeter(meterHeldPeakDbfs);
+  }
+  if (source || (meterEndedAt && performance.now() - meterEndedAt < MONITOR_PEAK_HOLD_MS)) {
+    meterFrame = requestAnimationFrame(updatePeakMeter);
+  } else resetMeter();
+}
+function startPeakMeter() {
+  meterHeldPeakDbfs = -Infinity; meterPeakAt = 0; meterEndedAt = 0; setMeter(-Infinity);
+  meterFrame = requestAnimationFrame(updatePeakMeter);
+}
 function pause() { running = false; accumulator = 0; $('run').textContent = '실행'; }
 function select(id = $('model').value, seed = $('seed').value) {
   if (!Object.hasOwn(constructors, id)) throw new Error('Unknown model');
@@ -109,16 +175,39 @@ function probe() {
   if (JSON.stringify(world.snapshot()) !== before) throw new Error('Probe mutated the material');
   $('sample').replaceChildren(...graphs.map((graph, index) => new Option(graph.label, index)));
   $('listen').disabled = false; $('probe-status').textContent = `Frozen ${(world.tick * STEP).toFixed(3)} s · peak ${responses.map(response => response.metrics.peak.toExponential(2)).join(' / ')}`;
-  drawWave(); return responses.map(response => response.metrics);
+  updateClipWarning(); drawWave(); return responses.map(response => response.metrics);
+}
+function ensureMonitorGraph() {
+  if (!monitorGainNode) {
+    monitorGainNode = context.createGain(); monitorGainNode.gain.value = gainFromDb(monitorGainDb);
+    monitorAnalyser = context.createAnalyser(); monitorAnalyser.fftSize = 2048;
+    monitorGainNode.connect(monitorAnalyser); monitorAnalyser.connect(context.destination);
+    // AnalyserNode time-domain reads are mono-downmixed, so meter both output channels separately.
+    meterSplitter = context.createChannelSplitter(2);
+    leftMeterAnalyser = context.createAnalyser(); rightMeterAnalyser = context.createAnalyser();
+    leftMeterAnalyser.fftSize = rightMeterAnalyser.fftSize = 2048;
+    monitorGainNode.connect(meterSplitter);
+    meterSplitter.connect(leftMeterAnalyser, 0); meterSplitter.connect(rightMeterAnalyser, 1);
+    meterSamples = [new Float32Array(2048), new Float32Array(2048)];
+  }
 }
 async function listen() {
   if (!responses.length) return;
   context ??= new AudioContext(); await context.resume(); stopAudio();
+  ensureMonitorGraph();
   const response = responses[Number($('sample').value) || 0];
   const buffer = context.createBuffer(2, response.left.length, response.sampleRate);
   buffer.copyToChannel(response.left, 0); buffer.copyToChannel(response.right, 1);
-  source = context.createBufferSource(); source.buffer = buffer; source.connect(context.destination); source.start();
-  $('status').textContent = '현재 구조의 고정 gain 응답 재생. 시스템 볼륨은 낮게 시작하세요.';
+  source = context.createBufferSource(); source.buffer = buffer;
+  source.connect(monitorGainNode);
+  const current = source;
+  current.onended = () => {
+    if (source !== current) return;
+    source = null; current.disconnect(); meterEndedAt = performance.now();
+    if (meterFrame === undefined) meterFrame = requestAnimationFrame(updatePeakMeter);
+  };
+  current.start(); startPeakMeter();
+  $('status').textContent = 'Monitor Gain이 Probe PCM 청취 출력에만 적용됩니다. 시스템 볼륨은 낮게 시작하세요.';
 }
 function record() {
   const state = world.snapshot();
@@ -152,7 +241,8 @@ for (const id of ['reset', 'model']) $(id).addEventListener(id === 'model' ? 'ch
 for (const id of ['diagnostic', 'field']) $(id).addEventListener('change', draw);
 $('probe').addEventListener('click', () => { try { probe(); } catch (error) { reportError(error); } });
 $('listen').addEventListener('click', () => listen().catch(reportError));
-$('sample').addEventListener('change', drawWave);
+$('sample').addEventListener('change', () => { drawWave(); updateClipWarning(); });
+$('monitor-gain').addEventListener('input', updateMonitorGain);
 $('record').addEventListener('click', () => {
   const receipt = record(), url = URL.createObjectURL(new Blob([JSON.stringify(receipt, null, 2)], { type: 'application/json' }));
   const link = document.createElement('a'); link.href = url; link.download = `material-${modelId}-${world.seed}-${world.tick}.json`; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
