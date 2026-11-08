@@ -1,0 +1,22 @@
+const fs=require('node:fs'),path=require('node:path');
+const {chromium}=require('playwright');
+(async()=>{
+ const browser=await chromium.launch({executablePath:'/usr/bin/chromium',headless:true,args:['--no-sandbox','--autoplay-policy=no-user-gesture-required']});
+ const page=await browser.newPage({viewport:{width:1440,height:1050}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.route('http://ant-report.test/**',route=>route.fulfill({status:200,contentType:'text/html',body:fs.readFileSync(path.join(__dirname,'output/comparison.html'),'utf8')}));
+ await page.goto('http://ant-report.test/');
+ const result={cardCount:await page.locator('.card').count(),imageCount:await page.locator('img').count()};
+ await page.locator('button[data-show="A"]').click();result.aVisible=await page.locator('.card:visible').count();
+ await page.locator('button[data-id="A-120s"][data-gain="36"]:not([data-fade])').click();
+ result.audio=await page.evaluate(()=>({contextState:context.state,channels:current.buffer.numberOfChannels,sampleRate:current.buffer.sampleRate,frames:current.buffer.length,now:document.getElementById('now').textContent}));
+ await page.locator('button[data-show="B"]').click();result.bVisible=await page.locator('.card:visible').count();
+ await page.locator('button[data-id="B-AB-040s"][data-fade]').click();
+ result.fade=await page.evaluate(()=>({first:current.buffer.getChannelData(0)[0],last:current.buffer.getChannelData(0).at(-1)}));
+ await page.locator('#stop').click();await page.locator('button[data-show="all"]').click();
+ result.completeImages=await page.locator('img').evaluateAll(images=>images.every(i=>i.complete&&i.naturalWidth>0));
+ await page.evaluate(()=>scrollTo(0,0));
+ await page.screenshot({path:path.join(__dirname,'output/report-preview.png')});
+ result.errors=errors;await browser.close();
+ fs.writeFileSync(path.join(__dirname,'output/report-validation.json'),JSON.stringify(result,null,2));console.log(JSON.stringify(result,null,2));
+ if(result.cardCount!==28||result.aVisible!==7||result.bVisible!==14||!result.completeImages||errors.length||result.fade.first!==0||result.fade.last!==0)process.exitCode=1;
+})().catch(e=>{console.error(e);process.exit(1)});

@@ -2,6 +2,15 @@
 
 **Canonical chronology: `docs/ant/daily/`**
 
+### 2026-11-08 — Sketchbook audio: sub-audible frequency diagnosis
+
+[Daily record](./2026-11-08-material-sketchbook-audio-diagnosis.md) · [Evidence and comparison sheet](../evidence/2026-11-08-material-sketchbook-audio-diagnosis/README.md)
+
+- Default seed; 28 frozen-state responses across seven world checkpoints
+- A modes stay below about 13 Hz; B/C output is also dominated by sub-20 Hz energy
+- Waveforms, spectrograms, original PCM, monitor/fade comparisons and browser receipts preserved
+- Diagnosis only; no material/audio-law change or production adoption
+
 ### 2026-11-02 — Artistic direction: simulation-driven generative art
 
 [Direction and chronology](./2026-11-02-generative-art-direction.md) · [Current artwork framing](../README.md#artwork-direction--causal-generative-world-2026-11-02)
