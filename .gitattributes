@@ -1,6 +1,13 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
+# Preserve the isolated v1 material laws and their byte-hashed evidence.
+material-sketchbook-v1.html text eol=lf
+src/sketchbook-v1/* text eol=lf
+docs/ant/daily/2026-11-09-material-sketchbook-v1.md text eol=lf
+docs/ant/evidence/2026-11-09-material-sketchbook-v1/** text eol=lf
+docs/ant/evidence/2026-11-09-material-sketchbook-v1/**/*.png binary
+
 # Keep Material Sketchbook sources and byte-hashed receipts stable on Windows.
 .gitattributes text eol=lf
 material-sketchbook.html text eol=lf

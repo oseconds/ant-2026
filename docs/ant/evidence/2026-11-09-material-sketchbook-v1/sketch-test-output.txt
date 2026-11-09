@@ -1,0 +1,184 @@
+TAP version 13
+# Subtest: activity world is deterministic and observations do not advance it
+ok 1 - activity world is deterministic and observations do not advance it
+  ---
+  duration_ms: 92.4044
+  type: 'test'
+  ...
+# Subtest: activity supply ends at 30 s while conservative transport continues
+ok 2 - activity supply ends at 30 s while conservative transport continues
+  ---
+  duration_ms: 41.2455
+  type: 'test'
+  ...
+# Subtest: bond slows transport and empty material has no probe contact
+ok 3 - bond slows transport and empty material has no probe contact
+  ---
+  duration_ms: 0.5965
+  type: 'test'
+  ...
+# Subtest: extended run stays finite and emits a positive 8 by 8 graph
+ok 4 - extended run stays finite and emits a positive 8 by 8 graph
+  ---
+  duration_ms: 767.0489
+  type: 'test'
+  ...
+# Subtest: capacity world is deterministic and observations leave the source state unchanged
+ok 5 - capacity world is deterministic and observations leave the source state unchanged
+  ---
+  duration_ms: 66.9956
+  type: 'test'
+  ...
+# Subtest: seeded local drive redistributes positive capacity without changing the declared budget
+ok 6 - seeded local drive redistributes positive capacity without changing the declared budget
+  ---
+  duration_ms: 29.2465
+  type: 'test'
+  ...
+# Subtest: 1000-second run stays finite with fixed geometry and unit masses
+ok 7 - 1000-second run stays finite with fixed geometry and unit masses
+  ---
+  duration_ms: 482.8531
+  type: 'test'
+  ...
+# Subtest: paired samples share exact initial geometry, mass, memory, and seed state
+ok 8 - paired samples share exact initial geometry, mass, memory, and seed state
+  ---
+  duration_ms: 2.432
+  type: 'test'
+  ...
+# Subtest: A and B each receive one equal-duration, equal-dose episode in opposite order
+ok 9 - A and B each receive one equal-duration, equal-dose episode in opposite order
+  ---
+  duration_ms: 7.6322
+  type: 'test'
+  ...
+# Subtest: same seed and schedule replay exactly; mechanics reflect memory without mutating it
+ok 10 - same seed and schedule replay exactly; mechanics reflect memory without mutating it
+  ---
+  duration_ms: 6.3815
+  type: 'test'
+  ...
+# Subtest: long quiet evolution remains finite and deterministic through 1000 seconds
+ok 11 - long quiet evolution remains finite and deterministic through 1000 seconds
+  ---
+  duration_ms: 25.8487
+  type: 'test'
+  ...
+# Subtest: empty and zero-contact graphs are silent
+ok 12 - empty and zero-contact graphs are silent
+  ---
+  duration_ms: 20.3423
+  type: 'test'
+  ...
+# Subtest: frozen-state mass and stiffness alter response without mutating input
+ok 13 - frozen-state mass and stiffness alter response without mutating input
+  ---
+  duration_ms: 24.5128
+  type: 'test'
+  ...
+# Subtest: the 100x clock advances free motion for exactly 100x the recorded duration
+ok 14 - the 100x clock advances free motion for exactly 100x the recorded duration
+  ---
+  duration_ms: 17.0374
+  type: 'test'
+  ...
+# Subtest: bounded high-stiffness graph stays finite
+ok 15 - bounded high-stiffness graph stays finite
+  ---
+  duration_ms: 29.925
+  type: 'test'
+  ...
+# Subtest: activity is deterministic, bounded and stops at the declared global tick
+ok 16 - activity is deterministic, bounded and stops at the declared global tick
+  ---
+  duration_ms: 56.5331
+  type: 'test'
+  ...
+# Subtest: invalid inputs and out-of-order steps reject without advancing state
+ok 17 - invalid inputs and out-of-order steps reject without advancing state
+  ---
+  duration_ms: 0.4459
+  type: 'test'
+  ...
+# Subtest: local-time replay is deterministic and observation is inert
+ok 18 - local-time replay is deterministic and observation is inert
+  ---
+  duration_ms: 47.9691
+  type: 'test'
+  ...
+# Subtest: no input makes local and mean-matched uniform worlds exactly equal
+ok 19 - no input makes local and mean-matched uniform worlds exactly equal
+  ---
+  duration_ms: 7.3514
+  type: 'test'
+  ...
+# Subtest: input changes local clocks while matching mean elapsed time
+ok 20 - input changes local clocks while matching mean elapsed time
+  ---
+  duration_ms: 5.4342
+  type: 'test'
+  ...
+# Subtest: local-time states stay bounded and coupled energy decreases over a long run
+ok 21 - local-time states stay bounded and coupled energy decreases over a long run
+  ---
+  duration_ms: 2827.2887
+  type: 'test'
+  ...
+# Subtest: coupling changes phase evolution, and condition recovers after input stops
+ok 22 - coupling changes phase evolution, and condition recovers after input stops
+  ---
+  duration_ms: 54.1508
+  type: 'test'
+  ...
+# Subtest: same seed replays and view/snapshot are read-only copies
+ok 23 - same seed replays and view/snapshot are read-only copies
+  ---
+  duration_ms: 163.5854
+  type: 'test'
+  ...
+# Subtest: fixed geometry and mass; damage is irreversible and energy losses balance
+ok 24 - fixed geometry and mass; damage is irreversible and energy losses balance
+  ---
+  duration_ms: 48.5414
+  type: 'test'
+  ...
+# Subtest: active sample receives activity and diverges from the no-activity control
+ok 25 - active sample receives activity and diverges from the no-activity control
+  ---
+  duration_ms: 52.6607
+  type: 'test'
+  ...
+# Subtest: fatigue-stop ablation matches the base world exactly through 40 seconds
+ok 26 - fatigue-stop ablation matches the base world exactly through 40 seconds
+  ---
+  duration_ms: 214.0336
+  type: 'test'
+  ...
+# Subtest: fatigue-off quiet world only relaxes and retains all bonds
+ok 27 - fatigue-off quiet world only relaxes and retains all bonds
+  ---
+  duration_ms: 62.6664
+  type: 'test'
+  ...
+# Subtest: zero-bond edges split exact components; quiet fatigue-off does not remove bonds
+ok 28 - zero-bond edges split exact components; quiet fatigue-off does not remove bonds
+  ---
+  duration_ms: 52.6149
+  type: 'test'
+  ...
+# Subtest: 1000-second evolution remains finite at both fixed seeds
+ok 29 - 1000-second evolution remains finite at both fixed seeds
+  ---
+  duration_ms: 2751.191
+  type: 'test'
+  ...
+1..29
+# tests 29
+# suites 0
+# pass 29
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3449.4783
